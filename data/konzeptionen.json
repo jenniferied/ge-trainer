@@ -1,0 +1,176 @@
+{
+  "id": "konzeptionen",
+  "titel": "Didaktische Konzeptionen & ICF",
+  "vorlesung": "V3",
+  "leitfrage": "Wie haben sich die didaktischen Konzeptionen im SGE gewandelt - und was bedeutet das ICF-Modell für die schulische Bildung?",
+  "unterthemen": ["ICF-Modell", "Wandel der Konzeptionen", "Klafki", "Feuser & Pitsch"],
+  "mc": [
+    {
+      "id": "ko-mc-1",
+      "unterthema": "ICF-Modell",
+      "frage": "Wie versteht die ICF (WHO) Behinderung?",
+      "optionen": [
+        { "text": "Als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren", "korrekt": true },
+        { "text": "Als rein medizinisch feststellbaren Defekt einer Person", "korrekt": false },
+        { "text": "Als ausschließlich gesellschaftlich erzeugtes Phänomen ohne körperliche Anteile", "korrekt": false },
+        { "text": "Als unveränderliches, stabiles Persönlichkeitsmerkmal", "korrekt": false }
+      ],
+      "erklaerung": "Die Funktionsfähigkeit wie auch die Behinderung eines Menschen wird in der ICF als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren dargestellt (WHO 2005). Weder rein medizinisch noch rein gesellschaftlich - das ist das biopsychosoziale Modell."
+    },
+    {
+      "id": "ko-mc-2",
+      "unterthema": "ICF-Modell",
+      "frage": "Welche Bestandteile gehören zum biopsychosozialen ICF-Modell?",
+      "optionen": [
+        { "text": "Körperfunktionen und -strukturen, Aktivitäten, Partizipation, Umweltfaktoren, personenbezogene Faktoren", "korrekt": true },
+        { "text": "Intelligenz, Motivation, Disziplin, Elternhaus", "korrekt": false },
+        { "text": "Diagnose, Therapie, Prognose", "korrekt": false },
+        { "text": "Input, Prozess, Output", "korrekt": false }
+      ],
+      "erklaerung": "Das ICF-Modell verbindet das Gesundheitsproblem mit Körperfunktionen und -strukturen, Aktivitäten und Partizipation (Teilhabe) sowie den Kontextfaktoren: Umweltfaktoren und personenbezogene Faktoren."
+    },
+    {
+      "id": "ko-mc-3",
+      "unterthema": "ICF-Modell",
+      "frage": "Warum ist die ICF für die Schule relevant?",
+      "optionen": [
+        { "text": "Ihre Sichtweise prägt die deutsche Sozialgesetzgebung und die schulische sonderpädagogische Förderung", "korrekt": true },
+        { "text": "Sie schreibt verbindliche Stundenpläne für Förderschulen vor", "korrekt": false },
+        { "text": "Sie regelt die Notengebung im Förderschwerpunkt", "korrekt": false },
+        { "text": "Sie ist nur für Ärzt:innen relevant, nicht für Schulen", "korrekt": false }
+      ],
+      "erklaerung": "Die Sichtweise der ICF prägt sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung: Potentielle Barrieren für Aktivität und Partizipation können differenziert erfasst werden, und über Unterrichtsumfeld, Hilfsmittel und personelle Hilfe wird größtmögliche Aktivität und Partizipation angestrebt. Für Kinder und Jugendliche gibt es die ICF-CY."
+    },
+    {
+      "id": "ko-mc-4",
+      "unterthema": "Wandel der Konzeptionen",
+      "frage": "Welches Ziel verfolgte die defizitäre/reduktionistische didaktische Konzeption (Saegert, Fuchs)?",
+      "optionen": [
+        { "text": "Brauchbarmachung und Nutzen für die Allgemeinheit", "korrekt": true },
+        { "text": "Autonomie der Schüler:innen", "korrekt": false },
+        { "text": "Persönliche Sinnstiftung", "korrekt": false },
+        { "text": "Selbstbestimmung und Solidaritätsfähigkeit", "korrekt": false }
+      ],
+      "erklaerung": "Die defizitäre/reduktionistische Konzeption zielte auf Brauchbarmachung und den Nutzen für die Allgemeinheit - mit Sinnes- und Funktionsschulung als Inhalten und Gesamtunterricht als Methode. Autonomie, Sinnstiftung und Selbstbestimmung sind Ziele der späteren Konzeptionen."
+    },
+    {
+      "id": "ko-mc-5",
+      "unterthema": "Wandel der Konzeptionen",
+      "frage": "Was kennzeichnet die kompetenz-/entwicklungsorientierte Konzeption (Speck, Mühl, John)?",
+      "optionen": [
+        { "text": "Ziel Autonomie, allgemeine Bildungsinhalte, handlungsorientierter Unterricht", "korrekt": true },
+        { "text": "Ziel Brauchbarmachung, Funktionsschulung, Gesamtunterricht", "korrekt": false },
+        { "text": "Selbstständigkeit ohne Selbstbestimmung, partikulare Inhalte", "korrekt": false },
+        { "text": "Verzicht auf jegliche Bildungsinhalte zugunsten von Pflege", "korrekt": false }
+      ],
+      "erklaerung": "Die kompetenz-/entwicklungsorientierte Konzeption zielt auf Autonomie, arbeitet mit allgemeinen Bildungsinhalten und setzt auf handlungsorientierten Unterricht. Selbstständigkeit ohne Selbstbestimmung war das Ziel der defizitorientierten Konzeption."
+    },
+    {
+      "id": "ko-mc-6",
+      "unterthema": "Feuser & Pitsch",
+      "frage": "Welche Ziele verfolgt die entwicklungslogische Didaktik nach Feuser?",
+      "optionen": [
+        { "text": "Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit - mit offenem Unterricht", "korrekt": true },
+        { "text": "Brauchbarmachung durch Sinnesschulung", "korrekt": false },
+        { "text": "Selbsterkenntnis durch lebenskundliche Inhalte im Gesamtunterricht", "korrekt": false },
+        { "text": "Reine Wissensvermittlung im Frontalunterricht", "korrekt": false }
+      ],
+      "erklaerung": "Feusers entwicklungslogische Didaktik zielt auf Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, arbeitet mit allgemeinen Bildungsinhalten und offenem Unterricht. Sein Leitsatz: Egal, wie ein Kind beschaffen ist, es hat das Recht, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt (Feuser 1999)."
+    },
+    {
+      "id": "ko-mc-7",
+      "unterthema": "Feuser & Pitsch",
+      "frage": "Aus welchen drei Analysen besteht die dreidimensionale didaktische Struktur nach Feuser?",
+      "optionen": [
+        { "text": "Sachstrukturanalyse, Tätigkeitsstrukturanalyse, Handlungsstrukturanalyse", "korrekt": true },
+        { "text": "Eingangsanalyse, Prozessanalyse, Ergebnisanalyse", "korrekt": false },
+        { "text": "Stärkenanalyse, Schwächenanalyse, Chancenanalyse", "korrekt": false },
+        { "text": "Lehrplananalyse, Notenanalyse, Elternanalyse", "korrekt": false }
+      ],
+      "erklaerung": "Feuser verschränkt Sachstrukturanalyse (Objektseite: der Inhalt), Tätigkeitsstrukturanalyse (Subjektseite: Entwicklung, u. a. Zone der aktuellen und der nächsten Entwicklung) und Handlungsstrukturanalyse. Pitsch erweitert das später zu einer vierdimensionalen Didaktik (1999)."
+    },
+    {
+      "id": "ko-mc-8",
+      "unterthema": "Klafki",
+      "frage": "Was meint kategoriale Bildung nach Klafki im Doppelsinn?",
+      "optionen": [
+        { "text": "Dem Menschen erschließt sich eine Wirklichkeit kategorial - und der Mensch ist für diese Wirklichkeit erschlossen", "korrekt": true },
+        { "text": "Bildung wird in Schulnoten-Kategorien von 1 bis 6 eingeteilt", "korrekt": false },
+        { "text": "Nur die objektive Welt zählt, die subjektive ist unwichtig", "korrekt": false },
+        { "text": "Bildung besteht aus dem Auswendiglernen von Kategorien", "korrekt": false }
+      ],
+      "erklaerung": "Kategoriale Bildung verbindet objektive Welt (kulturelle Zeugnisse kennen) und subjektive Welt (eigene Fähigkeiten entfalten) im Doppelsinn: Wirklichkeit erschließt sich dem Menschen, und der Mensch wird für die Wirklichkeit erschlossen. Einseitig wäre bildungstheoretischer Enzyklopädismus bzw. Formalismus."
+    },
+    {
+      "id": "ko-mc-9",
+      "unterthema": "Klafki",
+      "frage": "Welches gehört zu den epochaltypischen Schlüsselproblemen nach Klafki?",
+      "optionen": [
+        { "text": "Die Friedensfrage und die Umweltfrage", "korrekt": true },
+        { "text": "Die Frage nach dem besten Schulranzen", "korrekt": false },
+        { "text": "Die Rechtschreibreform", "korrekt": false },
+        { "text": "Die Digitalisierung der Zeugnisse", "korrekt": false }
+      ],
+      "erklaerung": "Klafkis Schlüsselprobleme: Friedensfrage, Problematik des Nationalitätsprinzips, Umweltfrage, wachsende Weltbevölkerung, gesellschaftlich bedingte Ungleichheit, Verhältnis Industrie-/Entwicklungsländer, Gefahren und Möglichkeiten neuer Technologien, menschliche Sexualität und Geschlechterbeziehung."
+    }
+  ],
+  "frei": [
+    {
+      "id": "ko-f-1",
+      "afb": 1,
+      "frage": "Nennen Sie drei didaktische Konzeptionen mit ihren jeweiligen Zielen.",
+      "stichpunkte": [
+        "Defizitär/reduktionistisch (Saegert, Fuchs): Brauchbarmachung, Nutzen für die Allgemeinheit",
+        "Defizitorientiert (u. a. Bach, Moor, Vetter; Bernart, KMK): Selbstständigkeit ohne Selbstbestimmung, Selbsterkenntnis, Selbstverwirklichung in sozialer Integration",
+        "Kompetenz-/entwicklungsorientiert (Speck, Mühl, John): Autonomie",
+        "Entwicklungslogisch (Feuser): Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit",
+        "Subjekt- und bedarfsorientiert (Fischer): persönliche Sinnstiftung"
+      ],
+      "muster": "Drei didaktische Konzeptionen mit ihren Zielen sind: erstens die defizitäre bzw. reduktionistische Konzeption (Saegert, Fuchs) mit dem Ziel der Brauchbarmachung und des Nutzens für die Allgemeinheit, zweitens die kompetenz- bzw. entwicklungsorientierte Konzeption (Speck, Mühl, John) mit dem Ziel der Autonomie und drittens die entwicklungslogische Konzeption (Feuser) mit den Zielen Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit.",
+      "tipp": "Original-Beispielaufgabe der Dozentin. Drei reichen - aber lerne am besten alle fünf aus der Tabelle von Stöppler & Wachsmuth (2015, 39), dann kannst du wählen."
+    },
+    {
+      "id": "ko-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie den Wandel der didaktischen Konzeptionen über die Zeit hinweg.",
+      "stichpunkte": [
+        "Von der Defizit- zur Kompetenzorientierung: Blick wandert vom Defizit der Person zu ihren Entwicklungsmöglichkeiten",
+        "Ziele wandeln sich: Brauchbarmachung -> Selbstständigkeit ohne Selbstbestimmung -> Autonomie -> Selbst-/Mitbestimmung und Solidaritätsfähigkeit -> persönliche Sinnstiftung",
+        "Inhalte wandeln sich: Sinnes-/Funktionsschulung und partikulare, lebenspraktische Inhalte -> allgemeine Bildungsinhalte für alle",
+        "Methoden wandeln sich: Gesamtunterricht -> handlungsorientierter Unterricht -> offener Unterricht",
+        "Menschenbild dahinter: vom Objekt der Fürsorge zum Subjekt mit Bildungsrecht (Feuser: jedes Kind hat das Recht, alles Wichtige über die Welt zu erfahren)"
+      ],
+      "muster": "Der Wandel verläuft von der Defizit- zur Kompetenz- und Subjektorientierung. Frühe Konzeptionen (Saegert, Fuchs) sahen den Menschen mit geistiger Beeinträchtigung als defizitär und wollten ihn durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Die defizitorientierte Konzeption zielte immerhin auf Selbstständigkeit, jedoch ohne Selbstbestimmung, mit lebenspraktischen und partikularen Inhalten. Mit der kompetenz- und entwicklungsorientierten Konzeption (Speck, Mühl, John) wurde Autonomie zum Ziel und allgemeine Bildungsinhalte mit handlungsorientiertem Unterricht zum Standard. Die entwicklungslogische Didaktik Feusers betont Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit im offenen Unterricht, und die subjekt- und bedarfsorientierte Konzeption (Fischer) stellt die persönliche Sinnstiftung ins Zentrum. Über die Zeit wandeln sich also Ziele, Inhalte, Methoden und vor allem das Menschenbild: vom Objekt der Brauchbarmachung zum Subjekt mit eigenem Bildungsrecht.",
+      "tipp": "Original-Beispielaufgabe. Der rote Faden ist wichtiger als jede Jahreszahl: Ziele, Inhalte und Methoden je Konzeption einmal durchlaufen."
+    },
+    {
+      "id": "ko-f-3",
+      "afb": 3,
+      "frage": "Diskutieren Sie die defizitäre didaktische Konzeption aus heutiger Sicht.",
+      "stichpunkte": [
+        "Kern der Konzeption benennen: Brauchbarmachung, Funktions-/Sinnesschulung, Mensch als Mängelwesen",
+        "Kritik 1: widerspricht heutigem Menschenbild und der UN-BRK (Selbstbestimmung, Teilhabe, gleichberechtigter Zugang zu Bildung)",
+        "Kritik 2: widerspricht der ICF-Sicht - Behinderung entsteht in Interaktion mit Kontextfaktoren, ist kein reines Personendefizit",
+        "Kritik 3: reduziert Bildung auf Training einzelner Funktionen statt allgemeiner Bildungsinhalte (vgl. Feuser: Recht auf alles Wichtige über die Welt)",
+        "Differenzierung: strukturierte Übung und Funktionsförderung haben weiterhin ihren Platz (z. B. Trainingsprogramme), aber eingebettet, nicht als Gesamtkonzept",
+        "Fazit formulieren: als Gesamtkonzept überholt, historisch einordnen"
+      ],
+      "muster": "Die defizitäre Konzeption betrachtete Menschen mit geistiger Beeinträchtigung als Mängelwesen und wollte sie durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Aus heutiger Sicht ist das mehrfach kritikwürdig: Es widerspricht dem Menschenbild der UN-Behindertenrechtskonvention, die Selbstbestimmung und gleichberechtigte Teilhabe fordert, und der ICF, die Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren versteht statt als reines Personendefizit. Zudem verkürzt die Konzeption Bildung auf das Training einzelner Funktionen, während heute allgemeine Bildungsinhalte für alle gelten - mit Feuser gesprochen hat jedes Kind das Recht, alles Wichtige über die Welt zu erfahren. Differenzierend lässt sich festhalten, dass strukturierte Übungs- und Trainingselemente weiterhin sinnvoll sein können, jedoch als Baustein in einem kompetenz- und subjektorientierten Unterricht. Als Gesamtkonzept ist die defizitäre Didaktik damit überholt und nur noch historisch von Bedeutung.",
+      "tipp": "Original-Beispielaufgabe. Bei Diskutieren-Aufgaben: erst kurz benennen, worum es geht, dann Argumente, dann eine klare Bewertung am Schluss."
+    },
+    {
+      "id": "ko-f-4",
+      "afb": 2,
+      "frage": "Erläutern Sie die Bestandteile des ICF-Modells und seine Bedeutung für die schulische Bildung.",
+      "stichpunkte": [
+        "ICF = International Classification of Functioning, Disability and Health (WHO 2001), ICF-CY für 0-18 Jahre (WHO 2013)",
+        "Bestandteile: Gesundheitsproblem, Körperfunktionen und -strukturen, Aktivitäten, Partizipation (Teilhabe), Umweltfaktoren, personenbezogene Faktoren",
+        "Behinderung = dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren (biopsychosoziales Modell)",
+        "Bedeutung: prägt Sozialgesetzgebung und schulische sonderpädagogische Förderung",
+        "Praktisch: Barrieren für Aktivität und Partizipation differenziert erfassen; über Unterrichtsumfeld, Hilfsmittel und personelle Hilfe größtmögliche Aktivität und Partizipation anstreben"
+      ],
+      "muster": "Die ICF (WHO 2001; für Kinder und Jugendliche die ICF-CY) beschreibt Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Ihre Bestandteile sind Körperfunktionen und -strukturen, Aktivitäten und Partizipation (Teilhabe) sowie als Kontextfaktoren Umweltfaktoren und personenbezogene Faktoren. Für die Schule ist das Modell zentral, weil seine Sichtweise die deutsche Sozialgesetzgebung und die sonderpädagogische Förderung prägt: Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt.",
+      "tipp": "Das Wort dynamische Interaktion sollte fallen - das ist der Kern des biopsychosozialen Modells."
+    }
+  ]
+}

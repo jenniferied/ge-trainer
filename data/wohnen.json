@@ -1,0 +1,186 @@
+{
+  "id": "wohnen",
+  "titel": "Wohnen im SGE",
+  "vorlesung": "V7",
+  "leitfrage": "Welche Bedeutung hat das Wohnen im Förderschwerpunkt geistige Entwicklung und wie kann es didaktisch-methodisch vermittelt werden?",
+  "unterthemen": ["Bedeutung & Geschichte", "Rechtliche Grundlagen", "Wohnformen", "Wohnen als Bildungsaufgabe"],
+  "mc": [
+    {
+      "id": "wo-mc-1",
+      "unterthema": "Bedeutung & Geschichte",
+      "frage": "Welche drei Meilensteine prägen die Geschichte des Wohnens von Menschen mit geistiger Beeinträchtigung (in richtiger Reihenfolge)?",
+      "optionen": [
+        { "text": "Normalisierungsprinzip (1950-1971), Selbstbestimmungsbegriff (1980-1994), UN-Behindertenrechtskonvention (2008)", "korrekt": true },
+        { "text": "UN-BRK (1950), Normalisierung (1980), Selbstbestimmung (2008)", "korrekt": false },
+        { "text": "Selbstbestimmung (1950), UN-BRK (1971), Normalisierung (1994)", "korrekt": false },
+        { "text": "Inklusionsgesetz (1960), Wohngeldreform (1990), Pflegeversicherung (2008)", "korrekt": false }
+      ],
+      "erklaerung": "Die Reihenfolge: das Normalisierungsprinzip (1950-1971) - das Leben von behinderten Menschen so normal wie möglich gestalten -, der Selbstbestimmungsbegriff (1980-1994) und die UN-Behindertenrechtskonvention (2008)."
+    },
+    {
+      "id": "wo-mc-2",
+      "unterthema": "Bedeutung & Geschichte",
+      "frage": "Wie lebten Menschen mit geistiger Beeinträchtigung bis 1971 überwiegend - und mit welchen Folgen?",
+      "optionen": [
+        { "text": "In Landeskrankenhäusern/Anstalten - mit gleichförmigem Tagesablauf, Schlafsälen ohne Privatsphäre, Isolation und Rückgang erworbener Fähigkeiten", "korrekt": true },
+        { "text": "Überwiegend in eigenen Wohnungen mit ambulanter Unterstützung", "korrekt": false },
+        { "text": "In inklusiven Wohngemeinschaften mit Assistenz", "korrekt": false },
+        { "text": "Ausschließlich bei Pflegefamilien mit individueller Förderung", "korrekt": false }
+      ],
+      "erklaerung": "Bis 1971 lebten Menschen mit geistiger Beeinträchtigung in Landeskrankenhäusern bzw. Anstalten: gleichförmiger Tagesablauf, nur ein Mindestmaß an Förderung und individueller Ansprache, Schlafsäle ohne Privatsphäre. Folgen: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme. Vor allem Eltern wünschten sich familiennahe und humane Lebensräume."
+    },
+    {
+      "id": "wo-mc-3",
+      "unterthema": "Rechtliche Grundlagen",
+      "frage": "In welchen drei Rechtsquellen ist das Wohnrecht verankert?",
+      "optionen": [
+        { "text": "Sozialgesetzbuch, Grundgesetz, UN-Behindertenrechtskonvention", "korrekt": true },
+        { "text": "Straßenverkehrsordnung, Baugesetzbuch, Mietspiegel", "korrekt": false },
+        { "text": "Schulgesetz, Kitagesetz, Jugendschutzgesetz", "korrekt": false },
+        { "text": "Arbeitsrecht, Steuerrecht, Vereinsrecht", "korrekt": false }
+      ],
+      "erklaerung": "Das Wohnrecht ist verankert im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention. Wohnen ist ein Menschenrecht - im GG u. a. über die Unversehrtheit der Wohnung, die Freizügigkeit im Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG)."
+    },
+    {
+      "id": "wo-mc-4",
+      "unterthema": "Rechtliche Grundlagen",
+      "frage": "Was garantiert Artikel 19 der UN-Behindertenrechtskonvention?",
+      "optionen": [
+        { "text": "Menschen mit Behinderungen können gleichberechtigt ihren Aufenthaltsort wählen und sind nicht verpflichtet, in besonderen Wohnformen zu leben", "korrekt": true },
+        { "text": "Ein Recht auf kostenloses Wohnen im Heim", "korrekt": false },
+        { "text": "Die Pflicht der Familien, Angehörige lebenslang aufzunehmen", "korrekt": false },
+        { "text": "Ein Verbot ambulanter Wohnformen", "korrekt": false }
+      ],
+      "erklaerung": "UN-BRK Art. 19: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben, und sind nicht verpflichtet, in besonderen Wohnformen zu leben. Dazu: gleichberechtigter Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz (zur Verhinderung von Isolation) und gemeindenahe Dienstleistungen, die ihren Bedürfnissen angepasst werden."
+    },
+    {
+      "id": "wo-mc-5",
+      "unterthema": "Wohnformen",
+      "frage": "Was kennzeichnet das Wohnen im Heim laut Vorlesung?",
+      "optionen": [
+        { "text": "56 % der Heimbewohner:innen teilen ihren Wohnraum mit 100-500 Bewohnern; organisiertes statt natürliches Wohnen; Primat der Gruppe vor Individualbedürfnissen", "korrekt": true },
+        { "text": "Freie Wahl von Wohnraum, Mitarbeitenden und Tagesablauf", "korrekt": false },
+        { "text": "Maximale Privatsphäre und Einzelapartments für alle", "korrekt": false },
+        { "text": "Es gibt in Deutschland keine Heime mehr", "korrekt": false }
+      ],
+      "erklaerung": "Wohnen im Heim: 56 % der Menschen in Heimen teilen ihren Wohnraum mit 100-500 Bewohnern; es ist organisiertes, kein natürliches Wohnen; Wohnraum, Mitarbeiter und Tagesablauf können nicht gewählt werden; es gilt das Primat der Gruppe vor Individualbedürfnissen; Konfliktpotential, da der Privatort der Bewohner auf den Arbeitsort der Mitarbeiter trifft."
+    },
+    {
+      "id": "wo-mc-6",
+      "unterthema": "Wohnformen",
+      "frage": "Was bedeutet beschützende Elternschaft?",
+      "optionen": [
+        { "text": "Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien; die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen", "korrekt": true },
+        { "text": "Eltern ziehen mit ins Wohnheim ein", "korrekt": false },
+        { "text": "Ein gerichtlich angeordnetes Besuchsverbot", "korrekt": false },
+        { "text": "Eine Pflegeform ausschließlich für Kinder unter 6 Jahren", "korrekt": false }
+      ],
+      "erklaerung": "Beschützende Elternschaft: Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien - einem wichtigen Wohn- und Lebensraum. Die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung (Beispiel Herr M., der mit 53 Jahren in eine Wohngruppe kommt)."
+    },
+    {
+      "id": "wo-mc-7",
+      "unterthema": "Wohnformen",
+      "frage": "Wie lautet die gewünschte Entwicklungsrichtung bei den Wohnformen?",
+      "optionen": [
+        { "text": "Von der vollstationären Heimwohngruppe über Trainingswohnung und Außenwohngruppe/offene WG zum betreuten Einzelwohnen", "korrekt": true },
+        { "text": "Vom betreuten Einzelwohnen zurück in die Komplexeinrichtung", "korrekt": false },
+        { "text": "Alle sollen dauerhaft in der Herkunftsfamilie bleiben", "korrekt": false },
+        { "text": "Es gibt keine gewünschte Richtung", "korrekt": false }
+      ],
+      "erklaerung": "Die gewünschte Entwicklungsrichtung führt von der vollstationären Heimwohngruppe über die Trainingswohnung und die Außenwohngruppe oder offene Wohngemeinschaft zum betreuten Einzelwohnen - also hin zu mehr Selbstbestimmung und gemeindenahem Wohnen. Die Statistik zeigt passend: Die Zahl der Menschen außerhalb besonderer Wohnformen wächst seit 2010 deutlich."
+    },
+    {
+      "id": "wo-mc-8",
+      "unterthema": "Wohnformen",
+      "frage": "Was bietet das Leben in Wohngemeinschaften oder der eigenen Wohnung - und was wird dafür benötigt?",
+      "optionen": [
+        { "text": "Die größten Freiräume und hohe kulturelle Teilhabe - benötigt werden alltagspraktische Fähigkeiten, damit stundenweise Betreuung möglich ist", "korrekt": true },
+        { "text": "Rundum-Versorgung ohne eigene Anforderungen", "korrekt": false },
+        { "text": "Weniger Freiheit als im Heim", "korrekt": false },
+        { "text": "Es ist gesetzlich erst ab 40 Jahren erlaubt", "korrekt": false }
+      ],
+      "erklaerung": "Das Leben in Wohngemeinschaften oder in eigener Wohnung bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ermöglicht ein hohes Maß an kultureller Teilnahme. Es werden aber alltagspraktische Fähigkeiten benötigt, damit stundenweise Betreuung möglich ist - genau hier setzt Wohnen als Bildungsaufgabe an."
+    },
+    {
+      "id": "wo-mc-9",
+      "unterthema": "Wohnen als Bildungsaufgabe",
+      "frage": "Was ist ein Wohntraining (Dworschak)?",
+      "optionen": [
+        { "text": "Eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag - hauswirtschaftliche und sozial-emotionale Lerninhalte, z. B. in der Lehrerwohnung", "korrekt": true },
+        { "text": "Ein Fitnessprogramm für zu Hause", "korrekt": false },
+        { "text": "Ein einmaliger Museumsbesuch zum Thema Wohnen", "korrekt": false },
+        { "text": "Ein Online-Kurs über Mietrecht", "korrekt": false }
+      ],
+      "erklaerung": "Ein Wohntraining ist eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag, die sowohl die hauswirtschaftlichen Aufgaben als auch die sozial-emotionalen Lerninhalte des Wohnens verfolgt und der Vorbereitung auf ein selbstständiges Wohnen dient. Adäquater Lernort: die Lehrerwohnung (Dworschak). Synonyme: Wohnvorbereitungskurs, Probewohnen, Trainingswohnen."
+    },
+    {
+      "id": "wo-mc-10",
+      "unterthema": "Wohnen als Bildungsaufgabe",
+      "frage": "Welche Aufgabe hat die Hauswirtschaft im Handlungsfeld Wohnen des Rahmenlehrplans?",
+      "optionen": [
+        { "text": "Auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren - u. a. Nahrungszubereitung, Hygiene, Wäschepflege, Gerätebedienung", "korrekt": true },
+        { "text": "Ausschließlich das Kochen für Schulfeste", "korrekt": false },
+        { "text": "Die Vorbereitung auf eine Ausbildung in der Gastronomie", "korrekt": false },
+        { "text": "Sie kommt im Rahmenlehrplan nicht vor", "korrekt": false }
+      ],
+      "erklaerung": "Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren: Nahrungszubereitung und Ernährungslehre, Wirtschaftlichkeit eines Haushaltes, Hygiene, Arbeitssicherheit und -organisation, umweltbewusstes Handeln, Pflege und Wartung von Möbeln und Wohnräumen, Körperpflege, Wäschepflege sowie Bedienung und Wartung elektrischer Klein- und Großgeräte."
+    }
+  ],
+  "frei": [
+    {
+      "id": "wo-f-1",
+      "afb": 1,
+      "frage": "Benennen Sie die rechtlichen Grundlagen für die Wohnsituation von Menschen mit Behinderungen.",
+      "stichpunkte": [
+        "Wohnrecht verankert in: Sozialgesetzbuch, Grundgesetz, UN-Behindertenrechtskonvention",
+        "Grundgesetz: Unversehrtheit der Wohnung; Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG); freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG); Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG)",
+        "UN-BRK Art. 19: gleichberechtigte Wahl von Aufenthaltsort, wo und mit wem man lebt; keine Verpflichtung zu besonderen Wohnformen; Zugang zu Unterstützungsdiensten inkl. persönlicher Assistenz; gemeindenahe, angepasste Dienstleistungen",
+        "Kernsatz: Wohnen ist ein Menschenrecht"
+      ],
+      "muster": "Das Wohnrecht von Menschen mit Behinderungen ist im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention verankert - Wohnen ist ein Menschenrecht. Im Grundgesetz stützen es die Unversehrtheit der Wohnung, die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie das Recht auf Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG). Artikel 19 der UN-BRK garantiert zudem, dass Menschen mit Behinderungen gleichberechtigt wählen können, wo und mit wem sie leben, dass sie nicht verpflichtet sind, in besonderen Wohnformen zu leben, und dass sie Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz erhalten.",
+      "tipp": "Kleiner Hinweis: Auf der Folie steht die Unversehrtheit der Wohnung mit Art. 14 Abs. 1 GG - im Grundgesetz ist die Unverletzlichkeit der Wohnung eigentlich Art. 13. Lerne es so, wie es auf der Folie steht, aber wundere dich nicht, falls es dir woanders anders begegnet."
+    },
+    {
+      "id": "wo-f-2",
+      "afb": 2,
+      "frage": "Beschreiben Sie die Bedeutung von Wohnen für Menschen mit geistiger Beeinträchtigung im Kontext der geschichtlichen Entwicklung der letzten 70 Jahre.",
+      "stichpunkte": [
+        "Bedeutung des Wohnens (Bundesvereinigung Lebenshilfe): Versorgung, Unterkunft, Verpflegung, Geborgenheit, Eigenständigkeit, Privatheit, Offenheit nach außen",
+        "Bis 1971: Leben in Landeskrankenhäusern/Anstalten; gleichförmiger Tagesablauf, Mindestmaß an Förderung, Schlafsäle ohne Privatsphäre",
+        "Folgen: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme; vor allem Eltern wünschen familiennahe, humane Lebensräume",
+        "Meilensteine: Normalisierungsprinzip (1950-1971), Selbstbestimmungsbegriff (1980-1994), UN-BRK (2008)",
+        "Heute: Vielfalt der Wohnformen von Familie über stationär bis ambulant; Trend zu gemeindenahem Wohnen (Statistik: außerhalb besonderer Wohnformen von ca. 125.000 im Jahr 2010 auf ca. 278.000 im Jahr 2023 gestiegen)"
+      ],
+      "muster": "Wohnen bedeutet weit mehr als Unterkunft: Nach der Bundesvereinigung Lebenshilfe umfasst es Versorgung, Verpflegung, Geborgenheit, Eigenständigkeit, Privatheit und Offenheit nach außen. Historisch wurde Menschen mit geistiger Beeinträchtigung genau das lange verwehrt: Bis 1971 lebten sie überwiegend in Landeskrankenhäusern und Anstalten mit gleichförmigem Tagesablauf, einem Mindestmaß an Förderung und Schlafsälen ohne Privatsphäre - mit Isolation, dem Rückgang erworbener Fähigkeiten und Verhaltensproblemen als Folge. Vor allem Eltern forderten familiennahe, humane Lebensräume. Den Wandel prägten drei Meilensteine: das Normalisierungsprinzip (1950-1971), das das Leben behinderter Menschen so normal wie möglich gestalten will, der Selbstbestimmungsbegriff (1980-1994) und die UN-Behindertenrechtskonvention (2008) mit dem Recht auf freie Wahl der Wohnform. Heute zeigt sich der Wandel in einer wachsenden Vielfalt der Wohnformen und einem klaren Trend zum ambulanten, gemeindenahen Wohnen.",
+      "tipp": "Die drei Meilensteine mit Jahreszahlen sind das Gerüst - der Rest erzählt sich fast von selbst als Weg von der Anstalt zur Selbstbestimmung."
+    },
+    {
+      "id": "wo-f-3",
+      "afb": 2,
+      "frage": "Vergleichen Sie Wohnformen für Erwachsene mit geistiger Beeinträchtigung im Hinblick auf Selbstbestimmung.",
+      "stichpunkte": [
+        "Systematik: Leben in der Familie | stationäre Wohnformen (vollstationär: u. a. Komplexeinrichtung, Dorfgemeinschaft; teilstationär: Wohnheim, eigenständige Wohngruppe, Außenwohngruppe) | ambulante Wohnformen (ambulant betreutes Wohnen); gemeindenahe Wohnformen als Querschnitt",
+        "Familie (beschützende Elternschaft): wichtiger Lebensraum, aber Ablösung oft erst durch unvorhergesehene Ereignisse - Selbstbestimmung abhängig vom Familiensystem",
+        "Heim: organisiertes Wohnen, keine Wahl von Wohnraum, Mitarbeitenden, Tagesablauf; Primat der Gruppe; 56 % teilen Wohnraum mit 100-500 Personen - geringste Selbstbestimmung",
+        "WG/eigene Wohnung: größte Freiräume, hohe kulturelle Teilhabe; setzt alltagspraktische Fähigkeiten voraus (stundenweise Betreuung)",
+        "Gewünschte Entwicklungsrichtung: Heimwohngruppe -> Trainingswohnung -> Außenwohngruppe/offene WG -> betreutes Einzelwohnen"
+      ],
+      "muster": "Die Wohnformen lassen sich in das Leben in der Familie, stationäre und ambulante Wohnformen gliedern. In der Herkunftsfamilie (beschützende Elternschaft) leben viele Erwachsene mit geistiger Beeinträchtigung; die Familie ist ein wichtiger Lebensraum, doch die Selbstbestimmung hängt stark vom Familiensystem ab, und die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod oder Überlastung der Eltern. Am wenigsten Selbstbestimmung bietet das Heim: Wohnraum, Mitarbeitende und Tagesablauf können nicht gewählt werden, es gilt das Primat der Gruppe, und 56 Prozent der Heimbewohner:innen teilen ihren Wohnraum mit 100 bis 500 Personen. Die größten Freiräume bieten Wohngemeinschaften und die eigene Wohnung mit ambulanter Unterstützung - sie ermöglichen hohe kulturelle Teilhabe, setzen aber alltagspraktische Fähigkeiten voraus, damit stundenweise Betreuung ausreicht. Die gewünschte Entwicklungsrichtung verläuft daher von der vollstationären Heimwohngruppe über Trainingswohnung und Außenwohngruppe hin zum betreuten Einzelwohnen.",
+      "tipp": "Vergleichen heißt: ein gemeinsames Kriterium (hier Selbstbestimmung) durch alle Formen durchziehen - nicht einfach nur Listen nebeneinanderstellen."
+    },
+    {
+      "id": "wo-f-4",
+      "afb": 3,
+      "frage": "Erörtern Sie das Wohnen als Bildungsaufgabe der Schule: Wie kann es didaktisch-methodisch vermittelt werden - und wo liegen Herausforderungen?",
+      "stichpunkte": [
+        "Verankerung: Lernfeld Der Mensch im Alltag im RLP (Selbstversorgung, Wohnen, Zusammenleben, Mediennutzung); Hauswirtschaft bereitet auf selbstbestimmtes Wohnen vor",
+        "Zu vermittelnde Fähigkeiten: Orientierung im eigenen Zuhause und in der Nachbarschaft, lebenspraktische Fähigkeiten, lebensbedeutsames Wissen, soziale Kontakte initiieren, Bedürfnisse und Entscheidungen vermitteln",
+        "Methode Wohntraining (Dworschak): mehrtägige Unterrichtssequenz, Lehrerwohnung als adäquater Lernort, hauswirtschaftliche plus sozial-emotionale Lerninhalte, realitätsnahes Üben in größtmöglicher Selbstständigkeit",
+        "Herausforderungen: Mietvertrag und Bürokratie, Umzug und Möbel, Barrierefreiheit, Kommunikation mit der Betreuung, Sicherheit der Wohnung",
+        "Bewertung: Wohntraining verbindet Lebensnähe, Handlungsorientierung und kleine Schritte; Grenze: Betreuungsbedarf bleibt oft bestehen - Ziel ist größtmögliche, nicht totale Selbstständigkeit"
+      ],
+      "muster": "Wohnen ist im Rahmenlehrplan als Bildungsaufgabe verankert: Im Lernfeld Der Mensch im Alltag stehen Selbstversorgung, Wohnen und Zusammenleben, und die Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten - von der Nahrungszubereitung über Hygiene und Wäschepflege bis zur Bedienung elektrischer Geräte. Didaktisch-methodisch eignet sich besonders das Wohntraining nach Dworschak: eine längere, zumeist mehrtägige Unterrichtssequenz, etwa in einer Lehrerwohnung, in der Alltagsaufgaben realitätsnah und in größtmöglicher Selbstständigkeit geübt werden - hauswirtschaftlich wie sozial-emotional. Damit verwirklicht es zentrale didaktische Prinzipien wie Lebensnähe und Handlungsorientierung. Herausforderungen bleiben dennoch: bürokratische Hürden wie der Mietvertrag, der Umzug selbst, barrierefreie Räume, die Kommunikation mit der Betreuung und die Sicherheit der Wohnung. In der Bewertung ist das Wohntraining eine sehr geeignete Methode, weil es echte Teilhabe vorbereitet; zugleich gilt: Für viele bleibt Unterstützung dauerhaft nötig - das Ziel ist größtmögliche Selbstständigkeit, nicht deren Fiktion.",
+      "tipp": "Das ist die Leitfrage der Vorlesung. Wohntraining als Kernbeispiel plus zwei, drei Herausforderungen - damit ist eine AFB-III-Antwort rund."
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "id": "mobilitaet",
+  "titel": "Mobilität & Verkehrserziehung",
+  "vorlesung": "V6",
+  "leitfrage": "Welche Bedeutung hat die Mobilitäts- und Verkehrserziehung und wie lässt sie sich didaktisch-methodisch umsetzen?",
+  "unterthemen": ["Bedeutung & Mobilitätsbehinderungen", "Curriculum & Kompetenzen", "Methoden der Mobilitätsförderung", "Verkehrsteilnahme konkret"],
+  "mc": [
+    {
+      "id": "mo-mc-1",
+      "unterthema": "Bedeutung & Mobilitätsbehinderungen",
+      "frage": "In welchem Spannungsfeld steht die Mobilität von Menschen im SGE?",
+      "optionen": [
+        { "text": "Abhängigkeit (von Fahrdiensten, Begleitung, Assistenz) versus Forderung nach Selbstbestimmung und Teilhabe", "korrekt": true },
+        { "text": "Geschwindigkeit versus Bequemlichkeit", "korrekt": false },
+        { "text": "Auto versus Fahrrad", "korrekt": false },
+        { "text": "Stadt versus Land ohne weiteren Bezug", "korrekt": false }
+      ],
+      "erklaerung": "Menschen mit SGE haben ein deutlich geringeres Mobilitätsniveau als andere Bevölkerungsgruppen und sind bereits von Kita über Schule bis zum Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Das erzeugt Abhängigkeit - im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Mobilität ist dafür Grundvoraussetzung."
+    },
+    {
+      "id": "mo-mc-2",
+      "unterthema": "Bedeutung & Mobilitätsbehinderungen",
+      "frage": "Welche gehört zu den Mobilitätsbehinderungen, auf die Menschen im Alltag stoßen können?",
+      "optionen": [
+        { "text": "Fehlende Ortskenntnis", "korrekt": true },
+        { "text": "Zu gutes Gedächtnis", "korrekt": false },
+        { "text": "Übermäßige Verkehrsmittelauswahl", "korrekt": false },
+        { "text": "Zu viel Mobilitätsbildung", "korrekt": false }
+      ],
+      "erklaerung": "Zu den Mobilitätsbehinderungen zählen u. a.: Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung/Verhalten Anderer und fehlende Mobilitätsbildung."
+    },
+    {
+      "id": "mo-mc-3",
+      "unterthema": "Curriculum & Kompetenzen",
+      "frage": "Aus welchen vier Teilbereichen setzt sich die schulische Mobilitäts- und Verkehrserziehung zusammen?",
+      "optionen": [
+        { "text": "Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung, Sozialerziehung", "korrekt": true },
+        { "text": "Fahrradprüfung, Fußgängerprüfung, Busprüfung, Bahnprüfung", "korrekt": false },
+        { "text": "Theorie, Praxis, Prüfung, Wiederholung", "korrekt": false },
+        { "text": "Motorik, Sensorik, Kognition, Emotion", "korrekt": false }
+      ],
+      "erklaerung": "Die Mobilitäts- und Verkehrserziehung umfasst Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung - sie ist also weit mehr als reines Verkehrsregeltraining."
+    },
+    {
+      "id": "mo-mc-4",
+      "unterthema": "Curriculum & Kompetenzen",
+      "frage": "In welchem Lernfeld des Rahmenlehrplans FsgE (2011) ist das Handlungsfeld Verkehr und Verkehrserziehung verankert?",
+      "optionen": [
+        { "text": "L5 - Der mobile Mensch", "korrekt": true },
+        { "text": "L1 - Der Mensch im Alltag", "korrekt": false },
+        { "text": "L3 - Der Mensch und die Gesundheit", "korrekt": false },
+        { "text": "L6 - Der Mensch in Natur und Umwelt", "korrekt": false }
+      ],
+      "erklaerung": "Das Lernfeld L5 Der mobile Mensch enthält das Handlungsfeld Verkehr und Verkehrserziehung. Zielsetzung: dass alle Schüler:innen, denen es möglich ist, den Schulweg bzw. Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen und situationsentsprechend handeln können - zu Fuß, mit Fahrrad oder Rollstuhl, im Auto und Bus, in öffentlichen Verkehrsmitteln."
+    },
+    {
+      "id": "mo-mc-5",
+      "unterthema": "Curriculum & Kompetenzen",
+      "frage": "Welche gehören zu den Mobilitätskompetenzen nach Stöppler?",
+      "optionen": [
+        { "text": "Visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, soziale Kompetenzen", "korrekt": true },
+        { "text": "Bremsen, Lenken, Schalten, Blinken, Hupen", "korrekt": false },
+        { "text": "Lesen, Schreiben, Rechnen, Zeichnen, Singen", "korrekt": false },
+        { "text": "Kraft, Ausdauer, Schnelligkeit, Beweglichkeit, Größe", "korrekt": false }
+      ],
+      "erklaerung": "Mobilitätskompetenzen nach Stöppler: visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition und Interaktion. Fünf davon nennen zu können war eine Original-Beispielaufgabe."
+    },
+    {
+      "id": "mo-mc-6",
+      "unterthema": "Curriculum & Kompetenzen",
+      "frage": "Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen sowie Entfernungshören sind Ziele in welchem Kompetenzbereich?",
+      "optionen": [
+        { "text": "Auditive Wahrnehmung", "korrekt": true },
+        { "text": "Visuelle Wahrnehmung", "korrekt": false },
+        { "text": "Motorik", "korrekt": false },
+        { "text": "Soziale Kompetenz", "korrekt": false }
+      ],
+      "erklaerung": "Ziele im Bereich auditive Wahrnehmung: Erkennen, Zuordnen, Differenzieren von Verkehrsgeräuschen, Lokalisieren von Verkehrsgeräuschen, auditive Diskriminierung und Entfernungshören. Visuell wären z. B. Farbensehen (Rot-Grün), Verständnis des Blinkens, Symbole und Raumbewusstsein."
+    },
+    {
+      "id": "mo-mc-7",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "frage": "Welche vier Methoden der Mobilitätsförderung nennt die Vorlesung?",
+      "optionen": [
+        { "text": "Praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen, pädagogisches Puppenspiel", "korrekt": true },
+        { "text": "Frontalunterricht, Diktat, Klassenarbeit, Hausaufgaben", "korrekt": false },
+        { "text": "Simulator, Virtual Reality, App-Training, E-Learning", "korrekt": false },
+        { "text": "Belohnungssystem, Strafarbeit, Wettbewerb, Ranking", "korrekt": false }
+      ],
+      "erklaerung": "Die Methoden: praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und pädagogisches Puppenspiel - dazu Kooperationen (z. B. mit der Polizei). Didaktische Prinzipien dabei: Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität, Kontinuität."
+    },
+    {
+      "id": "mo-mc-8",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "frage": "Was gilt für das Rollstuhlfahren im Straßenverkehr?",
+      "optionen": [
+        { "text": "Auf dem Gehweg darf nur mit Schrittgeschwindigkeit gefahren werden, und Radwege dürfen nicht benutzt werden", "korrekt": true },
+        { "text": "Rollstühle müssen immer auf dem Radweg fahren", "korrekt": false },
+        { "text": "Auf dem Gehweg gilt die Höchstgeschwindigkeit von 30 km/h", "korrekt": false },
+        { "text": "Für Rollstühle gibt es keinerlei Vorschriften", "korrekt": false }
+      ],
+      "erklaerung": "Zu wissen ist: Mit Rollstühlen (Höchstgeschwindigkeit max. 30 km/h) darf auf dem Gehweg nur mit Schrittgeschwindigkeit gefahren werden; Radwege dürfen nicht benutzt werden; für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. Geübt werden u. a. Ausweich-, Dreh- und Wendebewegungen, Bordsteine und das Ein- und Aussteigen."
+    },
+    {
+      "id": "mo-mc-9",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "frage": "Welche Art der Verkehrsbeteiligung hatte zum Unfallzeitpunkt den größten Anteil?",
+      "optionen": [
+        { "text": "Zu Fuß (35,7 %)", "korrekt": true },
+        { "text": "Fahrrad (22,8 %)", "korrekt": false },
+        { "text": "Beförderung mit Behindertentransportwagen (27,4 %)", "korrekt": false },
+        { "text": "Rollstuhl (1,0 %)", "korrekt": false }
+      ],
+      "erklaerung": "Verkehrsbeteiligung zum Unfallzeitpunkt: zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, öffentliche Verkehrsmittel 6,6 %, Rollstuhl 1,0 %. Das Zufußgehen ist also der unfallträchtigste Bereich - ein Argument für gezielte Fußgängerschulung."
+    },
+    {
+      "id": "mo-mc-10",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "frage": "Welche Gefahr gehört zur Vorbereitung auf den ÖPNV?",
+      "optionen": [
+        { "text": "Eiliges zum Bus Laufen, ohne auf den Straßenverkehr zu achten", "korrekt": true },
+        { "text": "Falsches Linksabbiegen mit dem Fahrrad", "korrekt": false },
+        { "text": "Benutzung des Radwegs mit dem Rollstuhl", "korrekt": false },
+        { "text": "Missachtung der Handyverbotszone im Klassenraum", "korrekt": false }
+      ],
+      "erklaerung": "ÖPNV-Gefahren: Anfahren und Abbremsen der Busse/Bahnen (Festhalten üben), eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten, Missachtung des Verkehrs beim Warten bzw. zu dichtes Stehen an der Straße. Lernziele: Orientierung an der Haltestelle, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg."
+    },
+    {
+      "id": "mo-mc-11",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "frage": "Welche Rahmenbedingungen unterstützen die Mobilität von Menschen im SGE im öffentlichen Raum?",
+      "optionen": [
+        { "text": "Einfache Schriftzüge, Bildzeichen, Symbole, Farben und ein individueller Netzplan in verschiedenen Komplexitätsgraden", "korrekt": true },
+        { "text": "Möglichst komplexe Fahrpläne mit vielen Fußnoten", "korrekt": false },
+        { "text": "Ausschließlich akustische Durchsagen in schneller Sprache", "korrekt": false },
+        { "text": "Verzicht auf jede Beschilderung", "korrekt": false }
+      ],
+      "erklaerung": "Rahmenbedingungen: Bewusstsein in der Öffentlichkeit schaffen, Barrieren erkennen und Barrierefreiheit mitdenken, klare Hinweise, einfache Schriftzüge, aktuelle/dynamische Informationen, Bildzeichen, Symbole, Farben, ein individueller Netzplan (verschiedene Komplexitätsgrade) und die allgemeine Erreichbarkeit verschiedener Orte erhöhen."
+    }
+  ],
+  "frei": [
+    {
+      "id": "mo-f-1",
+      "afb": 1,
+      "frage": "Benennen Sie 5 Mobilitätskompetenzen nach Stöppler.",
+      "stichpunkte": [
+        "Visuelle Wahrnehmung",
+        "Auditive Wahrnehmung",
+        "Motorik",
+        "Reaktion",
+        "Aufmerksamkeit",
+        "Weitere: Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition, Interaktion"
+      ],
+      "muster": "Fünf Mobilitätskompetenzen nach Stöppler sind die visuelle Wahrnehmung, die auditive Wahrnehmung, die Motorik, die Reaktion und die sozialen Kompetenzen. Daneben gehören auch Aufmerksamkeit, Gedächtnis, Kommunikation, Kognition und Interaktion dazu.",
+      "tipp": "Original-Beispielaufgabe der Dozentin! Insgesamt sind es zehn - präge dir mindestens sieben ein, dann hast du Puffer."
+    },
+    {
+      "id": "mo-f-2",
+      "afb": 1,
+      "frage": "Fassen Sie die wesentlichen Mobilitätsbehinderungen zusammen, auf die Menschen im Bereich GE im Alltag stoßen können.",
+      "stichpunkte": [
+        "Sensorisch: Blindheit, Gehörlosigkeit",
+        "Körperlich: Körperbehinderung, vorübergehende Unfallfolgen, Alter",
+        "Kognitiv/psychisch: Lernschwierigkeiten, psychische Behinderung, fehlende Ortskenntnis",
+        "Umfeld/strukturell: Einstellung und Verhalten Anderer, fehlende Mobilitätsbildung, Reisebehinderung",
+        "Konsequenz: geringeres Mobilitätsniveau, Angewiesensein auf Fahrdienste, Begleitung, Assistenz -> Abhängigkeit"
+      ],
+      "muster": "Menschen im Bereich GE können im Alltag auf vielfältige Mobilitätsbehinderungen stoßen: auf sensorische wie Blindheit und Gehörlosigkeit, auf körperliche wie eine Körperbehinderung, vorübergehende Unfallfolgen oder das Alter, auf kognitive und psychische wie Lernschwierigkeiten, eine psychische Behinderung oder fehlende Ortskenntnis sowie auf Barrieren im Umfeld wie die Einstellung und das Verhalten anderer Menschen, eine Reisebehinderung und fehlende Mobilitätsbildung. In der Folge haben sie ein deutlich geringeres Mobilitätsniveau und sind häufig auf Fahrdienste, Begleitung und Assistenz angewiesen.",
+      "tipp": "Original-Beispielaufgabe. Trick zum Merken: in vier Gruppen denken (Sinne, Körper, Kognition/Psyche, Umfeld) statt zehn Einzelbegriffe."
+    },
+    {
+      "id": "mo-f-3",
+      "afb": 2,
+      "frage": "Ordnen Sie verschiedene Unterrichtsmaßnahmen den jeweiligen Mobilitätskompetenzen zu.",
+      "stichpunkte": [
+        "Auditive Wahrnehmung: Geräusche-Gruppen, Geräuscheraten, Schiffe im Nebel (Ziele: Verkehrsgeräusche erkennen/zuordnen/differenzieren, lokalisieren, Entfernungshören)",
+        "Motorik & Reaktion: Feuer-Wasser-Luft, Gleichgewichtsspiel, Pappdeckel (Ziele: Gleichgewicht, Geschwindigkeiten wechseln, Bewegungs- und Handlungsunterbrechung, an bestimmten Stellen anhalten)",
+        "Kommunikation & soziale Kompetenz: Pantomime der Gefühle, Was fühlst du?, Zublinzeln (Ziele: Gefühle erkennen, Handlungsabsichten erschließen, Perspektivenübernahme und Empathie)",
+        "Visuelle Wahrnehmung: Wer fehlt?, Laufen-Stoppen, Verkehrszeichen-Puzzle, Zuzwinkern (Ziele: Farbensehen, Symbole unterscheiden, Raumbewusstsein, Geschwindigkeitswahrnehmung)",
+        "Wichtig: Maßnahme immer mit dem Ziel der Kompetenz begründen, nicht nur nennen"
+      ],
+      "muster": "Der auditiven Wahrnehmung lassen sich Spiele wie Geräuscheraten oder Schiffe im Nebel zuordnen, denn sie üben das Erkennen, Differenzieren und Lokalisieren von Geräuschen sowie das Entfernungshören. Der Motorik und Reaktion dienen Bewegungsspiele wie Feuer-Wasser-Luft oder Gleichgewichtsspiele, weil sie Gleichgewicht halten, Geschwindigkeiten wechseln und das Unterbrechen von Bewegungen trainieren - alles nötig, um etwa am Bordstein anzuhalten. Der Kommunikation und sozialen Kompetenz sind Übungen wie die Pantomime der Gefühle zuzuordnen, da sie das Erkennen eigener und fremder Gefühle, das Erschließen von Handlungsabsichten und die Perspektivenübernahme im Straßenverkehr fördern. Der visuellen Wahrnehmung dienen Spiele wie Wer fehlt?, Laufen-Stoppen oder ein Verkehrszeichen-Puzzle, die Formen- und Symbolunterscheidung, Raumbewusstsein und Geschwindigkeitswahrnehmung üben.",
+      "tipp": "Original-Beispielaufgabe (AFB II). Der Punkt kommt aus der Begründung: Maßnahme nennen UND sagen, welches Ziel der Kompetenz sie fördert."
+    },
+    {
+      "id": "mo-f-4",
+      "afb": 2,
+      "frage": "Vergleichen Sie die Verkehrsmittel in der Alltagsmobilität im Jahre 2002 und 2023.",
+      "stichpunkte": [
+        "Achtung: Die konkreten Zahlen dieser Folie stehen nicht in deinen Notizen - schau sie dir unbedingt noch einmal in den Vorlesungsfolien an",
+        "Vergleichs-Baustein, der sicher belegt ist: Verkehrsbeteiligung zum Unfallzeitpunkt - zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, ÖPNV 6,6 %, Rollstuhl 1,0 %",
+        "Sprachmuster für Vergleichsaufgaben: erst Gemeinsamkeiten, dann Unterschiede, dann kurze Deutung (z. B. was Veränderungen für Selbstständigkeit und Teilhabe bedeuten)",
+        "AFB III daran anschließend: Diskutieren, was das für Personen im GE bedeutet (Abhängigkeit von Bringdiensten vs. eigenständige Mobilität)"
+      ],
+      "muster": "Für diese Original-Beispielaufgabe fehlen in deinen Notizen die konkreten Zahlen der Folie zur Alltagsmobilität 2002/2023 - die musst du dir noch einmal aus den Vorlesungsfolien holen. Das Antwortmuster für Vergleichen-Aufgaben bleibt gleich: zuerst benennen, welche Verkehrsmittel in beiden Jahren eine Rolle spielen, dann die Verschiebungen zwischen 2002 und 2023 herausarbeiten und abschließend kurz deuten, was diese Entwicklung für die Alltagsmobilität von Menschen im GE bedeutet - etwa im Hinblick auf eigenständige Wege versus die Beförderung durch Fahrdienste.",
+      "tipp": "Ehrlicher Hinweis statt erfundener Zahlen: Diese eine Folie bitte im Original nachschlagen. Die Vergleichs-Struktur (Gemeinsamkeiten, Unterschiede, Deutung) kannst du hier trotzdem üben."
+    },
+    {
+      "id": "mo-f-5",
+      "afb": 3,
+      "frage": "Diskutieren Sie, was ein geringes eigenständiges Mobilitätsniveau für Personen im GE bedeutet.",
+      "stichpunkte": [
+        "Ausgangslage: deutlich geringeres Mobilitätsniveau; von Kita bis Arbeitsleben angewiesen auf spezielle Fahrdienste, Begleitungen, Assistenzen -> Abhängigkeit",
+        "Folgen: eingeschränkte Teilhabe an Arbeit, Freizeit, sozialen Kontakten; weniger Selbstbestimmung im Alltag; Mobilität ist Grundvoraussetzung für Teilhabe",
+        "Gegenperspektive: Fahrdienste bieten Sicherheit und ermöglichen überhaupt Wege - sie sind nicht per se schlecht",
+        "Pädagogische Konsequenz: Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule (RLP: Schulweg selbstständig bewältigen); Methoden vom Schonraum bis zur Ernstsituation",
+        "Strukturelle Konsequenz: Rahmenbedingungen verbessern (Barrierefreiheit, einfache Symbole, individueller Netzplan, Bewusstsein in der Öffentlichkeit)",
+        "Fazit: Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und barrierefreie Umwelt veränderbar"
+      ],
+      "muster": "Ein geringes eigenständiges Mobilitätsniveau bedeutet für Personen im GE vor allem Abhängigkeit: Bereits von der Kita über die Schule bis ins Arbeitsleben sind sie auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Da Mobilität Grundvoraussetzung für Teilhabe ist, schränkt das den Zugang zu Arbeit, Freizeit und sozialen Kontakten ein und steht im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Andererseits bieten Fahrdienste Sicherheit und ermöglichen überhaupt erst viele Wege - sie pauschal abzuschaffen wäre keine Lösung. Die pädagogische Konsequenz ist eine systematische Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule, die vom Schonraum bis zur Ernstsituation schrittweise eigenständige Mobilität aufbaut, wie es der Rahmenlehrplan mit dem selbstständig bewältigten Schulweg anstrebt. Ergänzend müssen die Rahmenbedingungen barrierefreier werden - einfache Schriftzüge, Symbole, individuelle Netzpläne und ein öffentliches Bewusstsein. Insgesamt gilt: Die Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und eine zugängliche Umwelt veränderbar.",
+      "tipp": "Entspricht der Original-AFB-III-Aufgabe. Stark wird die Antwort durch die doppelte Konsequenz: pädagogisch (Erziehung) UND strukturell (Barrierefreiheit)."
+    }
+  ]
+}

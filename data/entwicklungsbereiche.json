@@ -1,0 +1,163 @@
+{
+  "id": "entwicklungsbereiche",
+  "titel": "Entwicklungsbereiche & dualer Unterricht",
+  "vorlesung": "V3",
+  "leitfrage": "Was sind die Entwicklungsbereiche im SGE und wie verschränkt dualer Unterricht Fach- und Entwicklungsorientierung?",
+  "unterthemen": ["Die 4 Entwicklungsbereiche (KMK)", "Entwicklungsförderung in der Schule", "Dualer Unterricht"],
+  "mc": [
+    {
+      "id": "eb-mc-1",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
+      "frage": "Welche vier Entwicklungsbereiche im SGE nennt die KMK (2021)?",
+      "optionen": [
+        { "text": "Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung", "korrekt": true },
+        { "text": "Lesen, Schreiben, Rechnen, Sport", "korrekt": false },
+        { "text": "Sehen, Hören, Riechen, Tasten", "korrekt": false },
+        { "text": "Disziplin, Ordnung, Fleiß, Pünktlichkeit", "korrekt": false }
+      ],
+      "erklaerung": "Die vier Entwicklungsbereiche nach KMK (2021, 6 ff.) sind Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung. Diese vier solltest du auswendig können - das war eine der Beispielaufgaben."
+    },
+    {
+      "id": "eb-mc-2",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
+      "frage": "Unterstützung der Merkfähigkeit, handlungsplanendes Denken, Problemlösen und Entfaltung von Kreativität gehören zu welchem Entwicklungsbereich?",
+      "optionen": [
+        { "text": "Kognition", "korrekt": true },
+        { "text": "Kommunikation", "korrekt": false },
+        { "text": "Motorik und Wahrnehmung", "korrekt": false },
+        { "text": "Emotionale und soziale Entwicklung", "korrekt": false }
+      ],
+      "erklaerung": "Zum Bereich Kognition gehören: Unterstützung der Merkfähigkeit, Entwicklung des handlungsplanenden Denkens, Erkennen und Bewerten von Analogien und Zusammenhängen, Problemlösen und Entfaltung von Kreativität."
+    },
+    {
+      "id": "eb-mc-3",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
+      "frage": "Wortschatzerweiterung einschließlich Begriffsbildung und die Entwicklung eines sprachlichen Selbstkonzeptes gehören zu welchem Entwicklungsbereich?",
+      "optionen": [
+        { "text": "Kommunikation", "korrekt": true },
+        { "text": "Kognition", "korrekt": false },
+        { "text": "Emotionale und soziale Entwicklung", "korrekt": false },
+        { "text": "Motorik und Wahrnehmung", "korrekt": false }
+      ],
+      "erklaerung": "Zum Bereich Kommunikation gehören: Erweiterung der individuellen Sprechfähigkeit, des Wortschatzes einschließlich Begriffsbildung, des Sprachverständnisses und die Entwicklung eines sprachlichen Selbstkonzeptes. Kommunikationsformen: basal, nonverbal, mündlich, schriftlich."
+    },
+    {
+      "id": "eb-mc-4",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
+      "frage": "Förderung der emotionalen Stabilität, des Sozialverhaltens und die Befähigung, soziale Beziehungen einzugehen und zu gestalten - welcher Bereich?",
+      "optionen": [
+        { "text": "Emotionale und soziale Entwicklung", "korrekt": true },
+        { "text": "Motorik und Wahrnehmung", "korrekt": false },
+        { "text": "Kommunikation", "korrekt": false },
+        { "text": "Kognition", "korrekt": false }
+      ],
+      "erklaerung": "Der Bereich emotionale und soziale Entwicklung umfasst die Förderung der emotionalen Stabilität, des Sozialverhaltens, der Lern- und Arbeitsbereitschaft sowie die Befähigung, soziale Beziehungen einzugehen und zu gestalten."
+    },
+    {
+      "id": "eb-mc-5",
+      "unterthema": "Entwicklungsförderung in der Schule",
+      "frage": "Wie war die Geistigbehindertenpädagogik disziplingeschichtlich zunächst ausgerichtet - und was kam in den letzten Jahren dazu?",
+      "optionen": [
+        { "text": "Erst entwicklungsbezogen und lebenspraktisch dominierend, in den letzten Jahren zunehmende Fachorientierung", "korrekt": true },
+        { "text": "Erst rein fachorientiert, später nur noch lebenspraktisch", "korrekt": false },
+        { "text": "Von Anfang an ausschließlich fachorientiert", "korrekt": false },
+        { "text": "Die Ausrichtung hat sich nie verändert", "korrekt": false }
+      ],
+      "erklaerung": "Ab den Anfängen dominierte eine entwicklungsbezogene und lebenspraktische Ausrichtung (Lindmeier/Lindmeier 2019), erst in den letzten Jahren kam eine zunehmende Fachorientierung dazu (Ratz 2010, Musberg 2019). Bei beidem besteht die Gefahr der Überbetonung - gefragt ist eine individuell angemessene Balance (Jöhnck 2024)."
+    },
+    {
+      "id": "eb-mc-6",
+      "unterthema": "Dualer Unterricht",
+      "frage": "Was ist dualer Unterricht?",
+      "optionen": [
+        { "text": "Unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit der Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft", "korrekt": true },
+        { "text": "Unterricht, der abwechselnd in Schule und Betrieb stattfindet", "korrekt": false },
+        { "text": "Unterricht mit genau zwei Lehrkräften", "korrekt": false },
+        { "text": "Zwei Fächer werden im selben Raum parallel unterrichtet", "korrekt": false }
+      ],
+      "erklaerung": "Im dualen Unterricht wird das unterrichtsfachliche Lernen unterrichtsimmanent sowie systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023, 65). Der Name hat nichts mit der dualen Berufsausbildung zu tun - beliebter Verwechslungs-Trick."
+    },
+    {
+      "id": "eb-mc-7",
+      "unterthema": "Dualer Unterricht",
+      "frage": "Welche gehört zu den Grundformen dualen Unterrichts nach Jöhnck/Baumann (2023)?",
+      "optionen": [
+        { "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht", "korrekt": true },
+        { "text": "Wöchentlicher Betriebspraktikumstag", "korrekt": false },
+        { "text": "Verpflichtender Frontalunterricht am Vormittag", "korrekt": false },
+        { "text": "Trennung von Fach- und Entwicklungszielen auf verschiedene Schulen", "korrekt": false }
+      ],
+      "erklaerung": "Die fünf Grundformen: solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht, lerngruppenbezogene Umsetzung individueller Entwicklungsziele, (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen, intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt, parallele Verwirklichung mehrerer (verwandter) Entwicklungsschwerpunkte."
+    },
+    {
+      "id": "eb-mc-8",
+      "unterthema": "Entwicklungsförderung in der Schule",
+      "frage": "Wo kann Entwicklung in der Schule außerhalb des regulären Unterrichts unterstützt werden?",
+      "optionen": [
+        { "text": "U. a. in Essenszeiten, Pausen und Pflegesituationen, über Elternarbeit, Patenschaften, Therapien und Trainingsprogramme", "korrekt": true },
+        { "text": "Ausschließlich im Klassenraum während der Unterrichtsstunden", "korrekt": false },
+        { "text": "Nur in externen Therapiezentren, nie in der Schule", "korrekt": false },
+        { "text": "Entwicklungsförderung ist keine Aufgabe der Schule", "korrekt": false }
+      ],
+      "erklaerung": "Entwicklung kann u. a. über gute pädagogische Beziehungen, Elternarbeit, Schüler:innenpatenschaften, in Essenszeiten und Pausen, in Pflegesituationen, über Therapien und wissenschaftlich evaluierte Trainingsprogramme gefördert werden. Zentraler Fokus sollte aber auch der reguläre (Fach-)Unterricht sein."
+    }
+  ],
+  "frei": [
+    {
+      "id": "eb-f-1",
+      "afb": 1,
+      "frage": "Nennen Sie die 4 Entwicklungsbereiche im SGE.",
+      "stichpunkte": [
+        "Kognition",
+        "Kommunikation",
+        "Emotionale und soziale Entwicklung",
+        "Motorik und Wahrnehmung",
+        "Quelle: KMK 2021, 6 ff."
+      ],
+      "muster": "Die vier Entwicklungsbereiche im SGE nach KMK (2021) sind Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung.",
+      "tipp": "Original-Beispielaufgabe der Dozentin - die vier Begriffe müssen sitzen. Eselsbrücke: KoKo-EMo (Kognition, Kommunikation, Emotional-sozial, Motorik-Wahrnehmung)."
+    },
+    {
+      "id": "eb-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie das Konzept des dualen Unterrichts mithilfe eines Beispiels.",
+      "stichpunkte": [
+        "Definition: unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023, 65)",
+        "Ausgangspunkt: unterrichtsfachbezogene UND entwicklungsbezogene Bedarfe und Potenziale der Schüler:innen",
+        "Beispiel aus der Vorlesung: Förderung des Kooperationsverhaltens im Sachunterricht beim Thema Der Weg der Milch (Häußler) - fachliches Ziel und Entwicklungsziel (soziales Handeln) laufen zusammen",
+        "Alternatives Beispiel: Kommunikationstafel im Kunstunterricht zur Kommunikationsförderung, oder Arbeitsplatzorganisation im Deutschunterricht",
+        "Einordnung: wertvolle konzeptionelle Ressource, aber empirisch fundierte Konzeptualisierung ist noch weitgehend ein Desiderat - insbesondere im SGE"
+      ],
+      "muster": "Dualer Unterricht bedeutet, dass das unterrichtsfachliche Lernen unterrichtsimmanent und systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt wird (Jöhnck/Baumann 2023). Ausgangspunkt sind sowohl die fachbezogenen als auch die entwicklungsbezogenen Bedarfe und Potenziale der Schüler:innen. Ein Beispiel: Im Sachunterricht zum Thema Der Weg der Milch wird zugleich das Kooperationsverhalten gefördert - die Klasse erarbeitet das Fachthema in Gruppenarbeit mit vereinbarten Gesprächsregeln, sodass das fachliche Lernen und die Förderung im Entwicklungsbereich emotionale und soziale Entwicklung systematisch zusammenlaufen. Dualer Unterricht ist damit eine wertvolle konzeptionelle Ressource im SGE, auch wenn eine systematische, empirisch fundierte Konzeptualisierung noch weitgehend aussteht.",
+      "tipp": "Original-Beispielaufgabe. Möglichst anschaulich heißt laut Dozentin: Benennung, Beschreibung und Erläuterung anhand eines Beispiels."
+    },
+    {
+      "id": "eb-f-3",
+      "afb": 3,
+      "frage": "Diskutieren Sie folgende These: Die fachlichen Inhalte eines Faches sind weniger relevant als die der Entwicklungsförderung.",
+      "stichpunkte": [
+        "Dafür: Entwicklungsbereiche (Wahrnehmung, Sprache, Denken, Handeln) sind Grundlage für selbstständige und selbstbestimmte Lebensführung; disziplingeschichtlich war die entwicklungsbezogene, lebenspraktische Ausrichtung lange dominierend",
+        "Dafür: Ohne Entwicklungsgrundlagen (z. B. Kommunikation, Aufmerksamkeit) ist fachliches Lernen kaum zugänglich",
+        "Dagegen: Feuser - jedes Kind hat das Recht, alles Wichtige über die Welt zu erfahren; allgemeine Bildungsinhalte gehören allen Schüler:innen",
+        "Dagegen: zunehmende Fachorientierung ist eine bewusste Korrektur; reine Entwicklungsförderung ohne Fachinhalte verkürzt Bildung",
+        "Synthese: keine Rangfolge, sondern Verschränkung - genau dafür steht der duale Unterricht (Fach- UND Entwicklungsorientierung in Balance, individuell angemessen)",
+        "Bewertung mit Bezug auf Gefahr der Überbetonung beider Seiten (Jöhnck 2024)"
+      ],
+      "muster": "Für die These spricht, dass die Entwicklungsbereiche die Grundlage jeder selbstständigen und selbstbestimmten Lebensführung bilden: Ohne Fortschritte etwa in Kommunikation oder Aufmerksamkeit bleibt auch fachliches Lernen schwer zugänglich, und disziplingeschichtlich war die entwicklungsbezogene, lebenspraktische Ausrichtung im SGE lange dominierend. Gegen die These spricht das Bildungsverständnis Feusers: Jedes Kind hat das Recht, alles Wichtige über die Welt zu erfahren - fachliche Inhalte sind also kein Luxus, sondern Teil des Bildungsanspruchs, und die zunehmende Fachorientierung der letzten Jahre korrigiert bewusst eine einseitige Verkürzung. In der Bewertung halte ich die These für zu pauschal: Es geht nicht um eine Rangfolge, sondern um die Verschränkung beider Anliegen, wie sie das Konzept des dualen Unterrichts beschreibt. Sowohl bei der Fach- als auch bei der Entwicklungsorientierung besteht die Gefahr der Überbetonung; entscheidend ist eine individuell angemessene Balance.",
+      "tipp": "Original-Beispielaufgabe. Merkformel für die Diskussion: beide Seiten würdigen, dann mit dem dualen Unterricht als Synthese abschließen."
+    },
+    {
+      "id": "eb-f-4",
+      "afb": 2,
+      "frage": "Erläutern Sie zwei Entwicklungsbereiche nach KMK (2021) mit ihren jeweiligen Förderschwerpunkten.",
+      "stichpunkte": [
+        "Kognition: Merkfähigkeit, handlungsplanendes Denken, Analogien und Zusammenhänge erkennen und bewerten, Problemlösen, Kreativität",
+        "Kommunikation: Sprechfähigkeit, Wortschatz und Begriffsbildung, Sprachverständnis, sprachliches Selbstkonzept; Formen: basal, nonverbal, mündlich, schriftlich",
+        "Emotionale und soziale Entwicklung: emotionale Stabilität, Sozialverhalten, Lern- und Arbeitsbereitschaft, soziale Beziehungen eingehen und gestalten",
+        "Motorik und Wahrnehmung: körperliche Ausdrucksmöglichkeiten, Körpererleben, Eigenaktivität und Bewegungsmotivation, Grob- und Feinmotorik, Bewegungsplanung und -steuerung, Mund- und Gesichtsmotorik"
+      ],
+      "muster": "Der Entwicklungsbereich Kognition umfasst die Unterstützung der Merkfähigkeit, die Entwicklung des handlungsplanenden Denkens, das Erkennen und Bewerten von Analogien und Zusammenhängen sowie Problemlösen und die Entfaltung von Kreativität. Der Bereich Kommunikation zielt auf die Erweiterung der individuellen Sprechfähigkeit, des Wortschatzes einschließlich der Begriffsbildung und des Sprachverständnisses sowie auf die Entwicklung eines sprachlichen Selbstkonzeptes; dabei zählen alle Kommunikationsformen - basal, nonverbal, mündlich und schriftlich.",
+      "tipp": "Zwei Bereiche in der Tiefe können reicht meist - aber alle vier Überschriften musst du nennen können."
+    }
+  ]
+}

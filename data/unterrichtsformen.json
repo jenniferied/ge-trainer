@@ -1,0 +1,199 @@
+{
+  "id": "unterrichtsformen",
+  "titel": "Unterrichtsformen: offen & geschlossen",
+  "vorlesung": "V5",
+  "leitfrage": "Welche Potentiale kennzeichnen offene und geschlossene Unterrichtsformen und wie lassen sie sich methodisch umsetzen?",
+  "unterthemen": ["Offener Unterricht & Dimensionen", "Methoden offenen Unterrichts", "Kritik & Vorteile", "Geschlossener Unterricht & Lehrgang"],
+  "mc": [
+    {
+      "id": "uf-mc-1",
+      "unterthema": "Offener Unterricht & Dimensionen",
+      "frage": "Welche fünf Dimensionen der Öffnung von Unterricht unterscheidet Peschel (2002)?",
+      "optionen": [
+        { "text": "Organisatorisch, methodisch, inhaltlich, sozial, persönlich", "korrekt": true },
+        { "text": "Räumlich, zeitlich, finanziell, digital, analog", "korrekt": false },
+        { "text": "Kognitiv, emotional, motorisch, sozial, sprachlich", "korrekt": false },
+        { "text": "Planung, Durchführung, Kontrolle, Reflexion, Benotung", "korrekt": false }
+      ],
+      "erklaerung": "Peschel (2002) unterscheidet die organisatorische, methodische, inhaltliche, soziale und persönliche Dimension der Öffnung. Lernende bestimmen dabei selbst, wann, wo, mit wem, wie und woran sie arbeiten."
+    },
+    {
+      "id": "uf-mc-2",
+      "unterthema": "Offener Unterricht & Dimensionen",
+      "frage": "Was ist nach Fischer (2008) das entscheidende Kriterium für die Offenheit von Unterricht?",
+      "optionen": [
+        { "text": "Der Grad der Mit- bzw. Selbstbestimmung der Schüler:innen", "korrekt": true },
+        { "text": "Die Anzahl der verwendeten Materialien", "korrekt": false },
+        { "text": "Die Größe des Klassenraums", "korrekt": false },
+        { "text": "Der Verzicht auf jede Lehrperson", "korrekt": false }
+      ],
+      "erklaerung": "Der Grad der Mit- bzw. Selbstbestimmung wird zum entscheidenden Kriterium: Je freier die Schüler entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden (Fischer 2008, 155)."
+    },
+    {
+      "id": "uf-mc-3",
+      "unterthema": "Methoden offenen Unterrichts",
+      "frage": "Lernstraße, Übungszirkel, Lernparcours und Lernzirkel sind Synonyme für ...",
+      "optionen": [
+        { "text": "das Lernen an Stationen", "korrekt": true },
+        { "text": "die Freiarbeit", "korrekt": false },
+        { "text": "den Lehrgang", "korrekt": false },
+        { "text": "die Wochenplanarbeit", "korrekt": false }
+      ],
+      "erklaerung": "Lernen an Stationen ist auf ein im Lehrplan festgelegtes Thema konzentriert, in Teilthemen gegliedert, und ein Laufzettel dient als Orientierung. Synonyme: Lernstraße, Übungszirkel, Lernparcours, Lernzirkel."
+    },
+    {
+      "id": "uf-mc-4",
+      "unterthema": "Methoden offenen Unterrichts",
+      "frage": "Was ist das Alleinstellungsmerkmal der Werkstattarbeit?",
+      "optionen": [
+        { "text": "Schüler:innen sind Expert:innen (Chefs) für je ein Angebot: Sie helfen, nehmen Ergebnisse entgegen, korrigieren und verwalten das Material", "korrekt": true },
+        { "text": "Es gibt keinerlei Aufgabenstellung", "korrekt": false },
+        { "text": "Die Lehrkraft demonstriert jede Aufgabe frontal", "korrekt": false },
+        { "text": "Alle arbeiten immer gleichzeitig an derselben Aufgabe", "korrekt": false }
+      ],
+      "erklaerung": "Das Alleinstellungsmerkmal: Ein:e Schüler:in ist für ein Angebot Expert:in und kann bei Schwierigkeiten helfen, nimmt Ergebnisse entgegen und korrigiert bei Bedarf, mahnt bei obligatorischen Angeboten und beschafft und verwaltet das Material. Lerntheoretisch basiert Werkstattarbeit auf einem konstruktivistischen Verständnis von Lernen."
+    },
+    {
+      "id": "uf-mc-5",
+      "unterthema": "Methoden offenen Unterrichts",
+      "frage": "In welcher Reihenfolge werden offene Unterrichtsformen sinnvoll eingeführt?",
+      "optionen": [
+        { "text": "Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit", "korrekt": true },
+        { "text": "Freiarbeit sofort ab dem ersten Schultag, dann Tagesplan", "korrekt": false },
+        { "text": "Wochenplan, dann Tagesplan, dann Stationenarbeit", "korrekt": false },
+        { "text": "Die Reihenfolge ist beliebig, es gibt keine Empfehlung", "korrekt": false }
+      ],
+      "erklaerung": "Die Abfolge steigert die Anforderungen an Selbststeuerung schrittweise: Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit. Die erhöhte Aufgabenzahl beim Wochenplan stellt höhere Anforderungen an die Zeiteinteilung."
+    },
+    {
+      "id": "uf-mc-6",
+      "unterthema": "Kritik & Vorteile",
+      "frage": "Welcher Kritikpunkt am offenen Unterricht stammt aus der Effektivitätsforschung?",
+      "optionen": [
+        { "text": "Die Effektivität des kognitiven Lernens wird bezweifelt - mäßige Effektstärke von d = 0.45", "korrekt": true },
+        { "text": "Offener Unterricht ist grundsätzlich verboten", "korrekt": false },
+        { "text": "Offener Unterricht führt immer zu besseren Noten", "korrekt": false },
+        { "text": "Es gibt keine Forschung zu offenem Unterricht", "korrekt": false }
+      ],
+      "erklaerung": "Kritikpunkte: weiterhin viele Vorgaben durch die Lehrperson, methodische Bausteine als maskierte Übungsphasen, Schüler:innen im FSgE werden den Anforderungen nur schwer gerecht, Vermeidung schwieriger Aufgaben und Überschätzung eigener Fähigkeiten bei freier Wahl, mäßige Effektstärke (d = 0.45), offene Materialangebote können ablenken."
+    },
+    {
+      "id": "uf-mc-7",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "frage": "Welche vier zentralen Momente kennzeichnen geschlossene Lehr-Lernformen?",
+      "optionen": [
+        { "text": "Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung, Instruktion", "korrekt": true },
+        { "text": "Spontanität, Offenheit, Freiheit, Selbstbestimmung", "korrekt": false },
+        { "text": "Projekt, Präsentation, Portfolio, Peer-Feedback", "korrekt": false },
+        { "text": "Belohnung, Wiederholung, Prüfung, Benotung", "korrekt": false }
+      ],
+      "erklaerung": "Geschlossene Lehr-Lernformen kennzeichnen Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. In der Gegenüberstellung: frontal, formell, lehrerzentriert, rezeptiv, kleinschrittig - während offener Unterricht differenzierend, informell, schülerzentriert, aktiv und ganzheitlich ist."
+    },
+    {
+      "id": "uf-mc-8",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "frage": "Welche Grundregel für das Üben ist richtig?",
+      "optionen": [
+        { "text": "Tägliches Üben für 20-30 Minuten ist viel effektiver als geblockte Übungsphasen", "korrekt": true },
+        { "text": "Einmal pro Monat 5 Stunden am Stück üben ist am effektivsten", "korrekt": false },
+        { "text": "Üben sollte man nur, wenn man Lust dazu hat", "korrekt": false },
+        { "text": "Was geübt wird, muss vorher nicht verstanden sein", "korrekt": false }
+      ],
+      "erklaerung": "Grundregeln: Üben muss zur Gewohnheit werden; täglich 20-30 Minuten ist effektiver als geblockt; Üben ist keine Frage des Interesses, sondern eine Notwendigkeit; was sitzen soll, muss überlernt werden; was geübt wird, muss vorher verstanden sein; Fehler sofort erkennen und beheben."
+    },
+    {
+      "id": "uf-mc-9",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "frage": "In welcher Reihenfolge laufen die vier Phasen eines Lehrgangs ab?",
+      "optionen": [
+        { "text": "Eröffnungs- und Informationsphase, Demonstrationsphase, Übungsphase, Anwendungsphase", "korrekt": true },
+        { "text": "Übungsphase, Demonstrationsphase, Anwendungsphase, Eröffnungsphase", "korrekt": false },
+        { "text": "Anwendungsphase, Übungsphase, Demonstrationsphase, Informationsphase", "korrekt": false },
+        { "text": "Demonstrationsphase, Eröffnungsphase, Anwendungsphase, Übungsphase", "korrekt": false }
+      ],
+      "erklaerung": "Ein Lehrgang läuft ab in: 1. Eröffnungs- und Informationsphase (Ziele, Inhalte, Vorgehen vorstellen), 2. Demonstrationsphase (Lösungshandlung wird vorgemacht), 3. Übungsphase (schrittweises Nachvollziehen und Vertiefen) und 4. Anwendungsphase (Anwendung unter neuen Bedingungen, eigenständige Reflexion)."
+    },
+    {
+      "id": "uf-mc-10",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "frage": "Bei welcher Lehrgangsform kehrt ein Stoffelement auf zunehmend komplexerem Niveau wieder?",
+      "optionen": [
+        { "text": "Spiralcurriculum", "korrekt": true },
+        { "text": "Additiver Lehrgang", "korrekt": false },
+        { "text": "Genetische Form", "korrekt": false },
+        { "text": "Konzentrisch-erweiternde Form", "korrekt": false }
+      ],
+      "erklaerung": "Beim Spiralcurriculum kehrt ein Stoffelement in ausgefalteten Stufen wieder (z. B. Fertigungstechniken auf zunehmend komplexerem Niveau). Additiv = Stoffe geordnet aneinandergereiht; genetisch = chronologisch-entwickelnde Darstellung; konzentrisch-erweiternd = vom Nahen zum Ferneren."
+    },
+    {
+      "id": "uf-mc-11",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "frage": "Für welche Schüler:innen sind strukturierte, lernzielorientierte, programmartige Ansätze laut Vorlesung unter anderem besonders relevant?",
+      "optionen": [
+        { "text": "Für Schüler:innen mit autistischem Verhalten", "korrekt": true },
+        { "text": "Für niemanden - sie gelten als überholt", "korrekt": false },
+        { "text": "Nur für hochbegabte Schüler:innen", "korrekt": false },
+        { "text": "Nur für Lehrkräfte in der Ausbildung", "korrekt": false }
+      ],
+      "erklaerung": "Trainingsprogramme und Übungseinheiten sind Ansätze mit therapeutischer Ausrichtung, geprägt durch starke Strukturierung und Lernzielorientierung - strukturierte, programmartige Ansätze u. a. für Schüler:innen mit autistischem Verhalten. Sie sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen aber in der Schule eine relevante Rolle."
+    }
+  ],
+  "frei": [
+    {
+      "id": "uf-f-1",
+      "afb": 1,
+      "frage": "Nennen Sie die fünf Dimensionen der Öffnung von Unterricht nach Peschel (2002).",
+      "stichpunkte": [
+        "Organisatorisch",
+        "Methodisch",
+        "Inhaltlich",
+        "Sozial",
+        "Persönlich",
+        "Dahinter: Lernende bestimmen selbst, wann, wo, mit wem, wie, mit welchem Zugang und an welchem Thema sie arbeiten"
+      ],
+      "muster": "Peschel (2002) unterscheidet fünf Dimensionen der Öffnung von Unterricht: die organisatorische, die methodische, die inhaltliche, die soziale und die persönliche Dimension. Je nach Dimension bestimmen die Lernenden selbst, wann, wo, mit wem, wie und an welchem Thema sie arbeiten.",
+      "tipp": "Merkhilfe: O-M-I-S-P. Wenn du dazu je ein Selbstbestimmungs-Beispiel nennen kannst (wann = organisatorisch, wie = methodisch, woran = inhaltlich, mit wem = sozial), bist du auch für AFB II gerüstet."
+    },
+    {
+      "id": "uf-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie den Ablauf eines Lehrgangs anhand der vier Phasen mit einem Beispiel.",
+      "stichpunkte": [
+        "Definition: Unterrichtsverfahren zur Vermittlung fachspezifischer Kenntnisse und Fertigkeiten; Aufbau folgt der Fachsystematik, meist in kleine Schritte untergliedert (Penning 2022); hohe Effizienz (Pitsch & Thümmel 2015a, 109); wird als Teil des handlungsorientierten Unterrichts betrachtet (ISB 2019)",
+        "1. Eröffnungs- und Informationsphase: Ziele, Inhalte, Ablauf und Qualitätskriterien vorstellen; offene Fragen klären",
+        "2. Demonstrationsphase: Lösungshandlung wird demonstriert (Lehrperson, Externe, kundige Schüler:innen oder Video-Tutorials)",
+        "3. Übungsphase: Lernende vollziehen die Handlung schrittweise nach und vertiefen sie; Lehrkraft hilft und beobachtet",
+        "4. Anwendungsphase: Anwendung unter neuen Bedingungen; eigenständige Reflexion und Bewertung, ergänzt durch Feedback der Lehrperson",
+        "Beispiel: Training des Zähneputzens (Richter 1980) oder Einführung in den Umgang mit Handwerkzeugen"
+      ],
+      "muster": "Ein Lehrgang ist ein Unterrichtsverfahren, bei dem die Vermittlung fachspezifischer Kenntnisse und Fertigkeiten im Vordergrund steht; der Aufbau orientiert sich an der Fachsystematik und wird meist in kleine Schritte untergliedert. Er verläuft in vier Phasen, zum Beispiel beim Erlernen des Zähneputzens: In der Eröffnungs- und Informationsphase werden Ziel und Ablauf besprochen, sodass die Lernenden wissen, worum es geht. In der Demonstrationsphase macht die Lehrperson das Zähneputzen Schritt für Schritt vor - denkbar sind auch Video-Tutorials. In der Übungsphase vollziehen die Schüler:innen die Handlung schrittweise nach, zunächst eng begleitet, dann zunehmend selbstständig. In der Anwendungsphase wird das Gelernte unter neuen Bedingungen angewendet, etwa im Wohntraining, und die Lernenden reflektieren die Qualität ihrer Ausführung selbst, ergänzt durch Rückmeldung der Lehrkraft.",
+      "tipp": "Die vier Phasen-Namen plus ein durchgängiges Beispiel - nicht vier verschiedene Beispiele mischen."
+    },
+    {
+      "id": "uf-f-3",
+      "afb": 3,
+      "frage": "Bewerten Sie die Potentiale offener und geschlossener Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung.",
+      "stichpunkte": [
+        "Potentiale offen: Entscheidungsprozesse und Wahlmöglichkeiten, Transfer des Auswahlverhaltens, alle Entwicklungsbereiche ansprechbar, Selbstkontrolle, Zeitplanung, Selbstvertrauen und Selbstwert, innere Differenzierung",
+        "Grenzen offen: viele Vorgaben bleiben, maskierte Übungsphasen, Schüler:innen im FSgE werden Anforderungen schwer gerecht, Vermeidung schwieriger Aufgaben, Überschätzung, mäßige Effektstärke d = 0.45, Ablenkung durch Materialangebote",
+        "Potentiale geschlossen: Lernzielorientierung, Elementarisierung/Reduktion, Strukturierung, Instruktion; effektiv beim Aufbau lebenspraktischer Kompetenzen (Training, Lehrgang); Lehrgang hocheffizient (Pitsch & Thümmel)",
+        "Grenzen geschlossen: lehrerzentriert, rezeptiv, einseitig kognitiv bzw. kleinschrittig; wenig Selbstbestimmung",
+        "Bewertung: kein Entweder-oder - schrittweise Öffnung (Tagesplan vor Wochenplan vor Freiarbeit), geschlossene Formen für Fertigkeitsaufbau, offene für Selbstbestimmung; Mischung je nach Lerngruppe und Ziel"
+      ],
+      "muster": "Offene Unterrichtsformen ermöglichen Entscheidungsprozesse und Wahlmöglichkeiten, sprechen alle Entwicklungsbereiche an, fördern Selbstkontrolle, Zeitplanung sowie Selbstvertrauen und setzen innere Differenzierung um. Ihre Grenzen im FSgE: Schüler:innen werden den hohen Anforderungen an Selbststeuerung teils nur schwer gerecht, wählen eher leichte Aufgaben oder überschätzen sich, und die Effektivität des kognitiven Lernens gilt mit einer Effektstärke von d = 0.45 als mäßig. Geschlossene Formen punkten mit Lernzielorientierung, Elementarisierung, Strukturierung und Instruktion; gerade beim Aufbau lebenspraktischer Fertigkeiten sind Trainings und Lehrgänge hocheffizient. Dafür bieten sie wenig Raum für Selbstbestimmung. In der Bewertung schließen sich beide nicht aus: Sinnvoll ist eine schrittweise Öffnung - vom Tagesplan über Stationenarbeit und Wochenplan zur Freiarbeit - kombiniert mit geschlossenen Phasen für den Fertigkeitsaufbau. Die Wahl hängt vom Ziel und von der Lerngruppe ab, nicht von einer grundsätzlichen Überlegenheit einer Form.",
+      "tipp": "Das ist die Leitfrage der Vorlesung - ideale Vorbereitung auf eine AFB-III-Aufgabe zu diesem Thema."
+    },
+    {
+      "id": "uf-f-4",
+      "afb": 2,
+      "frage": "Erläutern Sie die Aufgabenverteilung zwischen Lehrperson und Schüler:innen beim Stationenlernen.",
+      "stichpunkte": [
+        "Lehrperson: wählt Thema (orientiert an Lehrplan, Planung, Förderbedarf), zergliedert es in Teilthemen, konzipiert Zeitrahmen, legt Anzahl der Stationen fest (Pflicht- und freiwillige Stationen), erstellt Materialien, achtet auf Ausgewogenheit von Einzel-, Partner- und Gruppenarbeit, schafft Möglichkeiten der Eigenkontrolle",
+        "Schüler:innen: werden an Themenwahl und Zergliederung beteiligt, bestimmen selbst, wie lange sie an einzelnen Stationen arbeiten (individuelle Zeiteinteilung), wählen Reihenfolge, Material und Sozialform, arbeiten auf Grundlage ihrer Vorerfahrungen, beurteilen ihr Ergebnis selbst",
+        "Laufzettel dient als Orientierung; Ablauf: Anfangsgespräch, Rundgang, eigentliche Arbeit an den Stationen, Schlussgespräch (vgl. Fischer 2008, 157)"
+      ],
+      "muster": "Beim Stationenlernen wählt die Lehrperson in Orientierung am Lehrplan und am Förderbedarf das Thema, zergliedert es in Teilthemen, legt Zeitrahmen und Anzahl der Stationen fest - unterteilt in Pflicht- und freiwillige Stationen -, erstellt die Materialien, achtet auf eine Ausgewogenheit von Einzel-, Partner- und Gruppenarbeit und schafft möglichst Möglichkeiten der Eigenkontrolle. Die Schüler:innen werden im Rahmen ihrer Möglichkeiten an der Themenwahl beteiligt, bestimmen selbst, wie lange sie an den einzelnen Stationen arbeiten, legen die Reihenfolge der Bearbeitung fest, wählen Material und Sozialform und beurteilen ihr Ergebnis selbst. Der Ablauf gliedert sich in Anfangsgespräch, Rundgang, die eigentliche Arbeit an den Stationen und ein Schlussgespräch; ein Laufzettel dient als Orientierung.",
+      "tipp": "Die Pointe: Die Lehrkraft strukturiert den Rahmen, die Schüler:innen steuern innerhalb des Rahmens selbst."
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "id": "prinzipien",
+  "titel": "Didaktische Prinzipien",
+  "vorlesung": "V4",
+  "leitfrage": "Welche didaktischen Prinzipien gelten im SGE und wie werden sie im Unterricht umgesetzt?",
+  "unterthemen": ["Überblick der Prinzipien", "Lebensnähe & Aneignungsebenen", "Differenzierung", "Elementarisierung", "Handlungsorientierung", "Ganzheitlichkeit & Strukturierung"],
+  "mc": [
+    {
+      "id": "pr-mc-1",
+      "unterthema": "Überblick der Prinzipien",
+      "frage": "Welches ist KEIN didaktisches Prinzip im SGE?",
+      "optionen": [
+        { "text": "Notenorientierung", "korrekt": true },
+        { "text": "Lebenspraxis und Lebensnähe", "korrekt": false },
+        { "text": "Handlungsorientierung", "korrekt": false },
+        { "text": "Elementarisierung", "korrekt": false }
+      ],
+      "erklaerung": "Die Prinzipien im SGE: Lebenspraxis und Lebensnähe, Individualisierung/Differenzierung, Ganzheitlichkeit, kleine Schritte und/oder Sinnzusammenhang, Handlungsorientierung, Elementarisierung, Strukturierung, Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen. Notenorientierung gehört nicht dazu."
+    },
+    {
+      "id": "pr-mc-2",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
+      "frage": "Was kennzeichnet Lebensnähe nach Pitsch (2002)?",
+      "optionen": [
+        { "text": "Bildungsgut, das für das spätere Leben benötigt wird - Alltagshandlungen werden Unterrichtsinhalte", "korrekt": true },
+        { "text": "Unterricht findet ausschließlich draußen statt", "korrekt": false },
+        { "text": "Es werden nur aktuelle Nachrichten besprochen", "korrekt": false },
+        { "text": "Die Schüler:innen wählen täglich frei, ob sie lernen möchten", "korrekt": false }
+      ],
+      "erklaerung": "Lebensnähe kennzeichnet jenes Bildungsgut, das für das spätere Leben benötigt wird (Pitsch 2002, 229). Alltagshandlungen werden als Unterrichtsinhalte tituliert und komplexe Inhalte unter Beachtung der Alltagsrelevanz gemäß den Aneignungsmöglichkeiten gestaltet."
+    },
+    {
+      "id": "pr-mc-3",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
+      "frage": "Salz wird in Wasser verrührt und löst sich auf - die Schüler:innen entdecken den Effekt handelnd. Welche Aneignungsebene ist das?",
+      "optionen": [
+        { "text": "Konkret-gegenständlich", "korrekt": true },
+        { "text": "Basal-perzeptiv", "korrekt": false },
+        { "text": "Anschaulich", "korrekt": false },
+        { "text": "Abstrakt-begrifflich", "korrekt": false }
+      ],
+      "erklaerung": "Konkret-gegenständlich heißt: handelnd Gegenstände nutzen oder Vorgänge nachvollziehen, die Welt durch Entdeckung von Wirkungen erforschen. Basal-perzeptiv wäre Wahrnehmung mit dem eigenen Körper (z. B. mit Handführung ein Gerät anschalten), anschaulich das Erschließen über Bilder/Modelle, abstrakt-begrifflich die Auseinandersetzung über Sprache und Gedanken."
+    },
+    {
+      "id": "pr-mc-4",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
+      "frage": "In welcher Reihenfolge stehen die vier Aneignungsebenen (vom Körperlich-Sinnlichen zum Gedanklichen)?",
+      "optionen": [
+        { "text": "Basal-perzeptiv, konkret-gegenständlich, anschaulich, abstrakt-begrifflich", "korrekt": true },
+        { "text": "Abstrakt-begrifflich, anschaulich, konkret-gegenständlich, basal-perzeptiv", "korrekt": false },
+        { "text": "Anschaulich, basal-perzeptiv, abstrakt-begrifflich, konkret-gegenständlich", "korrekt": false },
+        { "text": "Konkret-gegenständlich, abstrakt-begrifflich, basal-perzeptiv, anschaulich", "korrekt": false }
+      ],
+      "erklaerung": "Die Ebenen: basal-perzeptiv (über Wahrnehmung und Bewegung des eigenen Körpers), konkret-gegenständlich (handelnd), anschaulich (über Bilder, Fotos, Modelle) und abstrakt-begrifflich (über Sprache und Gedanken, ohne direkte Anschauung)."
+    },
+    {
+      "id": "pr-mc-5",
+      "unterthema": "Differenzierung",
+      "frage": "Die Bildung möglichst homogener Lerngruppen über Schulform, Schulprofil oder Jahrgangsklasse ist ...",
+      "optionen": [
+        { "text": "äußere Differenzierung", "korrekt": true },
+        { "text": "innere Differenzierung", "korrekt": false },
+        { "text": "qualitative Differenzierung", "korrekt": false },
+        { "text": "adaptives Lernen", "korrekt": false }
+      ],
+      "erklaerung": "Äußere Differenzierung versucht, weitestgehend homogene Lerngruppen zu bilden und über längere Zeit aufrechtzuerhalten (Schulform, Schulprofil, Jahrgangsklasse). Innere Differenzierung reagiert zeitlich flexibel auf die Heterogenität innerhalb der Lerngruppe."
+    },
+    {
+      "id": "pr-mc-6",
+      "unterthema": "Differenzierung",
+      "frage": "Was ist quantitative Differenzierung?",
+      "optionen": [
+        { "text": "Anpassung über die Menge, z. B. weniger Aufgaben", "korrekt": true },
+        { "text": "Anpassung über den Schwierigkeitsgrad", "korrekt": false },
+        { "text": "Aufteilung der Klasse in zwei Räume", "korrekt": false },
+        { "text": "Benotung nach Anzahl der Fehler", "korrekt": false }
+      ],
+      "erklaerung": "Quantitative Differenzierung passt die Menge an (weniger Aufgaben), qualitative Differenzierung den Schwierigkeitsgrad. Wichtig laut Vorlesung: Komplexität so anpassen, dass auch die begabten Schüler:innen in ihrer Leistung gefördert werden."
+    },
+    {
+      "id": "pr-mc-7",
+      "unterthema": "Handlungsorientierung",
+      "frage": "Was kennzeichnet handlungsorientierten Unterricht nach Jank & Meyer (2014)?",
+      "optionen": [
+        { "text": "Ganzheitlicher, schüleraktiver Unterricht, in dem vereinbarte Handlungsprodukte die Gestaltung leiten und Kopf- und Handarbeit ins Gleichgewicht kommen", "korrekt": true },
+        { "text": "Die Lehrkraft demonstriert, die Schüler:innen schauen ausschließlich zu", "korrekt": false },
+        { "text": "Es zählt nur die Handarbeit, Kopfarbeit ist unerwünscht", "korrekt": false },
+        { "text": "Unterricht ohne jedes Ziel und Produkt", "korrekt": false }
+      ],
+      "erklaerung": "Handlungsorientierter Unterricht ist ein ganzheitlicher und schüleraktiver Unterricht, in dem die zwischen Lehrer und Schülern vereinbarten Handlungsprodukte die Gestaltung des Unterrichtsprozesses leiten, sodass Kopf- und Handarbeit in ein ausgewogenes Verhältnis gebracht werden (Jank & Meyer 2014, 315). Merkmale: subjektive Interessen als Ausgangspunkt, selbsttätiges Handeln, solidarisches Handeln, Produktorientierung."
+    },
+    {
+      "id": "pr-mc-8",
+      "unterthema": "Handlungsorientierung",
+      "frage": "In welcher Reihenfolge stehen die vier Bestandteile des Handelns?",
+      "optionen": [
+        { "text": "Handlungsorientierung, Handlungsplanung, Handlungsausführung, Handlungskontrolle", "korrekt": true },
+        { "text": "Handlungskontrolle, Handlungsausführung, Handlungsplanung, Handlungsorientierung", "korrekt": false },
+        { "text": "Handlungsplanung, Handlungskontrolle, Handlungsorientierung, Handlungsausführung", "korrekt": false },
+        { "text": "Handlungsausführung, Handlungsorientierung, Handlungskontrolle, Handlungsplanung", "korrekt": false }
+      ],
+      "erklaerung": "Die Bestandteile des Handelns: 1. Handlungsorientierung (Handlungsmöglichkeiten wahrnehmen, abwägen), 2. Handlungsplanung (vorausschauendes Denken), 3. Handlungsausführung (Zielverfolgung im Auge behalten) und 4. Handlungskontrolle (Vergleich zwischen Ziel, Umsetzung, Ergebnis)."
+    },
+    {
+      "id": "pr-mc-9",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
+      "frage": "Was besagt das Modell der ganzheitlichen Entwicklung nach Fröhlich/Haupt?",
+      "optionen": [
+        { "text": "7 Entwicklungsbereiche stehen in permanenter Wechselwirkung und unterliegen keiner hierarchischen Ordnung", "korrekt": true },
+        { "text": "Entwicklung verläuft streng hierarchisch von Motorik zu Kognition", "korrekt": false },
+        { "text": "Nur die Wahrnehmung bestimmt die gesamte Entwicklung", "korrekt": false },
+        { "text": "Es gibt genau 4 voneinander unabhängige Bereiche", "korrekt": false }
+      ],
+      "erklaerung": "Nach Fröhlich/Haupt stehen 7 Entwicklungsbereiche (u. a. Wahrnehmung, Kognition, Bewegung, Körpererfahrung, Gefühle, Sozialerfahrung, Kommunikation) in permanenter Wechselwirkung zueinander - ohne hierarchische Ordnung. Ganzheitlichkeit ist charakterisiert durch Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit (Fröhlich 2008, 182). Stichwort: Lernen mit Kopf, Herz und Hand (Pestalozzi), Vielkanallernen (Vester)."
+    },
+    {
+      "id": "pr-mc-10",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
+      "frage": "Über welche vier Aspekte wirkt das Prinzip der Strukturierung?",
+      "optionen": [
+        { "text": "Verdeutlichung von Abläufen, Verhalten steuern/Konsequenzen vorhersehbar machen, Zeit, Räume", "korrekt": true },
+        { "text": "Noten, Zeugnisse, Prüfungen, Hausaufgaben", "korrekt": false },
+        { "text": "Belohnung, Bestrafung, Lob, Tadel", "korrekt": false },
+        { "text": "Lesen, Schreiben, Rechnen, Sachkunde", "korrekt": false }
+      ],
+      "erklaerung": "Strukturierung wirkt über: 1. Verdeutlichung von Abläufen, 2. Verhalten steuern und Konsequenzen vorhersehbar machen, 3. Zeit (z. B. Time-Timer) und 4. Räume. Struktur und Rhythmus geben Schüler:innen die notwendige Sicherheit, um sich der Umwelt zu öffnen."
+    },
+    {
+      "id": "pr-mc-11",
+      "unterthema": "Elementarisierung",
+      "frage": "Was ist Elementarisierung?",
+      "optionen": [
+        { "text": "Die Verschränkung von Lerninhalt und Lernsubjekt: Was ist das Elementare im Bildungsprozess? Zugleich fachdidaktisches Prinzip und Planungsvorgehen", "korrekt": true },
+        { "text": "Das Weglassen aller schwierigen Themen", "korrekt": false },
+        { "text": "Die Beschränkung des Unterrichts auf die Elemente Feuer, Wasser, Luft und Erde", "korrekt": false },
+        { "text": "Das Aufteilen der Klasse in Leistungsgruppen", "korrekt": false }
+      ],
+      "erklaerung": "Elementarisierung fragt nach dem Elementaren im Bildungsprozess und verschränkt Lerninhalt und Lernsubjekt. Sie ist sowohl fachdidaktisches Prinzip (Wachsmuth & Stöppler) als auch didaktisches Vorgehen bei der Unterrichtsplanung (Terfloth & Bauersfeld 2024) - u. a. mit didaktischer Reduktion (Stoffreduktion, Inhalts- und Komplexitätsreduktion)."
+    }
+  ],
+  "frei": [
+    {
+      "id": "pr-f-1",
+      "afb": 1,
+      "frage": "Nennen Sie fünf didaktische Prinzipien im sonderpädagogischen Schwerpunkt geistige Entwicklung.",
+      "stichpunkte": [
+        "Lebenspraxis und Lebensnähe",
+        "Individualisierung / Differenzierung",
+        "Ganzheitlichkeit",
+        "Kleine Schritte und/oder Sinnzusammenhang",
+        "Handlungsorientierung",
+        "Weitere: Elementarisierung, Strukturierung, Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen"
+      ],
+      "muster": "Fünf didaktische Prinzipien im SGE sind Lebenspraxis und Lebensnähe, Individualisierung bzw. Differenzierung, Ganzheitlichkeit, Handlungsorientierung und Elementarisierung. Daneben gelten unter anderem Strukturierung, Anschaulichkeit, kleine Schritte und/oder Sinnzusammenhang, adaptives Lernen, der Anstoß zur Eigenaktivität und die Ermöglichung von Erfahrungen.",
+      "tipp": "Es gibt insgesamt 11 in der Vorlesung - fünf sicher parat zu haben reicht für eine typische AFB-I-Aufgabe."
+    },
+    {
+      "id": "pr-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie das Prinzip der Handlungsorientierung anhand eines Beispiels.",
+      "stichpunkte": [
+        "Definition Jank & Meyer (2014, 315): ganzheitlicher, schüleraktiver Unterricht; vereinbarte Handlungsprodukte leiten den Prozess; Kopf- und Handarbeit im ausgewogenen Verhältnis",
+        "Merkmale: subjektive Interessen als Ausgangspunkt, selbsttätiges Handeln (Dialektik aus Führung und Selbsttätigkeit), solidarisches Handeln, Produktorientierung",
+        "Alle Schüler:innen gelten als handlungskompetent auf unterschiedlichen Niveaustufen (Pitsch 2019)",
+        "Bestandteile des Handelns: Handlungsorientierung, -planung, -ausführung, -kontrolle",
+        "Beispiel aus der Vorlesung: Koffer mit ferngesteuertem Auto - Gruppe findet ohne Vorgabe heraus, dass Auto und Fernbedienung angeschaltet werden müssen; abgestufte Hilfen (z. B. motorische Unterstützung, Handführung)",
+        "Alternativ: Teilschritte beim Bedienen einer Waschmaschine gemeinsam erarbeiten"
+      ],
+      "muster": "Handlungsorientierter Unterricht ist nach Jank und Meyer ein ganzheitlicher und schüleraktiver Unterricht, in dem die zwischen Lehrkraft und Schüler:innen vereinbarten Handlungsprodukte die Gestaltung des Unterrichtsprozesses leiten, sodass Kopf- und Handarbeit in ein ausgewogenes Verhältnis kommen. Ausgangspunkt sind die subjektiven Interessen der Schüler:innen; alle gelten als handlungskompetent auf jeweils unterschiedlichen Niveaustufen. Ein Beispiel aus der Vorlesung: Jede Lerngruppe erhält einen Koffer mit einem ferngesteuerten Auto samt Batterien. Die Schüler:innen sollen ohne direkte Anleitung herausfinden, dass Auto und Fernbedienung eingeschaltet werden müssen - sie planen, probieren, kontrollieren ihr Ergebnis und erhalten individuell abgestufte Unterstützung. Damit durchlaufen sie alle Bestandteile des Handelns: Handlungsorientierung, Handlungsplanung, Handlungsausführung und Handlungskontrolle.",
+      "tipp": "Die Definition mit eigenen Worten plus ein konkretes Beispiel - das deckt Benennung, Beschreibung und Erläuterung ab."
+    },
+    {
+      "id": "pr-f-3",
+      "afb": 2,
+      "frage": "Erläutern Sie die vier Aneignungsebenen mit jeweils einem Beispiel.",
+      "stichpunkte": [
+        "Basal-perzeptiv: über Wahrnehmung und Bewegung des eigenen Körpers, Fühlen/Schmecken/Sehen/Riechen/Hören - z. B. mit Handführung ein elektrisches Gerät an- und ausschalten, Effekte über Sinneskanäle erfahren",
+        "Konkret-gegenständlich: handelnd Gegenstände nutzen, Wirkungen entdecken - z. B. Salz wird in Wasser verrührt und löst sich auf",
+        "Anschaulich: Zusammenhänge über Bilder, Fotos, Modelle oder darstellendes Spiel erschließen - z. B. symbolhafte Darstellung erklärt die Bedienung der Waschmaschine",
+        "Abstrakt-begrifflich: über Sprache und Gedanken, ohne direkte Anschauung - z. B. Abläufe von Garverfahren, die man nicht sehen kann, abstrakt beschreiben"
+      ],
+      "muster": "Auf der basal-perzeptiven Ebene eignen sich Schüler:innen die Umwelt durch Wahrnehmung und Bewegung des eigenen Körpers an, etwa wenn mithilfe von Handführung ein elektrisches Gerät an- und ausgeschaltet wird und die Effekte über verschiedene Sinneskanäle erfahrbar werden. Auf der konkret-gegenständlichen Ebene werden Gegenstände handelnd genutzt und Wirkungen entdeckt, zum Beispiel wenn Salz in Wasser verrührt wird und sich auflöst. Auf der anschaulichen Ebene werden Zusammenhänge über ein Bild erschlossen, etwa wenn eine symbolhafte Darstellung die Bedienung der Waschmaschine erläutert. Auf der abstrakt-begrifflichen Ebene erfolgt die Auseinandersetzung über Sprache und Gedanken ohne direkte Anschauung, zum Beispiel wenn Abläufe von Garverfahren, die man nicht sehen kann, abstrakt beschrieben werden.",
+      "tipp": "Die Beispiele stammen direkt von der Folie - wer je Ebene ein Beispiel nennt, holt hier die vollen Punkte."
+    },
+    {
+      "id": "pr-f-4",
+      "afb": 3,
+      "frage": "Diskutieren Sie das Spannungsverhältnis von kleinen Schritten und Sinnzusammenhang bei der Strukturierung von Aufgaben.",
+      "stichpunkte": [
+        "Leitfrage: Wie können Aufgaben strukturiert werden?",
+        "Kleine Schritte: ermöglichen einen dezidierten Handlungsplan, Erfolgserlebnisse, Passung an Aneignungsmöglichkeiten",
+        "Gesamtzusammenhang: nötig, um den Sinn des eigenen Tuns zu erkennen",
+        "Gefahr: eine rigide, durch die Lehrkraft gelenkte Lernsituation - vs. Chance: über Strukturierung werden Teilaspekte einer Handlung deutlich",
+        "Bewertung: kein Entweder-oder; kleine Schritte immer in einen sinnvollen Gesamtzusammenhang einbetten"
+      ],
+      "muster": "Kleine Schritte erlauben es, Schüler:innen einen dezidierten Handlungsplan anzubieten: Aufgaben werden bewältigbar, Teilaspekte einer Handlung werden deutlich, Erfolgserlebnisse werden möglich. Zugleich braucht es den Gesamtzusammenhang, damit die Schüler:innen den Sinn des eigenen Tuns erkennen - wer nur isolierte Teilschritte übt, weiß nicht, wofür. Die Gefahr kleinschrittigen Vorgehens liegt in einer rigiden, vollständig durch die Lehrkraft gelenkten Lernsituation. In der Bewertung gilt daher: kein Entweder-oder, sondern kleine Schritte, die bewusst in einen sinnstiftenden Gesamtzusammenhang eingebettet werden - das Prinzip heißt in der Vorlesung nicht zufällig kleine Schritte und/oder Sinnzusammenhang.",
+      "tipp": "Klassische Diskutieren-Struktur: beide Pole, Gefahr benennen, Balance als Fazit."
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+/* GE-Trainer — warmes Papier, mobile-first, verwandt mit dem ST-Trainer-Look */
+
+:root {
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px;
+  --paper: #faf5ec;
+  --paper-2: #f3ecdd;
+  --card: #fffdf8;
+  --ink: #29241b;
+  --ink-soft: #6b6353;
+  --line: #e5dcc8;
+  --accent: #4a7d9e;
+  --accent-ink: #fff;
+  --ok: #2e7d4f;
+  --ok-bg: #e3f2e8;
+  --bad: #b3362b;
+  --bad-bg: #fbe7e4;
+  --warn-bg: #fdf3d7;
+  --warn-ink: #8a6d1a;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(60,50,30,.06), 0 6px 20px -8px rgba(60,50,30,.18);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Karla", system-ui, sans-serif;
+  background: var(--paper);
+  background-image: radial-gradient(ellipse 60% 40% at 85% -5%, #f6e8d4 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--sp-4) var(--sp-4) calc(var(--sp-8) * 2);
+}
+
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; line-height: 1.25; margin: 0 0 var(--sp-2); }
+h1 { font-size: 1.7rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 var(--sp-3); }
+
+.laden { padding: var(--sp-8); text-align: center; color: var(--ink-soft); }
+
+/* ---------- Kopf ---------- */
+.kopf { margin: var(--sp-4) 0 var(--sp-5); }
+.kopf .untertitel { color: var(--ink-soft); font-size: .95rem; margin-top: 2px; }
+.zurueck {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none; padding: var(--sp-2) 0;
+  font: inherit; font-weight: 700; color: var(--accent); cursor: pointer;
+}
+
+/* ---------- Karten ---------- */
+.karte {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-4);
+}
+
+.info-karte { border-left: 4px solid var(--accent); }
+.info-karte ul { margin: 0; padding-left: 1.2em; }
+.info-karte li { margin-bottom: 4px; }
+.info-karte .hinweis-gruen { color: var(--ok); font-weight: 700; }
+
+/* ---------- Themenliste ---------- */
+.thema-karte {
+  display: block; width: 100%; text-align: left;
+  font: inherit; color: inherit; cursor: pointer;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--tfarbe, var(--accent));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-3);
+  transition: transform .08s ease;
+}
+.thema-karte:active { transform: scale(.985); }
+.thema-kopfzeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.thema-titel { font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.08rem; }
+.vl-badge {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--tfarbe, var(--accent));
+  border: 1px solid currentColor; border-radius: 999px;
+  padding: 0 8px;
+}
+.beispiel-badge {
+  font-size: .72rem; font-weight: 700;
+  color: var(--warn-ink); background: var(--warn-bg);
+  border-radius: 999px; padding: 1px 8px;
+}
+.thema-meta { color: var(--ink-soft); font-size: .88rem; margin-top: 4px; }
+
+.balken {
+  height: 7px; border-radius: 999px; background: var(--paper-2);
+  overflow: hidden; margin-top: var(--sp-2);
+  display: flex;
+}
+.balken .voll { background: var(--tfarbe, var(--accent)); height: 100%; border-radius: 999px 0 0 999px; }
+
+/* ---------- Themen-Ansicht ---------- */
+.leitfrage { font-style: italic; color: var(--ink-soft); }
+.modus-knoepfe { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin: var(--sp-4) 0; }
+.modus-knopf {
+  font: inherit; font-weight: 700; cursor: pointer;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-4);
+  text-align: left;
+  transition: transform .08s ease;
+}
+.modus-knopf:active { transform: scale(.97); }
+.modus-knopf .gross { display: block; font-size: 1.05rem; margin-bottom: 2px; }
+.modus-knopf .klein { display: block; font-weight: 400; color: var(--ink-soft); font-size: .85rem; }
+.modus-knopf.primaer { background: var(--tfarbe, var(--accent)); color: #fff; border-color: transparent; }
+.modus-knopf.primaer .klein { color: rgba(255,255,255,.85); }
+
+.chip-reihe { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+.chip {
+  font-size: .8rem; color: var(--ink-soft);
+  background: var(--paper-2); border-radius: 999px; padding: 2px 10px;
+}
+
+/* ---------- MC-Quiz ---------- */
+.frage-fortschritt { color: var(--ink-soft); font-size: .88rem; margin-bottom: var(--sp-2); }
+.frage-text { font-size: 1.06rem; font-weight: 700; margin-bottom: var(--sp-4); }
+.unterthema-zeile { font-size: .8rem; color: var(--tfarbe, var(--accent)); font-weight: 700; letter-spacing: .03em; margin-bottom: var(--sp-1); }
+
+.option {
+  display: block; width: 100%; text-align: left;
+  font: inherit; cursor: pointer;
+  background: var(--card); color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-2);
+  transition: border-color .1s ease, background .1s ease;
+}
+.option:not(:disabled):hover { border-color: var(--tfarbe, var(--accent)); }
+.option:disabled { cursor: default; }
+.option.richtig { background: var(--ok-bg); border-color: var(--ok); font-weight: 700; }
+.option.falsch { background: var(--bad-bg); border-color: var(--bad); }
+.option.blass { opacity: .55; }
+
+.erklaerung {
+  background: var(--paper-2); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4);
+  margin: var(--sp-3) 0;
+  font-size: .95rem;
+}
+.erklaerung .titel { font-weight: 700; margin-bottom: 2px; }
+.erklaerung.gut .titel { color: var(--ok); }
+.erklaerung.schade .titel { color: var(--warn-ink); }
+
+.knopf {
+  font: inherit; font-weight: 700; cursor: pointer;
+  background: var(--tfarbe, var(--accent)); color: #fff;
+  border: none; border-radius: 999px;
+  padding: var(--sp-3) var(--sp-6);
+  box-shadow: var(--shadow);
+  transition: transform .08s ease;
+}
+.knopf:active { transform: scale(.96); }
+.knopf.sekundaer { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+.knopf-reihe { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-3); }
+
+/* ---------- Ende-Screen ---------- */
+.ergebnis { text-align: center; padding: var(--sp-6) var(--sp-4); }
+.ergebnis .zahl { font-family: "Fraunces", Georgia, serif; font-size: 2.6rem; font-weight: 700; color: var(--tfarbe, var(--accent)); }
+.ergebnis .satz { color: var(--ink-soft); margin-top: var(--sp-2); }
+
+/* ---------- Frei üben (AFB) ---------- */
+.afb-badge {
+  display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .05em;
+  border-radius: 999px; padding: 2px 10px; margin-bottom: var(--sp-2);
+}
+.afb-1 { background: #e3f2e8; color: #2e7d4f; }
+.afb-2 { background: #fdf3d7; color: #8a6d1a; }
+.afb-3 { background: #fbe7e4; color: #b3362b; }
+
+.frei-eingabe {
+  width: 100%; min-height: 110px; resize: vertical;
+  font: inherit; color: var(--ink);
+  background: var(--card);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+.frei-eingabe:focus { outline: 2px solid var(--tfarbe, var(--accent)); border-color: transparent; }
+
+.loesung { border-top: 1px dashed var(--line); margin-top: var(--sp-3); padding-top: var(--sp-3); }
+.loesung h3 { margin-bottom: var(--sp-2); }
+.stichpunkte { margin: 0 0 var(--sp-3); padding-left: 1.25em; }
+.stichpunkte li { margin-bottom: 6px; }
+.muster {
+  background: var(--paper-2); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: .95rem;
+  margin-bottom: var(--sp-3);
+}
+.tipp {
+  background: var(--warn-bg); color: var(--warn-ink);
+  border-radius: 12px; padding: var(--sp-3) var(--sp-4);
+  font-size: .9rem; margin-bottom: var(--sp-3);
+}
+.tipp b { color: inherit; }
+
+.selbstcheck { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+.selbstcheck .frage-klein { width: 100%; font-size: .88rem; color: var(--ink-soft); margin-bottom: 2px; }
+.check-knopf {
+  font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer;
+  background: var(--card); color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 999px;
+  padding: 6px 14px;
+}
+.check-knopf.aktiv-gut { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.check-knopf.aktiv-mittel { background: var(--warn-bg); border-color: var(--warn-ink); color: var(--warn-ink); }
+.check-knopf.aktiv-nochmal { background: var(--bad-bg); border-color: var(--bad); color: var(--bad); }
+
+.frei-status { font-size: .8rem; font-weight: 700; border-radius: 999px; padding: 1px 10px; }
+.status-gut { background: var(--ok-bg); color: var(--ok); }
+.status-mittel { background: var(--warn-bg); color: var(--warn-ink); }
+.status-nochmal { background: var(--bad-bg); color: var(--bad); }
+
+.fusszeile { text-align: center; color: var(--ink-soft); font-size: .82rem; margin-top: var(--sp-8); }
+
+@media (min-width: 600px) {
+  h1 { font-size: 2rem; }
+  #app { padding-top: var(--sp-8); }
+}

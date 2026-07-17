@@ -1,0 +1,124 @@
+{
+  "id": "grundlagen",
+  "titel": "Förderschule & Beschulung",
+  "vorlesung": "V1",
+  "leitfrage": "Welche Merkmale weisen Förderschulen auf?",
+  "unterthemen": ["Merkmale der Förderschule", "Stufenmodell", "Gemeinsamer Unterricht"],
+  "mc": [
+    {
+      "id": "gr-mc-1",
+      "unterthema": "Merkmale der Förderschule",
+      "frage": "Welches ist ein strukturelles Merkmal von Förderschulen im Schwerpunkt geistige Entwicklung?",
+      "optionen": [
+        { "text": "Relativ kleine Klassenfrequenzen", "korrekt": true },
+        { "text": "Ausschließlich Halbtagsbeschulung", "korrekt": false },
+        { "text": "Große, jahrgangsübergreifende Klassen mit über 30 Kindern", "korrekt": false },
+        { "text": "Verzicht auf Frühförderung", "korrekt": false }
+      ],
+      "erklaerung": "Förderschulen kennzeichnen: Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen."
+    },
+    {
+      "id": "gr-mc-2",
+      "unterthema": "Stufenmodell",
+      "frage": "Wie ist die Förderschule (GE) in Stufen gegliedert?",
+      "optionen": [
+        { "text": "4 Stufen, die jeweils 3 Jahre besucht werden", "korrekt": true },
+        { "text": "2 Stufen zu je 6 Jahren", "korrekt": false },
+        { "text": "6 Stufen zu je 2 Jahren", "korrekt": false },
+        { "text": "3 Stufen zu je 4 Jahren", "korrekt": false }
+      ],
+      "erklaerung": "Es gibt eine Unterteilung in 4 Stufen, die jeweils 3 Jahre besucht werden: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe und Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106)."
+    },
+    {
+      "id": "gr-mc-3",
+      "unterthema": "Stufenmodell",
+      "frage": "Welche Stufe bereitet über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem das Berufsleben vor?",
+      "optionen": [
+        { "text": "Die Werk- bzw. Abschlussstufe", "korrekt": true },
+        { "text": "Die Unterstufe", "korrekt": false },
+        { "text": "Die Mittelstufe", "korrekt": false },
+        { "text": "Die Vorstufe", "korrekt": false }
+      ],
+      "erklaerung": "Die relativ eigenständige Werkstufe hat die besondere Zielsetzung, über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten."
+    },
+    {
+      "id": "gr-mc-4",
+      "unterthema": "Stufenmodell",
+      "frage": "Wie verändert sich die Schulbesuchsdauer im Werkstufenbereich?",
+      "optionen": [
+        { "text": "Verlängerung von 9 auf 12 Jahre, mit Option auf weitere Verlängerung in begründeten Fällen", "korrekt": true },
+        { "text": "Verkürzung von 12 auf 9 Jahre", "korrekt": false },
+        { "text": "Es bleibt bei genau 10 Jahren ohne Ausnahme", "korrekt": false },
+        { "text": "Die Dauer ist völlig frei wählbar", "korrekt": false }
+      ],
+      "erklaerung": "Der Schulbesuch verlängert sich von 9 auf 12 Jahre im Werkstufenbereich - mit der Option auf Verlängerung in begründeten Fällen."
+    },
+    {
+      "id": "gr-mc-5",
+      "unterthema": "Gemeinsamer Unterricht",
+      "frage": "In welcher Form des gemeinsamen Unterrichts sind die Schüler:innen schulrechtlich der Förderschule zugeordnet?",
+      "optionen": [
+        { "text": "Kooperationsklasse", "korrekt": true },
+        { "text": "Integrationsklasse", "korrekt": false },
+        { "text": "Integrative Regelklasse", "korrekt": false },
+        { "text": "Einzelintegration", "korrekt": false }
+      ],
+      "erklaerung": "Bei der Kooperationsklasse bleiben die Schüler:innen schulrechtlich der Förderschule zugeordnet. Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur schulrechtlichen Zuordnung an die Regelschule."
+    },
+    {
+      "id": "gr-mc-6",
+      "unterthema": "Gemeinsamer Unterricht",
+      "frage": "Welche drei Formen gehören zum gemeinsamen Unterricht mit schulrechtlicher Zuordnung zur Regelschule?",
+      "optionen": [
+        { "text": "Integrationsklasse, integrative Regelklasse, Einzelintegration", "korrekt": true },
+        { "text": "Kooperationsklasse, Außenklasse, Werkstufe", "korrekt": false },
+        { "text": "Grundstufe, Mittelstufe, Oberstufe", "korrekt": false },
+        { "text": "Frühförderung, Ganztag, Hort", "korrekt": false }
+      ],
+      "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule."
+    }
+  ],
+  "frei": [
+    {
+      "id": "gr-f-1",
+      "afb": 1,
+      "frage": "Nennen Sie vier strukturelle Merkmale von Förderschulen im Schwerpunkt geistige Entwicklung.",
+      "stichpunkte": [
+        "Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen",
+        "Ganztagsbeschulung",
+        "Wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben",
+        "Relativ kleine Klassenfrequenzen",
+        "Zusätzlich möglich: Stufenmodell (4 Stufen à 3 Jahre), eigenständige Werkstufe, verlängerter Schulbesuch (9 auf 12 Jahre)"
+      ],
+      "muster": "Förderschulen im SGE weisen unter anderem folgende strukturelle Merkmale auf: Sie bieten Frühförderung und schulvorbereitende Gruppen an, es gibt eine Ganztagsbeschulung, die Klassenzimmer sind wohnlich gestaltet als Orte zum Lernen und Leben, und die Klassenfrequenzen sind relativ klein.",
+      "tipp": "AFB I heißt: sauber benennen reicht. Vier Punkte aufzählen, in ganzen Sätzen, Fachbegriffe nutzen."
+    },
+    {
+      "id": "gr-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie das Stufenmodell der Förderschule im Schwerpunkt geistige Entwicklung.",
+      "stichpunkte": [
+        "4 Stufen, jeweils 3 Jahre: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe, Werk- bzw. Abschlussstufe (Fornefeld 2004)",
+        "Werkstufe: relativ eigenständig, besondere Zielsetzung - Vorbereitung auf nachschulische Lebenswelten, vor allem Berufsleben",
+        "Verlängerung des Schulbesuchs von 9 auf 12 Jahre im Werkstufenbereich (Option auf weitere Verlängerung in begründeten Fällen)"
+      ],
+      "muster": "Die Förderschule im SGE gliedert sich in vier Stufen, die jeweils drei Jahre besucht werden: die Vor-, Unter- bzw. Grundstufe, die Mittelstufe, die Ober- bzw. Hauptstufe und die Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004). Die Werkstufe ist dabei relativ eigenständig: Sie soll über allgemeine Bildungsangebote hinaus gezielt auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten. Dafür verlängert sich der Schulbesuch von 9 auf 12 Jahre im Werkstufenbereich, in begründeten Fällen ist eine weitere Verlängerung möglich.",
+      "tipp": "Bei AFB II nicht nur aufzählen, sondern erklären, was die Stufen bedeuten - besonders die Sonderrolle der Werkstufe."
+    },
+    {
+      "id": "gr-f-3",
+      "afb": 3,
+      "frage": "Beziehen Sie begründet Stellung zu der Fragestellung: Förderschule oder allgemeinbildende Schule - welches ist der bessere Lernort für Schüler:innen im SGE?",
+      "stichpunkte": [
+        "Struktur laut Dozentin: zwei Punkte dafür, zwei dagegen, dann eine Bewertung",
+        "Pro Förderschule: kleine Klassenfrequenzen, wohnliche Lernumgebung, Ganztag, spezialisierte Förderung und Stufenmodell mit Werkstufe",
+        "Pro allgemeinbildende Schule: Teilhabe und Begegnung, UN-BRK-Perspektive (gleichberechtigter Zugang), soziales Lernen mit Peers, Abbau von Vorurteilen",
+        "Contra Förderschule: Gefahr der Isolation/Separation, weniger Kontakt zu Gleichaltrigen ohne Behinderung",
+        "Contra allgemeinbildende Schule: Anforderungen des offenen/fachlichen Unterrichts, denen Schüler:innen im FSgE schwer gerecht werden; Ressourcen oft nicht ausreichend",
+        "Eigene begründete Bewertung am Ende - kein bloßes Sowohl-als-auch, sondern Position beziehen"
+      ],
+      "muster": "Für die Förderschule sprechen die spezialisierten Rahmenbedingungen: kleine Klassenfrequenzen, wohnlich gestaltete Lernorte, Ganztagsstruktur und ein Stufenmodell mit eigener Werkstufe, das gezielt auf das nachschulische Leben vorbereitet. Für die allgemeinbildende Schule sprechen Teilhabe und Begegnung: Gemeinsamer Unterricht ermöglicht soziales Lernen mit Gleichaltrigen und entspricht dem Anspruch der UN-Behindertenrechtskonvention auf gleichberechtigten Zugang. Gegen die Förderschule spricht die Gefahr der Separation, gegen die Regelschule, dass Schüler:innen im FSgE den Anforderungen ohne ausreichende Ressourcen und Differenzierung nur schwer gerecht werden. In der Bewertung kommt es auf das einzelne Kind an: Entscheidend ist nicht der Ort an sich, sondern ob dort Entwicklungsförderung, Differenzierung und soziale Teilhabe tatsächlich umgesetzt werden.",
+      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben."
+    }
+  ]
+}

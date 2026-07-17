@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "themen": [
+    { "datei": "konzeptionen.json", "farbe": "#7a4f9e", "beispielthema": true },
+    { "datei": "entwicklungsbereiche.json", "farbe": "#1e7d74", "beispielthema": true },
+    { "datei": "prinzipien.json", "farbe": "#2f5d9e", "beispielthema": false },
+    { "datei": "unterrichtsformen.json", "farbe": "#b07f18", "beispielthema": false },
+    { "datei": "mobilitaet.json", "farbe": "#a83a4f", "beispielthema": true },
+    { "datei": "wohnen.json", "farbe": "#4e7d2e", "beispielthema": false },
+    { "datei": "freizeit.json", "farbe": "#c26a4a", "beispielthema": false },
+    { "datei": "grundlagen.json", "farbe": "#5b6770", "beispielthema": false }
+  ]
+}
