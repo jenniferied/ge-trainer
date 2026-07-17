@@ -1,24 +1,101 @@
 /* GE-Trainer - Konzeptueben fuer die GE-Klausur (Didaktik im FS geistige Entwicklung).
-   Vanilla JS, kein Build. Fortschritt nur in localStorage - bewusst leichtgewichtig. */
+   Vanilla JS, kein Build. Fortschritt nur in localStorage - bewusst leichtgewichtig.
+   Nachtmodus ist Standard; Sticker-Feedback wie im ST-Trainer (Roses & Jennifers
+   meistgenutzte WhatsApp-Sticker, Kategorien nie haemisch). */
 
 (function () {
   "use strict";
 
   var STORE_KEY = "ge-trainer-v1";
   var app = document.getElementById("app");
-  var themen = [];          // geladene Themen-Objekte inkl. farbe/beispielthema
+  var themen = [];
   var state = laden();
 
   function laden() {
     try {
       var roh = localStorage.getItem(STORE_KEY);
-      if (roh) return JSON.parse(roh);
+      if (roh) {
+        var s = JSON.parse(roh);
+        s.mc = s.mc || {}; s.frei = s.frei || {};
+        return s;
+      }
     } catch (e) { /* kaputter Storage -> frisch anfangen */ }
     return { mc: {}, frei: {} };
   }
   function speichern() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* voll/privat -> ok */ }
   }
+
+  /* ---------- Theme (Standard: dunkel) ---------- */
+
+  function themeAnwenden() {
+    var hell = state.theme === "hell";
+    if (hell) document.documentElement.setAttribute("data-theme", "hell");
+    else document.documentElement.removeAttribute("data-theme");
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", hell ? "#faf5ec" : "#171425");
+  }
+
+  function themeKnopf() {
+    var k = el("button", "theme-knopf", state.theme === "hell" ? "🌙" : "☀️");
+    k.setAttribute("aria-label", state.theme === "hell" ? "Nachtmodus" : "Heller Modus");
+    k.addEventListener("click", function () {
+      state.theme = state.theme === "hell" ? "dunkel" : "hell";
+      speichern();
+      themeAnwenden();
+      k.textContent = state.theme === "hell" ? "🌙" : "☀️";
+      k.setAttribute("aria-label", state.theme === "hell" ? "Nachtmodus" : "Heller Modus");
+    });
+    return k;
+  }
+
+  /* ---------- Sticker (Meme-Feedback) ---------- */
+
+  var STICKER = {
+    good: ["pepe_drool", "troll_grin", "patrick_happy", "laugh_cam", "happy_dog", "laughcry", "rat_dance", "kitten_lift"],
+    part: ["emoji_eye", "seal_blob", "patrick_slime", "monkey_side", "cat_grass", "fish_drink"],
+    sanft: ["praying_cat", "pat_pat", "kitten_braces", "kitten_suit", "sad_hamster", "teary_cat"]
+  };
+  var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function reactSrc(name) { return "assets/reactions/" + name + "." + (REDUCE_MOTION ? "png" : "webp"); }
+
+  function stickerEl(cls, extra) {
+    var arr = STICKER[cls] || [];
+    if (!arr.length) return null;
+    var name = arr[Math.floor(Math.random() * arr.length)];
+    var img = document.createElement("img");
+    img.className = "sticker" + (extra ? " " + extra : "");
+    img.src = reactSrc(name);
+    img.alt = "";
+    img.loading = "lazy";
+    return img;
+  }
+
+  // Sticker passend zur Quote: hoch = Freude, mittel = neckisch, niedrig = troestend (nie haemisch).
+  function standStickerEl(quote) {
+    return stickerEl(quote >= 0.7 ? "good" : quote >= 0.45 ? "part" : "sanft", "big");
+  }
+
+  var KONFETTI = ["🎉", "🎊", "💗", "💖", "⭐", "✨", "🌟", "🥳"];
+  function konfetti() {
+    if (REDUCE_MOTION) return;
+    var ov = el("div", "konfetti");
+    for (var i = 0; i < 45; i++) {
+      var s = el("span", "herz", KONFETTI[Math.floor(Math.random() * KONFETTI.length)]);
+      s.style.left = (Math.random() * 100).toFixed(1) + "%";
+      s.style.fontSize = (0.8 + Math.random() * 1.4).toFixed(2) + "rem";
+      s.style.setProperty("--sw", (8 + Math.random() * 22).toFixed(0) + "px");
+      s.style.setProperty("--spin", (Math.random() * 720 - 360).toFixed(0) + "deg");
+      s.style.animationDuration = (2.4 + Math.random() * 2).toFixed(2) + "s";
+      s.style.animationDelay = (Math.random() * 0.7).toFixed(2) + "s";
+      ov.appendChild(s);
+    }
+    document.body.appendChild(ov);
+    setTimeout(function () { ov.remove(); }, 4800);
+  }
+
+  /* ---------- Helfer ---------- */
 
   function mischen(arr) {
     var a = arr.slice();
@@ -37,6 +114,8 @@
   }
 
   function leeren() { app.innerHTML = ""; window.scrollTo(0, 0); }
+
+  function setzeFarbe(element, farbe) { element.style.setProperty("--tfarbe-basis", farbe); }
 
   /* ---------- Fortschritt ---------- */
 
@@ -64,8 +143,13 @@
     leeren();
 
     var kopf = el("div", "kopf");
-    kopf.appendChild(el("h1", null, "GE-Trainer"));
-    kopf.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung – Konzepte üben, Antworten trainieren."));
+    var zeile = el("div", "kopf-zeile");
+    var titelBox = el("div");
+    titelBox.appendChild(el("h1", null, "GE-Trainer"));
+    titelBox.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung – Konzepte üben, Antworten trainieren."));
+    zeile.appendChild(titelBox);
+    zeile.appendChild(themeKnopf());
+    kopf.appendChild(zeile);
     app.appendChild(kopf);
 
     var info = el("div", "karte info-karte");
@@ -77,14 +161,13 @@
       "In ganzen Sätzen antworten (außer die Aufgabe verlangt Stichpunkte) und Fachbegriffe nutzen.",
       "Die Punkte je Aufgabe stehen dabei – daran orientieren, wie viel du schreibst."
     ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
-    var gruen = el("li", "hinweis-gruen", "Das Thema Inklusion kommt laut Dozentin nicht dran.");
-    ul.appendChild(gruen);
+    ul.appendChild(el("li", "hinweis-gruen", "Das Thema Inklusion kommt laut Dozentin nicht dran."));
     info.appendChild(ul);
     app.appendChild(info);
 
     themen.forEach(function (thema) {
       var k = el("button", "thema-karte");
-      k.style.setProperty("--tfarbe", thema.farbe);
+      setzeFarbe(k, thema.farbe);
 
       var kz = el("div", "thema-kopfzeile");
       kz.appendChild(el("span", "thema-titel", thema.titel));
@@ -114,7 +197,7 @@
 
   function zeigeThema(thema) {
     leeren();
-    app.style.setProperty("--tfarbe", thema.farbe);
+    setzeFarbe(app, thema.farbe);
 
     var zurueck = el("button", "zurueck", "← Alle Themen");
     zurueck.addEventListener("click", zeigeStart);
@@ -134,7 +217,7 @@
     var knoepfe = el("div", "modus-knoepfe");
 
     var k1 = el("button", "modus-knopf primaer");
-    k1.style.setProperty("--tfarbe", thema.farbe);
+    setzeFarbe(k1, thema.farbe);
     k1.appendChild(el("span", "gross", "Konzept-Check"));
     k1.appendChild(el("span", "klein", mc.gesamt + " schnelle Fragen · " + mc.richtig + " sitzen schon"));
     k1.addEventListener("click", function () { starteQuiz(thema); });
@@ -162,7 +245,7 @@
 
     function frageZeigen() {
       leeren();
-      app.style.setProperty("--tfarbe", thema.farbe);
+      setzeFarbe(app, thema.farbe);
 
       var zurueck = el("button", "zurueck", "← " + thema.titel);
       zurueck.addEventListener("click", function () { zeigeThema(thema); });
@@ -199,12 +282,15 @@
           });
 
           var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
-          erk.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast – merk dir:"));
-          erk.appendChild(el("div", null, f.erklaerung));
+          var st = stickerEl(richtig ? "good" : "part");
+          if (st) erk.appendChild(st);
+          var text = el("div", "text");
+          text.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast – merk dir:"));
+          text.appendChild(el("div", null, f.erklaerung));
+          erk.appendChild(text);
           karte.appendChild(erk);
 
           var weiter = el("button", "knopf", index + 1 < fragen.length ? "Weiter" : "Fertig");
-          weiter.style.setProperty("--tfarbe", thema.farbe);
           weiter.addEventListener("click", function () {
             index++;
             if (index < fragen.length) frageZeigen(); else endeZeigen();
@@ -220,13 +306,17 @@
 
     function endeZeigen() {
       leeren();
-      app.style.setProperty("--tfarbe", thema.farbe);
+      setzeFarbe(app, thema.farbe);
+
+      var quote = punkte / fragen.length;
+      if (quote === 1) konfetti();
 
       var karte = el("div", "karte ergebnis");
+      var st = standStickerEl(quote);
+      if (st) karte.appendChild(st);
       karte.appendChild(el("div", "zahl", punkte + " / " + fragen.length));
 
       var satz;
-      var quote = punkte / fragen.length;
       if (quote === 1) satz = "Alles richtig – die Konzepte sitzen. Jetzt lohnt sich das freie Üben.";
       else if (quote >= 0.75) satz = "Stark! Die meisten Konzepte sitzen schon. Die restlichen holst du dir in der nächsten Runde.";
       else if (quote >= 0.5) satz = "Gute Basis – mit jeder Runde werden es mehr. Die Erklärungen nehmen dich mit.";
@@ -236,7 +326,6 @@
       var reihe = el("div", "knopf-reihe");
       reihe.style.justifyContent = "center";
       var nochmal = el("button", "knopf", "Nochmal");
-      nochmal.style.setProperty("--tfarbe", thema.farbe);
       nochmal.addEventListener("click", function () { starteQuiz(thema); });
       reihe.appendChild(nochmal);
       var freiKnopf = el("button", "knopf sekundaer", "Frei üben (AFB)");
@@ -259,7 +348,7 @@
 
   function zeigeFrei(thema) {
     leeren();
-    app.style.setProperty("--tfarbe", thema.farbe);
+    setzeFarbe(app, thema.farbe);
 
     var zurueck = el("button", "zurueck", "← " + thema.titel);
     zurueck.addEventListener("click", function () { zeigeThema(thema); });
@@ -293,7 +382,6 @@
     karte.appendChild(eingabe);
 
     var zeigen = el("button", "knopf", "Musterlösung anzeigen");
-    zeigen.style.setProperty("--tfarbe", thema.farbe);
     karte.appendChild(zeigen);
 
     zeigen.addEventListener("click", function () {
@@ -310,18 +398,18 @@
 
       if (f.tipp) {
         var t = el("div", "tipp");
-        var b = el("b", null, "Tipp: ");
-        t.appendChild(b);
+        t.appendChild(el("b", null, "Tipp: "));
         t.appendChild(document.createTextNode(f.tipp));
         box.appendChild(t);
       }
 
       var check = el("div", "selbstcheck");
       check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
+      var stickerPlatz = null;
       [
-        { wert: "gut", text: "Saß gut", klasse: "aktiv-gut" },
-        { wert: "mittel", text: "Teilweise", klasse: "aktiv-mittel" },
-        { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal" }
+        { wert: "gut", text: "Saß gut", klasse: "aktiv-gut", stk: "good" },
+        { wert: "mittel", text: "Teilweise", klasse: "aktiv-mittel", stk: "part" },
+        { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal", stk: "sanft" }
       ].forEach(function (opt) {
         var k = el("button", "check-knopf", opt.text);
         if (state.frei[f.id] === opt.wert) k.classList.add(opt.klasse);
@@ -332,6 +420,10 @@
             btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
           });
           k.classList.add(opt.klasse);
+          // Sticker-Belohnung: ploppt neben den Knoepfen auf, auch beim Troesten
+          if (stickerPlatz) stickerPlatz.remove();
+          stickerPlatz = stickerEl(opt.stk, "mini");
+          if (stickerPlatz) check.appendChild(stickerPlatz);
         });
         check.appendChild(k);
       });
@@ -344,6 +436,8 @@
   }
 
   /* ---------- Daten laden ---------- */
+
+  themeAnwenden();
 
   fetch("data/manifest.json")
     .then(function (r) { return r.json(); })
