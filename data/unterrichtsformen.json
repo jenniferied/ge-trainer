@@ -3,7 +3,13 @@
   "titel": "Unterrichtsformen: offen & geschlossen",
   "vorlesung": "V5",
   "leitfrage": "Welche Potentiale kennzeichnen offene und geschlossene Unterrichtsformen und wie lassen sie sich methodisch umsetzen?",
-  "unterthemen": ["Offener Unterricht & Dimensionen", "Methoden offenen Unterrichts", "Kritik & Vorteile", "Geschlossener Unterricht & Lehrgang"],
+  "unterthemen": [
+    "Offener Unterricht & Dimensionen",
+    "Methoden offenen Unterrichts",
+    "Kritik & Vorteile",
+    "Geschlossener Unterricht & Lehrgang",
+    "Grundformen nach Meyer"
+  ],
   "mc": [
     {
       "id": "uf-mc-1",
@@ -11,10 +17,22 @@
       "afb": 1,
       "frage": "Welche fünf Dimensionen der Öffnung von Unterricht unterscheidet Peschel (2002)?",
       "optionen": [
-        { "text": "Organisatorisch, methodisch, inhaltlich, sozial, persönlich", "korrekt": true },
-        { "text": "Räumlich, zeitlich, finanziell, digital, analog", "korrekt": false },
-        { "text": "Kognitiv, emotional, motorisch, sozial, sprachlich", "korrekt": false },
-        { "text": "Planung, Durchführung, Kontrolle, Reflexion, Benotung", "korrekt": false }
+        {
+          "text": "Organisatorisch, methodisch, inhaltlich, sozial, persönlich",
+          "korrekt": true
+        },
+        {
+          "text": "Räumlich, zeitlich, finanziell, digital, analog",
+          "korrekt": false
+        },
+        {
+          "text": "Kognitiv, emotional, motorisch, sozial, sprachlich",
+          "korrekt": false
+        },
+        {
+          "text": "Planung, Durchführung, Kontrolle, Reflexion, Benotung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Peschel (2002) unterscheidet die organisatorische, methodische, inhaltliche, soziale und persönliche Dimension der Öffnung. Lernende bestimmen dabei selbst, wann, wo, mit wem, wie und woran sie arbeiten.",
       "quelle": "notizen-s23",
@@ -26,10 +44,22 @@
       "afb": 1,
       "frage": "Was ist nach Fischer (2008) das entscheidende Kriterium für die Offenheit von Unterricht?",
       "optionen": [
-        { "text": "Der Grad der Mit- bzw. Selbstbestimmung der Schüler:innen", "korrekt": true },
-        { "text": "Die Anzahl der verwendeten Materialien", "korrekt": false },
-        { "text": "Die Größe des Klassenraums", "korrekt": false },
-        { "text": "Der Verzicht auf jede Lehrperson", "korrekt": false }
+        {
+          "text": "Der Grad der Mit- bzw. Selbstbestimmung der Schüler:innen",
+          "korrekt": true
+        },
+        {
+          "text": "Die Anzahl der verwendeten Materialien",
+          "korrekt": false
+        },
+        {
+          "text": "Die Größe des Klassenraums",
+          "korrekt": false
+        },
+        {
+          "text": "Der Verzicht auf jede Lehrperson",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Der Grad der Mit- bzw. Selbstbestimmung wird zum entscheidenden Kriterium: Je freier die Schüler entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden (Fischer 2008, 155).",
       "quelle": "notizen-s24",
@@ -41,10 +71,22 @@
       "afb": 1,
       "frage": "Lernstraße, Übungszirkel, Lernparcours und Lernzirkel sind Synonyme für ...",
       "optionen": [
-        { "text": "das Lernen an Stationen", "korrekt": true },
-        { "text": "die Freiarbeit", "korrekt": false },
-        { "text": "den Lehrgang", "korrekt": false },
-        { "text": "die Wochenplanarbeit", "korrekt": false }
+        {
+          "text": "das Lernen an Stationen",
+          "korrekt": true
+        },
+        {
+          "text": "die Freiarbeit",
+          "korrekt": false
+        },
+        {
+          "text": "den Lehrgang",
+          "korrekt": false
+        },
+        {
+          "text": "die Wochenplanarbeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Lernen an Stationen ist auf ein im Lehrplan festgelegtes Thema konzentriert, in Teilthemen gegliedert, und ein Laufzettel dient als Orientierung. Synonyme: Lernstraße, Übungszirkel, Lernparcours, Lernzirkel.",
       "quelle": "notizen-s25",
@@ -56,10 +98,22 @@
       "afb": 1,
       "frage": "Was ist das Alleinstellungsmerkmal der Werkstattarbeit?",
       "optionen": [
-        { "text": "Schüler:innen sind Expert:innen (Chefs) für je ein Angebot: Sie helfen, nehmen Ergebnisse entgegen, korrigieren und verwalten das Material", "korrekt": true },
-        { "text": "Es gibt keinerlei Aufgabenstellung", "korrekt": false },
-        { "text": "Die Lehrkraft demonstriert jede Aufgabe frontal", "korrekt": false },
-        { "text": "Alle arbeiten immer gleichzeitig an derselben Aufgabe", "korrekt": false }
+        {
+          "text": "Schüler:innen sind Expert:innen (Chefs) für je ein Angebot: Sie helfen, nehmen Ergebnisse entgegen, korrigieren und verwalten das Material",
+          "korrekt": true
+        },
+        {
+          "text": "Es gibt keinerlei Aufgabenstellung",
+          "korrekt": false
+        },
+        {
+          "text": "Die Lehrkraft demonstriert jede Aufgabe frontal",
+          "korrekt": false
+        },
+        {
+          "text": "Alle arbeiten immer gleichzeitig an derselben Aufgabe",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Alleinstellungsmerkmal: Ein:e Schüler:in ist für ein Angebot Expert:in und kann bei Schwierigkeiten helfen, nimmt Ergebnisse entgegen und korrigiert bei Bedarf, mahnt bei obligatorischen Angeboten und beschafft und verwaltet das Material. Lerntheoretisch basiert Werkstattarbeit auf einem konstruktivistischen Verständnis von Lernen.",
       "quelle": "notizen-s27",
@@ -71,10 +125,22 @@
       "afb": 1,
       "frage": "In welcher Reihenfolge werden offene Unterrichtsformen sinnvoll eingeführt?",
       "optionen": [
-        { "text": "Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit", "korrekt": true },
-        { "text": "Freiarbeit sofort ab dem ersten Schultag, dann Tagesplan", "korrekt": false },
-        { "text": "Wochenplan, dann Tagesplan, dann Stationenarbeit", "korrekt": false },
-        { "text": "Die Reihenfolge ist beliebig, es gibt keine Empfehlung", "korrekt": false }
+        {
+          "text": "Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit",
+          "korrekt": true
+        },
+        {
+          "text": "Freiarbeit sofort ab dem ersten Schultag, dann Tagesplan",
+          "korrekt": false
+        },
+        {
+          "text": "Wochenplan, dann Tagesplan, dann Stationenarbeit",
+          "korrekt": false
+        },
+        {
+          "text": "Die Reihenfolge ist beliebig, es gibt keine Empfehlung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Abfolge steigert die Anforderungen an Selbststeuerung schrittweise: Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit. Die erhöhte Aufgabenzahl beim Wochenplan stellt höhere Anforderungen an die Zeiteinteilung.",
       "quelle": "notizen-s29",
@@ -86,10 +152,22 @@
       "afb": 1,
       "frage": "Welcher Kritikpunkt am offenen Unterricht stammt aus der Effektivitätsforschung?",
       "optionen": [
-        { "text": "Die Effektivität des kognitiven Lernens wird bezweifelt - mäßige Effektstärke von d = 0.45", "korrekt": true },
-        { "text": "Offener Unterricht ist grundsätzlich verboten", "korrekt": false },
-        { "text": "Offener Unterricht führt immer zu besseren Noten", "korrekt": false },
-        { "text": "Es gibt keine Forschung zu offenem Unterricht", "korrekt": false }
+        {
+          "text": "Die Effektivität des kognitiven Lernens wird bezweifelt - mäßige Effektstärke von d = 0.45",
+          "korrekt": true
+        },
+        {
+          "text": "Offener Unterricht ist grundsätzlich verboten",
+          "korrekt": false
+        },
+        {
+          "text": "Offener Unterricht führt immer zu besseren Noten",
+          "korrekt": false
+        },
+        {
+          "text": "Es gibt keine Forschung zu offenem Unterricht",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Kritikpunkte: weiterhin viele Vorgaben durch die Lehrperson, methodische Bausteine als maskierte Übungsphasen, Schüler:innen im FSgE werden den Anforderungen nur schwer gerecht, Vermeidung schwieriger Aufgaben und Überschätzung eigener Fähigkeiten bei freier Wahl, mäßige Effektstärke (d = 0.45), offene Materialangebote können ablenken.",
       "quelle": "notizen-s29",
@@ -101,10 +179,22 @@
       "afb": 1,
       "frage": "Welche vier zentralen Momente kennzeichnen geschlossene Lehr-Lernformen?",
       "optionen": [
-        { "text": "Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung, Instruktion", "korrekt": true },
-        { "text": "Spontanität, Offenheit, Freiheit, Selbstbestimmung", "korrekt": false },
-        { "text": "Projekt, Präsentation, Portfolio, Peer-Feedback", "korrekt": false },
-        { "text": "Belohnung, Wiederholung, Prüfung, Benotung", "korrekt": false }
+        {
+          "text": "Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung, Instruktion",
+          "korrekt": true
+        },
+        {
+          "text": "Spontanität, Offenheit, Freiheit, Selbstbestimmung",
+          "korrekt": false
+        },
+        {
+          "text": "Projekt, Präsentation, Portfolio, Peer-Feedback",
+          "korrekt": false
+        },
+        {
+          "text": "Belohnung, Wiederholung, Prüfung, Benotung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Geschlossene Lehr-Lernformen kennzeichnen Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. In der Gegenüberstellung: frontal, formell, lehrerzentriert, rezeptiv, kleinschrittig - während offener Unterricht differenzierend, informell, schülerzentriert, aktiv und ganzheitlich ist.",
       "quelle": "notizen-s29",
@@ -116,10 +206,22 @@
       "afb": 1,
       "frage": "Welche Grundregel für das Üben ist richtig?",
       "optionen": [
-        { "text": "Tägliches Üben für 20-30 Minuten ist viel effektiver als geblockte Übungsphasen", "korrekt": true },
-        { "text": "Einmal pro Monat 5 Stunden am Stück üben ist am effektivsten", "korrekt": false },
-        { "text": "Üben sollte man nur, wenn man Lust dazu hat", "korrekt": false },
-        { "text": "Was geübt wird, muss vorher nicht verstanden sein", "korrekt": false }
+        {
+          "text": "Tägliches Üben für 20-30 Minuten ist viel effektiver als geblockte Übungsphasen",
+          "korrekt": true
+        },
+        {
+          "text": "Einmal pro Monat 5 Stunden am Stück üben ist am effektivsten",
+          "korrekt": false
+        },
+        {
+          "text": "Üben sollte man nur, wenn man Lust dazu hat",
+          "korrekt": false
+        },
+        {
+          "text": "Was geübt wird, muss vorher nicht verstanden sein",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Grundregeln: Üben muss zur Gewohnheit werden; täglich 20-30 Minuten ist effektiver als geblockt; Üben ist keine Frage des Interesses, sondern eine Notwendigkeit; was sitzen soll, muss überlernt werden; was geübt wird, muss vorher verstanden sein; Fehler sofort erkennen und beheben.",
       "quelle": "notizen-s30",
@@ -131,10 +233,22 @@
       "afb": 1,
       "frage": "In welcher Reihenfolge laufen die vier Phasen eines Lehrgangs ab?",
       "optionen": [
-        { "text": "Eröffnungs- und Informationsphase, Demonstrationsphase, Übungsphase, Anwendungsphase", "korrekt": true },
-        { "text": "Übungsphase, Demonstrationsphase, Anwendungsphase, Eröffnungsphase", "korrekt": false },
-        { "text": "Anwendungsphase, Übungsphase, Demonstrationsphase, Informationsphase", "korrekt": false },
-        { "text": "Demonstrationsphase, Eröffnungsphase, Anwendungsphase, Übungsphase", "korrekt": false }
+        {
+          "text": "Eröffnungs- und Informationsphase, Demonstrationsphase, Übungsphase, Anwendungsphase",
+          "korrekt": true
+        },
+        {
+          "text": "Übungsphase, Demonstrationsphase, Anwendungsphase, Eröffnungsphase",
+          "korrekt": false
+        },
+        {
+          "text": "Anwendungsphase, Übungsphase, Demonstrationsphase, Informationsphase",
+          "korrekt": false
+        },
+        {
+          "text": "Demonstrationsphase, Eröffnungsphase, Anwendungsphase, Übungsphase",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Ein Lehrgang läuft ab in: 1. Eröffnungs- und Informationsphase (Ziele, Inhalte, Vorgehen vorstellen), 2. Demonstrationsphase (Lösungshandlung wird vorgemacht), 3. Übungsphase (schrittweises Nachvollziehen und Vertiefen) und 4. Anwendungsphase (Anwendung unter neuen Bedingungen, eigenständige Reflexion).",
       "quelle": "notizen-s31",
@@ -146,10 +260,22 @@
       "afb": 1,
       "frage": "Bei welcher Lehrgangsform kehrt ein Stoffelement auf zunehmend komplexerem Niveau wieder?",
       "optionen": [
-        { "text": "Spiralcurriculum", "korrekt": true },
-        { "text": "Additiver Lehrgang", "korrekt": false },
-        { "text": "Genetische Form", "korrekt": false },
-        { "text": "Konzentrisch-erweiternde Form", "korrekt": false }
+        {
+          "text": "Spiralcurriculum",
+          "korrekt": true
+        },
+        {
+          "text": "Additiver Lehrgang",
+          "korrekt": false
+        },
+        {
+          "text": "Genetische Form",
+          "korrekt": false
+        },
+        {
+          "text": "Konzentrisch-erweiternde Form",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Beim Spiralcurriculum kehrt ein Stoffelement in ausgefalteten Stufen wieder (z. B. Fertigungstechniken auf zunehmend komplexerem Niveau). Additiv = Stoffe geordnet aneinandergereiht; genetisch = chronologisch-entwickelnde Darstellung; konzentrisch-erweiternd = vom Nahen zum Ferneren.",
       "quelle": "notizen-s33",
@@ -161,10 +287,22 @@
       "afb": 1,
       "frage": "Für welche Schüler:innen sind strukturierte, lernzielorientierte, programmartige Ansätze laut Vorlesung unter anderem besonders relevant?",
       "optionen": [
-        { "text": "Für Schüler:innen mit autistischem Verhalten", "korrekt": true },
-        { "text": "Für niemanden - sie gelten als überholt", "korrekt": false },
-        { "text": "Nur für hochbegabte Schüler:innen", "korrekt": false },
-        { "text": "Nur für Lehrkräfte in der Ausbildung", "korrekt": false }
+        {
+          "text": "Für Schüler:innen mit autistischem Verhalten",
+          "korrekt": true
+        },
+        {
+          "text": "Für niemanden - sie gelten als überholt",
+          "korrekt": false
+        },
+        {
+          "text": "Nur für hochbegabte Schüler:innen",
+          "korrekt": false
+        },
+        {
+          "text": "Nur für Lehrkräfte in der Ausbildung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Trainingsprogramme und Übungseinheiten sind Ansätze mit therapeutischer Ausrichtung, geprägt durch starke Strukturierung und Lernzielorientierung - strukturierte, programmartige Ansätze u. a. für Schüler:innen mit autistischem Verhalten. Sie sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen aber in der Schule eine relevante Rolle.",
       "quelle": "notizen-s30",
@@ -174,14 +312,26 @@
       "id": "uf-gen-mc-1",
       "unterthema": "Offener Unterricht & Dimensionen",
       "afb": 1,
-      "frage": "Das Schaubild der Vorlesung ordnet Unterrichtsmethoden drei Grundformen zu. Zu welcher Grundform gehört dort der Lehrgang?",
+      "frage": "Das Schaubild nach Terfloth und Bauersfeld ordnet Unterrichtsmethoden drei Grundformen zu. Zu welcher Grundform gehört dort der Lehrgang?",
       "optionen": [
-        { "text": "Zum gemeinsamen Unterricht", "korrekt": true },
-        { "text": "Zum individualisierten Unterricht", "korrekt": false },
-        { "text": "Zum kooperativen Unterricht", "korrekt": false },
-        { "text": "Zum offenen Unterricht - das ist die dritte Grundform", "korrekt": false }
+        {
+          "text": "Zum gemeinsamen Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Zum individualisierten Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Zum kooperativen Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Zum offenen Unterricht - das ist die dritte Grundform",
+          "korrekt": false
+        }
       ],
-      "erklaerung": "Der Lehrgang steht im Schaubild beim gemeinsamen Unterricht, neben Klassenunterricht, Kursarbeit, Präsentation und IT-Arbeit. Der naheliegende Fehlgriff ist der individualisierte Unterricht - dort stehen aber Freiarbeit, Werkstatt-, Stationen- und Planarbeit. Und Vorsicht: 'Offener Unterricht' ist gar keine der drei Grundformen (individualisiert, kooperativ, gemeinsam). (Notizen S. 24)",
+      "erklaerung": "Der Lehrgang steht im Schaubild beim gemeinsamen Unterricht, neben Klassenunterricht, Kursarbeit, Präsentation und IT-Arbeit. Der naheliegende Fehlgriff ist der individualisierte Unterricht - dort stehen aber Freiarbeit, Werkstatt-, Stationen- und Planarbeit. Und Vorsicht: 'Offener Unterricht' ist gar keine der drei Grundformen (individualisiert, kooperativ, gemeinsam). (Notizen S. 24) Achtung, bei Meyer sieht die Einteilung anders aus: Dort ist lehrgangsförmiger Unterricht eine eigene Grundform neben individualisierendem und kooperativem Unterricht. Die Frage muss also immer sagen, wessen Einteilung gemeint ist.",
       "quelle": "notizen-s24",
       "quelleSicherheit": "geprueft",
       "generiert": true
@@ -192,10 +342,22 @@
       "afb": 1,
       "frage": "Freiarbeit gilt als möglichst umfassend selbstbestimmter Lernprozess. Wodurch wird sie dennoch begrenzt?",
       "optionen": [
-        { "text": "Durch Regeln, die Logik der Sache, das Materialangebot und eigene Ziele", "korrekt": true },
-        { "text": "Durch einen Laufzettel, der Pflicht- und freiwillige Stationen vorgibt", "korrekt": false },
-        { "text": "Durch feste Phasen von der Demonstration bis zur Anwendung, die durchlaufen werden müssen", "korrekt": false },
-        { "text": "Gar nicht - Freiarbeit kennt per Definition keine Begrenzungen", "korrekt": false }
+        {
+          "text": "Durch Regeln, die Logik der Sache, das Materialangebot und eigene Ziele",
+          "korrekt": true
+        },
+        {
+          "text": "Durch einen Laufzettel, der Pflicht- und freiwillige Stationen vorgibt",
+          "korrekt": false
+        },
+        {
+          "text": "Durch feste Phasen von der Demonstration bis zur Anwendung, die durchlaufen werden müssen",
+          "korrekt": false
+        },
+        {
+          "text": "Gar nicht - Freiarbeit kennt per Definition keine Begrenzungen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Auch Freiarbeit hat Grenzen, und zwar vier: vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebots und die Zielsetzungen der Schüler:innen selbst. Der Laufzettel mit Pflichtstationen gehört zum Stationenlernen, die feste Phasenfolge zum Lehrgang - beides sind Nachbar-Decoys, keine Freiarbeit. (Notizen S. 28)",
       "quelle": "notizen-s28",
@@ -208,10 +370,22 @@
       "afb": 2,
       "frage": "In einer Hospitation notieren Sie: personen- und prozessbezogen, Grobstrukturierung, Langphasigkeit, ganzheitlich. Welcher Seite der Gegenüberstellung entspricht das?",
       "optionen": [
-        { "text": "Dem offenen Unterricht", "korrekt": true },
-        { "text": "Dem geschlossenen Unterricht", "korrekt": false },
-        { "text": "Dem Lehrgang", "korrekt": false },
-        { "text": "Einem Trainingsprogramm", "korrekt": false }
+        {
+          "text": "Dem offenen Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Dem geschlossenen Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Dem Lehrgang",
+          "korrekt": false
+        },
+        {
+          "text": "Einem Trainingsprogramm",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Alle vier Merkmale stehen in der Gegenüberstellungstabelle auf der offenen Seite. Die geschlossene Seite hält jeweils das Gegenstück bereit: lernzielorientiert, Feinstrukturierung, Kleinschrittigkeit, einseitig kognitiv. Lehrgang und Training sind Vertreter der geschlossenen Seite - wer sie wählt, liegt also gleich doppelt daneben. (Notizen S. 30)",
       "quelle": "notizen-s30",
@@ -224,10 +398,22 @@
       "afb": 2,
       "frage": "Werkstattunterricht bindet Schüler:innen an einer Stelle ein, die bei vielen anderen Formen allein der Lehrperson gehört. An welcher?",
       "optionen": [
-        { "text": "Bereits bei der Planung, etwa bei der Wahl des Lernweges", "korrekt": true },
-        { "text": "Bei der Benotung der Mitschüler:innen durch die Chef:innen", "korrekt": false },
-        { "text": "Beim Vormachen der Lösungshandlung wie im Lehrgang", "korrekt": false },
-        { "text": "Erst bei der Selbstkontrolle am Ende der Arbeit", "korrekt": false }
+        {
+          "text": "Bereits bei der Planung, etwa bei der Wahl des Lernweges",
+          "korrekt": true
+        },
+        {
+          "text": "Bei der Benotung der Mitschüler:innen durch die Chef:innen",
+          "korrekt": false
+        },
+        {
+          "text": "Beim Vormachen der Lösungshandlung wie im Lehrgang",
+          "korrekt": false
+        },
+        {
+          "text": "Erst bei der Selbstkontrolle am Ende der Arbeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zentrales Merkmal des Werkstattunterrichts ist neben der gestalteten Lernumgebung die Einbindung der Lernenden schon bei der Planung (Wiater 2008): Lernaspekte, Lernchancen, Lernweg, Material, Zeitablauf, Partnerwahl, Kontrolle. Der Fallstrick ist die Benotung: Chef:innen helfen, nehmen Ergebnisse entgegen und korrigieren - Noten vergeben sie nicht. (Notizen S. 27)",
       "quelle": "notizen-s27",
@@ -240,10 +426,22 @@
       "afb": 2,
       "frage": "Warum steht die Wochenplanarbeit in der Einführungsfolge erst nach der Tagesplanarbeit?",
       "optionen": [
-        { "text": "Weil die erhöhte Aufgabenzahl höhere Anforderungen an die Zeiteinteilung stellt", "korrekt": true },
-        { "text": "Weil die Wochenplanarbeit zu den geschlossenen Unterrichtsformen zählt", "korrekt": false },
-        { "text": "Weil beim Wochenplan keine Selbstkontrolle mehr möglich ist", "korrekt": false },
-        { "text": "Weil der Tagesplan bereits volle Wahlfreiheit über Ziele und Inhalte bietet", "korrekt": false }
+        {
+          "text": "Weil die erhöhte Aufgabenzahl höhere Anforderungen an die Zeiteinteilung stellt",
+          "korrekt": true
+        },
+        {
+          "text": "Weil die Wochenplanarbeit zu den geschlossenen Unterrichtsformen zählt",
+          "korrekt": false
+        },
+        {
+          "text": "Weil beim Wochenplan keine Selbstkontrolle mehr möglich ist",
+          "korrekt": false
+        },
+        {
+          "text": "Weil der Tagesplan bereits volle Wahlfreiheit über Ziele und Inhalte bietet",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Beim Wochenplan wächst die Aufgabenzahl - und damit die Anforderung, sich die Zeit über mehrere Tage selbst einzuteilen. Deshalb kommt er nach dem Tagesplan. Volle Wahlfreiheit über Ziele, Inhalte, Partner und Zeit bietet erst die Freiarbeit, die darum am Ende der Folge steht - das ist der Decoy. (Begründung Notizen S. 25, die Stufenfolge Einführung - Tagesplan - Stationenarbeit - Wochenplan - Freiarbeit steht auf S. 29)",
       "quelle": "notizen-s25",
@@ -256,10 +454,22 @@
       "afb": 1,
       "frage": "Ein Lehrgang behandelt die Geschichte des Automobils entlang ihrer zeitlichen Entwicklung. Welche Lehrgangsform liegt vor?",
       "optionen": [
-        { "text": "Genetische Form", "korrekt": true },
-        { "text": "Spiralcurriculum", "korrekt": false },
-        { "text": "Additiver Lehrgang", "korrekt": false },
-        { "text": "Konzentrisch-erweiternde Form", "korrekt": false }
+        {
+          "text": "Genetische Form",
+          "korrekt": true
+        },
+        {
+          "text": "Spiralcurriculum",
+          "korrekt": false
+        },
+        {
+          "text": "Additiver Lehrgang",
+          "korrekt": false
+        },
+        {
+          "text": "Konzentrisch-erweiternde Form",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die chronologisch-entwickelnde Darstellung eines Stoffes ist die genetische Form - typisch für geschichtliche Themen. Der Verwechsler ist das Spiralcurriculum: Dort kehrt derselbe Stoff auf zunehmend komplexerem Niveau wieder, es geht aber nicht um eine historische Abfolge. (Notizen S. 32)",
       "quelle": "notizen-s32",
@@ -272,10 +482,22 @@
       "afb": 2,
       "frage": "Ein Lehrgang startet bei der Stromversorgung eines einfachen Geräts, nimmt dann das Haus und schließlich die ganze Stadt in den Blick. Welche Lehrgangsform ist das?",
       "optionen": [
-        { "text": "Konzentrisch-erweiternde Form", "korrekt": true },
-        { "text": "Aufbau vom Elementaren her", "korrekt": false },
-        { "text": "Logisch-systematische Form", "korrekt": false },
-        { "text": "Ganzheitlicher Ausgangspunkt", "korrekt": false }
+        {
+          "text": "Konzentrisch-erweiternde Form",
+          "korrekt": true
+        },
+        {
+          "text": "Aufbau vom Elementaren her",
+          "korrekt": false
+        },
+        {
+          "text": "Logisch-systematische Form",
+          "korrekt": false
+        },
+        {
+          "text": "Ganzheitlicher Ausgangspunkt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Vom Nahen zum Ferneren - das ist die konzentrisch-erweiternde Form. Der engste Verwechsler ist der Aufbau vom Elementaren her: Auch dort taucht Elektrizität als Beispiel auf, aber es wird aus einem Element (dem Stromkreis) das Ganze verdeutlicht, statt räumlich immer weitere Kreise zu ziehen. (Notizen S. 33)",
       "quelle": "notizen-s33",
@@ -288,10 +510,22 @@
       "afb": 1,
       "frage": "Als Teil welchen Unterrichts werden Lehrgänge laut ISB (2019) betrachtet - obwohl sie zu den geschlossenen Formen zählen?",
       "optionen": [
-        { "text": "Des handlungsorientierten Unterrichts", "korrekt": true },
-        { "text": "Des offenen Unterrichts", "korrekt": false },
-        { "text": "Des Gesamtunterrichts", "korrekt": false },
-        { "text": "Der Freiarbeit", "korrekt": false }
+        {
+          "text": "Des handlungsorientierten Unterrichts",
+          "korrekt": true
+        },
+        {
+          "text": "Des offenen Unterrichts",
+          "korrekt": false
+        },
+        {
+          "text": "Des Gesamtunterrichts",
+          "korrekt": false
+        },
+        {
+          "text": "Der Freiarbeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Im Rahmen eines Lehrgangs erwerben Schüler:innen Fertigkeiten, die ihnen die Bewältigung des Alltags und den Erwerb neuer Kompetenzen ermöglichen - deshalb zählt das ISB Lehrgänge zum handlungsorientierten Unterricht. Der Gesamtunterricht ist ein Decoy aus dem Nachbarthema Konzeptionen: die Methode der frühen didaktischen Konzeptionen. (Notizen S. 31)",
       "quelle": "notizen-s31",
@@ -304,10 +538,22 @@
       "afb": 1,
       "frage": "Wovon sind Trainingsprogramme und Übungseinheiten laut Vorlesung begrifflich abzugrenzen?",
       "optionen": [
-        { "text": "Vom Begriff der Bildung und Erziehung", "korrekt": true },
-        { "text": "Von therapeutischen Ansätzen", "korrekt": false },
-        { "text": "Von der Schule insgesamt - dort haben sie keinen Platz", "korrekt": false },
-        { "text": "Von den geschlossenen Lehr-Lernformen", "korrekt": false }
+        {
+          "text": "Vom Begriff der Bildung und Erziehung",
+          "korrekt": true
+        },
+        {
+          "text": "Von therapeutischen Ansätzen",
+          "korrekt": false
+        },
+        {
+          "text": "Von der Schule insgesamt - dort haben sie keinen Platz",
+          "korrekt": false
+        },
+        {
+          "text": "Von den geschlossenen Lehr-Lernformen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Trainings und Übungseinheiten sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen in der Schule aber eine relevante Rolle. Der Decoy 'therapeutische Ansätze' führt in die Irre: Gerade die therapeutische Ausrichtung mit starker Strukturierung und Lernzielorientierung prägt sie - sie beschreibt sie also, statt sie abzugrenzen. (Notizen S. 30)",
       "quelle": "notizen-s30",
@@ -320,13 +566,165 @@
       "afb": 2,
       "frage": "Warum gibt es keine eindeutige Definition offenen Unterrichts?",
       "optionen": [
-        { "text": "Weil eine feste Definition der Offenheit selbst widersprechen würde (Knauf 2001)", "korrekt": true },
-        { "text": "Weil die Forschung zum offenen Unterricht noch ganz am Anfang steht", "korrekt": false },
-        { "text": "Weil sich die Definitionen von Wallrabenstein und Fischer gegenseitig widersprechen", "korrekt": false },
-        { "text": "Weil jede Schule selbst festlegen darf, was sie unter offenem Unterricht versteht", "korrekt": false }
+        {
+          "text": "Weil eine feste Definition der Offenheit selbst widersprechen würde (Knauf 2001)",
+          "korrekt": true
+        },
+        {
+          "text": "Weil die Forschung zum offenen Unterricht noch ganz am Anfang steht",
+          "korrekt": false
+        },
+        {
+          "text": "Weil sich die Definitionen von Wallrabenstein und Fischer gegenseitig widersprechen",
+          "korrekt": false
+        },
+        {
+          "text": "Weil jede Schule selbst festlegen darf, was sie unter offenem Unterricht versteht",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Argument ist begrifflich, nicht empirisch: Offen für Offenen Unterricht heißt laut Knauf (2001, 102) auch offen für Veränderungen und für verschiedene Interpretationen des Unterrichts - wer Offenheit eindeutig festlegt, hat sie schon wieder geschlossen. Der Decoy mit Wallrabenstein und Fischer zieht nicht - die beiden ergänzen sich: Wallrabenstein liefert den Sammelbegriff für Reformansätze, Fischer das Kriterium des Grades der Mit- bzw. Selbstbestimmung. (Notizen S. 23)",
       "quelle": "notizen-s23",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-mc-1",
+      "unterthema": "Grundformen nach Meyer",
+      "afb": 2,
+      "frage": "Bei Terfloth und Bauersfeld ist der Lehrgang eine Variation des gemeinsamen Unterrichts. Wie ordnet Hilbert Meyer ihn in seinem Schaubild ein?",
+      "optionen": [
+        {
+          "text": "Als eigene Säule lehrgangsförmiger Unterricht, geprägt von hoher Lehrerlenkung und überwiegend als Frontalunterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Als Variation des individualisierenden Unterrichts, weil jede:r im eigenen Tempo mitarbeitet",
+          "korrekt": false
+        },
+        {
+          "text": "Als Variation des kooperativen Unterrichts, weil die Lerngruppe gemeinsam ein Ziel verfolgt",
+          "korrekt": false
+        },
+        {
+          "text": "Gar nicht - bei Meyer kommt der Lehrgang im Schaubild nicht vor",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Meyer macht aus dem Lehrgang eine eigene der drei Säulen; ihr Kernkasten heißt direkte Instruktion beziehungsweise Lehrgänge. Genau darin unterscheiden sich die beiden Schaubilder, und genau das ist die Verwechslungsfalle: Für Klausurantworten ist die Trias von Terfloth und Bauersfeld die sichere Referenz, Meyers Trias sollte man kennen, aber nicht mit ihr vermischen. (Folie 7 gegenüber Folie 6)",
+      "quelle": "folie-unterrichtsformen-7",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-mc-2",
+      "unterthema": "Grundformen nach Meyer",
+      "afb": 2,
+      "frage": "Welche Rolle hat der gemeinsame Unterricht in Meyers Schaubild der Unterrichtsformen?",
+      "optionen": [
+        {
+          "text": "Er bildet den Rahmen über den drei Säulen, ist also keine eigene Grundform",
+          "korrekt": true
+        },
+        {
+          "text": "Er ist die dritte Säule neben individualisierendem und kooperativem Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Er ist eine Variation innerhalb der Säule des kooperativen Unterrichts",
+          "korrekt": false
+        },
+        {
+          "text": "Er meint bei Meyer das Lernen auf den Marktplätzen der Schule",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Bei Meyer läuft der gemeinsame Unterricht als Bogen über alle drei Säulen, mit Beispielen wie Klassenkonferenz und Morgenkreis; die dritte Säule ist stattdessen der lehrgangsförmige Unterricht. Der erste Decoy beschreibt die Einordnung bei Terfloth und Bauersfeld, wo der gemeinsame Unterricht wirklich eine der drei Grundformen ist - das ist der Kern der Verwechslungsgefahr. Der letzte Decoy meint den unteren Bogen desselben Schaubilds, also Feste und Feiern, Projektpräsentationen, Wettbewerbe und Internet. (Folie 7)",
+      "quelle": "folie-unterrichtsformen-7",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-mc-3",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Wie definiert die Vorlesung die Tagesplanarbeit?",
+      "optionen": [
+        {
+          "text": "Die Schüler:innen erhalten Aufgaben, die sie innerhalb eines Tages selbstständig bearbeiten; die Reihenfolge legen sie selbst fest, unterteilt wird in Pflicht- und Wahlaufgaben",
+          "korrekt": true
+        },
+        {
+          "text": "Die Schüler:innen erhalten für jeden Tag einen festen Ablauf, den sie in der vorgegebenen Reihenfolge abarbeiten",
+          "korrekt": false
+        },
+        {
+          "text": "Die Schüler:innen wählen Thema, Ziel und Zeitrahmen ihrer Aufgaben für den Tag vollständig selbst",
+          "korrekt": false
+        },
+        {
+          "text": "Die Schüler:innen bearbeiten an mehreren Orten im Raum nacheinander vorbereitete Aufgaben zu einem Thema",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Entscheidend sind die drei Bausteine: Aufgaben für einen Tag, selbst gewählte Reihenfolge, Pflicht- und Wahlaufgaben. Die Decoys markieren die Nachbarn: eine feste Reihenfolge wäre kein offener Unterricht mehr, die völlig freie Zielwahl wäre schon Freiarbeit, und der letzte Punkt beschreibt das Lernen an Stationen. (Folie 10, Pitsch & Thümmel 2019, 126)",
+      "quelle": "folie-unterrichtsformen-10",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-mc-4",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Um welche zwei Spalten kann ein Tagesplan laut Vorlesung ergänzt werden?",
+      "optionen": [
+        {
+          "text": "Um eine Kontrollspalte und eine Fertigspalte",
+          "korrekt": true
+        },
+        {
+          "text": "Um eine Pflichtspalte und eine Wahlspalte",
+          "korrekt": false
+        },
+        {
+          "text": "Um eine Zeitspalte und eine Materialspalte",
+          "korrekt": false
+        },
+        {
+          "text": "Um eine Partnerspalte und eine Sozialformspalte",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Folie zeigt zwei Pfeile auf den Tagesplan mit den Beschriftungen plus Kontrollspalte und plus Fertigspalte. Der erste Decoy ist der stärkste, weil Pflicht- und Wahlaufgaben wirklich zur Tagesplanarbeit gehören - sie sind aber die Aufgabenarten, nicht die beiden zusätzlichen Spalten. (Folie 10, Pitsch & Thümmel 2019, 126)",
+      "quelle": "folie-unterrichtsformen-10",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-mc-5",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 2,
+      "frage": "Woran orientieren sich Schüler:innen bei der Wochenplanarbeit zeitlich - und wodurch unterscheidet sich das von der Tagesplanarbeit?",
+      "optionen": [
+        {
+          "text": "An längeren Zeitabläufen wie Kalender und Wochenstundenplan; beim Tagesplan sind es kürzere Abläufe wie Uhr, Klingelzeichen oder Sanduhr",
+          "korrekt": true
+        },
+        {
+          "text": "An der Uhr und am Klingelzeichen; beim Tagesplan gibt es dagegen gar keine zeitliche Orientierungshilfe",
+          "korrekt": false
+        },
+        {
+          "text": "An einem Laufzettel, auf dem die Bearbeitungszeiten je Station eingetragen werden",
+          "korrekt": false
+        },
+        {
+          "text": "An der Vorgabe der Lehrkraft, die für jede Aufgabe eine feste Bearbeitungszeit festlegt",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Beide Pläne setzen ein lineares Zeitverständnis voraus, arbeiten aber mit verschiedenen Hilfsmitteln: der Tagesplan mit Uhr, Klingelzeichen, Sanduhr oder einem Uhr-Ersatz, der Wochenplan mit Kalender und Wochenstundenplan. Daraus folgt der Unterschied im Zeitmanagement, kurzfristig gegenüber flexibel mittelfristig. Der Laufzettel im dritten Decoy gehört zum Lernen an Stationen. (Folie 14 gegenüber Folie 11, Pitsch & Thümmel 2019, 128 und 130)",
+      "quelle": "folie-unterrichtsformen-14",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }
@@ -399,14 +797,14 @@
     {
       "id": "uf-gen-f-1",
       "afb": 2,
-      "frage": "Ordnen Sie die Methoden Freiarbeit, Stationenarbeit, Projektarbeit, Theaterarbeit, Lehrgang und Klassenunterricht den drei Grundformen des Unterrichts zu und nennen Sie zu jeder Grundform eine weitere Variation.",
+      "frage": "Ordnen Sie die Methoden Freiarbeit, Stationenarbeit, Projektarbeit, Theaterarbeit, Lehrgang und Klassenunterricht den drei Grundformen nach Terfloth und Bauersfeld zu und nennen Sie zu jeder Grundform eine weitere Variation.",
       "stichpunkte": [
         "Individualisierter Unterricht: Freiarbeit, Stationenarbeit - weitere Variationen: Werkstattarbeit, Planarbeit, Hausarbeit, Computerarbeit, außerschulische Arbeit, Lehr- und Lernfahrten",
         "Kooperativer Unterricht: Projektarbeit, Theaterarbeit - weitere Variationen: Zukunftswerkstatt, Feste und Feiern, Klassenfahrten",
         "Gemeinsamer Unterricht: Lehrgang, Klassenunterricht - weitere Variationen: Kursarbeit, Präsentation, IT-Arbeit"
       ],
       "muster": "Die Vorlesung unterscheidet drei Grundformen des Unterrichts. Zum individualisierten Unterricht gehören die Freiarbeit und die Stationenarbeit, außerdem etwa die Werkstattarbeit oder die Planarbeit. Zum kooperativen Unterricht zählen die Projektarbeit und die Theaterarbeit, als weitere Variation zum Beispiel die Zukunftswerkstatt. Der Lehrgang und der Klassenunterricht sind Variationen des gemeinsamen Unterrichts, ebenso wie die Kursarbeit oder die Präsentation.",
-      "tipp": "Der Stolperstein ist der Lehrgang: Er fühlt sich nach Einzelarbeit an, steht im Schaubild aber beim gemeinsamen Unterricht. Wenn du den sicher hast, ist der Rest gut zu erschließen.",
+      "tipp": "Der Stolperstein ist der Lehrgang: Er fühlt sich nach Einzelarbeit an, steht im Schaubild aber beim gemeinsamen Unterricht. Wenn du den sicher hast, ist der Rest gut zu erschließen. Wenn in der Klausur nach Grundformen gefragt wird, kurz dazuschreiben, wessen Einteilung du nutzt: Bei Meyer ist der Lehrgang eine eigene Grundform, bei Terfloth und Bauersfeld gehört er zum gemeinsamen Unterricht.",
       "quelle": "notizen-s24",
       "quelleSicherheit": "geprueft",
       "generiert": true
@@ -443,6 +841,29 @@
       "muster": "Für die These spricht, dass Trainingsprogramme und Übungseinheiten laut Vorlesung tatsächlich vom Begriff der Bildung und Erziehung abzugrenzen sind: Sie sind therapeutisch ausgerichtet und durch starke Strukturierung und Lernzielorientierung geprägt. Zudem stehen sie klar auf der geschlossenen Seite des Unterrichts und lassen den Schüler:innen wenig Raum für Selbstbestimmung. Gegen die These spricht erstens, dass die Vorlesung ihnen ausdrücklich eine relevante Rolle in der Schule zuschreibt, und zweitens ihre Wirksamkeit beim Aufbau lebenspraktischer Kompetenzen - etwa beim kleinschrittigen Training des Zähneputzens nach Richter (1980); gerade für Schüler:innen mit autistischem Verhalten sind strukturierte, programmartige Ansätze bedeutsam. In der Bewertung überzeugt die These daher nicht: Ihr erster Teil ist richtig, die Schlussfolgerung aber falsch. Dass Trainings keine Bildung im engeren Sinn sind, schließt sie nicht aus der Schule aus - sie ergänzen Bildung und Erziehung dort, wo lebenspraktische Fertigkeiten systematisch aufgebaut werden müssen.",
       "tipp": "Diskutieren ist ein AFB-III-Operator: zwei Punkte dafür, zwei dagegen und am Ende eine eigene begründete Bewertung, in ganzen Sätzen und mit Fachbegriffen. Die Pointe hier: eine These kann halb wahr sein, dann zerlegst du sie in Prämisse und Schlussfolgerung.",
       "quelle": "notizen-s30",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "uf-fol-f-1",
+      "afb": 2,
+      "frage": "Die Vorlesung zeigt zwei Schaubilder zu den grundlegenden Unterrichtsformen: eines nach Terfloth und Bauersfeld, eines nach Hilbert Meyer. Stellen Sie beide gegenüber und erläutern Sie, worin sie sich unterscheiden.",
+      "stichpunkte": [
+        "Terfloth & Bauersfeld (2015, 160) unterscheiden drei Grundformen: individualisierter Unterricht, kooperativer Unterricht und gemeinsamer Unterricht - jeweils mit Variationen",
+        "Variationen individualisierter Unterricht: Freiarbeit, Werkstattarbeit, Stationenarbeit, Planarbeit, Hausarbeit, Computerarbeit, außerschulische Arbeit, Lehr- und Lernfahrten",
+        "Variationen kooperativer Unterricht: Projektarbeit, Theaterarbeit, Zukunftswerkstatt, Feste und Feiern, Klassenfahrten",
+        "Variationen gemeinsamer Unterricht: Klassenunterricht, Kursarbeit, Präsentation, Lehrgang, IT-Arbeit",
+        "Meyer setzt ebenfalls drei Säulen an, aber andere: individualisierender Unterricht (Kern: Freiarbeit), lehrgangsförmiger Unterricht (Kern: direkte Instruktion beziehungsweise Lehrgänge) und kooperativer Unterricht (Kern: Projektarbeit)",
+        "Kurzcharakteristik bei Meyer: individualisierend mit hohen Anteilen selbstorganisierten Lernens, überwiegend Einzel- und Partnerarbeit; lehrgangsförmig mit hohem Ausmaß an Lehrerlenkung, überwiegend Frontalunterricht; kooperativ mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit",
+        "Erster Unterschied: Der Lehrgang ist bei Terfloth & Bauersfeld eine Variation des gemeinsamen Unterrichts, bei Meyer dagegen eine eigene Säule",
+        "Zweiter Unterschied: Gemeinsamer Unterricht ist bei Terfloth & Bauersfeld eine der drei Grundformen, bei Meyer dagegen der Rahmen über allen drei Säulen (Beispiele Klassenkonferenz, Morgenkreis)",
+        "Bei Meyer kommt ein Rahmenelement hinzu, das bei Terfloth & Bauersfeld fehlt: das Lernen auf den Marktplätzen der Schule (Feste und Feiern, Projektpräsentationen, Wettbewerbe, Internet)",
+        "Einordnung: Für Klausurantworten ist Folie 6 die sichere Referenz, weil die Kompetenzerwartung von den drei grundlegenden Unterrichtsformen spricht; Meyers Schaubild sollte man kennen, aber nicht mit dem ersten vermischen",
+        "Gemeinsamkeit beider Modelle: Individualisierung und Kooperation gelten in beiden als eigenständige Grundformen, und beide ordnen konkrete Methoden einer übergeordneten Form zu statt sie nur aufzuzählen"
+      ],
+      "muster": "Die Vorlesung stellt zwei Schaubilder nebeneinander, die beide drei grundlegende Unterrichtsformen unterscheiden, dies aber unterschiedlich zuschneiden. Terfloth und Bauersfeld nennen den individualisierten, den kooperativen und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem Freiarbeit, Werkstattarbeit, Stationenarbeit und Planarbeit, zum kooperativen Unterricht Projektarbeit, Theaterarbeit, Zukunftswerkstatt sowie Feste und Feiern, und zum gemeinsamen Unterricht Klassenunterricht, Kursarbeit, Präsentation, Lehrgang und IT-Arbeit. Hilbert Meyer setzt in seinem Schaubild ebenfalls drei Säulen an, ersetzt aber eine davon. Bei ihm stehen der individualisierende Unterricht mit der Freiarbeit im Kern, der lehrgangsförmige Unterricht mit der direkten Instruktion im Kern und der kooperative Unterricht mit der Projektarbeit im Kern. Er charakterisiert sie zusätzlich über die Anteile: der individualisierende Unterricht mit hohen Anteilen selbstorganisierten Lernens und überwiegend Einzel- und Partnerarbeit, der lehrgangsförmige mit einem hohen Ausmaß an Lehrerlenkung und überwiegend Frontalunterricht, der kooperative mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit. Daraus ergeben sich zwei wesentliche Unterschiede. Erstens ist der Lehrgang bei Terfloth und Bauersfeld nur eine Variation innerhalb des gemeinsamen Unterrichts, während er bei Meyer zu einer eigenen Säule aufgewertet wird. Zweitens ist der gemeinsame Unterricht bei Terfloth und Bauersfeld selbst eine der drei Grundformen, bei Meyer dagegen der Rahmen, der sich als Bogen über alle drei Säulen legt und Formen wie Klassenkonferenz und Morgenkreis umfasst. Hinzu kommt bei Meyer ein Element, das im ersten Schaubild fehlt: das Lernen auf den Marktplätzen der Schule mit Festen und Feiern, Projektpräsentationen, Wettbewerben und Internet. Für die Klausur ist die Trias von Terfloth und Bauersfeld die sichere Bezugsgröße, denn die Kompetenzerwartung spricht von den drei grundlegenden Unterrichtsformen. Meyers Schaubild lohnt sich trotzdem, weil es sichtbar macht, dass die Zuordnung des Lehrgangs eine Entscheidung und keine Selbstverständlichkeit ist.",
+      "tipp": "Das Meyer-Schaubild fehlt in deinen Notizen komplett, und genau darin liegt die Stolperfalle: Wenn in einer Aufgabe von den drei Grundformen die Rede ist, ist Terfloth und Bauersfeld gemeint. Merkhilfe für den Unterschied: Bei Meyer wandert der Lehrgang nach oben in eine eigene Säule, und das Gemeinsame wandert nach ganz oben als Dach.",
+      "quelle": "folie-unterrichtsformen-7",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }

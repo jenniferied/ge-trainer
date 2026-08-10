@@ -2,8 +2,14 @@
   "id": "entwicklungsbereiche",
   "titel": "Entwicklungsbereiche & dualer Unterricht",
   "vorlesung": "V3",
-  "leitfrage": "Was sind die Entwicklungsbereiche im SGE und wie verschränkt dualer Unterricht Fach- und Entwicklungsorientierung?",
-  "unterthemen": ["Die 4 Entwicklungsbereiche (KMK)", "Entwicklungsförderung in der Schule", "Dualer Unterricht", "Entwicklungsbereiche in den Lehrplänen"],
+  "leitfrage": "Wie können wir Schüler:innen in den einzelnen Entwicklungsbereichen unterstützen und fördern?",
+  "unterthemen": [
+    "Die 4 Entwicklungsbereiche (KMK)",
+    "Entwicklungsförderung in der Schule",
+    "Dualer Unterricht",
+    "Entwicklungsbereiche in den Lehrplänen",
+    "Entwicklungsbereiche & lebenspraktische Kompetenzen"
+  ],
   "mc": [
     {
       "id": "eb-mc-1",
@@ -11,10 +17,22 @@
       "afb": 1,
       "frage": "Welche vier Entwicklungsbereiche im SGE nennt die KMK (2021)?",
       "optionen": [
-        { "text": "Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung", "korrekt": true },
-        { "text": "Lesen, Schreiben, Rechnen, Sport", "korrekt": false },
-        { "text": "Sehen, Hören, Riechen, Tasten", "korrekt": false },
-        { "text": "Disziplin, Ordnung, Fleiß, Pünktlichkeit", "korrekt": false }
+        {
+          "text": "Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung",
+          "korrekt": true
+        },
+        {
+          "text": "Lesen, Schreiben, Rechnen, Sport",
+          "korrekt": false
+        },
+        {
+          "text": "Sehen, Hören, Riechen, Tasten",
+          "korrekt": false
+        },
+        {
+          "text": "Disziplin, Ordnung, Fleiß, Pünktlichkeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die vier Entwicklungsbereiche nach KMK (2021, 6 ff.) sind Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung. Diese vier solltest du auswendig können - das war eine der Beispielaufgaben.",
       "quelle": "notizen-s44",
@@ -26,10 +44,22 @@
       "afb": 1,
       "frage": "Unterstützung der Merkfähigkeit, handlungsplanendes Denken, Problemlösen und Entfaltung von Kreativität gehören zu welchem Entwicklungsbereich?",
       "optionen": [
-        { "text": "Kognition", "korrekt": true },
-        { "text": "Kommunikation", "korrekt": false },
-        { "text": "Motorik und Wahrnehmung", "korrekt": false },
-        { "text": "Emotionale und soziale Entwicklung", "korrekt": false }
+        {
+          "text": "Kognition",
+          "korrekt": true
+        },
+        {
+          "text": "Kommunikation",
+          "korrekt": false
+        },
+        {
+          "text": "Motorik und Wahrnehmung",
+          "korrekt": false
+        },
+        {
+          "text": "Emotionale und soziale Entwicklung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zum Bereich Kognition gehören: Unterstützung der Merkfähigkeit, Entwicklung des handlungsplanenden Denkens, Erkennen und Bewerten von Analogien und Zusammenhängen, Problemlösen und Entfaltung von Kreativität.",
       "quelle": "notizen-s44",
@@ -41,10 +71,22 @@
       "afb": 1,
       "frage": "Wortschatzerweiterung einschließlich Begriffsbildung und die Entwicklung eines sprachlichen Selbstkonzeptes gehören zu welchem Entwicklungsbereich?",
       "optionen": [
-        { "text": "Kommunikation", "korrekt": true },
-        { "text": "Kognition", "korrekt": false },
-        { "text": "Emotionale und soziale Entwicklung", "korrekt": false },
-        { "text": "Motorik und Wahrnehmung", "korrekt": false }
+        {
+          "text": "Kommunikation",
+          "korrekt": true
+        },
+        {
+          "text": "Kognition",
+          "korrekt": false
+        },
+        {
+          "text": "Emotionale und soziale Entwicklung",
+          "korrekt": false
+        },
+        {
+          "text": "Motorik und Wahrnehmung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zum Bereich Kommunikation gehören: Erweiterung der individuellen Sprechfähigkeit, des Wortschatzes einschließlich Begriffsbildung, des Sprachverständnisses und die Entwicklung eines sprachlichen Selbstkonzeptes. Kommunikationsformen: basal, nonverbal, mündlich, schriftlich.",
       "quelle": "notizen-s44",
@@ -56,10 +98,22 @@
       "afb": 1,
       "frage": "Förderung der emotionalen Stabilität, des Sozialverhaltens und die Befähigung, soziale Beziehungen einzugehen und zu gestalten - welcher Bereich?",
       "optionen": [
-        { "text": "Emotionale und soziale Entwicklung", "korrekt": true },
-        { "text": "Motorik und Wahrnehmung", "korrekt": false },
-        { "text": "Kommunikation", "korrekt": false },
-        { "text": "Kognition", "korrekt": false }
+        {
+          "text": "Emotionale und soziale Entwicklung",
+          "korrekt": true
+        },
+        {
+          "text": "Motorik und Wahrnehmung",
+          "korrekt": false
+        },
+        {
+          "text": "Kommunikation",
+          "korrekt": false
+        },
+        {
+          "text": "Kognition",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Der Bereich emotionale und soziale Entwicklung umfasst die Förderung der emotionalen Stabilität, des Sozialverhaltens, der Lern- und Arbeitsbereitschaft sowie die Befähigung, soziale Beziehungen einzugehen und zu gestalten.",
       "quelle": "notizen-s44",
@@ -71,10 +125,22 @@
       "afb": 1,
       "frage": "Wie war die Geistigbehindertenpädagogik disziplingeschichtlich zunächst ausgerichtet - und was kam in den letzten Jahren dazu?",
       "optionen": [
-        { "text": "Erst entwicklungsbezogen und lebenspraktisch dominierend, in den letzten Jahren zunehmende Fachorientierung", "korrekt": true },
-        { "text": "Erst rein fachorientiert, später nur noch lebenspraktisch", "korrekt": false },
-        { "text": "Von Anfang an ausschließlich fachorientiert", "korrekt": false },
-        { "text": "Die Ausrichtung hat sich nie verändert", "korrekt": false }
+        {
+          "text": "Erst entwicklungsbezogen und lebenspraktisch dominierend, in den letzten Jahren zunehmende Fachorientierung",
+          "korrekt": true
+        },
+        {
+          "text": "Erst rein fachorientiert, später nur noch lebenspraktisch",
+          "korrekt": false
+        },
+        {
+          "text": "Von Anfang an ausschließlich fachorientiert",
+          "korrekt": false
+        },
+        {
+          "text": "Die Ausrichtung hat sich nie verändert",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Ab den Anfängen dominierte eine entwicklungsbezogene und lebenspraktische Ausrichtung (Lindmeier/Lindmeier 2019), erst in den letzten Jahren kam eine zunehmende Fachorientierung dazu (Ratz 2010, Musberg 2019). Bei beidem besteht die Gefahr der Überbetonung - gefragt ist eine individuell angemessene Balance (Jöhnck 2024).",
       "quelle": "notizen-s46",
@@ -86,10 +152,22 @@
       "afb": 1,
       "frage": "Was ist dualer Unterricht?",
       "optionen": [
-        { "text": "Unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit der Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft", "korrekt": true },
-        { "text": "Unterricht, der abwechselnd in Schule und Betrieb stattfindet", "korrekt": false },
-        { "text": "Unterricht mit genau zwei Lehrkräften", "korrekt": false },
-        { "text": "Zwei Fächer werden im selben Raum parallel unterrichtet", "korrekt": false }
+        {
+          "text": "Unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit der Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft",
+          "korrekt": true
+        },
+        {
+          "text": "Unterricht, der abwechselnd in Schule und Betrieb stattfindet",
+          "korrekt": false
+        },
+        {
+          "text": "Unterricht mit genau zwei Lehrkräften",
+          "korrekt": false
+        },
+        {
+          "text": "Zwei Fächer werden im selben Raum parallel unterrichtet",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Im dualen Unterricht wird das unterrichtsfachliche Lernen unterrichtsimmanent sowie systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023, 65). Der Name hat nichts mit der dualen Berufsausbildung zu tun - beliebter Verwechslungs-Trick.",
       "quelle": "notizen-s47",
@@ -101,10 +179,22 @@
       "afb": 1,
       "frage": "Welche gehört zu den Grundformen dualen Unterrichts nach Jöhnck/Baumann (2023)?",
       "optionen": [
-        { "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht", "korrekt": true },
-        { "text": "Wöchentlicher Betriebspraktikumstag", "korrekt": false },
-        { "text": "Verpflichtender Frontalunterricht am Vormittag", "korrekt": false },
-        { "text": "Trennung von Fach- und Entwicklungszielen auf verschiedene Schulen", "korrekt": false }
+        {
+          "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Wöchentlicher Betriebspraktikumstag",
+          "korrekt": false
+        },
+        {
+          "text": "Verpflichtender Frontalunterricht am Vormittag",
+          "korrekt": false
+        },
+        {
+          "text": "Trennung von Fach- und Entwicklungszielen auf verschiedene Schulen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die fünf Grundformen: solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht, lerngruppenbezogene Umsetzung individueller Entwicklungsziele, (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen, intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt, parallele Verwirklichung mehrerer (verwandter) Entwicklungsschwerpunkte.",
       "quelle": "notizen-s48",
@@ -116,10 +206,22 @@
       "afb": 1,
       "frage": "Wo kann Entwicklung in der Schule außerhalb des regulären Unterrichts unterstützt werden?",
       "optionen": [
-        { "text": "U. a. in Essenszeiten, Pausen und Pflegesituationen, über Elternarbeit, Patenschaften, Therapien und Trainingsprogramme", "korrekt": true },
-        { "text": "Ausschließlich im Klassenraum während der Unterrichtsstunden", "korrekt": false },
-        { "text": "Nur in externen Therapiezentren, nie in der Schule", "korrekt": false },
-        { "text": "Entwicklungsförderung ist keine Aufgabe der Schule", "korrekt": false }
+        {
+          "text": "U. a. in Essenszeiten, Pausen und Pflegesituationen, über Elternarbeit, Patenschaften, Therapien und Trainingsprogramme",
+          "korrekt": true
+        },
+        {
+          "text": "Ausschließlich im Klassenraum während der Unterrichtsstunden",
+          "korrekt": false
+        },
+        {
+          "text": "Nur in externen Therapiezentren, nie in der Schule",
+          "korrekt": false
+        },
+        {
+          "text": "Entwicklungsförderung ist keine Aufgabe der Schule",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Entwicklung kann u. a. über gute pädagogische Beziehungen, Elternarbeit, Schüler:innenpatenschaften, in Essenszeiten und Pausen, in Pflegesituationen, über Therapien und wissenschaftlich evaluierte Trainingsprogramme gefördert werden. Zentraler Fokus sollte aber auch der reguläre (Fach-)Unterricht sein.",
       "quelle": "notizen-s46",
@@ -131,10 +233,22 @@
       "afb": 2,
       "frage": "In einer Klassenkonferenz soll für eine Schülerin ein Förderziel zum Entwicklungsschwerpunkt Leben in der Demokratie festgehalten werden. Zu welchem Entwicklungsbereich des NRW-Lehrplans (MSB 2022) gehört dieser Schwerpunkt?",
       "optionen": [
-        { "text": "Sozialisation", "korrekt": true },
-        { "text": "Kommunikation", "korrekt": false },
-        { "text": "Kognition", "korrekt": false },
-        { "text": "Wahrnehmung", "korrekt": false }
+        {
+          "text": "Sozialisation",
+          "korrekt": true
+        },
+        {
+          "text": "Kommunikation",
+          "korrekt": false
+        },
+        {
+          "text": "Kognition",
+          "korrekt": false
+        },
+        {
+          "text": "Wahrnehmung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Leben in der Demokratie steht in der NRW-Übersicht unter Sozialisation, und zwar im Strang Soziabilität - dort geht es um soziales Handeln, interpersonale Kompetenzen, Gemeinschaftsleben und eben das Leben in der Demokratie. Der Decoy Kommunikation ist verlockend, weil demokratisches Handeln viel mit Aushandeln zu tun hat; der NRW-Bereich Kommunikation umfasst aber nur Stimme und Sprechen, Äußerungen produzieren und aufnehmen sowie das Miteinander-Kommunizieren. Kognition und Wahrnehmung führen diesen Schwerpunkt gar nicht. (Notizen S. 45)",
       "quelle": "notizen-s45",
@@ -147,10 +261,22 @@
       "afb": 1,
       "frage": "Bei der Entwicklung welcher vier Felder benötigen Kinder und Jugendliche im SGE laut den Grundsätzen des Berlin-Brandenburger Rahmenlehrplans besondere Unterstützung?",
       "optionen": [
-        { "text": "Wahrnehmung, Sprache, Denken und Handeln", "korrekt": true },
-        { "text": "Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung", "korrekt": false },
-        { "text": "Motorik, Wahrnehmung, Kognition und Sozialisation", "korrekt": false },
-        { "text": "Lesen, Schreiben, Rechnen und Bewegung", "korrekt": false }
+        {
+          "text": "Wahrnehmung, Sprache, Denken und Handeln",
+          "korrekt": true
+        },
+        {
+          "text": "Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung",
+          "korrekt": false
+        },
+        {
+          "text": "Motorik, Wahrnehmung, Kognition und Sozialisation",
+          "korrekt": false
+        },
+        {
+          "text": "Lesen, Schreiben, Rechnen und Bewegung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Der RLP für Berlin und Brandenburg spricht von der Entwicklung von Wahrnehmung, Sprache, Denken und Handeln - dazu Unterstützung zur selbstständigen und selbstbestimmten Lebensführung und zur Entfaltung der Persönlichkeit. Der Decoy ist die KMK-Viererliste: richtig wichtig, aber eine andere Systematik aus einem anderen Dokument. (Notizen S. 45)",
       "quelle": "notizen-s45",
@@ -163,10 +289,22 @@
       "afb": 2,
       "frage": "Was ist mit der babylonischen Begriffsverwirrung rund um die Entwicklungsbereiche gemeint?",
       "optionen": [
-        { "text": "Es kursiert eine immense Vielfalt sich überschneidender Begriffe mit Bezug zu den Entwicklungsbereichen - etwa überfachliche, formale oder adaptive Kompetenzen", "korrekt": true },
-        { "text": "Die Fachwelt ist sich uneinig, wie geistige Behinderung definiert werden soll", "korrekt": false },
-        { "text": "Schüler:innen im SGE haben besondere Schwierigkeiten, Begriffe zu bilden", "korrekt": false },
-        { "text": "Die vier KMK-Bereiche werden in jedem Bundesland komplett anders benannt", "korrekt": false }
+        {
+          "text": "Es kursiert eine immense Vielfalt sich überschneidender Begriffe mit Bezug zu den Entwicklungsbereichen - etwa überfachliche, formale oder adaptive Kompetenzen",
+          "korrekt": true
+        },
+        {
+          "text": "Die Fachwelt ist sich uneinig, wie geistige Behinderung definiert werden soll",
+          "korrekt": false
+        },
+        {
+          "text": "Schüler:innen im SGE haben besondere Schwierigkeiten, Begriffe zu bilden",
+          "korrekt": false
+        },
+        {
+          "text": "Die vier KMK-Bereiche werden in jedem Bundesland komplett anders benannt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Gemeint ist die Begriffsvielfalt in der Fachliteratur: überfachliche Kompetenzen, formale Kompetenzen, adaptive Kompetenzen, Lebenskompetenzen, Befähigungsbereiche und mehr - alles Begriffe mit deutlichen Bezügen zu den Entwicklungsbereichen. Der Decoy zur Begriffsbildung der Schüler:innen verwechselt die Ebene: Dort geht es um einen Förderschwerpunkt im Bereich Kommunikation, nicht um die Fachterminologie. (Notizen S. 46 - dort ist der rechte Rand der Folie angeschnitten, die Aufzählung selbst ist aber vollständig lesbar.)",
       "quelle": "notizen-s46",
@@ -179,10 +317,22 @@
       "afb": 2,
       "frage": "Entwicklungsbezogene und unterrichtsfachliche Kompetenzen überschneiden sich. Welches Beispiel aus der Vorlesung belegt das?",
       "optionen": [
-        { "text": "Kommunikative Fähigkeiten sind zugleich Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch", "korrekt": true },
-        { "text": "Problemlösen aus dem Bereich Kognition ist zugleich Kernziel des Sportunterrichts", "korrekt": false },
-        { "text": "Feinmotorik wird ausschließlich im Fach Kunst gefördert", "korrekt": false },
-        { "text": "Soziales Handeln ist deckungsgleich mit dem Fach Sachunterricht", "korrekt": false }
+        {
+          "text": "Kommunikative Fähigkeiten sind zugleich Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch",
+          "korrekt": true
+        },
+        {
+          "text": "Problemlösen aus dem Bereich Kognition ist zugleich Kernziel des Sportunterrichts",
+          "korrekt": false
+        },
+        {
+          "text": "Feinmotorik wird ausschließlich im Fach Kunst gefördert",
+          "korrekt": false
+        },
+        {
+          "text": "Soziales Handeln ist deckungsgleich mit dem Fach Sachunterricht",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Vorlesungsbeispiel: Kommunikative Fähigkeiten bilden zugleich den Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch (Jöhnck 2020). Die Decoys klingen nach demselben Muster, kombinieren aber Bereich und Fach falsch bzw. behaupten Exklusivität oder Deckungsgleichheit, die so nirgends steht. (Notizen S. 46)",
       "quelle": "notizen-s46",
@@ -195,10 +345,22 @@
       "afb": 2,
       "frage": "Aus welchen Kontexten heraus wird das Konzept der dualen Unterrichtsplanung bislang vor allem propagiert?",
       "optionen": [
-        { "text": "Aus sprachheilpädagogischen Kontexten und der Fachrichtung Emotionale und soziale Entwicklung", "korrekt": true },
-        { "text": "Aus der beruflichen Bildung mit ihrem dualen Ausbildungssystem", "korrekt": false },
-        { "text": "Ausschließlich aus der Fachrichtung Geistige Entwicklung selbst", "korrekt": false },
-        { "text": "Aus den Fachdidaktiken der Naturwissenschaften", "korrekt": false }
+        {
+          "text": "Aus sprachheilpädagogischen Kontexten und der Fachrichtung Emotionale und soziale Entwicklung",
+          "korrekt": true
+        },
+        {
+          "text": "Aus der beruflichen Bildung mit ihrem dualen Ausbildungssystem",
+          "korrekt": false
+        },
+        {
+          "text": "Ausschließlich aus der Fachrichtung Geistige Entwicklung selbst",
+          "korrekt": false
+        },
+        {
+          "text": "Aus den Fachdidaktiken der Naturwissenschaften",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Propagiert wird das Konzept vor allem in sprachheilpädagogischen Kontexten (z. B. Berg 2018) und aus der Fachrichtung Emotionale und soziale Entwicklung (z. B. Urban/Leidig 2017), zudem fachrichtungsübergreifend. Der Decoy berufliche Bildung spielt mit der Namensverwechslung - dualer Unterricht hat nichts mit der dualen Ausbildung zu tun. (Notizen S. 47)",
       "quelle": "notizen-s47",
@@ -211,10 +373,22 @@
       "afb": 2,
       "frage": "In einer Klasse werden alle Schüler:innen im selben Entwicklungsschwerpunkt gefördert, wobei sich fachliche und entwicklungsbezogene Ziele kaum decken. Welche Grundform dualen Unterrichts liegt vor?",
       "optionen": [
-        { "text": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele", "korrekt": true },
-        { "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht", "korrekt": false },
-        { "text": "(Nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen", "korrekt": false },
-        { "text": "Intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt", "korrekt": false }
+        {
+          "text": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele",
+          "korrekt": true
+        },
+        {
+          "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "(Nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen",
+          "korrekt": false
+        },
+        {
+          "text": "Intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Kennzeichen dieser Grundform: Individuelle Entwicklungsbedarfe einzelner münden in eine (teil-)gruppenbezogene Förderung, alle arbeiten im selben Entwicklungsschwerpunkt, fachliche und entwicklungsbezogene Ziele sind getrennt. Der Decoy solitäre Förderung beschreibt das Gegenteil auf der Gruppenebene: Dort verfolgt nur ein Kind allein sein individuelles Ziel. (Notizen S. 49)",
       "quelle": "notizen-s49",
@@ -227,10 +401,22 @@
       "afb": 2,
       "frage": "Ein einzelnes Kind arbeitet im Kunstunterricht mit einer Kommunikationstafel, um seine Kommunikation zu fördern, während die Lerngruppe am gemeinsamen Fachthema bleibt. Welche Grundform dualen Unterrichts ist das?",
       "optionen": [
-        { "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht", "korrekt": true },
-        { "text": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele", "korrekt": false },
-        { "text": "Parallele Verwirklichung mehrerer verwandter Entwicklungsschwerpunkte", "korrekt": false },
-        { "text": "(Nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen", "korrekt": false }
+        {
+          "text": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele",
+          "korrekt": false
+        },
+        {
+          "text": "Parallele Verwirklichung mehrerer verwandter Entwicklungsschwerpunkte",
+          "korrekt": false
+        },
+        {
+          "text": "(Nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Kommunikationstafel im Kunstunterricht (Scholz/Stegkemper 2022) ist ein Vorlesungsbeispiel für die solitäre individuelle Entwicklungsförderung: unterrichtsintegriert werden allein individuell bestimmte Ziele angegangen. Der Decoy lerngruppenbezogene Umsetzung würde bedeuten, dass die ganze (Teil-)Gruppe im selben Entwicklungsschwerpunkt gefördert wird - hier ist es nur das eine Kind. (Notizen S. 48)",
       "quelle": "notizen-s48",
@@ -243,10 +429,22 @@
       "afb": 2,
       "frage": "Der duale Unterricht wird als weitgehendes Desiderat bezeichnet. Worauf bezieht sich das genau?",
       "optionen": [
-        { "text": "Es fehlt eine systematische, umfassende und insbesondere empirisch fundierte Konzeptualisierung - nicht die Zahl der Publikationen", "korrekt": true },
-        { "text": "Es gibt bislang kaum Veröffentlichungen zum dualen Unterricht", "korrekt": false },
-        { "text": "Das Konzept wurde empirisch überprüft und hat sich nicht bewährt", "korrekt": false },
-        { "text": "Es fehlen bislang jegliche Praxisbeispiele für die Umsetzung", "korrekt": false }
+        {
+          "text": "Es fehlt eine systematische, umfassende und insbesondere empirisch fundierte Konzeptualisierung - nicht die Zahl der Publikationen",
+          "korrekt": true
+        },
+        {
+          "text": "Es gibt bislang kaum Veröffentlichungen zum dualen Unterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Das Konzept wurde empirisch überprüft und hat sich nicht bewährt",
+          "korrekt": false
+        },
+        {
+          "text": "Es fehlen bislang jegliche Praxisbeispiele für die Umsetzung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Fazit stellt ausdrücklich klar: Desiderat ist nicht die Vielzahl an Publikationen, sondern die systematische, empirisch fundierte Konzeptualisierung - insbesondere im SGE. Der Decoy mit den fehlenden Veröffentlichungen dreht genau diese Klarstellung um; auch Praxisbeispiele gibt es reichlich (Jöhnck 2024 beschreibt die Grundformen anhand vielfältiger Beispiele). (Notizen S. 49)",
       "quelle": "notizen-s49",
@@ -259,10 +457,22 @@
       "afb": 2,
       "frage": "Warum sollte dualer Unterricht laut Fazit der Vorlesung nicht isoliert aus der Fachrichtung Geistige Entwicklung heraus betrachtet werden?",
       "optionen": [
-        { "text": "Weil die Kooperation mit den Fachdidaktiken gefragt ist und die sonderpädagogischen Fachrichtungen ihr Wissen stärker vernetzen sollten", "korrekt": true },
-        { "text": "Weil dualer Unterricht im SGE gar nicht umsetzbar ist", "korrekt": false },
-        { "text": "Weil die Zuständigkeit vollständig an die Regelschulpädagogik übergeben werden soll", "korrekt": false },
-        { "text": "Weil die Entwicklungsbereiche nur außerhalb des Unterrichts gefördert werden können", "korrekt": false }
+        {
+          "text": "Weil die Kooperation mit den Fachdidaktiken gefragt ist und die sonderpädagogischen Fachrichtungen ihr Wissen stärker vernetzen sollten",
+          "korrekt": true
+        },
+        {
+          "text": "Weil dualer Unterricht im SGE gar nicht umsetzbar ist",
+          "korrekt": false
+        },
+        {
+          "text": "Weil die Zuständigkeit vollständig an die Regelschulpädagogik übergeben werden soll",
+          "korrekt": false
+        },
+        {
+          "text": "Weil die Entwicklungsbereiche nur außerhalb des Unterrichts gefördert werden können",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Fazit fordert vielfältige wissenschaftliche Perspektiven: insbesondere Kooperation mit den Fachdidaktiken und eine stärkere Vernetzung der sonderpädagogischen Fachrichtungen untereinander (Jöhnck/Berg 2026). Der Decoy zur Förderung nur außerhalb des Unterrichts widerspricht der Kernaussage, dass gerade der reguläre Fachunterricht zentraler Fokus der Entwicklungsförderung sein sollte. (Notizen S. 49)",
       "quelle": "notizen-s49",
@@ -275,13 +485,165 @@
       "afb": 1,
       "frage": "Welche Fähigkeit hebt das KMK-Zitat (2021, S. 6) zu den bedeutsamen Angeboten im SGE mit dem Wort insbesondere hervor?",
       "optionen": [
-        { "text": "Die Fähigkeit, sich und die Umwelt wahrnehmen zu können", "korrekt": true },
-        { "text": "Die Fähigkeit, lesen und schreiben zu lernen", "korrekt": false },
-        { "text": "Die Fähigkeit, sich sprachlich mitzuteilen", "korrekt": false },
-        { "text": "Die Fähigkeit, Konflikte selbstständig zu lösen", "korrekt": false }
+        {
+          "text": "Die Fähigkeit, sich und die Umwelt wahrnehmen zu können",
+          "korrekt": true
+        },
+        {
+          "text": "Die Fähigkeit, lesen und schreiben zu lernen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Fähigkeit, sich sprachlich mitzuteilen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Fähigkeit, Konflikte selbstständig zu lösen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Zitat nennt Angebote, die kognitive, kommunikative, emotionale, soziale und motorische Fähigkeiten stärken - und hebt dann hervor: Hierzu gehört insbesondere die Fähigkeit, sich und die Umwelt wahrnehmen zu können. Der Decoy sprachliche Mitteilung gehört zwar zu den gestärkten Fähigkeiten, ist aber nicht die besonders hervorgehobene. (Notizen S. 43)",
       "quelle": "notizen-s43",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-mc-1",
+      "unterthema": "Dualer Unterricht",
+      "afb": 2,
+      "frage": "Eine Klasse behandelt im Sachunterricht das Thema Unsere fünf Sinne. Welche Grundform dualen Unterrichts liegt darin, und woran erkennt man sie?",
+      "optionen": [
+        {
+          "text": "Die (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen, weil das Fachthema und der Entwicklungsbereich Wahrnehmung praktisch dasselbe bearbeiten",
+          "korrekt": true
+        },
+        {
+          "text": "Die solitäre individuelle Entwicklungsförderung, weil einzelne Kinder dabei an eigenen Wahrnehmungszielen arbeiten",
+          "korrekt": false
+        },
+        {
+          "text": "Die intermittierend temporäre Konzentration, weil in dieser Reihe zeitweise der Fachaspekt im Vordergrund steht",
+          "korrekt": false
+        },
+        {
+          "text": "Die parallele Verwirklichung mehrerer verwandter Entwicklungsschwerpunkte, weil alle fünf Sinne zugleich angesprochen werden",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Folie nennt genau dieses Beispiel: Unsere fünf Sinne im Sachunterricht fällt zugleich in den Entwicklungsbereich Wahrnehmung - Fachanliegen und Entwicklungsanliegen decken sich nahezu. Der letzte Decoy ist der verlockendste, weil das Wort parallel und die fünf Sinne gut zusammenzupassen scheinen; gemeint ist dort aber die Arbeit an mehreren Entwicklungsschwerpunkten, nicht an mehreren Sinnen innerhalb eines Bereichs. (Folie 25, vgl. Jöhnck 2024, S. 55 ff.)",
+      "quelle": "folie-entwicklungsbereiche-25",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-mc-2",
+      "unterthema": "Dualer Unterricht",
+      "afb": 2,
+      "frage": "Womit begründet die Vorlesung, dass Fach- und Entwicklungsanliegen manchmal bewusst nicht in gleichem Umfang verfolgt werden?",
+      "optionen": [
+        {
+          "text": "Sonst droht eine Überfrachtung des Unterrichtsgeschehens und damit eine Überforderung von Lernenden und Lehrenden",
+          "korrekt": true
+        },
+        {
+          "text": "Sonst lässt sich der Lernfortschritt nicht mehr eindeutig einem Fach zuordnen und die Leistungsbewertung wird unklar",
+          "korrekt": false
+        },
+        {
+          "text": "Weil Entwicklungsziele grundsätzlich Vorrang vor fachlichen Zielen haben",
+          "korrekt": false
+        },
+        {
+          "text": "Weil der Rahmenlehrplan für jede Unterrichtsstunde nur ein einziges Ziel zulässt",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Begründung ist eine Zumutungsfrage, keine Verwaltungsfrage: Zu viel auf einmal überfrachtet den Unterricht und überfordert beide Seiten. Deshalb variiert die Gewichtung zwischen Fachziel und Entwicklungsziel zeitweise. Der zweite Decoy klingt professionell, spielt aber auf Leistungsbewertung an, die hier gar nicht der Punkt ist, und der dritte dreht die Balance in eine Rangordnung um, die die Vorlesung gerade nicht behauptet. (Folie 27, vgl. Jöhnck 2024, 59 ff.)",
+      "quelle": "folie-entwicklungsbereiche-27",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-mc-3",
+      "unterthema": "Dualer Unterricht",
+      "afb": 2,
+      "frage": "Wodurch unterscheiden sich die Grundformen (nahezu) Deckungsgleichheit und intermittierend temporäre Konzentration voneinander?",
+      "optionen": [
+        {
+          "text": "Bei der ersten fallen Fach- und Entwicklungsanliegen inhaltlich fast zusammen, bei der zweiten bleiben sie verschieden und werden zeitweise unterschiedlich stark gewichtet",
+          "korrekt": true
+        },
+        {
+          "text": "Bei der ersten arbeitet die ganze Lerngruppe am selben Ziel, bei der zweiten nur einzelne Schüler:innen an eigenen Zielen",
+          "korrekt": false
+        },
+        {
+          "text": "Bei der ersten liegt der Schwerpunkt auf dem Fach, bei der zweiten auf der Entwicklung",
+          "korrekt": false
+        },
+        {
+          "text": "Die erste ist für den Sachunterricht vorgesehen, die zweite für die künstlerischen Fächer",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Der Unterschied liegt im Verhältnis der beiden Anliegen zueinander: einmal Inhaltsgleichheit, einmal bewusst wechselnde Gewichtung bei bleibender Verschiedenheit. Der zweite Decoy beschreibt in Wahrheit den Unterschied zwischen den Grundformen 1 und 2, der dritte macht aus der zeitweisen Gewichtung eine feste Richtung, und der vierte erfindet eine Fächerzuordnung, die es nicht gibt - die Beispiele stammen aus Sachunterricht, Ethik, Geschichte, Deutsch und Kunst. (Folien 25 und 27)",
+      "quelle": "folie-entwicklungsbereiche-27",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-mc-4",
+      "unterthema": "Entwicklungsbereiche & lebenspraktische Kompetenzen",
+      "afb": 2,
+      "frage": "Ein Kollege sagt: Lebenspraktischer Unterricht ist etwas anderes als Entwicklungsförderung, das eine ersetzt das andere. Was hält die Vorlesung dem entgegen?",
+      "optionen": [
+        {
+          "text": "Auch lebenspraktische und lebensweltbezogene Kompetenzen setzen sich aus Kompetenzen in den Entwicklungsbereichen zusammen",
+          "korrekt": true
+        },
+        {
+          "text": "Lebenspraktische Kompetenzen bilden einen eigenen zusätzlichen Entwicklungsbereich neben den bekannten",
+          "korrekt": false
+        },
+        {
+          "text": "Lebenspraktische Kompetenzen gehören in die Werkstufe, Entwicklungsförderung in die Unter- und Mittelstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Lebenspraktische Kompetenzen sind Aufgabe des Elternhauses, Entwicklungsförderung Aufgabe der Schule",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Folie zerlegt das Beispiel Sich waschen quer über die Spalten Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation - lebenspraktisch und entwicklungsbezogen sind also keine Gegensätze, sondern zwei Blickwinkel auf dieselbe Sache. Der erste Decoy erfindet einen zusätzlichen Bereich, die beiden anderen verteilen die Aufgabe auf Stufen oder auf Zuständigkeiten und weichen der eigentlichen Frage damit aus. Achtung bei den Namen: Diese Tabelle stammt aus NRW und teilt anders auf als die KMK-Vierteilung Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung. (Folie 14, QUA-LiS NRW 2022; KMK-Systematik auf Folie 10)",
+      "quelle": "folie-entwicklungsbereiche-14",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-mc-5",
+      "unterthema": "Entwicklungsförderung in der Schule",
+      "afb": 1,
+      "frage": "Die Vorlesung zeigt Praxisbeispiele, in denen Klassenregeln wie 'Ich bin freundlich' in einzelne Indikatoren aufgelöst sind. Wie sind diese Indikatoren im gezeigten Beispiel zustande gekommen?",
+      "optionen": [
+        {
+          "text": "Die Kinder haben im Rahmen einer Unterrichtsreihe in Rollenspielen konkretes freundliches Verhalten erprobt; die Indikatoren hängen anschließend zur Erinnerung im Klassenraum",
+          "korrekt": true
+        },
+        {
+          "text": "Die Lehrkraft hat sie aus dem Schulprogramm abgeleitet und für die Klasse übersetzt",
+          "korrekt": false
+        },
+        {
+          "text": "Sie sind den Empfehlungen der KMK zum Entwicklungsbereich Sozialisation entnommen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Klasse hat sie im Klassenrat beschlossen und regelmäßig neu abgestimmt",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Bildunterschrift sagt es ausdrücklich: erst gemeinsam im Rollenspiel erproben, dann als sichtbare Erinnerung aufhängen. Die drei Decoys sind lauter Wege, die es in Schulen wirklich gibt, hier aber nicht beschrieben werden - der Unterschied zwischen abgeleitet, beschlossen und selbst erprobt ist genau der Punkt. (Folie 6, aus Schäpers/Storcks-Kemming 2024, S. 174)",
+      "quelle": "folie-entwicklungsbereiche-6",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }
@@ -400,6 +762,53 @@
       "muster": "Für exklusive Angebote außerhalb des regulären Unterrichts spricht, dass sie einen starken, gezielten Fokus auf die Entwicklungsbereiche und lebensweltbezogene Kompetenzen erlauben - etwa über Therapien oder wissenschaftlich evaluierte Trainingsprogramme; auch Essenszeiten, Pausen und Pflegesituationen sowie gute pädagogische Beziehungen, Elternarbeit und Patenschaften bieten Förderchancen jenseits der Unterrichtsstunde. Solche Angebote werden in der Vorlesung ausdrücklich als immer wieder sinnvoll eingeordnet. Dagegen lässt sich einwenden, dass die Schule ihren inhaltlich und zeitlich zentralen Fokus im regulären (Fach-)Unterricht hat: Wenn Entwicklungsförderung vor allem in Sonderangebote ausgelagert wird, bleibt der größte Teil der Schulzeit ungenutzt. In meiner Bewertung gehört der Schwerpunkt deshalb in den regulären Unterricht, der für die Entwicklungsförderung hohe Priorität haben sollte - der duale Unterricht zeigt konzeptionell, wie fachliches Lernen und Entwicklungsförderung dort systematisch verschränkt werden können. Exklusive Angebote behalten daneben ihren Wert als gezielte Ergänzung.",
       "tipp": "Erörtern heißt: erst beide Seiten mit Argumenten würdigen, dann eine begründete Stellungnahme abgeben. Ohne die Stellungnahme bleibt die Antwort auf AFB II stehen. Ein Satz zum dualen Unterricht am Schluss zeigt, dass du die Verbindung zwischen beiden Wegen mitdenkst.",
       "quelle": "notizen-s46",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-f-1",
+      "afb": 2,
+      "frage": "Erläutern Sie am Beispiel Sich waschen, warum sich auch lebenspraktische und lebensweltbezogene Kompetenzen aus Kompetenzen in den Entwicklungsbereichen zusammensetzen. Ziehen Sie eine Folgerung für die Unterrichtsplanung.",
+      "stichpunkte": [
+        "Grundaussage: Auch lebenspraktische und lebensweltbezogene Kompetenzen setzen sich aus Kompetenzen in den Entwicklungsbereichen zusammen (QUA-LiS NRW 2022)",
+        "Wichtig zur Einordnung: Die Tabelle dieser Folie stammt aus NRW und arbeitet mit den Spalten Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation - das ist eine andere Aufteilung als die KMK-Systematik der Vorlesung (Kognition, Kommunikation, emotionale und soziale Entwicklung, Motorik und Wahrnehmung). Inhaltlich decken beide dasselbe Feld ab, nur anders gebündelt",
+        "Beispiel Sich waschen umfasst unter anderem Körperteile und den ganzen Körper mit Wasser und geeigneten Reinigungsmaterialien waschen, beim Duschen, Baden, am Handwaschbecken, sich abtrocknen",
+        "Motorik: Hände öffnen und schließen, einen Gegenstand ergreifen und halten, einen Gegenstand mit Fingern und Händen handhaben",
+        "Wahrnehmung: einen Bewegungsfluss steuern, den Geruchssinn zur Wahrnehmung von Hygienebedürfnissen nutzen, die Hände zielgerichtet zu einem Gegenstand koordinieren",
+        "Kognition: Konzentration auf einen Lerngegenstand aufbauen und aufrechterhalten, verschiedene Handlungen koordinieren, Handlungsabfolgen nachahmen",
+        "Sozialisation: die Grenzen des eigenen Körpers wahrnehmen, eigene Lösungswege bewerten",
+        "Kommunikation: Körperberührungen bemerken, folgerichtig auf einfache gesprochene Mitteilungen reagieren, auf körperliche Zuwendung reagieren, erste Formen gemeinsamen Tuns zeigen",
+        "Folgerung 1: Lebenspraktisch und entwicklungsbezogen sind keine Alternativen - wer lebenspraktisch unterrichtet, fördert immer schon in Entwicklungsbereichen, ob er es benennt oder nicht",
+        "Folgerung 2: Für die Planung heißt das, eine lebenspraktische Handlung in ihre entwicklungsbezogenen Anteile zu zerlegen; dann wird sichtbar, wo genau ein Kind Unterstützung braucht - nicht 'kann sich nicht waschen', sondern zum Beispiel 'koordiniert Hand und Blick noch nicht zielgerichtet'",
+        "Folgerung 3: Das entschärft die disziplingeschichtliche Frontstellung zwischen entwicklungsbezogener und fachlicher Ausrichtung und stützt die geforderte Balance",
+        "Anschluss: Damit ist die Brücke zum dualen Unterricht geschlagen, der Fach- und Entwicklungsorientierung planvoll verschränkt"
+      ],
+      "muster": "Die Vorlesung hält fest, dass sich auch lebenspraktische und lebensweltbezogene Kompetenzen aus Kompetenzen in den Entwicklungsbereichen zusammensetzen. Das lässt sich am Beispiel Sich waschen zeigen, das die einzelnen Körperteile ebenso umfasst wie das Waschen des ganzen Körpers beim Duschen, Baden oder am Handwaschbecken und schließlich das Abtrocknen. Zerlegt man diese scheinbar einfache Handlung, ist jede Spalte der Tabelle beteiligt, also Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation. Im Bereich Motorik geht es darum, die Hände zu öffnen und zu schließen, einen Gegenstand zu ergreifen und zu halten und ihn mit Fingern und Händen zu handhaben. Im Bereich Wahrnehmung sind es das Steuern eines Bewegungsflusses, die Nutzung des Geruchssinns zur Wahrnehmung von Hygienebedürfnissen und die zielgerichtete Koordination der Hände zu einem Gegenstand. Der Bereich Kognition ist gefragt, wenn Konzentration auf den Lerngegenstand aufgebaut und gehalten, verschiedene Handlungen koordiniert oder Handlungsabfolgen nachgeahmt werden. Zur Sozialisation gehören das Wahrnehmen der Grenzen des eigenen Körpers und das Bewerten eigener Lösungswege, und im Bereich Kommunikation geht es darum, Körperberührungen zu bemerken, auf einfache gesprochene Mitteilungen folgerichtig zu reagieren und erste Formen gemeinsamen Tuns zu zeigen. Daraus folgt für die Unterrichtsplanung zweierlei. Erstens sind lebenspraktischer Unterricht und Entwicklungsförderung keine Alternativen: Wer lebenspraktisch unterrichtet, fördert immer schon in Entwicklungsbereichen, ob er das benennt oder nicht. Zweitens lohnt es sich, genau diese Zerlegung planvoll vorzunehmen. Dann tritt an die Stelle der pauschalen Feststellung, ein Kind könne sich noch nicht selbst waschen, eine präzise Beschreibung, etwa dass die zielgerichtete Koordination von Hand und Blick noch Unterstützung braucht. Damit wird die Förderung überhaupt erst planbar. Zugleich entschärft dieser Blick die alte Frontstellung zwischen entwicklungsbezogener und fachlicher Ausrichtung und stützt die geforderte Balance, denn er zeigt, dass beide Perspektiven denselben Gegenstand von zwei Seiten beschreiben.",
+      "tipp": "Du musst nicht alle Einzelkompetenzen der Tabelle auswendig können - zwei bis drei pro Spalte reichen völlig, und die lassen sich am Beispiel gut herleiten, wenn du dir das Händewaschen einmal Schritt für Schritt vorstellst. Nicht irritieren lassen: Diese NRW-Tabelle hat fünf Spalten, die KMK-Systematik der Vorlesung vier Bereiche - gemeint ist dasselbe Feld, nur anders gebündelt. Stark wird die Antwort durch die Folgerung am Schluss: von der pauschalen Beschreibung zur präzisen.",
+      "quelle": "folie-entwicklungsbereiche-14",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "eb-fol-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie die Grundformen (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen sowie intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt. Geben Sie zu jeder ein Beispiel und begründen Sie, warum es diese Vielfalt an Grundformen überhaupt braucht.",
+      "stichpunkte": [
+        "Vorbemerkung: Nach Jöhnck/Baumann (2023) und Jöhnck (2024) sind mindestens fünf Grundformen der Verwirklichung dualen Unterrichts zu unterscheiden; die beiden hier gefragten sind die dritte und die vierte",
+        "Grundform 3, (nahezu) Deckungsgleichheit: Fach- und Entwicklungsanliegen können sehr nah beieinander bis sogar deckend sein",
+        "Beispiel zu 3: Das Thema 'Cool bleiben - Konflikte klären' im Fach Ethik beziehungsweise Praktische Philosophie ist zugleich in besonderem Maße Entwicklungsbereich Sozialisation",
+        "Beispiel zu 3: Das Thema 'Unsere fünf Sinne' im Sachunterricht ist zugleich Entwicklungsbereich Wahrnehmung",
+        "Beispiel zu 3: Das Vergleichen im Geschichtsunterricht, etwa in der Reihe 'Sah es in Nordkirchen schon immer so aus?', in der frühere und heutige Ortsansichten verglichen werden",
+        "Grundform 4, intermittierend temporär: In gewissen Kontexten kann es geboten sein, Fach- und Entwicklungsanliegen nicht in gleich umfänglichem Maße zu verwirklichen",
+        "Begründung zu 4: Sonst kann es zu einer Überfrachtung des Unterrichtsgeschehens und einhergehend zu einer Überforderung von Lernenden und Lehrenden kommen",
+        "Beispiel zu 4: unterschiedliche Varianten der Gewichtung der Förderung von Erzählkompetenz und kooperativen Kompetenzen im Deutschunterricht bei Rolf und Lang (2026); auf der Folie als Waage zwischen Fachziel und Entwicklungsziel dargestellt",
+        "Beispiel zu 4: der Scherenführerschein im Kunstunterricht - dazu die Einschränkung der Vorlesung selbst, dass dieses Beispiel ggf. nur so halb zur Grundform passt und auch etwas vom deckungsgleichen Unterricht hat",
+        "Warum diese Vielfalt: Nur Vielfalt und Offenheit entsprechen der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in Lerngruppen",
+        "Ergänzend: Bei jeder Grundform gibt es neben spezifischen Chancen auch typische Stolpersteine"
+      ],
+      "muster": "Nach Jöhnck und Baumann lassen sich mindestens fünf Grundformen unterscheiden, in denen dualer Unterricht verwirklicht wird; die dritte und die vierte sollen hier näher betrachtet werden. Die dritte Grundform ist die nahezu vollständige Deckungsgleichheit von Fach- und Entwicklungsanliegen. Gemeint ist, dass beide Anliegen sehr nah beieinander liegen können, bis sie sich praktisch decken. Ein Beispiel ist das Thema Cool bleiben, Konflikte klären im Fach Ethik beziehungsweise Praktische Philosophie, das zugleich in besonderem Maße den Entwicklungsbereich Sozialisation bearbeitet. Ein zweites ist das Thema Unsere fünf Sinne im Sachunterricht, das zugleich Entwicklungsbereich Wahrnehmung ist. Auch das Vergleichen im Geschichtsunterricht gehört hierher, etwa in einer Reihe, in der frühere und heutige Ansichten desselben Ortes miteinander verglichen werden. Die vierte Grundform, die intermittierend temporäre Konzentration auf den Fach- oder den Entwicklungsaspekt, geht von einer anderen Ausgangslage aus. Hier fallen die beiden Anliegen gerade nicht zusammen, und es kann geboten sein, sie nicht in gleich umfänglichem Maße zu verwirklichen. Der Grund ist eine Zumutungsgrenze: Andernfalls droht eine Überfrachtung des Unterrichtsgeschehens und damit eine Überforderung sowohl der Lernenden als auch der Lehrenden. Deshalb wird die Gewichtung zeitweise verschoben, mal zugunsten des Fachziels, mal zugunsten des Entwicklungsziels. Als Beispiel dienen unterschiedliche Varianten der Gewichtung von Erzählkompetenz und kooperativen Kompetenzen im Deutschunterricht; die Folie stellt das als Waage zwischen Fachziel und Entwicklungsziel dar. Ein zweites Beispiel ist der Scherenführerschein im Kunstunterricht, wobei die Vorlesung selbst einräumt, dass dieses Beispiel nur bedingt passt und auch Züge des deckungsgleichen Unterrichts trägt. Dass es diese Vielfalt an Grundformen überhaupt gibt, hat einen einfachen Grund: Nur Vielfalt und Offenheit entsprechen der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in einer Lerngruppe. Eine einzige Umsetzungsvariante würde entweder einzelne Kinder oder ganze Gruppen nicht erreichen. Zugleich gilt für jede Grundform, dass sie neben spezifischen Chancen auch typische Stolpersteine mit sich bringt.",
+      "tipp": "Diese beiden Grundformen stehen in deinen Notizen nur als Listenpunkte, ohne Erklärung und ohne Beispiel - hier lohnt sich der Blick auf die Folien also besonders. Merkhilfe: Bei der dritten Grundform fällt beides zusammen, bei der vierten wird abwechselnd gewichtet. Dass die Dozentin ihr eigenes Scheren-Beispiel relativiert, kannst du in einer Antwort ruhig erwähnen; das zeigt genaues Hinsehen.",
+      "quelle": "folie-entwicklungsbereiche-25",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }

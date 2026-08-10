@@ -2,8 +2,15 @@
   "id": "konzeptionen",
   "titel": "Didaktische Konzeptionen & ICF",
   "vorlesung": "V3",
-  "leitfrage": "Wie haben sich die didaktischen Konzeptionen im SGE gewandelt - und was bedeutet das ICF-Modell für die schulische Bildung?",
-  "unterthemen": ["ICF-Modell", "Wandel der Konzeptionen", "Klafki", "Feuser & Pitsch", "Bildungsinhalte & RLP"],
+  "leitfrage": "Welche Ziele werden gefördert und welche Bildungsinhalte werden im SGE ausgewählt?",
+  "unterthemen": [
+    "ICF-Modell",
+    "Wandel der Konzeptionen",
+    "Klafki",
+    "Feuser & Pitsch",
+    "Bildungsinhalte & RLP",
+    "Spannungsfelder der Disziplin"
+  ],
   "mc": [
     {
       "id": "ko-mc-1",
@@ -11,12 +18,24 @@
       "afb": 1,
       "frage": "Wie versteht die ICF (WHO) Behinderung?",
       "optionen": [
-        { "text": "Als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren", "korrekt": true },
-        { "text": "Als rein medizinisch feststellbaren Defekt einer Person", "korrekt": false },
-        { "text": "Als ausschließlich gesellschaftlich erzeugtes Phänomen ohne körperliche Anteile", "korrekt": false },
-        { "text": "Als unveränderliches, stabiles Persönlichkeitsmerkmal", "korrekt": false }
+        {
+          "text": "Als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren",
+          "korrekt": true
+        },
+        {
+          "text": "Als rein medizinisch feststellbaren Defekt einer Person",
+          "korrekt": false
+        },
+        {
+          "text": "Als ausschließlich gesellschaftlich erzeugtes Phänomen ohne körperliche Anteile",
+          "korrekt": false
+        },
+        {
+          "text": "Als unveränderliches, stabiles Persönlichkeitsmerkmal",
+          "korrekt": false
+        }
       ],
-      "erklaerung": "Die Funktionsfähigkeit wie auch die Behinderung eines Menschen wird in der ICF als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren dargestellt (WHO 2005). Weder rein medizinisch noch rein gesellschaftlich - das ist das biopsychosoziale Modell.",
+      "erklaerung": "Die Funktionsfähigkeit wie auch die Behinderung eines Menschen wird in der ICF als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren dargestellt (vgl. Terfloth & Bauersfeld 2015, 34 f.). Weder rein medizinisch noch rein gesellschaftlich - das ist das biopsychosoziale Modell.",
       "quelle": "notizen-s51",
       "quelleSicherheit": "geprueft"
     },
@@ -26,10 +45,22 @@
       "afb": 1,
       "frage": "Welche Bestandteile gehören zum biopsychosozialen ICF-Modell?",
       "optionen": [
-        { "text": "Körperfunktionen und -strukturen, Aktivitäten, Partizipation, Umweltfaktoren, personenbezogene Faktoren", "korrekt": true },
-        { "text": "Intelligenz, Motivation, Disziplin, Elternhaus", "korrekt": false },
-        { "text": "Diagnose, Therapie, Prognose", "korrekt": false },
-        { "text": "Input, Prozess, Output", "korrekt": false }
+        {
+          "text": "Körperfunktionen und -strukturen, Aktivitäten, Partizipation, Umweltfaktoren, personenbezogene Faktoren",
+          "korrekt": true
+        },
+        {
+          "text": "Intelligenz, Motivation, Disziplin, Elternhaus",
+          "korrekt": false
+        },
+        {
+          "text": "Diagnose, Therapie, Prognose",
+          "korrekt": false
+        },
+        {
+          "text": "Input, Prozess, Output",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das ICF-Modell verbindet das Gesundheitsproblem mit Körperfunktionen und -strukturen, Aktivitäten und Partizipation (Teilhabe) sowie den Kontextfaktoren: Umweltfaktoren und personenbezogene Faktoren.",
       "quelle": "notizen-s51",
@@ -41,10 +72,22 @@
       "afb": 2,
       "frage": "Warum ist die ICF für die Schule relevant?",
       "optionen": [
-        { "text": "Ihre Sichtweise prägt die deutsche Sozialgesetzgebung und die schulische sonderpädagogische Förderung", "korrekt": true },
-        { "text": "Sie schreibt verbindliche Stundenpläne für Förderschulen vor", "korrekt": false },
-        { "text": "Sie regelt die Notengebung im Förderschwerpunkt", "korrekt": false },
-        { "text": "Sie ist nur für Ärzt:innen relevant, nicht für Schulen", "korrekt": false }
+        {
+          "text": "Ihre Sichtweise prägt die deutsche Sozialgesetzgebung und die schulische sonderpädagogische Förderung",
+          "korrekt": true
+        },
+        {
+          "text": "Sie schreibt verbindliche Stundenpläne für Förderschulen vor",
+          "korrekt": false
+        },
+        {
+          "text": "Sie regelt die Notengebung im Förderschwerpunkt",
+          "korrekt": false
+        },
+        {
+          "text": "Sie ist nur für Ärzt:innen relevant, nicht für Schulen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Sichtweise der ICF prägt sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung: Potentielle Barrieren für Aktivität und Partizipation können differenziert erfasst werden, und über Unterrichtsumfeld, Hilfsmittel und personelle Hilfe wird größtmögliche Aktivität und Partizipation angestrebt. Für Kinder und Jugendliche gibt es die ICF-CY.",
       "quelle": "notizen-s51",
@@ -56,10 +99,22 @@
       "afb": 1,
       "frage": "Welches Ziel verfolgte die defizitäre/reduktionistische didaktische Konzeption (Saegert, Fuchs)?",
       "optionen": [
-        { "text": "Brauchbarmachung und Nutzen für die Allgemeinheit", "korrekt": true },
-        { "text": "Autonomie der Schüler:innen", "korrekt": false },
-        { "text": "Persönliche Sinnstiftung", "korrekt": false },
-        { "text": "Selbstbestimmung und Solidaritätsfähigkeit", "korrekt": false }
+        {
+          "text": "Brauchbarmachung und Nutzen für die Allgemeinheit",
+          "korrekt": true
+        },
+        {
+          "text": "Autonomie der Schüler:innen",
+          "korrekt": false
+        },
+        {
+          "text": "Persönliche Sinnstiftung",
+          "korrekt": false
+        },
+        {
+          "text": "Selbstbestimmung und Solidaritätsfähigkeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die defizitäre/reduktionistische Konzeption zielte auf Brauchbarmachung und den Nutzen für die Allgemeinheit - mit Sinnes- und Funktionsschulung als Inhalten und Gesamtunterricht als Methode. Autonomie, Sinnstiftung und Selbstbestimmung sind Ziele der späteren Konzeptionen.",
       "quelle": "notizen-s52",
@@ -71,10 +126,22 @@
       "afb": 1,
       "frage": "Was kennzeichnet die kompetenz-/entwicklungsorientierte Konzeption (Speck, Mühl, John)?",
       "optionen": [
-        { "text": "Ziel Autonomie, allgemeine Bildungsinhalte, handlungsorientierter Unterricht", "korrekt": true },
-        { "text": "Ziel Brauchbarmachung, Funktionsschulung, Gesamtunterricht", "korrekt": false },
-        { "text": "Selbstständigkeit ohne Selbstbestimmung, partikulare Inhalte", "korrekt": false },
-        { "text": "Verzicht auf jegliche Bildungsinhalte zugunsten von Pflege", "korrekt": false }
+        {
+          "text": "Ziel Autonomie, allgemeine Bildungsinhalte, handlungsorientierter Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Ziel Brauchbarmachung, Funktionsschulung, Gesamtunterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Selbstständigkeit ohne Selbstbestimmung, partikulare Inhalte",
+          "korrekt": false
+        },
+        {
+          "text": "Verzicht auf jegliche Bildungsinhalte zugunsten von Pflege",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die kompetenz-/entwicklungsorientierte Konzeption zielt auf Autonomie, arbeitet mit allgemeinen Bildungsinhalten und setzt auf handlungsorientierten Unterricht. Selbstständigkeit ohne Selbstbestimmung war das Ziel der defizitorientierten Konzeption.",
       "quelle": "notizen-s52",
@@ -86,10 +153,22 @@
       "afb": 1,
       "frage": "Welche Ziele verfolgt die entwicklungslogische Didaktik nach Feuser?",
       "optionen": [
-        { "text": "Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit - mit offenem Unterricht", "korrekt": true },
-        { "text": "Brauchbarmachung durch Sinnesschulung", "korrekt": false },
-        { "text": "Selbsterkenntnis durch lebenskundliche Inhalte im Gesamtunterricht", "korrekt": false },
-        { "text": "Reine Wissensvermittlung im Frontalunterricht", "korrekt": false }
+        {
+          "text": "Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit - mit offenem Unterricht",
+          "korrekt": true
+        },
+        {
+          "text": "Brauchbarmachung durch Sinnesschulung",
+          "korrekt": false
+        },
+        {
+          "text": "Selbsterkenntnis durch lebenskundliche Inhalte im Gesamtunterricht",
+          "korrekt": false
+        },
+        {
+          "text": "Reine Wissensvermittlung im Frontalunterricht",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Feusers entwicklungslogische Didaktik zielt auf Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, arbeitet mit allgemeinen Bildungsinhalten und offenem Unterricht. Sein Leitsatz: Egal, wie ein Kind beschaffen ist, es hat das Recht, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt (Feuser 1999).",
       "quelle": "notizen-s52",
@@ -101,10 +180,22 @@
       "afb": 1,
       "frage": "Aus welchen drei Analysen besteht die dreidimensionale didaktische Struktur nach Feuser?",
       "optionen": [
-        { "text": "Sachstrukturanalyse, Tätigkeitsstrukturanalyse, Handlungsstrukturanalyse", "korrekt": true },
-        { "text": "Eingangsanalyse, Prozessanalyse, Ergebnisanalyse", "korrekt": false },
-        { "text": "Stärkenanalyse, Schwächenanalyse, Chancenanalyse", "korrekt": false },
-        { "text": "Lehrplananalyse, Notenanalyse, Elternanalyse", "korrekt": false }
+        {
+          "text": "Sachstrukturanalyse, Tätigkeitsstrukturanalyse, Handlungsstrukturanalyse",
+          "korrekt": true
+        },
+        {
+          "text": "Eingangsanalyse, Prozessanalyse, Ergebnisanalyse",
+          "korrekt": false
+        },
+        {
+          "text": "Stärkenanalyse, Schwächenanalyse, Chancenanalyse",
+          "korrekt": false
+        },
+        {
+          "text": "Lehrplananalyse, Notenanalyse, Elternanalyse",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Feuser verschränkt Sachstrukturanalyse (Objektseite: der Inhalt), Tätigkeitsstrukturanalyse (Subjektseite: Entwicklung, u. a. Zone der aktuellen und der nächsten Entwicklung) und Handlungsstrukturanalyse. Pitsch erweitert das später zu einer vierdimensionalen Didaktik (1999).",
       "quelle": "notizen-s53",
@@ -116,10 +207,22 @@
       "afb": 1,
       "frage": "Was meint kategoriale Bildung nach Klafki im Doppelsinn?",
       "optionen": [
-        { "text": "Dem Menschen erschließt sich eine Wirklichkeit kategorial - und der Mensch ist für diese Wirklichkeit erschlossen", "korrekt": true },
-        { "text": "Bildung wird in Schulnoten-Kategorien von 1 bis 6 eingeteilt", "korrekt": false },
-        { "text": "Nur die objektive Welt zählt, die subjektive ist unwichtig", "korrekt": false },
-        { "text": "Bildung besteht aus dem Auswendiglernen von Kategorien", "korrekt": false }
+        {
+          "text": "Dem Menschen erschließt sich eine Wirklichkeit kategorial - und der Mensch ist für diese Wirklichkeit erschlossen",
+          "korrekt": true
+        },
+        {
+          "text": "Bildung wird in Schulnoten-Kategorien von 1 bis 6 eingeteilt",
+          "korrekt": false
+        },
+        {
+          "text": "Nur die objektive Welt zählt, die subjektive ist unwichtig",
+          "korrekt": false
+        },
+        {
+          "text": "Bildung besteht aus dem Auswendiglernen von Kategorien",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Kategoriale Bildung verbindet objektive Welt (kulturelle Zeugnisse kennen) und subjektive Welt (eigene Fähigkeiten entfalten) im Doppelsinn: Wirklichkeit erschließt sich dem Menschen, und der Mensch wird für die Wirklichkeit erschlossen. Einseitig wäre bildungstheoretischer Enzyklopädismus bzw. Formalismus.",
       "quelle": "notizen-s52",
@@ -131,10 +234,22 @@
       "afb": 1,
       "frage": "Welches gehört zu den epochaltypischen Schlüsselproblemen nach Klafki?",
       "optionen": [
-        { "text": "Die Friedensfrage und die Umweltfrage", "korrekt": true },
-        { "text": "Die Frage nach dem besten Schulranzen", "korrekt": false },
-        { "text": "Die Rechtschreibreform", "korrekt": false },
-        { "text": "Die Digitalisierung der Zeugnisse", "korrekt": false }
+        {
+          "text": "Die Friedensfrage und die Umweltfrage",
+          "korrekt": true
+        },
+        {
+          "text": "Die Frage nach dem besten Schulranzen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Rechtschreibreform",
+          "korrekt": false
+        },
+        {
+          "text": "Die Digitalisierung der Zeugnisse",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Klafkis Schlüsselprobleme: Friedensfrage, Problematik des Nationalitätsprinzips, Umweltfrage, wachsende Weltbevölkerung, gesellschaftlich bedingte Ungleichheit, Verhältnis Industrie-/Entwicklungsländer, Gefahren und Möglichkeiten neuer Technologien, menschliche Sexualität und Geschlechterbeziehung.",
       "quelle": "notizen-s52",
@@ -146,10 +261,22 @@
       "afb": 1,
       "frage": "Wer vertritt die subjekt- und bedarfsorientierte didaktische Konzeption?",
       "optionen": [
-        { "text": "Fischer", "korrekt": true },
-        { "text": "Feuser", "korrekt": false },
-        { "text": "Speck", "korrekt": false },
-        { "text": "Saegert", "korrekt": false }
+        {
+          "text": "Fischer",
+          "korrekt": true
+        },
+        {
+          "text": "Feuser",
+          "korrekt": false
+        },
+        {
+          "text": "Speck",
+          "korrekt": false
+        },
+        {
+          "text": "Saegert",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die subjekt- und bedarfsorientierte Konzeption mit dem Ziel der persönlichen Sinnstiftung gehört zu Fischer. Feuser ist der naheliegende Verwechsler - er steht aber für die entwicklungslogische Konzeption, die direkt davor kommt. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -162,10 +289,22 @@
       "afb": 1,
       "frage": "Zu welcher didaktischen Konzeption zählt die Tabelle von Stöppler und Wachsmuth den Vertreter Bach?",
       "optionen": [
-        { "text": "Zur defizitorientierten Konzeption", "korrekt": true },
-        { "text": "Zur defizitären bzw. reduktionistischen Konzeption", "korrekt": false },
-        { "text": "Zur kompetenz- und entwicklungsorientierten Konzeption", "korrekt": false },
-        { "text": "Zur subjekt- und bedarfsorientierten Konzeption", "korrekt": false }
+        {
+          "text": "Zur defizitorientierten Konzeption",
+          "korrekt": true
+        },
+        {
+          "text": "Zur defizitären bzw. reduktionistischen Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Zur kompetenz- und entwicklungsorientierten Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Zur subjekt- und bedarfsorientierten Konzeption",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Bach steht mit Moor, Vetter, Bernart und anderen in der Spalte der defizitorientierten Konzeption. Der Decoy ist die defizitäre/reduktionistische Konzeption - die klingt fast gleich, gehört aber zu Saegert und Fuchs. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -178,10 +317,22 @@
       "afb": 2,
       "frage": "In einer Unterrichtsbeschreibung ist von Gesamtunterricht als Methode die Rede. Zu welchen Konzeptionen passt das laut der Tabelle zum Wandel der Konzeptionen?",
       "optionen": [
-        { "text": "Zu den beiden frühen: der defizitären/reduktionistischen und der defizitorientierten Konzeption", "korrekt": true },
-        { "text": "Zu den beiden späten: der entwicklungslogischen und der subjekt- und bedarfsorientierten Konzeption", "korrekt": false },
-        { "text": "Nur zur kompetenz- und entwicklungsorientierten Konzeption", "korrekt": false },
-        { "text": "Nur zur subjekt- und bedarfsorientierten Konzeption", "korrekt": false }
+        {
+          "text": "Zu den beiden frühen: der defizitären/reduktionistischen und der defizitorientierten Konzeption",
+          "korrekt": true
+        },
+        {
+          "text": "Zu den beiden späten: der entwicklungslogischen und der subjekt- und bedarfsorientierten Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Nur zur kompetenz- und entwicklungsorientierten Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Nur zur subjekt- und bedarfsorientierten Konzeption",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Gesamtunterricht ist die Methode der beiden frühen Konzeptionen. Danach wandelt sich die Methodik: erst zum handlungsorientierten Unterricht (kompetenz-/entwicklungsorientiert), dann zum offenen Unterricht (entwicklungslogisch, subjekt- und bedarfsorientiert). Die beiden späten Konzeptionen sind der Decoy - sie teilen sich zwar auch eine Methode, aber eben den offenen Unterricht. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -194,10 +345,22 @@
       "afb": 2,
       "frage": "Ab welcher Konzeption treten allgemeine Bildungsinhalte an die Stelle lebenspraktischer bzw. partikularer Inhalte?",
       "optionen": [
-        { "text": "Ab der kompetenz- und entwicklungsorientierten Konzeption (Speck, Mühl, John)", "korrekt": true },
-        { "text": "Ab der entwicklungslogischen Konzeption (Feuser)", "korrekt": false },
-        { "text": "Ab der defizitorientierten Konzeption (Bach, Moor, Vetter)", "korrekt": false },
-        { "text": "Erst ab der subjekt- und bedarfsorientierten Konzeption (Fischer)", "korrekt": false }
+        {
+          "text": "Ab der kompetenz- und entwicklungsorientierten Konzeption (Speck, Mühl, John)",
+          "korrekt": true
+        },
+        {
+          "text": "Ab der entwicklungslogischen Konzeption (Feuser)",
+          "korrekt": false
+        },
+        {
+          "text": "Ab der defizitorientierten Konzeption (Bach, Moor, Vetter)",
+          "korrekt": false
+        },
+        {
+          "text": "Erst ab der subjekt- und bedarfsorientierten Konzeption (Fischer)",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Der Wechsel zu allgemeinen Bildungsinhalten passiert bei der kompetenz- und entwicklungsorientierten Konzeption. Feuser und Fischer arbeiten zwar auch mit allgemeinen Bildungsinhalten - der Umbruch liegt aber schon eine Konzeption früher. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -210,10 +373,22 @@
       "afb": 2,
       "frage": "Selbstständigkeit ja, Selbstbestimmung nein - welche Konzeption beschreibt dieses Zielverständnis?",
       "optionen": [
-        { "text": "Die defizitorientierte Konzeption", "korrekt": true },
-        { "text": "Die defizitäre bzw. reduktionistische Konzeption", "korrekt": false },
-        { "text": "Die kompetenz- und entwicklungsorientierte Konzeption", "korrekt": false },
-        { "text": "Die entwicklungslogische Konzeption", "korrekt": false }
+        {
+          "text": "Die defizitorientierte Konzeption",
+          "korrekt": true
+        },
+        {
+          "text": "Die defizitäre bzw. reduktionistische Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Die kompetenz- und entwicklungsorientierte Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Die entwicklungslogische Konzeption",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Selbstständigkeit ohne Selbstbestimmung ist das Zielprofil der defizitorientierten Konzeption - daneben Selbsterkenntnis und Selbstverwirklichung in sozialer Integration. Bei Feuser ist Selbstbestimmung dagegen ausdrücklich das Ziel, das ist der Kontrast zum Merken. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -226,10 +401,22 @@
       "afb": 2,
       "frage": "Eine Bildungsvorstellung setzt allein darauf, die kulturellen Zeugnisse der Vergangenheit zu kennen und über sie zu verfügen. Wie nennt Klafki diese Einseitigkeit?",
       "optionen": [
-        { "text": "Bildungstheoretischer Enzyklopädismus", "korrekt": true },
-        { "text": "Bildungstheoretischer Formalismus", "korrekt": false },
-        { "text": "Kategoriale Bildung", "korrekt": false },
-        { "text": "Epochaltypisches Schlüsselproblem", "korrekt": false }
+        {
+          "text": "Bildungstheoretischer Enzyklopädismus",
+          "korrekt": true
+        },
+        {
+          "text": "Bildungstheoretischer Formalismus",
+          "korrekt": false
+        },
+        {
+          "text": "Kategoriale Bildung",
+          "korrekt": false
+        },
+        {
+          "text": "Epochaltypisches Schlüsselproblem",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die einseitige Betonung der objektiven Welt (Kulturgüter kennen) ist der bildungstheoretische Enzyklopädismus. Der Formalismus ist die spiegelbildliche Einseitigkeit auf der subjektiven Seite (nur die eigenen Fähigkeiten entfalten) - genau diese beiden werden gern vertauscht. (Notizen S. 52)",
       "quelle": "notizen-s52",
@@ -242,10 +429,22 @@
       "afb": 1,
       "frage": "Für welche Altersspanne wurde die ICF-CY entwickelt?",
       "optionen": [
-        { "text": "Von der Geburt bis zu 18 Jahren", "korrekt": true },
-        { "text": "Von der Geburt bis zu 6 Jahren", "korrekt": false },
-        { "text": "Von 6 bis 18 Jahren", "korrekt": false },
-        { "text": "Von der Geburt bis zu 21 Jahren", "korrekt": false }
+        {
+          "text": "Von der Geburt bis zu 18 Jahren",
+          "korrekt": true
+        },
+        {
+          "text": "Von der Geburt bis zu 6 Jahren",
+          "korrekt": false
+        },
+        {
+          "text": "Von 6 bis 18 Jahren",
+          "korrekt": false
+        },
+        {
+          "text": "Von der Geburt bis zu 21 Jahren",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die ICF-CY ist die Version der ICF speziell für Kinder und Jugendliche von der Geburt bis zu 18 Jahren (WHO 2013). Das CY steht für Children and Youth - die Spanne beginnt also schon bei der Geburt, nicht erst mit der Schulzeit. (Notizen S. 51)",
       "quelle": "notizen-s51",
@@ -258,10 +457,22 @@
       "afb": 2,
       "frage": "Feuser arbeitet mit drei Strukturanalysen. Welche Dimension kommt in Pitschs vierdimensionaler Didaktik hinzu?",
       "optionen": [
-        { "text": "Die Steuerungsform", "korrekt": true },
-        { "text": "Die Sachstrukturanalyse", "korrekt": false },
-        { "text": "Die Handlungsstruktur", "korrekt": false },
-        { "text": "Die Subjektseite", "korrekt": false }
+        {
+          "text": "Die Steuerungsform",
+          "korrekt": true
+        },
+        {
+          "text": "Die Sachstrukturanalyse",
+          "korrekt": false
+        },
+        {
+          "text": "Die Handlungsstruktur",
+          "korrekt": false
+        },
+        {
+          "text": "Die Subjektseite",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Pitschs Schema umfasst Steuerungsform, Objektseite, Subjektseite und Handlungsstruktur - Objekt- und Subjektseite sowie Handlungsstruktur gibt es sinngemäß schon bei Feuser, neu ist die Steuerungsform: Sie führt von interindividueller (Fremd-)Steuerung zu intraindividueller (Selbst-)Steuerung, mit Stufen von vollständiger körperlicher Hilfe bis ohne Hilfsmittel. Die Distraktoren sind also alle Teil beider Modelle. (Notizen S. 55)",
       "quelle": "notizen-s55",
@@ -274,10 +485,22 @@
       "afb": 1,
       "frage": "Aus welchen drei Säulen speisen sich die Bildungsinhalte laut Rahmenlehrplan (SenBildWiss Berlin & LISUM 2013)?",
       "optionen": [
-        { "text": "Individuelle Bedürfnisse und Voraussetzungen der Lernenden; bedeutsame Leitthemen und Handlungsfelder; Inhalte und Kompetenzen der Fachdidaktiken", "korrekt": true },
-        { "text": "Kognition; Kommunikation; emotionale und soziale Entwicklung; Motorik und Wahrnehmung", "korrekt": false },
-        { "text": "Ziele, Inhalte und Methoden der jeweils vorherrschenden didaktischen Konzeption", "korrekt": false },
-        { "text": "Sachstrukturanalyse; Tätigkeitsstrukturanalyse; Handlungsstrukturanalyse nach Feuser", "korrekt": false }
+        {
+          "text": "Individuelle Bedürfnisse und Voraussetzungen der Lernenden; bedeutsame Leitthemen und Handlungsfelder; Inhalte und Kompetenzen der Fachdidaktiken",
+          "korrekt": true
+        },
+        {
+          "text": "Kognition; Kommunikation; emotionale und soziale Entwicklung; Motorik und Wahrnehmung",
+          "korrekt": false
+        },
+        {
+          "text": "Ziele, Inhalte und Methoden der jeweils vorherrschenden didaktischen Konzeption",
+          "korrekt": false
+        },
+        {
+          "text": "Sachstrukturanalyse; Tätigkeitsstrukturanalyse; Handlungsstrukturanalyse nach Feuser",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die drei Säulen des RLP sind die individuellen Bedürfnisse und Voraussetzungen der Lernenden, die für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfelder sowie die Inhalte und Kompetenzen der Fachdidaktiken. Die Distraktoren stammen aus Nachbarthemen: Entwicklungsbereiche, Konzeptionstabelle und Feuser. (Notizen S. 56)",
       "quelle": "notizen-s56",
@@ -290,13 +513,137 @@
       "afb": 2,
       "frage": "Welcher der folgenden Einträge ist im Rahmenlehrplan ein Unterrichtsfach - und kein Leitthema (Lernfeld)?",
       "optionen": [
-        { "text": "Wirtschaft-Arbeit-Technik", "korrekt": true },
-        { "text": "Der Mensch und die Arbeit", "korrekt": false },
-        { "text": "Der mobile Mensch", "korrekt": false },
-        { "text": "Der Mensch in Natur und Umwelt", "korrekt": false }
+        {
+          "text": "Wirtschaft-Arbeit-Technik",
+          "korrekt": true
+        },
+        {
+          "text": "Der Mensch und die Arbeit",
+          "korrekt": false
+        },
+        {
+          "text": "Der mobile Mensch",
+          "korrekt": false
+        },
+        {
+          "text": "Der Mensch in Natur und Umwelt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Wirtschaft-Arbeit-Technik steht in der Fachdidaktik-Säule, zusammen mit Kommunikation/Deutsch, Sachunterricht, Mathematik, Musik, Kunst und Sport. Die drei anderen Optionen sind Leitthemen aus der Reihe L1 bis L6. Der Decoy ist 'Der Mensch und die Arbeit' - inhaltlich dicht an Wirtschaft-Arbeit-Technik, im Rahmenlehrplan aber auf der anderen Säule. (Notizen S. 56)",
       "quelle": "notizen-s56",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "ko-fol-mc-1",
+      "unterthema": "Spannungsfelder der Disziplin",
+      "afb": 2,
+      "frage": "In einer Konferenz streitet ein Kollegium darüber, ob Schüler:innen im SGE vor allem lebenspraktische Fertigkeiten oder fachliche Inhalte lernen sollen. Welches der vier zentralen Spannungsfelder der Disziplin wird hier ausgetragen?",
+      "optionen": [
+        {
+          "text": "Das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten",
+          "korrekt": true
+        },
+        {
+          "text": "Die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten",
+          "korrekt": false
+        },
+        {
+          "text": "Die Entwicklung des Förderschwerpunkts zwischen Bewahrung und Bildungsanspruch",
+          "korrekt": false
+        },
+        {
+          "text": "Die Öffnung des Förderschwerpunkts zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Frage, was überhaupt als Bildungsinhalt zählt, ist genau das vierte Spannungsfeld. Die drei Decoys sind die anderen drei Spannungsfelder derselben Folie - sie klingen alle plausibel, betreffen aber den Behinderungsbegriff, die Geschichte der Disziplin und das Verhältnis zur allgemeinen Didaktik. (Folie 3, Terfloth & Bauersfeld 2015, 33)",
+      "quelle": "folie-konzeptionen-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "ko-fol-mc-2",
+      "unterthema": "Spannungsfelder der Disziplin",
+      "afb": 1,
+      "frage": "Welches Begriffspaar benennt eines der vier zentralen Spannungsfelder der Disziplin?",
+      "optionen": [
+        {
+          "text": "Bewahrung und Bildungsanspruch",
+          "korrekt": true
+        },
+        {
+          "text": "Selbstbestimmung und Fürsorge",
+          "korrekt": false
+        },
+        {
+          "text": "Inklusion und Exklusion",
+          "korrekt": false
+        },
+        {
+          "text": "Förderschule und allgemeine Schule",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Das zweite Spannungsfeld beschreibt die historische und aktuelle Ausgestaltung des Förderschwerpunkts zwischen Bewahrung und Bildungsanspruch - also zwischen Verwahren und Fördern. Alle drei Decoys sind echte Begriffspaare aus dem Studium, nur eben aus anderen Zusammenhängen: Selbstbestimmung und Fürsorge ist ein Spannungsfeld der Freizeitbildung, Inklusion und Exklusion ein allgemeines Begriffspaar, und Förderschule gegenüber allgemeiner Schule ist die Ausblick-Frage der ersten Vorlesung. (Folie 3, Terfloth & Bauersfeld 2015, 33)",
+      "quelle": "folie-konzeptionen-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "ko-fol-mc-3",
+      "unterthema": "Spannungsfelder der Disziplin",
+      "afb": 2,
+      "frage": "Welches der vier Spannungsfelder greift das biopsychosoziale Modell der ICF unmittelbar auf?",
+      "optionen": [
+        {
+          "text": "Die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten",
+          "korrekt": true
+        },
+        {
+          "text": "Das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten",
+          "korrekt": false
+        },
+        {
+          "text": "Die Entwicklung des Förderschwerpunkts zwischen Bewahrung und Bildungsanspruch",
+          "korrekt": false
+        },
+        {
+          "text": "Die Öffnung des Förderschwerpunkts zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die ICF verbindet das Gesundheitsproblem mit Aktivitäten, Partizipation sowie Umwelt- und personenbezogenen Faktoren - sie hält also medizinische und soziale Aspekte zusammen, statt sich für eine Seite zu entscheiden. Damit liegt sie genau auf dem ersten Spannungsfeld. Die anderen drei Optionen sind die übrigen Spannungsfelder; sie werden von der ICF nicht direkt bearbeitet. (Folie 3 mit Folien 4 und 7)",
+      "quelle": "folie-konzeptionen-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "ko-fol-mc-4",
+      "unterthema": "ICF-Modell",
+      "afb": 2,
+      "frage": "Die Vorlesung spricht von einer Abkehr von einem monokausalen und eindimensionalen Begründungszusammenhang von Behinderung. Was ist damit gemeint?",
+      "optionen": [
+        {
+          "text": "Behinderung wird nicht mehr auf eine einzige Ursache und eine einzige Ebene zurückgeführt, sondern als Zusammenspiel von Gesundheitsproblem und Kontextfaktoren verstanden",
+          "korrekt": true
+        },
+        {
+          "text": "Die medizinische Diagnostik verliert ihre Bedeutung, weil Behinderung ausschließlich gesellschaftlich hergestellt wird",
+          "korrekt": false
+        },
+        {
+          "text": "Behinderung wird nicht mehr als dauerhaft, sondern als vorübergehender Zustand beschrieben",
+          "korrekt": false
+        },
+        {
+          "text": "Die Beschreibung von Behinderung wird auf beobachtbares Verhalten begrenzt, um Zuschreibungen zu vermeiden",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Monokausal heißt eine Ursache, eindimensional eine Betrachtungsebene - die Abkehr davon führt zur Beschreibung von Funktionsfähigkeit und Behinderung als dynamischer Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Der erste Decoy überdreht das in ein rein soziales Modell; das wäre wieder eindimensional, nur mit umgekehrtem Vorzeichen. (Folie 7, vgl. Terfloth & Bauersfeld 2015, 34 f.)",
+      "quelle": "folie-konzeptionen-7",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }
@@ -415,6 +762,27 @@
       "muster": "Feusers These ist der Kern seiner entwicklungslogischen Didaktik: Das Bildungsrecht eines Kindes hängt nicht von seiner Beschaffenheit ab, sondern folgt daraus, dass es in dieser Welt lebt. Vor dem Hintergrund des Wandels der Konzeptionen ist das eine deutliche Absage an die früheren Ansätze. Die defizitäre Konzeption wollte Kinder durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen, und auch die defizitorientierte Konzeption beschränkte sich auf partikulare, lebenspraktische Inhalte und auf Selbstständigkeit ohne Selbstbestimmung - beide machten die Inhalte also von der zugeschriebenen Beschaffenheit des Kindes abhängig. Feuser dreht das um: Alle Kinder erhalten allgemeine Bildungsinhalte, und der Zugang wird didaktisch gesichert, etwa über die Verschränkung von Sachstruktur-, Tätigkeitsstruktur- und Handlungsstrukturanalyse mit individualisierten Lernzielen im offenen Unterricht. Einwenden lässt sich, dass dieser Anspruch sehr hohe Anforderungen an die Aufbereitung der Inhalte und die Unterrichtsgestaltung stellt. In der Bewertung überzeugt die These dennoch: Sie macht Bildung zum Recht statt zur Belohnung für Lernvoraussetzungen und markiert damit den entscheidenden Fortschritt gegenüber den defizitorientierten Konzeptionen.",
       "tipp": "Ein Zitat diskutieren heißt: erst einordnen (wessen These, welche Konzeption), dann am Wandel spiegeln, dann bewerten. Die Konzeptionstabelle liefert dir die Kontrastfolie fast von selbst.",
       "quelle": "notizen-s53",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "ko-fol-f-1",
+      "afb": 3,
+      "frage": "Terfloth und Bauersfeld beschreiben vier zentrale Spannungsfelder der Disziplin. Stellen Sie diese dar und erörtern Sie an zwei davon, warum sie sich nicht endgültig auflösen lassen.",
+      "stichpunkte": [
+        "Spannungsfeld 1: Die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten",
+        "Spannungsfeld 2: Die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch",
+        "Spannungsfeld 3: Die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion - zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik",
+        "Spannungsfeld 4: Das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten",
+        "Zu 1: Die ICF löst den Gegensatz nicht auf, sondern hält beide Seiten zusammen - Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren; wer nur medizinisch schaut, übersieht Barrieren, wer nur sozial schaut, übersieht individuellen Unterstützungsbedarf",
+        "Zu 4: Der Wandel der didaktischen Konzeptionen zeigt die Pendelbewegung - von der Sinnesschulung über die lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte einfordern; beide Pole haben gute Gründe, und die Gewichtung muss individuell entschieden werden",
+        "Alternativ zu 3: Eine eigene Didaktik für den Förderschwerpunkt oder eine Spezifizierung allgemeiner Modelle - beide Antworten haben Kosten, entweder Sonderwissen ohne Anschluss oder Anschluss ohne Passung",
+        "Argument für die Unauflösbarkeit: Es handelt sich um Spannungsfelder, nicht um Fehler - beide Pole benennen jeweils ein berechtigtes Anliegen, sodass eine Entscheidung für eine Seite immer etwas verliert",
+        "Konsequenz für die Praxis: Statt einer Grundsatzentscheidung braucht es eine begründete, immer wieder neu justierte Balance an der einzelnen Schülerin und dem einzelnen Schüler"
+      ],
+      "muster": "Terfloth und Bauersfeld benennen vier zentrale Spannungsfelder der Disziplin. Das erste betrifft die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten. Das zweite betrifft die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch. Das dritte betrifft die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion, und zwar zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik. Das vierte betrifft das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten. Am ersten und am vierten Spannungsfeld lässt sich zeigen, warum solche Felder sich nicht endgültig auflösen lassen. Beim Behinderungsbegriff wäre die einfache Lösung, sich für eine Seite zu entscheiden. Wer Behinderung rein medizinisch fasst, übersieht jedoch, dass Barrieren in der Umwelt Teilhabe verhindern; wer sie rein sozial fasst, übersieht den individuellen Unterstützungsbedarf. Die ICF entscheidet den Streit deshalb nicht, sondern hält beide Seiten zusammen, indem sie Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren beschreibt. Ähnlich verhält es sich beim Verständnis von Bildung. Der Wandel der didaktischen Konzeptionen zeigt eine Pendelbewegung: von der Sinnesschulung über eine stark lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte ausdrücklich einfordern. Beide Pole haben gute Gründe. Wer nur lebenspraktisch unterrichtet, hält Bildungsinhalte vor, auf die alle anderen ein Recht haben; wer nur fachlich unterrichtet, verliert die Anschlussfähigkeit an den Alltag. Genau daran zeigt sich, dass es sich um Spannungsfelder und nicht um Fehler handelt: Jeder Pol benennt ein berechtigtes Anliegen, und jede Entscheidung für eine Seite gibt etwas auf. Für die Praxis folgt daraus keine Grundsatzentscheidung, sondern eine begründete Balance, die an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden muss.",
+      "tipp": "Diese Folie fehlt in deinen Notizen komplett, sie ist also neu - dafür ist sie ein Geschenk für AFB-III-Aufgaben, weil die vier Felder dir eine fertige Gliederung liefern. Merken kannst du sie über die vier Fragen: Was ist Behinderung? Wozu ist der Förderschwerpunkt da? Braucht er eine eigene Didaktik? Und was soll gelernt werden?",
+      "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }

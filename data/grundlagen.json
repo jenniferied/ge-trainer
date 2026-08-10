@@ -3,7 +3,12 @@
   "titel": "Förderschule & Beschulung",
   "vorlesung": "V1",
   "leitfrage": "Welche Merkmale weisen Förderschulen auf?",
-  "unterthemen": ["Merkmale der Förderschule", "Stufenmodell", "Gemeinsamer Unterricht"],
+  "unterthemen": [
+    "Merkmale der Förderschule",
+    "Stufenmodell",
+    "Gemeinsamer Unterricht",
+    "Rahmenfrage & Qualifikationsziele"
+  ],
   "mc": [
     {
       "id": "gr-mc-1",
@@ -13,10 +18,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "Welches ist ein strukturelles Merkmal von Förderschulen im Schwerpunkt geistige Entwicklung?",
       "optionen": [
-        { "text": "Relativ kleine Klassenfrequenzen", "korrekt": true },
-        { "text": "Ausschließlich Halbtagsbeschulung", "korrekt": false },
-        { "text": "Große, jahrgangsübergreifende Klassen mit über 30 Kindern", "korrekt": false },
-        { "text": "Verzicht auf Frühförderung", "korrekt": false }
+        {
+          "text": "Relativ kleine Klassenfrequenzen",
+          "korrekt": true
+        },
+        {
+          "text": "Ausschließlich Halbtagsbeschulung",
+          "korrekt": false
+        },
+        {
+          "text": "Große, jahrgangsübergreifende Klassen mit über 30 Kindern",
+          "korrekt": false
+        },
+        {
+          "text": "Verzicht auf Frühförderung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Förderschulen kennzeichnen: Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen."
     },
@@ -28,10 +45,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "Wie ist die Förderschule (GE) in Stufen gegliedert?",
       "optionen": [
-        { "text": "4 Stufen, die jeweils 3 Jahre besucht werden", "korrekt": true },
-        { "text": "2 Stufen zu je 6 Jahren", "korrekt": false },
-        { "text": "6 Stufen zu je 2 Jahren", "korrekt": false },
-        { "text": "3 Stufen zu je 4 Jahren", "korrekt": false }
+        {
+          "text": "4 Stufen, die jeweils 3 Jahre besucht werden",
+          "korrekt": true
+        },
+        {
+          "text": "2 Stufen zu je 6 Jahren",
+          "korrekt": false
+        },
+        {
+          "text": "6 Stufen zu je 2 Jahren",
+          "korrekt": false
+        },
+        {
+          "text": "3 Stufen zu je 4 Jahren",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Es gibt eine Unterteilung in 4 Stufen, die jeweils 3 Jahre besucht werden: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe und Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106)."
     },
@@ -43,10 +72,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "Welche Stufe bereitet über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem das Berufsleben vor?",
       "optionen": [
-        { "text": "Die Werk- bzw. Abschlussstufe", "korrekt": true },
-        { "text": "Die Unterstufe", "korrekt": false },
-        { "text": "Die Mittelstufe", "korrekt": false },
-        { "text": "Die Vorstufe", "korrekt": false }
+        {
+          "text": "Die Werk- bzw. Abschlussstufe",
+          "korrekt": true
+        },
+        {
+          "text": "Die Unterstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Die Mittelstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Die Vorstufe",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die relativ eigenständige Werkstufe hat die besondere Zielsetzung, über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten."
     },
@@ -58,10 +99,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "Wie verändert sich die Schulbesuchsdauer im Werkstufenbereich?",
       "optionen": [
-        { "text": "Verlängerung von 9 auf 12 Jahre, mit Option auf weitere Verlängerung in begründeten Fällen", "korrekt": true },
-        { "text": "Verkürzung von 12 auf 9 Jahre", "korrekt": false },
-        { "text": "Es bleibt bei genau 10 Jahren ohne Ausnahme", "korrekt": false },
-        { "text": "Die Dauer ist völlig frei wählbar", "korrekt": false }
+        {
+          "text": "Verlängerung von 9 auf 12 Jahre, mit Option auf weitere Verlängerung in begründeten Fällen",
+          "korrekt": true
+        },
+        {
+          "text": "Verkürzung von 12 auf 9 Jahre",
+          "korrekt": false
+        },
+        {
+          "text": "Es bleibt bei genau 10 Jahren ohne Ausnahme",
+          "korrekt": false
+        },
+        {
+          "text": "Die Dauer ist völlig frei wählbar",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Der Schulbesuch verlängert sich von 9 auf 12 Jahre im Werkstufenbereich - mit der Option auf Verlängerung in begründeten Fällen."
     },
@@ -73,10 +126,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "In welcher Form des gemeinsamen Unterrichts sind die Schüler:innen schulrechtlich der Förderschule zugeordnet?",
       "optionen": [
-        { "text": "Kooperationsklasse", "korrekt": true },
-        { "text": "Integrationsklasse", "korrekt": false },
-        { "text": "Integrative Regelklasse", "korrekt": false },
-        { "text": "Einzelintegration", "korrekt": false }
+        {
+          "text": "Kooperationsklasse",
+          "korrekt": true
+        },
+        {
+          "text": "Integrationsklasse",
+          "korrekt": false
+        },
+        {
+          "text": "Integrative Regelklasse",
+          "korrekt": false
+        },
+        {
+          "text": "Einzelintegration",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Bei der Kooperationsklasse bleiben die Schüler:innen schulrechtlich der Förderschule zugeordnet. Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur schulrechtlichen Zuordnung an die Regelschule."
     },
@@ -88,10 +153,22 @@
       "quelleSicherheit": "geprueft",
       "frage": "Welche drei Formen gehören zum gemeinsamen Unterricht mit schulrechtlicher Zuordnung zur Regelschule?",
       "optionen": [
-        { "text": "Integrationsklasse, integrative Regelklasse, Einzelintegration", "korrekt": true },
-        { "text": "Kooperationsklasse, Außenklasse, Werkstufe", "korrekt": false },
-        { "text": "Grundstufe, Mittelstufe, Oberstufe", "korrekt": false },
-        { "text": "Frühförderung, Ganztag, Hort", "korrekt": false }
+        {
+          "text": "Integrationsklasse, integrative Regelklasse, Einzelintegration",
+          "korrekt": true
+        },
+        {
+          "text": "Kooperationsklasse, Außenklasse, Werkstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Grundstufe, Mittelstufe, Oberstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Frühförderung, Ganztag, Hort",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule."
     },
@@ -101,10 +178,22 @@
       "afb": 2,
       "frage": "Das Schaubild zum gemeinsamen Unterricht sortiert Integrationsklasse, integrative Regelklasse, Einzelintegration und Kooperationsklasse in zwei Gruppen. Nach welchem Kriterium wird dabei unterschieden?",
       "optionen": [
-        { "text": "Nach der schulrechtlichen Zuordnung der Schüler:innen (Regelschule oder Förderschule)", "korrekt": true },
-        { "text": "Nach der Anzahl der Schüler:innen mit Förderbedarf pro Klasse", "korrekt": false },
-        { "text": "Nach dem Gebäude, in dem der Unterricht stattfindet", "korrekt": false },
-        { "text": "Nach dem Alter der Schüler:innen beim Einstieg in den gemeinsamen Unterricht", "korrekt": false }
+        {
+          "text": "Nach der schulrechtlichen Zuordnung der Schüler:innen (Regelschule oder Förderschule)",
+          "korrekt": true
+        },
+        {
+          "text": "Nach der Anzahl der Schüler:innen mit Förderbedarf pro Klasse",
+          "korrekt": false
+        },
+        {
+          "text": "Nach dem Gebäude, in dem der Unterricht stattfindet",
+          "korrekt": false
+        },
+        {
+          "text": "Nach dem Alter der Schüler:innen beim Einstieg in den gemeinsamen Unterricht",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Ordnungsprinzip ist die schulrechtliche Zuordnung: Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur Regelschule, die Kooperationsklasse zur Förderschule. Der Unterrichtsort klingt plausibel, ist aber nicht das Kriterium - es geht um den rechtlichen Status. (Notizen S. 57)",
       "quelle": "notizen-s57",
@@ -117,10 +206,22 @@
       "afb": 2,
       "frage": "Ein Schüler befindet sich im 8. Schulbesuchsjahr an der Förderschule. In welcher Stufe ist er nach dem Stufenmodell in der Regel?",
       "optionen": [
-        { "text": "In der Ober- bzw. Hauptstufe", "korrekt": true },
-        { "text": "In der Mittelstufe", "korrekt": false },
-        { "text": "In der Werk- bzw. Abschlussstufe", "korrekt": false },
-        { "text": "In der Vor-, Unter- bzw. Grundstufe", "korrekt": false }
+        {
+          "text": "In der Ober- bzw. Hauptstufe",
+          "korrekt": true
+        },
+        {
+          "text": "In der Mittelstufe",
+          "korrekt": false
+        },
+        {
+          "text": "In der Werk- bzw. Abschlussstufe",
+          "korrekt": false
+        },
+        {
+          "text": "In der Vor-, Unter- bzw. Grundstufe",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Bei 4 Stufen zu je 3 Jahren in der genannten Reihenfolge ergibt sich: Jahre 1-3 Vor-/Unter-/Grundstufe, 4-6 Mittelstufe, 7-9 Ober-/Hauptstufe, 10-12 Werk-/Abschlussstufe - das 8. Jahr liegt also in der Ober- bzw. Hauptstufe. Die Mittelstufe ist der naheliegende Verrechner, sie endet aber schon nach Jahr 6. (Notizen S. 58)",
       "quelle": "notizen-s58",
@@ -133,10 +234,22 @@
       "afb": 1,
       "frage": "Welches Angebot von Förderschulen setzt bereits vor dem eigentlichen Schuleintritt an?",
       "optionen": [
-        { "text": "Frühförderung und schulvorbereitende Gruppen", "korrekt": true },
-        { "text": "Die Werkstufe", "korrekt": false },
-        { "text": "Die Ganztagsbeschulung", "korrekt": false },
-        { "text": "Der Klassenrat", "korrekt": false }
+        {
+          "text": "Frühförderung und schulvorbereitende Gruppen",
+          "korrekt": true
+        },
+        {
+          "text": "Die Werkstufe",
+          "korrekt": false
+        },
+        {
+          "text": "Die Ganztagsbeschulung",
+          "korrekt": false
+        },
+        {
+          "text": "Der Klassenrat",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zu den strukturellen Merkmalen gehören Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen - beides greift vor Schulbeginn. Die Werkstufe ist das Gegenstück am anderen Ende: Sie bereitet auf die Zeit nach der Schule vor. (Notizen S. 57)",
       "quelle": "notizen-s57",
@@ -149,10 +262,22 @@
       "afb": 2,
       "frage": "Der exemplarische Stundenplan zeigt einen Schultag von etwa 8:30 bis 15 Uhr mit Frühstück, Mittagessen und großer Pause. Welches strukturelle Merkmal der Förderschule wird darin unmittelbar sichtbar?",
       "optionen": [
-        { "text": "Die Ganztagsbeschulung", "korrekt": true },
-        { "text": "Die relativ kleinen Klassenfrequenzen", "korrekt": false },
-        { "text": "Die Frühförderung", "korrekt": false },
-        { "text": "Die Verlängerung des Schulbesuchs von 9 auf 12 Jahre", "korrekt": false }
+        {
+          "text": "Die Ganztagsbeschulung",
+          "korrekt": true
+        },
+        {
+          "text": "Die relativ kleinen Klassenfrequenzen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Frühförderung",
+          "korrekt": false
+        },
+        {
+          "text": "Die Verlängerung des Schulbesuchs von 9 auf 12 Jahre",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Ein Tagesablauf bis in den Nachmittag mit Mahlzeiten und Pausen zeigt die Ganztagsbeschulung. Die Distraktoren sind alle echte Merkmale von Förderschulen - aber aus einem Stundenplan lassen sich Klassengröße, Frühförderung oder Schulbesuchsdauer nicht ablesen. (Notizen S. 57)",
       "quelle": "notizen-s57",
@@ -165,10 +290,22 @@
       "afb": 1,
       "frage": "Klassenzimmer an Förderschulen sind wohnlich gestaltet. Welche Doppelfunktion steckt dahinter?",
       "optionen": [
-        { "text": "Sie sind Orte zum Lernen und zum Leben", "korrekt": true },
-        { "text": "Sie dienen dem Unterricht und der Leistungsbewertung", "korrekt": false },
-        { "text": "Sie sind zugleich Unterrichts- und Therapieräume", "korrekt": false },
-        { "text": "Sie werden vormittags von der Schule und nachmittags vom Hort genutzt", "korrekt": false }
+        {
+          "text": "Sie sind Orte zum Lernen und zum Leben",
+          "korrekt": true
+        },
+        {
+          "text": "Sie dienen dem Unterricht und der Leistungsbewertung",
+          "korrekt": false
+        },
+        {
+          "text": "Sie sind zugleich Unterrichts- und Therapieräume",
+          "korrekt": false
+        },
+        {
+          "text": "Sie werden vormittags von der Schule und nachmittags vom Hort genutzt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die wohnliche Gestaltung macht Klassenzimmer zu Orten zum Lernen und Leben - das ist die Formulierung aus den Merkmalen der Förderschule. Die Therapie-Option klingt nah dran, ist aber nicht die genannte Doppelfunktion. (Notizen S. 57)",
       "quelle": "notizen-s57",
@@ -181,14 +318,138 @@
       "afb": 1,
       "frage": "Welche therapeutischen Angebote nennt das Bayern-Übersichtsschaubild als in die Förderschule integriert?",
       "optionen": [
-        { "text": "Unter anderem Physiotherapie, Ergotherapie und Logopädie", "korrekt": true },
-        { "text": "Ausschließlich Psychotherapie in externen Praxen", "korrekt": false },
-        { "text": "Reittherapie und Musiktherapie", "korrekt": false },
-        { "text": "Keine - Therapien finden grundsätzlich außerhalb der Schule statt", "korrekt": false }
+        {
+          "text": "Unter anderem Physiotherapie, Ergotherapie und Logopädie",
+          "korrekt": true
+        },
+        {
+          "text": "Ausschließlich Psychotherapie in externen Praxen",
+          "korrekt": false
+        },
+        {
+          "text": "Reittherapie und Musiktherapie",
+          "korrekt": false
+        },
+        {
+          "text": "Keine - Therapien finden grundsätzlich außerhalb der Schule statt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das Schaubild führt integrierte therapeutische Angebote auf, darunter Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst. Der Trick liegt in der Integration: Die Angebote gehören zur Schule, nicht in externe Praxen. (Notizen S. 58, Bayern-Übersicht - das Schaubild ist sehr klein gedruckt, die Beschriftungen sind sinngemäß und nicht wortgenau.)",
       "quelle": "notizen-s58",
       "quelleSicherheit": "unsicher",
+      "generiert": true
+    },
+    {
+      "id": "gr-fol-mc-1",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 1,
+      "frage": "Welche Frage stellt die Vorlesung laut Modulbeschreibung in den Mittelpunkt?",
+      "optionen": [
+        {
+          "text": "Ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt geben kann und inwiefern allgemeine Modelle und Theorien für ihn spezifiziert werden müssen",
+          "korrekt": true
+        },
+        {
+          "text": "Welche Merkmale Förderschulen aufweisen",
+          "korrekt": false
+        },
+        {
+          "text": "Ob Schüler:innen im SGE besser an der Förderschule oder an der allgemeinen Schule lernen",
+          "korrekt": false
+        },
+        {
+          "text": "Wie sich Unterricht so individualisieren lässt, dass alle Schüler:innen mitkommen",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Rahmenfrage des Moduls dreht sich um das Verhältnis von spezieller und spezifizierter allgemeiner Didaktik - sie spannt sich über alle Sitzungen. Der erste Decoy ist die Leitfrage genau dieser einen Sitzung, der zweite die Ausblick-Frage auf die nächste (und damit das von der Klausur ausgenommene Thema Inklusion im SGE). Beide sind richtig formuliert, nur eben nicht die Rahmenfrage. (Folie 5)",
+      "quelle": "folie-grundlagen-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-fol-mc-2",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 1,
+      "frage": "Welches Qualifikationsziel nennt die Modulbeschreibung für die Studierenden?",
+      "optionen": [
+        {
+          "text": "Eine Förderung mit akademischen und kulturellen Lerninhalten planen zu können",
+          "korrekt": true
+        },
+        {
+          "text": "Sonderpädagogische Gutachten zur Feststellung des Förderbedarfs erstellen zu können",
+          "korrekt": false
+        },
+        {
+          "text": "Diagnostische Testverfahren eigenständig auswerten zu können",
+          "korrekt": false
+        },
+        {
+          "text": "Beratungsgespräche mit Eltern und außerschulischen Diensten führen zu können",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die drei Qualifikationsziele lauten: didaktische Ansätze und methodische Aspekte kennen, eine Förderung mit akademischen und kulturellen Lerninhalten planen und Unterricht strukturieren und planen können. Die Decoys sind lauter Dinge, die zum Beruf gehören, in diesem Modul aber nicht als Ziel stehen - Diagnostik und Beratung sind eigene Felder. (Folie 5)",
+      "quelle": "folie-grundlagen-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-fol-mc-3",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Auf welche Quelle stützt sich die Vorlesung, wenn sie die strukturellen Merkmale und Besonderheiten von Förderschulen darstellt?",
+      "optionen": [
+        {
+          "text": "Auf Fischer 2008",
+          "korrekt": true
+        },
+        {
+          "text": "Auf Fornefeld 2004",
+          "korrekt": false
+        },
+        {
+          "text": "Auf die Empfehlungen der KMK von 2021",
+          "korrekt": false
+        },
+        {
+          "text": "Auf Stöppler 2017",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Beide Merkmals-Folien tragen die Quellenangabe Fischer 2008, 30 im Titel. Der stärkste Decoy ist Fornefeld 2004 - der taucht auf derselben Folie wirklich auf, aber nur als Beleg für die vier Stufen der Schule. Eine korrekte Quellenangabe bringt in einer AFB-I-Aufgabe leicht einen zusätzlichen Punkt. (Folien 18 und 20, Fischer 2008, 30)",
+      "quelle": "folie-grundlagen-18",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-fol-mc-4",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 2,
+      "frage": "Die Vorlesung legt den exemplarischen Stundenplan einer Förderschule frei und beschriftet, was sich daran ablesen lässt. Welche Beschreibung trifft zu?",
+      "optionen": [
+        {
+          "text": "Der Unterricht ist in Blöcke gegliedert, der Plan ist mit Symbolen visualisiert und enthält spezifische Lernfelder",
+          "korrekt": true
+        },
+        {
+          "text": "Der Unterricht folgt dem 45-Minuten-Takt und wechselt stündlich das Fach",
+          "korrekt": false
+        },
+        {
+          "text": "Der Nachmittag ist unterrichtsfrei und ausschließlich für Therapien vorgesehen",
+          "korrekt": false
+        },
+        {
+          "text": "Der Plan entspricht der Stundentafel der Grundschule, nur mit reduzierter Stundenzahl",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die sechs Beschriftungen der Folie lauten: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Die Decoys beschreiben jeweils das Gegenteil eines dieser Merkmale - das lohnt sich zu üben, weil die Blockstruktur und die Symbolvisualisierung leicht als bloße Layoutdetails übersehen werden. (Folie 19 zu Folie 18)",
+      "quelle": "folie-grundlagen-19",
+      "quelleSicherheit": "geprueft",
       "generiert": true
     }
   ],
@@ -286,6 +547,27 @@
       "tipp": "AFB III heißt Position beziehen: Argumente in beide Richtungen sammeln und am Ende klar bewerten. Die Merkmale aus den Notizen sind dein Fakten-Fundament.",
       "quelle": "notizen-s57",
       "quelleSicherheit": "unsicher",
+      "generiert": true
+    },
+    {
+      "id": "gr-fol-f-1",
+      "afb": 3,
+      "frage": "Die Vorlesung stellt die Frage in den Mittelpunkt, ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt Geistige Entwicklung geben kann oder ob allgemeine Modelle und Theorien für ihn spezifiziert werden müssen. Erörtern Sie diese Frage und beziehen Sie begründet Position.",
+      "stichpunkte": [
+        "Wiedergabe der Rahmenfrage aus der Modulbeschreibung: spezielle Didaktik oder Spezifizierung allgemeiner Modelle",
+        "Für eine eigene, spezielle Didaktik: Die strukturellen Merkmale der Förderschule sind eigenständig - Frühförderung und schulvorbereitende Gruppen, Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben, relativ kleine Klassenfrequenzen (Fischer 2008, 30)",
+        "Für eine eigene Didaktik: die eigene Stufenlogik mit vier Stufen à drei Jahren, die eigenständige Werkstufe mit dem Ziel der Vorbereitung auf nachschulische Lebenswelten und die Verlängerung des Schulbesuchs von 9 auf 12 Jahre",
+        "Für eine eigene Didaktik: spezifische Lernfelder und eine Alltagsstruktur mit gemeinsamen Mahlzeiten, die es so an der Regelschule nicht gibt",
+        "Dagegen: Beschulung findet längst nicht nur an der Förderschule statt - beim gemeinsamen Unterricht sind Schüler:innen in drei von vier Formen schulrechtlich der Regelschule zugeordnet (Integrationsklasse, integrative Regelklasse, Einzelintegration), nur die Kooperationsklasse ist der Förderschule zugeordnet",
+        "Dagegen: Eine Sonderdidaktik ohne Anschluss an die allgemeine Didaktik erschwert genau die Zusammenarbeit, die der gemeinsame Unterricht verlangt",
+        "Dagegen: Die Qualifikationsziele des Moduls sprechen von einer Förderung mit akademischen und kulturellen Lerninhalten - also von denselben Bildungsinhalten wie in der allgemeinen Schule, nur anders zugänglich gemacht",
+        "Synthese: Die Vorlesung legt die Antwort in ihrer eigenen Formulierung nahe - allgemeine Modelle werden spezifiziert, nicht ersetzt; das Besondere liegt in der Passung, nicht in einem eigenen Bildungsbegriff",
+        "Bewertung: Für die Praxis heißt das, allgemeine didaktische Modelle zu kennen und sie konsequent an den Bedarfen der Schüler:innen auszurichten - Spezifizierung statt Sonderweg"
+      ],
+      "muster": "Die Modulbeschreibung stellt die Frage, ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt Geistige Entwicklung geben kann und inwiefern allgemeine Modelle und Theorien für den Förderschwerpunkt spezifiziert werden müssen. Für eine eigenständige Didaktik spricht zunächst, wie eigen die Förderschule strukturiert ist. Nach Fischer gehören dazu Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen. Hinzu kommen die Unterteilung in vier Stufen zu je drei Jahren, eine relativ eigenständige Werkstufe mit der Zielsetzung, auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten, und die Verlängerung des Schulbesuchs von neun auf zwölf Jahre. Auch der exemplarische Stundenplan zeigt Eigenes: Unterricht in Blöcken, spezifische Lernfelder, symbolvisualisierte Pläne und gemeinsame Mahlzeiten als Teil des Schulalltags. Wer so viel Besonderes vorfindet, kann mit gutem Grund nach einer eigenen Didaktik fragen. Dagegen spricht allerdings, dass die Beschulung längst nicht mehr nur an der Förderschule stattfindet. Von den vier Organisationsformen des gemeinsamen Unterrichts sind die Schülerinnen und Schüler in dreien schulrechtlich der Regelschule zugeordnet, nämlich in der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration; allein die Kooperationsklasse ist der Förderschule zugeordnet. Eine Sonderdidaktik, die neben der allgemeinen Didaktik steht, würde die Zusammenarbeit gerade dort erschweren, wo sie am nötigsten ist. Auch die Qualifikationsziele des Moduls weisen in diese Richtung, denn sie sprechen von einer Förderung mit akademischen und kulturellen Lerninhalten, also von denselben Bildungsinhalten wie in der allgemeinen Schule. Ich komme deshalb zu dem Schluss, dass die zweite Lesart trägt: Allgemeine Modelle werden für den Förderschwerpunkt spezifiziert, nicht durch ein eigenes System ersetzt. Das Besondere liegt in der Passung, in der Elementarisierung, in der Strukturierung und in der Zeit, die zur Verfügung gestellt wird, nicht in einem eigenen Bildungsbegriff. Für die Praxis heißt das, allgemeine didaktische Modelle gut zu kennen und sie konsequent an den Bedarfen der einzelnen Schülerinnen und Schüler auszurichten.",
+      "tipp": "Diese Rahmenfrage steht in deinen Notizen nicht, sie ist aber die Klammer über die ganze Vorlesungsreihe - und sie taucht in anderer Formulierung als eines der vier Spannungsfelder der Disziplin wieder auf. Wenn du eine Erörterungsaufgabe bekommst und gerade keinen Einstieg findest: Diese Frage lässt sich fast auf jedes der acht Themen anwenden.",
+      "quelle": "folie-grundlagen-5",
+      "quelleSicherheit": "geprueft",
       "generiert": true
     }
   ]

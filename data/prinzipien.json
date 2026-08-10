@@ -3,7 +3,16 @@
   "titel": "Didaktische Prinzipien",
   "vorlesung": "V4",
   "leitfrage": "Welche didaktischen Prinzipien gelten im SGE und wie werden sie im Unterricht umgesetzt?",
-  "unterthemen": ["Überblick der Prinzipien", "Lebensnähe & Aneignungsebenen", "Differenzierung", "Elementarisierung", "Handlungsorientierung", "Ganzheitlichkeit & Strukturierung"],
+  "unterthemen": [
+    "Überblick der Prinzipien",
+    "Lebensnähe & Aneignungsebenen",
+    "Differenzierung",
+    "Elementarisierung",
+    "Handlungsorientierung",
+    "Ganzheitlichkeit & Strukturierung",
+    "Was sind didaktische Prinzipien?",
+    "Prinzipien im Rahmenlehrplan"
+  ],
   "mc": [
     {
       "id": "pr-mc-1",
@@ -11,10 +20,22 @@
       "afb": 1,
       "frage": "Welches ist KEIN didaktisches Prinzip im SGE?",
       "optionen": [
-        { "text": "Notenorientierung", "korrekt": true },
-        { "text": "Lebenspraxis und Lebensnähe", "korrekt": false },
-        { "text": "Handlungsorientierung", "korrekt": false },
-        { "text": "Elementarisierung", "korrekt": false }
+        {
+          "text": "Notenorientierung",
+          "korrekt": true
+        },
+        {
+          "text": "Lebenspraxis und Lebensnähe",
+          "korrekt": false
+        },
+        {
+          "text": "Handlungsorientierung",
+          "korrekt": false
+        },
+        {
+          "text": "Elementarisierung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Prinzipien im SGE: Lebenspraxis und Lebensnähe, Individualisierung/Differenzierung, Ganzheitlichkeit, kleine Schritte und/oder Sinnzusammenhang, Handlungsorientierung, Elementarisierung, Strukturierung, Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen. Notenorientierung gehört nicht dazu.",
       "quelle": "notizen-s34",
@@ -26,10 +47,22 @@
       "afb": 1,
       "frage": "Was kennzeichnet Lebensnähe nach Pitsch (2002)?",
       "optionen": [
-        { "text": "Bildungsgut, das für das spätere Leben benötigt wird - Alltagshandlungen werden Unterrichtsinhalte", "korrekt": true },
-        { "text": "Unterricht findet ausschließlich draußen statt", "korrekt": false },
-        { "text": "Es werden nur aktuelle Nachrichten besprochen", "korrekt": false },
-        { "text": "Die Schüler:innen wählen täglich frei, ob sie lernen möchten", "korrekt": false }
+        {
+          "text": "Bildungsgut, das für das spätere Leben benötigt wird - Alltagshandlungen werden Unterrichtsinhalte",
+          "korrekt": true
+        },
+        {
+          "text": "Unterricht findet ausschließlich draußen statt",
+          "korrekt": false
+        },
+        {
+          "text": "Es werden nur aktuelle Nachrichten besprochen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Schüler:innen wählen täglich frei, ob sie lernen möchten",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Lebensnähe kennzeichnet jenes Bildungsgut, das für das spätere Leben benötigt wird (Pitsch 2002, 229). Alltagshandlungen werden als Unterrichtsinhalte tituliert und komplexe Inhalte unter Beachtung der Alltagsrelevanz gemäß den Aneignungsmöglichkeiten gestaltet.",
       "quelle": "notizen-s34",
@@ -41,10 +74,22 @@
       "afb": 2,
       "frage": "Salz wird in Wasser verrührt und löst sich auf - die Schüler:innen entdecken den Effekt handelnd. Welche Aneignungsebene ist das?",
       "optionen": [
-        { "text": "Konkret-gegenständlich", "korrekt": true },
-        { "text": "Basal-perzeptiv", "korrekt": false },
-        { "text": "Anschaulich", "korrekt": false },
-        { "text": "Abstrakt-begrifflich", "korrekt": false }
+        {
+          "text": "Konkret-gegenständlich",
+          "korrekt": true
+        },
+        {
+          "text": "Basal-perzeptiv",
+          "korrekt": false
+        },
+        {
+          "text": "Anschaulich",
+          "korrekt": false
+        },
+        {
+          "text": "Abstrakt-begrifflich",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Konkret-gegenständlich heißt: handelnd Gegenstände nutzen oder Vorgänge nachvollziehen, die Welt durch Entdeckung von Wirkungen erforschen. Basal-perzeptiv wäre Wahrnehmung mit dem eigenen Körper (z. B. mit Handführung ein Gerät anschalten), anschaulich das Erschließen über Bilder/Modelle, abstrakt-begrifflich die Auseinandersetzung über Sprache und Gedanken.",
       "quelle": "notizen-s35",
@@ -56,10 +101,22 @@
       "afb": 1,
       "frage": "In welcher Reihenfolge stehen die vier Aneignungsebenen (vom Körperlich-Sinnlichen zum Gedanklichen)?",
       "optionen": [
-        { "text": "Basal-perzeptiv, konkret-gegenständlich, anschaulich, abstrakt-begrifflich", "korrekt": true },
-        { "text": "Abstrakt-begrifflich, anschaulich, konkret-gegenständlich, basal-perzeptiv", "korrekt": false },
-        { "text": "Anschaulich, basal-perzeptiv, abstrakt-begrifflich, konkret-gegenständlich", "korrekt": false },
-        { "text": "Konkret-gegenständlich, abstrakt-begrifflich, basal-perzeptiv, anschaulich", "korrekt": false }
+        {
+          "text": "Basal-perzeptiv, konkret-gegenständlich, anschaulich, abstrakt-begrifflich",
+          "korrekt": true
+        },
+        {
+          "text": "Abstrakt-begrifflich, anschaulich, konkret-gegenständlich, basal-perzeptiv",
+          "korrekt": false
+        },
+        {
+          "text": "Anschaulich, basal-perzeptiv, abstrakt-begrifflich, konkret-gegenständlich",
+          "korrekt": false
+        },
+        {
+          "text": "Konkret-gegenständlich, abstrakt-begrifflich, basal-perzeptiv, anschaulich",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Ebenen: basal-perzeptiv (über Wahrnehmung und Bewegung des eigenen Körpers), konkret-gegenständlich (handelnd), anschaulich (über Bilder, Fotos, Modelle) und abstrakt-begrifflich (über Sprache und Gedanken, ohne direkte Anschauung).",
       "quelle": "notizen-s35",
@@ -71,10 +128,22 @@
       "afb": 1,
       "frage": "Die Bildung möglichst homogener Lerngruppen über Schulform, Schulprofil oder Jahrgangsklasse ist ...",
       "optionen": [
-        { "text": "äußere Differenzierung", "korrekt": true },
-        { "text": "innere Differenzierung", "korrekt": false },
-        { "text": "qualitative Differenzierung", "korrekt": false },
-        { "text": "adaptives Lernen", "korrekt": false }
+        {
+          "text": "äußere Differenzierung",
+          "korrekt": true
+        },
+        {
+          "text": "innere Differenzierung",
+          "korrekt": false
+        },
+        {
+          "text": "qualitative Differenzierung",
+          "korrekt": false
+        },
+        {
+          "text": "adaptives Lernen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Äußere Differenzierung versucht, weitestgehend homogene Lerngruppen zu bilden und über längere Zeit aufrechtzuerhalten (Schulform, Schulprofil, Jahrgangsklasse). Innere Differenzierung reagiert zeitlich flexibel auf die Heterogenität innerhalb der Lerngruppe.",
       "quelle": "notizen-s35",
@@ -86,10 +155,22 @@
       "afb": 1,
       "frage": "Was ist quantitative Differenzierung?",
       "optionen": [
-        { "text": "Anpassung über die Menge, z. B. weniger Aufgaben", "korrekt": true },
-        { "text": "Anpassung über den Schwierigkeitsgrad", "korrekt": false },
-        { "text": "Aufteilung der Klasse in zwei Räume", "korrekt": false },
-        { "text": "Benotung nach Anzahl der Fehler", "korrekt": false }
+        {
+          "text": "Anpassung über die Menge, z. B. weniger Aufgaben",
+          "korrekt": true
+        },
+        {
+          "text": "Anpassung über den Schwierigkeitsgrad",
+          "korrekt": false
+        },
+        {
+          "text": "Aufteilung der Klasse in zwei Räume",
+          "korrekt": false
+        },
+        {
+          "text": "Benotung nach Anzahl der Fehler",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Quantitative Differenzierung passt die Menge an (weniger Aufgaben), qualitative Differenzierung den Schwierigkeitsgrad. Wichtig laut Vorlesung: Komplexität so anpassen, dass auch die begabten Schüler:innen in ihrer Leistung gefördert werden.",
       "quelle": "notizen-s36",
@@ -101,10 +182,22 @@
       "afb": 1,
       "frage": "Was kennzeichnet handlungsorientierten Unterricht nach Jank & Meyer (2014)?",
       "optionen": [
-        { "text": "Ganzheitlicher, schüleraktiver Unterricht, in dem vereinbarte Handlungsprodukte die Gestaltung leiten und Kopf- und Handarbeit ins Gleichgewicht kommen", "korrekt": true },
-        { "text": "Die Lehrkraft demonstriert, die Schüler:innen schauen ausschließlich zu", "korrekt": false },
-        { "text": "Es zählt nur die Handarbeit, Kopfarbeit ist unerwünscht", "korrekt": false },
-        { "text": "Unterricht ohne jedes Ziel und Produkt", "korrekt": false }
+        {
+          "text": "Ganzheitlicher, schüleraktiver Unterricht, in dem vereinbarte Handlungsprodukte die Gestaltung leiten und Kopf- und Handarbeit ins Gleichgewicht kommen",
+          "korrekt": true
+        },
+        {
+          "text": "Die Lehrkraft demonstriert, die Schüler:innen schauen ausschließlich zu",
+          "korrekt": false
+        },
+        {
+          "text": "Es zählt nur die Handarbeit, Kopfarbeit ist unerwünscht",
+          "korrekt": false
+        },
+        {
+          "text": "Unterricht ohne jedes Ziel und Produkt",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Handlungsorientierter Unterricht ist ein ganzheitlicher und schüleraktiver Unterricht, in dem die zwischen Lehrer und Schülern vereinbarten Handlungsprodukte die Gestaltung des Unterrichtsprozesses leiten, sodass Kopf- und Handarbeit in ein ausgewogenes Verhältnis gebracht werden (Jank & Meyer 2014, 315). Merkmale: subjektive Interessen als Ausgangspunkt, selbsttätiges Handeln, solidarisches Handeln, Produktorientierung.",
       "quelle": "notizen-s37",
@@ -116,10 +209,22 @@
       "afb": 1,
       "frage": "In welcher Reihenfolge stehen die vier Bestandteile des Handelns?",
       "optionen": [
-        { "text": "Handlungsorientierung, Handlungsplanung, Handlungsausführung, Handlungskontrolle", "korrekt": true },
-        { "text": "Handlungskontrolle, Handlungsausführung, Handlungsplanung, Handlungsorientierung", "korrekt": false },
-        { "text": "Handlungsplanung, Handlungskontrolle, Handlungsorientierung, Handlungsausführung", "korrekt": false },
-        { "text": "Handlungsausführung, Handlungsorientierung, Handlungskontrolle, Handlungsplanung", "korrekt": false }
+        {
+          "text": "Handlungsorientierung, Handlungsplanung, Handlungsausführung, Handlungskontrolle",
+          "korrekt": true
+        },
+        {
+          "text": "Handlungskontrolle, Handlungsausführung, Handlungsplanung, Handlungsorientierung",
+          "korrekt": false
+        },
+        {
+          "text": "Handlungsplanung, Handlungskontrolle, Handlungsorientierung, Handlungsausführung",
+          "korrekt": false
+        },
+        {
+          "text": "Handlungsausführung, Handlungsorientierung, Handlungskontrolle, Handlungsplanung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Bestandteile des Handelns: 1. Handlungsorientierung (Handlungsmöglichkeiten wahrnehmen, abwägen), 2. Handlungsplanung (vorausschauendes Denken), 3. Handlungsausführung (Zielverfolgung im Auge behalten) und 4. Handlungskontrolle (Vergleich zwischen Ziel, Umsetzung, Ergebnis).",
       "quelle": "notizen-s38",
@@ -131,10 +236,22 @@
       "afb": 1,
       "frage": "Was besagt das Modell der ganzheitlichen Entwicklung nach Fröhlich/Haupt?",
       "optionen": [
-        { "text": "7 Entwicklungsbereiche stehen in permanenter Wechselwirkung und unterliegen keiner hierarchischen Ordnung", "korrekt": true },
-        { "text": "Entwicklung verläuft streng hierarchisch von Motorik zu Kognition", "korrekt": false },
-        { "text": "Nur die Wahrnehmung bestimmt die gesamte Entwicklung", "korrekt": false },
-        { "text": "Es gibt genau 4 voneinander unabhängige Bereiche", "korrekt": false }
+        {
+          "text": "7 Entwicklungsbereiche stehen in permanenter Wechselwirkung und unterliegen keiner hierarchischen Ordnung",
+          "korrekt": true
+        },
+        {
+          "text": "Entwicklung verläuft streng hierarchisch von Motorik zu Kognition",
+          "korrekt": false
+        },
+        {
+          "text": "Nur die Wahrnehmung bestimmt die gesamte Entwicklung",
+          "korrekt": false
+        },
+        {
+          "text": "Es gibt genau 4 voneinander unabhängige Bereiche",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Nach Fröhlich/Haupt stehen 7 Entwicklungsbereiche (u. a. Wahrnehmung, Kognition, Bewegung, Körpererfahrung, Gefühle, Sozialerfahrung, Kommunikation) in permanenter Wechselwirkung zueinander - ohne hierarchische Ordnung. Ganzheitlichkeit ist charakterisiert durch Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit (Fröhlich 2008, 182). Stichwort: Lernen mit Kopf, Herz und Hand (Pestalozzi), Vielkanallernen (Vester).",
       "quelle": "notizen-s41",
@@ -146,10 +263,22 @@
       "afb": 1,
       "frage": "Über welche vier Aspekte wirkt das Prinzip der Strukturierung?",
       "optionen": [
-        { "text": "Verdeutlichung von Abläufen, Verhalten steuern/Konsequenzen vorhersehbar machen, Zeit, Räume", "korrekt": true },
-        { "text": "Noten, Zeugnisse, Prüfungen, Hausaufgaben", "korrekt": false },
-        { "text": "Belohnung, Bestrafung, Lob, Tadel", "korrekt": false },
-        { "text": "Lesen, Schreiben, Rechnen, Sachkunde", "korrekt": false }
+        {
+          "text": "Verdeutlichung von Abläufen, Verhalten steuern/Konsequenzen vorhersehbar machen, Zeit, Räume",
+          "korrekt": true
+        },
+        {
+          "text": "Noten, Zeugnisse, Prüfungen, Hausaufgaben",
+          "korrekt": false
+        },
+        {
+          "text": "Belohnung, Bestrafung, Lob, Tadel",
+          "korrekt": false
+        },
+        {
+          "text": "Lesen, Schreiben, Rechnen, Sachkunde",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Strukturierung wirkt über: 1. Verdeutlichung von Abläufen, 2. Verhalten steuern und Konsequenzen vorhersehbar machen, 3. Zeit (z. B. Time-Timer) und 4. Räume. Struktur und Rhythmus geben Schüler:innen die notwendige Sicherheit, um sich der Umwelt zu öffnen.",
       "quelle": "notizen-s42",
@@ -161,10 +290,22 @@
       "afb": 1,
       "frage": "Was ist Elementarisierung?",
       "optionen": [
-        { "text": "Die Verschränkung von Lerninhalt und Lernsubjekt: Was ist das Elementare im Bildungsprozess? Zugleich fachdidaktisches Prinzip und Planungsvorgehen", "korrekt": true },
-        { "text": "Das Weglassen aller schwierigen Themen", "korrekt": false },
-        { "text": "Die Beschränkung des Unterrichts auf die Elemente Feuer, Wasser, Luft und Erde", "korrekt": false },
-        { "text": "Das Aufteilen der Klasse in Leistungsgruppen", "korrekt": false }
+        {
+          "text": "Die Verschränkung von Lerninhalt und Lernsubjekt: Was ist das Elementare im Bildungsprozess? Zugleich fachdidaktisches Prinzip und Planungsvorgehen",
+          "korrekt": true
+        },
+        {
+          "text": "Das Weglassen aller schwierigen Themen",
+          "korrekt": false
+        },
+        {
+          "text": "Die Beschränkung des Unterrichts auf die Elemente Feuer, Wasser, Luft und Erde",
+          "korrekt": false
+        },
+        {
+          "text": "Das Aufteilen der Klasse in Leistungsgruppen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Elementarisierung fragt nach dem Elementaren im Bildungsprozess und verschränkt Lerninhalt und Lernsubjekt. Sie ist sowohl fachdidaktisches Prinzip (Wachsmuth & Stöppler) als auch didaktisches Vorgehen bei der Unterrichtsplanung (Terfloth & Bauersfeld 2024) - u. a. mit didaktischer Reduktion (Stoffreduktion, Inhalts- und Komplexitätsreduktion).",
       "quelle": "notizen-s36",
@@ -176,10 +317,22 @@
       "afb": 2,
       "frage": "Im Hauswirtschaftsunterricht hängt neben der Waschmaschine eine Bildfolge, die Schritt für Schritt zeigt, wie der Waschgang gestartet wird. Die Schüler:innen erschließen sich den Ablauf über diese Darstellung, ohne selbst zu hantieren. Welche Aneignungsebene sprechen sie dabei an?",
       "optionen": [
-        { "text": "Anschaulich", "korrekt": true },
-        { "text": "Konkret-gegenständlich", "korrekt": false },
-        { "text": "Basal-perzeptiv", "korrekt": false },
-        { "text": "Abstrakt-begrifflich", "korrekt": false }
+        {
+          "text": "Anschaulich",
+          "korrekt": true
+        },
+        {
+          "text": "Konkret-gegenständlich",
+          "korrekt": false
+        },
+        {
+          "text": "Basal-perzeptiv",
+          "korrekt": false
+        },
+        {
+          "text": "Abstrakt-begrifflich",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zusammenhänge erschließen, indem man sich ein Bild davon macht (Fotos, Abbildungen, Modelle), ohne dass der konkret handelnde Vollzug noch nötig ist - das ist die anschauliche Ebene. Konkret-gegenständlich ist der naheliegende Decoy, weil es um ein Gerät geht; die Ebene würde aber erst greifen, wenn die Schüler:innen die Maschine selbst handelnd bedienen. (Notizen S. 35)",
       "quelle": "notizen-s35",
@@ -192,10 +345,22 @@
       "afb": 2,
       "frage": "Eine Schülerin schaltet mit Handführung der Lehrkraft eine Lampe an und aus und erlebt dabei das Aufleuchten, das Klicken und die Bewegung ihrer Hand über verschiedene Sinneskanäle. Welche Aneignungsebene steht hier im Vordergrund?",
       "optionen": [
-        { "text": "Basal-perzeptiv", "korrekt": true },
-        { "text": "Konkret-gegenständlich", "korrekt": false },
-        { "text": "Anschaulich", "korrekt": false },
-        { "text": "Abstrakt-begrifflich", "korrekt": false }
+        {
+          "text": "Basal-perzeptiv",
+          "korrekt": true
+        },
+        {
+          "text": "Konkret-gegenständlich",
+          "korrekt": false
+        },
+        {
+          "text": "Anschaulich",
+          "korrekt": false
+        },
+        {
+          "text": "Abstrakt-begrifflich",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Hier läuft die Auseinandersetzung über Wahrnehmung und Bewegung des eigenen Körpers - Fühlen, Sehen, Hören mit Handführung. Genau das beschreibt die basal-perzeptive Ebene, das Folienbeispiel ist das An- und Ausschalten eines elektrischen Geräts mit Handführung. Konkret-gegenständlich als Decoy meint dagegen das eigenständig handelnde Nutzen von Gegenständen und Entdecken von Wirkungen. (Notizen S. 35)",
       "quelle": "notizen-s35",
@@ -208,10 +373,22 @@
       "afb": 2,
       "frage": "Eine Klasse arbeitet neu mit offenen, differenzierten Unterrichtsformen; einige Schüler:innen wirken zunehmend verloren und überfordert. Welche Konsequenz legt die Vorlesung nahe?",
       "optionen": [
-        { "text": "Die Formen einführen und sichern, ein Gleichgewicht aus selbstständigem Arbeiten und Orientierung schaffen und den Unterrichtsablauf transparent machen", "korrekt": true },
-        { "text": "Zur äußeren Differenzierung wechseln und dauerhaft homogene Leistungsgruppen bilden", "korrekt": false },
-        { "text": "Die Komplexität für die gesamte Klasse absenken, damit niemand mehr überfordert sein kann", "korrekt": false },
-        { "text": "Auf Differenzierung verzichten, weil heterogene Lerngruppen die Ausnahme sind", "korrekt": false }
+        {
+          "text": "Die Formen einführen und sichern, ein Gleichgewicht aus selbstständigem Arbeiten und Orientierung schaffen und den Unterrichtsablauf transparent machen",
+          "korrekt": true
+        },
+        {
+          "text": "Zur äußeren Differenzierung wechseln und dauerhaft homogene Leistungsgruppen bilden",
+          "korrekt": false
+        },
+        {
+          "text": "Die Komplexität für die gesamte Klasse absenken, damit niemand mehr überfordert sein kann",
+          "korrekt": false
+        },
+        {
+          "text": "Auf Differenzierung verzichten, weil heterogene Lerngruppen die Ausnahme sind",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Differenzierte und geöffnete Unterrichtsformen bedürfen einer Einführung und Sicherung; Transparenz des Unterrichtsablaufs wirkt Überforderung entgegen. Der Decoy mit dem generellen Absenken der Komplexität widerspricht Roses Vorlesungsnotiz, die Komplexität so anzupassen, dass auch die begabten Schüler:innen gefördert werden - und jede Klasse ist laut Vorlesung eine heterogene Lerngruppe. (Notizen S. 36)",
       "quelle": "notizen-s36",
@@ -224,10 +401,22 @@
       "afb": 2,
       "frage": "Bei der Planung einer Einheit vereinfacht eine Lehrkraft den Unterrichtsgegenstand so weit, dass er fachlich richtig bleibt und für die Schüler:innen zugleich fassbar wird. Welches Feld im Suchprozess der Elementarisierung beschreibt genau diesen Schritt?",
       "optionen": [
-        { "text": "Elementare Strukturen", "korrekt": true },
-        { "text": "Elementare Aneignungswege", "korrekt": false },
-        { "text": "Elementare Zugänge", "korrekt": false },
-        { "text": "Elementare Erfahrungen", "korrekt": false }
+        {
+          "text": "Elementare Strukturen",
+          "korrekt": true
+        },
+        {
+          "text": "Elementare Aneignungswege",
+          "korrekt": false
+        },
+        {
+          "text": "Elementare Zugänge",
+          "korrekt": false
+        },
+        {
+          "text": "Elementare Erfahrungen",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Das sach- und schülergemäße Vereinfachen des Unterrichtsgegenstands aus sachorientiertem Blickwinkel sind die elementaren Strukturen. Der Decoy elementare Aneignungswege klingt ähnlich, meint aber das Gestalten sach- und schülergerechter Lernwege aus methodisch-medialem Blickwinkel; elementare Zugänge sind entwicklungspsychologisch, elementare Erfahrungen anthropologisch gedacht. (Notizen S. 36)",
       "quelle": "notizen-s36",
@@ -240,10 +429,22 @@
       "afb": 1,
       "frage": "Welche Formen umfasst die didaktische Reduktion im Rahmen der Elementarisierung?",
       "optionen": [
-        { "text": "Stoffreduktion, Inhalts- und Komplexitätsreduktion sowie Reduzieren als Lernhandlung", "korrekt": true },
-        { "text": "Quantitative und qualitative Differenzierung", "korrekt": false },
-        { "text": "Begründungszusammenhang, Sachanalyse und methodische Entscheidungen", "korrekt": false },
-        { "text": "Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit", "korrekt": false }
+        {
+          "text": "Stoffreduktion, Inhalts- und Komplexitätsreduktion sowie Reduzieren als Lernhandlung",
+          "korrekt": true
+        },
+        {
+          "text": "Quantitative und qualitative Differenzierung",
+          "korrekt": false
+        },
+        {
+          "text": "Begründungszusammenhang, Sachanalyse und methodische Entscheidungen",
+          "korrekt": false
+        },
+        {
+          "text": "Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Zur didaktischen Reduktion gehören Stoffreduktion, Inhalts- und Komplexitätsreduktion sowie das Reduzieren als Lernhandlung. Der Decoy quantitative/qualitative Differenzierung gehört zum Prinzip Differenzierung (Menge bzw. Schwierigkeitsgrad anpassen), die dritte Option stammt aus dem Unterrichtsplanungsraster von Terfloth und Bauersfeld, die vierte aus der Ganzheitlichkeit nach Fröhlich. (Notizen S. 37)",
       "quelle": "notizen-s37",
@@ -256,10 +457,22 @@
       "afb": 2,
       "frage": "Ein Schüler deckt den Tisch inzwischen allein, verteilt Teller und Besteck aber noch durcheinander. Welches Hilfeniveau passt nach der Tabelle zur Handlungsdurchführung - und mit welchem Ziel?",
       "optionen": [
-        { "text": "Beobachtung und evtl. Korrektur, damit die Fertigkeiten durch Übung zur Routine werden", "korrekt": true },
-        { "text": "Mithilfe mit teilweiser Übernahme und Anleitung der lebenspraktischen Fertigkeiten", "korrekt": false },
-        { "text": "Stellvertretende Ausführung mit dem Ziel der Anregung zu eigener Aktivität", "korrekt": false },
-        { "text": "Begleitung zur Sicherung der Bedingungen für die Selbstständigkeit", "korrekt": false }
+        {
+          "text": "Beobachtung und evtl. Korrektur, damit die Fertigkeiten durch Übung zur Routine werden",
+          "korrekt": true
+        },
+        {
+          "text": "Mithilfe mit teilweiser Übernahme und Anleitung der lebenspraktischen Fertigkeiten",
+          "korrekt": false
+        },
+        {
+          "text": "Stellvertretende Ausführung mit dem Ziel der Anregung zu eigener Aktivität",
+          "korrekt": false
+        },
+        {
+          "text": "Begleitung zur Sicherung der Bedingungen für die Selbstständigkeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Gelingt die Ausführung schon, aber noch nicht sachgerecht, sind Beobachtung und Korrektur dran, damit die Fertigkeiten zur Routine werden. Der Decoy Mithilfe gehört eine Stufe früher hin: Er greift, wenn eine Person erst Ansätze zur selbstständigen Ausführung zeigt. (Notizen S. 40)",
       "quelle": "notizen-s40",
@@ -272,10 +485,22 @@
       "afb": 2,
       "frage": "Eine Schülerin wäscht sich die Hände, wenn sie dazu aufgefordert wird - von sich aus vor dem Essen tut sie es aber nie. Welche Unterstützung sieht die Hilfeniveau-Tabelle für diese Ausgangslage vor?",
       "optionen": [
-        { "text": "Rückmeldung und Begründung, damit die Tätigkeit in den Lebenszusammenhang eingeordnet und in Eigenregie ausgeübt wird", "korrekt": true },
-        { "text": "Begleitung, weil die selbstständige und sachgerechte Ausführung bereits gelingt", "korrekt": false },
-        { "text": "Beobachtung und Korrektur, damit die Fertigkeit zur Routine wird", "korrekt": false },
-        { "text": "Stellvertretende vollständige Übernahme der Tätigkeit", "korrekt": false }
+        {
+          "text": "Rückmeldung und Begründung, damit die Tätigkeit in den Lebenszusammenhang eingeordnet und in Eigenregie ausgeübt wird",
+          "korrekt": true
+        },
+        {
+          "text": "Begleitung, weil die selbstständige und sachgerechte Ausführung bereits gelingt",
+          "korrekt": false
+        },
+        {
+          "text": "Beobachtung und Korrektur, damit die Fertigkeit zur Routine wird",
+          "korrekt": false
+        },
+        {
+          "text": "Stellvertretende vollständige Übernahme der Tätigkeit",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Tätigkeit wird ausgeführt, aber noch nicht in den Lebenszusammenhang eingeordnet - dann braucht es laut Tabelle Begründung (Erklärungen) und/oder Aufforderung, um das Ausüben in Eigenregie zu ermöglichen. Der Decoy Begleitung ist die letzte Stufe und käme erst infrage, wenn die Schülerin die Handlung selbstständig und im richtigen Zusammenhang zeigt. (Notizen S. 40)",
       "quelle": "notizen-s40",
@@ -288,10 +513,22 @@
       "afb": 1,
       "frage": "Durch welche drei Aspekte ist Ganzheitlichkeit nach Fröhlich (2008) charakterisiert?",
       "optionen": [
-        { "text": "Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit", "korrekt": true },
-        { "text": "Kopf, Herz und Hand", "korrekt": false },
-        { "text": "Handlungsorientierung, Handlungsplanung und Handlungskontrolle", "korrekt": false },
-        { "text": "Wahrnehmung, Kognition und Bewegung", "korrekt": false }
+        {
+          "text": "Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit",
+          "korrekt": true
+        },
+        {
+          "text": "Kopf, Herz und Hand",
+          "korrekt": false
+        },
+        {
+          "text": "Handlungsorientierung, Handlungsplanung und Handlungskontrolle",
+          "korrekt": false
+        },
+        {
+          "text": "Wahrnehmung, Kognition und Bewegung",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Fröhlich charakterisiert Ganzheitlichkeit durch Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit. Kopf, Herz und Hand ist der Pestalozzi-Decoy: Die Formel gehört auch zur Ganzheitlichkeit, ist aber das Lernprinzip, nicht Fröhlichs Charakterisierung. Wahrnehmung, Kognition und Bewegung sind drei der sieben Entwicklungsbereiche nach Fröhlich/Haupt. (Notizen S. 41)",
       "quelle": "notizen-s41",
@@ -304,10 +541,22 @@
       "afb": 2,
       "frage": "In einer Stunde ertasten die Schüler:innen ein verdecktes Fahrrad, drehen die Kurbel, hören über eine Kopftaste das Geräusch eines Dynamos und sehen schließlich Foto und Schriftwort an der Tafel. Welches didaktische Prinzip setzt dieser Aufbau in erster Linie um?",
       "optionen": [
-        { "text": "Ganzheitlichkeit", "korrekt": true },
-        { "text": "Elementarisierung", "korrekt": false },
-        { "text": "Äußere Differenzierung", "korrekt": false },
-        { "text": "Kleine Schritte und/oder Sinnzusammenhang", "korrekt": false }
+        {
+          "text": "Ganzheitlichkeit",
+          "korrekt": true
+        },
+        {
+          "text": "Elementarisierung",
+          "korrekt": false
+        },
+        {
+          "text": "Äußere Differenzierung",
+          "korrekt": false
+        },
+        {
+          "text": "Kleine Schritte und/oder Sinnzusammenhang",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Die Stunde spricht viele Sinne an - Tasten, Bewegung, Hören, Sehen - und ist in der Vorlesung das Beispiel für Ganzheitlichkeit im Sinne des Vielkanallernens. Der Decoy kleine Schritte liegt nahe, weil die Stunde gestuft aufgebaut ist; der Kern des Beispiels ist aber die Einbeziehung mehrerer Sinneskanäle. (Notizen S. 41)",
       "quelle": "notizen-s41",
@@ -320,13 +569,165 @@
       "afb": 2,
       "frage": "Die Vorlesung gleicht die didaktisch-methodischen Prinzipien im SGE mit den Qualitätsmerkmalen des RLP Berlin/Brandenburg ab. Welches Prinzip hat dort KEINE direkte Entsprechung?",
       "optionen": [
-        { "text": "Elementarisierung", "korrekt": true },
-        { "text": "Ganzheitlichkeit", "korrekt": false },
-        { "text": "Handlungsorientierung", "korrekt": false },
-        { "text": "Lebenspraxis und Lebensnähe", "korrekt": false }
+        {
+          "text": "Elementarisierung",
+          "korrekt": true
+        },
+        {
+          "text": "Ganzheitlichkeit",
+          "korrekt": false
+        },
+        {
+          "text": "Handlungsorientierung",
+          "korrekt": false
+        },
+        {
+          "text": "Lebenspraxis und Lebensnähe",
+          "korrekt": false
+        }
       ],
       "erklaerung": "Ohne Entsprechung im RLP bleiben laut Abgleich-Tabelle Elementarisierung, Strukturierung, kleine Schritte und/oder Sinnzusammenhang, Anschaulichkeit und adaptives Lernen. Ganzheitlichkeit ist der Decoy mit wörtlicher Eins-zu-eins-Entsprechung; Handlungsorientierung entspricht dem handlungs- und situationsbezogenen Lernen, Lebenspraxis und Lebensnähe der lebensweltlichen und lebenspraktischen Orientierung. Umgekehrt steht kooperatives Lernen nur auf der RLP-Seite. (Notizen S. 42)",
       "quelle": "notizen-s42",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-mc-1",
+      "unterthema": "Was sind didaktische Prinzipien?",
+      "afb": 2,
+      "frage": "Eine Referendarin fragt: Was ist ein didaktisches Prinzip eigentlich - eine Methode, eine Regel, ein Lernziel? Welche Antwort trifft das Verständnis der Vorlesung?",
+      "optionen": [
+        {
+          "text": "Es sind grundlegende Regeln, Grundsätze und Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation",
+          "korrekt": true
+        },
+        {
+          "text": "Es sind erprobte Verfahren, mit denen ein Unterrichtsinhalt konkret vermittelt wird",
+          "korrekt": false
+        },
+        {
+          "text": "Es sind verbindlich formulierte Kompetenzen, die die Schüler:innen am Ende erreichen sollen",
+          "korrekt": false
+        },
+        {
+          "text": "Es sind die Arbeitsformen, in denen die Schüler:innen im Unterricht zusammenarbeiten",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Prinzipien sind Orientierungen, keine Verfahren - sie sagen, woran man sich hält, nicht, was man konkret tut. Die drei Decoys sind genau die Ebenen, die in der Rangfolge unter den Prinzipien liegen: Methoden, Techniken und Sozialformen; das Lernziel wiederum ist eine ganz andere Kategorie. (Folie 3, vgl. Weber 2008, 263 ff.)",
+      "quelle": "folie-prinzipien-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-mc-2",
+      "unterthema": "Was sind didaktische Prinzipien?",
+      "afb": 2,
+      "frage": "Die Vorlesung ordnet didaktische Prinzipien in eine Rangfolge weiterer Ebenen ein. Wie verläuft sie von oben nach unten?",
+      "optionen": [
+        {
+          "text": "Didaktische Prinzipien, Unterrichtsmethoden, Unterrichtstechniken, Sozialformen, Medien",
+          "korrekt": true
+        },
+        {
+          "text": "Unterrichtsmethoden, didaktische Prinzipien, Sozialformen, Unterrichtstechniken, Medien",
+          "korrekt": false
+        },
+        {
+          "text": "Didaktische Prinzipien, Sozialformen, Unterrichtsmethoden, Medien, Unterrichtstechniken",
+          "korrekt": false
+        },
+        {
+          "text": "Medien, Sozialformen, Unterrichtstechniken, Unterrichtsmethoden, didaktische Prinzipien",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Das Schaubild läuft vom Allgemeinen zum Konkreten: Die Prinzipien stehen ganz oben und geben Orientierung, darunter folgen Methoden, Techniken, Sozialformen und zuletzt Medien. Die Decoys tauschen jeweils zwei Ebenen oder drehen die Richtung um - wenn du dir merkst, dass die Prinzipien den Rahmen setzen und die Medien das letzte, konkreteste Glied sind, fällt die Antwort leicht. (Folie 3, vgl. Weber 2008, 263 ff.)",
+      "quelle": "folie-prinzipien-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-mc-3",
+      "unterthema": "Was sind didaktische Prinzipien?",
+      "afb": 2,
+      "frage": "Ein Kommilitone wendet ein: Wenn didaktische Prinzipien nicht durchgängig wissenschaftlich fundiert sind, kann man sie doch getrost ignorieren. Wie antwortet die Vorlesung darauf?",
+      "optionen": [
+        {
+          "text": "Sie haben trotzdem eine große Relevanz für die Arbeit von Lehrkräften, auch wenn sie nicht immer wissenschaftlich fundiert sind",
+          "korrekt": true
+        },
+        {
+          "text": "Sie sind rechtlich verbindlich, weil sie im Rahmenlehrplan als Standards festgeschrieben sind",
+          "korrekt": false
+        },
+        {
+          "text": "Sie sind vollständig empirisch abgesichert, der Einwand trifft also nicht zu",
+          "korrekt": false
+        },
+        {
+          "text": "Sie gelten nur für den Förderschwerpunkt geistige Entwicklung und sind deshalb ein Sonderfall",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Folie räumt die fehlende durchgängige Fundierung ausdrücklich ein und hält trotzdem an der großen Relevanz für die Praxis fest. Der Decoy mit dem Rahmenlehrplan ist besonders reizvoll, weil die Prinzipien dort tatsächlich als Qualitätsmerkmale wiederkehren - das macht sie aber nicht zu verbindlichen Standards. (Folie 3, vgl. Arndt 2020, 340)",
+      "quelle": "folie-prinzipien-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-mc-4",
+      "unterthema": "Was sind didaktische Prinzipien?",
+      "afb": 1,
+      "frage": "Welche Unterscheidung trifft die Vorlesung zusätzlich, wenn sie didaktische Prinzipien einführt?",
+      "optionen": [
+        {
+          "text": "Zwischen fachspezifischen und fächerübergreifenden Prinzipien",
+          "korrekt": true
+        },
+        {
+          "text": "Zwischen quantitativen und qualitativen Prinzipien",
+          "korrekt": false
+        },
+        {
+          "text": "Zwischen inneren und äußeren Prinzipien",
+          "korrekt": false
+        },
+        {
+          "text": "Zwischen allgemeinen und sonderpädagogischen Prinzipien",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Neben der Feststellung, dass verschiedene Fachdidaktiken und Vertreter:innen unterschiedliche Prinzipien für bedeutsam halten, unterscheidet die Folie fachspezifische und fächerübergreifende Prinzipien. Die beiden ersten Decoys sind echte Begriffspaare, gehören aber zur Differenzierung: quantitativ und qualitativ, innere und äußere Differenzierung. (Folie 3, vgl. Weber 2008, 263 ff.)",
+      "quelle": "folie-prinzipien-3",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-mc-5",
+      "unterthema": "Prinzipien im Rahmenlehrplan",
+      "afb": 2,
+      "frage": "Die Vorlesung stellt die didaktischen Prinzipien den Qualitätsmerkmalen des Rahmenlehrplans gegenüber. Welchem Qualitätsmerkmal entspricht dort die Handlungsorientierung?",
+      "optionen": [
+        {
+          "text": "Handlungs- und situationsbezogenes Lernen",
+          "korrekt": true
+        },
+        {
+          "text": "Selbstständigkeit und Eigenverantwortung",
+          "korrekt": false
+        },
+        {
+          "text": "Fehler als Lernchance",
+          "korrekt": false
+        },
+        {
+          "text": "Kooperatives Lernen",
+          "korrekt": false
+        }
+      ],
+      "erklaerung": "Die Abgleichtabelle ordnet der Handlungsorientierung das handlungs- und situationsbezogene Lernen zu. Die Decoys stehen alle wirklich in derselben Tabelle, aber in anderen Zeilen: Selbstständigkeit und Eigenverantwortung neben dem Anstoß zur Eigenaktivität, Fehler als Lernchance neben der Ermöglichung von Erfahrungen, und für das kooperative Lernen gibt es auf der linken Seite gar kein Gegenstück. Der Titel der Folie ist der eigentliche Punkt: Die Prinzipien geben auch im Rahmenlehrplan die Orientierung. (Folie 33)",
+      "quelle": "folie-prinzipien-33",
       "quelleSicherheit": "geprueft",
       "generiert": true
     }
@@ -449,6 +850,28 @@
       "tipp": "Genau diese Aufgabenform nennt die Vorlesung als Ziel: Lehr-Lernsequenzen nach ihren didaktischen Prinzipien analysieren. Geh den Ablauf Schritt für Schritt durch und frage bei jedem Schritt, welches Prinzip hier arbeitet - die Begründung liefert das Material dann fast von selbst.",
       "quelle": "notizen-s41",
       "quelleSicherheit": "unsicher",
+      "generiert": true
+    },
+    {
+      "id": "pr-fol-f-1",
+      "afb": 2,
+      "frage": "Erklären Sie, um was es sich bei didaktischen Prinzipien handelt, und erörtern Sie ihre Relevanz für die Unterrichtsplanung. Ordnen Sie die Prinzipien dabei in das Verhältnis zu Methoden, Techniken, Sozialformen und Medien ein.",
+      "stichpunkte": [
+        "Definition: grundlegende Regeln, Grundsätze bzw. Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation (vgl. Weber 2008, 263 ff.)",
+        "Sie sind nicht immer wissenschaftlich fundiert, haben aber eine große Relevanz für die Arbeit von Lehrkräften (vgl. Arndt 2020, 340)",
+        "In den einzelnen Fachdidaktiken und von einzelnen Vertreter:innen werden unterschiedliche Prinzipien für mehr oder weniger bedeutsam gehalten - es gibt also keine verbindliche Einheitsliste",
+        "Unterschieden werden fachspezifische und fächerübergreifende Prinzipien",
+        "Rangfolge von oben nach unten: didaktische Prinzipien, Unterrichtsmethoden, Unterrichtstechniken, Sozialformen, Medien - vom Allgemeinen zum Konkreten",
+        "Relevanz 1: Prinzipien geben Orientierung, wo der Einzelfall keine fertige Lösung hergibt - sie sind Entscheidungshilfen, keine Rezepte",
+        "Relevanz 2: Sie machen Planungsentscheidungen begründbar und damit für Kolleg:innen und Eltern nachvollziehbar",
+        "Relevanz 3: Sie decken die drei Phasen ab - Planung, Durchführung und Evaluation -, wirken also auch nach der Stunde als Maßstab",
+        "Relevanz 4: Sie kehren als Qualitätsmerkmale im Rahmenlehrplan wieder (Lebensweltliche und lebenspraktische Orientierung, Differenzierung und Individualisierung, Ganzheitlichkeit, Handlungs- und situationsbezogenes Lernen), sind also auch curricular verankert",
+        "Kritischer Punkt für die Erörterung: Weil die Fundierung uneinheitlich ist und die Listen je nach Vertreter:in variieren, ersetzen Prinzipien keine fachliche Analyse des Einzelfalls; sie können bei rigider Anwendung sogar in die Irre führen, etwa wenn kleine Schritte den Sinnzusammenhang verdecken"
+      ],
+      "muster": "Didaktische Prinzipien sind grundlegende Regeln, Grundsätze beziehungsweise Orientierungen für die Unterrichtsplanung, die Unterrichtsdurchführung und die Unterrichtsevaluation. Sie beantworten nicht die Frage, wie eine Stunde konkret abläuft, sondern woran sich Entscheidungen ausrichten sollen. Genau darin liegt auch ihre Stellung im Gefüge didaktischer Kategorien: Von oben nach unten stehen zuerst die Unterrichtsprinzipien beziehungsweise didaktischen Prinzipien, darunter die Unterrichtsmethoden, dann die Unterrichtstechniken, danach die Sozialformen und zuletzt die Medien. Die Reihe läuft also vom Allgemeinen zum Konkreten, und die Prinzipien setzen den Rahmen, innerhalb dessen die übrigen Ebenen ausgestaltet werden. Zu ihrem Status gehört eine Einschränkung: Die Prinzipien sind nicht immer wissenschaftlich fundiert, und in den einzelnen Fachdidaktiken werden von unterschiedlichen Vertreterinnen und Vertretern unterschiedliche Prinzipien für mehr oder weniger bedeutsam gehalten. Unterschieden werden dabei fachspezifische und fächerübergreifende Prinzipien. Trotz dieser uneinheitlichen Fundierung ist ihre Relevanz für die Arbeit von Lehrkräften groß. Erstens geben sie Orientierung, wo der Einzelfall keine fertige Lösung bereithält; sie sind Entscheidungshilfen, keine Rezepte. Zweitens machen sie Planungsentscheidungen begründbar und für Kolleginnen, Kollegen und Eltern nachvollziehbar. Drittens greifen sie über die Planung hinaus in Durchführung und Evaluation, wirken also auch im Rückblick als Maßstab. Und viertens sind sie curricular verankert, denn im Rahmenlehrplan kehren sie als Qualitätsmerkmale wieder, etwa als lebensweltliche und lebenspraktische Orientierung, als Differenzierung und Individualisierung, als Ganzheitlichkeit oder als handlungs- und situationsbezogenes Lernen. Kritisch anzumerken bleibt, dass Prinzipien die fachliche Analyse des Einzelfalls nicht ersetzen. Rigide angewandt können sie sogar in die Irre führen, etwa wenn das Prinzip der kleinen Schritte so konsequent umgesetzt wird, dass der Sinnzusammenhang für die Schülerinnen und Schüler verloren geht. Ihre Stärke liegt deshalb im abwägenden Gebrauch.",
+      "tipp": "Diese Definition ist die größte Neuigkeit aus den Folien zu diesem Thema und sie beantwortet eine Kompetenzerwartung fast wörtlich. Wenn du in der Klausur nur einen Satz behalten willst, dann diesen: Prinzipien sind Orientierungen für Planung, Durchführung und Evaluation. Die Rangfolge bis hinunter zu den Medien ist der Zusatz, mit dem aus einer Definition eine Erklärung wird.",
+      "quelle": "folie-prinzipien-3",
+      "quelleSicherheit": "geprueft",
       "generiert": true
     }
   ]
