@@ -8,6 +8,7 @@
     {
       "id": "mo-mc-1",
       "unterthema": "Bedeutung & Mobilitätsbehinderungen",
+      "afb": 1,
       "frage": "In welchem Spannungsfeld steht die Mobilität von Menschen im SGE?",
       "optionen": [
         { "text": "Abhängigkeit (von Fahrdiensten, Begleitung, Assistenz) versus Forderung nach Selbstbestimmung und Teilhabe", "korrekt": true },
@@ -15,11 +16,14 @@
         { "text": "Auto versus Fahrrad", "korrekt": false },
         { "text": "Stadt versus Land ohne weiteren Bezug", "korrekt": false }
       ],
-      "erklaerung": "Menschen mit SGE haben ein deutlich geringeres Mobilitätsniveau als andere Bevölkerungsgruppen und sind bereits von Kita über Schule bis zum Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Das erzeugt Abhängigkeit - im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Mobilität ist dafür Grundvoraussetzung."
+      "erklaerung": "Menschen mit SGE haben ein deutlich geringeres Mobilitätsniveau als andere Bevölkerungsgruppen und sind bereits von Kita über Schule bis zum Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Das erzeugt Abhängigkeit - im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Mobilität ist dafür Grundvoraussetzung.",
+      "quelle": "notizen-s16",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-2",
       "unterthema": "Bedeutung & Mobilitätsbehinderungen",
+      "afb": 1,
       "frage": "Welche gehört zu den Mobilitätsbehinderungen, auf die Menschen im Alltag stoßen können?",
       "optionen": [
         { "text": "Fehlende Ortskenntnis", "korrekt": true },
@@ -27,11 +31,14 @@
         { "text": "Übermäßige Verkehrsmittelauswahl", "korrekt": false },
         { "text": "Zu viel Mobilitätsbildung", "korrekt": false }
       ],
-      "erklaerung": "Zu den Mobilitätsbehinderungen zählen u. a.: Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung/Verhalten Anderer und fehlende Mobilitätsbildung."
+      "erklaerung": "Zu den Mobilitätsbehinderungen zählen u. a.: Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung/Verhalten Anderer und fehlende Mobilitätsbildung.",
+      "quelle": "notizen-s16",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-3",
       "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
       "frage": "Aus welchen vier Teilbereichen setzt sich die schulische Mobilitäts- und Verkehrserziehung zusammen?",
       "optionen": [
         { "text": "Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung, Sozialerziehung", "korrekt": true },
@@ -39,11 +46,14 @@
         { "text": "Theorie, Praxis, Prüfung, Wiederholung", "korrekt": false },
         { "text": "Motorik, Sensorik, Kognition, Emotion", "korrekt": false }
       ],
-      "erklaerung": "Die Mobilitäts- und Verkehrserziehung umfasst Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung - sie ist also weit mehr als reines Verkehrsregeltraining."
+      "erklaerung": "Die Mobilitäts- und Verkehrserziehung umfasst Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung - sie ist also weit mehr als reines Verkehrsregeltraining.",
+      "quelle": "notizen-s17",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-4",
       "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
       "frage": "In welchem Lernfeld des Rahmenlehrplans FsgE (2011) ist das Handlungsfeld Verkehr und Verkehrserziehung verankert?",
       "optionen": [
         { "text": "L5 - Der mobile Mensch", "korrekt": true },
@@ -51,11 +61,14 @@
         { "text": "L3 - Der Mensch und die Gesundheit", "korrekt": false },
         { "text": "L6 - Der Mensch in Natur und Umwelt", "korrekt": false }
       ],
-      "erklaerung": "Das Lernfeld L5 Der mobile Mensch enthält das Handlungsfeld Verkehr und Verkehrserziehung. Zielsetzung: dass alle Schüler:innen, denen es möglich ist, den Schulweg bzw. Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen und situationsentsprechend handeln können - zu Fuß, mit Fahrrad oder Rollstuhl, im Auto und Bus, in öffentlichen Verkehrsmitteln."
+      "erklaerung": "Das Lernfeld L5 Der mobile Mensch enthält das Handlungsfeld Verkehr und Verkehrserziehung. Zielsetzung: dass alle Schüler:innen, denen es möglich ist, den Schulweg bzw. Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen und situationsentsprechend handeln können - zu Fuß, mit Fahrrad oder Rollstuhl, im Auto und Bus, in öffentlichen Verkehrsmitteln.",
+      "quelle": "notizen-s17",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-5",
       "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
       "frage": "Welche gehören zu den Mobilitätskompetenzen nach Stöppler?",
       "optionen": [
         { "text": "Visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, soziale Kompetenzen", "korrekt": true },
@@ -63,11 +76,14 @@
         { "text": "Lesen, Schreiben, Rechnen, Zeichnen, Singen", "korrekt": false },
         { "text": "Kraft, Ausdauer, Schnelligkeit, Beweglichkeit, Größe", "korrekt": false }
       ],
-      "erklaerung": "Mobilitätskompetenzen nach Stöppler: visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition und Interaktion. Fünf davon nennen zu können war eine Original-Beispielaufgabe."
+      "erklaerung": "Mobilitätskompetenzen nach Stöppler: visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition und Interaktion. Fünf davon nennen zu können war eine Original-Beispielaufgabe.",
+      "quelle": "notizen-s18",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-6",
       "unterthema": "Curriculum & Kompetenzen",
+      "afb": 2,
       "frage": "Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen sowie Entfernungshören sind Ziele in welchem Kompetenzbereich?",
       "optionen": [
         { "text": "Auditive Wahrnehmung", "korrekt": true },
@@ -75,11 +91,14 @@
         { "text": "Motorik", "korrekt": false },
         { "text": "Soziale Kompetenz", "korrekt": false }
       ],
-      "erklaerung": "Ziele im Bereich auditive Wahrnehmung: Erkennen, Zuordnen, Differenzieren von Verkehrsgeräuschen, Lokalisieren von Verkehrsgeräuschen, auditive Diskriminierung und Entfernungshören. Visuell wären z. B. Farbensehen (Rot-Grün), Verständnis des Blinkens, Symbole und Raumbewusstsein."
+      "erklaerung": "Ziele im Bereich auditive Wahrnehmung: Erkennen, Zuordnen, Differenzieren von Verkehrsgeräuschen, Lokalisieren von Verkehrsgeräuschen, auditive Diskriminierung und Entfernungshören. Visuell wären z. B. Farbensehen (Rot-Grün), Verständnis des Blinkens, Symbole und Raumbewusstsein.",
+      "quelle": "notizen-s19",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-7",
       "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 1,
       "frage": "Welche vier Methoden der Mobilitätsförderung nennt die Vorlesung?",
       "optionen": [
         { "text": "Praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen, pädagogisches Puppenspiel", "korrekt": true },
@@ -87,11 +106,14 @@
         { "text": "Simulator, Virtual Reality, App-Training, E-Learning", "korrekt": false },
         { "text": "Belohnungssystem, Strafarbeit, Wettbewerb, Ranking", "korrekt": false }
       ],
-      "erklaerung": "Die Methoden: praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und pädagogisches Puppenspiel - dazu Kooperationen (z. B. mit der Polizei). Didaktische Prinzipien dabei: Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität, Kontinuität."
+      "erklaerung": "Die Methoden: praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und pädagogisches Puppenspiel - dazu Kooperationen (z. B. mit der Polizei). Didaktische Prinzipien dabei: Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität, Kontinuität.",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-8",
       "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 1,
       "frage": "Was gilt für das Rollstuhlfahren im Straßenverkehr?",
       "optionen": [
         { "text": "Auf dem Gehweg darf nur mit Schrittgeschwindigkeit gefahren werden, und Radwege dürfen nicht benutzt werden", "korrekt": true },
@@ -99,11 +121,14 @@
         { "text": "Auf dem Gehweg gilt die Höchstgeschwindigkeit von 30 km/h", "korrekt": false },
         { "text": "Für Rollstühle gibt es keinerlei Vorschriften", "korrekt": false }
       ],
-      "erklaerung": "Zu wissen ist: Mit Rollstühlen (Höchstgeschwindigkeit max. 30 km/h) darf auf dem Gehweg nur mit Schrittgeschwindigkeit gefahren werden; Radwege dürfen nicht benutzt werden; für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. Geübt werden u. a. Ausweich-, Dreh- und Wendebewegungen, Bordsteine und das Ein- und Aussteigen."
+      "erklaerung": "Zu wissen ist: Mit Rollstühlen (Höchstgeschwindigkeit max. 30 km/h) darf auf dem Gehweg nur mit Schrittgeschwindigkeit gefahren werden; Radwege dürfen nicht benutzt werden; für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. Geübt werden u. a. Ausweich-, Dreh- und Wendebewegungen, Bordsteine und das Ein- und Aussteigen.",
+      "quelle": "notizen-s21",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-9",
       "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 1,
       "frage": "Welche Art der Verkehrsbeteiligung hatte zum Unfallzeitpunkt den größten Anteil?",
       "optionen": [
         { "text": "Zu Fuß (35,7 %)", "korrekt": true },
@@ -111,11 +136,14 @@
         { "text": "Beförderung mit Behindertentransportwagen (27,4 %)", "korrekt": false },
         { "text": "Rollstuhl (1,0 %)", "korrekt": false }
       ],
-      "erklaerung": "Verkehrsbeteiligung zum Unfallzeitpunkt: zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, öffentliche Verkehrsmittel 6,6 %, Rollstuhl 1,0 %. Das Zufußgehen ist also der unfallträchtigste Bereich - ein Argument für gezielte Fußgängerschulung."
+      "erklaerung": "Verkehrsbeteiligung zum Unfallzeitpunkt: zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, öffentliche Verkehrsmittel 6,6 %, Rollstuhl 1,0 %. Das Zufußgehen ist also der unfallträchtigste Bereich - ein Argument für gezielte Fußgängerschulung.",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-10",
       "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 2,
       "frage": "Welche Gefahr gehört zur Vorbereitung auf den ÖPNV?",
       "optionen": [
         { "text": "Eiliges zum Bus Laufen, ohne auf den Straßenverkehr zu achten", "korrekt": true },
@@ -123,11 +151,14 @@
         { "text": "Benutzung des Radwegs mit dem Rollstuhl", "korrekt": false },
         { "text": "Missachtung der Handyverbotszone im Klassenraum", "korrekt": false }
       ],
-      "erklaerung": "ÖPNV-Gefahren: Anfahren und Abbremsen der Busse/Bahnen (Festhalten üben), eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten, Missachtung des Verkehrs beim Warten bzw. zu dichtes Stehen an der Straße. Lernziele: Orientierung an der Haltestelle, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg."
+      "erklaerung": "ÖPNV-Gefahren: Anfahren und Abbremsen der Busse/Bahnen (Festhalten üben), eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten, Missachtung des Verkehrs beim Warten bzw. zu dichtes Stehen an der Straße. Lernziele: Orientierung an der Haltestelle, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg.",
+      "quelle": "notizen-s21",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-mc-11",
       "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 1,
       "frage": "Welche Rahmenbedingungen unterstützen die Mobilität von Menschen im SGE im öffentlichen Raum?",
       "optionen": [
         { "text": "Einfache Schriftzüge, Bildzeichen, Symbole, Farben und ein individueller Netzplan in verschiedenen Komplexitätsgraden", "korrekt": true },
@@ -135,7 +166,169 @@
         { "text": "Ausschließlich akustische Durchsagen in schneller Sprache", "korrekt": false },
         { "text": "Verzicht auf jede Beschilderung", "korrekt": false }
       ],
-      "erklaerung": "Rahmenbedingungen: Bewusstsein in der Öffentlichkeit schaffen, Barrieren erkennen und Barrierefreiheit mitdenken, klare Hinweise, einfache Schriftzüge, aktuelle/dynamische Informationen, Bildzeichen, Symbole, Farben, ein individueller Netzplan (verschiedene Komplexitätsgrade) und die allgemeine Erreichbarkeit verschiedener Orte erhöhen."
+      "erklaerung": "Rahmenbedingungen: Bewusstsein in der Öffentlichkeit schaffen, Barrieren erkennen und Barrierefreiheit mitdenken, klare Hinweise, einfache Schriftzüge, aktuelle/dynamische Informationen, Bildzeichen, Symbole, Farben, ein individueller Netzplan (verschiedene Komplexitätsgrade) und die allgemeine Erreichbarkeit verschiedener Orte erhöhen.",
+      "quelle": "notizen-s22",
+      "quelleSicherheit": "geprueft"
+    },
+    {
+      "id": "mo-gen-mc-1",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 2,
+      "frage": "Ein Kind übt, vor dem Bordstein anzuhalten und eine begonnene Bewegung abzubrechen. Welchem Bereich der Mobilitätsförderung sind diese Ziele zuzuordnen?",
+      "optionen": [
+        { "text": "Dem motorischen Bereich", "korrekt": true },
+        { "text": "Der visuellen Wahrnehmung", "korrekt": false },
+        { "text": "Der auditiven Wahrnehmung", "korrekt": false },
+        { "text": "Der Sozialkompetenz", "korrekt": false }
+      ],
+      "erklaerung": "An bestimmten Stellen anhalten (z. B. vor dem Bordstein) und die Bewegungs- und Handlungsunterbrechung sind Ziele des motorischen Bereichs - genau wie Gleichgewicht halten, Geschwindigkeiten wechseln und Hindernissen ausweichen. Der Decoy visuelle Wahrnehmung liegt nahe, weil man den Bordstein ja sehen muss - das Ziel hier ist aber das Stoppen der Bewegung selbst. (Notizen S. 19)",
+      "quelle": "notizen-s19",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-2",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
+      "frage": "Laut dem Handlungsfeld Verkehr und Verkehrserziehung überwindet Mobilität die Distanz zwischen drei Lebensbereichen, die räumlich immer weiter auseinanderrücken. Welche drei sind gemeint?",
+      "optionen": [
+        { "text": "Wohnen, Arbeiten und Einkaufen", "korrekt": true },
+        { "text": "Schule, Freizeit und Familie", "korrekt": false },
+        { "text": "Kita, Schule und Arbeitsleben", "korrekt": false },
+        { "text": "Stadt, Land und Verkehrsraum", "korrekt": false }
+      ],
+      "erklaerung": "Das Handlungsfeld im Rahmenlehrplan versteht Mobilität als Überwindung der Distanz zwischen den Lebensbereichen Wohnen, Arbeiten und Einkaufen. Der Decoy Kita-Schule-Arbeitsleben stammt aus einer anderen Kernaussage der Vorlesung: Dort geht es um die Abhängigkeit von Fahrdiensten über die Lebensspanne, nicht um die Lebensbereiche des Handlungsfelds. (Notizen S. 17)",
+      "quelle": "notizen-s17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-3",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
+      "frage": "Welche drei Kompetenzen umfasst das Kompetenzmodell für die Mobilitätsentwicklung und Verkehrserziehung (Kreis: sicher und umweltbewusst mobil sein)?",
+      "optionen": [
+        { "text": "Erkennen, Beurteilen sowie Handeln und Kommunizieren", "korrekt": true },
+        { "text": "Sicherheits-, Umwelt- und Sozialerziehung", "korrekt": false },
+        { "text": "Beschreiben, Erläutern und Diskutieren", "korrekt": false },
+        { "text": "Wahrnehmung, Motorik und Reaktion", "korrekt": false }
+      ],
+      "erklaerung": "Im Kompetenzmodell stehen um den Kreis 'Sicher und umweltbewusst mobil sein' die drei Kompetenzen Erkennen, Beurteilen sowie Handeln und Kommunizieren. Der Decoy Sicherheits-, Umwelt- und Sozialerziehung greift drei der vier Teilbereiche der schulischen Mobilitäts- und Verkehrserziehung auf (der vierte ist die Gesundheitserziehung) - das ist aber das andere Schaubild; Wahrnehmung, Motorik und Reaktion gehören zu den Mobilitätskompetenzen nach Stöppler. (Notizen S. 18)",
+      "quelle": "notizen-s18",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-4",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
+      "frage": "Eine der Kernkompetenzen im Orientierungs- und Handlungsrahmen zielt darauf, den Straßenverkehr als Miteinander zu begreifen: Rücksicht nehmen, sich mit anderen abstimmen und mitdenken, wie das eigene Verhalten auf sie wirkt. Welche Kernkompetenz ist gemeint?",
+      "optionen": [
+        { "text": "Verantwortungsbewusst mobil sein", "korrekt": true },
+        { "text": "Sicher mobil sein", "korrekt": false },
+        { "text": "Selbstständig mobil sein", "korrekt": false },
+        { "text": "Nachhaltig mobil sein", "korrekt": false }
+      ],
+      "erklaerung": "Rücksicht, Kooperation und der Blick auf den Verkehr als soziales System kennzeichnen die Kernkompetenz 'Verantwortungsbewusst mobil sein'. Der Decoy 'Sicher mobil sein' zielt dagegen auf risikobewusstes, gefahrenvermeidendes Verhalten unter Beachtung der eigenen sensomotorischen Entwicklung - also auf den Schutz der eigenen Person, nicht auf das Miteinander. (Notizen S. 18)",
+      "quelle": "notizen-s18",
+      "quelleSicherheit": "unsicher",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-5",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 2,
+      "frage": "Eine Klasse übt das Überqueren der Straße. Welche Gefahr ordnet die Vorlesung ausdrücklich dem Bereich Zu-Fuß-Gehen zu?",
+      "optionen": [
+        { "text": "Man verlässt sich am Zebrastreifen darauf, dass die Autos schon bremsen, oder bleibt unschlüssig stehen", "korrekt": true },
+        { "text": "Zu geringer Abstand zum Vorausfahrenden", "korrekt": false },
+        { "text": "Verletzung von Vorfahrt- und Vorrangregelungen", "korrekt": false },
+        { "text": "Nicht abgeflachte Bordsteine, die sich kaum bewältigen lassen", "korrekt": false }
+      ],
+      "erklaerung": "Die unklare Interaktion am Zebrastreifen zählt zu den Gefahren beim Zu-Fuß-Gehen - dazu kommen das falsche Einschätzen der Fahrzeuggeschwindigkeit, das Überqueren an unsicheren Stellen, die Ablenkung durch die Ampel und die Benutzung des Smartphones. Die Decoys stammen aus den Nachbarbereichen: zu geringer Abstand und Vorfahrtsverletzungen sind klassische Fahrrad-Gefahren, die nicht abgeflachten Bordsteine eine Schwierigkeit beim Rollstuhlfahren. (Notizen S. 21, Bordsteine S. 22)",
+      "quelle": "notizen-s21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-6",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 2,
+      "frage": "Welches Lernziel gehört zur Vorbereitung auf die Verkehrsteilnahme mit dem Fahrrad?",
+      "optionen": [
+        { "text": "Durchführung eines Fahrrad-Turniers und der Fahrrad-Prüfung", "korrekt": true },
+        { "text": "Bezahlen und Lösen der Fahrkarte", "korrekt": false },
+        { "text": "Identifizieren und Erkennen des Gehwegs", "korrekt": false },
+        { "text": "Passanten bei Schwierigkeiten um Hilfe bitten", "korrekt": false }
+      ],
+      "erklaerung": "Zur Fahrrad-Vorbereitung gehören u. a. das verkehrssichere Fahrrad und der Helm, Übungen im Schonraum, Verkehrszeichen für Radfahrer, das Fahrrad-Turnier und die Fahrrad-Prüfung sowie Wissen über Umwelt und Nachhaltigkeit. Die Decoys sind Lernziele der anderen Bereiche: Fahrkarte lösen (ÖPNV), Gehweg erkennen (zu Fuß gehen), um Hilfe bitten (Rollstuhl fahren). (Notizen S. 21)",
+      "quelle": "notizen-s21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-7",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 2,
+      "frage": "Handlungsabsichten anderer erschließen, Folgen vorhersehen und ein moralisches Urteil fällen - für welchen Kompetenzbereich der Mobilitätsförderung sind diese Komponenten besonders bedeutsam?",
+      "optionen": [
+        { "text": "Sozialkompetenz", "korrekt": true },
+        { "text": "Auditive Wahrnehmung", "korrekt": false },
+        { "text": "Visuelle Wahrnehmung", "korrekt": false },
+        { "text": "Motorischer Bereich", "korrekt": false }
+      ],
+      "erklaerung": "Für das soziale Verständnis und Verhalten im Straßenverkehr sind u. a. das Erschließen von Handlungsabsichten und -motiven, das Vorhersehen von Folgen, die emotionale Perspektivenübernahme, die Verantwortlichkeitsattribution, das moralische Urteil und das Regelverständnis bedeutsam - alles Komponenten der Sozialkompetenz. Die visuelle Wahrnehmung als Decoy umfasst dagegen z. B. Farbensehen und Raumbewusstsein. (Notizen S. 19)",
+      "quelle": "notizen-s19",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-8",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 2,
+      "frage": "In der Spiel-Tabelle der Vorlesung werden Methoden den Kompetenzbereichen zugeordnet. Welche Methode passt NICHT zum Bereich Motorik und Reaktion?",
+      "optionen": [
+        { "text": "Autofahrspiel", "korrekt": true },
+        { "text": "Feuer-Wasser-Luft", "korrekt": false },
+        { "text": "Gleichgewichtsspiel", "korrekt": false },
+        { "text": "Pappdeckel", "korrekt": false }
+      ],
+      "erklaerung": "Das Autofahrspiel ist in der Tabelle als unpassend markiert. Feuer-Wasser-Luft, das Gleichgewichtsspiel und Pappdeckel passen dagegen, weil sie motorische Ziele wie Gleichgewicht halten, Geschwindigkeiten wechseln und Bewegungsunterbrechung üben. Merkhilfe: Nicht alles, was nach Verkehr klingt, trainiert auch die Kompetenz - entscheidend ist das Ziel der Übung. (Notizen S. 20)",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-9",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 1,
+      "frage": "Welches didaktische Prinzip nennt das Schaubild zu den Methoden der Mobilitätsförderung ausdrücklich?",
+      "optionen": [
+        { "text": "Individualisierung bzw. personenzentrierte Mobilität", "korrekt": true },
+        { "text": "Elementarisierung", "korrekt": false },
+        { "text": "Ganzheitlichkeit", "korrekt": false },
+        { "text": "Kleine Schritte im Sinnzusammenhang", "korrekt": false }
+      ],
+      "erklaerung": "Die didaktischen Prinzipien der Mobilitätsförderung sind Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität und Kontinuität. Die Decoys Elementarisierung, Ganzheitlichkeit und kleine Schritte sind echte didaktische Prinzipien aus V4 - sie stehen aber nicht in diesem Schaubild. (Notizen S. 20)",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-mc-10",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 2,
+      "frage": "Wie soll die Verkehrserziehung und Mobilitätsbildung in der Schule unterrichtlich verankert werden?",
+      "optionen": [
+        { "text": "Als fachübergreifendes und fächerverbindendes Thema - eine Aufgabe der gesamten Schule", "korrekt": true },
+        { "text": "Als eigenständiges Unterrichtsfach mit fester Stundentafel", "korrekt": false },
+        { "text": "Ausschließlich als externes Angebot in Kooperation mit der Polizei", "korrekt": false },
+        { "text": "Als freiwillige Arbeitsgemeinschaft am Nachmittag", "korrekt": false }
+      ],
+      "erklaerung": "Verkehrserziehung und Mobilitätsbildung sind für fachübergreifenden und fächerverbindenden Unterricht gedacht; die Bedeutung des Themas soll als Aufgabe für die gesamte Schule herausgestellt werden. Angeknüpft wird dabei an den Rahmenlehrplan der Jahrgangsstufen 1-10 in Berlin und Brandenburg. Der Polizei-Decoy greift die Kooperationen aus dem Methoden-Schaubild auf - die ergänzen den Unterricht, ersetzen ihn aber nicht. (Notizen S. 17)",
+      "quelle": "notizen-s17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
     }
   ],
   "frei": [
@@ -152,7 +345,9 @@
         "Weitere: Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition, Interaktion"
       ],
       "muster": "Fünf Mobilitätskompetenzen nach Stöppler sind die visuelle Wahrnehmung, die auditive Wahrnehmung, die Motorik, die Reaktion und die sozialen Kompetenzen. Daneben gehören auch Aufmerksamkeit, Gedächtnis, Kommunikation, Kognition und Interaktion dazu.",
-      "tipp": "Original-Beispielaufgabe der Dozentin! Insgesamt sind es zehn - präge dir mindestens sieben ein, dann hast du Puffer."
+      "tipp": "Original-Beispielaufgabe der Dozentin! Insgesamt sind es zehn - präge dir mindestens sieben ein, dann hast du Puffer.",
+      "quelle": "notizen-s18",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-f-2",
@@ -166,7 +361,9 @@
         "Konsequenz: geringeres Mobilitätsniveau, Angewiesensein auf Fahrdienste, Begleitung, Assistenz -> Abhängigkeit"
       ],
       "muster": "Menschen im Bereich GE können im Alltag auf vielfältige Mobilitätsbehinderungen stoßen: auf sensorische wie Blindheit und Gehörlosigkeit, auf körperliche wie eine Körperbehinderung, vorübergehende Unfallfolgen oder das Alter, auf kognitive und psychische wie Lernschwierigkeiten, eine psychische Behinderung oder fehlende Ortskenntnis sowie auf Barrieren im Umfeld wie die Einstellung und das Verhalten anderer Menschen, eine Reisebehinderung und fehlende Mobilitätsbildung. In der Folge haben sie ein deutlich geringeres Mobilitätsniveau und sind häufig auf Fahrdienste, Begleitung und Assistenz angewiesen.",
-      "tipp": "Original-Beispielaufgabe. Trick zum Merken: in vier Gruppen denken (Sinne, Körper, Kognition/Psyche, Umfeld) statt zehn Einzelbegriffe."
+      "tipp": "Original-Beispielaufgabe. Trick zum Merken: in vier Gruppen denken (Sinne, Körper, Kognition/Psyche, Umfeld) statt zehn Einzelbegriffe.",
+      "quelle": "notizen-s16",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "mo-f-3",
@@ -180,7 +377,9 @@
         "Wichtig: Maßnahme immer mit dem Ziel der Kompetenz begründen, nicht nur nennen"
       ],
       "muster": "Der auditiven Wahrnehmung lassen sich Spiele wie Geräuscheraten oder Schiffe im Nebel zuordnen, denn sie üben das Erkennen, Differenzieren und Lokalisieren von Geräuschen sowie das Entfernungshören. Der Motorik und Reaktion dienen Bewegungsspiele wie Feuer-Wasser-Luft oder Gleichgewichtsspiele, weil sie Gleichgewicht halten, Geschwindigkeiten wechseln und das Unterbrechen von Bewegungen trainieren - alles nötig, um etwa am Bordstein anzuhalten. Der Kommunikation und sozialen Kompetenz sind Übungen wie die Pantomime der Gefühle zuzuordnen, da sie das Erkennen eigener und fremder Gefühle, das Erschließen von Handlungsabsichten und die Perspektivenübernahme im Straßenverkehr fördern. Der visuellen Wahrnehmung dienen Spiele wie Wer fehlt?, Laufen-Stoppen oder ein Verkehrszeichen-Puzzle, die Formen- und Symbolunterscheidung, Raumbewusstsein und Geschwindigkeitswahrnehmung üben.",
-      "tipp": "Original-Beispielaufgabe (AFB II). Der Punkt kommt aus der Begründung: Maßnahme nennen UND sagen, welches Ziel der Kompetenz sie fördert."
+      "tipp": "Original-Beispielaufgabe (AFB II). Der Punkt kommt aus der Begründung: Maßnahme nennen UND sagen, welches Ziel der Kompetenz sie fördert.",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "unsicher"
     },
     {
       "id": "mo-f-4",
@@ -193,7 +392,8 @@
         "AFB III daran anschließend: Diskutieren, was das für Personen im GE bedeutet (Abhängigkeit von Bringdiensten vs. eigenständige Mobilität)"
       ],
       "muster": "Für diese Original-Beispielaufgabe fehlen in deinen Notizen die konkreten Zahlen der Folie zur Alltagsmobilität 2002/2023 - die musst du dir noch einmal aus den Vorlesungsfolien holen. Das Antwortmuster für Vergleichen-Aufgaben bleibt gleich: zuerst benennen, welche Verkehrsmittel in beiden Jahren eine Rolle spielen, dann die Verschiebungen zwischen 2002 und 2023 herausarbeiten und abschließend kurz deuten, was diese Entwicklung für die Alltagsmobilität von Menschen im GE bedeutet - etwa im Hinblick auf eigenständige Wege versus die Beförderung durch Fahrdienste.",
-      "tipp": "Ehrlicher Hinweis statt erfundener Zahlen: Diese eine Folie bitte im Original nachschlagen. Die Vergleichs-Struktur (Gemeinsamkeiten, Unterschiede, Deutung) kannst du hier trotzdem üben."
+      "tipp": "Ehrlicher Hinweis statt erfundener Zahlen: Diese eine Folie bitte im Original nachschlagen. Die Vergleichs-Struktur (Gemeinsamkeiten, Unterschiede, Deutung) kannst du hier trotzdem üben.",
+      "quelleSicherheit": "unsicher"
     },
     {
       "id": "mo-f-5",
@@ -208,7 +408,63 @@
         "Fazit: Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und barrierefreie Umwelt veränderbar"
       ],
       "muster": "Ein geringes eigenständiges Mobilitätsniveau bedeutet für Personen im GE vor allem Abhängigkeit: Bereits von der Kita über die Schule bis ins Arbeitsleben sind sie auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Da Mobilität Grundvoraussetzung für Teilhabe ist, schränkt das den Zugang zu Arbeit, Freizeit und sozialen Kontakten ein und steht im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Andererseits bieten Fahrdienste Sicherheit und ermöglichen überhaupt erst viele Wege - sie pauschal abzuschaffen wäre keine Lösung. Die pädagogische Konsequenz ist eine systematische Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule, die vom Schonraum bis zur Ernstsituation schrittweise eigenständige Mobilität aufbaut, wie es der Rahmenlehrplan mit dem selbstständig bewältigten Schulweg anstrebt. Ergänzend müssen die Rahmenbedingungen barrierefreier werden - einfache Schriftzüge, Symbole, individuelle Netzpläne und ein öffentliches Bewusstsein. Insgesamt gilt: Die Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und eine zugängliche Umwelt veränderbar.",
-      "tipp": "Entspricht der Original-AFB-III-Aufgabe. Stark wird die Antwort durch die doppelte Konsequenz: pädagogisch (Erziehung) UND strukturell (Barrierefreiheit)."
+      "tipp": "Entspricht der Original-AFB-III-Aufgabe. Stark wird die Antwort durch die doppelte Konsequenz: pädagogisch (Erziehung) UND strukturell (Barrierefreiheit).",
+      "quelle": "notizen-s16",
+      "quelleSicherheit": "geprueft"
+    },
+    {
+      "id": "mo-gen-f-1",
+      "afb": 2,
+      "frage": "Erläutern Sie anhand der vier Teilbereiche der schulischen Mobilitäts- und Verkehrserziehung, warum diese mehr umfasst als das Einüben von Verkehrsregeln.",
+      "stichpunkte": [
+        "Vier Teilbereiche: Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung, Sozialerziehung",
+        "Sicherheitserziehung: Gefahren erkennen und vermeiden, z. B. sicheres Überqueren der Straße, Verhalten an der Haltestelle",
+        "Gesundheitserziehung: eigene Bewegung und körperliche Leistungsfähigkeit, z. B. zu Fuß gehen und Fahrrad fahren statt gefahren zu werden",
+        "Umwelterziehung: umweltbewusste Verkehrsmittelwahl, beim Fahrrad gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen",
+        "Sozialerziehung: Verkehr als soziales Miteinander, Rücksicht, Gefühle und Handlungsabsichten anderer erkennen (Sozialkompetenz)",
+        "Fazit: Verkehrsregeln sind nur ein Ausschnitt - es geht um umfassende Mobilitätsbildung als Aufgabe der gesamten Schule"
+      ],
+      "muster": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Teilbereichen zusammen: Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung. Schon diese Breite zeigt, dass es um mehr geht als um Verkehrsregeln. Die Sicherheitserziehung zielt darauf, Gefahren zu erkennen und zu vermeiden, etwa beim Überqueren der Straße oder beim Warten an der Haltestelle. Die Gesundheitserziehung nimmt die eigene Bewegung in den Blick, denn wer zu Fuß geht oder Fahrrad fährt, statt gefahren zu werden, stärkt seine körperliche Leistungsfähigkeit. Die Umwelterziehung fördert eine umweltbewusste Verkehrsmittelwahl; beim Fahrradfahren gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen. Die Sozialerziehung schließlich versteht den Verkehr als soziales Miteinander, in dem Rücksicht, das Erkennen von Gefühlen und das Erschließen von Handlungsabsichten anderer wichtig sind. Verkehrsregeln zu beherrschen ist damit nur ein Ausschnitt einer umfassenden Mobilitätsbildung, die als Aufgabe der gesamten Schule verstanden wird.",
+      "tipp": "Die vier Teilbereiche sind das Gerüst - der Erläuterungs-Punkt kommt daraus, dass du zu jedem Bereich ein konkretes Beispiel aus dem Unterricht nennst. In den Notizen stehen die vier Bereiche nur als Schaubild; die Beispiele holst du dir aus den anderen Folien der Vorlesung, und genau das ist die Transferleistung, die AFB II verlangt.",
+      "quelle": "notizen-s17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-f-2",
+      "afb": 3,
+      "frage": "Entwickeln Sie eine Unterrichtssequenz zur Vorbereitung auf die ÖPNV-Nutzung, die vom Schonraum bis zur Ernstsituation führt. Benennen Sie Lernziele und thematisierte Gefahren.",
+      "stichpunkte": [
+        "Methoden-Aufbau nutzen: praktische Übungen/Spiel -> Übungen in Schonräumen -> Übungen in Ernstsituationen (ggf. pädagogisches Puppenspiel zum Einstieg, Kooperationen ergänzend einbeziehen)",
+        "Lernziele ÖPNV: Orientierung an der Haltestelle und Einstieg, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg; beim Bahnfahren sicheres Verhalten an den Gleisen",
+        "Gefahren thematisieren: Anfahren und Abbremsen der Busse (Festhalten üben), eiliges zum Bus Laufen ohne auf den Verkehr zu achten, zu dichtes Stehen an der Straße beim Warten",
+        "Beispiel-Sequenz: 1. im Klassenraum Haltestelle nachstellen und Fahrkartenkauf spielen, 2. auf dem Schulhof Ein- und Aussteigen und Festhalten üben, 3. begleitete echte Busfahrt, 4. schrittweise selbstständigere Fahrten",
+        "Didaktische Prinzipien anführen: Sicherheit, Lebensnähe, Strukturierung, Individualisierung, Kontinuität",
+        "Bezug zum RLP: Ziel ist der selbstständig bewältigte Schulweg bzw. Weg zum Praktikum"
+      ],
+      "muster": "Eine Unterrichtssequenz zur ÖPNV-Vorbereitung kann dem Methodenaufbau der Mobilitätsförderung folgen: von praktischen Übungen und Spiel über Übungen im Schonraum bis zu Übungen in der Ernstsituation. Den Einstieg bildet eine spielerische Phase im Klassenraum, in der eine Haltestelle nachgestellt wird und der Kauf einer Fahrkarte im Rollenspiel geübt wird; hier lassen sich auch Gefahren wie das eilige Laufen zum Bus mit einem pädagogischen Puppenspiel anschaulich machen. Im Schonraum, etwa auf dem Schulhof, werden anschließend das Ein- und Aussteigen, das Festhalten beim Anfahren und Abbremsen sowie das Warten mit ausreichendem Abstand zur Straße geübt. Danach folgt die Ernstsituation: eine begleitete Busfahrt, bei der die Orientierung an der Haltestelle, das Lösen der Fahrkarte, das Verhalten während der Fahrt sowie Orientierung und Ausstieg erprobt werden - beim Bahnfahren zusätzlich das sichere Verhalten an den Gleisen. Schritt für Schritt wird die Begleitung zurückgenommen, bis die Fahrt selbstständig gelingt. Die Sequenz folgt damit den Prinzipien Sicherheit, Lebensnähe, Strukturierung, Individualisierung und Kontinuität und arbeitet auf das Ziel des Rahmenlehrplans hin, den Schulweg selbstständig mit öffentlichen Verkehrsmitteln zu bewältigen.",
+      "tipp": "Entwickeln heißt: einen begründeten Aufbau zeigen. Die Dreier-Treppe Spiel - Schonraum - Ernstsituation gibt dir die Struktur fast geschenkt; hänge an jede Stufe ein Lernziel und eine Gefahr.",
+      "quelle": "notizen-s21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "mo-gen-f-3",
+      "afb": 3,
+      "frage": "Diskutieren Sie die These: Verkehrserziehung im SGE sollte aus Sicherheitsgründen vor allem im Schonraum stattfinden.",
+      "stichpunkte": [
+        "Pro: Sicherheit wird bei den didaktischen Prinzipien der Mobilitätsförderung als erstes genannt; im Schonraum lassen sich Fertigkeiten ohne reale Gefahr aufbauen (z. B. Fahrradübungen im Schonraum als ausdrückliches Lernziel)",
+        "Contra: Zum Unfallzeitpunkt waren 35,7 % zu Fuß unterwegs, der größte Anteil aller Beteiligungsarten - Unfälle passieren also gerade in der alltäglichen Situation, die sich nicht in den Schonraum verlagern lässt; geübt werden muss sie dort, wo sie stattfindet",
+        "Contra: Übungen in Ernstsituationen sind eine eigene Methode der Mobilitätsförderung; das Prinzip Lebensnähe verlangt echte Verkehrssituationen, der RLP will den selbstständig bewältigten Schulweg",
+        "Contra: Wer nur im Schonraum übt, bleibt abhängig - das widerspricht dem Ziel von Selbstbestimmung und Teilhabe",
+        "Synthese: Schonraum als Durchgangsstadium, nicht als Dauerlösung - gestufter Aufbau von Spiel über Schonraum zur Ernstsituation, mit Sicherheit als Begleitprinzip",
+        "Eigene begründete Position am Ende"
+      ],
+      "muster": "Für die These spricht, dass Sicherheit bei den didaktischen Prinzipien der Mobilitätsförderung an erster Stelle genannt wird: Im Schonraum können Kinder Fertigkeiten wie das Fahrradfahren ohne reale Gefahr aufbauen, entsprechend sind Übungen im Schonraum ein ausdrückliches Lernziel der Fahrrad-Vorbereitung. Gegen die These spricht jedoch mehreres. Erstens zeigt die Statistik zur Verkehrsbeteiligung zum Unfallzeitpunkt, dass 35,7 Prozent der Verunglückten zu Fuß unterwegs waren, der größte Anteil aller Beteiligungsarten. Das Zufußgehen lässt sich aber gerade nicht in den Schonraum verlagern, weil es zu fast jedem Weg gehört - geübt werden muss es deshalb dort, wo es tatsächlich stattfindet. Zweitens nennt die Vorlesung Übungen in Ernstsituationen als eigene Methode der Mobilitätsförderung, und das Prinzip der Lebensnähe verlangt, von echten Verkehrssituationen des Alltags auszugehen; auch der Rahmenlehrplan zielt auf den selbstständig bewältigten Schulweg. Drittens bliebe, wer nur im Schonraum übt, dauerhaft auf Begleitung angewiesen - das verschärft die Abhängigkeit, die im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe steht. Als Synthese lässt sich festhalten: Der Schonraum ist ein wichtiges Durchgangsstadium, aber keine Dauerlösung. Ein gestufter Aufbau von spielerischen Übungen über den Schonraum bis zur begleiteten und schließlich selbstständigen Ernstsituation verbindet Sicherheit mit dem Ziel eigenständiger Mobilität - dieser Position schließe ich mich an.",
+      "tipp": "Diskutieren heißt: beide Seiten ernst nehmen und dann Stellung beziehen. Die Unfallstatistik ist ein starkes Argument, wenn du sie sauber liest: Sie sagt, in welcher Rolle die Verunglückten unterwegs waren, nicht wie riskant eine Rolle für sich genommen ist. Genau diese Vorsicht im Umgang mit Zahlen bringt in AFB III Punkte.",
+      "quelle": "notizen-s20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
     }
   ]
 }

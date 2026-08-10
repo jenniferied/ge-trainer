@@ -8,6 +8,7 @@
     {
       "id": "fr-mc-1",
       "unterthema": "Freizeitbedürfnisse",
+      "afb": 1,
       "frage": "Welches Bedürfnis steht hinter der Zielfunktion Rekreation?",
       "optionen": [
         { "text": "Erholung, Ruhe, Wohlbefinden und angenehmes Körpergefühl", "korrekt": true },
@@ -15,11 +16,14 @@
         { "text": "Beteiligung, Mitbestimmung und Engagement", "korrekt": false },
         { "text": "Kennenlernen, Weiter- und Umlernen", "korrekt": false }
       ],
-      "erklaerung": "Rekreation (Erholung) meint das Bedürfnis nach Erholung, Ruhe, Wohlbefinden und angenehmem Körpergefühl. Kreative Entfaltung wäre Enkulturation, Beteiligung wäre Partizipation, Weiterlernen wäre Edukation."
+      "erklaerung": "Rekreation (Erholung) meint das Bedürfnis nach Erholung, Ruhe, Wohlbefinden und angenehmem Körpergefühl. Kreative Entfaltung wäre Enkulturation, Beteiligung wäre Partizipation, Weiterlernen wäre Edukation.",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-2",
       "unterthema": "Freizeitbedürfnisse",
+      "afb": 1,
       "frage": "Die Zielfunktion Kontemplation steht für das Bedürfnis nach ...",
       "optionen": [
         { "text": "Selbsterfahrung und Selbstfindung (Besinnlichkeit)", "korrekt": true },
@@ -27,11 +31,14 @@
         { "text": "Mitteilung und Geselligkeit", "korrekt": false },
         { "text": "Zusammensein und Gemeinschaftsbezug", "korrekt": false }
       ],
-      "erklaerung": "Kontemplation (Besinnlichkeit) = Selbsterfahrung und Selbstfindung. Ausgleich/Ablenkung/Vergnügen wäre Kompensation, Mitteilung/Geselligkeit wäre Kommunikation, Zusammensein/Gemeinschaftsbezug wäre Integration/Inklusion."
+      "erklaerung": "Kontemplation (Besinnlichkeit) = Selbsterfahrung und Selbstfindung. Ausgleich/Ablenkung/Vergnügen wäre Kompensation, Mitteilung/Geselligkeit wäre Kommunikation, Zusammensein/Gemeinschaftsbezug wäre Integration/Inklusion.",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-3",
       "unterthema": "Freizeitbedürfnisse",
+      "afb": 1,
       "frage": "Was gilt laut Vorlesung als gute Freizeit?",
       "optionen": [
         { "text": "Freizeit muss nicht produktiv sein - sie ist subjektiv und bedürfnisorientiert", "korrekt": true },
@@ -39,11 +46,14 @@
         { "text": "Fernsehen ist objektiv schlechte Freizeit und zu unterbinden", "korrekt": false },
         { "text": "Nichtstun ist keine Freizeit", "korrekt": false }
       ],
-      "erklaerung": "Die Frage, warum wir manche Freizeitaktivitäten als sinnvoller bewerten als andere (Sport = gute Freizeit? Fernsehen = schlechte? Darf Nichtstun Freizeit sein?), löst die Vorlesung so auf: Freizeit muss nicht produktiv sein, Freizeit ist subjektiv und bedürfnisorientiert."
+      "erklaerung": "Die Frage, warum wir manche Freizeitaktivitäten als sinnvoller bewerten als andere (Sport = gute Freizeit? Fernsehen = schlechte? Darf Nichtstun Freizeit sein?), löst die Vorlesung so auf: Freizeit muss nicht produktiv sein, Freizeit ist subjektiv und bedürfnisorientiert.",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-4",
       "unterthema": "Teilhabe & Barrieren",
+      "afb": 1,
       "frage": "Defizitorientierte Sichtweisen und Unsicherheiten im Umgang mit Behinderung gehören zu welcher Barrierekategorie im Freizeitbereich?",
       "optionen": [
         { "text": "Soziale Barrieren", "korrekt": true },
@@ -51,11 +61,14 @@
         { "text": "Ressourcenprobleme", "korrekt": false },
         { "text": "Rechtliche Barrieren", "korrekt": false }
       ],
-      "erklaerung": "Soziale Barrieren: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal, defizitorientierte Sichtweisen. Strukturelle Barrieren: schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse, fehlende Unterstützungssysteme. Ressourcenprobleme: fehlende Assistenz, Sicherheitsbedenken, zu wenig Betreuungspersonal."
+      "erklaerung": "Soziale Barrieren: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal, defizitorientierte Sichtweisen. Strukturelle Barrieren: schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse, fehlende Unterstützungssysteme. Ressourcenprobleme: fehlende Assistenz, Sicherheitsbedenken, zu wenig Betreuungspersonal.",
+      "quelle": "notizen-s02",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-5",
       "unterthema": "Teilhabe & Barrieren",
+      "afb": 1,
       "frage": "Welche Zahl beschreibt die Beteiligung von Menschen mit Behinderung im Vereinssport?",
       "optionen": [
         { "text": "2,4 % statt 9,6 % - eine deutlich geringere Beteiligung", "korrekt": true },
@@ -63,11 +76,14 @@
         { "text": "9,6 % statt 2,4 % - eine höhere Beteiligung", "korrekt": false },
         { "text": "0 % - Vereinssport ist nicht möglich", "korrekt": false }
       ],
-      "erklaerung": "Barrieren beim Sport: geringe Beteiligung im Vereinssport (2,4 % statt 9,6 %), nur 35 % inklusiv arbeitende Vereine, 55 % der Menschen mit Behinderung treiben keinen Sport, nur 4 % inklusive öffentliche Freizeitflächen, hoher Sanierungsbedarf (31 Mrd. Euro). Chancen: Teilhabe und Selbstbestimmung, Begegnung, Abbau von Vorurteilen, soziale Netzwerke, Stärkung von Kompetenzen und Lebensqualität."
+      "erklaerung": "Barrieren beim Sport: geringe Beteiligung im Vereinssport (2,4 % statt 9,6 %), nur 35 % inklusiv arbeitende Vereine, 55 % der Menschen mit Behinderung treiben keinen Sport, nur 4 % inklusive öffentliche Freizeitflächen, hoher Sanierungsbedarf (31 Mrd. Euro). Chancen: Teilhabe und Selbstbestimmung, Begegnung, Abbau von Vorurteilen, soziale Netzwerke, Stärkung von Kompetenzen und Lebensqualität.",
+      "quelle": "notizen-s02",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-6",
       "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 1,
       "frage": "Was bedeutet Selbstbestimmung nach Niehoff (1994)?",
       "optionen": [
         { "text": "Nicht ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können", "korrekt": true },
@@ -75,11 +91,14 @@
         { "text": "Dass Betreuer:innen alle Entscheidungen treffen", "korrekt": false },
         { "text": "Nur tun zu dürfen, was pädagogisch wertvoll ist", "korrekt": false }
       ],
-      "erklaerung": "Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.). Da Fremdbestimmung die Entwicklung erschwert (Hahn 1994), muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006)."
+      "erklaerung": "Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.). Da Fremdbestimmung die Entwicklung erschwert (Hahn 1994), muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006).",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-7",
       "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 1,
       "frage": "Welche drei zentralen Komponenten hat selbstbestimmte Freizeitgestaltung?",
       "optionen": [
         { "text": "Wissen, Können, Wollen", "korrekt": true },
@@ -87,11 +106,14 @@
         { "text": "Planen, Buchen, Bezahlen", "korrekt": false },
         { "text": "Sehen, Hören, Fühlen", "korrekt": false }
       ],
-      "erklaerung": "Wissen (Kenntnisse über Freizeitmöglichkeiten, Bedeutung und Nutzen verstehen), Können (praktische Fertigkeiten erwerben, z. B. sportliche, kreative, musische, organisatorische Kompetenzen) und Wollen (Interesse und Motivation entwickeln, positive Erfahrungen sammeln, Vorlieben reflektieren)."
+      "erklaerung": "Wissen (Kenntnisse über Freizeitmöglichkeiten, Bedeutung und Nutzen verstehen), Können (praktische Fertigkeiten erwerben, z. B. sportliche, kreative, musische, organisatorische Kompetenzen) und Wollen (Interesse und Motivation entwickeln, positive Erfahrungen sammeln, Vorlieben reflektieren).",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-8",
       "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 1,
       "frage": "Wie heißen die drei prozessbezogenen Kompetenzen (PK) im Kompetenzstrukturmodell Freizeitgestaltung (Thümmel & Stöppler 2025)?",
       "optionen": [
         { "text": "PK 1 informieren und ordnen, PK 2 bewerten und entscheiden, PK 3 anwenden und handeln", "korrekt": true },
@@ -99,11 +121,14 @@
         { "text": "PK 1 planen, PK 2 buchen, PK 3 reisen", "korrekt": false },
         { "text": "PK 1 wahrnehmen, PK 2 spielen, PK 3 ausruhen", "korrekt": false }
       ],
-      "erklaerung": "Die prozessbezogenen Kompetenzen: PK 1 informieren und ordnen (Angebote recherchieren, Informationen sammeln, vergleichen, als Entscheidungsgrundlage ordnen), PK 2 bewerten und entscheiden (Möglichkeiten reflektieren, Vor- und Nachteile abwägen, eigene Interessen berücksichtigen, Kompromisse), PK 3 anwenden und handeln (Aktivitäten planen und umsetzen, Anreise/Kosten/Material organisieren, Hilfen gezielt nutzen). Laut Notizen wichtig für die Klausur!"
+      "erklaerung": "Die prozessbezogenen Kompetenzen: PK 1 informieren und ordnen (Angebote recherchieren, Informationen sammeln, vergleichen, als Entscheidungsgrundlage ordnen), PK 2 bewerten und entscheiden (Möglichkeiten reflektieren, Vor- und Nachteile abwägen, eigene Interessen berücksichtigen, Kompromisse), PK 3 anwenden und handeln (Aktivitäten planen und umsetzen, Anreise/Kosten/Material organisieren, Hilfen gezielt nutzen). Laut Notizen wichtig für die Klausur!",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-9",
       "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 1,
       "frage": "Woraus besteht das Kompetenzstrukturmodell Freizeitgestaltung neben den prozessbezogenen Kompetenzen?",
       "optionen": [
         { "text": "Aus zwei domänenspezifischen Kompetenzbereichen (DK 1 Planungs- und Gestaltungswissen, DK 2 Wissen über Freizeitaktivitäten) auf Basis der Entwicklungsbereiche", "korrekt": true },
@@ -111,11 +136,14 @@
         { "text": "Aus einem Belohnungssystem mit Punkten", "korrekt": false },
         { "text": "Aus den fünf Peschel-Dimensionen", "korrekt": false }
       ],
-      "erklaerung": "Das Modell (Thümmel & Stöppler 2025, in Anlehnung an ISB 2022): zwei domänenspezifische Kompetenzbereiche - DK 1 Aneignung und Vertiefung von Planungs- und Gestaltungswissen, DK 2 Aneignung und Vertiefung von Wissen über Freizeitaktivitäten - verbunden mit den prozessbezogenen Kompetenzen PK 1-3, auf der Basis der Entwicklungsbereiche (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln)."
+      "erklaerung": "Das Modell (Thümmel & Stöppler 2025, in Anlehnung an ISB 2022): zwei domänenspezifische Kompetenzbereiche - DK 1 Aneignung und Vertiefung von Planungs- und Gestaltungswissen, DK 2 Aneignung und Vertiefung von Wissen über Freizeitaktivitäten - verbunden mit den prozessbezogenen Kompetenzen PK 1-3, auf der Basis der Entwicklungsbereiche (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln).",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-mc-10",
       "unterthema": "Spannungsfelder",
+      "afb": 1,
       "frage": "Welches ist ein Spannungsfeld der Freizeitbildung?",
       "optionen": [
         { "text": "Pädagogisierung von Freizeit versus Zweckfreiheit", "korrekt": true },
@@ -123,7 +151,169 @@
         { "text": "Drinnen versus draußen", "korrekt": false },
         { "text": "Analog versus digital", "korrekt": false }
       ],
-      "erklaerung": "Die Spannungsfelder: a) Selbstbestimmung versus Fürsorge (eigenständige Entscheidungen vs. Unterstützung und stellvertretende Entscheidungen), b) Pädagogisierung von Freizeit versus Zweckfreiheit (Freizeit wird funktionalisiert vs. Raum für freie Entfaltung) und c) Struktur versus Offenheit (Orientierung und Sicherheit vs. Raum für eigene Ideen). Ziel: ausgewogene Balance."
+      "erklaerung": "Die Spannungsfelder: a) Selbstbestimmung versus Fürsorge (eigenständige Entscheidungen vs. Unterstützung und stellvertretende Entscheidungen), b) Pädagogisierung von Freizeit versus Zweckfreiheit (Freizeit wird funktionalisiert vs. Raum für freie Entfaltung) und c) Struktur versus Offenheit (Orientierung und Sicherheit vs. Raum für eigene Ideen). Ziel: ausgewogene Balance.",
+      "quelle": "notizen-s05",
+      "quelleSicherheit": "geprueft"
+    },
+    {
+      "id": "fr-gen-mc-1",
+      "unterthema": "Freizeitbedürfnisse",
+      "afb": 2,
+      "frage": "Ein Schüler besucht jede Woche eine offene Kunstwerkstatt, gestaltet dort eigene Objekte und stellt sie beim Stadtteilfest aus. Welche Zielfunktion von Freizeit steht hier im Vordergrund?",
+      "optionen": [
+        { "text": "Enkulturation", "korrekt": true },
+        { "text": "Kontemplation", "korrekt": false },
+        { "text": "Edukation", "korrekt": false },
+        { "text": "Kommunikation", "korrekt": false }
+      ],
+      "erklaerung": "Enkulturation meint das Bedürfnis nach kreativer Entfaltung, produktiver Betätigung und Teilnahme am kulturellen Leben - genau das beschreibt die Kunstwerkstatt samt Ausstellung. Der naheliegende Decoy ist Edukation: Beim Gestalten lernt man zwar auch dazu, Edukation zielt aber auf Kennenlernen, Weiter- und Umlernen in sachlichen und sozialen Handlungsebenen, nicht auf die kulturelle Teilhabe. Kontemplation wäre Selbsterfahrung und Selbstfindung, Kommunikation die Geselligkeit. (Notizen S. 01)",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-2",
+      "unterthema": "Freizeitbedürfnisse",
+      "afb": 2,
+      "frage": "Eine Schülerin sitzt in der Gruppe, die das Freizeitprogramm ihrer Wohngruppe zusammenstellt, bringt eigene Vorschläge ein und stimmt über das Programm mit ab. Welche Zielfunktion von Freizeit erfüllt sie damit?",
+      "optionen": [
+        { "text": "Partizipation", "korrekt": true },
+        { "text": "Integration/Inklusion", "korrekt": false },
+        { "text": "Kommunikation", "korrekt": false },
+        { "text": "Kompensation", "korrekt": false }
+      ],
+      "erklaerung": "Partizipation ist das Bedürfnis nach Beteiligung, Mitbestimmung und Engagement - das Mitplanen und Abstimmen trifft es genau. Der Decoy ist Integration/Inklusion: Auch dort geht es um die Gruppe, aber um Zusammensein, Gemeinschaftsbezug und soziale Stabilität, nicht um Mitentscheiden. Kommunikation wäre Mitteilung und Geselligkeit, Kompensation Ausgleich, Ablenkung und Vergnügen. (Notizen S. 01)",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-3",
+      "unterthema": "Teilhabe & Barrieren",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt Inklusion im Sport zwischen Chancen und Barrieren. Welche Wirkung nennt sie dabei als Chance?",
+      "optionen": [
+        { "text": "Abbau von Vorurteilen und Aufbau sozialer Netzwerke", "korrekt": true },
+        { "text": "Nur 35 Prozent der Vereine arbeiten inklusiv", "korrekt": false },
+        { "text": "Hoher Sanierungsbedarf von 31 Milliarden Euro", "korrekt": false },
+        { "text": "Nur 4 Prozent der öffentlichen Freizeitflächen sind inklusiv", "korrekt": false }
+      ],
+      "erklaerung": "Als Chancen nennt die Vorlesung die Förderung von Teilhabe und Selbstbestimmung, die Begegnung zwischen Menschen mit und ohne Behinderung, den Abbau von Vorurteilen, den Aufbau sozialer Netzwerke sowie die Stärkung von Kompetenzen und Lebensqualität. Die drei Zahlenangaben - nur 35 Prozent inklusiv arbeitende Vereine, 31 Milliarden Euro Sanierungsbedarf und nur 4 Prozent inklusive öffentliche Freizeitflächen - gehören dagegen zu den Barrieren: Sie beschreiben, woran Teilhabe im Sport scheitert, nicht was sie bewirkt. (Notizen S. 02)",
+      "quelle": "notizen-s02",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-4",
+      "unterthema": "Teilhabe & Barrieren",
+      "afb": 2,
+      "frage": "Das passende Freizeitangebot findet im Nachbarort statt, dorthin fährt kein barrierefreier Bus, und das Gebäude ist nur über eine Treppe zu erreichen. Wie ordnen die Notizen diese Hürden ein?",
+      "optionen": [
+        { "text": "Strukturelle Barrieren - schlechte Erreichbarkeit von Angeboten und bauliche Hindernisse", "korrekt": true },
+        { "text": "Soziale Barrieren - defizitorientierte Sichtweisen im Umfeld", "korrekt": false },
+        { "text": "Ressourcenprobleme - fehlende Assistenz und Sicherheitsbedenken", "korrekt": false },
+        { "text": "Kein Barriere-Problem, sondern das Spannungsfeld zwischen Struktur und Offenheit", "korrekt": false }
+      ],
+      "erklaerung": "Erreichbarkeit, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme stehen in der Spalte der strukturellen Barrieren. Der interessanteste Decoy ist das Spannungsfeld zwischen Struktur und Offenheit: Struktur meint dort verlässliche Rahmenbedingungen im pädagogischen Handeln, nicht Gebäude und Busverbindungen. Soziale Barrieren betreffen Einstellungen, Ressourcenprobleme die fehlende Assistenz. (Notizen S. 02)",
+      "quelle": "notizen-s02",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-5",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 2,
+      "frage": "In einer Einrichtung entscheidet das Team regelmäßig stellvertretend, welche Freizeitangebote für die Bewohner:innen passend sind. Welchen Einwand formulieren die Notizen dagegen?",
+      "optionen": [
+        { "text": "Fremdbestimmung erschwert es, Selbstverantwortung und eigenständige Entscheidungen zu erlernen", "korrekt": true },
+        { "text": "Selbstbestimmung heißt, die Unterstützung ganz abzubauen", "korrekt": false },
+        { "text": "Freizeit muss produktiv genutzt werden, sonst ist sie verschenkt", "korrekt": false },
+        { "text": "Zu viel Offenheit im Angebot führt zur Überforderung", "korrekt": false }
+      ],
+      "erklaerung": "Der Einwand stammt von Hähn (1994): Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen, deshalb muss Selbstbestimmung schon in der Schulzeit gefördert werden (Kulig/Theunissen 2006). Die Aussage, Selbstbestimmung heiße die Unterstützung abzubauen, dreht Niehoff um - dort heißt es ausdrücklich, Selbstbestimmung bedeute nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Der Satz, Freizeit müsse produktiv genutzt werden, widerspricht dem Grundsatz, dass Freizeit nicht produktiv sein muss. Die Überforderung durch zu viel Offenheit ist zwar belegt, gehört aber zum Spannungsfeld Struktur und Offenheit und ist gerade kein Einwand gegen stellvertretende Entscheidungen. (Notizen S. 03)",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-6",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 2,
+      "frage": "Ein Schüler kennt die Angebote in seinem Stadtteil und beherrscht mehrere Sportarten, nutzt beides aber nie, weil ihn nichts davon reizt. Welche Komponente selbstbestimmter Freizeitgestaltung fehlt ihm?",
+      "optionen": [
+        { "text": "Wollen", "korrekt": true },
+        { "text": "Wissen", "korrekt": false },
+        { "text": "Können", "korrekt": false },
+        { "text": "PK 1 informieren und ordnen", "korrekt": false }
+      ],
+      "erklaerung": "Wollen umfasst Interesse und Motivation für Freizeitaktivitäten, positive Erfahrungen und das Reflektieren eigener Vorlieben - genau das fehlt hier. Wissen (Kenntnis der Möglichkeiten) und Können (praktische Fertigkeiten) bringt er bereits mit, deshalb scheiden sie aus. Der Decoy PK 1 informieren und ordnen stammt aus dem Kompetenzstrukturmodell und beschreibt das Recherchieren und Ordnen von Informationen, also eher die Wissensseite. (Notizen S. 03)",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-7",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 2,
+      "frage": "Eine Unterrichtsreihe vermittelt systematisch Wissen darüber, wie Freizeit geplant und gestaltet wird: Was gehört zu einer Planung, in welcher Reihenfolge geht man vor, woran denkt man. Welchem Bereich des Kompetenzstrukturmodells Freizeitgestaltung entspricht das?",
+      "optionen": [
+        { "text": "DK 1 - Aneignung und Vertiefung von Planungs- und Gestaltungswissen", "korrekt": true },
+        { "text": "DK 2 - Aneignung und Vertiefung von Wissen über Freizeitaktivitäten", "korrekt": false },
+        { "text": "PK 3 - anwenden und handeln", "korrekt": false },
+        { "text": "Entwicklungsbereich Denken und Lernstrategien", "korrekt": false }
+      ],
+      "erklaerung": "Die beiden domänenspezifischen Bereiche unterscheiden sich nach dem Gegenstand des Wissens: DK 1 ist das Planungs- und Gestaltungswissen, DK 2 das Wissen über die Freizeitaktivitäten selbst. Der Decoy PK 3 ist deshalb reizvoll, weil dort ebenfalls geplant wird - PK 3 meint aber das tatsächliche Umsetzen samt Anreise, Kosten und Material, also den Prozess, nicht den Wissensaufbau. Die Entwicklungsbereiche liegen im Modell quer darunter und sind mit allen Kompetenzbereichen verknüpft. (Notizen S. 04)",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-8",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 2,
+      "frage": "Eine Schülerin hat sich für das Schwimmbad entschieden. Nun klärt sie, wie sie hinkommt, was der Eintritt kostet, was sie mitnehmen muss und wo sie Begleitung braucht. Welche prozessbezogene Kompetenz zeigt sie?",
+      "optionen": [
+        { "text": "PK 3 - anwenden und handeln", "korrekt": true },
+        { "text": "PK 2 - bewerten und entscheiden", "korrekt": false },
+        { "text": "PK 1 - informieren und ordnen", "korrekt": false },
+        { "text": "DK 1 - Planungs- und Gestaltungswissen", "korrekt": false }
+      ],
+      "erklaerung": "PK 3 umfasst das Planen und Umsetzen von Aktivitäten samt Organisation von Anreise, Kosten und Material, das Einschätzen des eigenen Unterstützungsbedarfs und das gezielte Nutzen von Hilfen. Der Decoy PK 2 wäre der Schritt davor: Möglichkeiten abwägen und sich entscheiden - die Entscheidung ist hier schon gefallen. PK 1 wäre das Recherchieren und Ordnen der Angebote, DK 1 das dahinterliegende Planungswissen statt des Handelns. (Notizen S. 04)",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-9",
+      "unterthema": "Spannungsfelder",
+      "afb": 2,
+      "frage": "Eine Klasse bekommt einen Freizeitnachmittag völlig ohne Vorgaben. Mehrere Schüler:innen wirken orientierungslos und kommen gar nicht ins Tun. Welches Spannungsfeld der Freizeitbildung zeigt sich hier?",
+      "optionen": [
+        { "text": "Struktur und Offenheit", "korrekt": true },
+        { "text": "Selbstbestimmung und Fürsorge", "korrekt": false },
+        { "text": "Pädagogisierung von Freizeit und Zweckfreiheit", "korrekt": false },
+        { "text": "Unterstützung und Kontrolle", "korrekt": false }
+      ],
+      "erklaerung": "Struktur gibt Orientierung, Sicherheit und verlässliche Rahmenbedingungen, Offenheit lässt Raum für eigene Ideen - mit dem ausdrücklich genannten Risiko der Überforderung durch zu viel Offenheit. Genau das passiert hier. Der Decoy Selbstbestimmung und Fürsorge liegt nahe, weil auch dort Unterstützung fehlt, dieses Spannungsfeld dreht sich aber um stellvertretende Entscheidungen. Unterstützung und Kontrolle stammt aus der Abschlussfolie und beschreibt das Grenzensetzen, nicht die fehlende Rahmung. (Notizen S. 05)",
+      "quelle": "notizen-s05",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-mc-10",
+      "unterthema": "Spannungsfelder",
+      "afb": 2,
+      "frage": "Ein Kollegium will den wöchentlichen Freizeitnachmittag neu aufstellen. Welche Haltung entspricht dem Ziel, das die Vorlesung für die Spannungsfelder formuliert?",
+      "optionen": [
+        { "text": "Unterstützung geben, die stärkt, und zugleich Freiräume lassen - auch für Nichtstun, denn Freizeit muss nicht produktiv sein", "korrekt": true },
+        { "text": "Jede Aktivität mit einem klaren Förderziel versehen, damit die Zeit sinnvoll genutzt wird", "korrekt": false },
+        { "text": "Alle Vorgaben streichen, damit die Schüler:innen möglichst frei entscheiden können", "korrekt": false },
+        { "text": "Für jede Schülerin und jeden Schüler festlegen, was ihnen im Sinne der Fürsorge guttut", "korrekt": false }
+      ],
+      "erklaerung": "Das Ziel heißt ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit - Freizeit braucht Unterstützung, die stärkt, und Freiheit, die wachsen lässt. Alle drei Decoys benennen je ein Risiko, das die Notizen selbst markieren: jede Aktivität mit einem Förderziel zu versehen ist die Pädagogisierung, also der Verlust von Zweckfreiheit durch Instrumentalisierung; alle Vorgaben zu streichen führt zur Überforderung durch zu viel Offenheit; stellvertretend festzulegen, was einer Schülerin guttut, ist die Gefahr im Spannungsfeld Selbstbestimmung und Fürsorge. Jede Variante klingt für sich vernünftig, nur eine hält die Balance. (Notizen S. 05, mit S. 01)",
+      "quelle": "notizen-s05",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
     }
   ],
   "frei": [
@@ -140,7 +330,9 @@
         "Weitere: Integration/Inklusion (Zusammensein, Gemeinschaftsbezug, soziale Stabilität), Partizipation (Beteiligung, Mitbestimmung, Engagement), Enkulturation (kreative Entfaltung, produktive Betätigung, Teilnahme am kulturellen Leben)"
       ],
       "muster": "Fünf Zielfunktionen von Freizeit sind: Rekreation, das Bedürfnis nach Erholung, Ruhe und Wohlbefinden; Kompensation, das Bedürfnis nach Ausgleich, Ablenkung und Vergnügen; Edukation, das Bedürfnis nach Kennenlernen sowie Weiter- und Umlernen; Kommunikation, das Bedürfnis nach Mitteilung, vielfältigen sozialen Beziehungen und Geselligkeit; und Enkulturation, das Bedürfnis nach kreativer Entfaltung und Teilnahme am kulturellen Leben.",
-      "tipp": "Acht gibt es insgesamt - die Fachbegriffe plus je zwei, drei Stichworte zur Bedeutung reichen für volle AFB-I-Punkte."
+      "tipp": "Acht gibt es insgesamt - die Fachbegriffe plus je zwei, drei Stichworte zur Bedeutung reichen für volle AFB-I-Punkte.",
+      "quelle": "notizen-s01",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-f-2",
@@ -153,7 +345,9 @@
         "Einbettung: verbunden mit den domänenspezifischen Kompetenzbereichen DK 1 (Planungs- und Gestaltungswissen) und DK 2 (Wissen über Freizeitaktivitäten), auf Basis der Entwicklungsbereiche (Thümmel & Stöppler 2025)"
       ],
       "muster": "Das Kompetenzstrukturmodell Freizeitgestaltung (Thümmel & Stöppler 2025) beschreibt drei prozessbezogene Kompetenzen. PK 1, informieren und ordnen, umfasst das Recherchieren von Freizeitangeboten - analog wie digital -, das Sammeln und Vergleichen von Informationen und deren Ordnung als Entscheidungsgrundlage. PK 2, bewerten und entscheiden, meint das Reflektieren und Vergleichen von Freizeitmöglichkeiten, das Abwägen von Vor- und Nachteilen unter Berücksichtigung eigener Interessen und Bedürfnisse sowie die Fähigkeit, Kompromisse einzugehen. PK 3, anwenden und handeln, schließlich umfasst das Planen und Umsetzen von Freizeitaktivitäten samt Organisation von Anreise, Kosten und Material, das Einschätzen des eigenen Unterstützungsbedarfs, das gezielte Nutzen von Hilfen und den Aufbau von Handlungskompetenz durch Wiederholung. Die drei Prozesse sind mit den domänenspezifischen Wissensbereichen verschränkt und bauen auf den Entwicklungsbereichen auf.",
-      "tipp": "In deinen Notizen steht ausdrücklich: Wichtig!! Frage zwei: prozessbezogene Kompetenzen. Diese drei PKs solltest du sicher können."
+      "tipp": "In deinen Notizen steht ausdrücklich: Wichtig!! Frage zwei: prozessbezogene Kompetenzen. Diese drei PKs solltest du sicher können.",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-f-3",
@@ -168,7 +362,9 @@
         "Ziel: selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen (Kulig/Theunissen 2006, 237); Komponenten Wissen, Können, Wollen"
       ],
       "muster": "Menschen mit geistiger Behinderung erleben häufig Abhängigkeit von Betreuung und Unterstützung, und diese Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen. Deshalb muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden: Schüler:innen lernen, eigene Bedürfnisse zu erkennen, Entscheidungen zu treffen und Verantwortung zu übernehmen. Zentral ist dabei der Grundsatz von Niehoff: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Ziel der Freizeitbildung ist die selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen - dafür braucht es Wissen über Freizeitmöglichkeiten, Können im Sinne praktischer Fertigkeiten und Wollen im Sinne von Interesse und Motivation.",
-      "tipp": "Der Niehoff-Satz ist das Herzstück - wer den sinngemäß bringt, zeigt genau das geforderte Fachverständnis."
+      "tipp": "Der Niehoff-Satz ist das Herzstück - wer den sinngemäß bringt, zeigt genau das geforderte Fachverständnis.",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-f-4",
@@ -182,7 +378,9 @@
         "Fazit: Ziel ist die ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit"
       ],
       "muster": "Ich wähle das Spannungsfeld zwischen Pädagogisierung von Freizeit und Zweckfreiheit. Einerseits ist Freizeitbildung notwendig: Ohne pädagogische Anregung fehlen vielen Schüler:innen im SGE das Wissen, Können und Wollen, um ihre Freizeit selbstbestimmt zu gestalten. Andererseits droht die Freizeit funktionalisiert zu werden - wenn jede Aktivität einem Förderziel dient, geht genau die Zweckfreiheit verloren, die Freizeit als Raum für freie Entfaltung auszeichnet. In der Beurteilung ist keine Seite allein tragfähig: Weder darf Schule Freizeit vollständig durchpädagogisieren, noch darf sie Schüler:innen ohne Anregung lassen. Als Handlungsoptionen leite ich ab: Freizeitangebote als echte Wahlmöglichkeiten gestalten statt sie zu verordnen, dabei auch das Nichtstun zulassen - denn Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert -, und Unterstützung so anbieten, dass sie stärkt, ohne zu bevormunden. Ziel ist die ausgewogene Balance zwischen Förderung und Freiraum.",
-      "tipp": "Genau dieses Beurteilen plus Handlungsoptionen ableiten steht als AFB-III-Ziel der Vorlesung. Ein Spannungsfeld tief ist besser als drei oberflächlich."
+      "tipp": "Genau dieses Beurteilen plus Handlungsoptionen ableiten steht als AFB-III-Ziel der Vorlesung. Ein Spannungsfeld tief ist besser als drei oberflächlich.",
+      "quelle": "notizen-s05",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "fr-f-5",
@@ -195,7 +393,62 @@
         "Zahlen aus dem Sport: nur 2,4 % statt 9,6 % im Vereinssport, 55 % treiben keinen Sport, nur 35 % inklusiv arbeitende Vereine, nur 4 % inklusive öffentliche Freizeitflächen"
       ],
       "muster": "Im Freizeitbereich bestehen weiterhin drei Gruppen von Barrieren: strukturelle Barrieren wie die schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme; soziale Barrieren wie Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal und defizitorientierte Sichtweisen; sowie Ressourcenprobleme wie fehlende Assistenz und Sicherheitsbedenken. Wie stark diese Barrieren wirken, zeigt der Sport: Nur 2,4 Prozent der Menschen mit Behinderung sind im Vereinssport aktiv statt 9,6 Prozent in der Gesamtbevölkerung, und 55 Prozent treiben gar keinen Sport.",
-      "tipp": "Die Dreiteilung strukturell - sozial - Ressourcen ist das Gerüst; eine Beispielzahl aus dem Sport macht die Antwort anschaulich. War auch Quiz-Frage in der Vorlesung."
+      "tipp": "Die Dreiteilung strukturell - sozial - Ressourcen ist das Gerüst; eine Beispielzahl aus dem Sport macht die Antwort anschaulich. War auch Quiz-Frage in der Vorlesung.",
+      "quelle": "notizen-s02",
+      "quelleSicherheit": "geprueft"
+    },
+    {
+      "id": "fr-gen-f-1",
+      "afb": 2,
+      "frage": "Wenden Sie die drei prozessbezogenen Kompetenzen des Kompetenzstrukturmodells Freizeitgestaltung auf ein konkretes Beispiel an: Eine Schülergruppe soll einen gemeinsamen Nachmittag außerhalb der Schule planen.",
+      "stichpunkte": [
+        "PK 1 informieren und ordnen: Angebote im Umfeld analog und digital recherchieren (Schwimmbad, Kino, Bibliothek), Informationen zu Zeiten, Preisen und Erreichbarkeit sammeln und vergleichen, Auswahlkriterien festlegen, alles als Entscheidungsgrundlage ordnen",
+        "PK 2 bewerten und entscheiden: die Möglichkeiten reflektieren und vergleichen, Vor- und Nachteile abwägen (Kosten, Wetter, Barrierefreiheit), eigene Interessen und Bedürfnisse einbringen, in der Gruppe Kompromisse eingehen",
+        "PK 3 anwenden und handeln: den Nachmittag planen und umsetzen, Anreise, Kosten und Material organisieren, den eigenen Unterstützungsbedarf einschätzen und Hilfen gezielt nutzen, Handlungskompetenz durch Wiederholung aufbauen",
+        "Einbettung zeigen: die drei Prozesse sind mit DK 1 (Planungs- und Gestaltungswissen) und DK 2 (Wissen über Freizeitaktivitäten) verschränkt und bauen auf den Entwicklungsbereichen auf (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln)",
+        "Modellquelle nennen: Thümmel und Stöppler 2025, in Anlehnung an ISB 2022"
+      ],
+      "muster": "Der geplante Nachmittag lässt sich entlang der drei prozessbezogenen Kompetenzen des Kompetenzstrukturmodells Freizeitgestaltung (Thümmel und Stöppler 2025) aufbauen. In PK 1, informieren und ordnen, recherchiert die Gruppe zunächst analog und digital, welche Angebote es im Umfeld gibt, sammelt Informationen zu Öffnungszeiten, Preisen und Erreichbarkeit und ordnet sie nach zuvor vereinbarten Auswahlkriterien, sodass eine Entscheidungsgrundlage entsteht. In PK 2, bewerten und entscheiden, vergleicht die Gruppe die Möglichkeiten, wägt Vor- und Nachteile ab und bringt die eigenen Interessen ein; weil nicht alle dasselbe wollen, gehört das Eingehen von Kompromissen ausdrücklich dazu. In PK 3, anwenden und handeln, wird der Nachmittag dann tatsächlich umgesetzt: Anreise, Kosten und Material werden organisiert, jede und jeder schätzt den eigenen Unterstützungsbedarf ein und nutzt Hilfen gezielt, und durch Wiederholung solcher Vorhaben wächst die Handlungskompetenz. Die drei Prozesse greifen dabei auf das Wissen der domänenspezifischen Bereiche zurück, also auf Planungs- und Gestaltungswissen sowie Wissen über Freizeitaktivitäten, und sind mit den Entwicklungsbereichen verknüpft.",
+      "tipp": "In deinen Notizen steht neben dieser Quizfrage Wichtig!! - die drei PKs sind gesetzt. Anwenden ist ein AFB-II-Operator, Aufzählen reicht also nicht: Du musst die drei Kompetenzen am Beispiel durchspielen, erst recherchieren, dann entscheiden, dann umsetzen. Schreib in ganzen Sätzen und benutze die Fachbegriffe PK 1 bis PK 3, das verlangen die Klausurhinweise ausdrücklich.",
+      "quelle": "notizen-s04",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-f-2",
+      "afb": 3,
+      "frage": "Entwickeln Sie ein schulisches Vorhaben zur Förderung selbstbestimmter Freizeitgestaltung und begründen Sie Ihre Entscheidungen fachlich.",
+      "stichpunkte": [
+        "Zielbestimmung: selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen (Kulig/Theunissen 2006, 237); Begründung, warum das in die Schulzeit gehört (Selbstbestimmung muss bereits dort gezielt gefördert werden)",
+        "Die drei Komponenten abdecken: Wissen (Kenntnisse über Freizeitmöglichkeiten und deren Nutzen), Können (praktische Fertigkeiten, z. B. sportlich, kreativ, musisch, organisatorisch), Wollen (Interesse und Motivation, positive Erfahrungen, eigene Vorlieben reflektieren)",
+        "Kompetenzmodell als Gerüst nutzen: PK 1 informieren und ordnen, PK 2 bewerten und entscheiden, PK 3 anwenden und handeln; dazu DK 1 und DK 2 als Wissensbasis",
+        "Barrieren mitdenken: strukturelle (Erreichbarkeit, Barrierefreiheit, bauliche Hindernisse), soziale (Unsicherheiten im Umgang mit Behinderung, defizitorientierte Sichtweisen) und Ressourcenprobleme (fehlende Assistenz, Sicherheitsbedenken)",
+        "Haltung begründen: Unterstützung anbieten, ohne stellvertretend zu entscheiden - Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.)",
+        "Spannungsfelder reflektieren und Balance benennen: Selbstbestimmung und Fürsorge, Pädagogisierung und Zweckfreiheit, Struktur und Offenheit; auch Nichtstun zulassen, weil Freizeit nicht produktiv sein muss"
+      ],
+      "muster": "Ich entwickle ein Vorhaben, in dem eine Klasse über mehrere Wochen hinweg eigene Freizeitnachmittage plant und durchführt. Ziel ist die selbstbestimmte Gestaltung der eigenen Freizeit nach individuellen Bedürfnissen; weil Fremdbestimmung das Erlernen von Selbstverantwortung erschwert, muss diese Fähigkeit bereits in der Schulzeit gezielt gefördert werden. Inhaltlich decke ich die drei Komponenten selbstbestimmter Freizeitgestaltung ab: Wissen, indem die Schüler:innen Angebote im Stadtteil kennenlernen und deren Nutzen einschätzen; Können, indem sie praktische Fertigkeiten erwerben, also sportliche, kreative, musische und organisatorische Kompetenzen, etwa ein Spiel anleiten oder eine Verabredung selbst organisieren; und Wollen, indem sie eigene Vorlieben ausprobieren, positive Erfahrungen sammeln und darüber sprechen, was ihnen gefallen hat. Als Gerüst nutze ich die prozessbezogenen Kompetenzen: In PK 1 recherchieren und ordnen die Schüler:innen Angebote, in PK 2 wägen sie ab und entscheiden gemeinsam, in PK 3 setzen sie ihre Planung um und schätzen dabei ein, wo sie Unterstützung brauchen. Barrieren denke ich von Anfang an mit, also Erreichbarkeit und Barrierefreiheit der Ziele ebenso wie die Frage, wer begleitet, damit das Vorhaben nicht an fehlender Assistenz scheitert. Entscheidend ist die Haltung der Lehrkraft: Unterstützung ja, stellvertretende Entscheidungen nein, denn Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Deshalb halte ich die Spannungsfelder bewusst in Balance, gebe genug Struktur zur Orientierung, lasse aber Offenheit für eigene Ideen und verzichte darauf, jede Aktivität mit einem Förderziel zu belegen. Auch ein Nachmittag, an dem jemand einfach nichts tut, ist in diesem Vorhaben zulässig, weil Freizeit nicht produktiv sein muss, sondern subjektiv und bedürfnisorientiert ist.",
+      "tipp": "Entwickeln ist ein AFB-III-Operator, das heißt: nicht nur beschreiben, was du machst, sondern jede Entscheidung fachlich begründen. Wer Wissen, Können und Wollen plus die drei PKs als Gliederung nutzt und am Ende die Balance der Spannungsfelder reflektiert, hat das Gerüst der ganzen Vorlesung im Text.",
+      "quelle": "notizen-s03",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "fr-gen-f-3",
+      "afb": 3,
+      "frage": "Diskutieren Sie die These: Freizeit ist Privatsache der Schüler:innen, die Schule hat sich herauszuhalten. Nennen Sie zwei Argumente dafür, zwei dagegen und kommen Sie zu einer begründeten Bewertung.",
+      "stichpunkte": [
+        "Dafür 1: Zweckfreiheit gehört zum Wesen von Freizeit - wird sie funktionalisiert (wir fördern jetzt ...), geht der Raum für freie Entfaltung verloren",
+        "Dafür 2: Freizeit ist subjektiv und bedürfnisorientiert und muss nicht produktiv sein; schulische Bewertungsmaßstäbe für gute oder schlechte Freizeit sind fragwürdig (Sport gut, Fernsehen schlecht, Nichtstun?)",
+        "Dagegen 1: Selbstbestimmte Freizeitgestaltung setzt Wissen, Können und Wollen voraus - diese Komponenten entstehen nicht von selbst, sondern müssen erworben werden; Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006)",
+        "Dagegen 2: Reale Teilhaberisiken und Barrieren (strukturell, sozial, Ressourcen) schränken die Wahlfreiheit ein; ohne Unterstützung bleibt die vermeintliche Privatsache faktisch fremdbestimmt oder findet gar nicht statt",
+        "Bezug auf das Kompetenzstrukturmodell: Freizeitgestaltung ist als Kompetenzbereich mit DK, PK und Entwicklungsbereichen ausgewiesen, also als Bildungsauftrag gefasst",
+        "Bewertung: Freizeit ist kein Nebenbereich, sondern zentral für Lebensqualität, Teilhabe, Selbstbestimmung und Identitätsentwicklung; die Lösung liegt nicht im Heraushalten, sondern in der Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum"
+      ],
+      "muster": "Für die These spricht zweierlei. Erstens lebt Freizeit von ihrer Zweckfreiheit: Sobald jede Aktivität einem Förderziel dient, wird sie instrumentalisiert und verliert den Raum für freie Entfaltung, den sie eigentlich bietet. Zweitens ist Freizeit subjektiv und bedürfnisorientiert und muss nicht produktiv sein; wenn Schule bewertet, ob Sport gute und Fernsehen schlechte Freizeit ist, maßt sie sich ein Urteil an, das den Betroffenen zusteht. Dagegen sprechen aber gewichtige Gründe. Zum einen setzt selbstbestimmte Freizeitgestaltung Wissen über Möglichkeiten, praktisches Können und das Wollen im Sinne von Interesse und Motivation voraus - das entsteht nicht von allein, und deshalb muss Selbstbestimmung schon in der Schulzeit gezielt gefördert werden. Zum anderen ist die Wahlfreiheit für Menschen mit Behinderung real eingeschränkt: Strukturelle Barrieren wie fehlende Barrierefreiheit, soziale Barrieren wie defizitorientierte Sichtweisen und Ressourcenprobleme wie fehlende Assistenz führen dazu, dass die angebliche Privatsache ohne Unterstützung häufig gar nicht stattfindet. Dass die Freizeitgestaltung im Kompetenzstrukturmodell als eigener Kompetenzbereich ausgewiesen ist, zeigt zudem, dass sie fachlich als Bildungsauftrag verstanden wird. In der Bewertung folge ich der These deshalb nicht: Freizeit ist kein Nebenbereich, sondern zentral für Lebensqualität, Teilhabe, Selbstbestimmung und Identitätsentwicklung. Der berechtigte Kern der These liegt allerdings in der Warnung vor Pädagogisierung. Die Aufgabe der Schule ist damit nicht das Heraushalten, sondern das Halten der Balance: Unterstützung, die stärkt, und Freiheit, die wachsen lässt.",
+      "tipp": "Diskutieren ist ein AFB-III-Operator. Das Muster zwei Punkte dafür, zwei dagegen, dann eine begründete Bewertung trägt hier gut. Wichtig ist, dass du am Ende wirklich Position beziehst und nicht in der Aufzählung stecken bleibst - und wenn du der These widersprichst, ist es stark, ihren berechtigten Kern trotzdem anzuerkennen.",
+      "quelle": "notizen-s05",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
     }
   ]
 }

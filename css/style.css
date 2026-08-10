@@ -262,8 +262,11 @@ p { margin: 0 0 var(--sp-3); }
 .afb-2 { background: var(--warn-bg); color: var(--warn-ink); }
 .afb-3 { background: var(--bad-bg); color: var(--bad); }
 
+/* min-height ist nur der Startwert - die Hoehe zieht autoWachsen (core.js) mit
+   dem Inhalt nach. overflow-y: hidden muss sein, sonst waechst scrollHeight bei
+   jedem Tastendruck um die Scrollleiste weiter. */
 .frei-eingabe {
-  width: 100%; min-height: 110px; resize: vertical;
+  width: 100%; min-height: 110px; resize: vertical; overflow-y: hidden;
   font: inherit; color: var(--ink);
   background: var(--paper-2);
   border: 1.5px solid var(--line); border-radius: 12px;
@@ -318,4 +321,204 @@ p { margin: 0 0 var(--sp-3); }
 @media (min-width: 600px) {
   h1 { font-size: 2rem; }
   #app { padding-top: var(--sp-8); }
+}
+
+/* =======================================================================
+   Statistik (js/stats.js) und Spiele (js/spiele.js)
+   Angehaengt statt eingestreut, damit parallele Arbeit an style.css
+   nicht kollidiert. Alles nutzt die bestehenden Farb-Tokens.
+   ======================================================================= */
+
+/* ---------- Statistik: Kacheln ---------- */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.stat-tile {
+  background: var(--paper-2); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); text-align: center;
+}
+.stat-tile b {
+  display: block; font-family: "Fraunces", Georgia, serif;
+  font-size: 1.5rem; line-height: 1.1; color: var(--tfarbe, var(--accent));
+}
+.stat-tile span { display: block; font-size: .78rem; color: var(--ink-soft); margin-top: 2px; }
+
+.an-kopf { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
+.an-kopf h2 { flex: 1; }
+.an-kopf .sticker.big { width: 64px; height: 64px; margin: 0; }
+
+/* ---------- Statistik: Ueben-Chips ---------- */
+.chip-ueberschrift {
+  font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--ink-soft); margin: var(--sp-4) 0 var(--sp-2);
+}
+.uebe-chip {
+  display: block; width: 100%; text-align: left;
+  font: inherit; color: var(--ink); cursor: pointer;
+  background: var(--paper-2);
+  border: 1.5px solid var(--line); border-left: 4px solid var(--tfarbe);
+  border-radius: 12px;
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-2);
+  transition: transform .08s ease;
+}
+.uebe-chip:active { transform: scale(.985); }
+.uebe-chip.wacklig { border-color: var(--bad); border-left-color: var(--bad); background: var(--bad-bg); }
+.uebe-chip .chip-titel { display: block; font-weight: 700; font-size: .95rem; }
+.uebe-chip .chip-klein { display: block; font-size: .8rem; color: var(--ink-soft); margin-top: 1px; }
+
+/* ---------- Statistik: Thema x AFB ---------- */
+.raster-hinweis { font-size: .85rem; color: var(--ink-soft); }
+.afb-raster { display: flex; flex-direction: column; gap: var(--sp-2); }
+.raster-zeile {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  gap: var(--sp-2); align-items: stretch;
+}
+.raster-zeile.kopf { align-items: end; }
+.raster-kopfzelle {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--ink-soft); text-align: center; padding-bottom: 2px;
+}
+.raster-name {
+  display: flex; align-items: center;
+  min-width: 0; font-size: .78rem; font-weight: 700; line-height: 1.2;
+  /* Themen-Titel sind lang (z. B. "Entwicklungsbereiche & dualer Unterricht") und
+     duerfen umbrechen statt aus der Spalte zu laufen. */
+  overflow-wrap: anywhere; hyphens: auto;
+  border-left: 3px solid var(--tfarbe); padding-left: var(--sp-2);
+}
+.raster-zeile.kopf .raster-name { border: none; padding-left: 0; color: var(--ink-soft); font-weight: 400; }
+
+.zelle {
+  font: inherit; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 46px; padding: 4px 2px;
+  border: 1.5px solid var(--line); border-radius: 10px;
+  background: var(--paper-2); color: var(--ink);
+}
+.zelle .q { font-weight: 700; font-size: .95rem; line-height: 1.1; }
+.zelle .n { font-size: .68rem; color: var(--ink-soft); }
+.zelle.leer { cursor: default; color: var(--ink-soft); opacity: .5; border-style: dashed; }
+.zelle.neu, .zelle.duenn { background: var(--paper-2); }
+.zelle.rot { background: var(--bad-bg); border-color: var(--bad); }
+.zelle.rot .q { color: var(--bad); }
+.zelle.gelb { background: var(--warn-bg); border-color: var(--warn-ink); }
+.zelle.gelb .q { color: var(--warn-ink); }
+.zelle.gruen { background: var(--ok-bg); border-color: var(--ok); }
+.zelle.gruen .q { color: var(--ok); }
+
+.fussnote-karte {
+  font-size: .8rem; color: var(--ink-soft);
+  border-top: 1px dashed var(--line); padding-top: var(--sp-3);
+}
+.fussnote-karte p { margin-bottom: var(--sp-2); }
+
+/* ---------- Spiele: Hub ---------- */
+.spiel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.spiel-karte {
+  position: relative; cursor: pointer; text-align: center;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-4) var(--sp-3);
+  transition: transform .08s ease;
+}
+.spiel-karte:active { transform: scale(.97); }
+.spiel-karte.offen { border-color: var(--accent); }
+.spiel-karte.erledigt { opacity: .8; }
+.spiel-karte .spiel-icon { display: block; font-size: 1.8rem; line-height: 1.1; }
+.spiel-karte b { display: block; margin-top: 4px; }
+.spiel-karte .klein { display: block; font-size: .78rem; color: var(--ink-soft); }
+.spiel-haken { position: absolute; top: 6px; right: 10px; color: var(--ok); font-weight: 700; }
+
+/* ---------- Spiele: Signalwoerter ---------- */
+.op-wort {
+  font-family: "Fraunces", Georgia, serif; font-weight: 700;
+  font-size: 1.8rem; text-align: center;
+  color: var(--tfarbe, var(--accent));
+  margin: var(--sp-2) 0 var(--sp-3);
+}
+.op-stamm {
+  font-style: italic; background: var(--paper-2); border-radius: 12px;
+  padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3); font-size: .95rem;
+}
+.op-tipp { font-size: .88rem; color: var(--ink-soft); margin-top: 4px; }
+.op-karte { border-bottom: 1px solid var(--line); padding: var(--sp-2) 0; }
+.op-karte summary { cursor: pointer; }
+
+.sheet-ov {
+  position: fixed; inset: 0; z-index: 99;
+  display: flex; align-items: flex-end;
+  background: rgba(10, 8, 20, .6);
+}
+.sheet {
+  width: 100%; max-height: 84dvh; overflow-y: auto;
+  background: var(--card); color: var(--ink);
+  border-top-left-radius: 18px; border-top-right-radius: 18px;
+  border-top: 1px solid var(--line);
+  padding: var(--sp-5) var(--sp-5) calc(var(--sp-5) + env(safe-area-inset-bottom));
+}
+.sheet .klein { font-size: .82rem; color: var(--ink-soft); }
+.sheet-liste { margin: var(--sp-3) 0; }
+.sheet-gruppe {
+  font-size: .74rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--ink-soft); margin: var(--sp-3) 0 var(--sp-1);
+}
+
+/* ---------- Spiele: Zwei-Spalten-Zuordnung ---------- */
+/* Karten wachsen mit ihrem Text (Aufzaehlungen sind lang) - kein flex:1,
+   sonst laeuft der Text aus dem Kasten heraus. Die Spalten sind dadurch
+   unterschiedlich hoch, das ist beim Antippen egal. */
+.bg-spiel { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); align-items: start; margin-bottom: var(--sp-4); }
+.bg-col { display: flex; flex-direction: column; gap: var(--sp-2); }
+.bg-card {
+  font: inherit; font-size: .85rem; line-height: 1.3; text-align: left; cursor: pointer;
+  min-height: 52px; overflow-wrap: anywhere;
+  background: var(--paper-2); color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: var(--sp-2) var(--sp-3);
+}
+.bg-card.sel { border-color: var(--tfarbe, var(--accent)); background: var(--glow); font-weight: 700; }
+.bg-card.done { opacity: .45; border-style: dashed; cursor: default; }
+.bg-card.shake { animation: bg-shake .45s ease; border-color: var(--bad); }
+@keyframes bg-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.nachlesen { border-top: 1px dashed var(--line); margin-top: var(--sp-3); padding-top: var(--sp-3); }
+.nachlesen-zeile { margin-bottom: var(--sp-3); font-size: .9rem; }
+.nachlesen-zeile b { display: block; margin-bottom: 2px; }
+
+/* ---------- Frei ueben: Stift-Symbol und Handschrift-Entwurf ---------- */
+.frei-feld { position: relative; }
+.frei-feld .frei-eingabe { padding-right: 56px; }
+.frei-stift {
+  position: absolute; right: 8px; bottom: 20px;
+  width: 40px; height: 40px; cursor: pointer;
+  font-size: 1.1rem; line-height: 1;
+  color: var(--ink-soft); background: var(--card);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.frei-stift:active { transform: scale(.94); }
+.frei-hand { margin-bottom: var(--sp-3); }
+.frei-hand img {
+  display: block; width: 100%; border-radius: 12px; border: 1px solid var(--line);
+}
+.frei-hand .zeile {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: .8rem; color: var(--ink-soft); margin-top: 4px;
+}
+.frei-hand .zeile button {
+  font: inherit; font-size: .8rem; cursor: pointer;
+  background: none; border: none; color: var(--bad); text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-card.shake { animation: none; }
+  .uebe-chip:active, .spiel-karte:active, .frei-stift:active { transform: none; }
+}
+
+@media (min-width: 600px) {
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
 }

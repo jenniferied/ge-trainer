@@ -8,6 +8,9 @@
     {
       "id": "gr-mc-1",
       "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
       "frage": "Welches ist ein strukturelles Merkmal von Förderschulen im Schwerpunkt geistige Entwicklung?",
       "optionen": [
         { "text": "Relativ kleine Klassenfrequenzen", "korrekt": true },
@@ -20,6 +23,9 @@
     {
       "id": "gr-mc-2",
       "unterthema": "Stufenmodell",
+      "afb": 1,
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "geprueft",
       "frage": "Wie ist die Förderschule (GE) in Stufen gegliedert?",
       "optionen": [
         { "text": "4 Stufen, die jeweils 3 Jahre besucht werden", "korrekt": true },
@@ -32,6 +38,9 @@
     {
       "id": "gr-mc-3",
       "unterthema": "Stufenmodell",
+      "afb": 1,
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "geprueft",
       "frage": "Welche Stufe bereitet über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem das Berufsleben vor?",
       "optionen": [
         { "text": "Die Werk- bzw. Abschlussstufe", "korrekt": true },
@@ -44,6 +53,9 @@
     {
       "id": "gr-mc-4",
       "unterthema": "Stufenmodell",
+      "afb": 1,
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "geprueft",
       "frage": "Wie verändert sich die Schulbesuchsdauer im Werkstufenbereich?",
       "optionen": [
         { "text": "Verlängerung von 9 auf 12 Jahre, mit Option auf weitere Verlängerung in begründeten Fällen", "korrekt": true },
@@ -56,6 +68,9 @@
     {
       "id": "gr-mc-5",
       "unterthema": "Gemeinsamer Unterricht",
+      "afb": 1,
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
       "frage": "In welcher Form des gemeinsamen Unterrichts sind die Schüler:innen schulrechtlich der Förderschule zugeordnet?",
       "optionen": [
         { "text": "Kooperationsklasse", "korrekt": true },
@@ -68,6 +83,9 @@
     {
       "id": "gr-mc-6",
       "unterthema": "Gemeinsamer Unterricht",
+      "afb": 1,
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
       "frage": "Welche drei Formen gehören zum gemeinsamen Unterricht mit schulrechtlicher Zuordnung zur Regelschule?",
       "optionen": [
         { "text": "Integrationsklasse, integrative Regelklasse, Einzelintegration", "korrekt": true },
@@ -76,6 +94,102 @@
         { "text": "Frühförderung, Ganztag, Hort", "korrekt": false }
       ],
       "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule."
+    },
+    {
+      "id": "gr-gen-mc-1",
+      "unterthema": "Gemeinsamer Unterricht",
+      "afb": 2,
+      "frage": "Das Schaubild zum gemeinsamen Unterricht sortiert Integrationsklasse, integrative Regelklasse, Einzelintegration und Kooperationsklasse in zwei Gruppen. Nach welchem Kriterium wird dabei unterschieden?",
+      "optionen": [
+        { "text": "Nach der schulrechtlichen Zuordnung der Schüler:innen (Regelschule oder Förderschule)", "korrekt": true },
+        { "text": "Nach der Anzahl der Schüler:innen mit Förderbedarf pro Klasse", "korrekt": false },
+        { "text": "Nach dem Gebäude, in dem der Unterricht stattfindet", "korrekt": false },
+        { "text": "Nach dem Alter der Schüler:innen beim Einstieg in den gemeinsamen Unterricht", "korrekt": false }
+      ],
+      "erklaerung": "Das Ordnungsprinzip ist die schulrechtliche Zuordnung: Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur Regelschule, die Kooperationsklasse zur Förderschule. Der Unterrichtsort klingt plausibel, ist aber nicht das Kriterium - es geht um den rechtlichen Status. (Notizen S. 57)",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-mc-3",
+      "unterthema": "Stufenmodell",
+      "afb": 2,
+      "frage": "Ein Schüler befindet sich im 8. Schulbesuchsjahr an der Förderschule. In welcher Stufe ist er nach dem Stufenmodell in der Regel?",
+      "optionen": [
+        { "text": "In der Ober- bzw. Hauptstufe", "korrekt": true },
+        { "text": "In der Mittelstufe", "korrekt": false },
+        { "text": "In der Werk- bzw. Abschlussstufe", "korrekt": false },
+        { "text": "In der Vor-, Unter- bzw. Grundstufe", "korrekt": false }
+      ],
+      "erklaerung": "Bei 4 Stufen zu je 3 Jahren in der genannten Reihenfolge ergibt sich: Jahre 1-3 Vor-/Unter-/Grundstufe, 4-6 Mittelstufe, 7-9 Ober-/Hauptstufe, 10-12 Werk-/Abschlussstufe - das 8. Jahr liegt also in der Ober- bzw. Hauptstufe. Die Mittelstufe ist der naheliegende Verrechner, sie endet aber schon nach Jahr 6. (Notizen S. 58)",
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-mc-5",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Welches Angebot von Förderschulen setzt bereits vor dem eigentlichen Schuleintritt an?",
+      "optionen": [
+        { "text": "Frühförderung und schulvorbereitende Gruppen", "korrekt": true },
+        { "text": "Die Werkstufe", "korrekt": false },
+        { "text": "Die Ganztagsbeschulung", "korrekt": false },
+        { "text": "Der Klassenrat", "korrekt": false }
+      ],
+      "erklaerung": "Zu den strukturellen Merkmalen gehören Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen - beides greift vor Schulbeginn. Die Werkstufe ist das Gegenstück am anderen Ende: Sie bereitet auf die Zeit nach der Schule vor. (Notizen S. 57)",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-mc-6",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 2,
+      "frage": "Der exemplarische Stundenplan zeigt einen Schultag von etwa 8:30 bis 15 Uhr mit Frühstück, Mittagessen und großer Pause. Welches strukturelle Merkmal der Förderschule wird darin unmittelbar sichtbar?",
+      "optionen": [
+        { "text": "Die Ganztagsbeschulung", "korrekt": true },
+        { "text": "Die relativ kleinen Klassenfrequenzen", "korrekt": false },
+        { "text": "Die Frühförderung", "korrekt": false },
+        { "text": "Die Verlängerung des Schulbesuchs von 9 auf 12 Jahre", "korrekt": false }
+      ],
+      "erklaerung": "Ein Tagesablauf bis in den Nachmittag mit Mahlzeiten und Pausen zeigt die Ganztagsbeschulung. Die Distraktoren sind alle echte Merkmale von Förderschulen - aber aus einem Stundenplan lassen sich Klassengröße, Frühförderung oder Schulbesuchsdauer nicht ablesen. (Notizen S. 57)",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-mc-7",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Klassenzimmer an Förderschulen sind wohnlich gestaltet. Welche Doppelfunktion steckt dahinter?",
+      "optionen": [
+        { "text": "Sie sind Orte zum Lernen und zum Leben", "korrekt": true },
+        { "text": "Sie dienen dem Unterricht und der Leistungsbewertung", "korrekt": false },
+        { "text": "Sie sind zugleich Unterrichts- und Therapieräume", "korrekt": false },
+        { "text": "Sie werden vormittags von der Schule und nachmittags vom Hort genutzt", "korrekt": false }
+      ],
+      "erklaerung": "Die wohnliche Gestaltung macht Klassenzimmer zu Orten zum Lernen und Leben - das ist die Formulierung aus den Merkmalen der Förderschule. Die Therapie-Option klingt nah dran, ist aber nicht die genannte Doppelfunktion. (Notizen S. 57)",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-mc-8",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Welche therapeutischen Angebote nennt das Bayern-Übersichtsschaubild als in die Förderschule integriert?",
+      "optionen": [
+        { "text": "Unter anderem Physiotherapie, Ergotherapie und Logopädie", "korrekt": true },
+        { "text": "Ausschließlich Psychotherapie in externen Praxen", "korrekt": false },
+        { "text": "Reittherapie und Musiktherapie", "korrekt": false },
+        { "text": "Keine - Therapien finden grundsätzlich außerhalb der Schule statt", "korrekt": false }
+      ],
+      "erklaerung": "Das Schaubild führt integrierte therapeutische Angebote auf, darunter Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst. Der Trick liegt in der Integration: Die Angebote gehören zur Schule, nicht in externe Praxen. (Notizen S. 58, Bayern-Übersicht - das Schaubild ist sehr klein gedruckt, die Beschriftungen sind sinngemäß und nicht wortgenau.)",
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "unsicher",
+      "generiert": true
     }
   ],
   "frei": [
@@ -91,7 +205,9 @@
         "Zusätzlich möglich: Stufenmodell (4 Stufen à 3 Jahre), eigenständige Werkstufe, verlängerter Schulbesuch (9 auf 12 Jahre)"
       ],
       "muster": "Förderschulen im SGE weisen unter anderem folgende strukturelle Merkmale auf: Sie bieten Frühförderung und schulvorbereitende Gruppen an, es gibt eine Ganztagsbeschulung, die Klassenzimmer sind wohnlich gestaltet als Orte zum Lernen und Leben, und die Klassenfrequenzen sind relativ klein.",
-      "tipp": "AFB I heißt: sauber benennen reicht. Vier Punkte aufzählen, in ganzen Sätzen, Fachbegriffe nutzen."
+      "tipp": "AFB I heißt: sauber benennen reicht. Vier Punkte aufzählen, in ganzen Sätzen, Fachbegriffe nutzen.",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "gr-f-2",
@@ -103,7 +219,9 @@
         "Verlängerung des Schulbesuchs von 9 auf 12 Jahre im Werkstufenbereich (Option auf weitere Verlängerung in begründeten Fällen)"
       ],
       "muster": "Die Förderschule im SGE gliedert sich in vier Stufen, die jeweils drei Jahre besucht werden: die Vor-, Unter- bzw. Grundstufe, die Mittelstufe, die Ober- bzw. Hauptstufe und die Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004). Die Werkstufe ist dabei relativ eigenständig: Sie soll über allgemeine Bildungsangebote hinaus gezielt auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten. Dafür verlängert sich der Schulbesuch von 9 auf 12 Jahre im Werkstufenbereich, in begründeten Fällen ist eine weitere Verlängerung möglich.",
-      "tipp": "Bei AFB II nicht nur aufzählen, sondern erklären, was die Stufen bedeuten - besonders die Sonderrolle der Werkstufe."
+      "tipp": "Bei AFB II nicht nur aufzählen, sondern erklären, was die Stufen bedeuten - besonders die Sonderrolle der Werkstufe.",
+      "quelle": "notizen-s58",
+      "quelleSicherheit": "geprueft"
     },
     {
       "id": "gr-f-3",
@@ -118,7 +236,57 @@
         "Eigene begründete Bewertung am Ende - kein bloßes Sowohl-als-auch, sondern Position beziehen"
       ],
       "muster": "Für die Förderschule sprechen die spezialisierten Rahmenbedingungen: kleine Klassenfrequenzen, wohnlich gestaltete Lernorte, Ganztagsstruktur und ein Stufenmodell mit eigener Werkstufe, das gezielt auf das nachschulische Leben vorbereitet. Für die allgemeinbildende Schule sprechen Teilhabe und Begegnung: Gemeinsamer Unterricht ermöglicht soziales Lernen mit Gleichaltrigen und entspricht dem Anspruch der UN-Behindertenrechtskonvention auf gleichberechtigten Zugang. Gegen die Förderschule spricht die Gefahr der Separation, gegen die Regelschule, dass Schüler:innen im FSgE den Anforderungen ohne ausreichende Ressourcen und Differenzierung nur schwer gerecht werden. In der Bewertung kommt es auf das einzelne Kind an: Entscheidend ist nicht der Ort an sich, sondern ob dort Entwicklungsförderung, Differenzierung und soziale Teilhabe tatsächlich umgesetzt werden.",
-      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben."
+      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben.",
+      "quelle": "dozentin-beispiel",
+      "quelleSicherheit": "geprueft"
+    },
+    {
+      "id": "gr-gen-f-1",
+      "afb": 2,
+      "frage": "Vergleichen Sie die vier Formen des gemeinsamen Unterrichts im Hinblick auf die schulrechtliche Zuordnung der Schüler:innen.",
+      "stichpunkte": [
+        "Vergleichskriterium zuerst benennen: die schulrechtliche Zuordnung, nicht der Lernort",
+        "Schulrechtlich der Regelschule zugeordnet: Integrationsklasse, integrative Regelklasse, Einzelintegration",
+        "Schulrechtlich der Förderschule zugeordnet: Kooperationsklasse",
+        "Gemeinsamkeit: alle vier Formen sind gemeinsamer Unterricht - der Unterschied liegt allein im rechtlichen Status"
+      ],
+      "muster": "Alle vier Formen gehören zum gemeinsamen Unterricht, unterscheiden sich aber in der schulrechtlichen Zuordnung der Schüler:innen. Bei der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration sind die Schüler:innen schulrechtlich der Regelschule zugeordnet. Bei der Kooperationsklasse bleiben sie dagegen schulrechtlich der Förderschule zugeordnet. Der entscheidende Unterschied liegt somit nicht darin, wo der Unterricht stattfindet, sondern welcher Schulform die Schüler:innen rechtlich angehören.",
+      "tipp": "Vergleichen ist ein AFB-II-Operator: Erst das Vergleichskriterium nennen, dann die Formen daran sortieren - das bringt Struktur in die Antwort.",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-f-2",
+      "afb": 2,
+      "frage": "Erläutern Sie anhand des exemplarischen Stundenplans, welche strukturellen Merkmale der Förderschule darin sichtbar werden.",
+      "stichpunkte": [
+        "Ganztagsbeschulung: Zeitraster ca. 8:30 bis 15 Uhr, inklusive Frühstück, Mittagessen und großer Pause",
+        "Schule als Ort zum Lernen und Leben: Mahlzeiten und Alltagsroutinen sind Teil des Schultags, passend zu den wohnlich gestalteten Klassenzimmern",
+        "Lebensnahe und soziale Angebote im Plan: Soziales Lernen, Klassenrat, Bewegung und Entspannung, Hauswirtschaft, Schwimmen - neben Mathematik, Deutsch und Sachunterricht",
+        "Erläutern heißt: Merkmal benennen UND am Stundenplan-Detail festmachen"
+      ],
+      "muster": "Der exemplarische Stundenplan macht mehrere strukturelle Merkmale der Förderschule sichtbar. Zunächst zeigt das Zeitraster von etwa 8:30 bis 15 Uhr mit Frühstück, Mittagessen und großer Pause die Ganztagsbeschulung. Dass Mahlzeiten und Alltagsroutinen fest zum Schultag gehören, verweist außerdem darauf, dass die Schule als Ort zum Lernen und Leben gestaltet ist - dazu passen auch die wohnlich eingerichteten Klassenzimmer. Schließlich stehen neben klassischen Fächern wie Mathematik und Deutsch auch Angebote wie Soziales Lernen, Klassenrat, Bewegung und Entspannung sowie Hauswirtschaft im Plan, die soziales und lebenspraktisches Lernen in den Schulalltag integrieren.",
+      "tipp": "Bei Erläutern-Aufgaben mit Material immer die Brücke schlagen: erst das Detail aus dem Material, dann das Merkmal, das es belegt.",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "geprueft",
+      "generiert": true
+    },
+    {
+      "id": "gr-gen-f-3",
+      "afb": 3,
+      "frage": "Erörtern Sie, warum die Förderschule im SGE als Ort zum Lernen und Leben gestaltet ist, und bewerten Sie diese Doppelrolle.",
+      "stichpunkte": [
+        "Befund benennen: wohnlich gestaltete Klassenzimmer, Ganztagsbeschulung, Mahlzeiten im Stundenplan, Schulbesuch bis zu 12 Jahre - die Schule ist weit mehr als ein Unterrichtsort",
+        "Argumente dafür: viel Lebenszeit findet in der Schule statt, lebenspraktisches und soziales Lernen brauchen echte Alltagssituationen, eine wohnliche Umgebung gibt Sicherheit und Struktur",
+        "Argumente dagegen bzw. Grenzen: je mehr Leben in der Schule stattfindet, desto wichtiger wird die Frage nach Kontakten und Lebenserfahrungen außerhalb dieses Schonraums",
+        "Eigene Bewertung am Ende - Struktur der Dozentin: Punkte dafür, Punkte dagegen, dann Position beziehen"
+      ],
+      "muster": "Die Förderschule im SGE ist erkennbar als Ort zum Lernen und Leben angelegt: Die Klassenzimmer sind wohnlich gestaltet, es gibt eine Ganztagsbeschulung mit Frühstück und Mittagessen im Stundenplan, und der Schulbesuch kann sich auf bis zu zwölf Jahre erstrecken. Dafür spricht, dass die Schüler:innen einen großen Teil ihrer Lebenszeit in der Schule verbringen und lebenspraktisches wie soziales Lernen echte Alltagssituationen braucht - Mahlzeiten, Routinen und eine verlässliche, wohnliche Umgebung sind dann selbst Lerngelegenheiten. Kritisch lässt sich einwenden, dass eine Schule, die so viel Lebensraum bereitstellt, auch zum Schonraum werden kann, sodass Erfahrungen und Kontakte außerhalb der Schule bewusst mitgedacht werden müssen. In der Bewertung überwiegt für mich der Gewinn: Die Doppelrolle ist für diese Schülerschaft sinnvoll, solange die Schule den Blick über sich hinaus - etwa durch die Werkstufe auf das nachschulische Leben - nicht verliert.",
+      "tipp": "AFB III heißt Position beziehen: Argumente in beide Richtungen sammeln und am Ende klar bewerten. Die Merkmale aus den Notizen sind dein Fakten-Fundament.",
+      "quelle": "notizen-s57",
+      "quelleSicherheit": "unsicher",
+      "generiert": true
     }
   ]
 }

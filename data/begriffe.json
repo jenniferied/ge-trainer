@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "hinweis": "Begriff-Antwort-Paare für den Begriffe-Blitz. Ausschließlich aus materialien/notizen-referenz.md extrahiert (quelle = Seitenverweis notizen-sNN). Innerhalb einer Kategorie sind alle Antworten eindeutig — sonst wäre die Zwei-Spalten-Runde nicht lösbar. Kategorien, in denen Antworten mehrfach vorkommen (z. B. Inhalte/Methoden der Konzeptionen: „Allgemeine Bildungsinhalte\" 3×, „Gesamtunterricht\" 2×), sind bewusst NICHT aufgenommen.",
+  "kategorien": [
+    { "id": "konz-vertreter", "label": "Konzeptionen & Vertreter:innen", "oberthema": "konzeptionen" },
+    { "id": "konz-ziele", "label": "Konzeptionen & ihre Ziele", "oberthema": "konzeptionen" },
+    { "id": "stufen", "label": "Förderschule & Stufenmodell", "oberthema": "grundlagen" },
+    { "id": "eb-kmk", "label": "Entwicklungsbereiche (KMK 2021)", "oberthema": "entwicklungsbereiche" },
+    { "id": "eb-nrw", "label": "Entwicklungsbereiche im NRW-Lehrplan", "oberthema": "entwicklungsbereiche" },
+    { "id": "dual", "label": "Dualer Unterricht", "oberthema": "entwicklungsbereiche" },
+    { "id": "mobil", "label": "Mobilitätskompetenzen", "oberthema": "mobilitaet" }
+  ],
+  "paare": [
+    {
+      "id": "bg-kv-1",
+      "kategorie": "konz-vertreter",
+      "begriff": "Defizitär / Reduktionistisch",
+      "antwort": "Saegert, Fuchs",
+      "erklaerung": "Älteste Konzeption im Wandel: Ziel war die „Brauchbarmachung\" und der Nutzen für die Allgemeinheit, Inhalte waren Sinnes- und Funktionsschulung.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kv-2",
+      "kategorie": "konz-vertreter",
+      "begriff": "Defizitorientiert",
+      "antwort": "Hartschen, Höss, Osmers; Bach, Moor, Vetter; Bernart, KMK",
+      "erklaerung": "Lebenspraktische, lebenskundliche und partikulare Inhalte im Gesamtunterricht; Ziel ist Selbstständigkeit ohne Selbstbestimmung.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kv-3",
+      "kategorie": "konz-vertreter",
+      "begriff": "Kompetenz- / Entwicklungsorientiert",
+      "antwort": "Speck, Mühl, John",
+      "erklaerung": "Ziel ist Autonomie, Inhalte sind allgemeine Bildungsinhalte, Methode ist handlungsorientierter Unterricht.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kv-4",
+      "kategorie": "konz-vertreter",
+      "begriff": "Entwicklungslogisch",
+      "antwort": "Feuser",
+      "erklaerung": "Ziele: Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit; allgemeine Bildungsinhalte im offenen Unterricht.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kv-5",
+      "kategorie": "konz-vertreter",
+      "begriff": "Subjekt- und Bedarfsorientiert",
+      "antwort": "Fischer",
+      "erklaerung": "Ziel ist persönliche Sinnstiftung; allgemeine Bildungsinhalte im offenen Unterricht.",
+      "quelle": "notizen-s52"
+    },
+
+    {
+      "id": "bg-kz-1",
+      "kategorie": "konz-ziele",
+      "begriff": "Defizitär / Reduktionistisch",
+      "antwort": "Brauchbarmachung; Nutzen für die Allgemeinheit",
+      "erklaerung": "Vertreter: Saegert, Fuchs. Inhalte: Sinnesschulung und Funktionsschulung im Gesamtunterricht.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kz-2",
+      "kategorie": "konz-ziele",
+      "begriff": "Defizitorientiert",
+      "antwort": "Selbstständigkeit ohne Selbstbestimmung; Selbsterkenntnis; Selbstverwirklichung in sozialer Integration",
+      "erklaerung": "Vertreter u. a. Hartschen, Höss, Osmers; Bach, Moor, Vetter; Bernart, KMK. Inhalte: lebenspraktisch, lebenskundlich, partikular.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kz-3",
+      "kategorie": "konz-ziele",
+      "begriff": "Kompetenz- / Entwicklungsorientiert",
+      "antwort": "Autonomie",
+      "erklaerung": "Vertreter: Speck, Mühl, John. Allgemeine Bildungsinhalte, handlungsorientierter Unterricht.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kz-4",
+      "kategorie": "konz-ziele",
+      "begriff": "Entwicklungslogisch",
+      "antwort": "Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit",
+      "erklaerung": "Vertreter: Feuser. Allgemeine Bildungsinhalte im offenen Unterricht.",
+      "quelle": "notizen-s52"
+    },
+    {
+      "id": "bg-kz-5",
+      "kategorie": "konz-ziele",
+      "begriff": "Subjekt- und Bedarfsorientiert",
+      "antwort": "Persönliche Sinnstiftung",
+      "erklaerung": "Vertreter: Fischer. Allgemeine Bildungsinhalte im offenen Unterricht.",
+      "quelle": "notizen-s52"
+    },
+
+    {
+      "id": "bg-st-1",
+      "kategorie": "stufen",
+      "begriff": "Die vier Stufen der Förderschule (Fornefeld 2004, 106)",
+      "antwort": "Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe, Werk- bzw. Abschlussstufe",
+      "erklaerung": "Jede Stufe wird in der Regel drei Jahre lang besucht.",
+      "quelle": "notizen-s58"
+    },
+    {
+      "id": "bg-st-2",
+      "kategorie": "stufen",
+      "begriff": "Verweildauer in einer Stufe",
+      "antwort": "jeweils 3 Jahre",
+      "erklaerung": "Die Unterteilung in vier Stufen à drei Jahre gehört zu den strukturellen Merkmalen der Förderschule.",
+      "quelle": "notizen-s58"
+    },
+    {
+      "id": "bg-st-3",
+      "kategorie": "stufen",
+      "begriff": "Werkstufe",
+      "antwort": "bereitet über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten, vor allem auf das Berufsleben vor",
+      "erklaerung": "Relativ eigenständige Stufe mit besonderer Zielsetzung; hier ist auch die Verlängerung des Schulbesuchs verankert.",
+      "quelle": "notizen-s58"
+    },
+    {
+      "id": "bg-st-4",
+      "kategorie": "stufen",
+      "begriff": "Verlängerung des Schulbesuchs",
+      "antwort": "von 9 auf 12 Jahre im Werkstufenbereich (Verlängerung in begründeten Fällen möglich)",
+      "erklaerung": "Merkmal der Förderschule im Schwerpunkt geistige Entwicklung.",
+      "quelle": "notizen-s58"
+    },
+    {
+      "id": "bg-st-5",
+      "kategorie": "stufen",
+      "begriff": "Integrationsklasse, integrative Regelklasse, Einzelintegration",
+      "antwort": "Schüler:innen sind schulrechtlich der Regelschule zugeordnet",
+      "erklaerung": "Formen des Gemeinsamen Unterrichts, unterschieden nach der schulrechtlichen Zuordnung.",
+      "quelle": "notizen-s57"
+    },
+    {
+      "id": "bg-st-6",
+      "kategorie": "stufen",
+      "begriff": "Kooperationsklasse",
+      "antwort": "Schüler:innen sind schulrechtlich der Förderschule zugeordnet",
+      "erklaerung": "Form des Gemeinsamen Unterrichts mit Zuordnung zur Förderschule.",
+      "quelle": "notizen-s57"
+    },
+    {
+      "id": "bg-st-7",
+      "kategorie": "stufen",
+      "begriff": "Strukturelle Merkmale von Förderschulen",
+      "antwort": "Frühförderung und schulvorbereitende Gruppen, Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer, relativ kleine Klassenfrequenzen",
+      "erklaerung": "Klassenzimmer sind Orte zum Lernen und Leben — ein Merkmal, das Rose sich gut über den Stundenplan merken kann (Soziales Lernen, Frühstück, Mittagessen, Schwimmen).",
+      "quelle": "notizen-s57"
+    },
+
+    {
+      "id": "bg-kmk-1",
+      "kategorie": "eb-kmk",
+      "begriff": "Kognition",
+      "antwort": "Unterstützung der Merkfähigkeit, handlungsplanendes Denken, Erkennen und Bewerten von Analogien und Zusammenhängen, Problemlösen, Entfaltung von Kreativität",
+      "erklaerung": "Einer der vier Entwicklungsbereiche im SGE nach KMK 2021, S. 6 ff.",
+      "quelle": "notizen-s44"
+    },
+    {
+      "id": "bg-kmk-2",
+      "kategorie": "eb-kmk",
+      "begriff": "Kommunikation",
+      "antwort": "Sprechfähigkeit, Wortschatz und Begriffsbildung, Sprachverständnis, sprachliches Selbstkonzept; basal, nonverbal, mündlich, schriftlich",
+      "erklaerung": "Einer der vier Entwicklungsbereiche im SGE nach KMK 2021, S. 6 ff.",
+      "quelle": "notizen-s44"
+    },
+    {
+      "id": "bg-kmk-3",
+      "kategorie": "eb-kmk",
+      "begriff": "Emotionale und soziale Entwicklung",
+      "antwort": "emotionale Stabilität, Sozialverhalten, Lern- und Arbeitsbereitschaft, soziale Beziehungen eingehen und gestalten",
+      "erklaerung": "Einer der vier Entwicklungsbereiche im SGE nach KMK 2021, S. 6 ff.",
+      "quelle": "notizen-s44"
+    },
+    {
+      "id": "bg-kmk-4",
+      "kategorie": "eb-kmk",
+      "begriff": "Motorik und Wahrnehmung",
+      "antwort": "körperliche Ausdrucksmöglichkeiten, Körpererleben, Eigenaktivität und Bewegungsmotivation, Grob- und Feinmotorik, Bewegungsplanung und -steuerung, Präzisions- und Rhythmusfähigkeit, Mund- und Gesichtsmotorik",
+      "erklaerung": "Einer der vier Entwicklungsbereiche im SGE nach KMK 2021, S. 6 ff.; dazu gehört die Fähigkeit, sich und die Umwelt wahrnehmen zu können.",
+      "quelle": "notizen-s44"
+    },
+
+    {
+      "id": "bg-nrw-1",
+      "kategorie": "eb-nrw",
+      "begriff": "Motorik (NRW)",
+      "antwort": "Körperposition ändern und aufrecht halten, Gegenstände tragen, bewegen und handhaben, sich fortbewegen und gehen, Zungen- und Mundmotorik, Kopf-, Augen- und Gesichtsmotorik",
+      "erklaerung": "Einer von fünf Entwicklungsbereichen der NRW-Unterrichtsvorgaben (MSB 2022, S. 29).",
+      "quelle": "notizen-s45"
+    },
+    {
+      "id": "bg-nrw-2",
+      "kategorie": "eb-nrw",
+      "begriff": "Wahrnehmung (NRW)",
+      "antwort": "vibratorisch, vestibulär, kinästhetisch, taktil, gustatorisch, olfaktorisch, auditiv, visuell",
+      "erklaerung": "Acht Wahrnehmungsbereiche in den NRW-Unterrichtsvorgaben (MSB 2022, S. 29).",
+      "quelle": "notizen-s45"
+    },
+    {
+      "id": "bg-nrw-3",
+      "kategorie": "eb-nrw",
+      "begriff": "Kognition (NRW)",
+      "antwort": "sensomotorische Entwicklung, Gedächtnis, Begriffsbildung und Vorstellung von der Welt, planvolles Handeln, Beurteilen, Problemlösen, Bewerten, Lernstrategien",
+      "erklaerung": "Einer von fünf Entwicklungsbereichen der NRW-Unterrichtsvorgaben (MSB 2022, S. 29).",
+      "quelle": "notizen-s45"
+    },
+    {
+      "id": "bg-nrw-4",
+      "kategorie": "eb-nrw",
+      "begriff": "Sozialisation (NRW)",
+      "antwort": "Emotionalität (eigene Person und Biografie, emotionale Kompetenzen, soziomoralisches Handeln) und Soziabilität (soziales Handeln, interpersonale Kompetenzen, Gemeinschaftsleben und soziales Leben, Leben in der Demokratie)",
+      "erklaerung": "Einer von fünf Entwicklungsbereichen der NRW-Unterrichtsvorgaben (MSB 2022, S. 29).",
+      "quelle": "notizen-s45"
+    },
+    {
+      "id": "bg-nrw-5",
+      "kategorie": "eb-nrw",
+      "begriff": "Kommunikation (NRW)",
+      "antwort": "Funktionen von Stimme und Sprechen, Äußerungen produzieren, Äußerungen aufnehmen, miteinander kommunizieren",
+      "erklaerung": "Einer von fünf Entwicklungsbereichen der NRW-Unterrichtsvorgaben (MSB 2022, S. 29).",
+      "quelle": "notizen-s45"
+    },
+
+    {
+      "id": "bg-du-1",
+      "kategorie": "dual",
+      "begriff": "Dualer Unterricht (Jöhnck & Baumann 2023, S. 65)",
+      "antwort": "unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit der Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt",
+      "erklaerung": "Ausgangspunkt sind die unterrichtsfachbezogenen UND entwicklungsbezogenen Bedarfe und Potenziale der Schüler:innen.",
+      "quelle": "notizen-s47"
+    },
+    {
+      "id": "bg-du-2",
+      "kategorie": "dual",
+      "begriff": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht",
+      "antwort": "unterrichtsintegriert allein individuell bestimmte Ziele angehen, z. B. Kommunikationstafel, Selbstkontrollkarten, Förderung der Konzentrationsfähigkeit",
+      "erklaerung": "Erste der fünf Grundformen dualen Unterrichts nach Jöhnck/Baumann (2023) und Jöhnck (2024).",
+      "quelle": "notizen-s48"
+    },
+    {
+      "id": "bg-du-3",
+      "kategorie": "dual",
+      "begriff": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele",
+      "antwort": "alle werden in demselben Entwicklungsschwerpunkt gefördert; fachliche und entwicklungsbezogene Ziele decken sich nicht oder wenig",
+      "erklaerung": "Zweite Grundform. Beispiel: Förderung des Kooperationsverhaltens beim Thema „Der Weg der Milch\" im Sachunterricht (Häußler 2023a).",
+      "quelle": "notizen-s49"
+    },
+    {
+      "id": "bg-du-4",
+      "kategorie": "dual",
+      "begriff": "Die fünf Grundformen dualen Unterrichts",
+      "antwort": "solitäre individuelle Entwicklungsförderung; lerngruppenbezogene Umsetzung individueller Ziele; (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen; intermittierend temporäre Konzentration; parallele Verwirklichung mehrerer Entwicklungsschwerpunkte",
+      "erklaerung": "Nach Jöhnck/Baumann (2023) und Jöhnck (2024). Jede Grundform hat spezifische Chancen und typische Stolpersteine.",
+      "quelle": "notizen-s48"
+    },
+
+    {
+      "id": "bg-mo-1",
+      "kategorie": "mobil",
+      "begriff": "Selbstständig mobil sein",
+      "antwort": "eigenständige Teilnahme am öffentlichen Straßenverkehr unter Nutzung verschiedener Mobilitätsformen",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen zur Mobilitäts- und Verkehrserziehung.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-2",
+      "kategorie": "mobil",
+      "begriff": "Sicher mobil sein",
+      "antwort": "risikobewusste, gefahrenvermeidende und situationsangepasste Teilnahme, unter Beachtung der eigenen sensomotorischen Entwicklung und des Reaktionsvermögens",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-3",
+      "kategorie": "mobil",
+      "begriff": "Verantwortungsbewusst mobil sein",
+      "antwort": "umsichtige, rücksichtsvolle und kooperative Teilnahme; befähigt dazu, den Verkehr als soziales System zu erkennen",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-4",
+      "kategorie": "mobil",
+      "begriff": "Gesundheitsbewusst mobil sein",
+      "antwort": "Erweiterung der physischen und psychischen Leistungsfähigkeit im Zusammenhang mit gesundheitsbewusster Teilnahme am öffentlichen Verkehr",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-5",
+      "kategorie": "mobil",
+      "begriff": "Nachhaltig mobil sein",
+      "antwort": "umweltbewusste und ressourcenschonende Teilnahme sowie Anpassung des Verkehrsverhaltens an die Erfordernisse des Klimaschutzes",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-6",
+      "kategorie": "mobil",
+      "begriff": "Zukunftsfähige Mobilität mitgestalten",
+      "antwort": "Teilhabe an den sozialen, technischen, ökologischen und ökonomischen Entwicklungsprozessen für die Mobilität der Zukunft",
+      "erklaerung": "Eine der sechs Kernkompetenzen im Orientierungs- und Handlungsrahmen.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-7",
+      "kategorie": "mobil",
+      "begriff": "Kompetenzmodell „Sicher und umweltbewusst mobil sein\"",
+      "antwort": "Erkennen, Beurteilen, Handeln und Kommunizieren",
+      "erklaerung": "Die drei Kompetenzen des Kompetenzmodells für die Mobilitätsentwicklung und Verkehrserziehung.",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-8",
+      "kategorie": "mobil",
+      "begriff": "Mobilitätskompetenzen (personenbezogen)",
+      "antwort": "visuelle und auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition, Interaktion",
+      "erklaerung": "Die Fähigkeiten, die eine Person für eigenständige Mobilität braucht — Grundlage der Klausuraufgabe „Benennen Sie 5 Mobilitätskompetenzen\".",
+      "quelle": "notizen-s18"
+    },
+    {
+      "id": "bg-mo-9",
+      "kategorie": "mobil",
+      "begriff": "Mobilitäts- und Verkehrserziehung: die vier Felder",
+      "antwort": "Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung, Sozialerziehung",
+      "erklaerung": "Die schulische Mobilitäts- und Verkehrserziehung steht in der Mitte dieser vier Felder.",
+      "quelle": "notizen-s17"
+    },
+    {
+      "id": "bg-mo-10",
+      "kategorie": "mobil",
+      "begriff": "L5 Der mobile Mensch",
+      "antwort": "das Lernfeld für Verkehrserziehung und Mobilitätsbildung im Rahmenlehrplan (RLP FsgE 2011, 27)",
+      "erklaerung": "Die sechs Lernfelder: L1 Der Mensch im Alltag, L2 Der Mensch und die Arbeit, L3 Der Mensch und die Gesundheit, L4 Der Mensch in der Gesellschaft, L5 Der mobile Mensch, L6 Der Mensch in Natur und Umwelt.",
+      "quelle": "notizen-s17"
+    },
+    {
+      "id": "bg-mo-11",
+      "kategorie": "mobil",
+      "begriff": "Mobilitätsbehinderungen",
+      "antwort": "Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung und Verhalten Anderer, fehlende Mobilitätsbildung",
+      "erklaerung": "Die elf Faktoren der Mindmap „Mobilitätsbehinderungen\" — nicht nur Beeinträchtigungen der Person, sondern auch Umfeld und Bildung.",
+      "quelle": "notizen-s16"
+    }
+  ]
+}

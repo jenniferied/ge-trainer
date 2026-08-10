@@ -1,0 +1,436 @@
+/* GE-Trainer papier.css — Papier-Optik fuer den Klausurmodus (Stufe 2).
+   Verbindliche Vorlage: scratchpad/papier-spec.md (Variante B "Rolle").
+   Wird von js/klausur.js zur Laufzeit nachgeladen, damit index.html unangetastet bleibt.
+
+   Eigener Variablen-Satz: --paper ist in style.css bereits als dunkler App-Hintergrund
+   vergeben, das Blatt braucht darum eigene Tokens (--blatt, --bleistift, --rotstift ...).
+   Standard ist das gedaempfte Tonpapier fuer den Nachtmodus; der Toggle "Helles Blatt"
+   setzt data-blatt="hell" auf .klausur-rolle und zieht die App NICHT auf Hellmodus. */
+
+.klausur-rolle {
+  --blatt: #ddd3c0;
+  --blatt-rand: #c6bba5;
+  --blatt-ink: #24201a;          /* gedruckte Tinte */
+  --blatt-ink-2: #5d564a;        /* Sekundaertext auf dem Blatt */
+  --lineatur: rgba(60, 82, 120, .22);
+  --rotstift: #c0392b;
+  --rotstift-2: rgba(192, 57, 43, .18);
+  --gruenstift: #3d7a52;
+  --bleistift: #46403a;          /* Roses Handschrift */
+  --blatt-schatten: 0 1px 2px rgba(5,0,20,.5), 0 10px 28px -12px rgba(5,0,20,.7);
+  --lin-hoehe: 28px;             /* die EINE Zahl: line-height (px!) UND Gradient-Periode */
+}
+
+:root[data-theme="hell"] .klausur-rolle,
+.klausur-rolle[data-blatt="hell"] {
+  --blatt: #fffdf6;
+  --blatt-rand: #e6dcc6;
+  --blatt-ink: #201c15;
+  --blatt-ink-2: #6b6353;
+  --lineatur: rgba(70, 100, 150, .28);
+  --rotstift: #b3362b;
+  --rotstift-2: rgba(179, 54, 43, .14);
+  --gruenstift: #2e7d4f;
+  --bleistift: #2c2a35;
+  --blatt-schatten: 0 1px 2px rgba(60,50,30,.08), 0 10px 28px -14px rgba(60,50,30,.35);
+}
+
+/* ---------- Rolle: Kopf + Sprungleiste ---------- */
+
+.klausur-rolle { display: block; padding-bottom: var(--sp-8); }
+
+/* Kopf und Sprungleiste kleben gemeinsam: frueher hatte jede ihr eigenes sticky
+   mit festem top, und sobald die Meta-Zeile zweizeilig wurde (Pause, Zeit ist um),
+   lagen die Chips auf dem Handy ueber der Uhr. Die Hoehe misst klausur.js in
+   --leisten-h, daran haengt das scroll-margin-top der Blaetter. */
+.kl-leisten {
+  position: sticky; top: 0; z-index: 6;
+  background: var(--paper);
+}
+
+.kl-kopf {
+  display: flex; align-items: center; gap: var(--sp-2);
+  min-height: 44px;
+  padding: 4px 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.kl-uhr {
+  font-family: "Fraunces", Georgia, serif; font-weight: 700;
+  font-size: 1.15rem; font-variant-numeric: tabular-nums;
+  color: var(--ink); letter-spacing: .02em;
+  min-width: 3.4em;
+}
+.kl-uhr.pausiert { color: var(--ink-soft); }
+.kl-kopf-meta { color: var(--ink-soft); font-size: .8rem; line-height: 1.2; flex: 1; }
+.kl-kopf-knopf {
+  font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; padding: 0 var(--sp-3);
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.kl-kopf-knopf.stark { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+
+.kl-sprung {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding: 6px 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.kl-sprung::-webkit-scrollbar { display: none; }
+.kl-chip {
+  flex: 0 0 auto;
+  font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer;
+  min-height: 32px; padding: 2px 12px;
+  color: var(--tfarbe); background: var(--paper-2);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.kl-chip.hat-text { border-color: var(--tfarbe); }
+.kl-chip.aktiv { background: var(--tfarbe); color: #14111f; border-color: transparent; }
+:root[data-theme="hell"] .kl-chip.aktiv { color: #fff; }
+
+/* ---------- Blatt ---------- */
+
+.kl-blatt-wrap {
+  display: block;
+  margin: 24px auto;
+  max-width: 640px;
+  scroll-margin-top: calc(var(--leisten-h, 96px) + 8px);
+  transform: rotate(var(--kipp, 0deg));
+}
+.kl-blatt {
+  position: relative;
+  background: var(--blatt);
+  color: var(--blatt-ink);
+  border: 1px solid var(--blatt-rand);
+  border-radius: 3px;
+  box-shadow: var(--blatt-schatten);
+  min-height: 340px;
+  padding: 20px 18px 44px 30px;
+  /* Nur der Heftrand liegt auf dem Blatt. Die Lineatur sitzt am Schreibfeld selbst
+     (siehe .kl-schrift/.kl-text) - sonst haengt die erste Linie an der variablen
+     Hoehe des gedruckten Aufgabenkopfs und trifft nie die Schrift. */
+  background-image:
+    linear-gradient(to right, transparent 21px, var(--rotstift-2) 21px, var(--rotstift-2) 22px, transparent 22px);
+}
+.aufgabenbogen .kl-blatt { background-image: none; padding: 24px 22px 28px; }
+
+/* gedruckter Kopf einer Schreibseite */
+.kl-druck { margin-bottom: 10px; }
+.kl-druck .nr {
+  display: block;
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blatt-ink-2);
+}
+.kl-druck .meta {
+  display: block;
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .78rem; color: var(--blatt-ink-2);
+  margin-bottom: 4px;
+}
+.kl-druck .meta b { color: var(--blatt-ink); }
+.kl-druck .aufgabentext {
+  font-family: "Fraunces", Georgia, serif; font-weight: 500;
+  font-size: 1rem; line-height: 1.45; color: var(--blatt-ink);
+  margin: 0 0 4px;
+}
+.kl-druck .afb-1, .kl-druck .afb-2, .kl-druck .afb-3 { background: none; padding: 0; }
+
+/* Handschrift */
+.kl-schrift, .kl-text {
+  font-family: "Caveat", "Bradley Hand", cursive;
+  font-size: 1.35rem;
+  line-height: var(--lin-hoehe);
+  color: var(--bleistift);
+  /* Lineatur direkt am Schreibfeld: eine Periode = eine Zeile, die Linie liegt
+     am unteren Rand jeder Zeilenbox. Auto-Grow heisst kein interner Scroll,
+     darum darf das auch am textarea haengen. */
+  background-image: repeating-linear-gradient(to bottom,
+    transparent 0, transparent calc(var(--lin-hoehe) - 1px),
+    var(--lineatur) calc(var(--lin-hoehe) - 1px), var(--lineatur) var(--lin-hoehe));
+  background-attachment: local;
+}
+.kl-schrift {
+  display: block; width: 100%;
+  min-height: calc(var(--lin-hoehe) * 5);
+  background-color: transparent;
+  border: none; outline: none; resize: none; overflow: hidden;
+  padding: 0; margin: 0;
+}
+.kl-schrift::placeholder { color: var(--blatt-ink-2); opacity: .55; font-size: 1.1rem; }
+.kl-schrift:focus-visible { outline: 2px dashed var(--rotstift-2); outline-offset: 4px; }
+.kl-text { white-space: pre-wrap; }
+.kl-text .leer { color: var(--blatt-ink-2); font-style: italic; }
+
+.kl-anhang {
+  display: block; max-width: 100%; margin-top: 8px;
+  border: 1px solid var(--blatt-rand); border-radius: 3px;
+  background: #fff;
+}
+.kl-anhang-hinweis {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .76rem; color: var(--blatt-ink-2); margin-top: 4px;
+}
+
+.kl-stift {
+  position: absolute; right: 10px; bottom: 8px;
+  width: 44px; height: 44px; cursor: pointer;
+  font-size: 1.2rem; line-height: 1;
+  color: var(--blatt-ink-2);
+  background: var(--blatt);
+  border: 1px solid var(--blatt-rand); border-radius: 999px;
+}
+.kl-stift:active { transform: scale(.94); }
+
+.kl-neuer-abschnitt {
+  display: block; margin: 0 auto 8px;
+  font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; padding: 0 var(--sp-4);
+  color: var(--ink-soft); background: var(--paper-2);
+  border: 1px dashed var(--line); border-radius: 999px;
+}
+
+/* ---------- Aufgabenbogen (Blatt 0) ---------- */
+
+.amtskopf { text-align: center; border-bottom: 2px solid var(--blatt-ink); padding-bottom: 8px; margin-bottom: 12px; }
+.amtskopf .uni {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--blatt-ink-2);
+}
+.amtskopf .titel {
+  font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.2rem; color: var(--blatt-ink);
+  margin: 2px 0;
+}
+.amtskopf .fach { font-family: "Karla", system-ui, sans-serif; font-size: .85rem; color: var(--blatt-ink-2); }
+
+.feldzeile {
+  display: flex; gap: var(--sp-4); flex-wrap: wrap;
+  font-family: "Karla", system-ui, sans-serif; font-size: .8rem; color: var(--blatt-ink-2);
+  margin-bottom: 10px;
+}
+.feldzeile > span { flex: 1 1 40%; display: flex; align-items: baseline; gap: 6px; }
+.lueckenlinie { flex: 1; border-bottom: 1px solid var(--blatt-rand); min-width: 60px; height: 1.1em; }
+.lueckenlinie .hand { font-family: "Caveat", cursive; font-size: 1.1rem; color: var(--bleistift); }
+
+.rahmenzeile {
+  font-family: "Karla", system-ui, sans-serif; font-size: .82rem; color: var(--blatt-ink);
+  border-top: 1px solid var(--blatt-rand); border-bottom: 1px solid var(--blatt-rand);
+  padding: 6px 0; margin-bottom: 12px;
+}
+
+.aufgabenliste { list-style: none; margin: 0; padding: 0; }
+.aufgabenliste .block-kopf {
+  font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: .98rem;
+  color: var(--blatt-ink); margin: 12px 0 4px;
+}
+.aufgabe-zeile {
+  display: flex; align-items: baseline; gap: 6px;
+  font-family: "Karla", system-ui, sans-serif; font-size: .86rem; line-height: 1.45;
+  color: var(--blatt-ink); margin-bottom: 4px;
+}
+.aufgabe-zeile .a-nr { font-weight: 700; flex: 0 0 auto; }
+.aufgabe-zeile .a-text { flex: 0 1 auto; }
+.aufgabe-zeile .fuehrung {
+  flex: 1 1 20px; min-width: 20px; align-self: flex-end;
+  border-bottom: 2px dotted var(--blatt-rand); transform: translateY(-4px);
+}
+.aufgabe-zeile .punkte { flex: 0 0 auto; font-weight: 700; white-space: nowrap; }
+.bogen-fuss {
+  font-family: "Karla", system-ui, sans-serif; font-size: .74rem; color: var(--blatt-ink-2);
+  text-align: center; border-top: 1px solid var(--blatt-rand); margin-top: 14px; padding-top: 6px;
+}
+
+/* ---------- Abgabe-Blatt ---------- */
+
+.abgabe .kl-blatt { min-height: 0; text-align: center; padding-bottom: 24px; }
+.abgabe .kl-abgabe-knopf {
+  font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer;
+  min-height: 48px; padding: 0 var(--sp-6);
+  color: #fff; background: var(--rotstift);
+  border: none; border-radius: 999px;
+}
+.abgabe p {
+  font-family: "Karla", system-ui, sans-serif; font-size: .85rem; color: var(--blatt-ink-2);
+}
+
+/* ---------- Korrektur-Ansicht ---------- */
+
+.kl-blatt.korrigiert { --kipp: 0deg; }
+.kl-blatt-wrap.korrigiert { transform: none; }
+
+.kl-randnotiz {
+  font-family: "Caveat", cursive; font-size: 1.15rem; line-height: 1.25;
+  color: var(--rotstift);
+  border-left: 2px solid var(--rotstift); padding-left: 8px;
+  margin: 8px 0 0;
+}
+.kl-punkte-zeile {
+  display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap;
+  border-top: 1px dashed var(--blatt-rand); margin-top: 12px; padding-top: 10px;
+}
+.kl-punkte-zeile .wert {
+  font-family: "Caveat", cursive; font-size: 1.7rem; font-weight: 700; color: var(--rotstift);
+  min-width: 4.5em;
+}
+.kl-pm {
+  width: 44px; height: 44px; cursor: pointer;
+  font: inherit; font-size: 1.2rem; font-weight: 700;
+  color: var(--rotstift); background: transparent;
+  border: 1.5px solid var(--rotstift); border-radius: 999px;
+}
+.kl-ki-zeile {
+  font-family: "Karla", system-ui, sans-serif; font-size: .78rem; color: var(--blatt-ink-2);
+  width: 100%;
+}
+
+.kl-bewertung { margin-top: 10px; }
+.kl-bewertung h4, .kl-muster h4 {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blatt-ink-2);
+  margin: 12px 0 2px;
+}
+.kl-stich { list-style: none; margin: 10px 0 0; padding: 0; }
+.kl-stich > li {
+  font-family: "Karla", system-ui, sans-serif; font-size: .88rem; line-height: 1.45;
+  color: var(--blatt-ink);
+  padding: 8px 0; border-top: 1px solid var(--blatt-rand);
+}
+.kl-stich .wahl { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.kl-wahl-knopf {
+  font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; padding: 0 14px;
+  color: var(--blatt-ink-2); background: transparent;
+  border: 1.5px solid var(--blatt-rand); border-radius: 999px;
+}
+.kl-wahl-knopf.gewaehlt { border-color: var(--rotstift); color: var(--rotstift); background: var(--rotstift-2); }
+.kl-wahl-knopf.gewaehlt.voll { border-color: var(--gruenstift); color: var(--gruenstift); background: transparent; }
+
+.kl-muster {
+  font-family: "Karla", system-ui, sans-serif; font-size: .86rem; line-height: 1.5;
+  color: var(--blatt-ink-2);
+  border-left: 2px solid var(--blatt-rand); padding-left: 10px; margin-top: 10px;
+}
+.kl-muster h4 {
+  font-family: "Karla", system-ui, sans-serif; font-size: .72rem; letter-spacing: .1em;
+  text-transform: uppercase; margin: 0 0 4px; color: var(--blatt-ink-2);
+}
+
+.sticker.aufgeklebt {
+  position: absolute; right: 8px; top: -14px;
+  width: 68px; height: 68px;
+  transform: rotate(6deg);
+  border: 3px solid var(--sticker-papier); border-radius: 10px;
+}
+
+/* ---------- Overlays: Stift-Canvas, Dialoge ---------- */
+
+.kl-ov {
+  position: fixed; inset: 0; z-index: 99;
+  display: flex; flex-direction: column;
+  background: rgba(10, 8, 20, .72);
+  backdrop-filter: blur(2px);
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+.kl-ov-leiste {
+  display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--card); border-bottom: 1px solid var(--line);
+}
+.kl-ov-leiste .titel { flex: 1; font-size: .85rem; font-weight: 700; color: var(--ink); }
+.kl-ov-knopf {
+  font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; min-width: 44px; padding: 0 var(--sp-3);
+  color: var(--ink); background: var(--paper-2);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.kl-ov-knopf.aktiv { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.kl-ov-knopf.stark { background: var(--ok); color: #10221a; border-color: transparent; }
+
+.kl-canvas-huelle { flex: 1; position: relative; background: var(--blatt); }
+.kl-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  touch-action: none; cursor: crosshair;
+}
+.kl-canvas-lineatur {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(to bottom,
+    transparent 0, transparent 43px, var(--lineatur) 43px, var(--lineatur) 44px);
+}
+
+.kl-dialog {
+  margin: auto; width: min(560px, calc(100% - 32px));
+  max-height: 86dvh; overflow-y: auto;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-5);
+}
+.kl-dialog h3 { margin-bottom: var(--sp-2); }
+.kl-dialog p { font-size: .92rem; color: var(--ink-soft); }
+.kl-dialog textarea {
+  width: 100%; min-height: 140px; resize: vertical;
+  font-family: "Caveat", cursive; font-size: 1.3rem; line-height: 1.5;
+  color: var(--ink); background: var(--paper-2);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: var(--sp-3);
+}
+.kl-dialog .reihe { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-3); }
+
+.kl-toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  z-index: 97; max-width: min(460px, calc(100% - 32px));
+  font-size: .9rem;
+  color: var(--ink); background: var(--card);
+  border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: var(--shadow);
+  padding: 10px var(--sp-4);
+}
+
+/* ---------- Setup + Ergebnis ---------- */
+
+.kl-setup .zeile {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  padding: var(--sp-3) 0; border-top: 1px solid var(--line);
+}
+.kl-setup .zeile .label { font-weight: 700; }
+.kl-setup .zeile .klein { font-size: .82rem; color: var(--ink-soft); font-weight: 400; }
+.kl-seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.kl-seg-knopf {
+  font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer;
+  min-height: 44px; padding: 0 var(--sp-4);
+  color: var(--ink); background: var(--paper-2);
+  border: 1.5px solid var(--line); border-radius: 999px;
+}
+.kl-seg-knopf.an { border-color: var(--accent); color: var(--accent); background: var(--glow); }
+
+.kl-summe {
+  text-align: center; padding: var(--sp-5) var(--sp-4);
+}
+.kl-summe .zahl {
+  font-family: "Fraunces", Georgia, serif; font-size: 2.6rem; font-weight: 700; color: var(--accent);
+}
+.kl-summe .satz { color: var(--ink-soft); margin-top: var(--sp-2); }
+.kl-themenbilanz { list-style: none; margin: var(--sp-3) 0 0; padding: 0; text-align: left; }
+.kl-themenbilanz li {
+  display: flex; justify-content: space-between; gap: var(--sp-3);
+  font-size: .9rem; padding: 6px 0; border-top: 1px solid var(--line);
+}
+.kl-themenbilanz b { font-variant-numeric: tabular-nums; }
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 860px) {
+  .kl-blatt.korrigiert { padding-right: 200px; }
+  .kl-blatt.korrigiert .kl-randnotiz {
+    position: absolute; right: 12px; width: 168px;
+    border-left: 2px solid var(--rotstift); margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kl-blatt-wrap { transform: none; }
+  .sticker.aufgeklebt { transform: none; }
+  .kl-stift:active { transform: none; }
+}
