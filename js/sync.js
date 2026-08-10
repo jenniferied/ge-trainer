@@ -531,6 +531,35 @@ export function syncKarte() {
     box.style.display = "none";
   });
   box.appendChild(speichernKnopf);
+
+  // Neuanfang: setzt Grabsteine fuer alles Bisherige, damit der geleerte Stand
+  // auch auf den anderen Geraeten ankommt (der Merge ist sonst eine Vereinigung
+  // und wuerde alles zurueckholen). Bewusst klein, zweistufig und ohne rote
+  // Warnfarbe - erreichbar, wenn man ihn sucht, nicht im Weg, wenn nicht.
+  var neu = el("button", "knopf sekundaer", "Fortschritt zurücksetzen");
+  neu.style.marginTop = "14px";
+  neu.style.opacity = "0.75";
+  neu.style.fontSize = "0.85rem";
+  var sicher = el("div", "thema-meta");
+  sicher.style.display = "none";
+  sicher.style.marginTop = "8px";
+  sicher.appendChild(el("div", null, "Damit fängst du bei null an: beantwortete Fragen, Selbsteinschätzungen und Klausur-Ergebnisse werden geleert, auf diesem Gerät und auf den anderen. Die Fragen selbst bleiben natürlich alle da."));
+  var jaNein = el("div", "knopf-reihe");
+  var ja = el("button", "knopf sekundaer", "Ja, bei null anfangen");
+  var nein = el("button", "knopf sekundaer", "Lieber nicht");
+  jaNein.appendChild(ja);
+  jaNein.appendChild(nein);
+  sicher.appendChild(jaNein);
+  neu.addEventListener("click", function () { sicher.style.display = "block"; neu.style.display = "none"; });
+  nein.addEventListener("click", function () { sicher.style.display = "none"; neu.style.display = ""; });
+  ja.addEventListener("click", function () {
+    fortschrittZuruecksetzen();
+    sicher.style.display = "none";
+    neu.style.display = "";
+    text.textContent = "Alles auf Anfang. Der neue Stand geht gleich an deine anderen Geräte.";
+  });
+  box.appendChild(neu);
+  box.appendChild(sicher);
   karte.appendChild(box);
 
   aendern.addEventListener("click", function () {
