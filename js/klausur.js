@@ -15,6 +15,7 @@
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti } from "./ui.js";
+import { syncSession } from "./sync.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
 // das Modul nie ausgewertet und der KI-Pfad waere still tot (kein Import-Zyklus,
 // llm.js haengt nur an config.js).
@@ -1505,6 +1506,23 @@ function abschliessen() {
       punkte: a.punkte, max: a.max,
       modus: "klausur", kid: k.id
     });
+  });
+
+  // Ein Sitzungs-Datensatz je Klausurlauf, wie im ST-Trainer - damit die
+  // Auswertung die Laeufe vergleichen kann und nicht nur Einzelantworten sieht.
+  var maxP = gesamtPunkte(k);
+  var hatP = erreichtePunkte(k);
+  syncSession({
+    id: k.id,
+    ts: k.gestartet,
+    modus: "klausur",
+    timerModus: k.dauerMin + "min",
+    dauerSek: Math.round((Date.now() - k.gestartet - (k.pausiertMs || 0)) / 1000),
+    anzahl: k.aufgaben.length,
+    punkte: hatP,
+    max: maxP,
+    bestanden: maxP ? hatP >= bestehensGrenze(k) : null,
+    detail: { themen: k.themen, umfang: k.themen.length > 5 ? "alle" : "fuenf", feedback: k.feedback },
   });
 
   var kopie = JSON.parse(JSON.stringify(k));

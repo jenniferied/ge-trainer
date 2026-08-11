@@ -454,8 +454,24 @@ export function flushSync() {
 
 /* ---------- Anschluss an die App ---------- */
 
-// Hook 4 aus ARCHITEKTUR.md: jede geloggte Antwort stoesst einen Debounce-Push an.
-beiAntwort(function () { syncBald(); });
+// Hook 4 aus ARCHITEKTUR.md: jede geloggte Antwort stoesst einen Debounce-Push an
+// UND geht als Zeile nach events - genau wie im ST-Trainer, damit beide Trainer
+// dieselbe Auswertungsbasis haben. events kennt nur die Spalten unten; alles
+// andere aus dem Log-Eintrag (thema, afb, kid, spiel) bleibt im lernstand-Snapshot.
+beiAntwort(function (e) {
+  syncBald();
+  if (!e || !e.qid) return;
+  var voll = e.voll != null ? !!e.voll : e.richtig === true;
+  syncEvent({
+    frage_id: e.qid,
+    gewaehlt: null,                                    // GE merkt sich die Option nicht
+    punkte: e.punkte != null ? e.punkte : (e.richtig === true ? 1 : 0),
+    max_punkte: e.max != null ? e.max : 1,
+    voll: voll,
+    modus: e.modus || "ueben",
+    ts: new Date(e.ts || Date.now()).toISOString(),
+  });
+});
 
 // Zweites Fenster derselben App: core.js meldet den Stand, der gerade im
 // localStorage gelandet ist, und wir ziehen ihn herein. Derselbe Merge wie beim
