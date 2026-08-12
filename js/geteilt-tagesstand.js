@@ -169,12 +169,25 @@ export function tagesPunktKlasse(h) {
   return s === 4 ? "s5" : s > 0 ? "s" + s : "s0";
 }
 
-/* "12 von 60" — bewusst die nackte Bruchzahl statt einer Prozentangabe.
-   Prozent laden dazu ein, zwei Prozentzahlen zu vergleichen, die Verschiedenes
-   messen; genau daran ist die alte Pille gescheitert. "12 von 60" sagt von
-   selbst, worauf es sich bezieht. */
+/* Prozent vom TAGESPENSUM (Jennifer, 12.08., nach kurzer Diskussion: "ne
+   prozent"). 100 % heisst also "Tagespensum geschafft", nicht "alles gelernt".
+
+   Bewusst NICHT bei 100 gedeckelt: ueber das Pensum hinaus zu kommen ist der
+   gute Fall, und ein Deckel wuerde die besten Tage einebnen. Bezugsgroesse ist
+   ziel und nicht stretch, damit die 100 auf der Schwelle liegt, die auch der
+   Zonen-Balken feiert.
+
+   Fuer die Nachwelt, weil hier vorher das Gegenteil stand: ich hatte zur
+   Bruchzahl "12 von 40" geraten, weil zwei Prozentzahlen nebeneinander dazu
+   einladen, verglichen zu werden — Roses ST-Pensum liegt bei 60-100 Karten,
+   das GE-Pensum bei 15-40, gleiche Prozentzahl heisst also verschieden viel
+   Arbeit. Jennifer hat sich fuer Prozent entschieden. Der Vergleich ist damit
+   moeglich, aber er ist hier auch nicht falsch: beide Zahlen messen jetzt
+   dasselbe, naemlich "wie weit bin ich heute mit dem, was fuer heute dran
+   war". Die absoluten Karten stehen weiter im Tooltip, es geht nichts
+   verloren. */
 export function tagesText(h) {
-  return h.n + " von " + h.ziel;
+  return Math.round((100 * h.n) / h.ziel) + " %";
 }
 
 /* ---------- Der Zustand "heute noch nichts" (Jennifer, 12.08.) ----------
@@ -219,6 +232,8 @@ export function losWorte(appName) {
    kein Lob unterhalb des Pensums: die Pille ist eine Auskunft, keine Wertung. */
 export function tagesWorte(h, appName) {
   var s = tagesStufe(h);
+  // Hier stehen die absoluten Karten — die Pille zeigt Prozent, und "wie viele
+  // noch" ist die Frage, die man sich danach stellt.
   var kern = h.n + " von " + h.ziel + " Karten heute in " + appName;
   if (s === 4) return kern + " — Streckziel geknackt";
   if (s === 3) return kern + " — Tagespensum geschafft";

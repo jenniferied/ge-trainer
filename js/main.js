@@ -263,12 +263,13 @@ function querLink() {
       worte.push("drüben ist gerade nichts offen");
     }
 
-    /* Der Tagesfortschritt drueben. Kein Prozent, sondern die nackte Bruchzahl:
-       "12 von 60" sagt von selbst, worauf es sich bezieht - zwei Prozentzahlen
-       laden dazu ein, verglichen zu werden, und genau daran ist die alte Pille
-       gescheitert (Begruendung im Kopf von nachbar.js). Die Farbe traegt der
-       geteilte Leiterpunkt, nicht die Flaeche: auf Orange und Gelb gibt es
-       keine Textfarbe, die in beiden Themes ueber 4,5:1 bleibt. */
+    /* Der Tagesfortschritt drueben, in Prozent vom Tagespensum (Jennifer,
+       12.08.: "ne prozent"). 100 % heisst "Pensum geschafft", nicht "alles
+       gelernt", und ueber 100 wird nicht gedeckelt - Begruendung und die
+       verworfene Gegenposition stehen in geteilt-tagesstand.js bei tagesText().
+       Die absoluten Karten stehen im Tooltip. Die Farbe traegt der geteilte
+       Leiterpunkt, nicht die Flaeche: auf Orange und Gelb gibt es keine
+       Textfarbe, die in beiden Themes ueber 4,5:1 bleibt. */
     if (s && s.heute) {
       var pille = el("span", "tag-pille");
       pille.appendChild(el("i", "hm-pkt " + tagesPunktKlasse(s.heute)));
