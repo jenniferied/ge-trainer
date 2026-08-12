@@ -12,7 +12,7 @@ import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
-import { tagesPunktKlasse, tagesText, tagesWorte, losText, losWorte } from "./geteilt-tagesstand.js";
+import { tagesPilleKlasse, tagesText, tagesWorte, losText, losWorte } from "./geteilt-tagesstand.js";
 
 var themen = [];
 
@@ -271,8 +271,7 @@ function querLink() {
        Leiterpunkt, nicht die Flaeche: auf Orange und Gelb gibt es keine
        Textfarbe, die in beiden Themes ueber 4,5:1 bleibt. */
     if (s && s.heute) {
-      var pille = el("span", "tag-pille");
-      pille.appendChild(el("i", "hm-pkt " + tagesPunktKlasse(s.heute)));
+      var pille = el("span", "tag-pille " + tagesPilleKlasse(s.heute));
       pille.appendChild(document.createTextNode(tagesText(s.heute)));
       stand.appendChild(pille);
       worte.push(tagesWorte(s.heute, "ST"));

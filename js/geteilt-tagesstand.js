@@ -187,7 +187,25 @@ export function tagesPunktKlasse(h) {
    war". Die absoluten Karten stehen weiter im Tooltip, es geht nichts
    verloren. */
 export function tagesText(h) {
-  return Math.round((100 * h.n) / h.ziel) + " %";
+  var pz = Math.round((100 * h.n) / h.ziel);
+  var kern = pz + " % · " + h.n + "/" + h.ziel;
+  // Das Regenbogen-Zeichen nur auf der obersten Stufe (Jennifer, 12.08.:
+  // "gerne ein Regenbogensymbol oder so dahin"). Es ersetzt keine Farbe,
+  // sondern doppelt sie — wer die Faerbung nicht unterscheiden kann, sieht
+  // trotzdem, dass dieser Tag etwas Besonderes war.
+  return tagesStufe(h) === 4 ? kern + " 🌈" : kern;
+}
+
+/* Die Stufe als Klasse fuer die Pillen-FLAECHE (.tag-pille.s1 … .s4).
+   Warum die Flaeche und nicht die Ziffern: Jennifer wollte die Prozentzahl
+   farbig nach der Leiter. Als Schriftfarbe geht das nicht ueber alle vier
+   Zustaende — gemessen liegen die Leiterfarben als Text zwischen 2,2:1
+   (Orange) und 3,4:1 (Gruen nachts), also unter den 4,5:1, die der Rest der
+   App einhaelt. Die Flaeche traegt die Farbe deshalb, die Ziffern bleiben in
+   --ink. Codiert ist dieselbe Information, lesbar bleibt sie auch. */
+export function tagesPilleKlasse(h) {
+  var s = tagesStufe(h);
+  return s > 0 ? "s" + s : "";
 }
 
 /* ---------- Der Zustand "heute noch nichts" (Jennifer, 12.08.) ----------

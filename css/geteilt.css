@@ -247,6 +247,17 @@
   color: var(--ink);
   background: color-mix(in srgb, var(--ink) 10%, transparent);
 }
+/* Die Leiterfarbe liegt auf der FLAECHE, die Ziffern bleiben in --ink
+   (Begruendung bei tagesPilleKlasse() in tagesstand.js: als Schriftfarbe
+   erreichen die Leiterfarben nicht ueber alle vier Zustaende 4,5:1).
+   26 % ist der gemessene Kompromiss: kraeftig genug, um Orange von Gelb zu
+   unterscheiden, hell genug, dass der Text darauf ueber 8:1 bleibt.
+   Die oberste Stufe traegt zusaetzlich 🌈 im Text — Farbe allein soll nie das
+   einzige Unterscheidungsmerkmal sein. */
+.tag-pille.s1 { background: color-mix(in srgb, var(--tag-1) 26%, transparent); }
+.tag-pille.s2 { background: color-mix(in srgb, var(--tag-2) 26%, transparent); }
+.tag-pille.s3 { background: color-mix(in srgb, var(--tag-3) 26%, transparent); }
+.tag-pille.s4 { background: color-mix(in srgb, var(--tag-4) 26%, transparent); }
 /* Der Punkt in der Pille ist eine Spur kleiner als der freistehende: neben
    Text auf 0,68 rem wirkten 8 px wie ein Aufzaehlungszeichen. */
 .tag-pille .hm-pkt { width: 7px; height: 7px; vertical-align: 0; }
