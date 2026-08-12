@@ -440,6 +440,11 @@ function standKnoten(tz, neu) {
   var meta = el("p", "mk-meta");
   meta.innerHTML = t.meta;
   text.appendChild(meta);
+  // Wechseln geht nur, SOLANGE das Ei noch nichts gesammelt hat (Jennifer 12.08.).
+  // Direkt nach der Auswahl darf man sich noch umentscheiden — sobald das erste
+  // Herz da ist, gehoert das Ei dazu und bleibt. Ein Begleiter, den man jederzeit
+  // austauschen kann, ist keiner. Der Knopf verschwindet dann einfach.
+  if (st.herzen > 0) { zeile.appendChild(text); return zeile; }
   // Der Wechsel-Knopf stand frueher am Ende des Fliesstexts hinter einem
   // Mittelpunkt und war praktisch unauffindbar. Eigene Zeile — auffindbar,
   // aber weiter dezent: das Aussuchen soll ein Moment bleiben, kein Menue.
