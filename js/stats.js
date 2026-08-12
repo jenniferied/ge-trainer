@@ -11,7 +11,7 @@
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
 import { state, speichern, app, el, leeren } from "./core.js";
-import { themeKnopf, setzeFarbe, standStickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
+import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
    Das GE-antwortLog kennt (anders als der ST-Trainer) keine Punkte, sondern
@@ -636,7 +636,9 @@ function runde(pool, meta, hooks) {
     farbeSetzen();
 
     var quote = mcAnzahl ? richtige / mcAnzahl : null;
-    if (quote === 1 && mcAnzahl >= 3) konfetti();
+    // Kein Konfetti mehr fuer eine fehlerfreie Runde (Jennifer, 12.08.): gefeiert
+    // wird nur das Streckziel und eine bestandene Klausur. Der Sticker und das
+    // Ergebnis-Banner bleiben - das ist Rueckmeldung, keine Feier.
 
     var karte = el("div", "karte ergebnis glimmer");
     var stk = standStickerEl(quote == null ? 0.7 : quote);

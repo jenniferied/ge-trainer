@@ -90,7 +90,34 @@ export function standStickerEl(quote) {
   return stickerEl(quote >= 0.7 ? "good" : quote >= 0.45 ? "part" : "sanft", "big");
 }
 
-/* ---------- Konfetti ---------- */
+/* ---------- Konfetti ----------
+   FEIER-REGEL (Jennifer, 12.08.): "die celebration icons sollten nur kommen,
+   wenn sie voll ist (gruen/Regenbogen bei Streckziel), oder wenn sie heute
+   eine Klausur bestanden hat."
+
+   Genau zwei Anlaesse also, und beide sind selten. Vorher flog bei jeder
+   fehlerfreien Kurzrunde Konfetti - in einer App, in der man taeglich mehrere
+   Runden dreht, heisst das fast taeglich. Eine Feier, die zu oft kommt, ist
+   keine mehr. Der ruhige Erledigt-Zustand (gruener Haken, getoenter Rand,
+   gruene Kante) bleibt ueberall, wo er war: das ist eine Statusangabe.
+
+   feiereEinmal() sorgt dafuer, dass derselbe Anlass an einem Tag nur einmal
+   feiert - sonst knallt es bei jedem Zurueck zur Startseite erneut. Der Merker
+   liegt direkt im localStorage und nicht im State: er gehoert dem Geraet, nicht
+   dem Lernstand, und darf nie mitsyncen. */
+
+var FEIER_KEY = "ge-feier-tag";
+
+export function feiereEinmal(anlass) {
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  var marke = heute.getTime() + ":" + anlass;
+  try {
+    if (localStorage.getItem(FEIER_KEY) === marke) return false;
+    localStorage.setItem(FEIER_KEY, marke);
+  } catch (e) { /* ohne Speicher feiert es eben jedes Mal - kein Beinbruch */ }
+  konfetti();
+  return true;
+}
 
 var KONFETTI = ["🎉", "🎊", "💗", "💖", "⭐", "✨", "🌟", "🥳"];
 

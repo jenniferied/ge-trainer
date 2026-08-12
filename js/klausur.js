@@ -1536,6 +1536,8 @@ function zeigeErgebnis(k) {
 
   var summe = erreichtePunkte(k);
   var bestanden = summe >= bestehensGrenze(k);
+  // Einer der zwei Feier-Anlaesse (Jennifer, 12.08.): heute eine Klausur
+  // bestanden. Der andere ist das Streckziel, der sitzt auf der Startseite.
   if (bestanden) konfetti();
 
   var karte = el("div", "karte kl-summe");
@@ -1658,7 +1660,8 @@ export function zeigeMcQuer(themen, zurueck) {
   function endeZeigen() {
     leeren();
     var quote = treffer / gezogen.length;
-    if (quote === 1) konfetti();
+    // Kein Konfetti fuer einen fehlerfreien MC-Querschnitt (Jennifer, 12.08.) -
+    // das hier ist eine Uebungsrunde, keine Klausur.
 
     var karte = el("div", "karte ergebnis");
     var st = standStickerEl(quote);

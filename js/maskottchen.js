@@ -14,16 +14,15 @@
    Hier liegen DREI ANDERE Eier als im ST-Trainer — zusammen sind es sechs
    individuelle, keins doppelt.
 
-   WICHTIG: Der Ankunfts-Schalter liegt absichtlich geraetelokal und nicht im
-   synchronisierten state. Sonst nimmt ein Test auf Jennifers Geraet Rose die
-   Ankunft weg, bevor sie sie gesehen hat.
+   WICHTIG: Ob die Ankunft laeuft, haengt allein daran, ob schon ein Ei gewaehlt
+   wurde (state.eiVariante). Beim Testen mit Roses Sync-Code also NICHT
+   auswaehlen — sonst ist der Moment fuer sie weg, bevor sie ihn hatte.
 
    Entwurf, Archiv und Werkstatt: playground/rose/maskottchen/ */
 import { state, speichern, el } from "./core.js";
 import * as Stats from "./stats.js";
 
 var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-var ANKUNFT_KEY = "ge-mk-ankunft";   // geraetelokal, siehe Kopfkommentar
 
 export function herzenStand(tz) {
   var min = tz && tz.minimum ? tz.minimum : 8;
@@ -137,10 +136,15 @@ export function eiHtml(variante, stufe) {
   }).join("\n");
 }
 
-/* ---------- Ablauf ---------- */
-function phase() { return localStorage.getItem(ANKUNFT_KEY) || ""; }
-function setzePhase(p) { localStorage.setItem(ANKUNFT_KEY, p); }
-export function zuruecksetzen() { localStorage.removeItem(ANKUNFT_KEY); state.eiVariante = null; speichern(); }
+/* ---------- Ablauf ----------
+   Einzige Wahrheit ist, OB ein Ei gewaehlt wurde. Solange keins gewaehlt ist,
+   kommt die Ankunft bei jedem Oeffnen wieder — wer nicht aussucht, verliert den
+   Moment nicht. "Schon nachgesehen" haelt nur bis zum Neuladen. */
+function gewaehlt() { return !!state.eiVariante; }
+var angesehen = false;
+export function zuruecksetzen() { state.eiVariante = null; speichern(); angesehen = false; }
+
+var STORCH = ["        ▁▄▖        ", "       ▟◉ ▝▄▄▄▄▄   ", "      ▟███▙        ", "     ▟█████▙       ", "     ▜█████▛       ", "       ╱ ╲         ", "      ╱   ╲        "];
 
 var blaetterIdx = 0;
 
@@ -155,10 +159,15 @@ function knopf(text, klasse, aktion) {
 
 function ankunftKnoten(neu) {
   var box = el("div", "mk-ankunft");
-  box.appendChild(el("div", "mk-ank-kopf", "🥚 Da war jemand am Nest."));
-  box.appendChild(el("p", "mk-ank-text", "Etwas ist angekommen, während du geübt hast. Es liegen drei da – eins davon darf bei dir bleiben."));
+  var storch = document.createElement("pre");
+  storch.className = "mk-storch" + (REDUCE_MOTION ? "" : " mk-schwebt");
+  storch.setAttribute("aria-hidden", "true");
+  storch.textContent = STORCH.join("\n");
+  box.appendChild(storch);
+  box.appendChild(el("div", "mk-ank-kopf", "Etwas ist angekommen."));
+  box.appendChild(el("p", "mk-ank-text", "Da war jemand am Nest, während du geübt hast. Es liegen drei da – eins davon darf bei dir bleiben."));
   box.appendChild(knopf("Nachsehen", "knopf klein", function () {
-    blaetterIdx = eiIndex(); setzePhase("gesehen"); neu();
+    blaetterIdx = eiIndex(); angesehen = true; neu();
   }));
   return box;
 }
@@ -195,7 +204,7 @@ function auswahlKnoten(neu) {
 
   box.appendChild(el("p", "mk-teaser", v.teaser));
   box.appendChild(knopf("Das nehme ich", "knopf klein", function () {
-    state.eiVariante = v.key; speichern(); setzePhase("fertig"); neu();
+    state.eiVariante = v.key; speichern(); angesehen = false; neu();
   }));
   return box;
 }
@@ -230,7 +239,7 @@ function standKnoten(tz, neu) {
     " aus " + st.tage + " Übungstagen — " +
     (naechste ? "noch <b>" + (naechste.ab - st.herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") + "." + heute + " · ";
   var wechseln = knopf("anderes Ei", "mk-link", function () {
-    blaetterIdx = eiIndex(); setzePhase("gesehen"); neu();
+    blaetterIdx = eiIndex(); state.eiVariante = null; speichern(); angesehen = true; neu();
   });
   meta.appendChild(wechseln);
   text.appendChild(meta);
@@ -239,8 +248,6 @@ function standKnoten(tz, neu) {
 }
 
 export function knoten(tz, neuZeichnen) {
-  var p = phase();
-  if (!p) return ankunftKnoten(neuZeichnen);
-  if (p === "gesehen") return auswahlKnoten(neuZeichnen);
-  return standKnoten(tz, neuZeichnen);
+  if (gewaehlt()) return standKnoten(tz, neuZeichnen);
+  return angesehen ? auswahlKnoten(neuZeichnen) : ankunftKnoten(neuZeichnen);
 }

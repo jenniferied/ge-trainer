@@ -19,7 +19,7 @@
      hooks.spiele()  -> Spiele-Hub neu rendern */
 
 import { state, speichern, logAntwort, app, el, mischen, leeren } from "./core.js";
-import { themeKnopf, setzeFarbe, stickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
+import { themeKnopf, setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
 
 /* ---------- AFB-Grundwissen (Klausurinfo, Folie 5) ---------- */
 
@@ -232,7 +232,8 @@ function fazit(ziel, ok, n, nochmal, fertig, extra) {
   reihe.appendChild(k2);
   ziel.appendChild(reihe);
 
-  if (quote === 1) konfetti();
+  // Kein Konfetti fuer eine fehlerfreie Spielrunde (Jennifer, 12.08.) - gefeiert
+  // wird nur das Streckziel und eine bestandene Klausur.
 }
 
 /* ---------- Spickzettel-Sheet (AFB-Operatoren nachschlagen) ---------- */

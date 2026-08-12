@@ -3,11 +3,12 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, quoteStufe, quotePille } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
-import { syncKarte, syncStart, fremdZuletzt, leseTabelle, fremdCache } from "./sync.js";
+import { syncKarte, syncStart, leseTabelle, fremdCache } from "./sync.js";
+import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 
 var themen = [];
@@ -102,49 +103,64 @@ function kartenZustand(bearbeitet, gesamt) {
 // Belohnungsmoment, den Jennifer gemeint hat. Bewusst klein: Rose uebt am
 // Handy, ein Konfetti-Gewitter je erledigtem Thema waere Krach.
 function zustandBadge(zustand) {
-  if (zustand === "neu") return el("span", "zustand-badge neu", "noch nicht geübt");
-  if (zustand === "fertig") return el("span", "zustand-badge fertig", "✓ durchgearbeitet");
+  // Dasselbe Muster wie ueberall (stand-badge, siehe style.css) - aber OHNE
+  // .puls: auf der Startseite stehen acht Themenkarten untereinander, acht
+  // atmende Zeichen waeren Flimmern statt Signal. Der ST-Trainer haelt es im
+  // Stoebern genauso: gleiches Wort, gleiches Zeichen, nur ohne Atem.
+  if (zustand === "neu") return standBadge(false, "✦ noch offen");
+  if (zustand === "fertig") return standBadge(true, "✓ alle geübt");
   return null;
+}
+
+/* Das gemeinsame Abzeichen "offen / erledigt" (Jennifer, 12.08.: "Ich mag
+   tatsaechlich, dass dort steht offen und es pulsiert. Das kann man natuerlich
+   jetzt uebernehmen in die Karten."). Dieselbe Bauweise wie im ST-Trainer,
+   nicht eine aehnliche: gleiche Klassen, gleiches Zeichen, gleiches Wort,
+   gleicher Takt. Das ✦ atmet nur, wo wenige Abzeichen nebeneinander stehen -
+   pulsierend uebergeben wir es deshalb ausdruecklich (puls = true). */
+function standBadge(erledigt, text, extra) {
+  var b = el("span", "stand-badge " + (erledigt ? "sitzt" : "neu") + (extra ? " " + extra : ""));
+  b.appendChild(document.createTextNode(text));
+  return b;
+}
+
+function offenBadge(text, extra) {
+  var b = el("span", "stand-badge neu" + (extra ? " " + extra : ""));
+  b.appendChild(el("i", "puls", "✦"));
+  b.appendChild(document.createTextNode(" " + text));
+  return b;
 }
 
 /* ---------- Querlink zum ST-Trainer (Jennifer, 12.08.) ----------
    Rose hat zwei Klausuren und zwei Trainer. Oben rechts steht deshalb der Weg
-   hinueber - klar beschriftet, damit sie weiss, wo sie landet, und in der
-   Identitaetsfarbe des ST-Trainers (Terracotta), damit die beiden Apps optisch
-   aufeinander zeigen. Der Rueckweg wird drueben spiegelbildlich gebaut.
+   hinueber - in der Identitaetsfarbe des ST-Trainers (Terracotta), damit die
+   beiden Apps optisch aufeinander zeigen. Der Rueckweg ist drueben
+   spiegelbildlich gebaut (klausur-trainer/app/js/nachbar.js), und seit dem
+   12.08. sieht die Werkzeug-Gruppe oben rechts in beiden Apps gleich aus:
+   Querlink, Hell/Dunkel, Zahnrad.
 
-   Darunter, wenn es sich abrufen laesst, eine Zeile zum Zustand drueben:
-   heute schon geuebt / zuletzt vor N Tagen. Die kommt aus dem Zeitstempel der
-   letzten lernstand-Zeile unter dem ST-Code - nur gelesen, nie geschrieben
-   (sync.fremdZuletzt). Klappt der Abruf nicht, bleibt der Link genau so
-   nuetzlich, nur ohne die Zeile. */
+   Am Link haengen genau zwei Angaben (Jennifer, 12.08.: "Da sollte auch nur
+   stehen: offene Spiele, wie viel Prozent wir sind, und dann die entsprechend
+   passende Farbe"):
 
-var ST_URL = "https://jenniferied.github.io/st-trainer/";
-var ST_CODE = "rose";
+   1. OFFENE MINI-RUNDEN - aus der events-Tabelle, die beide Trainer ohnehin
+      mitschreiben: welche Spiel-Modi liefen drueben HEUTE schon? Winzige
+      Abfrage, ein paar Dutzend Zeilen.
+   2. DIE PROZENTZAHL - der Lernscore des ST-Trainers, also genau die Zahl, die
+      drueben auf der eigenen Startseite im Balken steht. Sie wird in nachbar.js
+      aus dem Snapshot nachgerechnet (siehe der ausfuehrliche Kopf dort). Vorher
+      stand hier die Punktequote der letzten fuenf Laeufe - das war eine ANDERE
+      Groesse und am 12.08. um 46 Prozentpunkte daneben.
 
-/* Was der Querlink vom ST-Trainer erzaehlt, kommt aus drei kleinen Lese-Abfragen
-   (Jennifer, 12.08.: "die Verlinkungen sollen anzeigen, ob noch Mini-Games offen
-   sind und bei welcher Punktzahl wir uns befinden").
+   Die Farbe kommt aus der Leiter dieser App (ui.quoteStufe), damit eine
+   Prozentzahl im GE-Trainer ueberall dasselbe bedeutet.
 
-   1. offene Mini-Runden - aus der events-Tabelle, die beide Trainer ohnehin
-      mitschreiben: welche Spiel-Modi wurden drueben HEUTE schon gespielt?
-   2. Punktestand - aus der sessions-Tabelle: die letzten fuenf bewerteten Laeufe,
-      Summe Punkte durch Summe Maximum. Das ist die Zahl, die drueben auch
-      "bestanden" entscheidet.
-   3. wann zuletzt - Zeitstempel der letzten lernstand-Zeile (Rueckfallanzeige,
-      wenn 1 und 2 nichts hergeben).
-
-   Warum nicht der Snapshot selbst: der ist drueben ein halbes Megabyte. Und das
-   dortige Tagesziel steht nur im lokalen State des ST-Trainers, es ist von
-   aussen gar nicht lesbar - eine Anzeige "so steht es um das Tagesziel drueben"
-   waere geraten.
-
-   EHRLICHKEIT: Jede der drei Abfragen kann einzeln ausfallen, dann bleibt genau
-   dieses Feld null und wird nicht angezeigt. Faellt alles aus, bleibt der Link
-   neutral - lieber gar keine Aussage als eine erfundene. Die einzige Richtung,
-   in die diese Anzeige irren kann, ist "zu viel offen" (wenn drueben die
-   events-Zeilen ausbleiben wuerden); "alles erledigt" kann sie nicht faelschlich
-   behaupten, denn dafuer muss sie Spiel-Zeilen von heute wirklich gesehen haben.
+   EHRLICHKEIT: Jede Abfrage kann einzeln ausfallen, dann bleibt genau dieses
+   Feld null und wird nicht angezeigt. Faellt alles aus, bleibt der Link neutral -
+   lieber gar keine Aussage als eine erfundene. Die Offen-Anzeige kann nur in
+   Richtung "zu viel offen" irren (wenn drueben die events-Zeilen ausbleiben);
+   "alles erledigt" kann sie nicht faelschlich behaupten, denn dafuer muss sie
+   Spiel-Zeilen von heute wirklich gesehen haben.
 
    Die Liste der Spiele spiegelt den Hub des ST-Trainers (spiele.js hubHtml:
    Paare, Signalwoerter, Zuordnen, Detektiv, Begriffe; "op" traegt beide
@@ -164,83 +180,63 @@ function mitternachtIso() {
   return d.toISOString();   // lokale Mitternacht als UTC-Zeitpunkt, so steht ts in der DB
 }
 
-function stStatus() {
-  return fremdCache("st-status", function () {
+// Nur die Spiel-Modi und nur von heute - das sind ein paar Dutzend Zeilen.
+function stOffen() {
+  return fremdCache("st-offen", function () {
     var seit = encodeURIComponent(mitternachtIso());
-    return Promise.all([
-      fremdZuletzt(ST_CODE),
-      // Nur die Spiel-Modi und nur von heute - das sind ein paar Dutzend Zeilen.
-      leseTabelle("events?select=modus,frage_id&modus=in.(vp,op,detektiv,begriffe)&ts=gte." + seit + "&limit=400"),
-      // modus=not.like.ge-* schliesst die eigenen Zeilen aus, ohne sich auf den
-      // Nutzernamen zu verlassen (den kann man drueben umstellen).
-      leseTabelle("sessions?select=punkte,max_punkte&modus=not.like.ge-*&order=ts.desc&limit=5")
-    ]).then(function (r) {
-      var st = { zuletzt: r[0], offen: null, spiele: ST_SPIELE.length, quote: null };
-      if (r[1]) {
+    return leseTabelle("events?select=modus,frage_id&modus=in.(vp,op,detektiv,begriffe)&ts=gte." + seit + "&limit=400")
+      .then(function (rows) {
+        if (!rows) return { offen: null };
         var heute = {};
-        r[1].forEach(function (e) { heute[stSpielKey(e)] = true; });
-        st.offen = ST_SPIELE.filter(function (k) { return !heute[k]; }).length;
-      }
-      if (r[2] && r[2].length) {
-        var p = 0, m = 0;
-        r[2].forEach(function (s) { p += s.punkte || 0; m += s.max_punkte || 0; });
-        if (m > 0) st.quote = Math.round(100 * p / m);
-      }
-      return st;
-    });
-  }, function (st) { return st.zuletzt != null || st.offen != null || st.quote != null; });
-}
-
-// Der Offen-Zustand in beiden Apps gleich: pulsierender Punkt plus das Wort.
-// Ohne etwas Offenes gibt es keinen Puls - ein Icon, das immer pulst, ist Deko.
-function offenBadge(text) {
-  var b = el("span", "offen-badge");
-  b.appendChild(el("i", "puls-punkt"));
-  b.appendChild(document.createTextNode(text));
-  return b;
+        rows.forEach(function (e) { heute[stSpielKey(e)] = true; });
+        return { offen: ST_SPIELE.filter(function (k) { return !heute[k]; }).length };
+      });
+  }, function (st) { return st.offen != null; });
 }
 
 function querLink() {
   var a = document.createElement("a");
-  a.className = "quer-link";
-  a.href = ST_URL;
-  a.appendChild(el("b", null, "ST-Trainer ↗"));
-  a.appendChild(el("span", "quer-klein", "Schultheorie · 18.09."));
-  a.setAttribute("aria-label", "Zum Schultheorie-Trainer, Roses anderer Klausur am 18.09.");
+  a.className = "app-link";
+  a.href = Nachbar.ST_URL;
+  a.appendChild(document.createTextNode("ST"));
+  a.appendChild(el("span", "nur-breit", "-Trainer"));
+  var stand = el("span", "nachbar-stand");
+  a.appendChild(stand);
+  a.appendChild(document.createTextNode(" \u2197"));
+  a.title = "Zum Schultheorie-Trainer – deine andere Klausur am 18.09.";
+  a.setAttribute("aria-label", "Zum Schultheorie-Trainer wechseln");
 
-  var zeile = el("span", "quer-stand-zeile");
-  zeile.hidden = true;
-  a.appendChild(zeile);
+  /* Erst synchron aus dem Cache zeichnen (damit beim Blaettern nichts flackert),
+     dann noch einmal nach dem Abruf. Der Abruf blockiert nichts und meldet
+     keinen Fehler - schlaegt er fehl, bleibt der Link stehen, wie er war. */
+  var male = function (offen) {
+    if (!a.isConnected) return;
+    stand.innerHTML = "";
+    var worte = [];
+    var s = Nachbar.stStand();
 
-  stStatus().then(function (st) {
-    if (!st || !a.isConnected) return;
-    var text = [];
-
-    if (st.quote != null) {
-      zeile.appendChild(quotePille(st.quote, "mini"));
-      text.push("Punktestand drüben " + st.quote + " Prozent");
+    if (offen > 0) {
+      stand.appendChild(offenBadge(offen + " offen", "kompakt"));
+      worte.push(offen + (offen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute noch offen");
+    } else if (offen === 0) {
+      stand.appendChild(standBadge(true, "\u2713 heute", "kompakt"));
+      worte.push("die Mini-Runden von heute sind durch");
     }
 
-    if (st.offen > 0) {
-      zeile.appendChild(offenBadge(st.offen + " offen"));
-      text.push(st.offen + (st.offen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute noch offen");
-    } else if (st.offen === 0) {
-      zeile.appendChild(el("span", "quer-stand frisch", "✓ heute durch"));
-      text.push("die Mini-Runden von heute sind durch");
-    } else if (st.zuletzt != null) {
-      // Ueber die Spiele wissen wir nichts - dann wenigstens, wann zuletzt.
-      var tag = new Date(st.zuletzt); tag.setHours(0, 0, 0, 0);
-      var heute = new Date(); heute.setHours(0, 0, 0, 0);
-      var diff = Math.round((heute.getTime() - tag.getTime()) / 86400000);
-      var satz = diff <= 0 ? "heute schon geübt" : diff === 1 ? "zuletzt gestern" : "zuletzt vor " + diff + " Tagen";
-      zeile.appendChild(el("span", "quer-stand" + (diff <= 0 ? " frisch" : ""), satz));
-      text.push(satz);
+    if (s && s.lernscore != null) {
+      stand.appendChild(quotePille(s.lernscore));
+      worte.push("Lernscore drüben " + s.lernscore + " Prozent");
     }
 
-    if (!zeile.childNodes.length) return;   // nichts Belastbares -> Link bleibt neutral
-    zeile.hidden = false;
-    a.setAttribute("aria-label", "Zum Schultheorie-Trainer, Roses anderer Klausur am 18.09. – " + text.join(", "));
-  });
+    if (!worte.length) return;
+    a.title = "Zum Schultheorie-Trainer – deine andere Klausur am 18.09. \u00b7 " + worte.join(" \u00b7 ");
+    a.setAttribute("aria-label", "Zum Schultheorie-Trainer wechseln, " + worte.join(", "));
+  };
+
+  var offenStand = null;
+  male(null);
+  stOffen().then(function (o) { offenStand = o && o.offen; male(offenStand); }).catch(function () { /* neutral bleiben */ });
+  Nachbar.hole().then(function () { male(offenStand); }).catch(function () { /* neutral bleiben */ });
   return a;
 }
 
@@ -623,7 +619,7 @@ function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
   box.appendChild(el("b", null, titel));
   box.appendChild(el("span", null, klein));
   z.appendChild(box);
-  z.appendChild(erledigt ? el("span", "heute-status", status) : offenBadge(status));
+  z.appendChild(erledigt ? standBadge(true, status) : offenBadge(status));
   z.addEventListener("click", onClick);
   return z;
 }
@@ -634,12 +630,12 @@ function heuteDranKarte() {
 
   var heute = Spiele.heuteGespielt();
   karte.appendChild(heuteZeile("🎯", "Signalwörter", "6 Aufgaben · welcher Operator will was",
-    heute.operatoren ? "✓ heute schon" : "offen", !!heute.operatoren,
+    heute.operatoren ? "✓ geübt" : "offen", !!heute.operatoren,
     function () { zeige("spiel-op"); }));
 
   if (Spiele.hatBegriffe()) {
     karte.appendChild(heuteZeile("🃏", "Begriffe-Blitz", "5 Paare zuordnen · ~2 Minuten",
-      heute.begriffe ? "✓ heute schon" : "offen", !!heute.begriffe,
+      heute.begriffe ? "✓ geübt" : "offen", !!heute.begriffe,
       function () { zeige("spiel-bg"); }));
   }
 
@@ -691,19 +687,32 @@ function zeigeStart() {
 
   var kopf = el("div", "kopf");
   var zeile = el("div", "kopf-zeile");
-  var titelBox = el("div");
-  titelBox.appendChild(el("h1", null, "GE-Trainer"));
-  titelBox.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung"));
-  zeile.appendChild(titelBox);
-  // Rechte Ecke: Theme-Knopf und darunter der Weg zum anderen Trainer.
-  var ecke = el("div", "kopf-aktionen");
-  ecke.appendChild(themeKnopf());
+  zeile.appendChild(el("h1", null, "GE-Trainer"));
+  // Werkzeug-Gruppe oben rechts, in beiden Trainern gleich aufgebaut
+  // (Jennifer, 12.08.): Querlink zum anderen Trainer, Hell/Dunkel, Zahnrad.
+  // Das Zahnrad springt zur Einstellungs-Karte am Fuss der Seite - dort steht
+  // alles, was das Geraet betrifft (Sync-Code, Abgleich, Zuruecksetzen).
+  var ecke = el("div", "topbar-tools");
   ecke.appendChild(querLink());
+  ecke.appendChild(themeKnopf());
+  var zahnrad = el("button", "theme-knopf", "⚙️");
+  zahnrad.title = "Einstellungen";
+  zahnrad.setAttribute("aria-label", "Einstellungen");
+  zahnrad.addEventListener("click", function () {
+    var ziel = document.getElementById("einstellungen");
+    if (ziel) ziel.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  ecke.appendChild(zahnrad);
   zeile.appendChild(ecke);
   kopf.appendChild(zeile);
+  kopf.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung"));
   app.appendChild(kopf);
 
   var tz = Stats.tagesziel(themen, tageBisKlausur());
+  // Einer der zwei Feier-Anlaesse (Jennifer, 12.08.): das Streckziel ist voll,
+  // der Tag leuchtet im Kalender im Regenbogen. Einmal am Tag, nicht bei jedem
+  // Zurueck zur Startseite - darum feiereEinmal statt konfetti.
+  if (tz.n >= tz.stretch) feiereEinmal("streckziel");
   app.appendChild(countdownKarte(tz));
   app.appendChild(heuteDranKarte());
   app.appendChild(uebenKacheln());
@@ -781,7 +790,9 @@ function zeigeStart() {
   // laufen und nicht der erste Blick sein. Hier stehen NUR Geraete-Sachen
   // (Theme oben im Kopf, Sync-Code, Zuruecksetzen); alles, was einen einzelnen
   // Uebungslauf betrifft, wird dort eingestellt, wo der Lauf startet.
-  app.appendChild(syncKarte());
+  var einst = syncKarte();
+  einst.id = "einstellungen";        // Sprungziel des Zahnrads oben rechts
+  app.appendChild(einst);
 
   app.appendChild(el("div", "fusszeile", "Jede Runde zählt – auch eine kurze. Dein Fortschritt bleibt auf diesem Gerät gespeichert."));
 }
@@ -955,7 +966,7 @@ function starteQuiz(thema) {
     setzeFarbe(app, thema.farbe);
 
     var quote = punkte / fragen.length;
-    if (quote === 1) konfetti();
+    // Kein Konfetti fuer eine fehlerfreie Themenrunde (Jennifer, 12.08.).
 
     var karte = el("div", "karte ergebnis");
     var st = standStickerEl(quote);

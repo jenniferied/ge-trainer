@@ -50,6 +50,20 @@
   --zone-top: #0a7a44;
   --zone-top-ink: #f0fff6;
   --regenbogen: linear-gradient(115deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a);
+
+  /* Tagesleiter als SATTE Tonwerte - Wortlaut und Werte aus dem ST-Trainer
+     uebernommen (Jennifer 12.08.: der Punkte-Plot soll bei beiden gleich sein):
+     dieselbe Bedeutung wie die Kalenderzellen .hm-s1…s4, aber ungemischt. Eine
+     34-px-Zelle darf einen in die Karte gemischten Ton tragen; ein 3-px-Punkt im
+     Diagramm verschwindet damit. Nachts muessen die obersten Stufen HELLER
+     werden, nicht dunkler - tiefes Gruen auf indigoschwarzem Grund ist kein
+     Punkt mehr. */
+  --tag-1: #e08a2e;
+  --tag-2: #cfa62c;
+  --tag-3: var(--ok);
+  --tag-4: #14a95c;
+  --tag-4-ring: #3ee08d;
+  --tag-5: #0d7a43;
   color-scheme: dark;
 }
 
@@ -81,6 +95,9 @@
   --zone-g: #2e7d4f;
   --zone-top: #0b6b3c;
   --zone-top-ink: #ffffff;
+  --tag-4: #0b6f3c;
+  --tag-4-ring: #16b262;
+  --tag-5: #06341c;
   color-scheme: light;
 }
 
@@ -124,7 +141,18 @@ p { margin: 0 0 var(--sp-3); }
 /* ---------- Kopf ---------- */
 .kopf { margin: var(--sp-4) 0 var(--sp-5); }
 .kopf .untertitel { color: var(--ink-soft); font-size: .95rem; margin-top: 2px; }
-.kopf-zeile { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
+.kopf-zeile { display: flex; align-items: center; gap: var(--sp-2); }
+/* Titel skaliert mit, damit er neben Querlink, Theme und Zahnrad auch auf
+   360 px in EINE Zeile passt; Ellipse als Fangnetz fuer noch schmalere
+   Geraete - lieber ein abgeschnittener Titel als Text, der unter dem Link
+   verschwindet. Der Untertitel steht darunter ueber die volle Breite, sonst
+   quetscht ihn die Werkzeug-Gruppe auf vier Zeilen. (Regel aus dem
+   ST-Trainer uebernommen.) */
+.kopf-zeile h1 {
+  flex: 1; min-width: 0; margin: 0;
+  font-size: clamp(1.05rem, 4.6vw, 1.7rem);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .zurueck {
   display: inline-flex; align-items: center; gap: 6px;
   background: none; border: none; padding: var(--sp-2) 0;
@@ -200,15 +228,65 @@ p { margin: 0 0 var(--sp-3); }
   border-color: color-mix(in srgb, var(--ok) 45%, var(--line));
   background: linear-gradient(120deg, color-mix(in srgb, var(--ok) 8%, transparent), transparent 55%), var(--card);
 }
-.zustand-badge {
-  font-size: .7rem; font-weight: 700; letter-spacing: .02em;
-  border-radius: 999px; padding: 1px 8px; white-space: nowrap;
+/* ---------- Muster "offen / erledigt" (Jennifer 12.08.) ----------
+   Woertlich aus dem ST-Trainer uebernommen (dort style.css, Block "offen /
+   erledigt") - Jennifer: "Ich mag tatsaechlich, dass dort steht offen und es
+   pulsiert. Das kann man natuerlich jetzt uebernehmen in die Karten." Und
+   ausdruecklich DIESELBE Bauweise, nicht eine aehnliche: gleiche Punktgroesse,
+   gleiche Pulsationsdauer, gleiche Farben, gleiches Wort. Darum steht das
+   Muster hier an EINER Stelle und wird ueberall nur benutzt.
+
+   Dieser Block ist der Kandidat fuer das geteilte Style-Paket beider Trainer
+   (Jennifer 12.08.: "wir brauchen eigentlich Style Packages, die geshared
+   sind"). Er haengt an nichts ausser den fuenf Variablen darueber -
+   herausloesen heisst kopieren.
+
+   Benutzung:
+     <span class="stand-badge neu"><i class="puls">✦</i> offen</span>
+     <span class="stand-badge sitzt">✓ geübt</span>
+   Zusatzklasse .kompakt fuer enge Plaetze (Kachel, Topbar).
+
+   Das ✦ atmet, die Karte darum NICHT - und nur, wenn wirklich etwas offen ist.
+   Ein Zeichen, das immer pulsiert, ist Deko statt Information. Auf der
+   Startseite stehen acht Themenkarten nebeneinander; dort traegt das Abzeichen
+   dasselbe Wort und dasselbe Zeichen, aber OHNE .puls (wie im Stoebern des
+   ST-Trainers). Acht atmende Punkte waeren Flimmern, kein Signal. */
+:root {
+  --offen-bg: var(--accent);
+  --offen-ink: #10233a;
+  --fertig-bg: var(--ok-bg);
+  --fertig-ink: var(--ok);
+  --puls-dauer: 2.8s;
 }
-.zustand-badge.neu { color: var(--glimmer-1); border: 1px solid currentColor; }
-.zustand-badge.fertig {
-  color: var(--ok); background: var(--ok-bg); border: 1px solid transparent;
-  /* Der kleine Belohnungsmoment: der Haken poppt einmal auf, wenn die Karte
-     erscheint. Kurz und leise - Rose uebt am Handy, die App bleibt ruhig. */
+/* Auf dem hellen Papier ist der Akzent dunkel genug fuer weisse Schrift
+   (4,5:1); nachts ist er ein helles Blau und braucht dunkle Schrift (5,3:1). */
+:root[data-theme="hell"] { --offen-ink: var(--accent-ink, #fff); }
+.stand-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: .7rem; font-weight: 800; letter-spacing: .02em; white-space: nowrap;
+  border-radius: 999px; padding: 2px 8px;
+}
+.stand-badge.neu { background: var(--offen-bg); color: var(--offen-ink); }
+.stand-badge.sitzt {
+  background: var(--fertig-bg); color: var(--fertig-ink);
+  border: 1px solid color-mix(in srgb, var(--fertig-ink) 40%, transparent);
+}
+/* Enge Plaetze: Tageskachel (auf 360 px rund 75 px breit) und Topbar. Nur die
+   Groesse aendert sich, nie Farbe, Wort oder Rhythmus. */
+.stand-badge.kompakt { font-size: .68rem; padding: 1px 6px; letter-spacing: 0; }
+/* Die Pulsation: langsam und weich, kein Blinken. Alle Punkte auf einem Schirm
+   atmen im GLEICHEN Takt - versetzte Verzoegerungen sahen aus wie eine Welle,
+   die immer irgendwo blinkt; im Gleichtakt liest es sich als ein ruhiger Atem. */
+.puls { display: inline-block; animation: sanft-puls var(--puls-dauer) ease-in-out infinite; }
+@keyframes sanft-puls {
+  0%, 100% { opacity: .5; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+/* GE-Zusatz, nicht Teil des geteilten Musters: der kleine Belohnungsmoment,
+   wenn ein Thema einmal komplett durch ist. Kurz und leise - eine
+   Statusangabe, keine Feier (Jennifer 12.08.: Feiern bleiben dem Streckziel
+   und der bestandenen Klausur vorbehalten). */
+.thema-karte .stand-badge.sitzt {
   animation: haken-pop .42s cubic-bezier(.2, 1.5, .4, 1) both;
 }
 @keyframes haken-pop {
@@ -808,18 +886,7 @@ p { margin: 0 0 var(--sp-3); }
 .heute-text { flex: 1; min-width: 0; }
 .heute-text b { display: block; font-size: .96rem; line-height: 1.25; }
 .heute-text span { display: block; font-size: .78rem; color: var(--ink-soft); }
-.heute-status {
-  flex-shrink: 0; font-size: .74rem; font-weight: 700; letter-spacing: .02em;
-  color: var(--ink-soft);
-}
-/* Gruen bleibt dem Erledigten vorbehalten; "offen" bekommt den Lila-Akzent. */
-.heute-zeile:not(.erledigt) .offen-badge { color: var(--glimmer-1); }
-/* Erledigt bekommt denselben kleinen Pop wie der Haken auf einer Themen-Karte -
-   ein Belohnungsmoment, kein Feuerwerk. */
-.heute-zeile.erledigt .heute-status {
-  color: var(--ok);
-  animation: haken-pop .42s cubic-bezier(.2, 1.5, .4, 1) both;
-}
+.heute-zeile .stand-badge { flex-shrink: 0; }
 .heute-zeile.erledigt { border-color: color-mix(in srgb, var(--ok) 32%, var(--line)); }
 .heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
 
@@ -852,46 +919,53 @@ p { margin: 0 0 var(--sp-3); }
 :root { --st-farbe: #d0703d; }
 :root[data-theme="hell"] { --st-farbe: #b4552d; }
 
-.kopf-aktionen { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
-.quer-link {
-  display: flex; flex-direction: column; align-items: flex-end;
-  text-decoration: none; text-align: right; line-height: 1.25;
-  color: var(--st-farbe);
-  border: 1px solid color-mix(in srgb, var(--st-farbe) 45%, transparent);
-  border-radius: 10px; padding: 4px 9px;
-  background: color-mix(in srgb, var(--st-farbe) 8%, var(--card));
+/* Werkzeug-Gruppe oben rechts (Jennifer 12.08.): Querlink zum anderen Trainer,
+   Hell/Dunkel und Einstellungen gehoeren zusammen und sollen auch so aussehen -
+   beide Apps bekommen dieselbe Kopfzeile. Regeln woertlich aus dem ST-Trainer.
+   Enger gesetzt als der Kopf-Abstand, damit die drei als EIN Block gegen den
+   Titel stehen, und flex-shrink:0, damit die Gruppe auf 360 px nicht umbricht
+   (dort gibt der Titel nach). */
+.topbar-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; margin-left: auto; }
+/* Querlink zum ST-Trainer: traegt dessen Identitaetsfarbe (Terracotta), damit
+   die beiden Apps sichtbar aufeinander zeigen. Kontrast gerechnet, nicht
+   geschaetzt: #d0703d auf der Nachtkarte 4,8:1, #b4552d auf hellem Papier
+   4,9:1 - beides ueber 4,5. */
+.app-link {
+  --st: var(--st-farbe);
+  flex: 0 0 auto; white-space: nowrap; text-decoration: none;
+  font-size: .76rem; font-weight: 700; line-height: 1.5;
+  padding: 3px 7px; border-radius: 999px;
+  color: var(--st); border: 1.5px solid color-mix(in srgb, var(--st) 45%, transparent);
+  background: color-mix(in srgb, var(--st) 10%, transparent);
 }
-.quer-link b { font-size: .78rem; white-space: nowrap; }
-.quer-klein { font-size: .64rem; color: var(--ink-soft); white-space: nowrap; }
-/* Zustand drueben - gruen nur, wenn heute drueben schon geuebt wurde. */
-.quer-stand { font-size: .64rem; color: var(--ink-soft); white-space: nowrap; }
-.quer-stand.frisch { color: var(--ok); font-weight: 700; }
-.quer-stand-zeile {
-  display: flex; align-items: center; justify-content: flex-end;
-  flex-wrap: wrap; gap: 5px; margin-top: 2px;
+/* Zustand des ST-Trainers im Link (nachbar.js). Bleibt leer, solange nichts
+   Belastbares bekannt ist - dann sieht der Link genau so aus wie vorher.
+   Deshalb kein reservierter Platz, kein Platzhalter-Strich, kein Ladezustand. */
+.nachbar-stand:empty { display: none; }
+.nachbar-stand { display: inline-flex; align-items: center; gap: 4px; margin-left: 5px; }
+.nachbar-stand .q-pille { margin-left: 0; font-size: .68rem; padding: 0 5px; }
+.nachbar-stand .stand-badge { font-size: .66rem; padding: 1px 5px; }
+/* Unter 400 px muessen Titel, Link, Theme und Zahnrad zusammen in EINE Zeile.
+   Dort schrumpft die Quote auf ihren Punkt zusammen: die Farbe ist die
+   Botschaft, die Ziffern sind der Zusatz - und beides steht vollstaendig im
+   title und im aria-label. Damit bleibt Platz fuer "✦ offen", das hier den
+   Vorrang hat. */
+.q-pille.q0 { --q-punkt: var(--line); }
+.q-pille.q1 { --q-punkt: var(--zone-o); }
+.q-pille.q2 { --q-punkt: var(--zone-y); }
+.q-pille.q3 { --q-punkt: var(--zone-g); }
+.q-pille.q4 { --q-punkt: var(--zone-top); }
+.q-pille.q5 { --q-punkt: var(--tag-4-ring); }
+@media (max-width: 399px) {
+  .nachbar-stand .q-pille {
+    width: 9px; height: 9px; padding: 0; font-size: 0; border: none;
+    border-radius: 50%; background: var(--q-punkt);
+  }
 }
-.q-pille.mini { font-size: .62rem; padding: 0 6px; line-height: 1.45; }
-
-/* ---------- Offen-Zustand, eine Sprache in beiden Apps (Jennifer 12.08.) ----------
-   Ein kleines Statuslicht neben dem Wort "offen", das ruhig atmet. Bewusst nur
-   der Punkt und nicht die ganze Zeile: drei atmende Zeilen waeren Unruhe.
-   Und bewusst nur, wenn wirklich etwas offen ist - ein Punkt, der immer pulst,
-   ist Deko und keine Information. */
-.offen-badge {
-  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
-  font-size: .68rem; font-weight: 700; letter-spacing: .02em;
-  color: var(--glimmer-1); white-space: nowrap;
-}
-.heute-zeile .offen-badge { font-size: .74rem; }
-.puls-punkt {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: currentColor; flex-shrink: 0;
-  animation: offen-atmen 2.6s ease-in-out infinite;
-}
-@keyframes offen-atmen {
-  0%, 100% { opacity: .45; box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 40%, transparent); }
-  50% { opacity: 1; box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 0%, transparent); }
-}
+/* Am Handy steht nur "ST ↗" - mehr passt neben Titel, Theme und Zahnrad nicht
+   in eine Zeile. Sobald Platz da ist, steht der volle Name da. */
+.app-link .nur-breit { display: none; }
+@media (min-width: 560px) { .app-link .nur-breit { display: inline; } }
 
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand
@@ -899,10 +973,11 @@ p { margin: 0 0 var(--sp-3); }
   .hm-s4 { animation: none; box-shadow: 0 0 12px -1px #1fae52, 0 0 22px -5px #86efac; }
   .heute-zeile:active, .kachel:active { transform: none; }
   /* Der Haken bleibt sichtbar, er hoert nur auf zu huepfen. */
-  .zustand-badge.fertig, .heute-zeile.erledigt .heute-status { animation: none; }
-  /* Statt zu atmen steht der Offen-Punkt dann einfach voll da - der Zustand
-     darf nicht verschwinden, nur weil Bewegung reduziert ist. */
-  .puls-punkt { animation: none; opacity: 1; }
+  .thema-karte .stand-badge.sitzt { animation: none; }
+  /* Wer Bewegung reduziert hat, bekommt dieselbe Hervorhebung - nur still.
+     Volle Deckkraft, damit das Zeichen nicht halb verblasst einfriert.
+     (Regel woertlich aus dem ST-Trainer.) */
+  .puls { animation: none; opacity: 1; transform: none; }
 }
 
 /* ---------- Maskottchen: das Ei in der Countdown-Karte ----------
@@ -922,6 +997,9 @@ p { margin: 0 0 var(--sp-3); }
 
 .mk-ankunft { border: 1.5px dashed var(--mk-riss); border-radius: 14px;
   padding: 13px 14px 14px; margin: 0 0 12px; text-align: center; }
+.mk-storch { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px; line-height: 1; white-space: pre; margin: 0 auto 8px; color: var(--mk-fell);
+  display: block; width: max-content; }
 .mk-ank-kopf { font-weight: 700; font-size: 1.02rem; }
 .mk-ank-text { margin: 4px auto 10px; font-size: .9rem; opacity: .8; max-width: 42ch; }
 .mk-karussell { display: flex; align-items: center; justify-content: center; gap: 10px;
