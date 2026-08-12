@@ -38,6 +38,19 @@ import { heuteAntworten } from "./stats.js";
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
 import { heuteBlock, heuteTag } from "./geteilt-tagesstand.js";
 
+/* ---------- Wer zaehlt die offenen Tagesaufgaben? ----------
+   Die Tagesliste ("Heute dran") wird in main.js gebaut und braucht dafuer die
+   geladenen themen — die kennt diese Datei nicht. Deshalb meldet sich der
+   Zaehler an, statt geholt zu werden; angemeldet wird er beim Start.
+
+   Nicht angemeldet heisst null heisst "wir wissen es nicht" — streng etwas
+   anderes als die 0, die "heute alles erledigt" heisst. Der heute-Block laesst
+   das Feld dann weg, und der Querlink drueben zeigt gar kein Offen-Signal,
+   statt faelschlich Entwarnung zu geben.
+   Der ST-Trainer hat dieselbe Bauweise in core.js. */
+var offenZaehler = null;
+export function setzeOffenZaehler(f) { offenZaehler = typeof f === "function" ? f : null; }
+
 /* ---------- Grundlagen ---------- */
 
 function supaAktiv() { return !!(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey); }
@@ -131,7 +144,8 @@ export function snapshot(st) {
   // Das Log wird durchgereicht, damit die Zahl zu genau diesem Stand passt.
   var plan = state.tzPlan;
   var heute = plan && plan.tag === heuteTag()
-    ? heuteBlock(heuteAntworten(s.antwortLog || []), plan) : null;
+    ? heuteBlock(heuteAntworten(s.antwortLog || []), plan,
+                 offenZaehler ? offenZaehler() : null) : null;
   var aus = { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
     geloescht: s.geloescht || [], mk: s.mk || {} };
   if (heute) aus.heute = heute;

@@ -48,7 +48,7 @@
 import { CONFIG } from "./config.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
-import { liesHeute, tagesPunktKlasse, tagesText, tagesWorte, tagesLos, losText, losWorte } from "./geteilt-tagesstand.js";
+import { liesHeute, liesOffen, tagesPunktKlasse, tagesText, tagesWorte, tagesLos, losText, losWorte } from "./geteilt-tagesstand.js";
 
 export const ST_URL = "https://jenniferied.github.io/st-trainer/";
 const ST_CODE = "rose";
@@ -85,8 +85,11 @@ function schreib(key, o) {
    uebte (ihr Snapshot ruehrt sich ja nur beim Ueben). Ein Cache muss ungueltig
    werden, wenn sich die Frage aendert - nicht nur, wenn sich die Antwort aendert.
    WER DIE AUSWERTUNG ODER DIE GESPEICHERTEN FELDER AENDERT, ZAEHLT HIER HOCH.
-   v3 (12.08.): lernscore ist raus, dafuer der rohe heute-Block. */
-const AUSWERTUNG_V = 3;
+   v3 (12.08.): lernscore ist raus, dafuer der rohe heute-Block.
+   v4 (12.08. abends): runden ist raus. Die offenen Tagesaufgaben kommen jetzt
+   als fertige Liste im heute-Block (Feld offen), gezaehlt vom ST-Trainer
+   selbst — samt Namen fuer den Tooltip. */
+const AUSWERTUNG_V = 4;
 const liesStand = () => { const c = lies(CACHE_KEY); return c && c.v === AUSWERTUNG_V ? c : null; };
 const schreibStand = (o) => schreib(CACHE_KEY, Object.assign({ v: AUSWERTUNG_V }, o));
 
@@ -100,29 +103,23 @@ try { localStorage.removeItem("ge-nachbar-st-pool"); } catch (e) { /* egal */ }
    anzeigen, dass noch was offen ist. Offene Dailies oder was auch immer, offene
    Uebungen oder so."
 
-   Aus dem Snapshot laesst sich dazu genau EINE Sache sauber ablesen: die Liste
-   der angefangenen, noch nicht abgeschlossenen Runden (daten.offen). Die ist
-   exakt, sie muss nicht rekonstruiert werden, und drueben steht sie auf der
-   Startseite unter "Angefangen - du kannst weitermachen".
+   SEIT DEM 12.08. ABENDS WIRD DAS NICHT MEHR ABGELEITET, sondern uebernommen.
+   Hier stand vorher zweierlei: die angefangenen Runden aus daten.offen und -
+   in main.js - eine eigene Abfrage der events-Tabelle, die die Mini-Spiele des
+   ST-Trainers aus einer HIER gepflegten Liste (ST_SPIELE) nachbaute. Genau
+   diese Nachbildung war der Fehler: sie kannte nur, was hier eingetragen war,
+   und die Gegenrichtung hatte dasselbe Problem spiegelbildlich. Jennifer sah
+   am Querlink "2 offen" und in der Tagesliste drueben drei Zeilen.
 
-   Das TAGESZIEL stand hier frueher unter "nicht zaehlbar": es friert einmal am
-   Tag ein und lag in settings.tzPlan, und settings ist im Snapshot bewusst
-   nicht enthalten. Nachrechnen waere Raten gewesen. Seit dem 12.08. schickt
-   der ST-Trainer seinen Tagesstand selbst mit (Feld heute) - deshalb steht die
-   Zahl jetzt als eigene Pille daneben, und zwar als uebernommene, nicht als
-   abgeleitete. Sie gehoert nicht in diese Zaehlung: "12 von 60" ist eine
-   Auskunft ueber den Tag, kein offener Posten. Ein halbvolles Tagesziel als
-   "offen" zu zaehlen wuerde aus jedem normalen Uebungstag eine Mahnung machen.
+   Jetzt schickt der ST-Trainer die Liste seiner offenen Tagesaufgaben selbst
+   mit (Feld offen im heute-Block), gezaehlt aus derselben Funktion, aus der er
+   seine Kacheln baut. Kommt drueben ein Spiel dazu, steht es hier automatisch
+   mit drin - ohne dass jemand diese Datei anfasst.
 
-   Weiterhin NICHT mitgezaehlt: faellige Wiederholungen. Der ST-Trainer hat
-   dafuer keinen Termin je Frage, sondern zieht beim Rundenbau aus dem
-   Wackligen - eine Zahl "so viele sind faellig" gibt es drueben gar nicht, sie
-   waere hier erfunden.
-   Lieber "✦ 2 offen", das stimmt, als "✦ 5 offen", das geraten ist. */
-function offeneRunden(daten) {
-  const offen = (daten && daten.offen) || [];
-  return Array.isArray(offen) ? offen.length : 0;
-}
+   NICHT mitgezaehlt wird weiterhin das Tagesziel: "12 von 60" ist eine Auskunft
+   ueber den Tag, kein offener Posten. Ein halbvolles Tagesziel als "offen" zu
+   zaehlen wuerde aus jedem normalen Uebungstag eine Mahnung machen. Es steht
+   deshalb als eigene Pille daneben. */
 
 /* ---------- Abruf ----------
    Schritt 1 fragt nur den Zeitstempel (winzig). Schritt 2 holt den Snapshot nur,
@@ -142,7 +139,9 @@ export function hole() {
       const ts = zeilen && zeilen[0] && zeilen[0].ts ? new Date(zeilen[0].ts).getTime() : null;
       if (!ts) return null;
       // Nichts Neues drueben: nur den Cache auffrischen.
-      if (c && c.ts === ts && typeof c.runden === "number") {
+      // "heute" als Schluessel, nicht als Wert: der Block DARF null sein (drueben
+      // laeuft eine aeltere Fassung), der Cache ist trotzdem vollstaendig.
+      if (c && c.ts === ts && Object.prototype.hasOwnProperty.call(c, "heute")) {
         const frisch = Object.assign({}, c, { geholt: Date.now() });
         schreibStand(frisch);
         return frisch;
@@ -155,7 +154,7 @@ export function hole() {
           // Der heute-Block wird roh gespeichert und erst beim Anzeigen mit
           // liesHeute() geprueft - so faellt er um Mitternacht von selbst weg,
           // auch wenn drueben seither niemand gepusht hat.
-          const neu = { ts: ts, geholt: Date.now(), heute: daten.heute || null, runden: offeneRunden(daten) };
+          const neu = { ts: ts, geholt: Date.now(), heute: daten.heute || null };
           schreibStand(neu);
           return neu;
         });
@@ -170,15 +169,19 @@ export function hole() {
 export function stStand() {
   const c = liesStand();
   if (!c || !c.ts) return null;
+  const h = liesHeute(c);
   return {
     ts: c.ts,
     frisch: tagVon(c.ts) === heuteTag(),
     // liesHeute() verwirft alles, was nicht von heute ist - auch einen Block,
     // der noch im Cache liegt, weil drueben seit gestern niemand gepusht hat.
-    heute: liesHeute(c),
+    heute: h,
     // Genau dieser Fall ist der Anstupser: kein frischer Block, weil der letzte
     // Push von gestern oder aelter ist. Begruendung in tagesLos().
     los: tagesLos(c.ts),
-    runden: typeof c.runden === "number" ? c.runden : null,
+    // Die offenen Tagesaufgaben, wie der ST-Trainer sie selbst gezaehlt hat.
+    // null heisst "wir wissen es nicht" und ist streng etwas anderes als die
+    // leere Liste, die "heute alles erledigt" heisst.
+    offen: liesOffen(h),
   };
 }

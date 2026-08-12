@@ -7,7 +7,9 @@ import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feier
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
-import { syncKarte, syncStart, leseTabelle, fremdCache } from "./sync.js";
+// leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
+// die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
+import { syncKarte, syncStart, setzeOffenZaehler } from "./sync.js";
 import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
@@ -184,37 +186,22 @@ function offenBadge(text, extra) {
    "alles erledigt" kann sie nicht faelschlich behaupten, denn dafuer muss sie
    Spiel-Zeilen von heute wirklich gesehen haben.
 
-   Die Liste der Spiele spiegelt den Hub des ST-Trainers (spiele.js hubHtml:
-   Paare, Signalwoerter, Zuordnen, Detektiv, Begriffe; "op" traegt beide
-   Operatoren-Spiele und wird an der Fragen-Id auseinandergehalten). Kommt
-   drueben ein Spiel dazu, zaehlt diese Anzeige eins zu wenig - das faellt auf
-   die sichere Seite. */
+   AM ABEND DES 12.08. IST HIER EINE GANZE MASCHINERIE WEGGEFALLEN, und der
+   Grund gehoert zur Datei. Bis dahin stand hier eine eigene Abfrage der
+   events-Tabelle plus eine von Hand gepflegte Liste ST_SPIELE = ["vp", "opu",
+   "opz", "detektiv", "begriffe"], mit der die Tageskacheln des ST-Trainers hier
+   NACHGEBAUT wurden. Der Kommentar daneben gab sogar zu, dass die Zahl "eins zu
+   wenig" wird, wenn drueben ein Spiel dazukommt - abgetan als "faellt auf die
+   sichere Seite".
 
-var ST_SPIELE = ["vp", "opu", "opz", "detektiv", "begriffe"];
+   Jennifer hat am selben Abend gezeigt, dass das eben nicht die sichere Seite
+   ist: eine Zahl, die etwas anderes zaehlt als die Liste, auf die sie zeigt,
+   ist keine vorsichtige Zahl, sondern eine falsche. Vorsicht rechtfertigt "wir
+   sagen nichts", nicht "wir sagen etwas Anderes".
 
-function stSpielKey(e) {
-  if (e.modus !== "op") return e.modus;
-  return String(e.frage_id || "").indexOf("opz-") === 0 ? "opz" : "opu";
-}
-
-function mitternachtIso() {
-  var d = new Date(); d.setHours(0, 0, 0, 0);
-  return d.toISOString();   // lokale Mitternacht als UTC-Zeitpunkt, so steht ts in der DB
-}
-
-// Nur die Spiel-Modi und nur von heute - das sind ein paar Dutzend Zeilen.
-function stOffen() {
-  return fremdCache("st-offen", function () {
-    var seit = encodeURIComponent(mitternachtIso());
-    return leseTabelle("events?select=modus,frage_id&modus=in.(vp,op,detektiv,begriffe)&ts=gte." + seit + "&limit=400")
-      .then(function (rows) {
-        if (!rows) return { offen: null };
-        var heute = {};
-        rows.forEach(function (e) { heute[stSpielKey(e)] = true; });
-        return { offen: ST_SPIELE.filter(function (k) { return !heute[k]; }).length };
-      });
-  }, function (st) { return st.offen != null; });
-}
+   Der ST-Trainer schickt seine offenen Tagesaufgaben jetzt selbst mit (Feld
+   offen im heute-Block, siehe nachbar.js). Damit ist auch die events-Abfrage
+   ersatzlos weg - eine Anfrage weniger bei jedem Start. */
 
 function querLink() {
   var a = document.createElement("a");
@@ -231,30 +218,20 @@ function querLink() {
   /* Erst synchron aus dem Cache zeichnen (damit beim Blaettern nichts flackert),
      dann noch einmal nach dem Abruf. Der Abruf blockiert nichts und meldet
      keinen Fehler - schlaegt er fehl, bleibt der Link stehen, wie er war. */
-  var male = function (spieleOffen) {
+  var male = function () {
     if (!a.isConnected) return;
     stand.innerHTML = "";
     var worte = [];
     var s = Nachbar.stStand();
 
-    /* Alles, was drueben aussteht, in EINER Zahl (Jennifer, 12.08.: "falls noch
-       taegliches Ueben offen ist, anzeigen, dass noch was offen ist. Offene
-       Dailies oder was auch immer, offene Uebungen oder so"). Zusammengezaehlt
-       wird nur, was wirklich ablesbar ist: die Mini-Runden von heute (aus der
-       events-Tabelle) und die angefangenen, nicht abgeschlossenen Runden (aus
-       dem Snapshot). Das Tagesziel drueben ist von aussen NICHT lesbar und
-       zaehlt deshalb nicht mit - Begruendung in nachbar.js, offeneRunden(). */
-    var teile = [], summe = 0, wissen = false;
-    if (spieleOffen != null) {
-      wissen = true;
-      summe += spieleOffen;
-      if (spieleOffen > 0) teile.push(spieleOffen + (spieleOffen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute");
-    }
-    if (s && s.runden != null) {
-      wissen = true;
-      summe += s.runden;
-      if (s.runden > 0) teile.push(s.runden + (s.runden === 1 ? " angefangene Runde" : " angefangene Runden"));
-    }
+    /* Was drueben aussteht (Jennifer, 12.08.: "falls noch taegliches Ueben offen
+       ist, anzeigen, dass noch was offen ist. Offene Dailies oder was auch
+       immer"). Die Liste kommt seit dem Abend des 12.08. FERTIG aus dem
+       ST-Trainer und wird hier weder gezaehlt noch ergaenzt - Begruendung im
+       Kopf ueber querLink() und in geteilt-tagesstand.js bei offenText().
+       null heisst "wir wissen es nicht", die leere Liste heisst "alles
+       erledigt". Aus null wird nie Entwarnung. */
+    var offen = s && s.offen;
 
     /* Wenn drueben heute noch gar nichts lief, tritt der Anstupser weiter unten
        AN DIE STELLE des Offen-Abzeichens, statt danebenzustehen. Zwei Gruende,
@@ -264,20 +241,16 @@ function querLink() {
        Staerkere - was offen ist, steht weiter im Tooltip. */
     var losStatt = !!(s && !s.heute && s.los);
 
-    if (wissen && summe > 0) {
+    if (offen && offen.length) {
       // Wortwahl aus offenText(), damit sie nicht getrennt von der Gegenrichtung
-      // driftet - drueben stand bis zum 12.08. nachmittags "offen" ohne Zahl.
-      if (!losStatt) stand.appendChild(offenBadge(offenText(summe), "kompakt"));
-      worte.push("noch offen: " + teile.join(" und "));
-    } else if (spieleOffen != null && summe === 0 && !losStatt) {
-      /* "Nichts offen" darf NUR behauptet werden, wenn die Spiel-Abfrage
-         wirklich geantwortet hat. Faellt sie aus und der Snapshot meldet
-         zufaellig null angefangene Runden, wuesste die Anzeige ueber die
-         Mini-Runden gar nichts und gaebe trotzdem Entwarnung. Die Anzeige
-         darf in Richtung "zu viel offen" irren, nie in Richtung "alles
-         erledigt". */
+      // driftet. Zahl UND Namen stammen aus derselben Liste - Abzeichen und
+      // Tooltip koennen also nicht auseinanderlaufen.
+      if (!losStatt) stand.appendChild(offenBadge(offenText(offen.length), "kompakt"));
+      worte.push("heute noch offen: " + offen.join(", "));
+    } else if (offen && !losStatt) {
+      // Leere Liste, nicht null: drueben ist heute wirklich alles erledigt.
       stand.appendChild(standBadge(true, "✓ heute", "kompakt"));
-      worte.push("drüben ist gerade nichts offen");
+      worte.push("drüben ist heute alles erledigt");
     }
 
     /* Der Tagesfortschritt drueben, in Prozent vom Tagespensum (Jennifer,
@@ -308,10 +281,11 @@ function querLink() {
     a.setAttribute("aria-label", "Zum Schultheorie-Trainer wechseln, " + worte.join(", "));
   };
 
-  var offenStand = null;
-  male(null);
-  stOffen().then(function (o) { offenStand = o ? o.offen : null; male(offenStand); }).catch(function () { /* neutral bleiben */ });
-  Nachbar.hole().then(function () { male(offenStand); }).catch(function () { /* neutral bleiben */ });
+  // Nur noch EIN Abruf. Die zweite Abfrage (events-Tabelle, Mini-Runden von
+  // heute) ist am 12.08. abends weggefallen, weil der ST-Trainer seine offenen
+  // Tagesaufgaben selbst mitschickt.
+  male();
+  Nachbar.hole().then(male).catch(function () { /* neutral bleiben */ });
   return a;
 }
 
@@ -884,29 +858,67 @@ function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
   return z;
 }
 
+/* DIE Tagesliste dieser App — eine Quelle fuer beides: die Zeilen unter
+   "Heute dran" und die Zahl, die im Querlink des ST-Trainers steht.
+
+   Dass das EINE Funktion ist, ist die Lehre aus dem 12.08. abends: vorher hat
+   der ST-Trainer diese Liste aus unserem Snapshot NACHGEBAUT, zaehlte dabei
+   nur Eintraege mit modus === "spiel" und uebersah damit zwangslaeufig die
+   Wiederholen-Zeile. Jennifer sah drueben "2 offen" und hier drei Zeilen.
+   Wer hier eine Aufgabe dazunimmt, aendert jetzt automatisch auch die Zahl
+   drueben. Begruendung ausfuehrlich in geteilt-tagesstand.js bei offenText(). */
+function tagesAufgaben() {
+  var heute = Spiele.heuteGespielt();
+  var liste = [{
+    key: "op", icon: "🎯", titel: "Signalwörter", kurz: "Signalwörter",
+    klein: "6 Aufgaben · welcher Operator will was",
+    erledigt: !!heute.operatoren, geh: function () { zeige("spiel-op"); }
+  }];
+  if (Spiele.hatBegriffe()) {
+    liste.push({
+      key: "bg", icon: "🃏", titel: "Begriffe-Blitz", kurz: "Begriffe-Blitz",
+      klein: "5 Paare zuordnen · ~2 Minuten",
+      erledigt: !!heute.begriffe, geh: function () { zeige("spiel-bg"); }
+    });
+  }
+  // Kein Spaced-Repetition-Termin, also auch kein "faellig": gezaehlt wird, was
+  // beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg — und damit
+  // auch der Posten in der Zahl, denn nichts zu wiederholen ist nichts Offenes.
+  var w = Stats.wiederholPool(themen).length;
+  if (w) {
+    liste.push({
+      key: "wdh", icon: "♻️", titel: w + (w === 1 ? " Frage" : " Fragen") + " zum Wiederholen",
+      kurz: "Wiederholen", klein: "zuletzt danebengelegen",
+      erledigt: false, geh: function () { zeige("wiederholen"); }
+    });
+  }
+  return liste;
+}
+
+/* Welche davon heute noch offen sind, als Liste ihrer KURZEN Namen. Wandert
+   ueber snapshot() in den Lernstand und von dort in den Querlink des
+   ST-Trainers: die Laenge wird dort zur Zahl im Abzeichen, die Namen stehen im
+   Tooltip. Die LEERE Liste ist ein gueltiges Ergebnis und heisst "heute alles
+   erledigt" — sie ist etwas anderes als gar keine Liste.
+   Genommen wird kurz und nicht titel, weil der Wiederholen-Eintrag seine Anzahl
+   im Titel traegt ("8 Fragen zum Wiederholen") — im Tooltip drueben neben einer
+   anderen Zahl waere das nur verwirrend. */
+function offeneDailies() {
+  return tagesAufgaben().filter(function (a) { return !a.erledigt; })
+                        .map(function (a) { return a.kurz; });
+}
+
 function heuteDranKarte() {
   var karte = el("div", "karte heute-karte glimmer");
   karte.appendChild(el("h2", null, "Heute dran"));
 
-  var heute = Spiele.heuteGespielt();
-  karte.appendChild(heuteZeile("🎯", "Signalwörter", "6 Aufgaben · welcher Operator will was",
-    heute.operatoren ? "✓ geübt" : "offen", !!heute.operatoren,
-    function () { zeige("spiel-op"); }));
+  var liste = tagesAufgaben();
+  liste.forEach(function (a) {
+    karte.appendChild(heuteZeile(a.icon, a.titel, a.klein,
+      a.erledigt ? "✓ geübt" : "offen", a.erledigt, a.geh));
+  });
 
-  if (Spiele.hatBegriffe()) {
-    karte.appendChild(heuteZeile("🃏", "Begriffe-Blitz", "5 Paare zuordnen · ~2 Minuten",
-      heute.begriffe ? "✓ geübt" : "offen", !!heute.begriffe,
-      function () { zeige("spiel-bg"); }));
-  }
-
-  // Kein Spaced-Repetition-Termin, also auch kein "faellig": gezaehlt wird, was
-  // beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg.
-  var w = Stats.wiederholPool(themen).length;
-  if (w) {
-    karte.appendChild(heuteZeile("♻️", w + (w === 1 ? " Frage" : " Fragen") + " zum Wiederholen",
-      "zuletzt danebengelegen", "offen", false,
-      function () { zeige("wiederholen"); }));
-  } else {
+  if (!liste.some(function (a) { return a.key === "wdh"; })) {
     karte.appendChild(el("div", "heute-leer", state.antwortLog.length
       ? "Nichts liegt gerade quer – alles, was du beantwortet hast, saß beim letzten Mal."
       : "Eine kurze Runde reicht zum Anfangen. Der Rest kommt von allein."));
@@ -1405,6 +1417,11 @@ themeAnwenden();
 Promise.all([ladeThemen(), Spiele.ladeBegriffe()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
+    // Erst JETZT anmelden, nicht frueher: tagesAufgaben() braucht themen (fuer
+    // den Wiederholen-Pool) und die geladenen Begriffe. Vorher waere die Liste
+    // kuerzer und wir schrieben zu WENIG offene Aufgaben in den Lernstand — also
+    // in die verbotene Richtung. Steht deshalb vor syncStart(), das pusht.
+    setzeOffenZaehler(offeneDailies);
     zeige("start");
     syncStart(); // Boot-Hook: Offline-Queue leeren + einmal abgleichen (still, ohne Blocker)
   })

@@ -85,7 +85,10 @@
    mit anderer Version verwirft den Block, statt ihn falsch zu deuten. Das ist
    dieselbe Lehre wie AUSWERTUNG_V in nachbar.js: ungueltig werden muss ein
    Datum schon dann, wenn sich die FRAGE aendert, nicht erst die Antwort. */
-export const HEUTE_V = 1;
+/* v2 (12.08. abends): Feld offen dazu — die Zahl der heute noch offenen
+   Tagesaufgaben, von der App gezaehlt, der die Liste gehoert. Siehe den
+   Abschnitt "WARUM offen IM BLOCK STEHT" weiter unten bei offenText(). */
+export const HEUTE_V = 2;
 
 export function tagVon(ts) {
   var d = new Date(ts);
@@ -102,13 +105,13 @@ export function heuteTag() {
    zweite, hier nachgerechnete. plan ist ihr eingefrorener Tagesplan.
    Fehlt eines von beidem, gibt es keinen Block: dann zeigt der Nachbar eben
    keine Zahl. Das ist der gewollte Ausgang, nicht ein Fehlerfall. */
-export function heuteBlock(n, plan) {
+export function heuteBlock(n, plan, offen) {
   if (typeof n !== "number" || !plan) return null;
   var ziel = Number(plan.ziel);
   if (!(ziel > 0)) return null;
   var minimum = Number(plan.minimum);
   var stretch = Number(plan.stretch);
-  return {
+  var block = {
     v: HEUTE_V,
     tag: heuteTag(),
     n: n,
@@ -116,6 +119,20 @@ export function heuteBlock(n, plan) {
     minimum: minimum > 0 ? minimum : 0,
     stretch: stretch > 0 ? stretch : ziel
   };
+  /* offen ist OPTIONAL und eine LISTE kurzer Namen, keine Zahl. Die leere Liste
+     ist ein gueltiger Wert ("heute alles erledigt") — deshalb die Pruefung auf
+     Array und nicht auf Wahrheit. Fehlt der Wert, fehlt das Feld, und der
+     Nachbar zeigt kein Offen-Signal, statt eine Null zu behaupten.
+
+     Warum Namen und nicht bloss die Anzahl: der Querlink zeigt die Zahl, sein
+     Tooltip nennt die Aufgaben. Stuende hier nur eine Zahl, muesste der Nachbar
+     sich die Namen wieder selbst zusammenreimen — und genau dieses Nachbauen ist
+     der Fehler, den dieses Feld beseitigt. Eine Quelle, beide Auskuenfte. */
+  if (Array.isArray(offen)) {
+    block.offen = offen.filter(function (x) { return typeof x === "string" && x; })
+                       .slice(0, 8).map(function (x) { return x.slice(0, 40); });
+  }
+  return block;
 }
 
 /* ---------- Lesen (gehoert in nachbar.js) ----------
@@ -255,19 +272,63 @@ export function losWorte(appName) {
    die ehrlichere, sondern nur die aeltere. Die Zahl steht jetzt auf beiden
    Seiten, und sie kommt aus dieser einen Funktion.
 
-   Was die Zahl NICHT ist: gleich gross auf beiden Seiten. Der GE-Trainer zaehlt
-   drueben zwei Dinge zusammen (Mini-Runden von heute plus angefangene Runden
-   aus dem Snapshot), der ST-Trainer nur eines (Mini-Spiele, die drueben heute
-   noch nicht liefen) — denn der GE-Trainer kennt gar keine fortsetzbaren
-   Runden, es gibt in seinem Snapshot kein Feld offen. Symmetrie heisst hier
-   also: gleiche Regel, gleiches Aussehen, gleiches Wort. Nicht: gleiche
-   Bezugsgroesse. Eine dazuerfundene dritte Quelle waere genau der Fehler, an
-   dem die alte Quoten-Pille gestorben ist.
-
    Kein "noch", kein "!" und keine Gesamtzahl dahinter ("3 von 5 offen"):
-   ein Nenner macht aus einer Auskunft eine Bilanz. */
+   ein Nenner macht aus einer Auskunft eine Bilanz.
+
+   ---------------------------------------------------------------------------
+   WARUM offen IM BLOCK STEHT — der Fehler, den Jennifer am Abend des 12.08.
+   gefunden hat, und er ist lehrreich genug fuer diesen Absatz.
+
+   Sie sah im ST-Trainer am Querlink "✦ 2 offen", klickte hinueber, und die
+   Tagesliste des GE-Trainers zeigte DREI offene Zeilen. Ihr Satz dazu: "warum
+   stehen die acht Wiederholungen dann unter den Minigames? ... Das ergibt
+   keinen Sinn."
+
+   Der Grund war eine Konstruktion, die ich am selben Tag noch als "gleiche
+   Regel, nicht gleiche Bezugsgroesse" verteidigt hatte: jede App hat die
+   Tagesliste der ANDEREN aus deren Snapshot NACHGEBAUT. Der ST-Trainer zaehlte
+   dazu die Eintraege mit modus === "spiel" — und uebersah damit zwangslaeufig
+   die Wiederholen-Zeile des GE-Trainers, die gar kein Spiel ist, sondern aus
+   dessen wiederholPool kommt.
+
+   Beim Lesen klang das sauber ("wir zaehlen nur, was ehrlich ableitbar ist"),
+   beim Draufschauen ist es schlicht falsch: eine Zahl, die etwas anderes zaehlt
+   als die Liste, auf die sie zeigt, ist keine vorsichtige Zahl, sondern eine
+   verkehrte. Vorsicht rechtfertigt "wir sagen nichts", nicht "wir sagen etwas
+   Anderes".
+
+   Es ist derselbe Fehler wie beim Lernscore und bei der alten Quoten-Pille,
+   nur ein drittes Mal und in neuer Verkleidung — und deshalb gilt hier
+   wortgleich dieselbe Regel:
+
+     Wer die Zahl berechnet, muss die App sein, die sie auch anzeigt.
+
+   Jede App zaehlt ihre EIGENEN offenen Tagesaufgaben, aus derselben Funktion,
+   aus der sie ihre Tagesliste baut, und legt das Ergebnis hier ab. Der Nachbar
+   liest die Zahl und rechnet nichts nach. Damit koennen Liste und Querlink
+   nicht mehr auseinanderlaufen — nicht heute und auch nicht, wenn eine der
+   beiden Apps morgen eine vierte Tagesaufgabe bekommt.
+
+   Das Feld ist ABLEITBAR (es entsteht aus antwortLog und dem eigenen Stand) und
+   reist deshalb huckepack: keine Zeile in signatur(), keine Merge-Regel. Es
+   folgt damit derselben Unterscheidung wie n — anders als mk.geschluepft, das
+   sich durch einen Knopfdruck ohne neue Antwort aendern kann.
+
+   EINE EHRLICHE LUECKE bleibt und ist gewollt: ohne heute-Block gibt es auch
+   keine Zahl. Der Block entsteht nur beim Push, und gepusht wird nur, wenn eine
+   Antwort dazukommt. Hat Rose drueben heute noch gar nichts gemacht, steht dort
+   ohnehin der Anstupser "heute noch nichts" — und der sagt das Staerkere. */
 export function offenText(n) {
   return n + " offen";
+}
+
+/* Welche Tagesaufgaben drueben noch offen sind — null heisst "wir wissen es
+   nicht" und ist streng von der leeren Liste zu unterscheiden, die "heute alles
+   erledigt" heisst. Der Aufrufer darf aus null NIE Entwarnung machen; das ist
+   dieselbe Regel wie bei liesHeute(). */
+export function liesOffen(h) {
+  if (!h || !Array.isArray(h.offen)) return null;
+  return h.offen;
 }
 
 /* Fuer title/aria — ein ganzer Satz, kein Zahlensalat. Kein Ausrufezeichen und
