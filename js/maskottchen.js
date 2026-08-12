@@ -172,19 +172,19 @@ var SPRUCH = {
     "Heute noch gar nichts. Macht nichts, ich mag auch kurze Tage.",
   ],
   start: [
-    "Du hast angefangen. Genau das zaehlt bei mir am meisten.",
+    "Du hast angefangen. Genau das zählt bei mir am meisten.",
     "Da ist mein erstes Herz heute. Angefangen ist das Schwerste.",
-    "Oh, du bist da. Das reicht mir schon fuer heute.",
+    "Oh, du bist da. Das reicht mir schon für heute.",
   ],
   mitte: [
     "Zwei Herzen heute. Das war schon ein richtiger Tag.",
-    "Ich hab zwei bekommen. Von mir aus kannst du jetzt aufhoeren.",
-    "Zwei. Und ich hab nicht mal was dafuer tun muessen.",
+    "Ich hab zwei bekommen. Von mir aus kannst du jetzt aufhören.",
+    "Zwei. Und ich hab nicht mal was dafür tun müssen.",
   ],
   voll: [
     "Drei Herzen. Mehr kriege ich an einem Tag gar nicht.",
     "Das war alles, was heute ging. Ich bin satt.",
-    "Voll. Ab jetzt uebst du nur noch fuer dich, nicht fuer mich.",
+    "Voll. Ab jetzt übst du nur noch für dich, nicht für mich.",
   ],
 };
 function spruchVon(liste, tag) { return liste[tag % liste.length]; }
