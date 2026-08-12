@@ -140,11 +140,80 @@ export function eiHtml(variante, stufe) {
    Einzige Wahrheit ist, OB ein Ei gewaehlt wurde. Solange keins gewaehlt ist,
    kommt die Ankunft bei jedem Oeffnen wieder — wer nicht aussucht, verliert den
    Moment nicht. "Schon nachgesehen" haelt nur bis zum Neuladen. */
-function gewaehlt() { return !!state.eiVariante; }
+/* Nicht nur "steht da was", sondern "steht da ein Ei, das es noch gibt".
+   Sonst zaehlt ein Key aus einer frueheren Fassung als getroffene Wahl: die
+   Ankunft wird uebersprungen und eiIndex() faellt still auf Ei 0 zurueck —
+   die Ankunft ist dann weg, ohne dass je jemand ausgesucht hat. */
+function gewaehlt() {
+  var k = state.eiVariante;
+  return !!k && EIER.some(function (e) { return e.key === k; });
+}
 var angesehen = false;
 export function zuruecksetzen() { state.eiVariante = null; speichern(); angesehen = false; }
 
-var STORCH = ["        ▁▄▖        ", "       ▟◉ ▝▄▄▄▄▄   ", "      ▟███▙        ", "     ▟█████▙       ", "     ▜█████▛       ", "       ╱ ╲         ", "      ╱   ╲        "];
+/* ---------- Der Storch ----------
+   Bewusst KEINE Textgrafik, anders als das Ei. Blockzeichen wie ▟ ▙ sind
+   zellgenau und darum unkritisch, aber der Storch braucht duenne Teile
+   (Hals, Beine, Schnur) und die gab es nur mit ◉ ╱ ╲ — genau die Zeichen,
+   die auf Android gern in einen Ersatzfont fallen und dann die Zeile
+   verschieben. Deshalb dasselbe Zellraster, aber als SVG-Rechtecke gemalt:
+   sieht aus wie Blockgrafik, passt zum Ei, rendert aber ueberall gleich
+   und skaliert mit.
+
+   Legende:  # Koerper   s Schnabel   a Auge
+             l Bein      t Buendel    | Schnur      . nichts
+
+   Das Auge war zuerst nur eine Luecke im Kopf, damit der Kartengrund
+   durchscheint. Das traegt aber nur im Nachtmodus: im hellen Modus ist der
+   Grund heller als das Gefieder, und das Auge verschwand fast. Es bekommt
+   darum die Musterfarbe, die in beiden Modi dunkler ist als das Fell. */
+var STORCH = [
+  "............#####..........",
+  "...........#######.........",
+  "..sssssssss##a#####........",
+  "...........#######.........",
+  "............#####..........",
+  "....|........###...........",
+  "....|........###...........",
+  "...ttttt.....###...........",
+  "..ttttttt....###...........",
+  "..ttttttt....###...........",
+  "..ttttttt....###...........",
+  "...ttttt..#########........",
+  "........#############......",
+  ".......###############.....",
+  "......#################....",
+  ".......###############.....",
+  "........#############......",
+  "..........#########........",
+  "...........ll...ll.........",
+  "...........ll...ll.........",
+  "...........ll...ll.........",
+  "..........llll.llll........",
+];
+var STORCH_FARBE = { "#": "var(--mk-fell)", s: "var(--mk-riss)", l: "var(--mk-riss)",
+  t: "var(--mk-muster)", "|": "var(--mk-muster)", a: "var(--mk-muster)" };
+
+/* Zellen einer Zeile, die gleich sind, werden zu EINEM Rechteck zusammengefasst
+   (Lauflaenge) — sonst stehen ~300 rects im DOM statt ~40. */
+function storchHtml() {
+  var Z = 10, teile = "", breite = 0;
+  STORCH.forEach(function (zeile) { if (zeile.length > breite) breite = zeile.length; });
+  STORCH.forEach(function (zeile, y) {
+    var x = 0;
+    while (x < zeile.length) {
+      var c = zeile[x];
+      if (!STORCH_FARBE[c]) { x++; continue; } // "." und "a" bleiben Luecke
+      var n = 1;
+      while (x + n < zeile.length && zeile[x + n] === c) n++;
+      teile += '<rect x="' + x * Z + '" y="' + y * Z + '" width="' + n * Z +
+        '" height="' + Z + '" fill="' + STORCH_FARBE[c] + '"/>';
+      x += n;
+    }
+  });
+  return '<svg viewBox="0 0 ' + breite * Z + " " + STORCH.length * Z + '" width="' + breite * Z +
+    '" height="' + STORCH.length * Z + '" aria-hidden="true" focusable="false">' + teile + "</svg>";
+}
 
 var blaetterIdx = 0;
 
@@ -159,10 +228,10 @@ function knopf(text, klasse, aktion) {
 
 function ankunftKnoten(neu) {
   var box = el("div", "mk-ankunft");
-  var storch = document.createElement("pre");
+  var storch = document.createElement("div");
   storch.className = "mk-storch" + (REDUCE_MOTION ? "" : " mk-schwebt");
   storch.setAttribute("aria-hidden", "true");
-  storch.textContent = STORCH.join("\n");
+  storch.innerHTML = storchHtml();
   box.appendChild(storch);
   box.appendChild(el("div", "mk-ank-kopf", "Etwas ist angekommen."));
   box.appendChild(el("p", "mk-ank-text", "Da war jemand am Nest, während du geübt hast. Es liegen drei da – eins davon darf bei dir bleiben."));
