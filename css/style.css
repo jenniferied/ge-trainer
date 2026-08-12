@@ -813,8 +813,7 @@ p { margin: 0 0 var(--sp-3); }
   color: var(--ink-soft);
 }
 /* Gruen bleibt dem Erledigten vorbehalten; "offen" bekommt den Lila-Akzent. */
-.heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
-:root[data-theme="hell"] .heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
+.heute-zeile:not(.erledigt) .offen-badge { color: var(--glimmer-1); }
 /* Erledigt bekommt denselben kleinen Pop wie der Haken auf einer Themen-Karte -
    ein Belohnungsmoment, kein Feuerwerk. */
 .heute-zeile.erledigt .heute-status {
@@ -867,6 +866,32 @@ p { margin: 0 0 var(--sp-3); }
 /* Zustand drueben - gruen nur, wenn heute drueben schon geuebt wurde. */
 .quer-stand { font-size: .64rem; color: var(--ink-soft); white-space: nowrap; }
 .quer-stand.frisch { color: var(--ok); font-weight: 700; }
+.quer-stand-zeile {
+  display: flex; align-items: center; justify-content: flex-end;
+  flex-wrap: wrap; gap: 5px; margin-top: 2px;
+}
+.q-pille.mini { font-size: .62rem; padding: 0 6px; line-height: 1.45; }
+
+/* ---------- Offen-Zustand, eine Sprache in beiden Apps (Jennifer 12.08.) ----------
+   Ein kleines Statuslicht neben dem Wort "offen", das ruhig atmet. Bewusst nur
+   der Punkt und nicht die ganze Zeile: drei atmende Zeilen waeren Unruhe.
+   Und bewusst nur, wenn wirklich etwas offen ist - ein Punkt, der immer pulst,
+   ist Deko und keine Information. */
+.offen-badge {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  font-size: .68rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--glimmer-1); white-space: nowrap;
+}
+.heute-zeile .offen-badge { font-size: .74rem; }
+.puls-punkt {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0;
+  animation: offen-atmen 2.6s ease-in-out infinite;
+}
+@keyframes offen-atmen {
+  0%, 100% { opacity: .45; box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 40%, transparent); }
+  50% { opacity: 1; box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 0%, transparent); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand
@@ -875,6 +900,9 @@ p { margin: 0 0 var(--sp-3); }
   .heute-zeile:active, .kachel:active { transform: none; }
   /* Der Haken bleibt sichtbar, er hoert nur auf zu huepfen. */
   .zustand-badge.fertig, .heute-zeile.erledigt .heute-status { animation: none; }
+  /* Statt zu atmen steht der Offen-Punkt dann einfach voll da - der Zustand
+     darf nicht verschwinden, nur weil Bewegung reduziert ist. */
+  .puls-punkt { animation: none; opacity: 1; }
 }
 
 /* ---------- Maskottchen: das Ei in der Countdown-Karte ----------

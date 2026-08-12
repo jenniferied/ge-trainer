@@ -7,7 +7,7 @@ import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, konfe
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
-import { syncKarte, syncStart, fremdZuletzt } from "./sync.js";
+import { syncKarte, syncStart, fremdZuletzt, leseTabelle, fremdCache } from "./sync.js";
 import * as Mk from "./maskottchen.js";
 
 var themen = [];
@@ -122,6 +122,84 @@ function zustandBadge(zustand) {
 var ST_URL = "https://jenniferied.github.io/st-trainer/";
 var ST_CODE = "rose";
 
+/* Was der Querlink vom ST-Trainer erzaehlt, kommt aus drei kleinen Lese-Abfragen
+   (Jennifer, 12.08.: "die Verlinkungen sollen anzeigen, ob noch Mini-Games offen
+   sind und bei welcher Punktzahl wir uns befinden").
+
+   1. offene Mini-Runden - aus der events-Tabelle, die beide Trainer ohnehin
+      mitschreiben: welche Spiel-Modi wurden drueben HEUTE schon gespielt?
+   2. Punktestand - aus der sessions-Tabelle: die letzten fuenf bewerteten Laeufe,
+      Summe Punkte durch Summe Maximum. Das ist die Zahl, die drueben auch
+      "bestanden" entscheidet.
+   3. wann zuletzt - Zeitstempel der letzten lernstand-Zeile (Rueckfallanzeige,
+      wenn 1 und 2 nichts hergeben).
+
+   Warum nicht der Snapshot selbst: der ist drueben ein halbes Megabyte. Und das
+   dortige Tagesziel steht nur im lokalen State des ST-Trainers, es ist von
+   aussen gar nicht lesbar - eine Anzeige "so steht es um das Tagesziel drueben"
+   waere geraten.
+
+   EHRLICHKEIT: Jede der drei Abfragen kann einzeln ausfallen, dann bleibt genau
+   dieses Feld null und wird nicht angezeigt. Faellt alles aus, bleibt der Link
+   neutral - lieber gar keine Aussage als eine erfundene. Die einzige Richtung,
+   in die diese Anzeige irren kann, ist "zu viel offen" (wenn drueben die
+   events-Zeilen ausbleiben wuerden); "alles erledigt" kann sie nicht faelschlich
+   behaupten, denn dafuer muss sie Spiel-Zeilen von heute wirklich gesehen haben.
+
+   Die Liste der Spiele spiegelt den Hub des ST-Trainers (spiele.js hubHtml:
+   Paare, Signalwoerter, Zuordnen, Detektiv, Begriffe; "op" traegt beide
+   Operatoren-Spiele und wird an der Fragen-Id auseinandergehalten). Kommt
+   drueben ein Spiel dazu, zaehlt diese Anzeige eins zu wenig - das faellt auf
+   die sichere Seite. */
+
+var ST_SPIELE = ["vp", "opu", "opz", "detektiv", "begriffe"];
+
+function stSpielKey(e) {
+  if (e.modus !== "op") return e.modus;
+  return String(e.frage_id || "").indexOf("opz-") === 0 ? "opz" : "opu";
+}
+
+function mitternachtIso() {
+  var d = new Date(); d.setHours(0, 0, 0, 0);
+  return d.toISOString();   // lokale Mitternacht als UTC-Zeitpunkt, so steht ts in der DB
+}
+
+function stStatus() {
+  return fremdCache("st-status", function () {
+    var seit = encodeURIComponent(mitternachtIso());
+    return Promise.all([
+      fremdZuletzt(ST_CODE),
+      // Nur die Spiel-Modi und nur von heute - das sind ein paar Dutzend Zeilen.
+      leseTabelle("events?select=modus,frage_id&modus=in.(vp,op,detektiv,begriffe)&ts=gte." + seit + "&limit=400"),
+      // modus=not.like.ge-* schliesst die eigenen Zeilen aus, ohne sich auf den
+      // Nutzernamen zu verlassen (den kann man drueben umstellen).
+      leseTabelle("sessions?select=punkte,max_punkte&modus=not.like.ge-*&order=ts.desc&limit=5")
+    ]).then(function (r) {
+      var st = { zuletzt: r[0], offen: null, spiele: ST_SPIELE.length, quote: null };
+      if (r[1]) {
+        var heute = {};
+        r[1].forEach(function (e) { heute[stSpielKey(e)] = true; });
+        st.offen = ST_SPIELE.filter(function (k) { return !heute[k]; }).length;
+      }
+      if (r[2] && r[2].length) {
+        var p = 0, m = 0;
+        r[2].forEach(function (s) { p += s.punkte || 0; m += s.max_punkte || 0; });
+        if (m > 0) st.quote = Math.round(100 * p / m);
+      }
+      return st;
+    });
+  }, function (st) { return st.zuletzt != null || st.offen != null || st.quote != null; });
+}
+
+// Der Offen-Zustand in beiden Apps gleich: pulsierender Punkt plus das Wort.
+// Ohne etwas Offenes gibt es keinen Puls - ein Icon, das immer pulst, ist Deko.
+function offenBadge(text) {
+  var b = el("span", "offen-badge");
+  b.appendChild(el("i", "puls-punkt"));
+  b.appendChild(document.createTextNode(text));
+  return b;
+}
+
 function querLink() {
   var a = document.createElement("a");
   a.className = "quer-link";
@@ -130,19 +208,38 @@ function querLink() {
   a.appendChild(el("span", "quer-klein", "Schultheorie · 18.09."));
   a.setAttribute("aria-label", "Zum Schultheorie-Trainer, Roses anderer Klausur am 18.09.");
 
-  var stand = el("span", "quer-stand");
-  stand.hidden = true;
-  a.appendChild(stand);
+  var zeile = el("span", "quer-stand-zeile");
+  zeile.hidden = true;
+  a.appendChild(zeile);
 
-  fremdZuletzt(ST_CODE).then(function (ts) {
-    if (!ts || !a.isConnected) return;
-    var tag = new Date(ts); tag.setHours(0, 0, 0, 0);
-    var heute = new Date(); heute.setHours(0, 0, 0, 0);
-    var diff = Math.round((heute.getTime() - tag.getTime()) / 86400000);
-    if (diff <= 0) { stand.textContent = "heute schon geübt"; stand.classList.add("frisch"); }
-    else if (diff === 1) stand.textContent = "zuletzt gestern";
-    else stand.textContent = "zuletzt vor " + diff + " Tagen";
-    stand.hidden = false;
+  stStatus().then(function (st) {
+    if (!st || !a.isConnected) return;
+    var text = [];
+
+    if (st.quote != null) {
+      zeile.appendChild(quotePille(st.quote, "mini"));
+      text.push("Punktestand drüben " + st.quote + " Prozent");
+    }
+
+    if (st.offen > 0) {
+      zeile.appendChild(offenBadge(st.offen + " offen"));
+      text.push(st.offen + (st.offen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute noch offen");
+    } else if (st.offen === 0) {
+      zeile.appendChild(el("span", "quer-stand frisch", "✓ heute durch"));
+      text.push("die Mini-Runden von heute sind durch");
+    } else if (st.zuletzt != null) {
+      // Ueber die Spiele wissen wir nichts - dann wenigstens, wann zuletzt.
+      var tag = new Date(st.zuletzt); tag.setHours(0, 0, 0, 0);
+      var heute = new Date(); heute.setHours(0, 0, 0, 0);
+      var diff = Math.round((heute.getTime() - tag.getTime()) / 86400000);
+      var satz = diff <= 0 ? "heute schon geübt" : diff === 1 ? "zuletzt gestern" : "zuletzt vor " + diff + " Tagen";
+      zeile.appendChild(el("span", "quer-stand" + (diff <= 0 ? " frisch" : ""), satz));
+      text.push(satz);
+    }
+
+    if (!zeile.childNodes.length) return;   // nichts Belastbares -> Link bleibt neutral
+    zeile.hidden = false;
+    a.setAttribute("aria-label", "Zum Schultheorie-Trainer, Roses anderer Klausur am 18.09. – " + text.join(", "));
   });
   return a;
 }
@@ -514,6 +611,11 @@ function zuletztKarte(themen) {
   return karte;
 }
 
+/* Eine Zeile der Tagesliste. Offen und erledigt sprechen dieselbe Sprache wie
+   der Querlink oben rechts (Jennifer, 12.08.): was offen ist, pulst ruhig,
+   was erledigt ist, behaelt den kleinen Belohnungsmoment. Gepulst wird nur der
+   kleine Punkt am Wort "offen" - nicht die ganze Zeile und nicht das Emoji.
+   Drei atmende Zeilen waeren Unruhe; ein Statuslicht je Zeile ist Information. */
 function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
   var z = el("button", "heute-zeile" + (erledigt ? " erledigt" : ""));
   z.appendChild(el("span", "heute-icon", icon));
@@ -521,7 +623,7 @@ function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
   box.appendChild(el("b", null, titel));
   box.appendChild(el("span", null, klein));
   z.appendChild(box);
-  z.appendChild(el("span", "heute-status", status));
+  z.appendChild(erledigt ? el("span", "heute-status", status) : offenBadge(status));
   z.addEventListener("click", onClick);
   return z;
 }
@@ -546,7 +648,7 @@ function heuteDranKarte() {
   var w = Stats.wiederholPool(themen).length;
   if (w) {
     karte.appendChild(heuteZeile("♻️", w + (w === 1 ? " Frage" : " Fragen") + " zum Wiederholen",
-      "zuletzt danebengelegen", "starten", false,
+      "zuletzt danebengelegen", "offen", false,
       function () { zeige("wiederholen"); }));
   } else {
     karte.appendChild(el("div", "heute-leer", state.antwortLog.length

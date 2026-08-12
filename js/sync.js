@@ -382,6 +382,20 @@ function einSync() {
 
 var FREMD_CACHE_MS = 10 * 60000;
 
+/* Eine einzige Lese-Tuer nach draussen. Bewusst die EINZIGE Stelle, an der eine
+   fremde Zeile ueberhaupt angefasst wird, und sie kann nur GET: kein method,
+   kein body, kein Weg, hier versehentlich etwas zu schreiben. Antwort ist die
+   geparste Zeilenliste oder null - Fehler werden geschluckt, ein Ausfall darf
+   die Oberflaeche nie aufhalten. */
+export function leseTabelle(pfad) {
+  if (!supaAktiv()) return Promise.resolve(null);
+  var kopf = Object.assign({}, headers());
+  kopf.Prefer = "";
+  return fetch(CONFIG.supabaseUrl + "/rest/v1/" + pfad, { headers: kopf })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; });
+}
+
 export function fremdZuletzt(code) {
   var key = "ge-fremd-" + code;
   try {
@@ -392,18 +406,33 @@ export function fremdZuletzt(code) {
     }
   } catch (e) { /* kein sessionStorage - dann eben ohne Cache */ }
 
-  if (!supaAktiv()) return Promise.resolve(null);
-  var q = "?code=eq." + encodeURIComponent(code) + "&select=ts&order=ts.desc&limit=1";
-  var kopf = Object.assign({}, headers());
-  kopf.Prefer = "";
-  return fetch(lernstandUrl() + q, { headers: kopf })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (rows) {
-      var ts = (rows && rows[0] && rows[0].ts) ? new Date(rows[0].ts).getTime() : null;
-      try { sessionStorage.setItem(key, JSON.stringify({ ts: ts, geholt: Date.now() })); } catch (e) { /* egal */ }
-      return ts;
-    })
-    .catch(function () { return null; });
+  var q = CONFIG.lernstandTabelle + "?code=eq." + encodeURIComponent(code) + "&select=ts&order=ts.desc&limit=1";
+  return leseTabelle(q).then(function (rows) {
+    if (!rows) return null;
+    var ts = (rows[0] && rows[0].ts) ? new Date(rows[0].ts).getTime() : null;
+    try { sessionStorage.setItem(key, JSON.stringify({ ts: ts, geholt: Date.now() })); } catch (e) { /* egal */ }
+    return ts;
+  });
+}
+
+/* Kleiner Cache fuer zusammengesetzte Fremd-Abfragen (der Querlink oben rechts).
+   Gecacht wird nur ein Ergebnis, das wenigstens EINE belastbare Angabe enthaelt -
+   ein kompletter Fehlschlag soll sich nicht zehn Minuten festsetzen. */
+export function fremdCache(name, holen, brauchbar) {
+  var key = "ge-fremd-" + name;
+  try {
+    var roh = sessionStorage.getItem(key);
+    if (roh) {
+      var c = JSON.parse(roh);
+      if (Date.now() - c.geholt < FREMD_CACHE_MS) return Promise.resolve(c.wert);
+    }
+  } catch (e) { /* ohne Cache ist auch gut */ }
+  return holen().then(function (wert) {
+    if (wert && (!brauchbar || brauchbar(wert))) {
+      try { sessionStorage.setItem(key, JSON.stringify({ wert: wert, geholt: Date.now() })); } catch (e) { /* egal */ }
+    }
+    return wert;
+  });
 }
 
 var syncTimer = null;
