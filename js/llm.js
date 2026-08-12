@@ -131,7 +131,6 @@ export async function maskottchen(messages, stand) {
   const steuerung = new AbortController();
   const wecker = setTimeout(() => steuerung.abort(), 20000);
   try {
-    mkVerbrauch();
     const r = await fetch(url(), {
       method: "POST",
       headers: kopf(),
@@ -145,6 +144,16 @@ export async function maskottchen(messages, stand) {
         })),
       }),
     });
+    // Erst zaehlen, wenn wirklich ein Status zurueckkam. Der Zaehler stand
+    // frueher VOR dem fetch: ist die Function tot oder falsch konfiguriert,
+    // lief er trotzdem hoch, Rose bekam zwanzig freundliche Fallbacks und
+    // danach "Fuer heute hab ich genug geredet" — was nicht stimmte und sich
+    // anfuehlt, als wuerde die App sie anluegen. Ein abgebrochener Socket
+    // wirft und kommt hier nie an, kostet also auch nichts.
+    // Auch ein 4xx/5xx zaehlt: der Server wurde erreicht, und ein nicht
+    // zaehlender Fehlerpfad waere eine Schleife ohne Kostenbremse.
+    // Dieselbe Reihenfolge steht in st-trainer/app/js/mk-chat.js (senden).
+    mkVerbrauch();
     if (!r.ok) return null;
     const d = await r.json();
     return d && typeof d.antwort === "string" && d.antwort.trim() ? d.antwort.trim() : null;

@@ -38,16 +38,17 @@ export const CONFIG = {
   llmTagesLimit: 100,      // zweiter Kostenschutz neben dem serverseitigen Limit
 
   // ---- Kreaturen-Chat (Maskottchen) ----
-  // Der freie Text laeuft ueber art "maskottchen" in der Edge Function. Der
-  // Zweig ist im Repo fertig, aber NOCH NICHT DEPLOYT — deshalb steht der
-  // Schalter auf false und der Chat zeigt nur die Schnellantworten (die aus
-  // Roses lokalem Stand kommen und kein Netz brauchen).
+  // Der freie Text laeuft ueber art "maskottchen" in der Edge Function.
+  // DEPLOYT UND GEPRUEFT am 12.08.2026 abends: echter Aufruf gegen llm-ge kam
+  // mit 200 und einer passenden Antwort zurueck, die Roses Tagesstand kannte.
+  // Faellt die Function aus, greift weiter der stille Fallback in llm.js -
+  // Rose sieht nie einen Fehler, nur die Schnellantworten.
   //
   // WARUM EIN SCHALTER UND KEIN PROBEAUFRUF: gegen die alte Function schlaegt
   // ein unbekanntes art nicht sauber fehl. Sie wuerde stillen Muell liefern
   // oder einen 502, und llm.js schluckt beides. Also erst deployen, dann hier
   // auf true drehen, dann im echten Pfad testen.
-  mkChatFreitext: false,
+  mkChatFreitext: true,
   mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
   mkTagesLimit: 20,        // (ge-llm-tag, 100) nicht aufessen.
 };
