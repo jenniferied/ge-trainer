@@ -36,7 +36,7 @@
    Importiert nur core.js + config.js (siehe ARCHITEKTUR.md, keine Zyklen). */
 
 import { CONFIG } from "./config.js";
-import { state, speichern, antwortId, beiAntwort, beiFremdemStand, el } from "./core.js";
+import { state, speichern, antwortId, beiAntwort, beiFremdemStand, sitzungenNachziehen, el } from "./core.js";
 import { heuteAntworten } from "./stats.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js —
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
@@ -254,6 +254,77 @@ export function loescheChatVerlauf() {
   syncBald(500);
 }
 
+/* ---------- Sitzungen (Runden) ----------
+   Seit 13.08. faehrt state.sitzungen mit. Eine Sitzung ist rund 200 Byte; sechs
+   Runden am Tag ueber 30 Tage sind etwa 36 kB, das faellt neben dem Antwort-Log
+   nicht auf. Was an einer Sitzung ABGELEITET ist (beantwortet, bewertet, quote,
+   themen, ts), rechnet core.js nach dem Merge aus dem vereinigten Log neu - hier
+   werden nur die Felder vereinigt, die im Log nicht stehen.
+
+   Alle Regeln unten muessen REIHENFOLGE-UNABHAENGIG sein, sonst konvergieren
+   zwei Geraete nie und pushen sich in einer append-only Tabelle gegenseitig
+   voll. Darum ueberall Minimum/Maximum/ODER und nirgends "der neuere gewinnt". */
+
+/* Deckel nach ANZAHL, nie nach Alter: eine Altersgrenze rechnet gegen Date.now()
+   und ist auf zwei Geraeten nie derselbe Schnitt (ausfuehrlich bei CHAT_MAX). */
+export var SITZUNGEN_MAX = 300;
+
+function sitzungEine(s) {
+  if (!s || typeof s !== "object") return null;
+  var id = s.id == null ? "" : String(s.id);
+  var erstellt = typeof s.erstellt === "number" && isFinite(s.erstellt) ? s.erstellt : null;
+  // Ohne Id gibt es keinen Dedupe-Schluessel, ohne erstellt keine Sortierung.
+  // Lieber sichtbar weglassen als unsichtbar verschmelzen (wie bei chatEine).
+  if (!id || erstellt === null) return null;
+  return s;
+}
+
+// "wahr gewinnt" fuer bestanden, aber ohne aus false ein null zu machen.
+function obBestanden(a, b) {
+  if (a === true || b === true) return true;
+  if (a === false || b === false) return false;
+  return null;
+}
+function hoechstes(a, b) {
+  if (typeof a !== "number") return typeof b === "number" ? b : null;
+  if (typeof b !== "number") return a;
+  return Math.max(a, b);
+}
+
+function sitzungVereine(a, b) {
+  var out = Object.assign({}, a);
+  // Was die eine Seite noch gar nicht kennt, kommt von der anderen dazu.
+  Object.keys(b).forEach(function (k) { if (out[k] == null && b[k] != null) out[k] = b[k]; });
+  out.erstellt = Math.min(a.erstellt, b.erstellt);
+  out.ts = Math.max(a.ts || 0, b.ts || 0);
+  out.fertig = !!(a.fertig || b.fertig);
+  out.anzahl = hoechstes(a.anzahl, b.anzahl);
+  out.dauerSek = Math.max(a.dauerSek || 0, b.dauerSek || 0);
+  out.punkte = hoechstes(a.punkte, b.punkte);
+  out.max = hoechstes(a.max, b.max);
+  out.bestanden = obBestanden(a.bestanden, b.bestanden);
+  return out;
+}
+
+/* Reine Mengen-Operation: putzen, ueber die Id vereinigen, deterministisch
+   sortieren, deckeln. Wird von snapshot(), signatur() und mergeIn() benutzt. */
+export function sitzungSchnitt(liste) {
+  var map = {}, ids = [];
+  (liste || []).forEach(function (roh) {
+    var s = sitzungEine(roh);
+    if (!s) return;
+    if (!map[s.id]) { ids.push(s.id); map[s.id] = s; }
+    else map[s.id] = sitzungVereine(map[s.id], s);
+  });
+  var aus = ids.map(function (id) { return map[id]; });
+  // Zweiter Sortierschluessel ist Pflicht (siehe chatSchnitt): bei gleichem
+  // erstellt kaemen zwei Geraete sonst auf verschiedene Reihenfolgen.
+  aus.sort(function (x, y) {
+    return (x.erstellt - y.erstellt) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
+  });
+  return aus.slice(-SITZUNGEN_MAX);
+}
+
 /* ---------- Snapshot + Signatur ---------- */
 
 // Was hochgeladen wird. deviceId/pending/syncCode/theme bleiben geraetelokal -
@@ -283,7 +354,8 @@ export function snapshot(st) {
     ? heuteBlock(heuteAntworten(s.antwortLog || []), plan,
                  offenZaehler ? offenZaehler() : null) : null;
   var aus = { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
-    geloescht: s.geloescht || [], mk: s.mk || {}, mkChat: chatSchnitt(s.mkChat || []) };
+    geloescht: s.geloescht || [], mk: s.mk || {}, mkChat: chatSchnitt(s.mkChat || []),
+    sitzungen: sitzungSchnitt(s.sitzungen || []) };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -328,7 +400,17 @@ export function signatur(d) {
   // Eine aeltere, ungedeckelte Zeile von dort gilt sonst fuer immer als
   // verschieden und erzeugt bei jedem Sync einen Push ins Leere.
   var chat = chatSchnitt(daten.mkChat || []).map(function (m) { return m.id; }).join(",");
-  return [aids, mc, frei, tot, mk, chat].join("|");
+  /* Die Sitzungen brauchen mehr als ihre Ids. Eine WACHSENDE Runde traegt vom
+     ersten bis zum letzten Schritt dieselbe Id - stuende hier nur die Id, waere
+     die Runde nach dem ersten Push fuer immer "schon oben" und der Rest der
+     Antworten kaeme nie an. Darum haengen der Zaehler und der Fertig-Haken mit
+     dran; der ST-Trainer loest genau dasselbe bei offenen Sessions ueber
+     s.id + ":" + beantwortet. Der Fertig-Haken MUSS mit rein, weil er sich ohne
+     neue Antwort aendert (Rose geht am Ende der Runde auf die Startseite). */
+  var sit = sitzungSchnitt(daten.sitzungen || []).map(function (s) {
+    return s.id + ":" + (s.beantwortet || 0) + ":" + (s.fertig ? 1 : 0);
+  }).sort().join(",");
+  return [aids, mc, frei, tot, mk, chat, sit].join("|");
 }
 
 /* ---------- Merge ----------
@@ -339,7 +421,12 @@ export function signatur(d) {
    werden die gespeicherten Staende vereinigt.
    Grabstein-Arten in geloescht:
    - "<ts>-<qid>"    = aid einer einzelnen Antwort
-   - "stand:<qid>"   = der Alt-Stand dieser Frage (nur was NICHT im Log steht) */
+   - "stand:<qid>"   = der Alt-Stand dieser Frage (nur was NICHT im Log steht)
+   - "chat:<id>"     = eine geloeschte Chat-Nachricht
+   - "sit:<id>"      = eine geloeschte Sitzung. Es gibt heute keinen Knopf, der
+                       so einen Grabstein setzt - die Regel steht trotzdem hier
+                       und ist getestet, damit sie stimmt, sobald jemand einen
+                       Loeschen-Knopf nachruestet. */
 
 function ausLog(log) {
   var mc = {}, frei = {};
@@ -409,7 +496,7 @@ export function mergeIn(st, remote) {
     // Zufallsteil. Unwahrscheinlich, aber es waere ein Datenverlust ohne
     // jede Spur.
     var i = s.indexOf("-");
-    if (i > 0 && s.indexOf("stand:") !== 0 && s.indexOf("chat:") !== 0) totQids[s.slice(i + 1)] = true;
+    if (i > 0 && s.indexOf("stand:") !== 0 && s.indexOf("chat:") !== 0 && s.indexOf("sit:") !== 0) totQids[s.slice(i + 1)] = true;
   });
 
   // 2. Antwort-Log: Map per aid, remote zuerst, lokale Fassung gewinnt.
@@ -492,6 +579,24 @@ export function mergeIn(st, remote) {
   });
   st.mkChat = chatSchnitt(chat);
 
+  /* Sitzungen: Vereinigung ueber die Id, danach die abgeleiteten Zahlen aus dem
+     JETZT vereinigten Log neu rechnen. Drei Eigenschaften, an denen es haengt:
+       - Ein Snapshot OHNE sitzungen (jede Zeile, die vor dem 13.08. hochging)
+         entwertet nichts: r.sitzungen ist dann leer, und die Vereinigung mit
+         nichts laesst die lokalen Sitzungen unveraendert stehen. Dieselbe
+         Eigenschaft, die mkChat schon hat.
+       - Dieselbe Runde auf zwei Geraeten: es gewinnt kein "Stand", sondern es
+         wird feldweise vereinigt (frueheres erstellt, spaeteres ts, fertig als
+         ODER, groesste Dauer). beantwortet/bewertet/quote kommen ohnehin aus
+         dem Log und sind damit auf beiden Geraeten dieselbe Zahl.
+       - Grabsteine gelten auch hier, sonst kaeme eine geloeschte Runde beim
+         naechsten Sync vom anderen Geraet zurueck. */
+  var sitzungen = (r.sitzungen || []).concat(st.sitzungen || []).filter(function (s) {
+    return s && !tot["sit:" + String(s.id)];
+  });
+  st.sitzungen = sitzungSchnitt(sitzungen);
+  sitzungenNachziehen(st);
+
   return signatur(snapshot(st)) !== vorher;
 }
 
@@ -525,9 +630,13 @@ export function fortschrittZuruecksetzen() {
   (state.antwortLog || []).forEach(function (a) { grabstein(a.aid || antwortId(a)); });
   Object.keys(state.mc || {}).forEach(function (qid) { grabstein("stand:" + qid); });
   Object.keys(state.frei || {}).forEach(function (qid) { grabstein("stand:" + qid); });
+  // Die Runden gehoeren zum Fortschritt und muessen mit weg - sonst stuenden im
+  // Verlauf lauter leere Zeilen, deren Antworten es nicht mehr gibt.
+  (state.sitzungen || []).forEach(function (s) { if (s && s.id) grabstein("sit:" + s.id); });
   state.antwortLog = [];
   state.mc = {};
   state.frei = {};
+  state.sitzungen = [];
   speichern();
   syncBald(500);
 }
@@ -794,10 +903,19 @@ beiAntwort(function (e) {
   syncBald();
   if (!e || !e.qid) return;
   var voll = e.voll != null ? !!e.voll : e.richtig === true;
+  /* punkte: seit 13.08. loggt der Klausurmodus auch BEARBEITETE, aber noch nicht
+     bewertete Aufgaben (punkte === null). Die duerfen hier nicht als 0 in die
+     gemeinsame events-Tabelle laufen - das waere eine falsche Zahl in der
+     Datenbank, nicht nur in der Anzeige. Nur wo es wirklich eine Bewertung gibt,
+     steht eine Zahl. */
+  var punkte = e.punkte != null ? e.punkte : (e.modus === "klausur" ? null : (e.richtig === true ? 1 : 0));
   syncEvent({
     frage_id: e.qid,
-    gewaehlt: null,                                    // GE merkt sich die Option nicht
-    punkte: e.punkte != null ? e.punkte : (e.richtig === true ? 1 : 0),
+    // Seit 13.08. merkt sich GE die angetippte Option (Index in der Original-
+    // reihenfolge). Als Array, damit die Spalte dieselbe Form traegt wie beim
+    // ST-Trainer, der dort mehrere Kreuze ablegt.
+    gewaehlt: e.gewaehlt != null ? [e.gewaehlt] : null,
+    punkte: punkte,
     max_punkte: e.max != null ? e.max : 1,
     voll: voll,
     modus: e.modus || "ueben",

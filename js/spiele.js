@@ -18,7 +18,7 @@
      hooks.home()    -> Startseite
      hooks.spiele()  -> Spiele-Hub neu rendern */
 
-import { state, speichern, logAntwort, app, el, mischen, leeren } from "./core.js";
+import { state, speichern, logAntwort, sekundenSeit, app, el, mischen, leeren } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
 /* Die Mechanik des Begriffe-Blitz liegt seit dem 12.08.2026 im geteilten
    Baustein — dieselbe Datei treibt drueben den Begriffe-Blitz UND das
@@ -94,8 +94,25 @@ function katInfo(kat) {
 
 /* ---------- Log & Ziehung ---------- */
 
+/* Spiel-Antworten bekommen NIE eine echte Sitzung, sondern die Pseudo-sid
+   "spiel" - dieselbe Invariante wie im ST-Trainer. Grund: eine Karte ist
+   leichter als eine Klausuraufgabe, und eine Kartenrunde, die als Sitzung
+   zaehlte, wuerde den Rundenschnitt nach oben ziehen. Weil sie strukturell gar
+   keine Sitzung ist, kann sie die Quote nicht beruehren; fuer die Anzeige
+   lassen sich Spielantworten zu Tagesgruppen verdichten.
+
+   Neu seit 13.08.: thema und afb werden gefuellt, wo die Information vorliegt
+   (Begriffs-Kategorie -> Oberthema, Operatoren-Aufgabe -> Thema und AFB der
+   echten Aufgabe). Nur fuer die ANZEIGE: wertVon() in stats.js laesst modus
+   "spiel" weiter aus dem Thema-x-AFB-Raster, und ausLog() in sync.js
+   ueberspringt es weiter beim Ableiten der mc/frei-Staende.
+   Alteintraege werden NICHT nachtraeglich gefuellt - das aenderte ihre aid
+   nicht, ginge also nie hoch, und sie bleiben ehrlich leer. */
 function logSpiel(spiel, qid, richtig, zusatz) {
-  var e = { qid: qid, thema: null, afb: null, richtig: !!richtig, modus: "spiel", spiel: spiel };
+  var e = {
+    qid: qid, thema: null, afb: null, richtig: !!richtig, modus: "spiel", spiel: spiel,
+    sid: "spiel", art: spiel === "begriffe" ? "spiel-begriffe" : "spiel-operatoren"
+  };
   if (zusatz) Object.keys(zusatz).forEach(function (k) { e[k] = zusatz[k]; });
   logAntwort(e);
 }
@@ -342,6 +359,7 @@ function opRunde(themen, hooks) {
     spielKopf("🎯 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
 
     var item = runde[index];
+    var uhr = Date.now();   // eine Karte je Schirm, die Uhr darf hier loslaufen
     var karte = el("div", "karte");
     karte.appendChild(el("div", "frage-fortschritt", "Aufgabe " + (index + 1) + " von " + runde.length));
 
@@ -363,7 +381,12 @@ function opRunde(themen, hooks) {
         beantwortet = true;
         var richtig = afb === item.afb;
         if (richtig) richtige++; else gepatzt.push(item);
-        logSpiel("operatoren", item.id, richtig, item.art === "aufgabe" ? { afb: item.afb } : null);
+        // Bei einer echten Aufgabe kennen wir Thema und AFB - beides steht hier
+        // im selben Aufruf bereit. Ein reines Signalwort gehoert zu keinem
+        // Thema, da bleibt es ehrlich null.
+        var dazu = { zeit: sekundenSeit(uhr) };
+        if (item.art === "aufgabe") { dazu.afb = item.afb; dazu.thema = item.thema.id; }
+        logSpiel("operatoren", item.id, richtig, dazu);
 
         knoepfe.forEach(function (k) {
           k.knopf.disabled = true;
@@ -551,7 +574,9 @@ function bgRunde(kat, hooks) {
     paare: paare,
     linksText: linksText,
     rechtsText: rechtsText,
-    onTreffer: function (id, voll) { logSpiel("begriffe", id, voll); },
+    // info ist katInfo(kat) von oben: die Kategorie kennt ihr Oberthema, damit
+    // laesst sich eine Begriffe-Runde im Verlauf einem Thema zuordnen.
+    onTreffer: function (id, voll) { logSpiel("begriffe", id, voll, { thema: info.oberthema || null }); },
     onFertig: rundeFertig
   }));
   app.appendChild(fazitPlatz);

@@ -2,7 +2,8 @@
    Konzept-Check (MC), Frei ueben (AFB). Importiert core.js (State/Daten/Helfer)
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
-import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll } from "./core.js";
+import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
+  starteRunde, beendeRunde, antwortText, sekundenSeit } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
@@ -29,7 +30,13 @@ var themen = [];
    Zentrale Weiche fuer alle Screens. Neue Module (klausur.js, stats.js,
    spiele.js) haengen sich hier mit eigenen Faellen ein - siehe ARCHITEKTUR.md. */
 
+/* Jeder Wechsel des Screens schliesst eine laufende Uebungsrunde ab (core.js
+   beendeRunde). Das ist die einzige Stelle, an der eine Runde ohne eigenen
+   Abschluss-Knopf endet - und sie deckt alles ab, was ueber diesen Router
+   zurueckgeht: Startseite, Statistik, Themenwahl, Spiele. Eine Runde ohne
+   Antwort verschwindet dabei wieder, sie hat nie stattgefunden. */
 function zeige(route, arg) {
+  beendeRunde();
   switch (route) {
     case "thema": return zeigeThema(arg);
     case "check": return starteQuiz(arg);
@@ -37,8 +44,17 @@ function zeige(route, arg) {
     case "freiwahl": return zeigeFreiWahl();
     case "klausur": return Klausur.zeigeKlausur(themen, function () { zeige("start"); });
     case "mcquer": return Klausur.zeigeMcQuer(themen, function () { zeige("start"); });
-    case "mix": return Stats.zeigeMix(themen, HOOKS, false);
-    case "wiederholen": return Stats.zeigeMix(themen, HOOKS, true);
+    /* Die Runde beginnt SCHON HIER, vor dem Baukasten - und nicht erst in
+       stats.js, wenn die erste Karte steht. Grund: die Runden-Mechanik in
+       stats.js (runde()) wird von vier Einstiegen benutzt, und der Titel, den
+       Rose gedrueckt hat, ist nur hier bekannt. Steigt sie im Baukasten wieder
+       aus, raeumt beendeRunde die leere Sitzung von selbst weg. */
+    case "mix":
+      starteRunde({ art: "mix", titel: "Gemischte Runde", modus: "gemischt" });
+      return Stats.zeigeMix(themen, HOOKS, false);
+    case "wiederholen":
+      starteRunde({ art: "wiederholen", titel: "Wiederholen", modus: "gemischt" });
+      return Stats.zeigeMix(themen, HOOKS, true);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
     case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
     case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS);
@@ -57,7 +73,13 @@ var HOOKS = {
   stats: function () { zeige("stats"); },
   spiele: function () { zeige("spiele"); },
   mcKarte: function (thema, f, fortschritt, weiterText, onWeiter) { return mcKarte(thema, f, fortschritt, weiterText, onWeiter); },
-  freiKarte: function (thema, f) { return freiKarte(thema, f); }
+  // einzeln: in den Runden steht genau EINE Karte auf dem Schirm, darum darf die
+  // Uhr beim Rendern loslaufen. Auf der Themenseite stehen alle Aufgaben
+  // untereinander - dort waere das die Lesezeit der vorherigen Karten, deshalb
+  // startet die Uhr erst, wenn Rose die Aufgabe wirklich anfasst.
+  // Kein neuer Parameter an der Hook-Signatur: stats.js ruft weiter mit zwei
+  // Argumenten, die Unterscheidung passiert hier im Wrapper.
+  freiKarte: function (thema, f) { return freiKarte(thema, f, { einzeln: true }); }
 };
 
 /* ---------- Startseite ----------
@@ -1456,10 +1478,16 @@ function zeigeThema(thema) {
 // gleich anfuehlt. onWeiter(richtig) laeuft beim Klick auf den Weiter-Knopf.
 function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
   var karte = el("div", "karte");
+  // Eine MC-Karte steht immer allein auf dem Schirm, egal ueber welchen Einstieg
+  // - die Uhr darf hier also beim Bauen loslaufen.
+  var uhr = Date.now();
   if (fortschritt) karte.appendChild(el("div", "frage-fortschritt", fortschritt));
   if (f.unterthema) karte.appendChild(el("div", "unterthema-zeile", f.unterthema));
   karte.appendChild(el("div", "frage-text", f.frage));
 
+  // mischen() gibt eine Kopie zurueck (slice), f.optionen bleibt in der
+  // Originalreihenfolge indizierbar - genau die wird geloggt, damit sich spaeter
+  // sagen laesst, WELCHE falsche Antwort Rose gewaehlt hat.
   var optionen = mischen(f.optionen);
   var beantwortet = false;
 
@@ -1473,7 +1501,10 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
       state.mc[f.id] = state.mc[f.id] || { richtig: 0, falsch: 0 };
       if (richtig) state.mc[f.id].richtig++; else state.mc[f.id].falsch++;
       state.mc[f.id].zuletztRichtig = richtig;
-      logAntwort({ qid: f.id, thema: thema.id, afb: f.afb || null, richtig: richtig, modus: "check" });
+      logAntwort({
+        qid: f.id, thema: thema.id, afb: f.afb || null, richtig: richtig, modus: "check",
+        gewaehlt: f.optionen.indexOf(o), zeit: sekundenSeit(uhr)
+      });
 
       Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
         btn.disabled = true;
@@ -1506,6 +1537,7 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
 function starteQuiz(thema) {
   var fragen = mischen(thema.mc);
   var index = 0, punkte = 0;
+  starteRunde({ art: "thema-check", titel: thema.titel, modus: "check", anzahl: fragen.length });
 
   function frageZeigen() {
     leeren();
@@ -1636,6 +1668,7 @@ function entwurfTextBald(id, text) {
 
 function zeigeFrei(thema) {
   leeren();
+  starteRunde({ art: "thema-frei", titel: thema.titel, modus: "frei", anzahl: (thema.frei || []).length });
   setzeFarbe(app, thema.farbe);
 
   var zurueck = el("button", "zurueck", "← " + thema.titel);
@@ -1660,8 +1693,13 @@ var CHECK_OPTIONEN = [
    koennen (Musterloesung und KI-Urteil). appendChild verschiebt den Knoten, statt
    ihn zu kopieren - so kann es keine zwei Staende geben, die sich widersprechen.
    waehleWert() ist der Draht fuer die KI: sie darf denselben Weg gehen wie Roses
-   Finger, mehr nicht. */
-function selbstCheck(thema, f) {
+   Finger, mehr nicht.
+
+   dazu() liefert das, was nur die Karte weiss: Roses Antworttext, ob sie mit dem
+   Stift geschrieben hat und wie lange sie gebraucht hat. Als Funktion und nicht
+   als Wert, weil der Selbstcheck spaeter laeuft als der Aufbau der Karte - der
+   Text entsteht erst dazwischen. */
+function selbstCheck(thema, f, dazu) {
   var check = el("div", "selbstcheck");
   check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
   var stickerPlatz = null;
@@ -1670,7 +1708,8 @@ function selbstCheck(thema, f) {
   function waehlen(opt, vonKi) {
     state.frei[f.id] = opt.wert;
     speichern();
-    var eintrag = { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" };
+    var eintrag = Object.assign({}, dazu ? dazu() : null,
+      { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" });
     if (vonKi) eintrag.ki = true;   // ehrlich mitschreiben, woher die Einschaetzung kam
     logAntwort(eintrag);
     Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
@@ -1722,7 +1761,8 @@ function kiEinschaetzung(erg) {
 
 var GETROFFEN_ZEICHEN = { ja: "✓", teilweise: "~", nein: "✗" };
 
-function freiKarte(thema, f) {
+function freiKarte(thema, f, opts) {
+  var o = opts || {};
   var karte = el("div", "karte");
   karte.appendChild(el("span", "afb-badge afb-" + f.afb, AFB_TEXT[f.afb]));
 
@@ -1738,6 +1778,23 @@ function freiKarte(thema, f) {
 
   var e = entwurfLesen(f.id);
 
+  /* Was in den Log-Eintrag soll, und wie wir es wissen:
+     - getippt / handBenutzt sind Beobachtungen dieser Karte, keine Vermutungen.
+       Liegt beim Aufbau schon ein Entwurf da, uebernehmen wir dessen Spuren:
+       gespeicherter Text heisst getippt (oder ein bestaetigtes Transkript, das
+       ebenfalls im Textfeld landet), ein gespeichertes Bild heisst gezeichnet.
+       Ist ein Bild inzwischen dem Speicherdeckel zum Opfer gefallen, wissen wir
+       es nicht mehr - dann steht dort ehrlich nur "getippt".
+     - Die Uhr laeuft in den Runden ab dem Rendern (eine Karte je Schirm) und auf
+       der Themenseite erst ab dem ersten Anfassen. Fasst Rose nichts an und
+       schaetzt nur aus dem Kopf ein, bleibt zeit weg statt geraten zu werden.
+     - zeit steht nur am ERSTEN Eintrag: Umentscheiden ist keine zweite Runde. */
+  var uhr = o.einzeln ? Date.now() : null;
+  var zeitVergeben = false;
+  var getippt = !!(e.text || "").trim();
+  var handBenutzt = !!e.bild;
+  function uhrAn() { if (!uhr) uhr = Date.now(); }
+
   // Handschrift-Font und Stift-Symbol wie im Klausurmodus: die Klausur wird mit
   // der Hand geschrieben, das Ueben soll sich genauso anfuehlen.
   var feld = el("div", "frei-feld");
@@ -1748,9 +1805,12 @@ function freiKarte(thema, f) {
   // Das Feld waechst mit - auf dem Handy gibt es keinen Ziehgriff, und eine
   // AFB-III-Antwort passt nie in vier Zeilen. Gleiche Funktion wie im Klausurmodus.
   eingabe.addEventListener("input", function () {
+    getippt = true;
+    uhrAn();
     autoWachsen(eingabe);
     entwurfTextBald(f.id, eingabe.value);
   });
+  eingabe.addEventListener("focus", uhrAn);
   if (eingabe.value) requestAnimationFrame(function () { autoWachsen(eingabe); });
   feld.appendChild(eingabe);
 
@@ -1794,6 +1854,7 @@ function freiKarte(thema, f) {
   stift.title = "Mit dem Stift schreiben";
   stift.setAttribute("aria-label", "Mit dem Stift schreiben");
   stift.addEventListener("click", function () {
+    uhrAn();
     // Dieselbe Flaeche wie im Klausurmodus (klausur.js stiftFlaeche) - nicht
     // nachgebaut. Die Aufgabe steht dort oben auf dem Blatt.
     Klausur.stiftFlaeche(function (bilder) { handschrift(bilder); }, {
@@ -1808,6 +1869,7 @@ function freiKarte(thema, f) {
      KI-Antwort haengen. Die eiserne Regel aus llm.js gilt auch hier: faellt die
      Transkription aus, bleibt einfach das Bild an der Karte stehen. */
   function handschrift(bilder) {
+    handBenutzt = true;   // der Vermerk ueberlebt spaeter auch ohne das Bild
     var ent = entwurf(f.id);
     ent.bild = bilder.jpeg;
     entwurfSichern(f.id);
@@ -1838,8 +1900,28 @@ function freiKarte(thema, f) {
   karte.appendChild(handPlatz);
   karte.appendChild(kiZeile);
 
+  /* Was am Log-Eintrag haengt, wenn Rose sich einschaetzt. Alles steht zu diesem
+     Zeitpunkt fertig da - es wird nichts nachtraeglich angehaengt (eiserne Regel
+     im Kopf von core.js). Das BILD faehrt bewusst NICHT mit: ein Blatt wiegt
+     50 bis 133 kB, Roses kompletter gesyncter Lernstand wiegt 8,6 kB, und der
+     faehrt bei jedem Push komplett hoch UND runter. Was bleibt, ist das, was
+     zaehlt - die Umschrift und der Vermerk, dass mit der Hand geschrieben wurde.
+     Das Bild bleibt geraetelokal in state.freiEntwurf liegen. */
+  function logZusatz() {
+    var zus = { hand: handBenutzt };
+    var txt = antwortText(eingabe.value);
+    if (txt) zus.text = txt;
+    var q = getippt && handBenutzt ? "gemischt" : handBenutzt ? "hand" : getippt ? "getippt" : null;
+    if (q) zus.quelle = q;
+    if (!zeitVergeben) {
+      var z = sekundenSeit(uhr);
+      if (z !== null) { zus.zeit = z; zeitVergeben = true; }
+    }
+    return zus;
+  }
+
   // Nur einmal gebaut, wandert in die Box, die zuerst aufgeht.
-  var check = selbstCheck(thema, f);
+  var check = selbstCheck(thema, f, logZusatz);
 
   var reihe = el("div", "knopf-reihe");
   var zeigen = el("button", "knopf", "Musterlösung anzeigen");

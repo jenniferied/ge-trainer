@@ -13,7 +13,8 @@
    benutzt, wenn sie existieren. Fehlen sie oder liefern sie null, laeuft alles
    ueber Handschrift-Bild als Anhang bzw. reine Selbstbewertung weiter. */
 
-import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen } from "./core.js";
+import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
+  starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 import { syncSession } from "./sync.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
@@ -387,6 +388,9 @@ export function zeigeKlausur(themen, zurueck) {
   ZURUECK = zurueck || function () { };
   imLauf = false;   // erst rendereLauf/rendereKorrektur setzt das wieder
   timerStoppen();
+  // Eine Uebungsrunde, die noch offen ist, endet hier - der Klausurbogen fuehrt
+  // seine eigene Sitzung. Wird auch ohne den Router erreicht (Knopf im Ergebnis).
+  beendeRunde();
   if (state.klausur && state.klausur.aufgaben && state.klausur.aufgaben.length) return zeigeFortsetzen();
   zeigeSetup();
 }
@@ -715,7 +719,9 @@ function schreibBlattBauen(a, blattId, istLetztes) {
     img.src = blatt.canvasBild;
     img.alt = "Handschriftliche Antwort als Bild";
     b.appendChild(img);
-    b.appendChild(el("div", "kl-anhang-hinweis", "Als Bild angehängt. Beim Bewerten liest du selbst mit."));
+    b.appendChild(el("div", "kl-anhang-hinweis", blatt.transkribiert
+      ? "Deine Handschrift – oben steht die Umschrift. Das Bild bleibt auf diesem Gerät."
+      : "Als Bild angehängt. Beim Bewerten liest du selbst mit."));
   }
 
   var stift = el("button", "kl-stift", "✎");
@@ -1099,7 +1105,12 @@ function transkriptDialog(blatt, text, jpeg) {
     beiOk: function (wert) {
       blatt.text = (blatt.text ? blatt.text + "\n" : "") + wert;
       blatt.transkribiert = true;
-      blatt.canvasBild = null;
+      /* Bis zum 13.08. stand hier blatt.canvasBild = null - Roses Blatt war in
+         dem Moment weg, in dem sie das Transkript bestaetigt hat. Damit konnte
+         sie beim Bewerten nie gegenlesen, was die KI aus ihrer Schrift gemacht
+         hat. Das Bild bleibt jetzt liegen, solange der Bogen offen ist; es geht
+         nie ueber die Leitung (snapshot() nimmt state.klausur nicht mit) und der
+         Notabwurf oben raeumt es weg, wenn der Speicher knapp wird. */
       speichernJetzt();
       neuZeichnen();
     },
@@ -1514,13 +1525,103 @@ function rendereKorrektur() {
   beobachterStarten(rolle);
 }
 
+/* Was von einer Aufgabe geschrieben wurde - ueber alle ihre Blaetter hinweg.
+   Roses Text ist bei einer offenen Aufgabe die eigentliche Leistung; die
+   Punktzahl ist nur ihr Schatten. Bis zum 13.08. ging beides mit
+   state.klausur = null unter, und nach der Simulation konnte sie nicht mehr
+   nachlesen, was sie geschrieben hatte. */
+function blattSpuren(k, a) {
+  var texte = [], hand = false, getippt = false;
+  a.blaetter.forEach(function (id) {
+    var b = k.blaetter[id];
+    if (!b) return;
+    var t = (b.text || "").trim();
+    if (t) texte.push(t);
+    if (b.canvasBild || b.transkribiert) hand = true;
+    if (t && !b.transkribiert) getippt = true;
+  });
+  return {
+    text: kuerzeText(texte.join("\n")),
+    hand: hand,
+    quelle: getippt && hand ? "gemischt" : hand ? "hand" : getippt ? "getippt" : null,
+    bearbeitet: !!(texte.length || hand)
+  };
+}
+
+/* Ein Log-Eintrag je Aufgabe (nie je Blatt). Seit 13.08. auch fuer BEARBEITETE,
+   aber noch nicht bewertete Aufgaben - sonst sieht eine Aufgabe, an der Rose
+   geschrieben hat, im Log aus, als haette sie sie nie angefasst, und die
+   gepushte Zeile meldet mehr Aufgaben, als im Log stehen.
+   wertVon() in stats.js faengt punkte === null schon ab, das AFB-Raster bleibt
+   also unberuehrt, und sync.js schickt fuer diese Eintraege bewusst kein 0 an
+   die events-Tabelle.
+   Was gar nicht angefasst UND nicht bewertet wurde, bleibt draussen: ein leerer
+   Eintrag traegt keine Information, wuerde aber Roses Tageszahl aufblaehen. */
+function logAufgaben(k) {
+  var n = 0;
+  k.aufgaben.forEach(function (a) {
+    if (a.geloggt) return;
+    var sp = blattSpuren(k, a);
+    if (a.punkte === null && !sp.bearbeitet) return;
+    a.geloggt = true;
+    n++;
+    var e = {
+      qid: a.qid, thema: a.thema, afb: a.afb,
+      punkte: a.punkte, max: a.max,
+      modus: "klausur", kid: k.id,
+      sid: k.id, art: "klausur",
+      bearbeitet: sp.bearbeitet, hand: sp.hand,
+      // Treffer je Stichpunkt, direkt so wie in der Bewertung angeklickt.
+      // Daraus laesst sich spaeter sagen, welcher Stichpunkt regelmaessig fehlt.
+      bewertung: Array.isArray(a.bewertung) ? a.bewertung.slice() : null,
+      // Nur die Zahl der KI, nicht ihre Kommentare: die Texte waegen 1-2 kB je
+      // Aufgabe, aendern nichts an Roses Stand und fuehren bei jedem Sync mit.
+      // Wer die KI-Qualitaet auswerten will, nimmt die Tabelle events.
+      punkteKi: a.punkteKi == null ? null : a.punkteKi
+    };
+    if (sp.text) e.text = sp.text;
+    if (sp.quelle) e.quelle = sp.quelle;
+    logAntwort(e);
+  });
+  return n;
+}
+
+/* Die Sitzung zum Klausurlauf - lokal im Lernstand, damit der Verlauf sie
+   spaeter wiederfindet. Bewusst OHNE Runden-Kontext aus core.js: die Klausur hat
+   mit state.klausur schon einen Bogen, der einen Neustart der Seite ueberlebt,
+   und traegt hier ihre eigene Id (dieselbe, die auch in die Tabelle sessions
+   geht - so gehoeren Push-Zeile und lokale Sitzung sichtbar zusammen). */
+function klausurSitzung(k, bewertet) {
+  var maxP = gesamtPunkte(k);
+  var hatP = erreichtePunkte(k);
+  merkeSitzung({
+    id: k.id,
+    erstellt: k.gestartet,
+    ts: Date.now(),
+    art: "klausur",
+    titel: "Klausur-Simulation",
+    modus: "klausur",
+    anzahl: k.aufgaben.length,
+    dauerSek: Math.max(0, Math.round((Date.now() - k.gestartet - (k.pausiertMs || 0)) / 1000)),
+    // Ohne eine einzige Bewertung gibt es keine Punktzahl - dann steht dort
+    // nichts statt einer 0, die wie ein Durchfallen aussaehe.
+    punkte: bewertet ? hatP : null,
+    max: bewertet ? maxP : null,
+    bestanden: bewertet && maxP ? hatP >= bestehensGrenze(k) : null,
+    fertig: true
+  });
+}
+
 function abschliessen() {
   var k = state.klausur;
   if (!k) return zeigeSetup();
   if (!bewerteteAufgaben(k)) {
-    return void frag("Noch nichts bewertet", "Ohne Bewertung wird nichts gespeichert. Magst du erst ein paar Aufgaben durchgehen?", "Weiter bewerten", "Trotzdem beenden")
+    return void frag("Noch nichts bewertet", "Ohne Bewertung wird keine Punktzahl gespeichert. Magst du erst ein paar Aufgaben durchgehen?", "Weiter bewerten", "Trotzdem beenden")
       .then(function (ja) {
         if (ja) return;
+        // Auch hier wird geloggt: Rose hat vielleicht eine Stunde geschrieben
+        // und nur nicht bewertet. Ihr Text darf an dieser Stelle nicht sterben.
+        if (logAufgaben(k)) klausurSitzung(k, false);
         state.klausur = null;
         imLauf = false;
         speichernJetzt();
@@ -1528,16 +1629,8 @@ function abschliessen() {
       });
   }
 
-  // Ein Log-Eintrag je Aufgabe (nie je Blatt), nur fuer bewertete Aufgaben.
-  k.aufgaben.forEach(function (a) {
-    if (a.punkte === null || a.geloggt) return;
-    a.geloggt = true;
-    logAntwort({
-      qid: a.qid, thema: a.thema, afb: a.afb,
-      punkte: a.punkte, max: a.max,
-      modus: "klausur", kid: k.id
-    });
-  });
+  logAufgaben(k);
+  klausurSitzung(k, true);
 
   // Ein Sitzungs-Datensatz je Klausurlauf, wie im ST-Trainer - damit die
   // Auswertung die Laeufe vergleichen kann und nicht nur Einzelantworten sieht.
@@ -1553,7 +1646,22 @@ function abschliessen() {
     punkte: hatP,
     max: maxP,
     bestanden: maxP ? hatP >= bestehensGrenze(k) : null,
-    detail: { themen: k.themen, umfang: k.themen.length > 5 ? "alle" : "fuenf", feedback: k.feedback },
+    detail: {
+      themen: k.themen, umfang: k.themen.length > 5 ? "alle" : "fuenf", feedback: k.feedback,
+      // proFrage wie im ST-Trainer: ohne das steht in der Datenbank von einer
+      // ganzen Klausur nur eine Gesamtpunktzahl, und "welche Themen kosten
+      // Punkte?" laesst sich ueber mehrere Laeufe hinweg nie beantworten.
+      // Roses Antworttexte bleiben bewusst draussen - die stehen im Lernstand,
+      // der ist an ihren Sync-Code gebunden; sessions ist mandantenlos.
+      proFrage: k.aufgaben.map(function (a) {
+        return {
+          qid: a.qid, thema: a.thema, afb: a.afb,
+          punkte: a.punkte, max: a.max,
+          bewertung: Array.isArray(a.bewertung) ? a.bewertung.slice() : null,
+          punkteKi: a.punkteKi == null ? null : a.punkteKi
+        };
+      })
+    },
   });
 
   var kopie = JSON.parse(JSON.stringify(k));
@@ -1598,6 +1706,7 @@ export function zeigeMcQuer(themen, zurueck) {
   ZURUECK = zurueck || ZURUECK;
   imLauf = false;
   timerStoppen();
+  beendeRunde();   // siehe zeigeKlausur
 
   var pool = [];
   THEMEN.forEach(function (t) { (t.mc || []).forEach(function (f) { pool.push({ f: f, t: t }); }); });
@@ -1635,9 +1744,14 @@ function starteMcQuer(pool, wahl) {
   }));
 
   var index = 0, treffer = 0;
+  // Eigene Runde, damit die MC-Quermischung im Verlauf unter ihrem eigenen Namen
+  // steht und nicht mit dem verschmilzt, was Rose davor gemacht hat. Ein
+  // erneutes "Nochmal" schliesst die alte Runde ab und beginnt eine neue.
+  starteRunde({ art: "mc-quer", titel: "MC-Quermischung", modus: "check", anzahl: gezogen.length });
 
   function frageZeigen() {
     leeren();
+    var uhr = Date.now();
     var z = el("button", "zurueck", "← Startseite");
     z.addEventListener("click", function () { ZURUECK(); });
     app.appendChild(z);
@@ -1665,7 +1779,11 @@ function starteMcQuer(pool, wahl) {
         if (richtig) state.mc[f.id].richtig++; else state.mc[f.id].falsch++;
         state.mc[f.id].zuletztRichtig = richtig;
         speichern();
-        logAntwort({ qid: f.id, thema: t.id, afb: f.afb || null, richtig: richtig, modus: "check", quer: true });
+        logAntwort({
+          qid: f.id, thema: t.id, afb: f.afb || null, richtig: richtig, modus: "check", quer: true,
+          // Index in der ORIGINALreihenfolge - mischen() gibt eine Kopie zurueck.
+          gewaehlt: f.optionen.indexOf(o), zeit: sekundenSeit(uhr)
+        });
 
         Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
           btn.disabled = true;

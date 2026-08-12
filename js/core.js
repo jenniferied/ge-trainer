@@ -21,6 +21,9 @@ function laden() {
   s.mc = s.mc || {};
   s.frei = s.frei || {};
   if (!Array.isArray(s.antwortLog)) s.antwortLog = []; // Migration: neu seit Skeleton-Refactor
+  // Migration 13.08.: Sitzungen (Runden). Vorher gab es in GE ueberhaupt keine
+  // Liste - der Verlauf wurde aus dem Log ueber ein 30-Minuten-Fenster geraten.
+  if (!Array.isArray(s.sitzungen)) s.sitzungen = [];
   // Migration Sync-Port: Felder fuer den Geraete-Sync ergaenzen. Alle drei sind
   // GERAETE-lokal und werden nie hochgeladen (snapshot() in sync.js waehlt gezielt aus).
   if (!Array.isArray(s.geloescht)) s.geloescht = []; // Grabsteine (aids) fuer Geloeschtes
@@ -126,23 +129,221 @@ if (typeof window !== "undefined" && window.addEventListener) {
 
 /* ---------- Antwort-Log ----------
    Zentrales Log: JEDE beantwortete Frage landet hier, als Basis fuer
-   Statistik, Leitner und spaeter Supabase-Sync (Sync-Code rose-ge).
-   Eintrag: { qid, thema, afb, richtig ODER selbsteinschaetzung, modus, ts }
+   Statistik, Verlauf und Supabase-Sync (Sync-Code rose-ge).
+
+   PFLICHT, in jedem Modus:
    - qid:    Fragen-Id (z. B. "gr-mc-1", "gr-f-1")
-   - thema:  Themen-Id aus dem Themen-JSON (z. B. "grundlagen")
+   - thema:  Themen-Id aus dem Themen-JSON (z. B. "grundlagen"). Seit 13.08.
+             auch bei Spielen gefuellt, wo die Information vorliegt (die
+             Begriffs-Kategorie kennt ihr Oberthema, eine Operatoren-Aufgabe
+             ihr Thema). Wo es sie wirklich nicht gibt, bleibt das Feld ehrlich null.
    - afb:    1-3 oder null (MC-Altbestand hat noch kein afb-Feld)
-   - richtig: boolean (nur MC / Konzept-Check)
-   - selbsteinschaetzung: "gut" | "mittel" | "nochmal" (nur Frei ueben)
-   - modus:  "check" | "frei" (spaeter: "klausur", "spiel", ...)
-   - ts:     Date.now() */
+   - modus:  "check" | "frei" | "klausur" | "spiel"
+   - ts:     Date.now(), zugleich Sortierschluessel
+   - aid:    "<ts>-<qid>", der Dedupe-Schluessel des Merges
+   - sid:    Id der Sitzung, zu der die Antwort gehoert, oder null (Einzelantwort).
+             Pseudo-Wert "spiel" fuer ALLE Spielantworten - Kartenrunden bekommen
+             nie eine Sitzung (dieselbe Invariante wie im ST-Trainer, sonst
+             heben die leichteren Karten den Rundenschnitt).
+   - art:    Herkunft der Runde ("wiederholen", "mix", "thema-check", ...). Fehlt,
+             wenn die Antwort zu keiner Runde gehoert. DAS ist das Feld, das
+             "die Wiederholen-Runde heisst im Verlauf ploetzlich anders" behebt.
+   - zeit:   Sekunden von "Karte da" bis "Antwort", oder null/fehlend. Wird nur
+             gesetzt, wo die Zeit wirklich gemessen wurde - nie geschaetzt.
+
+   MODUS-SPEZIFISCH:
+   - richtig (check|spiel), gewaehlt (check: Index in der ORIGINAL-Optionsreihenfolge)
+   - selbsteinschaetzung "gut"|"mittel"|"nochmal", ki (frei)
+   - punkte (darf null sein), max, bearbeitet, bewertung[], punkteKi, kid (klausur)
+   - text, hand, quelle "getippt"|"hand"|"gemischt" (frei + klausur)
+   - spiel (spiel)
+
+   EISERNE REGEL, die alles andere traegt: ALLE Felder werden ZUM LOG-ZEITPUNKT
+   gestempelt. Es gibt in GE bewusst kein nachtraegliches Anreichern (das
+   ergaenzeAntwort-Muster des ST-Trainers). Grund: signatur() in sync.js haengt
+   an der aid-Liste. Ein Feld an einem NEUEN Eintrag reist huckepack mit dessen
+   aid nach oben; ein Feld, das nachtraeglich an einen SCHON GELOGGTEN Eintrag
+   kommt, aendert die Signatur nicht und geht nie hoch - und mergeIn ersetzt bei
+   gleicher aid das ganze Objekt, ein Geraet mit der nackten Fassung wuerde die
+   angereicherte ueberbuegeln. */
+
+// Laengster Antworttext, der mit in den Lernstand faehrt (Vorbild
+// CHAT_TEXT_MAX = 2000 in sync.js). Gekuerzt wird beim SCHREIBEN und nur dort.
+export var ANTWORT_TEXT_MAX = 2000;
+
+// Roses Antworttext auf die Form bringen, die ins Log darf: getrimmt, gedeckelt,
+// leer wird zu null (nicht ""). Ein leeres Feld soll im Log auch leer aussehen.
+export function antwortText(roh) {
+  var t = typeof roh === "string" ? roh.trim() : "";
+  return t ? t.slice(0, ANTWORT_TEXT_MAX) : null;
+}
+
+/* Bearbeitungsdauer in Sekunden. Ueber einer Stunde geben wir null zurueck statt
+   einer Zahl: dann lag die Karte offen, waehrend Rose etwas anderes gemacht hat,
+   und eine erfundene Dauer waere schlechter als gar keine. */
+var ZEIT_MAX_SEK = 3600;
+export function sekundenSeit(start) {
+  if (!start) return null;
+  var s = Math.max(0, Math.round((Date.now() - start) / 1000));
+  return s > ZEIT_MAX_SEK ? null : s;
+}
+
+/* ---------- Runden (state.sitzungen) ----------
+   Bis zum 13.08. fuehrte GE ueberhaupt keine Sitzungsliste; der Verlauf schnitt
+   das Antwort-Log alle 30 Minuten durch und riet die Ueberschrift aus dem
+   haeufigsten Modus. Deshalb stand ueber einer Wiederholen-Runde "Konzept-Check
+   u. a." und drei verschiedene Runden hintereinander wurden zu einer Zeile.
+
+   Eine Sitzung entsteht SOFORT beim Start der Runde, nicht am Ende: bricht Rose
+   mittendrin ab, gibt es keinen Abschlusspfad - die Sitzung steht dann einfach
+   da und ist nur nicht fertig. Eine Runde ohne einzige Antwort wird beim Beenden
+   wieder entfernt, damit ein versehentlich geoeffneter Baukasten keine leere
+   Zeile im Verlauf hinterlaesst.
+
+   Der Zeiger auf die laufende Runde ist bewusst MODULLOKAL und steht nicht im
+   State: schliesst Rose den Tab mitten in einer Runde und kommt morgen wieder,
+   soll die alte Runde einfach unfertig stehen bleiben - und nicht beim ersten
+   Klick mit einer Dauer von 14 Stunden abgeschlossen werden.
+
+   Gemerkt wird die ID, nicht das Objekt: der Merge (sync.js) darf die Sitzung
+   waehrend einer laufenden Runde durch eine vereinigte Fassung ersetzen, und ein
+   Objekt-Zeiger zeigte danach auf eine Waise, die niemand mehr speichert. */
+
+var laufendeId = null;
+
+export function aktiveRunde() {
+  if (!laufendeId) return null;
+  for (var i = 0; i < state.sitzungen.length; i++) {
+    if (state.sitzungen[i].id === laufendeId) return state.sitzungen[i];
+  }
+  return null;   // von aussen entfernt (Grabstein, Zuruecksetzen) - dann eben nicht
+}
+
+export function starteRunde(info) {
+  beendeRunde();
+  var i = info || {};
+  var jetzt = Date.now();
+  var s = {
+    id: "s-" + jetzt + "-" + Math.random().toString(36).slice(2, 8),
+    erstellt: jetzt,
+    ts: jetzt,
+    art: i.art || "ueben",
+    titel: i.titel || "Übungsrunde",
+    modus: i.modus || null,
+    anzahl: typeof i.anzahl === "number" ? i.anzahl : null,
+    themen: [],
+    beantwortet: 0,
+    bewertet: 0,
+    quote: null,
+    punkte: null,
+    max: null,
+    bestanden: null,
+    dauerSek: 0,
+    fertig: false
+  };
+  state.sitzungen.push(s);
+  laufendeId = s.id;
+  speichern();
+  return s;
+}
+
+export function beendeRunde() {
+  var s = aktiveRunde();
+  laufendeId = null;
+  if (!s) return null;
+  sitzungNachziehen(state, s);
+  if (!s.beantwortet) {
+    // Nichts beantwortet - die Runde hat nie stattgefunden.
+    state.sitzungen = state.sitzungen.filter(function (x) { return x !== s; });
+    speichern();
+    return null;
+  }
+  s.fertig = true;
+  // Bis zur LETZTEN ANTWORT, nicht bis jetzt: sonst zaehlt die Zeit mit, die das
+  // Ergebnis-Banner offen stand oder das Handy in der Tasche lag.
+  s.dauerSek = Math.max(0, Math.round(((s.ts || s.erstellt) - s.erstellt) / 1000));
+  speichern();
+  return s;
+}
+
+/* Eine fertige Sitzung von aussen eintragen (die Klausur baut ihre selbst: sie
+   hat mit state.klausur schon einen Bogen, der einen Neustart der Seite
+   ueberlebt, und braucht darum keinen modullokalen Zeiger). Gleiche Id ersetzt. */
+export function merkeSitzung(roh) {
+  if (!roh || !roh.id) return null;
+  var s = null;
+  for (var i = 0; i < state.sitzungen.length; i++) {
+    if (state.sitzungen[i].id === roh.id) { s = Object.assign(state.sitzungen[i], roh); break; }
+  }
+  if (!s) { s = Object.assign({ erstellt: Date.now(), ts: Date.now(), fertig: true }, roh); state.sitzungen.push(s); }
+  sitzungNachziehen(state, s);
+  speichern();
+  return s;
+}
+
+/* Der Wert einer Antwort auf der 0..1-Skala. SPIEGEL von wertVon() in stats.js -
+   core.js darf stats.js nicht importieren (das waere der Zyklus aus
+   ARCHITEKTUR.md). Wer dort die Bewertung aendert, muss hier nachziehen; die
+   Anzeige darf die Quote jederzeit selbst aus dem Log nachrechnen, diese Felder
+   an der Sitzung sind nur eine Bequemlichkeit. */
+var SELBST_WERT = { gut: 1, mittel: 0.5, nochmal: 0 };
+function quoteWert(a) {
+  if (!a) return undefined;
+  if (a.modus === "check") return a.richtig ? 1 : 0;
+  if (a.modus === "frei") return SELBST_WERT[a.selbsteinschaetzung];
+  if (a.modus === "klausur") return (typeof a.punkte === "number" && a.max > 0) ? a.punkte / a.max : undefined;
+  return undefined;   // modus "spiel" bleibt draussen, wie im Raster
+}
+
+/* Die abgeleiteten Zahlen einer Sitzung neu aus dem Log rechnen. Bewusst
+   NEU RECHNEN statt hochzaehlen: so kann die Zahl nach einem Merge oder nach
+   dem Loeschen einer Antwort nicht von der Wahrheit im Log abweichen - und weil
+   sie eine reine Funktion des Logs ist, kommen zwei Geraete auf dasselbe
+   Ergebnis (sonst gaebe es Push-Ping-Pong). */
+export function sitzungNachziehen(st, s) {
+  if (!s) return s;
+  var eintraege = (st.antwortLog || []).filter(function (a) { return a && a.sid === s.id; });
+  // Umentscheiden ist kein zweiter Versuch: von einer ununterbrochenen Kette
+  // gleicher qid zaehlt nur die letzte Antwort (gleiche Regel wie zeilen() in stats.js).
+  var zaehlt = eintraege.filter(function (a, i) {
+    return !(i + 1 < eintraege.length && eintraege[i + 1].qid === a.qid);
+  });
+  s.beantwortet = zaehlt.length;
+  var werte = [];
+  zaehlt.forEach(function (a) { var w = quoteWert(a); if (w !== undefined) werte.push(w); });
+  s.bewertet = werte.length;
+  s.quote = werte.length ? werte.reduce(function (a, b) { return a + b; }, 0) / werte.length : null;
+  var zaehler = {}, reihe = [];
+  zaehlt.forEach(function (a) {
+    if (!a.thema) return;
+    if (zaehler[a.thema] === undefined) { zaehler[a.thema] = 0; reihe.push(a.thema); }
+    zaehler[a.thema]++;
+  });
+  s.themen = reihe.sort(function (a, b) { return zaehler[b] - zaehler[a]; });
+  var letzte = eintraege[eintraege.length - 1];
+  if (letzte && letzte.ts > (s.ts || 0)) s.ts = letzte.ts;
+  return s;
+}
+
+export function sitzungenNachziehen(st) {
+  (st.sitzungen || []).forEach(function (s) { sitzungNachziehen(st, s); });
+  return st.sitzungen || [];
+}
 
 export function logAntwort(eintrag) {
   var e = Object.assign({ afb: null, ts: Date.now() }, eintrag);
+  var runde = aktiveRunde();
+  // Runden-Kontext stempeln. Aufrufer duerfen sid selbst setzen (die Spiele
+  // tragen "spiel", die Klausur ihre Bogen-Id) - dann bleibt das stehen.
+  if (e.sid === undefined) e.sid = runde ? runde.id : null;
+  // art nur setzen, wenn es eine gibt. Ein Feld mit "unbekannt" waere geraten.
+  if (e.art === undefined && runde) e.art = runde.art;
   // ts muss je Antwort eindeutig sein, sonst kollidiert die aid beim Merge.
   var letzte = state.antwortLog[state.antwortLog.length - 1];
   if (letzte && letzte.qid === e.qid && letzte.ts >= e.ts) e.ts = letzte.ts + 1;
   e.aid = antwortId(e);
   state.antwortLog.push(e);
+  if (runde && e.sid === runde.id) sitzungNachziehen(state, runde);
   speichern();
   // Hook 4 (ARCHITEKTUR.md): einzige Schreibstelle ins Log - hier haengt sich der
   // Sync ein (sync.js ruft beiAntwort() und stoesst einen Debounce-Push an).
