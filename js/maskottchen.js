@@ -120,6 +120,25 @@ export function stufeVon(herzen) {
   return i;
 }
 
+/* ---------- Die Sperrklinke: einmal erreicht, bleibt erreicht ----------
+   herzenStand() rechnet die GANZE Historie mit dem HEUTIGEN Tagesziel, und das
+   schwankt taeglich (Zielband hier 10-40). Je enger die Leiter wird, desto
+   sicherer ueberspringt so ein Rutsch eine Stufengrenze — und dann ist das Tier
+   am naechsten Tag wieder ein Ei. Eine Zahl, die sinkt, ist aergerlich; ein
+   Tier, das ent-schluepft, ist ein Wortbruch.
+
+   mk.stufeMax merkt sich die hoechste je erreichte Stufe, wird nur groesser und
+   synct mit (sync.js: snapshot, signatur UND eine eigene Max-Regel im Merge).
+   Geraeteuebergreifend noetig, weil der Tagesplan geraetelokal liegt: zwei
+   Geraete rechnen am selben Tag verschiedene Herzenzahlen aus.
+   Gleiche Loesung im ST-Trainer — beide Kopien zusammen halten. */
+export function stufeJetzt(herzen) {
+  state.mk = state.mk || {};
+  var stufe = Math.min(Math.max(stufeVon(herzen), state.mk.stufeMax || 0), STUFEN.length - 1);
+  if (stufe > (state.mk.stufeMax || 0)) { state.mk.stufeMax = stufe; speichern(); }
+  return stufe;
+}
+
 /* ---------- Das Ei, Blockgrafik ----------
    Volle Flaeche statt Umriss. Die Musterung ist keine andere Zeichenart,
    sondern nur eine zweite Farbe auf denselben Bloecken. */
@@ -401,7 +420,10 @@ export function markenKnoten(tz, minP, zielP) {
    Reine Funktion: kein Zugriff auf state, Uhr oder Historie. */
 export function blaseText(w) {
   var herzen = w.herzen, sterne = w.sterne, tage = w.tage, stunde = w.stunde, hh = w.hh;
-  var stufe = stufeVon(herzen);
+  // stufeMax ist die Sperrklinke (siehe stufeJetzt): die Stufe faellt nie unter
+  // das schon Erreichte zurueck. Geklemmt, damit ein gespeicherter Wert aus einer
+  // laengeren Leiter hier nicht ins Leere greift.
+  var stufe = Math.min(Math.max(stufeVon(herzen), w.stufeMax || 0), STUFEN.length - 1);
   var naechste = STUFEN[stufe + 1];
   var nacht = stunde >= 22 || stunde < 6;
   // Was heute schon dazukam. Nachts bleibt das weg — kein Abend-Mahnmal.
@@ -421,8 +443,10 @@ export function blaseText(w) {
 
 function standKnoten(tz, neu) {
   var st = herzenStand(tz);
+  // stufeJetzt() zieht die Sperrklinke nach; blaseText() bekommt sie herein und
+  // rechnet nicht selbst. Sonst haette die Blase eine andere Stufe als das Bild.
   var t = blaseText({ herzen: st.herzen, sterne: st.sterne, tage: st.tage,
-    stunde: new Date().getHours(), hh: herzenHeute(tz) });
+    stunde: new Date().getHours(), hh: herzenHeute(tz), stufeMax: stufeJetzt(st.herzen) });
   var stufe = t.stufe;
   var v = EIER[eiIndex()];
 

@@ -133,7 +133,11 @@ export function signatur(d) {
   // Server-Zeile ohne mk nicht dauerhaft als verschieden gilt.
   // ts gehoert mit rein: waehlt jemand dasselbe Ei erneut, ist das eine neue
   // Wahl und muss den Server erreichen, sonst gewinnt dort der aeltere Stempel.
-  var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0);
+  // stufeMax gehoert ebenfalls hier rein und NICHT nur in den Snapshot: erreicht
+  // Rose auf dem Handy eine neue Stufe, aendert sich sonst die Signatur nicht,
+  // es wird nie gepusht, und auf dem Tablet faellt das Tier zurueck.
+  var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0) +
+    ":" + ((daten.mk && daten.mk.stufeMax) || 0);
   return [aids, mc, frei, tot, mk].join("|");
 }
 
@@ -266,6 +270,11 @@ export function mergeIn(st, remote) {
   var rMk = r.mk || {};
   if (rMk.ei && (rMk.ts || 0) > (st.mk.ts || 0)) { st.mk.ei = rMk.ei; st.mk.ts = rMk.ts || 0; }
   else if (!st.mk.ei && rMk.ei) { st.mk.ei = rMk.ei; st.mk.ts = rMk.ts || 0; }
+  // stufeMax dagegen NICHT nach Zeitstempel: das ist kein Wert, sondern ein
+  // Zaehlwerk, das nur steigen darf. Nach ts-Regel koennte ein Geraet mit
+  // niedrigerer, aber neuerer Stufe die hoehere ueberschreiben — also genau der
+  // Rueckfall, den stufeMax verhindern soll. Darum bedingungslos das Maximum.
+  st.mk.stufeMax = Math.max(st.mk.stufeMax || 0, rMk.stufeMax || 0);
 
   return signatur(snapshot(st)) !== vorher;
 }
