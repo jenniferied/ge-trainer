@@ -368,8 +368,44 @@ function tagesSatz(tz) {
 
    Die Kreatur weiss ihre Tierart erst ab Mk.TIER_STUFE. Vorher bleibt offen,
    was aus ihr wird; die Frage danach wird gar nicht erst angeboten. */
+/* Seit wie vielen Tagen uebt Rose ueberhaupt? Spanne vom ERSTEN Uebungstag bis
+   heute, beide eingeschlossen. uebungsTage() liefert die Tage aufsteigend, also
+   ist der erste Eintrag der Anfang. Ruhetage dazwischen zaehlen mit: gefragt ist,
+   wie lange die Kreatur schon dabei ist, nicht wie fleissig.
+   null, solange es keinen einzigen Uebungstag im Log gibt — der Fortschritt aus
+   der Zeit vor dem Log (altFortschritt) hat keinen Zeitstempel, da wird nichts
+   geraten. */
+function dabeiSeitTagen() {
+  var tage = Stats.uebungsTage();
+  if (!tage.length) return null;
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  return Math.max(1, Math.round((heute.getTime() - tage[0].ts) / 86400000) + 1);
+}
+
+/* Wie viel sitzt schon? Genau die Zaehlung, die auf der Startseite in jeder
+   Themen-Kachel steht (mcStand + freiStand), nur ueber alle Themen summiert.
+   Bewusst dieselben zwei Funktionen und nicht der Umweg ueber state.mc/state.frei:
+   sonst zaehlten Ids von Aufgaben mit, die es im Korpus nicht mehr gibt. */
+function sitztGesamt(liste) {
+  var n = 0, gesamt = 0;
+  (liste || []).forEach(function (t) {
+    var mc = mcStand(t), fr = freiStand(t);
+    n += mc.richtig + fr.gut;
+    gesamt += mc.gesamt + fr.gesamt;
+  });
+  return { n: n, gesamt: gesamt };
+}
+
 function mkStand(tz, stufe) {
   var hs = Mk.herzenStand(tz);
+  // themen ist der Modul-State dieser Datei und beim Oeffnen des Chats immer
+  // geladen (die Startseite entsteht erst danach). Trotzdem defensiv: ein leeres
+  // Array laeuft durch alle Stats-Funktionen sauber durch und ergibt Nullen, ein
+  // undefined wuerde in alleItems() werfen — und ein geworfener Fehler im Adapter
+  // heisst, dass sich das Sheet gar nicht erst oeffnet.
+  var liste = themen || [];
+  var stat = Stats.statistik(liste);
+  var sitzt = sitztGesamt(liste);
   return {
     appName: "GE-Trainer",
     fach: "Didaktik im Förderschwerpunkt geistige Entwicklung",
@@ -391,6 +427,36 @@ function mkStand(tz, stufe) {
     // Der Baustein leitet daraus istNacht() ab; die Stunde einmal hier zu holen
     // heisst, dass Fallback und Schnellantworten dieselbe Nacht meinen.
     stunde: new Date().getHours(),
+
+    /* ---------- Roses Lernstand ----------
+       Jennifer, 12.08.: "du solltest knowlegde haben wie ihren lernstand/ihre
+       beantworteten fragen, etc. nicht nur der tag." Feldliste und Begruendung
+       stehen im geteilten Baustein (standFelder), damit beide Trainer dieselbe
+       Struktur schicken. Hier steht nur, woher der GE-Trainer die Zahlen nimmt.
+
+       Was bewusst NICHT mitgeht, obwohl stats.js es fertig liefert: statistik().quote,
+       das AFB-Raster mit seinen Quoten je Zelle und die Quoten aus letzteRunden().
+       Das sind Leistungsmasse, und die Kreatur berichtet, sie bewertet nicht. */
+
+    // Alle geloggten Antworten. Der undatierte Alt-Fortschritt aus der Zeit vor
+    // dem Antwort-Log (altFortschritt, seit 10.08.) fehlt hier bewusst: er hat
+    // keinen Zeitstempel, und eine Summe aus zwei Waehrungen waere keine Zahl,
+    // die Rose auf der Statistik-Seite wiederfindet.
+    beantwortet: stat.antwortenGesamt,
+    dabeiSeitTagen: dabeiSeitTagen(),
+    sitzt: sitzt,
+    // Karten je Thema aus dem AFB-Raster - dieselbe Zahl, die auf der
+    // Statistik-Seite in der Themenzeile steht. Der Baustein deckelt auf drei.
+    themen: (stat.raster || []).map(function (r) {
+      return { name: r.thema && r.thema.titel, karten: r.n };
+    }),
+    // Der Stapel "zuletzt danebengelegen". Heisst in der Oberflaeche bewusst
+    // nicht "faellig" (es gibt hier kein Spaced Repetition), und die Kreatur
+    // sagt es genauso: es liegt etwas da, es ist nichts ueberfaellig.
+    wiederholen: Stats.wiederholPool(liste).length,
+    // Probeklausuren gibt es nur im ST-Trainer. null heisst "diese App fuehrt
+    // das nicht", die Edge Function laesst die Zeile dann ganz weg.
+    probeklausuren: null,
   };
 }
 

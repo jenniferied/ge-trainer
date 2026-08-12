@@ -1204,10 +1204,17 @@ h2.abschnitt-titel, .abschnitt-titel {
 
 /* Senden. Eigener Name statt .btn.small: den definieren beide Apps
    verschieden. color: var(--card) statt #fff, weil --accent im hellen Modus
-   dunkel und im dunklen hell ist — der Kontrast dreht damit richtig mit. */
+   dunkel und im dunklen hell ist — der Kontrast dreht damit richtig mit.
+
+   Die Flaeche ist NICHT --accent pur, sondern um 12 % abgedunkelt. Gemessen am
+   12.08.2026 abends in allen vier Zustaenden: ST hell 4,83:1, ST dunkel 4,77:1,
+   GE dunkel 7,6:1 — aber GE HELL nur 4,38:1 (#fffdf8 auf #4a7d9e) und damit
+   unter den 4,5:1, die lesbar heisst. Das Abdunkeln hebt genau diese eine
+   Kombination ueber die Grenze und laesst die anderen drei, wo sie sind.
+   Wer --accent in einer der Apps aendert, misst hier nach. */
 .chat-senden {
   flex: none; border: 0; border-radius: 12px; cursor: pointer;
-  background: var(--accent); color: var(--card);
+  background: color-mix(in srgb, var(--accent) 88%, #000); color: var(--card);
   font: inherit; font-size: 1.05rem; font-weight: 700; line-height: 1;
   padding: 0 14px; min-width: 44px; min-height: 40px;
 }

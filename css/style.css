@@ -1144,21 +1144,4 @@ p { margin: 0 0 var(--sp-3); }
    sondern die Uebersetzung genau dort, wo der geteilte Baustein sie braucht.
    Faellt weg, sobald das Knopf-System zusammengelegt ist (.btn vs .knopf steht
    als offener Punkt in beiden ROADMAPs). */
-.chat-sheet .sheet-grip {
-  width: 42px; height: 4px; border-radius: 2px;
-  background: var(--line); margin: 0 auto 12px;
-}
-.chat-sheet .btn.small {
-  font: inherit; font-weight: 700; font-size: 1.05rem; line-height: 1; cursor: pointer;
-  background: var(--tfarbe); color: #14111f;
-  border: none; border-radius: 999px;
-  padding: 10px 16px; min-height: 40px;
-  box-shadow: var(--shadow);
-}
-:root[data-theme="hell"] .chat-sheet .btn.small { color: #fff; }
-.chat-sheet .btn.small:disabled { opacity: .45; cursor: default; }
-.chat-sheet .linkish {
-  border: 0; background: none; cursor: pointer; font: inherit; font-size: .82rem;
-  color: var(--ink-soft); text-decoration: underline;
-  padding: 8px 4px 0; display: inline-block;
-}
+:root[data-theme="hell"] 

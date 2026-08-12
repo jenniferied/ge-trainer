@@ -186,7 +186,90 @@ function sichereVerlauf(key, verlauf) {
    wie ein Persona-Fehler aus statt wie eine Feldkollision:
      tageBisKlausur  Kalendertage bis zur Klausur (aus config.klausurTag)
      uebungstage     an wie vielen Tagen Rose ueberhaupt geuebt hat
-   Deshalb heissen sie hier ausgeschrieben und nie beide tage. */
+   Deshalb heissen sie hier ausgeschrieben und nie beide tage.
+
+   ---------------------------------------------------------------------------
+   DER LERNSTAND (Jennifer, 12.08. abends, woertlich)
+
+   "du solltest knowlegde haben wie ihren lernstand/ihre beantworteten fragen,
+   etc. nicht nur der tag"
+
+   Bis dahin kannte die Kreatur nur den heutigen Tag. Die sechs Felder unten
+   sind der Lernstand, und sie sind alle BESCHREIBEND: Anzahlen, Namen, Tage.
+   Was hier bewusst NICHT steht, obwohl beide Apps es haetten:
+
+     Quoten, Prozente, Sicherheits-Sterne, Beherrschungs-Balken, Trend,
+     Entwicklung (besser/schlechter), Staerken und Schwaechen.
+
+   Denn die Kreatur BERICHTET, sie bewertet nicht. Eine Zahl, die eine Leistung
+   misst, laesst sich nicht neutral vorlesen — sie wird zum Urteil, sobald sie
+   im Satz steht. Anzahlen dagegen sind nur wahr.
+
+   NULL HEISST HIER ETWAS ANDERES ALS BEI offen. Bei offen ist null eine
+   Aussage ("wir wissen es heute nicht") und muss im Block stehen, sonst wird
+   aus Unwissen Entwarnung. Bei den Lernstand-Feldern heisst null schlicht
+   "diese App fuehrt das nicht" — probeklausuren gibt es nur im ST-Trainer,
+   wiederholen nur im GE-Trainer. Solche Zeilen laesst standBlock() in der
+   Edge Function WEG, statt "unbekannt" zu schreiben: sonst redet die Kreatur
+   ueber Probeklausuren in einer App, die keine hat. */
+
+/* Nur nicht-negative, endliche Zahlen; alles andere wird null. Gerundet, damit
+   keine 12.000000000000002 Uebungstage im Prompt landen. */
+function nOderNull(w) {
+  return typeof w === "number" && isFinite(w) && w >= 0 ? Math.round(w) : null;
+}
+
+/* Ein Zaehlerpaar wie { n, gesamt }. Nur gueltig, wenn BEIDE Zahlen da sind und
+   gesamt > 0 — "3 von 0" waere keine Auskunft, sondern ein Rechenfehler, den
+   das Modell brav vorlaese. */
+function paarOderNull(w, a, b) {
+  if (!w || typeof w !== "object") return null;
+  var x = nOderNull(w[a]), y = nOderNull(w[b]);
+  if (x === null || y === null || y <= 0) return null;
+  var raus = {};
+  raus[a] = Math.min(x, y);
+  raus[b] = y;
+  return raus;
+}
+
+/* Wie viele Fragen schon sicher sassen — aber NICHT, solange es keine gibt.
+   "0 von 456 sitzen" ist wahr und trotzdem der falsche erste Satz an jemanden,
+   der gerade anfaengt. Der ST-Trainer macht es auf seiner Startseite genauso:
+   der Teil "N gemeistert" erscheint dort erst, wenn N ueber null ist
+   (main.js, `${g.st.gem ? ... : ""}`). Eine Zeile weniger im Block, und die
+   Kreatur redet ueber das, was da ist, statt ueber das, was noch nicht da ist.
+   Sobald die erste Frage sitzt, ist es eine gute Nachricht und steht drin. */
+function sitztOderNull(w) {
+  var p = paarOderNull(w, "n", "gesamt");
+  return p && p.n > 0 ? p : null;
+}
+
+/* Die Themenliste. [{ name, karten }], absteigend nach karten.
+
+   BEWUSST OHNE QUOTE: hier steht, WIE VIEL Rose bei einem Thema war, nie WIE
+   GUT. Genau das ist Jennifers Beispiel ("du warst diese Woche viel bei
+   Schulrecht" statt "du kannst Schulrecht schlecht").
+
+   Und bewusst gedeckelt: eine vollstaendige Tabelle aller Themen ist eine
+   Rangliste, und eine Rangliste liest sich von unten. Drei Namen sind eine
+   Beobachtung, sechs sind ein Zeugnis. Themen ohne Karten fallen raus — ein
+   Thema, das gar nicht vorkommt, ist kein Vorwurf. */
+var MAX_THEMEN = 3;
+
+function themenListe(w) {
+  if (!Array.isArray(w)) return null;
+  var raus = [];
+  for (var i = 0; i < w.length; i++) {
+    var e = w[i] || {};
+    var name = typeof e.name === "string" ? e.name.slice(0, 60) : "";
+    var karten = nOderNull(e.karten);
+    if (!name || !karten) continue;
+    raus.push({ name: name, karten: karten });
+  }
+  raus.sort(function (a, b) { return b.karten - a.karten; });
+  return raus.length ? raus.slice(0, MAX_THEMEN) : null;
+}
+
 export function standFelder(roh) {
   var s = roh || {};
   return {
@@ -210,6 +293,32 @@ export function standFelder(roh) {
        liesHeute() in tagesstand.js. */
     offen: Array.isArray(s.offen) ? s.offen : null,
     stunde: typeof s.stunde === "number" ? s.stunde : new Date().getHours(),
+
+    /* ---- Lernstand (Begruendung im Block ueber dieser Funktion) ---- */
+
+    /* Wie viele Fragen Rose insgesamt beantwortet hat. Beide Apps zaehlen das
+       ohnehin fuer ihre Statistik-Seite; nachgerechnet wird hier nichts. */
+    beantwortet: nOderNull(s.beantwortet),
+    /* Seit wie vielen Tagen sie ueberhaupt uebt — gezaehlt ab ihrem ersten
+       Uebungstag, nicht ab der Installation. Das Gegenstueck zu uebungstage:
+       dabeiSeitTagen ist die Spanne, uebungstage sind die Tage darin, an denen
+       wirklich etwas passiert ist. Die Kreatur darf beide nennen, aber nie die
+       Luecke dazwischen ausrechnen — das waere eine Fehltage-Zaehlung. */
+    dabeiSeitTagen: nOderNull(s.dabeiSeitTagen),
+    /* { n, gesamt } — wie viele Fragen schon sicher sassen. Was "sicher" heisst,
+       entscheidet jede App fuer sich (ST: Leitner-Stufe 3, GE: zuletzt richtig
+       bzw. Selbsteinschaetzung "gut"). Fuer die Kreatur ist es dieselbe Aussage,
+       und sie nennt beide Zahlen oder keine — "120 sitzen" ohne das Ganze
+       daneben klingt nach Bewertung. */
+    sitzt: sitztOderNull(s.sitzt),
+    /* [{ name, karten }] — bei welchen Themen sie bisher wie viel geuebt hat. */
+    themen: themenListe(s.themen),
+    /* Wie viele Aufgaben im Stapel "nochmal ansehen" liegen. Nur der GE-Trainer
+       fuehrt so einen Stapel (wiederholPool); im ST-Trainer ist das Feld null
+       und faellt aus dem Block. */
+    wiederholen: nOderNull(s.wiederholen),
+    /* { geschafft, gesamt } — Probeklausuren. Gibt es nur im ST-Trainer. */
+    probeklausuren: paarOderNull(s.probeklausuren, "geschafft", "gesamt"),
   };
 }
 
