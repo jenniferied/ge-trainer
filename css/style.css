@@ -253,7 +253,16 @@ p { margin: 0 0 var(--sp-3); }
    (5,3:1). Steht deshalb hier und nicht im Paket - style.css wird nach
    geteilt.css geladen und gewinnt bei gleicher Spezifitaet. */
 :root { --offen-ink: #10233a; }
-:root[data-theme="hell"] { --offen-ink: var(--accent-ink, #fff); }
+/* Auf dem hellen Papier traegt der Akzent weisse Schrift - aber knapp: --accent
+   #4a7d9e kommt auf 4,45:1 und verfehlt die 4,5:1 fuer ~11 px fett um Haaresbreite
+   (der alte Kommentar hier behauptete 4,5:1, nachgerechnet stimmt das nicht ganz).
+   Das Abzeichen nimmt deshalb einen Hauch dunkleres Blau als die Flaechen ringsum:
+   #477a9a, 4,65:1, vom Akzent mit blossem Auge nicht zu unterscheiden.
+   (Jennifer, 12.08., zusammen mit der Nacht-Fassung drueben entschieden.) */
+:root[data-theme="hell"] {
+  --offen-ink: var(--accent-ink, #fff);
+  --offen-bg: #477a9a;
+}
 
 /* GE-Zusatz, nicht Teil des geteilten Musters: der kleine Belohnungsmoment,
    wenn ein Thema einmal komplett durch ist. Kurz und leise - eine
