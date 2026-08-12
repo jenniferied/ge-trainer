@@ -48,7 +48,10 @@
 import { CONFIG } from "./config.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
-import { liesHeute, liesOffen, tagesPunktKlasse, tagesText, tagesWorte, tagesLos, losText, losWorte } from "./geteilt-tagesstand.js";
+// tagesPunktKlasse wird hier nicht mehr gebraucht (Rest aus der Zeit, als der
+// Querlink einen Leiterpunkt statt einer Pille trug) - main.js holt sich
+// tagesPilleKlasse direkt aus dem Baustein.
+import { liesHeute, liesOffen, tagesZeigen, nochNichts } from "./geteilt-tagesstand.js";
 
 export const ST_URL = "https://jenniferied.github.io/st-trainer/";
 const ST_CODE = "rose";
@@ -88,7 +91,16 @@ function schreib(key, o) {
    v3 (12.08.): lernscore ist raus, dafuer der rohe heute-Block.
    v4 (12.08. abends): runden ist raus. Die offenen Tagesaufgaben kommen jetzt
    als fertige Liste im heute-Block (Feld offen), gezaehlt vom ST-Trainer
-   selbst — samt Namen fuer den Tooltip. */
+   selbst — samt Namen fuer den Tooltip.
+   NICHT hochgezaehlt am 12.08. spaetabends, obwohl sich die Anzeige-Regel
+   geaendert hat (tagesZeigen/nochNichts) - und das ist die Praezisierung, die
+   sich niemand neu herleiten soll: seit v3 liegt im Cache nur noch der ROHE
+   fremde Block, gedeutet wird erst beim Zeichnen. Eine Aenderung an der ANZEIGE
+   oder an den Lesefunktionen in geteilt-tagesstand.js wirkt deshalb sofort auf
+   alles, was schon gespeichert ist; es gibt keinen abgeleiteten Wert, der
+   veralten koennte, und eine Erhoehung erzwaenge nur den Abruf derselben
+   Serverzeile. Hochzaehlen muss, wer die GESPEICHERTEN FELDER anfasst (die
+   Zeile mit heute: daten.heute weiter unten) - nicht, wer nur anders liest. */
 const AUSWERTUNG_V = 4;
 const liesStand = () => { const c = lies(CACHE_KEY); return c && c.v === AUSWERTUNG_V ? c : null; };
 const schreibStand = (o) => schreib(CACHE_KEY, Object.assign({ v: AUSWERTUNG_V }, o));
@@ -175,10 +187,13 @@ export function stStand() {
     frisch: tagVon(c.ts) === heuteTag(),
     // liesHeute() verwirft alles, was nicht von heute ist - auch einen Block,
     // der noch im Cache liegt, weil drueben seit gestern niemand gepusht hat.
-    heute: h,
-    // Genau dieser Fall ist der Anstupser: kein frischer Block, weil der letzte
-    // Push von gestern oder aelter ist. Begruendung in tagesLos().
-    los: tagesLos(c.ts),
+    // tagesZeigen() haelt zusaetzlich einen frischen Block mit n = 0 zurueck:
+    // "0 % · 0/60" waere die Rueckstands-Lesart, die losText() vermeiden soll.
+    // Begruendung ausfuehrlich in geteilt-tagesstand.js bei nochNichts().
+    heute: tagesZeigen(h) ? h : null,
+    // Der Anstupser, aus BEIDEN Wegen: kein frischer Block (letzter Push von
+    // gestern oder aelter) ODER ein frischer Block, der n = 0 sagt.
+    los: nochNichts(h, c.ts),
     // Die offenen Tagesaufgaben, wie der ST-Trainer sie selbst gezaehlt hat.
     // null heisst "wir wissen es nicht" und ist streng etwas anderes als die
     // leere Liste, die "heute alles erledigt" heisst.

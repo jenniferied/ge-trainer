@@ -21,7 +21,7 @@ import * as MkChat from "./geteilt-maskottchen-chat.js";
 import * as Llm from "./llm.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
-import { tagesPilleKlasse, tagesText, tagesWorte, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
+import { tagesPilleKlasse, tagesText, tagesWorte, zeigAnstupser, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
 
 var themen = [];
 
@@ -172,26 +172,24 @@ function offenBadge(text, extra) {
 
    Am Link haengen genau zwei Angaben (Jennifer, 12.08.: "Da sollte auch nur
    stehen: offene Spiele, wie viel Prozent wir sind, und dann die entsprechend
-   passende Farbe"):
+   passende Farbe"), und BEIDE kommen fertig aus dem fremden Snapshot:
 
-   1. OFFENE MINI-RUNDEN - aus der events-Tabelle, die beide Trainer ohnehin
-      mitschreiben: welche Spiel-Modi liefen drueben HEUTE schon? Winzige
-      Abfrage, ein paar Dutzend Zeilen.
-   2. DIE PROZENTZAHL - der Lernscore des ST-Trainers, also genau die Zahl, die
-      drueben auf der eigenen Startseite im Balken steht. Sie wird in nachbar.js
-      aus dem Snapshot nachgerechnet (siehe der ausfuehrliche Kopf dort). Vorher
-      stand hier die Punktequote der letzten fuenf Laeufe - das war eine ANDERE
-      Groesse und am 12.08. um 46 Prozentpunkte daneben.
+   1. WAS DRUEBEN HEUTE NOCH OFFEN IST - die Liste, die der ST-Trainer selbst
+      aus seiner Kachel-Funktion gezaehlt hat (Feld offen im heute-Block). Die
+      Laenge wird zur Zahl im Abzeichen, die Namen stehen im Tooltip.
+   2. DER TAGESFORTSCHRITT - Prozent vom Tagespensum, ebenfalls aus dem
+      heute-Block. 100 % heisst "Pensum geschafft", nicht "alles gelernt".
 
-   Die Farbe kommt aus der Leiter dieser App (ui.quoteStufe), damit eine
-   Prozentzahl im GE-Trainer ueberall dasselbe bedeutet.
+   Hier wird nichts nachgerechnet und nichts nachgebaut. Die Farbe der Pille
+   kommt aus der geteilten Farbleiter des Tages (tagesPilleKlasse im Baustein),
+   nicht aus ui.quoteStufe - eine Tagesfarbe soll in beiden Apps dasselbe
+   bedeuten.
 
-   EHRLICHKEIT: Jede Abfrage kann einzeln ausfallen, dann bleibt genau dieses
-   Feld null und wird nicht angezeigt. Faellt alles aus, bleibt der Link neutral -
-   lieber gar keine Aussage als eine erfundene. Die Offen-Anzeige kann nur in
-   Richtung "zu viel offen" irren (wenn drueben die events-Zeilen ausbleiben);
-   "alles erledigt" kann sie nicht faelschlich behaupten, denn dafuer muss sie
-   Spiel-Zeilen von heute wirklich gesehen haben.
+   EHRLICHKEIT: es gibt nur noch EINEN Abruf, und faellt er aus, bleibt der Link
+   neutral - lieber gar keine Aussage als eine erfundene. Fehlt der heute-Block
+   (drueben laeuft eine aeltere Fassung), fehlt die Auskunft, statt dass eine
+   Null behauptet wird. null heisst "wir wissen es nicht", die leere Liste
+   heisst "heute alles erledigt"; aus null wird nie Entwarnung.
 
    AM ABEND DES 12.08. IST HIER EINE GANZE MASCHINERIE WEGGEFALLEN, und der
    Grund gehoert zur Datei. Bis dahin stand hier eine eigene Abfrage der
@@ -240,21 +238,26 @@ function querLink() {
        erledigt". Aus null wird nie Entwarnung. */
     var offen = s && s.offen;
 
-    /* Wenn drueben heute noch gar nichts lief, tritt der Anstupser weiter unten
-       AN DIE STELLE des Offen-Abzeichens, statt danebenzustehen. Zwei Gruende,
-       beide auf 360 px nachgemessen: die Kopfzeile wurde sonst so breit, dass
-       vom App-Namen links nur noch ein Buchstabe uebrig blieb, und es haetten
-       zwei Dinge gleichzeitig gepulst. "Heute noch nichts" sagt ohnehin das
-       Staerkere - was offen ist, steht weiter im Tooltip. */
-    var losStatt = !!(s && !s.heute && s.los);
+    /* Abzeichen und Anstupser koennen gleichzeitig zutreffen, seit ein frischer
+       Block mit n = 0 auch als "heute noch nichts" gilt (nochNichts() in
+       nachbar.js). Nebeneinander passen sie nicht - bei 320 px laeuft die Seite
+       in beiden Apps ueber, gemessen 27 px hier und 31 px drueben - und zwei
+       gleichzeitig rot pulsende Dinge waeren ohnehin eine Wand aus Alarm.
+       Welches weicht, beantwortet EINE Funktion im geteilten Baustein, damit
+       die beiden Apps es nicht verschieden beantworten: das Abzeichen gewinnt,
+       weil es mehr sagt und antippbar gemeint ist. Bis zum 12.08. spaetabends
+       stand hier die umgekehrte Regel (der Anstupser ersetzte das Abzeichen);
+       sie war praktisch unerreichbar und haette die Liste auf dem Handy in den
+       title verbannt, wo es kein Hover gibt. Begruendung bei zeigAnstupser(). */
+    var anstupser = zeigAnstupser(s && s.los, offen);
 
     if (offen && offen.length) {
       // Wortwahl aus offenText(), damit sie nicht getrennt von der Gegenrichtung
       // driftet. Zahl UND Namen stammen aus derselben Liste - Abzeichen und
       // Tooltip koennen also nicht auseinanderlaufen.
-      if (!losStatt) stand.appendChild(offenBadge(offenText(offen.length), "kompakt"));
+      stand.appendChild(offenBadge(offenText(offen.length), "kompakt"));
       worte.push("heute noch offen: " + offen.join(", "));
-    } else if (offen && !losStatt) {
+    } else if (offen) {
       // Leere Liste, nicht null: drueben ist heute wirklich alles erledigt.
       stand.appendChild(standBadge(true, "✓ heute", "kompakt"));
       worte.push("drüben ist heute alles erledigt");
@@ -272,7 +275,7 @@ function querLink() {
       pille.appendChild(document.createTextNode(tagesText(s.heute)));
       stand.appendChild(pille);
       worte.push(tagesWorte(s.heute, "ST"));
-    } else if (s && s.los) {
+    } else if (anstupser) {
       /* Der Anstupser (Jennifer, 12.08.): heute drueben noch nichts. Kein
          Zahlenpaar, weil wir das dortige Tagesziel gar nicht kennen - und weil
          "0 von 60" sich wie ein Rueckstand liest statt wie ein offener Tag. */
