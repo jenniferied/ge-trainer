@@ -82,6 +82,18 @@ function schreib(key, o) {
   try { localStorage.setItem(key, JSON.stringify(o)); } catch (e) { /* voll oder gesperrt - dann eben ohne */ }
 }
 
+/* Version der AUSWERTUNG, nicht der Daten. Der Cache wurde bisher nur ungueltig,
+   wenn sich der Snapshot drueben bewegt hat (`c.ts === ts`) - aendert sich dagegen
+   die RECHNUNG, blieb die alte Zahl unbegrenzt stehen, weil jeder Abruf nur
+   `geholt` auffrischte. Genau das ist am 12.08. passiert: die Prozentzahl kam noch
+   aus der alten Formel und war durch nichts zu bewegen, solange Rose drueben nicht
+   uebte (ihr Snapshot ruehrt sich ja nur beim Ueben). Ein Cache muss ungueltig
+   werden, wenn sich die Frage aendert - nicht nur, wenn sich die Antwort aendert.
+   WER lernscoreVon() ODER DIE GESPEICHERTEN FELDER AENDERT, ZAEHLT HIER HOCH. */
+const AUSWERTUNG_V = 2;
+const liesStand = () => { const c = lies(CACHE_KEY); return c && c.v === AUSWERTUNG_V ? c : null; };
+const schreibStand = (o) => schreib(CACHE_KEY, Object.assign({ v: AUSWERTUNG_V }, o));
+
 /* ---------- Der Fragen-Index des ST-Trainers ----------
    Nur was fuer den Nenner gebraucht wird: die Ids der zaehlenden Fragen und,
    je Probeklausur, welche Ids gesperrt sind, solange sie nicht bestanden ist.
@@ -210,7 +222,7 @@ let laeuft = null;
 export function hole() {
   if (!aktiv()) return Promise.resolve(null);
   if (laeuft) return laeuft;
-  const c = lies(CACHE_KEY);
+  const c = liesStand();
   if (c && c.geholt && Date.now() - c.geholt < POLL_MS) return Promise.resolve(c);
 
   laeuft = fetch(leseUrl("&select=ts&order=ts.desc&limit=1"), { headers: leseKopf() })
@@ -221,7 +233,7 @@ export function hole() {
       // Nichts Neues drueben und die Zahl steht schon: nur den Cache auffrischen.
       if (c && c.ts === ts && typeof c.lernscore === "number") {
         const frisch = Object.assign({}, c, { geholt: Date.now() });
-        schreib(CACHE_KEY, frisch);
+        schreibStand(frisch);
         return frisch;
       }
       return Promise.all([
@@ -235,7 +247,7 @@ export function hole() {
         // Ohne Index gibt es keine ehrliche Zahl - dann bleibt sie weg, statt
         // eine andere Groesse als Lernscore auszugeben.
         const neu = { ts: ts, geholt: Date.now(), lernscore: score, runden: offeneRunden(daten) };
-        if (typeof score === "number") schreib(CACHE_KEY, neu);
+        if (typeof score === "number") schreibStand(neu);
         return neu;
       });
     })
@@ -247,7 +259,7 @@ export function hole() {
 /* Was der Link zeigen darf - aus dem Cache, ohne Netz. null heisst: wir wissen
    nichts, also behauptet der Link auch nichts. */
 export function stStand() {
-  const c = lies(CACHE_KEY);
+  const c = liesStand();
   if (!c || !c.ts) return null;
   return {
     ts: c.ts,
