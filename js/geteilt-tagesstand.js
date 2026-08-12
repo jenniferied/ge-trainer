@@ -146,7 +146,25 @@ export function heuteBlock(n, plan, offen) {
    Richtung "zu viel offen" irren, nie in Richtung "alles erledigt". */
 export function liesHeute(daten) {
   var h = daten && daten.heute;
-  if (!h || h.v !== HEUTE_V) return null;
+  /* AELTERE Fassungen werden ANGENOMMEN, nur neuere verworfen. Bis zum Abend des
+     12.08. stand hier `h.v !== HEUTE_V`, und das war ein Fehler, der sofort
+     zugeschlagen hat: mit der Erhoehung auf v2 hat der Leser schlagartig jeden
+     bereits gespeicherten v1-Block fuer ungueltig erklaert — Bloecke, die die
+     Prozentzahl vollstaendig enthielten. Jennifer sah daraufhin am Querlink gar
+     nichts mehr und fragte zu Recht, warum es nach dem Umbau schlechter ist.
+
+     Die Regel, die daraus folgt und allgemein gilt:
+
+       Eine Versionserhoehung, die ein Feld HINZUFUEGT, darf alte Daten nicht
+       entwerten. Nur eine, die die BEDEUTUNG vorhandener Felder aendert, muss es.
+
+     Ein neueres Format verwerfen wir weiterhin: dort koennte ein bekanntes Feld
+     etwas anderes bedeuten, und dann ist Schweigen richtig. Fehlende Felder eines
+     aelteren Blocks meldet der jeweilige Leser als "nicht bekannt" — liesOffen()
+     gibt fuer einen v1-Block null zurueck, und der Querlink zeigt dann eben nur
+     die Prozentzahl statt zusaetzlich das Offen-Signal. Weniger sagen ist in
+     Ordnung; nichts sagen, obwohl man es weiss, ist es nicht. */
+  if (!h || typeof h.v !== "number" || h.v < 1 || h.v > HEUTE_V) return null;
   if (h.tag !== heuteTag()) return null;
   if (typeof h.n !== "number" || h.n < 0 || !(h.ziel > 0)) return null;
   return h;

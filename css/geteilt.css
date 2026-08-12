@@ -469,28 +469,43 @@
    weiterhin im aria-label und im title, es geht also nichts verloren.
    --------------------------------------------------------------------------- */
 
+/* MASSE: exakt die der Probeklausur-Reihe im ST-Trainer (.pk-box) — Jennifer,
+   12.08. abends: "Die sollen so breit sein wie bei Klausurtrainern, diese
+   Probeklausuren sowohl bei GE als auch ST. Also die sind jetzt kleiner
+   geworden. Das gefällt mir nicht."
+
+   Nachgemessen war der erste Wurf tatsaechlich 8 px flacher (73 statt 81 px) und
+   innen deutlich kleiner skaliert: 0,6 rem Beschriftung gegen 0,68, dazu weniger
+   Polsterung und ein schmalerer Abstand. In der Breite lag er mit 56 zu 54 px
+   sogar knapp darueber — was zeigt, dass "zu klein" hier nicht die Breite meinte,
+   sondern die Wirkung. Deshalb sind jetzt ALLE Masse uebernommen (Polsterung
+   10/4/8, Abstand 8, Radius 14, Kante 1,5) statt nur der Breite. Wer eines davon
+   aendert, sollte drueben mitziehen: die zwei Reihen stehen in derselben App
+   uebereinander und sollen als Geschwister lesbar sein. */
 .dailies-reihe {
-  display: flex; gap: 6px; margin-top: 8px;
+  display: flex; gap: 8px; margin-top: 10px;
   /* Umbruch erlaubt, aber im Regelfall nicht noetig: fuenf Kacheln passen auf
      360 px in eine Zeile. max-width haelt sie bei zwei oder drei Aufgaben
-     (GE-Trainer) davon ab, sich unfoermig breit zu ziehen. */
+     (GE-Trainer) davon ab, sich unfoermig breit zu ziehen — die Grenze liegt
+     auf der Breite der dortigen Uebungs-Kacheln (101 px), damit auch dort zwei
+     Reihen untereinander wie Geschwister aussehen. */
   flex-wrap: wrap;
 }
 .daily-kachel {
-  flex: 1 1 0; min-width: 52px; max-width: 88px;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 7px 3px 6px; border-radius: 12px;
-  border: 1px solid var(--line); background: var(--card);
+  flex: 1 1 0; min-width: 52px; max-width: 104px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 4px 8px; border-radius: 14px;
+  border: 1.5px solid var(--line); background: var(--card);
   cursor: pointer; text-align: center;
   font: inherit; color: inherit;
-  transition: transform .12s ease, border-color .12s ease;
+  transition: transform .15s ease, border-color .15s ease;
 }
 .daily-kachel:active { transform: scale(.96); }
 .daily-kachel:focus-visible { outline: 2px solid var(--ziel-fokus, currentColor); outline-offset: 2px; }
-.daily-kachel .d-icon { font-size: 1.15rem; line-height: 1; }
+.daily-kachel .d-icon { font-size: 1.45rem; line-height: 1.1; }
 .daily-kachel b {
-  font-size: .6rem; font-weight: 700; line-height: 1.15;
-  /* Lange Namen wie "Signalwoerter" muessen in 57 px umbrechen duerfen. */
+  font-size: .68rem; font-weight: 700; line-height: 1.15;
+  /* Lange Namen wie "Signalwoerter" muessen in 54 px umbrechen duerfen. */
   hyphens: auto; overflow-wrap: anywhere;
 }
 
