@@ -586,24 +586,30 @@ function frequenzKarte(tz, themen) {
     var dt = new Date(t.ts);
     var r = 2.9;
     /* Die GE-Leiter hat nur VIER Stufen: der ST-Trainer trennt "genau das
-       Streckziel" (⭐, --tag-4-ring) von "darueber" (🌈); hier sind beide
-       zusammengelegt (ROADMAP 12.08.: eine eigene Stufe fuer genau einen
-       Zahlenwert waere keine Stufe, sondern Zufall). Der Regenbogen-Ring
-       gehoert deshalb an Stufe 4 und sonst nirgendwohin - ein Ring auf
-       Stufe 3 haenge dem Tagespensum eine Auszeichnung an, die die
-       Kalenderzelle desselben Tages nicht kennt. */
-    var ring = s === 4 ? 'stroke="url(#tagRegenbogen)" stroke-width="1"'
-      : 'stroke="var(--card)" stroke-width="1"';
+       Streckziel" (⭐) von "darueber" (🌈); hier sind beide zusammengelegt
+       (ROADMAP 12.08.: eine eigene Stufe fuer genau einen Zahlenwert waere
+       keine Stufe, sondern Zufall). Der Regenbogen gehoert deshalb an Stufe 4
+       und sonst nirgendwohin - auf Stufe 3 haenge er dem Tagespensum eine
+       Auszeichnung an, die die Kalenderzelle desselben Tages nicht kennt.
+
+       Seit dem 12.08. ist er die FUELLUNG statt des Randes (ROADMAP, beide
+       Trainer): seit alle Punkte gleich gross sind, war ein 1-px-Ring auf
+       einem 5,8-px-Punkt fast kein Pixel mehr - der beste Tag sah aus wie ein
+       gruener Fleck. Als Flaeche ist der Verlauf auf der Groesse grob, aber
+       ein mehrfarbiger Punkt zwischen lauter einfarbigen ist sofort als etwas
+       Besonderes zu erkennen, und das ist die Information. Der Rand ist damit
+       ueberall derselbe und traegt nur noch die Trennung vom Untergrund. */
+    var fuellung = s === 4 ? 'url(#tagRegenbogen)' : TAG_FARBE[s];
     var tip = WTAG_VON_JS[dt.getDay()] + " " + kurzDatum(dt) + ": " + t.n +
       (t.n === 1 ? " Antwort" : " Antworten") +
       (s === 4 ? " – Streckziel geknackt!" : s === 3 ? " – Tagespensum geschafft" : "");
     return '<circle cx="' + px(t.ts).toFixed(1) + '" cy="' + py(t.n).toFixed(1) + '" r="' + r +
-      '" fill="' + TAG_FARBE[s] + '" ' + ring + '><title>' + tip + '</title></circle>';
+      '" fill="' + fuellung + '" stroke="var(--card)" stroke-width="1"><title>' +
+      tip + '</title></circle>';
   }).join("");
 
-  // Der Regenbogen lebt hier als Rand, nicht als Flaeche: auf 6 px Durchmesser
-  // wird ein sechsstufiger Verlauf zu Matsch, ein Ring bleibt lesbar. Dieselben
-  // Stops wie drueben, damit ein Streckziel-Tag in beiden Apps gleich aussieht.
+  // Dieselben Stops wie drueben und wie --tag-regenbogen in geteilt.css, damit
+  // Plot-Punkt, Legende und der ST-Trainer denselben Regenbogen zeigen.
   var rbDef = echteTage.some(function (t) { return tagesStufe(t.n, tz) === 4; })
     ? '<defs><linearGradient id="tagRegenbogen" x1="0" y1="0" x2="1" y2="1">' +
       '<stop offset="0%" stop-color="#ff78be"/><stop offset="20%" stop-color="#ffa55a"/>' +

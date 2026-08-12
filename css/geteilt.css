@@ -136,6 +136,17 @@
   --fertig-bg: var(--ok-bg);
   --fertig-ink: var(--ok);
   --puls-dauer: 2.8s;
+
+  /* Der Regenbogen der obersten Stufe. Dieselben Stops wie der SVG-Verlauf
+     #tagRegenbogen, den beide Apps im Punkte-Plot aufspannen — die Legende
+     muss zeigen, was im Diagramm steht, sonst ist sie keine Legende.
+     Bewusst NICHT theme-abhaengig: die Stops sind helle Pastelltoene, die auf
+     beiden Untergruenden tragen.
+     (Der GE-Trainer hat unter --regenbogen noch einen zweiten, saettigteren
+     Verlauf fuer die Tagesziel-Leiste. Zwei Regenboegen fuer dieselbe Aussage
+     sind einer zu viel — steht als Stufe 2 in den ROADMAPs.) */
+  --tag-regenbogen: linear-gradient(135deg, #ff78be 0%, #ffa55a 20%, #faeb78 38%,
+                                    #96ffbe 56%, #78dcff 74%, #b987ff 100%);
 }
 
 .stand-badge {
@@ -176,7 +187,16 @@
    ausserhalb des SVG liegt.
 
    Alle Stufen gleich gross (Jennifers Ansage 12.08.): die Farbe kodiert den
-   Wert, nicht der Durchmesser. Ab Stufe 4 kommt ein Ring dazu.
+   Wert, nicht der Durchmesser.
+
+   Stufe 4 (Streckziel) traegt einen hellen Ring um sattes Gruen. Stufe 5
+   (darueber) traegt den Regenbogen als FUELLUNG — bis zum 12.08. war er ein
+   Ring, und das ging nicht auf: seit alle Punkte gleich gross sind, ist ein
+   1-px-Ring auf einem 5,8-px-Punkt fast kein Pixel mehr, der beste Tag sah
+   also aus wie ein dunkelgruener Fleck. Als Flaeche ist der Verlauf auf der
+   Groesse zwar grob, aber ein mehrfarbiger Punkt zwischen lauter einfarbigen
+   ist auf einen Blick als etwas Besonderes zu erkennen — und genau das ist
+   die Information.
    --------------------------------------------------------------------------- */
 
 .hm-pkt { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: -1px; }
@@ -184,4 +204,4 @@
 .hm-pkt.s2 { background: var(--tag-2); }
 .hm-pkt.s3 { background: var(--tag-3); }
 .hm-pkt.s4 { background: var(--tag-4); box-shadow: 0 0 0 1.5px var(--tag-4-ring); }
-.hm-pkt.s5 { background: var(--tag-5); box-shadow: 0 0 0 1.5px #96ffbe; }
+.hm-pkt.s5 { background: var(--tag-regenbogen); }
