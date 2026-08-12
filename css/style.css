@@ -849,10 +849,31 @@ p { margin: 0 0 var(--sp-3); }
 }
 .zuletzt-zeile:active { transform: scale(.99); }
 .zuletzt-zeile:first-child { border-top: none; padding-top: 0; }
+/* Spiel-Tage sind keine Runde und haben keine Detailansicht - dann auch kein
+   Chevron, kein Zeiger und kein Druck-Feedback. */
+.zuletzt-zeile.starr { cursor: default; }
+.zuletzt-zeile.starr:active { transform: none; }
 .zuletzt-icon { font-size: 1.1rem; line-height: 1.3; flex-shrink: 0; }
-.zuletzt-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.zuletzt-text { display: flex; flex-direction: column; min-width: 0; flex: 1; gap: 1px; }
 .zuletzt-text b { font-size: .92rem; }
 .zuletzt-text span { font-size: .8rem; color: var(--ink-soft); }
+/* Titel und Gattungs-Pillen in einer Zeile, die bei 360 px sauber umbricht. */
+.zuletzt-kopf { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.zuletzt-kopf b { min-width: 0; overflow-wrap: anywhere; }
+.zuletzt-art {
+  font-size: .68rem !important; letter-spacing: .02em;
+  padding: 1px 7px; border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  color: var(--ink-soft) !important; flex-shrink: 0;
+}
+/* "angefangen" ist ein Hinweis, keine Mahnung - darum die ruhige Glimmer-Farbe
+   und nicht der Warnton. Rot bleibt fuer "heute dran und offen" reserviert. */
+.zuletzt-offen {
+  font-size: .68rem !important; padding: 1px 7px; border-radius: 999px;
+  background: color-mix(in srgb, var(--glimmer-1) 18%, transparent);
+  color: var(--glimmer-1) !important; flex-shrink: 0;
+}
+.zuletzt-selbst { font-size: .76rem !important; opacity: .9; }
 .zuletzt-pfeil { color: var(--ink-soft); font-size: 1.1rem; flex-shrink: 0; }
 .zuletzt-karte .knopf { margin-top: var(--sp-3); width: 100%; }
 
@@ -876,6 +897,24 @@ p { margin: 0 0 var(--sp-3); }
 .runde-text { display: flex; flex-direction: column; min-width: 0; }
 .runde-text b { font-size: .9rem; font-weight: 600; line-height: 1.35; }
 .runde-text span { font-size: .78rem; color: var(--ink-soft); }
+/* Roses eigener Text bzw. die Umschrift ihrer Handschrift. Zugeklappt, weil eine
+   Runde mit zehn offenen Aufgaben sonst eine Textwand waere. */
+.runde-text-falt { margin-top: 4px; }
+.runde-text-falt > summary {
+  font-size: .76rem; color: var(--ink-soft); cursor: pointer;
+  list-style: none; display: inline-block;
+  padding: 2px 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+.runde-text-falt > summary::-webkit-details-marker { display: none; }
+.runde-text-falt[open] > summary { margin-bottom: 4px; }
+.runde-antworttext {
+  font-size: .82rem; line-height: 1.45; color: var(--ink);
+  white-space: pre-wrap; overflow-wrap: anywhere;
+  margin: 0; padding: var(--sp-2);
+  border-radius: 10px; border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
 
 /* =======================================================================
    Quoten-Farbleiter q1..q5 (Jennifer 12.08.) - dieselbe Sprache wie die

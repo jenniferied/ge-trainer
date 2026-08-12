@@ -1023,7 +1023,21 @@ var MIX_TEXT = {
   neu: {
     art: "neu",
     titel: "Fünf neue", unter: "Größtenteils Ungesehenes",
-    fertig: "Fünf durch, überwiegend Sachen, die du noch nicht hattest."
+    fertig: "Fünf durch, überwiegend Sachen, die du noch nicht hattest.",
+    /* Jennifer wollte am 13.08. zu BEIDEN neuen Modi "jeweils 2 kurze games zum
+       aufwaermen". Beim Klausurfrage-Modus stehen sie davor, hier bewusst
+       DANACH - und zwar aus zwei Gruenden:
+
+       1. Eine Vorschaltseite vor der kuerzesten Runde der App waere genau die
+          Huerde, gegen die es diese Kachel gibt. Zwei Spiele vor fuenf Fragen
+          ist ausserdem mehr Vorlauf als Runde.
+       2. Vorher ist das Aufwaermen ohnehin einen Tipp entfernt: dieselbe
+          Startseite traegt Signalwoerter und Begriffe-Blitz schon als
+          Tageskacheln, direkt ueber den Uebungs-Kacheln.
+
+       Der Knopf zeigt auf die Spieleseite, weil runde() genau EINEN Extra-Knopf
+       kann und dort beide Spiele nebeneinanderstehen. */
+    extraText: "🎯 Kurz aufwärmen"
   }
 };
 
@@ -1039,6 +1053,10 @@ function mixRunde(pool, themen, hooks, art, wahl) {
     // Nochmal laeuft direkt mit derselben Einstellung weiter - der Baukasten
     // steht vor der Runde, nicht zwischen zwei Runden.
     nochmal: function () { mixRunde(pool, themen, hooks, art, wahl); },
-    fertigSatz: t.fertig
+    fertigSatz: t.fertig,
+    // Nur die Neu-Runde traegt einen Extra-Knopf (siehe MIX_TEXT). Fehlt
+    // extraText, laesst fertig() den Platz weg - kein leerer Knopf.
+    extraText: t.extraText || null,
+    extra: t.extraText ? function () { hooks.spiele(); } : null
   }, hooks, wahl);
 }

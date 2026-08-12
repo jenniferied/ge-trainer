@@ -68,13 +68,12 @@ function zeige(route, arg) {
        Einstellung, es gibt keine Vorschaltseite. Wie bei "mix" und
        "wiederholen" schreibt runde() (stats.js) die Sitzung. */
     case "neu": return Stats.zeigeNeu(themen, HOOKS);
-    /* Eine Klausurfrage: eigene Runde, aber KEIN "gemischt" - hier steht genau
-       eine freie Aufgabe auf dem Schirm, und der Aufdroesel-Schritt davor
-       schreibt bewusst nichts ins Log (Begruendung im Kopf von
-       klausurfrage.js). Ein Durchlauf ergibt also genau einen Eintrag. */
-    case "klausurfrage":
-      starteRunde({ art: "klausurfrage", titel: "Eine Klausurfrage", modus: "frei" });
-      return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
+    /* Eine Klausurfrage: die Sitzung beginnt NICHT hier, sondern je Frage in
+       klausurfrage.js - "Noch eine Klausurfrage" laeuft nicht durch den Router
+       und wuerde sonst an die vorige Sitzung anbauen. Der Aufdroesel-Schritt
+       davor schreibt bewusst gar nichts ins Log (Begruendung im Kopf der
+       Datei), ein Durchlauf ergibt also genau einen Eintrag. */
+    case "klausurfrage": return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
     case "start":
     default: return zeigeStart();
   }
@@ -1092,13 +1091,16 @@ function zuletztZeile(r, onKlick) {
   zeile.appendChild(el("span", "zuletzt-icon", r.icon));
   var box = el("div", "zuletzt-text");
 
-  var kopf = el("b", null, r.titel);
-  box.appendChild(kopf);
+  var kopf = el("div", "zuletzt-kopf");
+  kopf.appendChild(el("b", null, r.titel));
   // Gattung nur dazu, wenn sie etwas hinzufuegt (bei "Wiederholen" waere
   // "Wiederholen · Wiederholen" albern).
-  if (r.name && r.name !== r.titel) box.appendChild(el("span", "zuletzt-art", r.name));
-  if (r.typ === "sitzung" && !r.fertig) box.appendChild(el("span", "zuletzt-offen", "angefangen"));
-  if (r.badge) box.appendChild(el("span", "zuletzt-art", r.badge));
+  if (r.name && r.name !== r.titel) kopf.appendChild(el("span", "zuletzt-art", r.name));
+  if (r.badge) kopf.appendChild(el("span", "zuletzt-art", r.badge));
+  // Kein Rot und nicht "abgebrochen": eine Runde, die noch offen ist, ist eine,
+  // die weitergehen darf. Rot bleibt fuer "heute dran und offen" reserviert.
+  if (r.typ === "sitzung" && !r.fertig) kopf.appendChild(el("span", "zuletzt-offen", "angefangen"));
+  box.appendChild(kopf);
 
   box.appendChild(el("span", null, rundenMeta(r)));
   var st = selbstText(r.selbst);

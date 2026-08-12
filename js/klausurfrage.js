@@ -37,7 +37,7 @@
    Modus vorher schon auf die falsche Seite der Frage zu stellen waere unfair
    gegen die Antwort, die dort noch aussteht. */
 
-import { app, el, leeren, state } from "./core.js";
+import { app, el, leeren, state, starteRunde, beendeRunde } from "./core.js";
 import { stickerEl, setzeFarbe } from "./ui.js";
 import { afbAnalyse, afbOption, afbKurz, starteOperatoren, starteBegriffe } from "./spiele.js";
 
@@ -103,12 +103,25 @@ export function zeigeKlausurfrage(themen, hooks) {
     return Object.assign({}, hooks, { spiele: function () { start(); } });
   }
 
+  /* Aufwaermen heisst: das Spiel ist eine eigene Runde und gehoert NICHT in die
+     Sitzung der Klausurfrage. Ohne dieses beendeRunde landeten die
+     Signalwort-Antworten unter dem Titel "Eine Klausurfrage" im Verlauf, weil
+     logAntwort die laufende sid anhaengt. Der Router macht dasselbe bei jedem
+     Screenwechsel - nur laeuft der Weg hier nicht durch ihn. */
+  function warmMachen(starter) {
+    beendeRunde();
+    starter(themen, spielHooks());
+  }
+
   /* ---------- Schirm 1: was gleich passiert, plus das Aufwaermen ----------
      Die zwei Spiele stehen hier als ANGEBOT und nicht als Pflichtstrecke. Ein
      Modus, der drei Bildschirme lang nicht zur Sache kommt, wird an einem
      schlechten Tag gar nicht erst angefangen — und die kurze Anlaufstrecke ist
      der halbe Grund, warum diese App ueberhaupt benutzt wird. */
   function start() {
+    // Zurueck auf den Startschirm beendet die Sitzung der vorigen Frage. Ohne
+    // das liefe sie weiter, waehrend Rose gar nichts mehr schreibt.
+    beendeRunde();
     leeren();
     app.style.removeProperty("--tfarbe-basis");
     kopf("Eine Klausurfrage", "Erst aufdröseln, was gefragt ist. Dann mit der Hand schreiben.",
@@ -135,10 +148,10 @@ export function zeigeKlausurfrage(themen, hooks) {
       "Muss nicht sein. Beide Runden sind in ein paar Minuten durch und bringen dich in den Blick fürs Aufgabenlesen."));
     var reihe = el("div", "knopf-reihe");
     var op = el("button", "knopf sekundaer", "🎯 Signalwörter");
-    op.addEventListener("click", function () { starteOperatoren(themen, spielHooks()); });
+    op.addEventListener("click", function () { warmMachen(starteOperatoren); });
     reihe.appendChild(op);
     var bg = el("button", "knopf sekundaer", "⚡ Begriffe-Blitz");
-    bg.addEventListener("click", function () { starteBegriffe(themen, spielHooks()); });
+    bg.addEventListener("click", function () { warmMachen(starteBegriffe); });
     reihe.appendChild(bg);
     warm.appendChild(reihe);
     app.appendChild(warm);
@@ -224,6 +237,22 @@ export function zeigeKlausurfrage(themen, hooks) {
      Handschrift lesen, Musterloesung, KI-Korrektur, Selbstcheck. Der Modus
      haengt nur noch die beiden Abschlussknoepfe darunter. */
   function schreiben(item) {
+    /* JEDE Klausurfrage ist eine eigene Sitzung, und sie beginnt hier - nicht
+       im Router. "Noch eine Klausurfrage" laeuft naemlich direkt hierher und
+       nicht durch den Router; stuende starteRunde dort, baute die zweite Frage
+       an die Sitzung der ersten an, und im Verlauf staende eine Zeile mit
+       doppelter Zahl. Genau denselben Fehler beschreibt runde() in stats.js
+       fuer "Noch eine Runde".
+
+       anzahl: 1 ist kein Platzhalter - eine Klausurfrage IST eine Aufgabe. Die
+       von runde() geborenen Sitzungen tragen dort liste.length, und der Verlauf
+       rechnet mit dem Feld. */
+    starteRunde({
+      art: "klausurfrage",
+      titel: "Eine Klausurfrage",
+      modus: "frei",
+      anzahl: 1
+    });
     leeren();
     if (item.thema.farbe) setzeFarbe(app, item.thema.farbe);
     kopf("Eine Klausurfrage", item.thema.titel + " · " + afbKurz(item.f.afb),
