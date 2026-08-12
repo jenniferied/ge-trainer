@@ -11,8 +11,8 @@
    Auswahl wie bei einem Starter (drei Eier, eins nach dem anderen, wischbar),
    dann die kompakte Ansicht mit Herzen.
 
-   Hier liegen ANDERE drei Eier als im ST-Trainer — es sollen ja nicht zweimal
-   dieselben sein.
+   Hier liegen DREI ANDERE Eier als im ST-Trainer — zusammen sind es sechs
+   individuelle, keins doppelt.
 
    WICHTIG: Der Ankunfts-Schalter liegt absichtlich geraetelokal und nicht im
    synchronisierten state. Sonst nimmt ein Test auf Jennifers Geraet Rose die
@@ -41,6 +41,18 @@ export function herzenStand(tz) {
   return { herzen: herzen, sterne: sterne, tage: tage };
 }
 
+/* Gruss nach Tageszeit. Nachts bewusst leise. */
+function grussVon(h) {
+  return h < 5 ? "Nanu, so spät noch" : h < 11 ? "Guten Morgen" : h < 14 ? "Hallo" : h < 18 ? "Hey" : h < 22 ? "Guten Abend" : "Psst";
+}
+
+/* Was das Ei heute schon bekommen hat — dieselbe Rechnung wie fuer die Historie. */
+function herzenHeute(tz) {
+  if (!tz) return 0;
+  var n = tz.n || 0;
+  return (n > 0 ? 1 : 0) + (n >= tz.minimum ? 1 : 0) + (n >= tz.ziel ? 1 : 0);
+}
+
 var STUFEN = [
   { ab: 0,  satz: "Da liegt ein Ei im Nest. Keine Ahnung, wo das herkommt." },
   { ab: 20, satz: "Das Ei hat sich bewegt. Nur ein bisschen, aber es hat." },
@@ -65,14 +77,18 @@ var EI_FORM = [
 ];
 var VOLL = "█▟▙▐▌▝▘▄▀";
 
-/* Drei eigene Eier fuer den GE-Trainer. Der Hinweis deutet Temperament an und
-   verraet nicht, was drin ist. */
+/* Die drei Eier dieses Trainers — andere Farben und Muster als im ST-Trainer. Der Hinweis deutet Temperament an und verraet nichts.
+   Musterung laeuft als zweite Farbe auf denselben Bloecken; Sonderzeichen
+   (Bluete, Ring) sitzen als Marken obendrauf. */
 export var EIER = [
-  { key: "gefleckt", name: "Gefleckt", muster: function (z, sp) { return (z * 5 + sp * 2) % 7 === 0; },
-    teaser: "Schwer für seine Größe. Es liegt einfach da und lässt sich Zeit." },
-  { key: "gebaendert", name: "Gebändert", muster: function (z, sp) { return z % 2 === 0 && sp > 1 && sp < 9; },
+  { key: "blueten", name: "Blüten", fell: "#d98f86", muster: "#a9635c", akzent: "#fbe8e4",
+    regel: function () { return false; }, marken: [[2, 4, "❀"], [4, 6, "❀"]],
+    teaser: "Ganz leicht. Wenn man es hochnimmt, dreht es sich langsam." },
+  { key: "ringe", name: "Ringe", fell: "#6fa8a4", muster: "#417a76", akzent: "#dff2f0",
+    regel: function (z) { return z === 2 || z === 4; }, marken: [[3, 3, "◦"], [3, 7, "◦"]],
     teaser: "Glatt und kühl. Es macht keinen Mucks – bis es das dann doch tut." },
-  { key: "gesprenkelt", name: "Gesprenkelt", muster: function (z, sp) { return (z + sp * 3) % 4 === 0; },
+  { key: "karo", name: "Karo", fell: "#a68bb5", muster: "#75588a",
+    regel: function (z, sp) { return (z + Math.floor(sp / 2)) % 2 === 0; },
     teaser: "Leicht warm, und manchmal wippt es. Als würde es auf etwas horchen." },
 ];
 export function eiIndex() {
@@ -85,7 +101,7 @@ function eiEbenen(variante, stufe) {
   var zeilen = EI_FORM.slice();
   var maske = EI_FORM.map(function (zeile, z) {
     return zeile.split("").map(function (ch, sp) {
-      return VOLL.indexOf(ch) < 0 ? " " : variante.muster(z, sp) ? "M" : "F";
+      return VOLL.indexOf(ch) < 0 ? " " : variante.regel(z, sp) ? "M" : "F";
     }).join("");
   });
   function setz(z, sp, text, m) {
@@ -93,19 +109,22 @@ function eiEbenen(variante, stufe) {
     for (var i = 0; i < text.length; i++) { a[sp + i] = text[i]; b[sp + i] = m; }
     zeilen[z] = a.join(""); maske[z] = b.join("");
   }
+  (variante.marken || []).forEach(function (m) { setz(m[0], m[1], m[2], "A"); });
   if (stufe >= 1) setz(2, 5, "╷", "R");
   if (stufe >= 2) { setz(2, 4, "╲╱", "R"); setz(3, 5, "╱", "R"); }
   return { zeilen: zeilen, maske: maske };
 }
-var FARBE = { F: "var(--mk-fell)", M: "var(--mk-muster)", R: "var(--mk-riss)" };
-
 export function eiHtml(variante, stufe) {
+  var FARBE = { F: variante.fell, M: variante.muster, A: variante.akzent || variante.muster, R: "var(--mk-riss)" };
   var e = eiEbenen(variante, stufe);
   return e.zeilen.map(function (zeile, i) {
     var out = "", puffer = "", k = null;
     function spuelen() {
       if (!puffer) return;
-      out += k === " " ? puffer : '<span style="color:' + FARBE[k] + '">' + puffer + "</span>";
+      // Marken (Bluete, Ring) brauchen die Eifarbe als Zellhintergrund, sonst
+      // scheint die Seite durch und es sieht aus wie ein Loch im Ei.
+      var stil = k === "A" ? "color:" + FARBE.A + ";background:" + FARBE.F : "color:" + FARBE[k];
+      out += k === " " ? puffer : '<span style="' + stil + '">' + puffer + "</span>";
       puffer = "";
     }
     for (var j = 0; j < zeile.length; j++) {
@@ -153,7 +172,7 @@ function auswahlKnoten(neu) {
   function blaettern(d) { blaetterIdx = (blaetterIdx + d + EIER.length) % EIER.length; neu(); }
   kar.appendChild(knopf("‹", "mk-pfeil", function () { blaettern(-1); }));
   var pre = document.createElement("pre");
-  pre.className = "mk-ei gross";
+  pre.className = "mk-ei gross" + (REDUCE_MOTION ? "" : " mk-schwebt");
   pre.setAttribute("aria-hidden", "true");
   pre.innerHTML = eiHtml(v, 0);
   kar.appendChild(pre);
@@ -191,17 +210,25 @@ function standKnoten(tz, neu) {
 
   var zeile = el("div", "mk-zeile");
   var pre = document.createElement("pre");
-  pre.className = "mk-ei" + (REDUCE_MOTION || stufe === 0 ? "" : stufe === 1 ? " mk-atmet" : " mk-wackelt");
+  pre.className = "mk-ei" + (REDUCE_MOTION ? "" : stufe === 0 ? " mk-schwebt" : stufe === 1 ? " mk-atmet" : " mk-wackelt");
   pre.setAttribute("aria-hidden", "true");
   pre.innerHTML = eiHtml(v, stufe);
   zeile.appendChild(pre);
 
   var text = el("div", "mk-text");
-  text.appendChild(el("p", "mk-satz", nacht ? "Das Ei ist still. Morgen früh sind wir wieder da." : STUFEN[stufe].satz));
+  var satz = el("p", "mk-satz");
+  satz.innerHTML = "<b>" + grussVon(stunde) + ".</b> " +
+    (nacht ? "Das Ei ist still. Morgen früh sind wir wieder da." : STUFEN[stufe].satz);
+  text.appendChild(satz);
+  var hh = herzenHeute(tz);
+  // Was heute schon dazukam. Nachts bleibt das weg — kein Abend-Mahnmal.
+  var heute = nacht ? ""
+    : hh === 0 ? " Heute noch keins – das erste kommt mit der ersten Aufgabe."
+    : " Heute schon <b>" + hh + "</b> ♥ dazu" + (hh < 3 ? ", da geht noch was." : " – mehr geht an einem Tag nicht.");
   var meta = el("p", "mk-meta");
   meta.innerHTML = "<b>" + st.herzen + "</b> ♥" + (st.sterne ? " · <b>" + st.sterne + "</b> ★" : "") +
     " aus " + st.tage + " Übungstagen — " +
-    (naechste ? "noch " + (naechste.ab - st.herzen) + " ♥ bis es weitergeht" : "gleich passiert was") + " · ";
+    (naechste ? "noch <b>" + (naechste.ab - st.herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") + "." + heute + " · ";
   var wechseln = knopf("anderes Ei", "mk-link", function () {
     blaetterIdx = eiIndex(); setzePhase("gesehen"); neu();
   });

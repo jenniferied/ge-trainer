@@ -934,8 +934,10 @@ p { margin: 0 0 var(--sp-3); }
 .mk-punkte .an { color: var(--mk-riss); opacity: 1; }
 .mk-teaser { margin: 8px auto 11px; font-size: .92rem; font-style: italic; max-width: 40ch; }
 
+@keyframes mkSchweben { 0%,100% { transform: translateY(0) rotate(0) } 50% { transform: translateY(-2px) rotate(-1.5deg) } }
+.mk-schwebt { animation: mkSchweben 4.2s ease-in-out infinite; }
 @keyframes mkAtmen { 0%,100% { transform: translateY(0) } 50% { transform: translateY(1px) } }
 @keyframes mkWackeln { 0%,88%,100% { transform: rotate(0) } 91% { transform: rotate(-4deg) } 94% { transform: rotate(4deg) } 97% { transform: rotate(-2deg) } }
 .mk-atmet { animation: mkAtmen 3.4s ease-in-out infinite; }
 .mk-wackelt { animation: mkWackeln 3.6s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .mk-atmet, .mk-wackelt { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .mk-atmet, .mk-wackelt, .mk-schwebt { animation: none; } }
