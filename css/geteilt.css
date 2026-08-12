@@ -1018,39 +1018,53 @@ h2.abschnitt-titel, .abschnitt-titel {
 /* ---------------------------------------------------------------------------
    11. CHAT — DAS SHEET DES KREATUREN-CHATS
 
-   >>> GEHOERT ZUM KREATUREN-CHAT. <<< Der Baustein selbst (maskottchen-chat.js)
-   ist noch nicht gebaut; dieser Block liegt hier, damit er nicht zweimal
-   entsteht, und weil der ST-Trainer sein Fragen-Chat-Sheet bereits benutzt.
-
    Jennifer: "wenn die gleichen Games sind mit der gleichen Funktion im
    Hintergrund, dann sollen sie sich natuerlich auch irgendeine Art von Logik
    Package teilen. Zum anderen sollten sie ja auch gleich aussehen."
+   Und am 12.08. abends: "solche module sollen gleiche codebase und style
+   haben."
 
-   Nach diesem Block sind der ST-Fragenchat und der Maskottchen-Chat in beiden
-   Apps EIN Bauteil mit EINEM Aussehen. Die Regeln stammen woertlich aus
-   st-trainer/app/css/style.css, mit drei Aenderungen:
+   ZWEI EBENEN, UND DAS IST DER GANZE TRICK:
 
-     1. .chat-tipp haengt nicht mehr an sticker-idle. Dieser Keyframe liegt
-        LOKAL in beiden style.css — dass es heute in beiden funktioniert, ist
-        Zufall und macht das Paket von den Apps abhaengig, statt umgekehrt.
-        Eigener Keyframe chat-tippt, mit reduced-motion-Ausnahme.
-     2. Die Eingabe steht auf 1rem statt .95rem (= 15,2 px). Unter 16 px zoomt
-        iOS Safari beim Fokussieren die ganze Seite — auf Roses Handy also
-        jedes Mal.
-     3. Neu: .chat-schnell (die Chip-Reihe der Schnellfragen, die aus dem
-        lokalen Stand antworten und ohne Netz funktionieren) und .chat-hinweis.
+     .chat-*          das gemeinsame Innenleben. Benutzt auch der ST-Fragenchat
+                      (llm.js), der weiter in der App-Huelle .sheet sitzt.
+     .mk-chat-ov ...  die Huelle des KREATUREN-Chats. Sie gehoert komplett
+                      hierher, damit keine App-Regel mehr hineingreift.
 
-   Die Huelle (.sheet, .sheet-ov) bleibt lokal, sie ist bereits je App gebaut.
-   Ebenso lokal bleiben .llm-fb und .llm-chat-btn (nur ST) und der
-   Ausloeser .mk-chat-knopf, der in den .mk-*-Bereich am Ende der jeweiligen
-   style.css gehoert — .mk-* ist aus diesem Paket ausdruecklich ausgenommen.
+   WARUM DIE HUELLE UMGEZOGEN IST. Der Kreaturen-Chat borgte sich bis zum
+   12.08. App-Namen: .sheet fuer die Huelle, .sheet-grip fuer den Griff,
+   .btn.small fuer Senden, .linkish fuer Schliessen. Die sind in beiden Apps
+   verschieden definiert, und weil style.css NACH geteilt.css laedt, gewannen
+   sie. Gemessen bei 360 px, beide hell:
 
-   APP-SEITE:
-     ST  style.css  `.chat-sheet { display: flex;` bis
-                    `.chat-eingabe textarea:focus` — der ganze Block raus.
-                    style.css laedt NACH geteilt.css: bleibt er stehen, gewinnt
-                    er und dieser Block hier ist toter Code.
-     GE  —          nichts zu loeschen, der GE-Trainer hatte noch kein Chat-CSS
+     Senden-Knopf     ST 34x39 px, Radius 12, .92rem   GE 38x40, Radius 999, 1.05rem
+     Schliessen       ST 60x24 px, Polster 4/0/0       GE 68x28, Polster 8/4/0
+     Hinweiszeile     ST .93rem (ueber .sheet p)       GE .8rem
+     Sheet-Polster    ST 14/20/18                      GE 20/20/20
+     Sheet-Breite     ST max 560 px                    GE unbegrenzt
+     Overlay          ST rgba(20,14,8,.42)             GE rgba(10,8,20,.6)
+
+   Jetzt heissen die Teile chat-grip, chat-senden und chat-zu und die Huelle
+   haengt an .mk-chat-ov. Kein App-Name mehr, also auch kein Wettlauf um die
+   Spezifitaet. App-spezifisch ist nur noch --accent (die Identitaetsfarbe).
+
+   Zwei Masse, die kein Geschmack sind:
+     - Die Eingabe steht auf 1rem statt .95rem (= 15,2 px). Unter 16 px zoomt
+       iOS Safari beim Fokussieren die ganze Seite — auf Roses Handy jedes Mal.
+     - .chat-tipp haengt an einem eigenen Keyframe (chat-tippt) statt an
+       sticker-idle aus den App-Dateien. Sonst haengt das Paket an den Apps
+       statt umgekehrt.
+
+   Lokal bleiben .llm-fb und .llm-chat-btn (nur ST) und der Ausloeser
+   .mk-chat-knopf, der in den .mk-*-Bereich der jeweiligen style.css gehoert —
+   .mk-* ist aus diesem Paket ausdruecklich ausgenommen.
+
+   APP-SEITE, was jetzt tot ist und beim naechsten Anfassen rausdarf:
+     ST  style.css  nichts (der alte .chat-sheet-Block ist schon raus)
+     GE  style.css  die drei Uebersetzungsregeln
+                    `.chat-sheet .sheet-grip`, `.chat-sheet .btn.small`,
+                    `.chat-sheet .linkish` greifen ins Leere — der Baustein
+                    baut diese Knopf-Namen nicht mehr.
    --------------------------------------------------------------------------- */
 
 .chat-sheet { display: flex; flex-direction: column; max-height: 82vh; }
@@ -1103,3 +1117,107 @@ h2.abschnitt-titel, .abschnitt-titel {
   background: var(--card); color: var(--ink); min-height: 40px;
 }
 .chat-eingabe textarea:focus { outline: none; border-color: var(--accent); }
+
+
+/* ---------------------------------------------------------------------------
+   11b. DER KREATUREN-CHAT: HUELLE, SPRECHBLASEN, AVATARE
+
+   Jennifer, 12.08. abends, woertlich: "einfach chatbubble ei und rechts ein
+   personen ascii icon und chatbubbles halt. und name einfach Ei."
+
+   Links die Kreatur mit ihrem eigenen Bild, rechts Rose mit einem
+   Personen-Icon, beide in Sprechblasen — die Optik, die jeder Messenger hat.
+   Es gibt bewusst KEINE Ueberschrift mehr: "Mit deinem Ei reden" behauptete
+   eine Beziehung und waere spaeter ("Mit deiner Katze reden") auch noch ein
+   Spoiler auf das, worauf das ganze Wachsen hinauslaeuft.
+   --------------------------------------------------------------------------- */
+
+/* Die Huelle. Absichtlich NICHT .sheet/.sheet-ov: siehe Messtabelle oben. */
+.mk-chat-ov {
+  position: fixed; inset: 0; z-index: 99;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(12, 10, 18, .55);
+}
+.mk-chat-ov .chat-sheet {
+  width: 100%; max-width: 560px;
+  max-height: 86dvh; overflow-y: auto;
+  background: var(--card); color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-radius: 18px 18px 0 0;
+  padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, .28);
+}
+@media (min-width: 700px) {
+  .mk-chat-ov { align-items: center; }
+  .mk-chat-ov .chat-sheet { border-radius: 18px; border-top: 0; }
+}
+.chat-grip {
+  flex: none; width: 42px; height: 4px; border-radius: 2px;
+  background: var(--line); margin: 0 auto 10px;
+}
+
+/* Eine Zeile des Gespraechs: Avatarspalte + Blasenspalte. Rose sitzt rechts,
+   also dieselbe Zeile spiegelverkehrt. */
+.chat-reihe { display: flex; align-items: flex-end; gap: 8px; margin: 6px 0; }
+.chat-reihe.du { flex-direction: row-reverse; }
+
+/* Der Avatar. Dieselbe Blockgrafik wie auf der Startseite, nur klein — die
+   Kreatur waechst im Chat also automatisch mit.
+
+   44 px feste Spalte und 5,5 px Schrift sind gemessen, nicht geschaetzt: eine
+   Monospace-Zelle ist 0,602 * Schriftgroesse breit, die breiteste Figur (das
+   erwachsene Tier) ist 13 Zellen und damit 43,1 px breit. Bei 40 px Spalte
+   waeren dem ausgewachsenen Tier rechts 3 px abgeschnitten worden — gemessen,
+   nicht vermutet. Ei 36x33, Blob 30x27,5.
+   Die Spalte bleibt auch dann stehen, wenn kein Avatar drin ist, sonst
+   ruecken Folgeblasen nach aussen.
+
+   Roses Icon ist nur 7 Zellen breit und darf deshalb groesser gesetzt werden
+   (7 px Schrift = 29x35 px) — sonst wirkt es neben der Kreatur wie ein Krümel.
+
+   Nur bei der ERSTEN Nachricht einer Folge steht ein Bild drin. Bei 360 px
+   waere ein Avatar an jeder Blase eine Wand. */
+.chat-avatar {
+  flex: 0 0 44px; width: 44px;
+  margin: 0 0 2px; padding: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 5.5px; line-height: 1;
+  text-align: center; white-space: pre; overflow: hidden;
+}
+.chat-reihe.du .chat-avatar { font-size: 7px; color: var(--ink-soft); }
+
+.chat-spalte { min-width: 0; display: flex; flex-direction: column; }
+.chat-reihe.du .chat-spalte { align-items: flex-end; }
+
+/* Der Name. Schlicht das, was die Kreatur GERADE ist: Ei, dann Kreatur, dann
+   Katze bzw. Hund (kreaturName() im Baustein). Nur an ihrer Seite — den
+   eigenen Namen schreibt in einem Zweiergespraech kein Messenger dran. */
+.chat-name {
+  font-size: .7rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink-soft); margin: 0 0 2px 4px;
+}
+
+/* In der Reihe uebernimmt die Spalte die Ausrichtung, die alten
+   auto-Raender der Blase wuerden dagegenarbeiten. Steht bewusst NACH
+   .chat-msg.du/.ki — gleiche Spezifitaet, die spaetere Regel gewinnt. */
+.chat-reihe .chat-msg { margin: 0; max-width: 100%; }
+
+/* Senden. Eigener Name statt .btn.small: den definieren beide Apps
+   verschieden. color: var(--card) statt #fff, weil --accent im hellen Modus
+   dunkel und im dunklen hell ist — der Kontrast dreht damit richtig mit. */
+.chat-senden {
+  flex: none; border: 0; border-radius: 12px; cursor: pointer;
+  background: var(--accent); color: var(--card);
+  font: inherit; font-size: 1.05rem; font-weight: 700; line-height: 1;
+  padding: 0 14px; min-width: 44px; min-height: 40px;
+}
+.chat-senden:disabled { opacity: .45; cursor: default; }
+.chat-senden:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Schliessen. Eigener Name statt .linkish, gleiche Begruendung. */
+.chat-zu {
+  align-self: center; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: .82rem; color: var(--ink-soft);
+  text-decoration: underline; padding: 8px 4px 0;
+}
+.chat-zu:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

@@ -238,7 +238,28 @@ export function letzteRunden(themen, max) {
    waechst oder schrumpft, waere Psycho-Gift. tzPlan ist geraetelokal und wird
    nie hochgeladen: snapshot() in sync.js waehlt seine Felder gezielt aus. */
 
-var TZ_MIN = 10, TZ_MAX = 40;
+/* Tagesziel-Band. Am 12.08.2026 abends um rund die Haelfte angehoben, Jennifer:
+   "ge is a bit easy increase the points needed in a day by 50%".
+
+   NUR die Grenzen anzuheben haette nichts bewirkt - nachgerechnet lag der Bedarf
+   bei 518 Karten auf 29 Tage, also rund 18 pro Tag, und damit weit unter dem
+   alten Deckel von 40. Der Deckel war wirkungslos, der eigentliche Wert kommt
+   aus bedarf/restTage. Deshalb sitzt die Erhoehung an DURCHGAENGE unten und die
+   Grenzen ziehen nur mit, damit sie den neuen Wert nicht wieder abschneiden. */
+var TZ_MIN = 15, TZ_MAX = 60;
+
+/* Wie oft der Stoff bis zur Klausur durchlaufen soll. 1 hiesse: einmal alles
+   ansehen und fertig - das ist die Rechnung, die das Ziel bisher zu niedrig
+   gemacht hat, denn einmal gesehen ist nicht gelernt. 1,7 heisst grob: einmal
+   ganz durch und gut zwei Drittel noch ein zweites Mal. Wer hieran dreht,
+   aendert Roses Tagespensum unmittelbar - das ist die Stellschraube, nicht TZ_MAX.
+
+   Warum 1,7 und nicht 1,5, obwohl "plus 50 Prozent" die Ansage war: r5() rundet
+   auf Fuenferschritte, und die fressen die Haelfte der Erhoehung. Der Rohwert lag
+   bei 17,9 und wurde zu 20 AUFgerundet; mit 1,5 waeren es 26,8 und damit 25, also
+   nur ein Viertel mehr statt der Haelfte. Massgeblich ist die Zahl, die Rose
+   sieht, nicht der Faktor im Code: mit 1,7 stehen dort 30 statt 20. */
+var DURCHGAENGE = 1.7;
 function r5(x) { return Math.max(5, Math.round(x / 5) * 5); }
 
 function planRechnen(themen, tage, heute) {
@@ -255,11 +276,11 @@ function planRechnen(themen, tage, heute) {
     });
   });
   var restTage = Math.max(1, tage == null ? 21 : tage);
-  var ziel = Math.max(TZ_MIN, Math.min(TZ_MAX, r5(bedarf / restTage)));
+  var ziel = Math.max(TZ_MIN, Math.min(TZ_MAX, r5(bedarf * DURCHGAENGE / restTage)));
   // Vortag festigen statt pauken; am Klausurtag selbst steht das Pensum nur
   // noch der Vollstaendigkeit halber im Plan - die Startseite zeigt es nicht
   // mehr an, sonst waere der Balken am Klausurmorgen eine Forderung.
-  if (tage === 1) ziel = Math.min(ziel, 15);
+  if (tage === 1) ziel = Math.min(ziel, 20);
   if (tage === 0) ziel = TZ_MIN;
   return {
     v: 1, tag: heute, ziel: ziel,

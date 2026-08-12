@@ -37,6 +37,24 @@
   <div id="app" aria-live="polite">
     <div class="laden">Einen Moment, die Fragen werden geladen &hellip;</div>
   </div>
+  <script>
+  // Fehler sichtbar machen statt weisser Seite (hilft beim Debuggen, v.a. mobil).
+  // Wortgleich mit dem ST-Trainer (dessen index.html), damit ein Absturz in beiden
+  // Apps dasselbe zeigt: bis zum 12.08. hatte nur der ST-Trainer diese Box, der
+  // GE-Trainer waere bei einem Modul-Fehler still weiss geblieben. Die Box haengt
+  // NICHT am Theme - sie soll auch dann noch lesbar sein, wenn das CSS schuld ist.
+  window.addEventListener("error", function (e) {
+    var app = document.getElementById("app");
+    if (!app) return;
+    var box = document.createElement("div");
+    box.style.cssText = "margin:16px;padding:14px;border:2px solid #b3362b;border-radius:12px;background:#fbe7e4;color:#7a2018;font:14px/1.5 monospace;white-space:pre-wrap;word-break:break-word";
+    box.textContent = "Fehler: " + (e.message || e.type) + (e.filename ? "\n" + e.filename.split("/").pop() + ":" + e.lineno : "");
+    app.appendChild(box);
+  });
+  window.addEventListener("unhandledrejection", function (e) {
+    window.dispatchEvent(new ErrorEvent("error", { message: String(e.reason && e.reason.message || e.reason) }));
+  });
+  </script>
   <!-- rough-notation (vendored, klassisches IIFE -> window.RoughNotation) fuer den
        Rotstift-Look der Korrektur. defer laeuft vor dem Modul-Skript, klausur.js
        fragt trotzdem ueber rn() ab - fehlt es, bleibt die Korrektur schlicht. -->

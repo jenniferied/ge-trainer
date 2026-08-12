@@ -421,6 +421,32 @@ p { margin: 0 0 var(--sp-3); }
 .frei-eingabe:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
 .frei-eingabe::placeholder { color: var(--ink-soft); opacity: .8; }
 
+/* Statuszeile der KI (liest Handschrift / prueft Antwort). Ruhig gehalten: sie
+   sagt, was gerade passiert, und verschwindet wieder. Fehler stehen hier auch -
+   die KI ist nie Voraussetzung, deshalb nie in Alarmfarbe. */
+.ki-status {
+  font-size: .85rem; color: var(--ink-soft);
+  margin-bottom: var(--sp-3);
+}
+
+/* Urteil der KI: dieselbe Kastenform wie die Musterloesung, damit Rose es als
+   Rueckmeldung liest und nicht als Note. */
+.ki-treffer { list-style: none; margin: 0 0 var(--sp-3); padding: 0; }
+.ki-treffer li {
+  display: grid; grid-template-columns: 1.4em 1fr; gap: 2px var(--sp-2);
+  font-size: .92rem; line-height: 1.45;
+  padding: 6px 0; border-top: 1px solid var(--line);
+}
+.ki-treffer .zeichen { font-weight: 700; text-align: center; }
+.ki-treffer .dazu { grid-column: 2; font-size: .85rem; color: var(--ink-soft); }
+.ki-treffer .treffer-ja .zeichen { color: var(--ok); }
+.ki-treffer .treffer-teilweise .zeichen { color: var(--warn-ink); }
+.ki-treffer .treffer-nein .zeichen { color: var(--bad); }
+.ki-vorschlag {
+  font-size: .88rem; color: var(--ink-soft);
+  margin-bottom: var(--sp-2);
+}
+
 .loesung { border-top: 1px dashed var(--line); margin-top: var(--sp-3); padding-top: var(--sp-3); }
 .loesung h3 { margin-bottom: var(--sp-2); }
 .stichpunkte { margin: 0 0 var(--sp-3); padding-left: 1.25em; }

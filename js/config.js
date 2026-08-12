@@ -42,13 +42,13 @@ export const CONFIG = {
   // DEPLOYT UND GEPRUEFT am 12.08.2026 abends: echter Aufruf gegen llm-ge kam
   // mit 200 und einer passenden Antwort zurueck, die Roses Tagesstand kannte.
   // Faellt die Function aus, greift weiter der stille Fallback in llm.js -
-  // Rose sieht nie einen Fehler, nur die Schnellantworten.
+  // Rose sieht nie einen Fehler, nur einen freundlichen Satz aus dem Stand.
   //
-  // WARUM EIN SCHALTER UND KEIN PROBEAUFRUF: gegen die alte Function schlaegt
-  // ein unbekanntes art nicht sauber fehl. Sie wuerde stillen Muell liefern
-  // oder einen 502, und llm.js schluckt beides. Also erst deployen, dann hier
-  // auf true drehen, dann im echten Pfad testen.
-  mkChatFreitext: true,
+  // Einen Schalter mkChatFreitext gibt es seit dem 12.08. abends NICHT mehr.
+  // Frei tippen geht immer (Jennifer: "man soll frei tippen können beim chat"),
+  // und ein Schalter, den niemand mehr umlegt, ist eine Falle: er hat drueben
+  // im ST-Trainer dafuer gesorgt, dass statt eines Eingabefelds "Tipp auf eine
+  // Frage." dastand.
   mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
   mkTagesLimit: 20,        // (ge-llm-tag, 100) nicht aufessen.
 };

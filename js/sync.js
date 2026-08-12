@@ -8,6 +8,10 @@
    - Der Merge ist eine VEREINIGUNG, kein Last-Write-Wins: Antworten kommen nur
      dazu, Geloeschtes traegt einen Grabstein, die mc/frei-Staende werden danach
      aus dem Antwort-Log nachgezogen.
+   - Seit 12.08. faehrt auch der CHATVERLAUF mit (mkChat, Abschnitt weiter
+     unten). Jennifer: "chatverlauf speichern und immer sofort syncen ueber
+     alle geraete." Vorher lag er geraetelokal in localStorage und war
+     ausdruecklich nicht im Snapshot - diese Entscheidung ist aufgehoben.
    - Der Sync ist nie Voraussetzung. Jeder Fehler landet in syncStatus.fehler,
      die App laeuft lokal weiter.
    - Trennung von Roses ST-Lernstand: der GE-Trainer synct ausschliesslich unter
@@ -118,6 +122,138 @@ function headers() {
 
 function lernstandUrl() { return CONFIG.supabaseUrl + "/rest/v1/" + CONFIG.lernstandTabelle; }
 
+/* ---------- Chatverlauf (mkChat) ----------
+   Das Gespraech mit dem Maskottchen gehoert seit dem 12.08. in den Lernstand
+   und nicht mehr aufs Geraet (Jennifer: "chatverlauf speichern und immer
+   sofort syncen ueber alle geraete"). Bis dahin lag er unter einem eigenen
+   localStorage-Schluessel im geteilten Chat-Baustein und war damit auf dem
+   Handy ein anderer als auf dem Tablet.
+
+   Eine Nachricht ist genau das hier - dieselbe Form wie im ST-Trainer, damit
+   die Regel spaeter in den geteilten Baustein wandern kann:
+
+     { id, rolle, text, ts }
+
+     id     stabil und geraeteuebergreifend eindeutig ("<ts>-<zufall>"). Sie
+            ist der Dedupe-Schluessel des Merges. Ohne stabile Id gaebe es
+            keinen Weg, dieselbe Nachricht von zwei Geraeten als eine zu
+            erkennen, und jeder Sync wuerde den Verlauf verdoppeln.
+     rolle  "user" (Rose) oder "assistant" (die Kreatur). Bewusst die Namen,
+            die die Edge Function ohnehin erwartet - so braucht der Baustein
+            beim Senden keine Uebersetzung.
+     text   reiner Text, nie HTML.
+     ts     Millisekunden, der Sortierschluessel.
+
+   Der Merge ist wie ueberall hier eine VEREINIGUNG: Nachrichten beider
+   Geraete zusammen, nach Zeit sortiert, ueber die Id dedupliziert. Nie
+   "der neuere Verlauf gewinnt" - dann verloere ein Geraet, das offline
+   weitergeschrieben hat, seine Haelfte des Gespraechs. */
+
+/* Deckel: die letzten 50 Nachrichten. Der Verlauf faehrt bei JEDEM Push im
+   Snapshot mit, jede Nachricht kostet also dauerhaft Platz in Roses
+   Lernstand und Bandbreite auf dem Handy. 50 sind rund 25 Wortwechsel:
+   deutlich mehr, als der Baustein ueberhaupt an die Function schickt (dort
+   sind es 20), und genug, dass ein Gespraech ueber mehrere Tage
+   zusammenhaengend bleibt. Bei CHAT_TEXT_MAX pro Nachricht sind das im
+   schlimmsten Fall rund 100 kB - neben dem Antwort-Log faellt das nicht auf.
+
+   Ein zweiter Deckel nach ALTER (z.B. 14 Tage) war ueberlegt und ist bewusst
+   NICHT eingebaut: er wuerde nur dort greifen, wo weniger als 50 Nachrichten
+   ueber mehr als zwei Wochen verteilt sind - also ausgerechnet beim duennen,
+   langsam gewachsenen Gespraech, das man am wenigsten wegwerfen will. Dazu
+   kommt die Falle: eine Grenze gegen Date.now() wandert waehrend des Syncs,
+   zwei Geraete werfen verschiedene Nachrichten weg und schieben sich
+   gegenseitig wieder welche unter - Ping-Pong in einer append-only Tabelle.
+   Ein Alters-Deckel muesste deshalb gegen die JUENGSTE Nachricht rechnen,
+   nicht gegen die Uhr. Wer ihn nachtraegt, muss das wissen. */
+export var CHAT_MAX = 50;
+
+/* Laengster Text, den eine Nachricht mit in den Lernstand nimmt. Gekuerzt
+   wird beim SCHREIBEN (chatNotiere) und nur dort: danach ist der Text
+   unveraenderlich. Wuerde stattdessen der Merge kuerzen, aenderte sich
+   Roses Text still bei jedem Sync - und die Begruendung, warum in der
+   Signatur die Ids allein genuegen, waere nur noch ungefaehr wahr. */
+var CHAT_TEXT_MAX = 2000;
+
+/* Eine Nachricht auf die kanonische Form bringen oder null.
+   Streng bei id/text/ts: alle drei koennen nur von unserem eigenen Schreiber
+   (chatNotiere) oder vom selben Schreiber auf einem anderen Geraet stammen.
+   Fehlt eine Id, gibt es keinen Dedupe-Schluessel - eine ausgedachte Ersatz-Id
+   (etwa ts + Textlaenge) wuerde zwei verschiedene Nachrichten derselben
+   Millisekunde stillschweigend zu einer verschmelzen. Lieber sichtbar
+   weglassen als unsichtbar verschmelzen. */
+function chatEine(m) {
+  if (!m) return null;
+  var id = m.id == null ? "" : String(m.id);
+  var text = typeof m.text === "string" ? m.text : "";
+  var ts = typeof m.ts === "number" && isFinite(m.ts) ? m.ts : null;
+  if (!id || ts === null || !text.replace(/\s+/g, "")) return null;
+  // Alles, was nicht ausdruecklich Rose ist, ist die Kreatur. So kann eine
+  // Nachricht nie wegen eines unbekannten Rollennamens verschwinden.
+  return { id: id, rolle: m.rolle === "user" ? "user" : "assistant", text: text, ts: ts };
+}
+
+/* Reine Mengen-Operation: putzen, ueber die Id deduplizieren, deterministisch
+   sortieren, deckeln. Wird von snapshot(), signatur() und mergeIn() benutzt -
+   deshalb darf sie den Inhalt einer Nachricht NICHT anfassen. */
+export function chatSchnitt(liste) {
+  var map = {}, ids = [];
+  (liste || []).forEach(function (roh) {
+    var m = chatEine(roh);
+    if (!m) return;
+    if (!map[m.id]) ids.push(m.id);
+    map[m.id] = m; // gleiche Id = dieselbe Nachricht, Text aendert sich nie
+  });
+  var aus = ids.map(function (id) { return map[id]; });
+  // Zweiter Sortierschluessel ist Pflicht: bei gleichem ts haengt die
+  // Reihenfolge sonst davon ab, welches Geraet zuerst gemerged hat - und zwei
+  // Geraete kaemen auf verschiedene Signaturen, also auf Dauer-Pushes.
+  aus.sort(function (a, b) {
+    return (a.ts - b.ts) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  });
+  return aus.slice(-CHAT_MAX);
+}
+
+/* Der Verlauf, wie ihn die App anzeigen soll. Der Chat-Baustein liest ihn
+   hierueber statt aus seinem eigenen localStorage-Schluessel. */
+export function chatVerlauf() { return chatSchnitt(state.mkChat || []); }
+
+/* Eine Nachricht anhaengen. Vergibt Id und Zeitstempel, kuerzt den Text und
+   stoesst SOFORT einen Push an - genau das ist Jennifers "immer sofort
+   syncen". Die 400 ms sind kein Zoegern, sondern fassen die Nachricht und
+   einen unmittelbar folgenden Tastendruck zu einem Push zusammen; die Antwort
+   der Kreatur kommt Sekunden spaeter und bringt ihren eigenen mit. */
+export function chatNotiere(rolle, text) {
+  var m = chatEine({
+    id: Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+    rolle: rolle, ts: Date.now(),
+    text: typeof text === "string" ? text.slice(0, CHAT_TEXT_MAX) : "",
+  });
+  if (!m) return null;
+  state.mkChat = chatSchnitt((state.mkChat || []).concat([m]));
+  speichern();
+  syncBald(400);
+  return m;
+}
+
+/* Verlauf loeschen. Rose koennte etwas Persoenliches getippt haben, also muss
+   es einen Weg geben, es wieder loszuwerden - und weil der Merge eine
+   Vereinigung ist, genuegt das blosse Leeren nicht: das andere Geraet
+   schoebe den Verlauf beim naechsten Sync zurueck. Darum bekommt jede
+   Nachricht einen Grabstein "chat:<id>", dieselbe Liste state.geloescht wie
+   fuer Antworten. Kostet hoechstens CHAT_MAX Eintraege je Loeschung.
+   Bewusst NICHT an fortschrittZuruecksetzen angehaengt: dort steht in der
+   Rueckfrage "beantwortete Fragen, Selbsteinschaetzungen und
+   Klausur-Ergebnisse", und ein Gespraech ist kein Fortschritt. Wer beim
+   Zuruecksetzen etwas Persoenliches verliert, das im Text nicht angekuendigt
+   war, hat einen schlechteren Tag als jemand mit einem alten Chat. */
+export function loescheChatVerlauf() {
+  (state.mkChat || []).forEach(function (m) { if (m && m.id) grabstein("chat:" + m.id); });
+  state.mkChat = [];
+  speichern();
+  syncBald(500);
+}
+
 /* ---------- Snapshot + Signatur ---------- */
 
 // Was hochgeladen wird. deviceId/pending/syncCode/theme bleiben geraetelokal -
@@ -147,7 +283,7 @@ export function snapshot(st) {
     ? heuteBlock(heuteAntworten(s.antwortLog || []), plan,
                  offenZaehler ? offenZaehler() : null) : null;
   var aus = { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
-    geloescht: s.geloescht || [], mk: s.mk || {} };
+    geloescht: s.geloescht || [], mk: s.mk || {}, mkChat: chatSchnitt(s.mkChat || []) };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -181,7 +317,18 @@ export function signatur(d) {
   var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0) +
     ":" + ((daten.mk && daten.mk.stufeMax) || 0) +
     ":" + ((daten.mk && daten.mk.geschluepft) || 0);
-  return [aids, mc, frei, tot, mk].join("|");
+  // Der Chatverlauf MUSS hier stehen, sonst ist die ganze Uebung umsonst:
+  // signatur() entscheidet, OB gepusht wird. Stuende mkChat nur im Snapshot,
+  // aendert eine neue Nachricht die Signatur nicht, es geht nie etwas hoch,
+  // und "sofort auf allen Geraeten" waere ein Verlauf, der das Geraet nie
+  // verlaesst. Es genuegen die Ids: eine Nachricht bekommt ihren Text bei der
+  // Geburt und behaelt ihn.
+  // Gerechnet wird ueber chatSchnitt und nicht ueber die rohe Liste, weil
+  // signatur() auch auf die Server-Antwort angewandt wird (siehe einSync).
+  // Eine aeltere, ungedeckelte Zeile von dort gilt sonst fuer immer als
+  // verschieden und erzeugt bei jedem Sync einen Push ins Leere.
+  var chat = chatSchnitt(daten.mkChat || []).map(function (m) { return m.id; }).join(",");
+  return [aids, mc, frei, tot, mk, chat].join("|");
 }
 
 /* ---------- Merge ----------
@@ -256,8 +403,13 @@ export function mergeIn(st, remote) {
     // Aus der aid "<ts>-<qid>" faellt die Frage-Id ab. Bleibt fuer eine Frage keine
     // lebende Antwort uebrig, muss auch ihr gespeicherter Stand weg - sonst holt
     // ihn der naechste Merge zurueck, obwohl die Antwort geloescht wurde.
+    // Die Praefixe muessen hier ausgenommen werden: ein Chat-Grabstein
+    // "chat:<ts>-<zufall>" sieht sonst aus wie eine aid und wuerde den
+    // Alt-Stand einer Frage abraeumen, die zufaellig so heisst wie der
+    // Zufallsteil. Unwahrscheinlich, aber es waere ein Datenverlust ohne
+    // jede Spur.
     var i = s.indexOf("-");
-    if (i > 0 && s.indexOf("stand:") !== 0) totQids[s.slice(i + 1)] = true;
+    if (i > 0 && s.indexOf("stand:") !== 0 && s.indexOf("chat:") !== 0) totQids[s.slice(i + 1)] = true;
   });
 
   // 2. Antwort-Log: Map per aid, remote zuerst, lokale Fassung gewinnt.
@@ -325,6 +477,20 @@ export function mergeIn(st, remote) {
   // damit der Wert stabil bleibt und nicht bei jedem Merge hin und her springt.
   var gs = [st.mk.geschluepft, rMk.geschluepft].filter(Boolean);
   if (gs.length) st.mk.geschluepft = Math.min.apply(null, gs);
+
+  // Chatverlauf: Vereinigung beider Seiten, ueber die Id dedupliziert, nach
+  // Zeit sortiert. Drei Eigenschaften, an denen es haengt:
+  //   - Ein Snapshot OHNE mkChat (jede Zeile, die vor dem 12.08. hochging)
+  //     entwertet nichts: r.mkChat ist dann leer, und die Vereinigung mit
+  //     nichts laesst den lokalen Verlauf unveraendert stehen.
+  //   - Grabsteine gelten auch hier, sonst kaeme ein geloeschtes Gespraech
+  //     beim naechsten Sync vom anderen Geraet zurueck.
+  //   - chatSchnitt ist reihenfolge-unabhaengig, also konvergieren zwei
+  //     Geraete auf denselben Verlauf statt sich gegenseitig zu pushen.
+  var chat = (r.mkChat || []).concat(st.mkChat || []).filter(function (m) {
+    return m && !tot["chat:" + String(m.id)];
+  });
+  st.mkChat = chatSchnitt(chat);
 
   return signatur(snapshot(st)) !== vorher;
 }

@@ -117,16 +117,17 @@ function mkVerbrauch() {
 // des allgemeinen Fallbacks (zwei verschiedene Lagen, zwei verschiedene Saetze).
 export const mkTagFrei = () => mkBudget().n < MK_LIMIT();
 
-// Ist der freie Text ueberhaupt eingeschaltet? Haengt am expliziten Schalter in
-// config.js, nie an einem Probeaufruf gegen die Function.
-export const mkFreitext = () => !!(aktiv() && cfg().mkChatFreitext);
-
 /* Freier Chat mit der Kreatur. Liefert den Antworttext oder null — null heisst
    IMMER "sag etwas Freundliches aus dem lokalen Stand", nie eine Fehlermeldung.
    Die Persona lebt serverseitig (SYSTEM_MASKOTTCHEN in der Edge Function), hier
-   gehen nur der Stand-Block und der Verlauf hoch. */
+   gehen nur der Stand-Block und der Verlauf hoch.
+
+   Frei tippen kann Rose IMMER (Jennifer, 12.08.). Den frueheren Schalter
+   mkFreitext/CONFIG.mkChatFreitext gibt es nicht mehr: die Function ist
+   deployt und geprueft, und ein Schalter, den niemand mehr umlegt, ist eine
+   Falle. Geprueft wird nur noch der Transport - Endpunkt da, Budget da. */
 export async function maskottchen(messages, stand) {
-  if (!mkFreitext() || !mkTagFrei()) return null;
+  if (!aktiv() || !mkTagFrei()) return null;
   if (!Array.isArray(messages) || !messages.length) return null;
   const steuerung = new AbortController();
   const wecker = setTimeout(() => steuerung.abort(), 20000);
@@ -371,4 +372,4 @@ export function stelleFinden(text, textstelle) {
 // Aufrufer.
 
 // Globale Schnittstelle fuer klausur.js und den Uebungsmodus.
-window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkFreitext, mkTagFrei };
+window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei };

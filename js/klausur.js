@@ -721,7 +721,12 @@ function schreibBlattBauen(a, blattId, istLetztes) {
   var stift = el("button", "kl-stift", "✎");
   stift.setAttribute("aria-label", "Mit Stift schreiben");
   stift.addEventListener("click", function () {
-    stiftFlaeche(function (bilder) { uebernehmen(blatt, bilder); });
+    // Die Aufgabe steht beim Schreiben oben auf dem Blatt - frageTextZuBlatt
+    // liefert sie schon fuer die Transkription, hier zeigt sie dieselbe Quelle.
+    stiftFlaeche(function (bilder) { uebernehmen(blatt, bilder); }, {
+      frage: frageTextZuBlatt(blatt),
+      nr: "Aufgabe " + blatt.aufgabeNr
+    });
   });
   b.appendChild(stift);
 
@@ -833,6 +838,10 @@ function rendereLauf() {
 
 /* ---------- Handschrift-Canvas ---------- */
 
+// Die Tinte. Passt zu --bleistift in papier.css (.kl-ov.stiftblatt) und ist
+// bewusst fast schwarz: das Blatt ist creme, geschrieben wird mit dem Fueller.
+var TINTE = "#14110c";
+
 // Auf Papier gerendert, damit die Tinte nicht auf schwarzem Grund landet.
 function aufPapier(cv, maxB) {
   var skala = Math.min(1, maxB / cv.width);
@@ -861,11 +870,18 @@ function exportBilder(cv) {
 // Funktion (ARCHITEKTUR.md: wiederverwenden, nicht duplizieren). Generisch
 // gehalten - beiFertig({ png, jpeg }) entscheidet, was mit dem Bild passiert.
 // Wird nur beim Tippen aufs Stift-Symbol gerufen, laedt also nichts vorab.
-export function stiftFlaeche(beiFertig) {
+//
+// opts.frage: der Aufgabentext. Steht gedruckt oben auf dem Blatt und bleibt
+// beim Schreiben sichtbar - genau wie auf dem echten Klausurbogen. Ohne Text
+// faellt der Kopf weg und die Schreibflaeche nimmt das ganze Blatt.
+export function stiftFlaeche(beiFertig, opts) {
+  var o = opts || {};
   var y = scrollMerken();
-  var ov = el("div", "kl-ov");
+  // stiftblatt traegt die Papier-Tokens (papier.css). Ohne die Klasse erbt das
+  // Overlay nichts - es haengt an document.body, nicht in der .klausur-rolle.
+  var ov = el("div", "kl-ov stiftblatt");
   var leiste = el("div", "kl-ov-leiste");
-  leiste.appendChild(el("span", "titel", "Mit dem Stift schreiben"));
+  leiste.appendChild(el("span", "titel", o.titel || "Mit dem Stift schreiben"));
 
   var radierer = el("button", "kl-ov-knopf", "Radierer");
   var zurueckK = el("button", "kl-ov-knopf", "Zurück");
@@ -875,12 +891,21 @@ export function stiftFlaeche(beiFertig) {
   [radierer, zurueckK, leerK, abbruch, fertig].forEach(function (b) { leiste.appendChild(b); });
   ov.appendChild(leiste);
 
+  var blatt = el("div", "kl-stift-blatt");
+  if (o.frage) {
+    var kopf = el("div", "kl-stift-kopf");
+    kopf.appendChild(el("span", "nr", o.nr || "Aufgabe"));
+    kopf.appendChild(el("p", "aufgabentext", o.frage));
+    blatt.appendChild(kopf);
+  }
+
   var huelle = el("div", "kl-canvas-huelle");
   huelle.appendChild(el("div", "kl-canvas-lineatur"));
   var cv = document.createElement("canvas");
   cv.className = "kl-canvas";
   huelle.appendChild(cv);
-  ov.appendChild(huelle);
+  blatt.appendChild(huelle);
+  ov.appendChild(blatt);
   document.body.appendChild(ov);
 
   var ctx = cv.getContext("2d");
@@ -924,13 +949,13 @@ export function stiftFlaeche(beiFertig) {
       ctx.globalCompositeOperation = s.radierer ? "destination-out" : "source-over";
       ctx.beginPath();
       ctx.arc(s.punkte[0][0], s.punkte[0][1], s.breite / 2, 0, Math.PI * 2);
-      ctx.fillStyle = "#2c2a35";
+      ctx.fillStyle = TINTE;
       ctx.fill();
       ctx.globalCompositeOperation = "source-over";
       return;
     }
     ctx.globalCompositeOperation = s.radierer ? "destination-out" : "source-over";
-    ctx.strokeStyle = "#2c2a35";
+    ctx.strokeStyle = TINTE;
     ctx.lineWidth = s.breite;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -1036,32 +1061,50 @@ function uebernehmen(blatt, bilder) {
     });
 }
 
-function transkriptDialog(blatt, text, jpeg) {
+/* Generischer Transkript-Dialog: die KI hat gelesen, Rose korrigiert und
+   entscheidet. Klausurmodus UND Frei ueben nutzen denselben Dialog - beide
+   Stellen sollen sich gleich anfuehlen, und die eiserne Regel (llm.js) gilt hier
+   genauso: die Maschine schlaegt vor, Rose hat das letzte Wort.
+   opts: { beiOk(text), beiBild() | null, hinweis } */
+export function transkriptPruefen(text, opts) {
+  var o = opts || {};
   var ov = el("div", "kl-ov");
   var d = el("div", "kl-dialog");
   d.appendChild(el("h3", null, "So habe ich das gelesen"));
-  d.appendChild(el("p", null, "Ändere frei, was danebenlag. Erst wenn du bestätigst, steht es auf dem Blatt."));
+  d.appendChild(el("p", null, o.hinweis || "Ändere frei, was danebenlag. Erst wenn du bestätigst, wird es übernommen."));
   var ta = document.createElement("textarea");
   ta.value = text;
   d.appendChild(ta);
   var reihe = el("div", "reihe");
   var ok = el("button", "knopf", "Passt so");
   ok.addEventListener("click", function () {
-    blatt.text = (blatt.text ? blatt.text + "\n" : "") + ta.value;
-    blatt.transkribiert = true;
-    blatt.canvasBild = null;
     ov.remove();
-    speichernJetzt();
-    neuZeichnen();
+    if (o.beiOk) o.beiOk(ta.value);
   });
-  var alsBild = el("button", "knopf sekundaer", "Lieber als Bild anhängen");
-  alsBild.addEventListener("click", function () { ov.remove(); bildAnhaengen(blatt, jpeg); });
   reihe.appendChild(ok);
-  reihe.appendChild(alsBild);
+  if (o.beiBild) {
+    var alsBild = el("button", "knopf sekundaer", "Lieber als Bild anhängen");
+    alsBild.addEventListener("click", function () { ov.remove(); o.beiBild(); });
+    reihe.appendChild(alsBild);
+  }
   d.appendChild(reihe);
   ov.appendChild(d);
   document.body.appendChild(ov);
   ta.focus();
+}
+
+function transkriptDialog(blatt, text, jpeg) {
+  transkriptPruefen(text, {
+    hinweis: "Ändere frei, was danebenlag. Erst wenn du bestätigst, steht es auf dem Blatt.",
+    beiOk: function (wert) {
+      blatt.text = (blatt.text ? blatt.text + "\n" : "") + wert;
+      blatt.transkribiert = true;
+      blatt.canvasBild = null;
+      speichernJetzt();
+      neuZeichnen();
+    },
+    beiBild: function () { bildAnhaengen(blatt, jpeg); }
+  });
 }
 
 /* ---------- Bewertung an den Stichpunkten ---------- */

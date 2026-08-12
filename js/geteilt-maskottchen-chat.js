@@ -12,59 +12,87 @@
    verteilen. Kein Build-Schritt, gleiche Begruendung wie beim Style-Paket und
    bei tagesstand.js: beide Apps sind Vanilla JS, deploy.sh kopiert nur app/.
 
-   Das Aussehen liegt im Style-Paket (trainer-muster.css, Block 11):
-   .chat-sheet .chat-verlauf .chat-msg .chat-tipp .chat-schnell .chat-hinweis
-   .chat-eingabe — dieselben Klassen, die der ST-Fragenchat schon benutzt.
-   Damit sind Fragenchat und Kreaturen-Chat EIN Bauteil mit EINEM Aussehen
-   (Jennifer, 12.08.: "wenn die gleichen Games sind mit der gleichen Funktion
-   im Hintergrund, dann sollen sie sich auch ein Logik-Package teilen ... und
-   gleich aussehen").
+   ---------------------------------------------------------------------------
+   EIN MODUL, EINE OPTIK (Jennifer, 12.08. abends)
+
+   "solche module sollen gleiche codebase und style haben."
+
+   Deshalb baut diese Datei das GANZE Sheet — Huelle, Griff, Senden-Knopf und
+   Schliessen-Knopf inklusive. Frueher borgte sie sich dafuer App-Namen
+   (.sheet, .sheet-grip, .btn.small, .linkish); die sind in beiden Apps
+   verschieden definiert, und weil style.css NACH geteilt.css laedt, gewannen
+   sie. Gemessen am 12.08. bei 360 px, beide Apps hell:
+
+     Senden-Knopf     ST 34x39 px, Radius 12, .92rem   GE 38x40, Radius 999, 1.05rem
+     Schliessen       ST 60x24 px, Polster 4/0/0       GE 68x28, Polster 8/4/0
+     Hinweiszeile     ST .93rem (ueber .sheet p)       GE .8rem
+     Sheet-Polster    ST 14/20/18                      GE 20/20/20
+     Sheet-Breite     ST max 560                       GE unbegrenzt
+     Overlay          ST rgba(20,14,8,.42)             GE rgba(10,8,20,.6)
+
+   Jetzt heissen die Teile chat-grip, chat-senden und chat-zu, und die Huelle
+   haengt an .mk-chat-ov statt an .sheet. Keine App-Regel greift mehr hinein.
+   App-spezifisch ist nur noch, was --accent hergibt (die Identitaetsfarbe),
+   der Fachhinweis und die Persoenlichkeit der Kreatur.
 
    ---------------------------------------------------------------------------
-   ZWEI STUFEN, UND DIE ERSTE TRAEGT ALLEIN
+   MESSENGER-OPTIK (Jennifer, 12.08. abends, woertlich)
 
-   Stufe 1  Sheet, Einstieg am Maskottchen, SCHNELLANTWORTEN aus dem lokalen
-            Stand. Kein Netz, kein Supabase, kein Deploy noetig.
-   Stufe 2  freier Text ueber die Edge Function. Additiv, haengt an einem
-            expliziten Schalter der App (mkChatFreitext) und geht erst an,
-            wenn die Function deployt ist.
+   "nicht schreiben mit meinem/deinem Ei reden sondern einfach chatbubble ei
+   und rechts ein personen ascii icon und chatbubbles halt. und name einfach
+   Ei."
 
-   Die Schnellantworten sind KEIN Platzhalter. Sie sind die dauerhafte erste
-   Ebene und gleichzeitig das Netz: sie kosten nichts, brauchen niemanden und
-   sagen trotzdem etwas Wahres. Solange Stufe 2 aus ist, wird das Eingabefeld
-   gar nicht erst gebaut — kein ausgegrautes Feld, kein Hinweis auf etwas
-   Fehlendes. Rose sieht ein Maskottchen mit Knoepfen, sonst nichts.
+   Also: keine Ueberschrift, die eine Beziehung behauptet. Links die Kreatur
+   mit ihrem eigenen Bild als Avatar, rechts Rose mit einem Personen-Icon,
+   beide in Sprechblasen. Der Name steht ueber der ersten Blase einer Folge
+   und ist schlicht das, was die Kreatur GERADE ist — siehe kreaturName().
+
+   Der Avatar erscheint nur bei der ERSTEN Nachricht einer Folge. Bei 360 px
+   waere ein Avatar an jeder Blase eine Wand; die Spalte bleibt aber stehen,
+   damit die Blasen buendig untereinander liegen.
+
+   ---------------------------------------------------------------------------
+   DAS EI BLEIBT EIN GEHEIMNIS
+
+   Vor dem Schluepfen heisst die Kreatur "Ei" und sonst gar nichts. Kein Titel,
+   keine Schnellfrage und kein Feld im Stand-Block verraet, was daraus wird —
+   die Apps schicken tierart erst ab ihrer TIER_STUFE mit, und diese Datei
+   erfindet nichts dazu. Nach dem Schluepfen waechst der Name mit, und der
+   Avatar tut es automatisch, weil er dasselbe Bild zeigt wie die Startseite.
 
    ---------------------------------------------------------------------------
    WAS DIESES MODUL NIE TUT
 
    1. Es fasst den Lernstand nicht an. Kein snapshot(), kein signatur(), kein
       state().mk. Der Chat LIEST den Stand, den ihm die App hereinreicht.
-      Ein Chatverlauf ist kein Lernstand — er liegt geraetelokal in
-      localStorage und synct nicht.
    2. Es rechnet nichts nach. stand() liefert fertige Zahlen; wer die Zahl
-      berechnet, muss die App sein, die sie anzeigt (die Lehre aus Lernscore,
-      Quoten-Pille und Offen-Zahl, dreimal im Handoff).
+      berechnet, muss die App sein, die sie anzeigt.
    3. Es zeigt nie einen Fehler. Kein "nicht erreichbar", keine leere Blase,
-      keine Entschuldigung fuer Technik. Das Maskottchen ist verschlafen,
-      nicht kaputt — und sagt danach trotzdem etwas Wahres aus dem Stand.
+      keine Entschuldigung fuer Technik. Faellt die Function aus, sagt die
+      Kreatur trotzdem etwas Wahres aus dem lokalen Stand.
 
    ---------------------------------------------------------------------------
    DER ADAPTER (das App-spezifische, vollstaendig)
 
      {
-       titel:         String   Ueberschrift des Sheets
        hinweis:       String   ruhiger Nebensatz unter den Knoepfen (optional)
        verlaufKey:    String   localStorage-Schluessel (optional; ohne ihn
                                lebt der Verlauf nur, solange das Sheet offen
                                ist). NIE ein Schluessel aus dem Lernstand.
        stand:         fn()     -> reiner Datenblock, siehe standFelder()
+       avatarHtml:    fn(st)   -> HTML des Kreaturenbildes (aus maskottchen.js,
+                                  damit Chat und Startseite dieselbe Figur
+                                  zeigen). Optional; ohne bleibt die Spalte leer.
        schnellFragen: fn(st)   -> [{ text, antwort }] (antwort ist ein String)
-       freitext:      fn()     -> Boolean: Eingabefeld ueberhaupt bauen?
        budgetFrei:    fn()     -> Boolean (optional, Default true)
        senden:        fn(msgs, st) -> Promise<String|null>
        fallback:      fn(st)   -> String, immer in der Rolle
      }
+
+   Einen Schalter fuers Eingabefeld gibt es NICHT mehr. Frei tippen geht immer
+   (Jennifer, 12.08.: "man soll frei tippen können beim chat"). Die
+   Schnellfragen bleiben als Chips daneben — sie sind eine Abkuerzung, kein
+   Ersatz, und sie antworten weiter ohne Netz.
 
    Stil dieser Datei bewusst wie tagesstand.js: var/function, keine
    Pfeilfunktionen, DOM-Knoten statt HTML-Strings. Nur so passt dieselbe Datei
@@ -72,7 +100,7 @@
    (el()-Baukasten). Keine deutschen Anfuehrungszeichen in Strings.
    =========================================================================== */
 
-export var CHAT_V = 1;
+export var CHAT_V = 2;
 
 /* Wie viele Nachrichten der Verlauf behaelt (Paare aus Frage und Antwort).
    Begrenzt aus zwei Gruenden: die Function bekommt sonst einen wachsenden
@@ -82,8 +110,23 @@ var MAX_NACHRICHTEN = 20;
 
 /* Eigener Marker, NICHT das blosse .chat-ov des ST-Fragenchats: sonst raeumen
    sich die beiden Sheets gegenseitig weg, obwohl sie verschiedene Gespraeche
-   sind. chatSchliessen() faellt damit nur ueber das eigene Sheet her. */
+   sind. chatSchliessen() faellt damit nur ueber das eigene Sheet her. Seit dem
+   12.08. traegt diese Klasse auch die Huelle (siehe Kopf). */
 var OV_KLASSE = "mk-chat-ov";
+
+/* Roses Avatar. Nur Blockgrafik aus demselben Zeichensatz wie das Ei
+   (VOLL = "█▟▙▐▌▝▘▄▀" in maskottchen.js) — die Zeichen, die auf Android
+   garantiert nicht in einen Ersatzfont fallen und die Zeile verschieben.
+   Kopf ueber Schultern, 7 Zellen breit, damit es neben der Kreatur (9 bis 13
+   Zellen) kleiner wirkt und nicht mit ihr konkurriert. Gemessen bei 5 px
+   Schriftgroesse: 23x25 px. */
+var ICH_BILD = [
+  "  ▄▄▄  ",
+  " ▐███▌ ",
+  "  ▀▀▀  ",
+  " ▄▄▄▄▄ ",
+  "▐█████▌",
+].join("\n");
 
 /* ---------- kleine Bausteine ---------- */
 
@@ -95,9 +138,9 @@ function el(tag, klasse, text) {
 }
 
 /* Nur textContent, nie innerHTML: der Text kommt aus einem Sprachmodell und
-   soll in beiden Apps ohne Vertrauensfrage anzeigbar sein. Der Fragenchat im
-   ST-Trainer rendert Belegmarken, weil er ueber Folien spricht — das
-   Maskottchen tut das ausdruecklich nicht (es nennt keine Foliennummern). */
+   soll in beiden Apps ohne Vertrauensfrage anzeigbar sein. Einzige Ausnahme
+   ist der Avatar — dessen HTML baut maskottchen.js selbst aus einer festen
+   Zeichentabelle, da kommt nichts von aussen hinein. */
 function istText(x) {
   return typeof x === "string" && x.replace(/\s+/g, "") !== "";
 }
@@ -152,7 +195,10 @@ export function standFelder(roh) {
     tageBisKlausur: typeof s.tageBisKlausur === "number" ? s.tageBisKlausur : null,
     stufe: typeof s.stufe === "number" ? s.stufe : 0,
     geschluepft: !!s.geschluepft,
-    tierart: s.tierart || "",          // erst ab Stufe 6 verraten
+    /* Vor der TIER_STUFE der jeweiligen App schicken beide Adapter hier den
+       leeren String — nicht die Tierart. Das ist die Ueberraschung, auf die
+       das ganze Wachsen hinauslaeuft, und sie darf nirgends vorher fallen. */
+    tierart: s.tierart || "",
     herzen: typeof s.herzen === "number" ? s.herzen : 0,
     sterne: typeof s.sterne === "number" ? s.sterne : 0,
     uebungstage: typeof s.uebungstage === "number" ? s.uebungstage : 0,
@@ -165,6 +211,22 @@ export function standFelder(roh) {
     offen: Array.isArray(s.offen) ? s.offen : null,
     stunde: typeof s.stunde === "number" ? s.stunde : new Date().getHours(),
   };
+}
+
+/* Wie die Kreatur im Chat heisst. Genau drei Faelle, in beiden Apps gleich:
+
+     noch im Ei      "Ei"        — und kein Wort mehr, das ist der Punkt
+     geschluepft     "Kreatur"   — sie weiss selbst noch nicht, was sie ist
+     Art bekannt     "Katze" bzw. "Hund"
+
+   Der mittlere Fall ist das einzige Wort, das hier erfunden ist: nach dem
+   Schluepfen ist "Ei" gelogen, die Art aber noch geheim. Die Apps sagten
+   dafuer bisher Verschiedenes (ST "Begleiter", GE "Kreatur") — EIN Wort fuer
+   beide, sonst faengt die Doppelung wieder von vorne an. */
+export function kreaturName(st) {
+  if (st && st.tierart) return st.tierart;
+  if (st && st.geschluepft) return "Kreatur";
+  return "Ei";
 }
 
 /* Ist es Nacht? Nachts ist das Maskottchen leise und sagt kein Wort ueber
@@ -183,6 +245,10 @@ export function heuteSatz(st) {
   if (!h.n) return "heute ist noch nichts dazugekommen, und das ist völlig in Ordnung";
   return "heute sind schon " + h.n + " von " + h.ziel + " durch";
 }
+
+/* Der Leersatz. EIN Wortlaut fuer beide Apps, und er laedt zum Tippen ein —
+   das Eingabefeld ist immer da, es gibt nichts mehr zu relativieren. */
+var LEER_SATZ = "Schreib mir was - oder tipp auf eine Frage.";
 
 /* ---------- Das Sheet ---------- */
 
@@ -212,19 +278,26 @@ export function chatOeffnen(adapter) {
 
   var st = standFelder(adapter.stand ? adapter.stand() : null);
   var verlauf = ladeVerlauf(adapter.verlaufKey);
+  var name = kreaturName(st);
 
-  var ov = el("div", "sheet-ov " + OV_KLASSE);
-  var sheet = el("div", "sheet chat-sheet");
+  /* Einmal beim Oeffnen geholt und dann wiederverwendet. Das Bild kommt aus
+     maskottchen.js und ist damit dieselbe Figur wie auf der Startseite — sie
+     waechst also automatisch mit, ohne dass hier eine Stufenleiter steht. */
+  var kreaturBild = "";
+  if (typeof adapter.avatarHtml === "function") {
+    try { kreaturBild = String(adapter.avatarHtml(st) || ""); } catch (e) { kreaturBild = ""; }
+  }
+
+  var ov = el("div", OV_KLASSE);
+  var sheet = el("div", "chat-sheet");
   sheet.setAttribute("role", "dialog");
   sheet.setAttribute("aria-modal", "true");
-  sheet.setAttribute("aria-label", adapter.titel || "Mit deinem Begleiter reden");
+  /* Nur der Name, keine Anrede. Sichtbar steht er an der ersten Blase; hier
+     ist er das Label fuer den Screenreader. */
+  sheet.setAttribute("aria-label", name);
   ov.appendChild(sheet);
 
-  sheet.appendChild(el("div", "sheet-grip"));
-
-  var kopf = el("h3", null, adapter.titel || "Mit deinem Begleiter reden");
-  kopf.style.marginBottom = "2px";
-  sheet.appendChild(kopf);
+  sheet.appendChild(el("div", "chat-grip"));
 
   var box = el("div", "chat-verlauf");
   box.setAttribute("aria-live", "polite");
@@ -237,46 +310,64 @@ export function chatOeffnen(adapter) {
   hinweis.hidden = true;
   sheet.appendChild(hinweis);
 
-  var txt = null, sendKnopf = null;
-  if (adapter.freitext && adapter.freitext()) {
-    var zeile = el("div", "chat-eingabe");
-    txt = el("textarea");
-    txt.rows = 1;
-    txt.placeholder = "Schreib mir was";
-    txt.setAttribute("aria-label", "Nachricht an dein Maskottchen");
-    sendKnopf = el("button", "btn small", "›");
-    sendKnopf.type = "button";
-    sendKnopf.setAttribute("aria-label", "Abschicken");
-    zeile.appendChild(txt);
-    zeile.appendChild(sendKnopf);
-    sheet.appendChild(zeile);
-  }
+  /* Das Eingabefeld wird IMMER gebaut. Es haengt an keinem Schalter mehr —
+     der alte mkChatFreitext war genau der Grund, warum im ST-Trainer statt
+     eines Feldes "Tipp auf eine Frage" stand. */
+  var zeile = el("div", "chat-eingabe");
+  var txt = el("textarea");
+  txt.rows = 1;
+  txt.placeholder = "Schreib mir was";
+  txt.setAttribute("aria-label", "Nachricht an " + name);
+  var sendKnopf = el("button", "chat-senden", "›");
+  sendKnopf.type = "button";
+  sendKnopf.setAttribute("aria-label", "Abschicken");
+  zeile.appendChild(txt);
+  zeile.appendChild(sendKnopf);
+  sheet.appendChild(zeile);
 
-  var zu = el("button", "linkish", "Schließen");
+  var zu = el("button", "chat-zu", "Schließen");
   zu.type = "button";
-  zu.style.alignSelf = "center";
   sheet.appendChild(zu);
 
   document.body.appendChild(ov);
   offenesSheet = ov;
 
+  /* ---- eine Sprechblase mit Avatar ----
+     mitKopf steuert Avatar UND Namen: beides nur bei der ERSTEN Nachricht
+     einer Folge. Die Avatarspalte bleibt trotzdem stehen (feste Breite im
+     CSS), sonst rutschten Folgeblasen nach aussen. */
+  function reiheBauen(rolle, mitKopf) {
+    var duSeite = rolle === "user";
+    var reihe = el("div", "chat-reihe " + (duSeite ? "du" : "ki"));
+
+    var av = el("pre", "chat-avatar");
+    av.setAttribute("aria-hidden", "true");
+    if (mitKopf) {
+      if (duSeite) av.textContent = ICH_BILD;
+      else av.innerHTML = kreaturBild;
+    }
+    reihe.appendChild(av);
+
+    var spalte = el("div", "chat-spalte");
+    /* Der Name steht nur an der Kreatur. Roses eigene Blasen bekommen keinen —
+       in einem Zweiergespraech schreibt kein Messenger den eigenen Namen dran. */
+    if (mitKopf && !duSeite) spalte.appendChild(el("span", "chat-name", name));
+    reihe.appendChild(spalte);
+    reihe.spalte = spalte;
+    return reihe;
+  }
+
   /* ---- zeichnen ---- */
   function malen() {
     box.textContent = "";
-    if (!verlauf.length) {
-      /* Der Leersatz darf nur dann zum Tippen einladen, wenn es auch ein
-         Eingabefeld gibt. Solange Stufe 2 aus ist (adapter.freitext() false,
-         txt bleibt null), waere "frag einfach los" ein Hinweis auf ein
-         Feature, das Rose nirgends findet — genau das, was hier verboten ist.
-         txt wird oben gesetzt, bevor malen() das erste Mal laeuft. */
-      var leer = el("p", "chat-hinweis", txt
-        ? "Tipp auf eine Frage - oder frag einfach los."
-        : "Tipp auf eine Frage.");
-      box.appendChild(leer);
-    }
+    if (!verlauf.length) box.appendChild(el("p", "chat-hinweis chat-leer", LEER_SATZ));
+    var vorher = null;
     for (var i = 0; i < verlauf.length; i++) {
       var m = verlauf[i];
-      box.appendChild(el("div", "chat-msg " + (m.role === "user" ? "du" : "ki"), m.content));
+      var reihe = reiheBauen(m.role, m.role !== vorher);
+      reihe.spalte.appendChild(el("div", "chat-msg " + (m.role === "user" ? "du" : "ki"), m.content));
+      box.appendChild(reihe);
+      vorher = m.role;
     }
     box.scrollTop = box.scrollHeight;
   }
@@ -308,11 +399,11 @@ export function chatOeffnen(adapter) {
     return "Ich bin gerade ein bisschen verschlafen und finde die Worte nicht. Was ich aber sehe: " + heuteSatz(st) + ".";
   }
 
-  /* ---- Freitext (Stufe 2) ---- */
+  /* ---- Freier Text ---- */
   var laeuft = false;
 
   function frageAb() {
-    if (!txt || laeuft) return;
+    if (laeuft) return;
     var frage = txt.value.trim();
     if (!frage) return;
 
@@ -327,11 +418,13 @@ export function chatOeffnen(adapter) {
 
     laeuft = true;
     txt.value = "";
-    if (sendKnopf) sendKnopf.disabled = true;
+    sendKnopf.disabled = true;
     sagen("user", frage);
 
-    var warte = el("div", "chat-msg ki");
-    warte.appendChild(el("span", "chat-tipp", "…"));
+    var warte = reiheBauen("assistant", true);
+    var blase = el("div", "chat-msg ki");
+    blase.appendChild(el("span", "chat-tipp", "…"));
+    warte.spalte.appendChild(blase);
     box.appendChild(warte);
     box.scrollTop = box.scrollHeight;
 
@@ -353,16 +446,14 @@ export function chatOeffnen(adapter) {
          hier verboten ist. */
       sagen("assistant", istText(antwort) ? String(antwort).trim() : fallbackText());
       laeuft = false;
-      if (sendKnopf) sendKnopf.disabled = false;
+      sendKnopf.disabled = false;
     });
   }
 
-  if (sendKnopf) sendKnopf.onclick = frageAb;
-  if (txt) {
-    txt.onkeydown = function (e) {
-      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); frageAb(); }
-    };
-  }
+  sendKnopf.onclick = frageAb;
+  txt.onkeydown = function (e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); frageAb(); }
+  };
 
   /* ---- Schliessen ---- */
   function schliesse() {
@@ -383,8 +474,8 @@ export function chatOeffnen(adapter) {
 
   /* Der Schliessen-Knopf bekommt den Fokus, NICHT das Textfeld. Auf dem Handy
      schoebe ein fokussiertes Textfeld sofort die Tastatur hoch und deckte
-     genau die Schnellantworten zu, die der Hauptweg sind. Wer tippen will,
-     tippt ins Feld. */
+     genau die Schnellantworten zu, die eine gleichwertige Abkuerzung sind.
+     Wer tippen will, tippt ins Feld. */
   zu.focus();
 
   return ov;

@@ -362,7 +362,93 @@
 .kl-canvas-lineatur {
   position: absolute; inset: 0; pointer-events: none;
   background-image: repeating-linear-gradient(to bottom,
-    transparent 0, transparent 43px, var(--lineatur) 43px, var(--lineatur) 44px);
+    transparent 0, transparent calc(var(--lin-stift, 44px) - 1px),
+    var(--lineatur, rgba(60, 82, 120, .30)) calc(var(--lin-stift, 44px) - 1px),
+    var(--lineatur, rgba(60, 82, 120, .30)) var(--lin-stift, 44px));
+}
+
+/* ---------- Stift-Flaeche: ein liniertes Blatt ----------
+
+   Diese Tokens muessen HIER stehen und nicht nur auf .klausur-rolle: die
+   Stift-Flaeche haengt an document.body (klausur.js stiftFlaeche), also ausserhalb
+   der Rolle. Bis zum 12.08. abends erbte sie deshalb gar nichts - var(--blatt)
+   loeste sich nicht auf, die Huelle blieb transparent ueber dem dunklen Scrim und
+   die Lineatur-Gradient war komplett ungueltig (fehlende Custom Properties sind
+   kein Fehler, sie sind still). Geschrieben wurde mit fast schwarzer Tinte auf
+   dunklem Grund.
+
+   Bewusst IMMER helles Tonpapier, in beiden Themes: mit der Hand schreibt Rose
+   auf Papier, und schwarz auf creme ist der Kontrast, den sie dafuer braucht.
+   Der Nachtmodus der App bleibt davon unberuehrt - nur dieses eine Blatt leuchtet. */
+.kl-ov.stiftblatt {
+  --blatt: #f7f0dd;
+  --blatt-rand: #ddd1b2;
+  --blatt-ink: #1b1710;          /* gedruckte Aufgabe */
+  --blatt-ink-2: #5d5445;
+  --lineatur: rgba(60, 82, 120, .30);
+  --randlinie: rgba(179, 54, 43, .30);
+  --bleistift: #14110c;          /* Roses Handschrift, siehe TINTE in klausur.js */
+  --lin-stift: 44px;             /* eine Zeilenhoehe - Handschrift braucht mehr als getippt */
+  padding: env(safe-area-inset-top) var(--sp-2) env(safe-area-inset-bottom);
+}
+
+/* Kopf und Schreibflaeche zusammen sind das Blatt. Der gedruckte Kopf liegt
+   NEBEN der Huelle, nicht darin: klausur.js misst die Huelle in groesse() und
+   rechnet alle Striche auf ihre Groesse um - was in der Huelle liegt, verschiebt
+   die Zeichenflaeche. */
+.stiftblatt .kl-stift-blatt {
+  flex: 1; display: flex; flex-direction: column; min-height: 0;
+  width: 100%; margin: var(--sp-2) auto 0;
+  background: var(--blatt);
+  border: 1px solid var(--blatt-rand);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(5,0,20,.5), 0 10px 28px -12px rgba(5,0,20,.7);
+  overflow: hidden;
+}
+.stiftblatt .kl-canvas-huelle { background: transparent; }
+
+/* Die Frage bleibt beim Schreiben sichtbar - auf dem Blatt gedruckt, so wie sie
+   auf dem Klausurbogen steht. Scrollt bei langen Aufgaben in sich, damit fuer die
+   Antwort immer Flaeche bleibt. */
+.stiftblatt .kl-stift-kopf {
+  flex: 0 0 auto; max-height: 30vh; overflow-y: auto;
+  padding: 12px 16px 10px 30px;
+  border-bottom: 1px solid var(--blatt-rand);
+}
+.stiftblatt .kl-stift-kopf .nr {
+  display: block;
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blatt-ink-2);
+  margin-bottom: 2px;
+}
+.stiftblatt .kl-stift-kopf .aufgabentext {
+  font-family: "Fraunces", Georgia, serif; font-weight: 500;
+  font-size: 1rem; line-height: 1.4;
+  color: var(--blatt-ink);
+  margin: 0;
+}
+
+/* Lineatur plus Heftrand, gemeinsam auf der einen Ebene ueber dem Blatt. */
+.stiftblatt .kl-canvas-lineatur {
+  background-image:
+    linear-gradient(to right, transparent 21px, var(--randlinie) 21px, var(--randlinie) 22px, transparent 22px),
+    repeating-linear-gradient(to bottom,
+      transparent 0, transparent calc(var(--lin-stift) - 1px),
+      var(--lineatur) calc(var(--lin-stift) - 1px), var(--lineatur) var(--lin-stift));
+}
+
+/* Auf dem Handy fuellt das Blatt die Flaeche - A4-Proportionen wuerden Rose dort
+   Schreibraum kosten. Erst am grossen Schirm wird daraus ein Blatt auf dem Tisch. */
+@media (min-width: 860px) {
+  .stiftblatt .kl-stift-blatt { max-width: 760px; margin-bottom: var(--sp-2); }
+}
+
+/* Auf schmalen Schirmen faellt die Ueberschrift der Leiste weg: mit ihr braucht
+   sie zwei Zeilen, und die fehlen unten beim Schreiben. Die fuenf Knoepfe sagen
+   ohnehin selbst, wo man ist. */
+@media (max-width: 560px) {
+  .stiftblatt .kl-ov-leiste .titel { display: none; }
 }
 
 .kl-dialog {

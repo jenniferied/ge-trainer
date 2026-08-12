@@ -2,7 +2,7 @@
    Konzept-Check (MC), Frei ueben (AFB). Importiert core.js (State/Daten/Helfer)
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
-import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen } from "./core.js";
+import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
@@ -470,7 +470,11 @@ function mkSchnellFragen(s) {
 
 function mkChatAdapter(tz, stufe) {
   return {
-    titel: Mk.chatTitel(stufe),
+    // Kein titel mehr: das Sheet hat seit dem 12.08. keine Ueberschrift, die
+    // eine Beziehung behauptet ("Mit deinem Ei reden"). Die Kreatur heisst im
+    // Chat schlicht so, wie sie GERADE ist - kreaturName() im Baustein macht
+    // daraus Ei, Kreatur oder Hund.
+    //
     // Geraetelokal und tagesfrisch, der Baustein raeumt selbst auf. NICHT im
     // Lernstand, nicht in snapshot(), nicht in signatur(): ein Chatverlauf ist
     // kein Lernstand. Eigener Key - der ST-Trainer liegt auf demselben
@@ -480,15 +484,15 @@ function mkChatAdapter(tz, stufe) {
     // was nicht - sonst probiert Rose Fachfragen an der falschen Stelle. Der
     // ST-Trainer hat denselben Satz in seiner Fassung (mk-chat.js); die Grenze
     // ist dort der Chat an der Uebungsfrage, hier sind es die Aufgaben selbst.
-    hinweis: Llm.mkFreitext()
-      ? "Ich weiß, wie dein Tag läuft. Vom Stoff versteh ich nichts."
-      : "Ich weiß, wie dein Tag läuft. Für den Stoff nimm eine Aufgabe – da steht die Erklärung dabei.",
+    hinweis: "Ich weiß, wie dein Tag läuft. Vom Stoff versteh ich nichts – dafür steht bei jeder Aufgabe die Erklärung.",
     stand: function () { return mkStand(tz, stufe); },
+    // Dasselbe Bild wie auf der Startseite - der Chat zeichnet nichts Eigenes,
+    // also waechst der Avatar automatisch mit und kann nie in einer anderen
+    // Stufe stehen als die Karte darueber.
+    avatarHtml: function (s) {
+      return Mk.bildHtml(Mk.EIER[Mk.eiIndex()], s.stufe, MkChat.istNacht(s));
+    },
     schnellFragen: mkSchnellFragen,
-    // Stufe 2. Solange die Edge Function den art-Zweig "maskottchen" nicht
-    // kennt, wird das Eingabefeld gar nicht erst gebaut - kein ausgegrautes
-    // Feld, kein Hinweis auf etwas Fehlendes.
-    freitext: function () { return Llm.mkFreitext(); },
     // Eigenes kleines Tagesbudget (ge-mk-tag, 20), damit Geplauder Roses
     // Klausur-Korrektur (ge-llm-tag, 100) nie wegnimmt.
     budgetFrei: function () { return Llm.mkTagFrei(); },
@@ -1497,6 +1501,73 @@ function starteQuiz(thema) {
 
 var AFB_TEXT = { 1: "AFB I · Nennen & Beschreiben", 2: "AFB II · Erläutern & Anwenden", 3: "AFB III · Diskutieren & Bewerten" };
 
+/* ---------- Entwuerfe: Getipptes und Gezeichnetes bleiben liegen ----------
+
+   Bis zum 12.08. lebte beides nur im DOM: einmal weg von der Karte, und Roses
+   handschriftlicher Entwurf war weg. Jetzt haelt state.freiEntwurf ihn fest.
+
+   GERAETELOKAL, mit Absicht: das Feld steht NICHT in snapshot() (sync.js), also
+   geht es nie hoch. Ein JPEG je Aufgabe wuerde den Lernstand aufblaehen, und der
+   Sync-Code rose-ge traegt Roses echten Stand - da gehoeren Bilder nicht hinein.
+   Form: { <fragenId>: { text: "", bild: <jpeg dataURL>|null, ts: 0 } } */
+
+if (!state.freiEntwurf || typeof state.freiEntwurf !== "object") state.freiEntwurf = {};
+
+// Deckel gegen den vollen localStorage: das Kontingent teilt sich der GE-Trainer
+// auf github.io mit dem ST-Trainer, und ein JPEG wiegt schwerer als alles andere
+// im Lernstand zusammen. Der Text bleibt IMMER, nur Bilder werden abgeworfen.
+var ENTWURF_BILDER_MAX = 8;
+
+// Lesen legt NICHTS an: freiKarte laeuft je Aufgabe einmal durch, und ein leeres
+// Kaestchen fuer jede der ueber 80 Fragen stuende fuer immer im Speicher.
+// Angelegt wird erst, wenn wirklich etwas geschrieben oder gezeichnet wurde.
+var ENTWURF_LEER = { text: "", bild: null, ts: 0 };
+
+function entwurfLesen(id) {
+  var e = state.freiEntwurf[id];
+  return e && typeof e === "object" ? e : ENTWURF_LEER;
+}
+
+function entwurf(id) {
+  var e = state.freiEntwurf[id];
+  if (!e || typeof e !== "object") { e = { text: "", bild: null, ts: 0 }; state.freiEntwurf[id] = e; }
+  return e;
+}
+
+function entwuerfeMitBild() {
+  return Object.keys(state.freiEntwurf).filter(function (k) {
+    return state.freiEntwurf[k] && state.freiEntwurf[k].bild;
+  });
+}
+
+// Aeltestes Bild abwerfen. Zwei Aufrufer: der Deckel oben und - als Notabwurf -
+// core.js, wenn der Speicher ueberlaeuft (beiSpeicherVoll, siehe dort).
+function aeltestesBildAbwerfen() {
+  var mitBild = entwuerfeMitBild();
+  if (!mitBild.length) return false;
+  mitBild.sort(function (a, b) { return (state.freiEntwurf[a].ts || 0) - (state.freiEntwurf[b].ts || 0); });
+  state.freiEntwurf[mitBild[0]].bild = null;
+  return true;
+}
+beiSpeicherVoll(aeltestesBildAbwerfen);
+
+function entwurfSichern(id) {
+  entwurf(id).ts = Date.now();
+  while (entwuerfeMitBild().length > ENTWURF_BILDER_MAX) {
+    if (!aeltestesBildAbwerfen()) break;
+  }
+  speichern();
+}
+
+// Getipptes wird gebuendelt geschrieben - bei jedem Tastendruck in den
+// localStorage zu gehen waere auf dem Handy spuerbar.
+var tippWecker = null;
+function entwurfTextBald(id, text) {
+  entwurf(id).text = text;
+  clearTimeout(tippWecker);
+  tippWecker = setTimeout(function () { entwurfSichern(id); }, 700);
+}
+
 function zeigeFrei(thema) {
   leeren();
   setzeFarbe(app, thema.farbe);
@@ -1513,6 +1584,78 @@ function zeigeFrei(thema) {
   thema.frei.forEach(function (f) { app.appendChild(freiKarte(thema, f)); });
 }
 
+var CHECK_OPTIONEN = [
+  { wert: "gut", text: "Saß gut", klasse: "aktiv-gut", stk: "good" },
+  { wert: "mittel", text: "Teilweise", klasse: "aktiv-mittel", stk: "part" },
+  { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal", stk: "sanft" }
+];
+
+/* Der Selbstcheck steht nur EINMAL je Karte, auch wenn ihn zwei Boxen zeigen
+   koennen (Musterloesung und KI-Urteil). appendChild verschiebt den Knoten, statt
+   ihn zu kopieren - so kann es keine zwei Staende geben, die sich widersprechen.
+   waehleWert() ist der Draht fuer die KI: sie darf denselben Weg gehen wie Roses
+   Finger, mehr nicht. */
+function selbstCheck(thema, f) {
+  var check = el("div", "selbstcheck");
+  check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
+  var stickerPlatz = null;
+  var knoepfe = {};
+
+  function waehlen(opt, vonKi) {
+    state.frei[f.id] = opt.wert;
+    speichern();
+    var eintrag = { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" };
+    if (vonKi) eintrag.ki = true;   // ehrlich mitschreiben, woher die Einschaetzung kam
+    logAntwort(eintrag);
+    Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
+      btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
+    });
+    knoepfe[opt.wert].classList.add(opt.klasse);
+    // Sticker-Belohnung: ploppt neben den Knoepfen auf, auch beim Troesten
+    if (stickerPlatz) stickerPlatz.remove();
+    stickerPlatz = stickerEl(opt.stk, "mini");
+    if (stickerPlatz) check.appendChild(stickerPlatz);
+  }
+
+  CHECK_OPTIONEN.forEach(function (opt) {
+    var k = el("button", "check-knopf", opt.text);
+    knoepfe[opt.wert] = k;
+    if (state.frei[f.id] === opt.wert) k.classList.add(opt.klasse);
+    k.addEventListener("click", function () { waehlen(opt, false); });
+    check.appendChild(k);
+  });
+
+  check.waehleWert = function (wert) {
+    for (var i = 0; i < CHECK_OPTIONEN.length; i++) {
+      if (CHECK_OPTIONEN[i].wert === wert) return void waehlen(CHECK_OPTIONEN[i], true);
+    }
+  };
+  return check;
+}
+
+// Aus dem Punktevorschlag der KI eine Selbsteinschaetzung ableiten. Faellt
+// defensiv auf die Einzelurteile zurueck, falls die Summe fehlt - und auf null,
+// wenn gar nichts Brauchbares kam. Dann bleibt der Check einfach unberuehrt.
+var GETROFFEN_WERT = { ja: 1, teilweise: 0.5, nein: 0 };
+
+function kiEinschaetzung(erg) {
+  var quote = null;
+  if (typeof erg.punkteGesamt === "number" && typeof erg.punkteMax === "number" && erg.punkteMax > 0) {
+    quote = erg.punkteGesamt / erg.punkteMax;
+  } else if (Array.isArray(erg.punkteVorschlag) && erg.punkteVorschlag.length) {
+    var summe = 0, n = 0;
+    erg.punkteVorschlag.forEach(function (v) {
+      var w = v && GETROFFEN_WERT[v.getroffen];
+      if (w !== undefined) { summe += w; n++; }
+    });
+    if (n) quote = summe / n;
+  }
+  if (quote === null) return null;
+  return quote >= 0.8 ? "gut" : quote >= 0.5 ? "mittel" : "nochmal";
+}
+
+var GETROFFEN_ZEICHEN = { ja: "✓", teilweise: "~", nein: "✗" };
+
 function freiKarte(thema, f) {
   var karte = el("div", "karte");
   karte.appendChild(el("span", "afb-badge afb-" + f.afb, AFB_TEXT[f.afb]));
@@ -1527,19 +1670,58 @@ function freiKarte(thema, f) {
 
   karte.appendChild(el("div", "frage-text", f.frage));
 
+  var e = entwurfLesen(f.id);
+
   // Handschrift-Font und Stift-Symbol wie im Klausurmodus: die Klausur wird mit
   // der Hand geschrieben, das Ueben soll sich genauso anfuehlen.
   var feld = el("div", "frei-feld");
   var eingabe = document.createElement("textarea");
   eingabe.className = "frei-eingabe handschrift";
   eingabe.placeholder = "Optional: tippen, mit dem Stift schreiben – oder im Kopf formulieren.";
+  eingabe.value = e.text || "";
   // Das Feld waechst mit - auf dem Handy gibt es keinen Ziehgriff, und eine
   // AFB-III-Antwort passt nie in vier Zeilen. Gleiche Funktion wie im Klausurmodus.
-  eingabe.addEventListener("input", function () { autoWachsen(eingabe); });
+  eingabe.addEventListener("input", function () {
+    autoWachsen(eingabe);
+    entwurfTextBald(f.id, eingabe.value);
+  });
+  if (eingabe.value) requestAnimationFrame(function () { autoWachsen(eingabe); });
   feld.appendChild(eingabe);
 
   var handPlatz = el("div", "frei-hand");
   handPlatz.hidden = true;
+
+  function bildZeigen(dataUrl) {
+    handPlatz.innerHTML = "";
+    var bild = document.createElement("img");
+    bild.src = dataUrl;
+    bild.alt = "Dein handschriftlicher Entwurf";
+    handPlatz.appendChild(bild);
+    var zeile = el("div", "zeile");
+    zeile.appendChild(el("span", null, "Dein Entwurf mit der Hand – er bleibt liegen, auch wenn du weiterblätterst."));
+    var weg = el("button", null, "entfernen");
+    weg.type = "button";
+    weg.addEventListener("click", function () {
+      entwurf(f.id).bild = null;
+      entwurfSichern(f.id);
+      handPlatz.innerHTML = "";
+      handPlatz.hidden = true;
+    });
+    zeile.appendChild(weg);
+    handPlatz.appendChild(zeile);
+    handPlatz.hidden = false;
+  }
+  if (e.bild) bildZeigen(e.bild);
+
+  // Eine Statuszeile fuer beide KI-Wege (Lesen und Pruefen). Kein toast: der
+  // haengt in klausur.js und gehoert dem Klausurmodus.
+  var kiZeile = el("div", "ki-status");
+  kiZeile.hidden = true;
+  function sagen(text) {
+    if (!text) { kiZeile.hidden = true; return; }
+    kiZeile.textContent = text;
+    kiZeile.hidden = false;
+  }
 
   var stift = el("button", "frei-stift", "✎");
   stift.type = "button";
@@ -1547,34 +1729,144 @@ function freiKarte(thema, f) {
   stift.setAttribute("aria-label", "Mit dem Stift schreiben");
   stift.addEventListener("click", function () {
     // Dieselbe Flaeche wie im Klausurmodus (klausur.js stiftFlaeche) - nicht
-    // nachgebaut. Das Bild bleibt hier als Entwurf an der Karte; die
-    // KI-Transkription kommt spaeter und ist nie Voraussetzung.
-    Klausur.stiftFlaeche(function (bilder) {
-      handPlatz.innerHTML = "";
-      var bild = document.createElement("img");
-      bild.src = bilder.jpeg;
-      bild.alt = "Dein handschriftlicher Entwurf";
-      handPlatz.appendChild(bild);
-      var zeile = el("div", "zeile");
-      zeile.appendChild(el("span", null, "Dein Entwurf mit der Hand – vergleich ihn gleich mit der Musterlösung."));
-      var weg = el("button", null, "entfernen");
-      weg.type = "button";
-      weg.addEventListener("click", function () {
-        handPlatz.innerHTML = "";
-        handPlatz.hidden = true;
-      });
-      zeile.appendChild(weg);
-      handPlatz.appendChild(zeile);
-      handPlatz.hidden = false;
+    // nachgebaut. Die Aufgabe steht dort oben auf dem Blatt.
+    Klausur.stiftFlaeche(function (bilder) { handschrift(bilder); }, {
+      frage: f.frage,
+      nr: AFB_TEXT[f.afb] || "Aufgabe"
     });
   });
   feld.appendChild(stift);
 
+  /* Gezeichnetes uebernehmen: erst sichern, dann lesen lassen. Die Reihenfolge
+     ist Absicht - das Bild ist Roses Arbeit und darf nie an einer wackeligen
+     KI-Antwort haengen. Die eiserne Regel aus llm.js gilt auch hier: faellt die
+     Transkription aus, bleibt einfach das Bild an der Karte stehen. */
+  function handschrift(bilder) {
+    var ent = entwurf(f.id);
+    ent.bild = bilder.jpeg;
+    entwurfSichern(f.id);
+    bildZeigen(bilder.jpeg);
+
+    if (!Llm.aktiv()) return;
+    sagen("Die KI liest deine Handschrift …");
+    Promise.resolve()
+      // Der Fragetext hilft dem Modell beim Lesen der Handschrift (Signatur llm.js).
+      .then(function () { return Llm.transkribiere(bilder.png, f.frage); })
+      .catch(function () { return null; })
+      .then(function (text) {
+        if (!text) return void sagen("Die Handschrift konnte gerade nicht gelesen werden – dein Bild bleibt hier liegen.");
+        sagen("");
+        Klausur.transkriptPruefen(String(text), {
+          hinweis: "Ändere frei, was danebenlag. Erst wenn du bestätigst, steht es im Feld.",
+          beiOk: function (wert) {
+            eingabe.value = (eingabe.value ? eingabe.value + "\n" : "") + wert;
+            entwurf(f.id).text = eingabe.value;
+            entwurfSichern(f.id);
+            autoWachsen(eingabe);
+          }
+        });
+      });
+  }
+
   karte.appendChild(feld);
   karte.appendChild(handPlatz);
+  karte.appendChild(kiZeile);
 
+  // Nur einmal gebaut, wandert in die Box, die zuerst aufgeht.
+  var check = selbstCheck(thema, f);
+
+  var reihe = el("div", "knopf-reihe");
   var zeigen = el("button", "knopf", "Musterlösung anzeigen");
-  karte.appendChild(zeigen);
+  reihe.appendChild(zeigen);
+
+  // Die KI-Pruefung ist ein eigener Knopf und laeuft nie von allein: sie kostet
+  // vom Tagesbudget (ge-llm-tag), das sich Ueben und Klausurkorrektur teilen.
+  if (Llm.aktiv()) {
+    var kiKnopf = el("button", "knopf sekundaer", "Von der KI prüfen lassen");
+    kiKnopf.addEventListener("click", function () {
+      var antwort = (eingabe.value || "").trim();
+      if (!antwort) {
+        return void sagen("Schreib oder zeichne erst etwas – dann schaut die KI drüber.");
+      }
+      kiKnopf.disabled = true;
+      var vorher = kiKnopf.textContent;
+      kiKnopf.textContent = "Die KI liest …";
+      sagen("");
+      Promise.resolve()
+        // Signatur laut llm.js: korrigiere(themaId, aufgabe, antwort). Frei-Aufgaben
+        // tragen keine Punktzahl - ein Punkt je Stichpunkt macht den Vorschlag
+        // ablesbar und die Quote unten ehrlich.
+        .then(function () {
+          return Llm.korrigiere(thema.id, {
+            id: f.id, frage: f.frage, afb: f.afb || null,
+            punkte: (f.stichpunkte || []).length || 1,
+            stichpunkte: f.stichpunkte || [], muster: f.muster || "", tipp: f.tipp || ""
+          }, antwort);
+        })
+        .catch(function () { return null; })
+        .then(function (erg) {
+          kiKnopf.disabled = false;
+          kiKnopf.textContent = "KI nochmal fragen";
+          if (!erg) {
+            kiKnopf.textContent = vorher;
+            return void sagen("Die KI war gerade nicht erreichbar. Deine eigene Einschätzung zählt sowieso mehr.");
+          }
+          kiUrteilZeigen(erg);
+        });
+    });
+    reihe.appendChild(kiKnopf);
+  }
+  karte.appendChild(reihe);
+
+  var kiBox = null;
+
+  /* Das Urteil der KI. Sie schlaegt vor, Rose entscheidet: der Vorschlag geht
+     durch denselben Selbstcheck wie ein Fingertipp und bleibt danach anklickbar.
+     So steht nie etwas im Lernstand, das Rose nicht aendern koennte. */
+  function kiUrteilZeigen(erg) {
+    if (kiBox) kiBox.remove();
+    kiBox = el("div", "loesung ki-urteil");
+    kiBox.appendChild(el("h3", null, "Die KI hat mitgelesen"));
+
+    var vorschlag = Array.isArray(erg.punkteVorschlag) ? erg.punkteVorschlag : [];
+    if (vorschlag.length) {
+      var ul = el("ul", "ki-treffer");
+      vorschlag.forEach(function (v) {
+        if (!v) return;
+        var li = el("li", "treffer-" + (v.getroffen || "nein"));
+        li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[v.getroffen] || "–"));
+        li.appendChild(el("span", "was", v.stichpunkt || ""));
+        if (v.kommentar) li.appendChild(el("div", "dazu", v.kommentar));
+        ul.appendChild(li);
+      });
+      kiBox.appendChild(ul);
+    }
+
+    var saetze = [];
+    if (Array.isArray(erg.randkommentare)) saetze = saetze.concat(erg.randkommentare);
+    if (erg.gesamtkommentar) saetze.push(erg.gesamtkommentar);
+    else if (erg.kommentar) saetze.push(erg.kommentar);
+    if (saetze.length) kiBox.appendChild(el("div", "muster", saetze.join(" ")));
+
+    var wert = kiEinschaetzung(erg);
+    if (wert) {
+      var satz = wert === "gut" ? "Das saß." : wert === "mittel" ? "Teilweise getroffen." : "Das üben wir nochmal.";
+      // Hatte Rose sich schon selbst eingeschaetzt, bleibt IHR Wort stehen - die
+      // KI sagt dann nur ihre Meinung dazu. Gleiche Linie wie kiUebernehmen im
+      // Klausurmodus, das auch nur fuellt, was noch offen ist. Sonst koennte ein
+      // KI-Aufruf ihre Einschaetzung ueberschreiben, ohne dass sie hinschaut -
+      // und state.frei haengt an der Fortschrittsanzeige des Themas.
+      var schonBewertet = !!state.frei[f.id];
+      kiBox.appendChild(el("div", "ki-vorschlag", schonBewertet
+        ? "Die KI liest es so: " + satz + " Deine eigene Einschätzung bleibt stehen – tipp sie an, wenn du sie ändern willst."
+        : "Die KI liest es so: " + satz + " Stimmt das nicht, tipp einfach was anderes an."));
+      kiBox.appendChild(check);
+      if (!schonBewertet) check.waehleWert(wert);
+    } else {
+      kiBox.appendChild(check);
+    }
+    karte.appendChild(kiBox);
+  }
 
   zeigen.addEventListener("click", function () {
     zeigen.remove();
@@ -1595,33 +1887,7 @@ function freiKarte(thema, f) {
       box.appendChild(t);
     }
 
-    var check = el("div", "selbstcheck");
-    check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
-    var stickerPlatz = null;
-    [
-      { wert: "gut", text: "Saß gut", klasse: "aktiv-gut", stk: "good" },
-      { wert: "mittel", text: "Teilweise", klasse: "aktiv-mittel", stk: "part" },
-      { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal", stk: "sanft" }
-    ].forEach(function (opt) {
-      var k = el("button", "check-knopf", opt.text);
-      if (state.frei[f.id] === opt.wert) k.classList.add(opt.klasse);
-      k.addEventListener("click", function () {
-        state.frei[f.id] = opt.wert;
-        speichern();
-        logAntwort({ qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" });
-        Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
-          btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
-        });
-        k.classList.add(opt.klasse);
-        // Sticker-Belohnung: ploppt neben den Knoepfen auf, auch beim Troesten
-        if (stickerPlatz) stickerPlatz.remove();
-        stickerPlatz = stickerEl(opt.stk, "mini");
-        if (stickerPlatz) check.appendChild(stickerPlatz);
-      });
-      check.appendChild(k);
-    });
     box.appendChild(check);
-
     karte.appendChild(box);
   });
 
