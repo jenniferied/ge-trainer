@@ -107,7 +107,11 @@ function zustandBadge(zustand) {
   // .puls: auf der Startseite stehen acht Themenkarten untereinander, acht
   // atmende Zeichen waeren Flimmern statt Signal. Der ST-Trainer haelt es im
   // Stoebern genauso: gleiches Wort, gleiches Zeichen, nur ohne Atem.
-  if (zustand === "neu") return standBadge(false, "✦ noch offen");
+  // "offen" statt "noch offen": dasselbe in kuerzer, und die kurze Fassung steht
+  // schon auf den Kacheln und am Querlink (Wortwahl-Angleich 12.08.). Was eine
+  // eigene Aussage traegt, bleibt unterschieden: "heute" heisst heute gelaufen,
+  // "alle geübt" ist eine Sammelaussage, "geübt" gilt einem einzelnen Stueck.
+  if (zustand === "neu") return standBadge(false, "✦ offen");
   if (zustand === "fertig") return standBadge(true, "✓ alle geübt");
   return null;
 }
