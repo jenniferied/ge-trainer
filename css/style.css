@@ -906,20 +906,34 @@ p { margin: 0 0 var(--sp-3); }
 }
 
 /* ---------- Maskottchen: das Ei in der Countdown-Karte ----------
-   Farbe pro Zeichen ueber Tokens, damit die Strichzeichnung in hell und dunkel
-   genug Kontrast hat. Entwurf: playground/rose/maskottchen/ */
-:root { --mk-rand: #9a8f7e; --mk-innen: #b9af9c; --mk-riss: var(--akzent, #d0703d); }
-[data-theme="hell"] { --mk-rand: #8a8070; --mk-innen: #a99f8c; }
-.mk-zeile { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; }
+   Blockgrafik, Farbe pro Zelle: Fell, Musterung, Riss getrennt. Die Auswahl
+   laeuft wie ein Starter-Bildschirm: ein Ei, Pfeile, wischbar.
+   Entwurf und Archiv: playground/rose/maskottchen/ */
+:root { --mk-fell: #b0a48f; --mk-muster: #7b7160; --mk-riss: var(--akzent, #d0703d); }
+.mk-zeile { display: flex; align-items: center; gap: 13px; margin: 0 0 12px; flex-wrap: wrap; }
 .mk-ei { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 15px; line-height: 1; white-space: pre; margin: 0; flex-shrink: 0; }
+.mk-ei.gross { font-size: 22px; }
 .mk-text { min-width: 0; flex: 1; }
 .mk-satz { margin: 0; font-size: .95rem; }
 .mk-meta { margin: 2px 0 0; font-size: .78rem; opacity: .75; }
-.mk-wahl { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
-.mk-chip { font: inherit; font-size: .72rem; padding: 3px 9px; border-radius: 999px; cursor: pointer;
-  border: 1px solid currentColor; background: transparent; color: inherit; opacity: .6; }
-.mk-chip.an { opacity: 1; font-weight: 700; border-color: var(--mk-riss); color: var(--mk-riss); }
+.mk-link { font: inherit; font-size: .78rem; background: none; border: none; padding: 0;
+  color: var(--mk-riss); text-decoration: underline; cursor: pointer; }
+
+.mk-ankunft { border: 1.5px dashed var(--mk-riss); border-radius: 14px;
+  padding: 13px 14px 14px; margin: 0 0 12px; text-align: center; }
+.mk-ank-kopf { font-weight: 700; font-size: 1.02rem; }
+.mk-ank-text { margin: 4px auto 10px; font-size: .9rem; opacity: .8; max-width: 42ch; }
+.mk-karussell { display: flex; align-items: center; justify-content: center; gap: 10px;
+  touch-action: pan-y; user-select: none; }
+.mk-pfeil { font: inherit; font-size: 1.5rem; line-height: 1; width: 40px; height: 40px;
+  border-radius: 999px; border: 1.5px solid currentColor; background: transparent;
+  color: inherit; cursor: pointer; flex-shrink: 0; opacity: .7; }
+.mk-pfeil:hover { opacity: 1; color: var(--mk-riss); }
+.mk-punkte { display: flex; justify-content: center; gap: 6px; margin-top: 8px; font-size: .6rem; opacity: .4; }
+.mk-punkte .an { color: var(--mk-riss); opacity: 1; }
+.mk-teaser { margin: 8px auto 11px; font-size: .92rem; font-style: italic; max-width: 40ch; }
+
 @keyframes mkAtmen { 0%,100% { transform: translateY(0) } 50% { transform: translateY(1px) } }
 @keyframes mkWackeln { 0%,88%,100% { transform: rotate(0) } 91% { transform: rotate(-4deg) } 94% { transform: rotate(4deg) } 97% { transform: rotate(-2deg) } }
 .mk-atmet { animation: mkAtmen 3.4s ease-in-out infinite; }
