@@ -1,0 +1,187 @@
+/* ===========================================================================
+   GETEILTES STYLE-PAKET — ST-Trainer  ⇄  GE-Trainer
+   Beschluss Jennifer, 12.08.2026: "wir brauchen eigentlich Style Packages,
+   die geshared sind."
+
+   QUELLE dieser Datei: rose/geteilte-styles/trainer-muster.css
+   KOPIEN:              rose/klausur-trainer/app/css/geteilt.css
+                        rose/ge-trainer/app/css/geteilt.css
+
+   Die Kopien werden mitcommittet, damit jedes Repo fuer sich deploybar
+   bleibt (der ST-Trainer ist eine eigene Repo, der GE-Trainer haengt am
+   playground). Kein Build-Schritt: beide Apps sind Vanilla JS, deploy.sh
+   kopiert nur app/.
+
+     Verteilen:  rose/geteilte-styles/verteilen.sh
+     Nur pruefen: rose/geteilte-styles/verteilen.sh --pruefen
+
+   >>> NIE eine Kopie bearbeiten. <<< Immer diese Quelle aendern und neu
+   verteilen; verteilen.sh --pruefen meldet auseinandergelaufene Kopien.
+
+   ---------------------------------------------------------------------------
+   WAS HIER REINGEHOERT: was BEDEUTUNG traegt. Gruen muss in beiden Apps
+   dasselbe heissen, "offen" muss in beiden Apps gleich aussehen und im
+   gleichen Takt atmen. Wenn die zwei Apps hier auseinanderlaufen, lernt Rose
+   zwei Zeichensprachen statt einer.
+
+   WAS HIER NICHT REINGEHOERT: was CHARAKTER traegt. Exam.UP-Look (ST),
+   Papier-Optik und Handschrift-Font (GE), Themenfarben, Identitaetsfarben
+   (--accent ist drueben Terracotta, hier Blau — das ist Absicht) und
+   .mk-* (Maskottchen; wird gerade woechentlich umgebaut, Wiedervorlage erst
+   nach dem Schluepfen).
+
+   ---------------------------------------------------------------------------
+   THEME-ANKER — warum die Selektoren so aussehen, wie sie aussehen
+
+   Die beiden Apps haben entgegengesetzte Voreinstellungen, und beide setzen
+   data-theme auf <html>, aber mit unterschiedlichen Konventionen:
+
+     ST-Trainer:  hell ist Standard. Das Inline-Skript in index.html loest
+                  "auto" schon VOR dem CSS zu "hell" oder "dunkel" auf —
+                  data-theme ist dort also IMMER gesetzt.
+     GE-Trainer:  dunkel ist Standard. ui.js setzt data-theme="hell" oder
+                  ENTFERNT das Attribut wieder (= dunkel).
+
+   Zusammen ergibt das genau zwei Faelle, die in beiden Apps gelten:
+
+     hell    = [data-theme="hell"]
+     dunkel  = [data-theme="dunkel"]  ODER  Attribut fehlt
+
+   Deshalb braucht diese Datei weder eine zusaetzliche Klasse am <html> noch
+   eine JS-Aenderung noch ein prefers-color-scheme: sie passt so, wie sie ist,
+   in beide Apps. :root:not([data-theme]) greift im ST-Trainer nie (dort ist
+   das Attribut immer da) und im GE-Trainer genau nachts.
+
+   EINBINDEN: <link rel="stylesheet" href="css/geteilt.css"> VOR style.css.
+   Die Attribut-Selektoren hier sind spezifischer als ein blankes :root, sie
+   schlagen die App-Voreinstellungen also unabhaengig von der Reihenfolge.
+   Wo eine App bewusst abweicht (siehe --offen-ink), steht die Abweichung in
+   ihrer eigenen style.css und gewinnt, weil sie spaeter kommt.
+   =========================================================================== */
+
+
+/* ---------------------------------------------------------------------------
+   1. FARBLEITER (Tagesleiter)
+   orange -> gelb -> gruen -> tiefes Gruen (Streckziel) -> Regenbogen darueber.
+   KEIN Gold (sah auf dem Handy aus wie das Orange am unteren Ende, Jennifer
+   12.08.), und Rot kommt als Mahnfarbe nirgends vor: ein niedriger Wert ist
+   ein Angebot, kein Vorwurf.
+
+   Satte Tonwerte, absichtlich ungemischt: eine 34-px-Kalenderzelle darf einen
+   in die Karte gemischten Ton tragen, ein 3-px-Punkt im Diagramm verschwindet
+   damit. Nachts muessen die obersten Stufen HELLER werden, nicht dunkler —
+   tiefes Gruen auf indigoschwarzem Grund ist kein Punkt mehr.
+
+   Fuenf Stufen, obwohl der GE-Trainer nur vier KENNT: drueben ist "genau das
+   Streckziel" (4) von "darueber" (5) getrennt, im GE-Trainer sind beide
+   zusammengelegt. Die Namen stehen trotzdem vollstaendig hier — ein Paket, in
+   dem die eine App zwei Variablen weniger definiert, laesst sich nicht
+   gemeinsam pflegen. Die GE-Seite benutzt --tag-5 einfach nicht.
+
+   --tag-3 haengt bewusst an --ok: Gruen heisst in beiden Apps Erfolg, und
+   --ok ist in beiden Apps derselbe Wert (hell #2e7d4f, dunkel #6cc194).
+   --------------------------------------------------------------------------- */
+
+:root[data-theme="hell"] {
+  --tag-1: #e08a2e;
+  --tag-2: #cfa62c;
+  --tag-3: var(--ok);
+  --tag-4: #0b6f3c;
+  --tag-4-ring: #16b262;
+  --tag-5: #06341c;
+}
+
+:root[data-theme="dunkel"],
+:root:not([data-theme]) {
+  --tag-1: #e08a2e;
+  --tag-2: #cfa62c;
+  --tag-3: var(--ok);
+  --tag-4: #14a95c;
+  --tag-4-ring: #3ee08d;
+  --tag-5: #0d7a43;
+}
+
+
+/* ---------------------------------------------------------------------------
+   2. MUSTER "offen / erledigt"
+   EIN Bauteil fuer alle Stellen, an denen eine App sagt, ob etwas noch ansteht
+   oder durch ist: Tageskacheln, Querlink zum anderen Trainer, Fragenliste,
+   Unterthema-Zeilen, Themenkarten.
+
+   Jennifer, 12.08., nachdem sie den Querlink live gesehen hat: "Ich mag
+   tatsaechlich, dass dort steht offen und es pulsiert. Das kann man natuerlich
+   jetzt uebernehmen in die Karten." — und ausdruecklich DIESELBE Bauweise,
+   nicht eine aehnliche: gleiche Punktgroesse, gleiche Pulsationsdauer, gleiche
+   Farben, gleiches Wort. Genau dafuer ist dieses Paket da.
+
+   Benutzung:
+     <span class="stand-badge neu"><i class="puls">✦</i> offen</span>
+     <span class="stand-badge sitzt">✓ geübt</span>
+   Zusatzklasse .kompakt fuer enge Plaetze (Tageskachel, Topbar).
+
+   Das ✦ atmet, die Karte darum NICHT — und nur, wenn wirklich etwas offen ist.
+   Ein Zeichen, das immer pulsiert, ist Deko statt Information. Wo viele
+   Abzeichen nebeneinander stehen (acht Themenkarten, Stoebern-Liste), traegt
+   das Abzeichen dasselbe Wort und Zeichen, aber OHNE .puls: acht atmende
+   Punkte waeren Flimmern, kein Signal.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* "offen" traegt die Identitaetsfarbe der jeweiligen App — drueben
+     Terracotta, hier Blau. Das ist der eine Punkt, an dem das gemeinsame
+     Muster absichtlich verschieden aussieht: Rose soll auf einen Blick sehen,
+     in welchem Trainer sie ist. */
+  --offen-bg: var(--accent);
+  --offen-ink: var(--accent-ink, #fff);
+  --fertig-bg: var(--ok-bg);
+  --fertig-ink: var(--ok);
+  --puls-dauer: 2.8s;
+}
+
+.stand-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: .7rem; font-weight: 800; letter-spacing: .02em; white-space: nowrap;
+  border-radius: 999px; padding: 2px 8px;
+}
+.stand-badge.neu { background: var(--offen-bg); color: var(--offen-ink); }
+.stand-badge.sitzt {
+  background: var(--fertig-bg); color: var(--fertig-ink);
+  border: 1px solid color-mix(in srgb, var(--fertig-ink) 40%, transparent);
+}
+/* Enge Plaetze: Tageskachel (auf 360 px rund 75 px breit) und Topbar. Nur die
+   Groesse aendert sich, nie Farbe, Wort oder Rhythmus. */
+.stand-badge.kompakt { font-size: .68rem; padding: 1px 6px; letter-spacing: 0; }
+
+/* Die Pulsation: langsam und weich, kein Blinken. Alle Punkte auf einem Schirm
+   atmen im GLEICHEN Takt — versetzte Verzoegerungen sahen aus wie eine Welle,
+   die immer irgendwo blinkt; im Gleichtakt liest es sich als ein ruhiger Atem. */
+.puls { display: inline-block; animation: sanft-puls var(--puls-dauer) ease-in-out infinite; }
+@keyframes sanft-puls {
+  0%, 100% { opacity: .5; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+/* Wer Bewegung reduziert hat, bekommt dieselbe Hervorhebung — nur still. Volle
+   Deckkraft, damit das Zeichen nicht halb verblasst einfriert. */
+@media (prefers-reduced-motion: reduce) {
+  .puls { animation: none; opacity: 1; transform: none; }
+}
+
+
+/* ---------------------------------------------------------------------------
+   3. PLOT-PUNKTE
+   Der kleine runde Punkt, der einen Uebungstag in seiner Leiterfarbe zeigt —
+   in der Legende unter dem Diagramm und in Fliesstexten. Die Punkte IM
+   Diagramm zeichnet das jeweilige JS als <circle> und holt sich die Farbe aus
+   denselben --tag-* Variablen; hier steht die CSS-Fassung fuer alles, was
+   ausserhalb des SVG liegt.
+
+   Alle Stufen gleich gross (Jennifers Ansage 12.08.): die Farbe kodiert den
+   Wert, nicht der Durchmesser. Ab Stufe 4 kommt ein Ring dazu.
+   --------------------------------------------------------------------------- */
+
+.hm-pkt { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: -1px; }
+.hm-pkt.s1 { background: var(--tag-1); }
+.hm-pkt.s2 { background: var(--tag-2); }
+.hm-pkt.s3 { background: var(--tag-3); }
+.hm-pkt.s4 { background: var(--tag-4); box-shadow: 0 0 0 1.5px var(--tag-4-ring); }
+.hm-pkt.s5 { background: var(--tag-5); box-shadow: 0 0 0 1.5px #96ffbe; }

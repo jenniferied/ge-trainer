@@ -51,25 +51,13 @@
   --zone-top-ink: #f0fff6;
   --regenbogen: linear-gradient(115deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a);
 
-  /* Tagesleiter als SATTE Tonwerte - Wortlaut und Werte aus dem ST-Trainer
-     uebernommen (Jennifer 12.08.: der Punkte-Plot soll bei beiden gleich sein):
-     dieselbe Bedeutung wie die Kalenderzellen .hm-s1…s4, aber ungemischt. Eine
-     34-px-Zelle darf einen in die Karte gemischten Ton tragen; ein 3-px-Punkt im
-     Diagramm verschwindet damit. Nachts muessen die obersten Stufen HELLER
-     werden, nicht dunkler - tiefes Gruen auf indigoschwarzem Grund ist kein
-     Punkt mehr.
-
-     Fuenf Namen, obwohl der GE-Trainer nur VIER Stufen kennt: drueben ist
-     "genau das Streckziel" (--tag-4) von "darueber" (--tag-5) getrennt, hier
-     sind beide zusammengelegt. Die Namen bleiben trotzdem vollstaendig - sie
-     gehoeren zum geteilten Style-Paket, und ein Paket, in dem die eine App
-     zwei Variablen weniger definiert, laesst sich nicht gemeinsam pflegen. */
-  --tag-1: #e08a2e;
-  --tag-2: #cfa62c;
-  --tag-3: var(--ok);
-  --tag-4: #14a95c;
-  --tag-4-ring: #3ee08d;
-  --tag-5: #0d7a43;
+  /* Die Tagesleiter (--tag-1…--tag-5, --tag-4-ring) steht seit dem 12.08. im
+     GETEILTEN Paket: css/geteilt.css, Abschnitt 1 - dort auch die Begruendung
+     fuer die satten Tonwerte und dafuer, warum die obersten Stufen nachts
+     heller werden muessen statt dunkler. Diese App kennt nur VIER Stufen
+     (Streckziel und "darueber" sind hier zusammengelegt) und benutzt --tag-5
+     einfach nicht; definiert wird die Leiter trotzdem vollstaendig, sonst
+     liesse sich das Paket nicht gemeinsam pflegen. */
   color-scheme: dark;
 }
 
@@ -101,9 +89,7 @@
   --zone-g: #2e7d4f;
   --zone-top: #0b6b3c;
   --zone-top-ink: #ffffff;
-  --tag-4: #0b6f3c;
-  --tag-4-ring: #16b262;
-  --tag-5: #06341c;
+  /* Helle Fassung der Tagesleiter: ebenfalls in css/geteilt.css, Abschnitt 1. */
   color-scheme: light;
 }
 
@@ -242,52 +228,33 @@ p { margin: 0 0 var(--sp-3); }
    gleiche Pulsationsdauer, gleiche Farben, gleiches Wort. Darum steht das
    Muster hier an EINER Stelle und wird ueberall nur benutzt.
 
-   Dieser Block ist der Kandidat fuer das geteilte Style-Paket beider Trainer
-   (Jennifer 12.08.: "wir brauchen eigentlich Style Packages, die geshared
-   sind"). Er haengt an nichts ausser den fuenf Variablen darueber -
-   herausloesen heisst kopieren.
+   Seit dem 12.08. ist dieser Block GETEILT: css/geteilt.css, Abschnitt 2.
+   Dort stehen die fuenf Variablen, .stand-badge samt .neu/.sitzt/.kompakt,
+   .puls, die Pulsations-Animation und - neu - der reduced-motion-Block, den
+   diese App vorher nicht hatte.
 
-   Benutzung:
+   Benutzung unveraendert:
      <span class="stand-badge neu"><i class="puls">✦</i> offen</span>
      <span class="stand-badge sitzt">✓ geübt</span>
    Zusatzklasse .kompakt fuer enge Plaetze (Kachel, Topbar).
 
    Das ✦ atmet, die Karte darum NICHT - und nur, wenn wirklich etwas offen ist.
-   Ein Zeichen, das immer pulsiert, ist Deko statt Information. Auf der
-   Startseite stehen acht Themenkarten nebeneinander; dort traegt das Abzeichen
-   dasselbe Wort und dasselbe Zeichen, aber OHNE .puls (wie im Stoebern des
-   ST-Trainers). Acht atmende Punkte waeren Flimmern, kein Signal. */
-:root {
-  --offen-bg: var(--accent);
-  --offen-ink: #10233a;
-  --fertig-bg: var(--ok-bg);
-  --fertig-ink: var(--ok);
-  --puls-dauer: 2.8s;
-}
-/* Auf dem hellen Papier ist der Akzent dunkel genug fuer weisse Schrift
-   (4,5:1); nachts ist er ein helles Blau und braucht dunkle Schrift (5,3:1). */
+   Auf der Startseite stehen acht Themenkarten nebeneinander; dort traegt das
+   Abzeichen dasselbe Wort und dasselbe Zeichen, aber OHNE .puls (wie im
+   Stoebern des ST-Trainers). Acht atmende Punkte waeren Flimmern, kein Signal.
+
+   Aenderungen gehoeren nach rose/geteilte-styles/trainer-muster.css, danach
+   verteilen.sh. Was hier folgt, sind nur die GE-eigenen Abweichungen. */
+
+/* Die einzige echte Abweichung vom geteilten Muster - und sie muss eine sein:
+   "offen" traegt die Identitaetsfarbe der App, und die ist hier ein helles
+   Blau statt Terracotta. Auf dem hellen Papier ist der Akzent dunkel genug
+   fuer weisse Schrift (4,5:1); nachts braucht das helle Blau dunkle Schrift
+   (5,3:1). Steht deshalb hier und nicht im Paket - style.css wird nach
+   geteilt.css geladen und gewinnt bei gleicher Spezifitaet. */
+:root { --offen-ink: #10233a; }
 :root[data-theme="hell"] { --offen-ink: var(--accent-ink, #fff); }
-.stand-badge {
-  display: inline-flex; align-items: center; gap: 3px;
-  font-size: .7rem; font-weight: 800; letter-spacing: .02em; white-space: nowrap;
-  border-radius: 999px; padding: 2px 8px;
-}
-.stand-badge.neu { background: var(--offen-bg); color: var(--offen-ink); }
-.stand-badge.sitzt {
-  background: var(--fertig-bg); color: var(--fertig-ink);
-  border: 1px solid color-mix(in srgb, var(--fertig-ink) 40%, transparent);
-}
-/* Enge Plaetze: Tageskachel (auf 360 px rund 75 px breit) und Topbar. Nur die
-   Groesse aendert sich, nie Farbe, Wort oder Rhythmus. */
-.stand-badge.kompakt { font-size: .68rem; padding: 1px 6px; letter-spacing: 0; }
-/* Die Pulsation: langsam und weich, kein Blinken. Alle Punkte auf einem Schirm
-   atmen im GLEICHEN Takt - versetzte Verzoegerungen sahen aus wie eine Welle,
-   die immer irgendwo blinkt; im Gleichtakt liest es sich als ein ruhiger Atem. */
-.puls { display: inline-block; animation: sanft-puls var(--puls-dauer) ease-in-out infinite; }
-@keyframes sanft-puls {
-  0%, 100% { opacity: .5; transform: scale(.9); }
-  50% { opacity: 1; transform: scale(1.15); }
-}
+
 /* GE-Zusatz, nicht Teil des geteilten Musters: der kleine Belohnungsmoment,
    wenn ein Thema einmal komplett durch ist. Kurz und leise - eine
    Statusangabe, keine Feier (Jennifer 12.08.: Feiern bleiben dem Streckziel
@@ -299,6 +266,13 @@ p { margin: 0 0 var(--sp-3); }
   0% { transform: scale(.5); opacity: 0; }
   70% { transform: scale(1.12); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
+}
+/* Wer Bewegung reduziert hat, bekommt das Abzeichen ohne den Popp - aber voll
+   sichtbar (`both` wuerde es sonst im 0-%-Zustand einfrieren, also unsichtbar).
+   Steht hier statt im Sammelblock weiter unten, damit die Ausnahme neben der
+   Animation liegt, zu der sie gehoert. */
+@media (prefers-reduced-motion: reduce) {
+  .thema-karte .stand-badge.sitzt { animation: none; transform: none; opacity: 1; }
 }
 
 .balken {
@@ -1034,9 +1008,10 @@ p { margin: 0 0 var(--sp-3); }
 
 .mk-ankunft { border: 1.5px dashed var(--mk-riss); border-radius: 14px;
   padding: 13px 14px 14px; margin: 0 0 12px; text-align: center; }
-.mk-storch { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12px; line-height: 1; white-space: pre; margin: 0 auto 8px; color: var(--mk-fell);
-  display: block; width: max-content; }
+/* Der Storch ist SVG, keine Textgrafik — darum keine font/white-space-Regeln.
+   Breite in ch statt px, damit er bei groesserer Schrift mitwaechst. */
+.mk-storch { display: block; margin: 0 auto 8px; width: 11ch; max-width: 45%; }
+.mk-storch svg { display: block; width: 100%; height: auto; }
 .mk-ank-kopf { font-weight: 700; font-size: 1.02rem; }
 .mk-ank-text { margin: 4px auto 10px; font-size: .9rem; opacity: .8; max-width: 42ch; }
 .mk-karussell { display: flex; align-items: center; justify-content: center; gap: 10px;
