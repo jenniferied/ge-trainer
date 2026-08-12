@@ -75,37 +75,51 @@ export function herzenHeute(tz) {
    Ton: nie Druck, nie Schuld. "Noch nichts heute" ist eine Feststellung, kein
    Vorwurf.
 
-   Schwellen am 12.08. halbiert (Jennifer): vorher 0/20/45, jetzt 0/10/22. Mit
-   45 Herzen bis zum Riss waere es Wochen ohne sichtbare Veraenderung gewesen. */
+   Schwellen am 12.08. halbiert (Jennifer): vorher 0/20/45, dann 0/10/22, seit
+   dem 13.08. 0/22/52 (siehe Leiter unten). Mit 45 Herzen bis zum Riss waere es
+   Wochen ohne sichtbare Veraenderung gewesen, mit 10 ging es zu schnell. */
 /* ---------- Die Leiter, neun Stufen ----------
-   Von Jennifer am 12.08. bestaetigt: 0/4/7/10/13/16/19/22/25. Gerechnet in
-   UEBUNGSTAGEN, nicht in Kalendertagen — ein Uebungstag bringt fast immer genau
-   3 Herzen, das ist die harte Groesse. Rose stand hier am 12.08. bei 3 Herzen
-   aus einem Uebungstag, Klausur ist der 10.09.
+   Stand 13.08.: 0/7/13/22/28/34/40/46/52. Gerechnet in UEBUNGSTAGEN, nicht in
+   Kalendertagen — ein voller Uebungstag (n >= ziel) bringt genau 3 Herzen, ein
+   angefangener 1 bis 2. Das ist die harte Groesse. Rose stand am 12.08. bei
+   3 Herzen aus einem Uebungstag, Klausur ist der 10.09.
 
-     Stufe 3 (schlueft)   10 = 3 Uebungstage
-     Stufe 8 (erwachsen)  25 = 8 Uebungstage, also etwa der 01.09.
+     Stufe 3 (schluepft)   22 = 8 volle Uebungstage
+     Stufe 8 (erwachsen)   52 = 18 volle Uebungstage
 
-   "Halbier da mal die Tage" war als halbierte WARTEZEIT gemeint, nicht als
-   halbierte Schwellen — die Alternative (Schluepfen erst bei 16, Ende August)
-   ist damit vom Tisch. Nicht neu aufmachen.
+   Die Geschichte der Zahl in drei Schritten, damit sie niemand rueckwaerts
+   dreht: am 12.08. "halbier da mal die Tage" (als halbierte WARTEZEIT gemeint,
+   nicht als halbierte Schwellen) → Schluepfen bei 10. Am 12.08. spaet drei
+   Herzen drauf → 13. Am 13.08. Jennifer: "nicht so schnell schluepfen bitte,
+   einfach ein paar Herzen (2-3) hinzufuegen pro Stufe" — das sind die
+   ABSTAENDE, nicht die Schwellen, also +3 auf jede Luecke. Damit ist die
+   fruehere Ansage "Schluepfen erst bei 16 ist vom Tisch" bewusst ueberholt: 22
+   liegt spaeter als 16, und das ist so gewollt.
 
-   Die Schwellen sind hier enger als im ST-Trainer (dort 31 bzw. 48), weil Rose
-   hier fast bei null anfaengt und die Klausur acht Tage frueher liegt. Gleiche
-   Anzahl Stufen, gleiche Bedeutung je Index — nur andere Zahlen.
+   Erwachsen (52) ist vor dem 10.09. nur mit fast taeglichem vollen Pensum
+   erreichbar. Bewusst in Kauf genommen — die Leiter soll bis zur Klausur
+   tragen, nicht vorher auslaufen.
+
+   Die Schwellen liegen jetzt ueber denen des ST-Trainers (dort 31 bzw. 48),
+   obwohl Rose hier spaeter angefangen hat. Gleiche Anzahl Stufen, gleiche
+   Bedeutung je Index — nur andere Zahlen.
+
+   Hochsetzen ist immer sicher: stufeJetzt() nimmt das Maximum aus der
+   gerechneten Stufe und dem gesyncten stufeMax, eine erreichte Stufe geht also
+   nie verloren. Runtersetzen waere es nicht.
 
    ANHAENGEN IST SICHER, UMSORTIEREN NICHT: mk.stufeMax speichert die Stufe als
    INDEX und synct. Die Stufen 0/1/2 muessen die Ei-Stufen bleiben. */
 var STUFEN = [
   { ab: 0,  art: "ei",   sub: 0, satz: "Ich bin einfach hier hingeploppt. Mal sehen, was aus mir wird." },
-  { ab: 4,  art: "ei",   sub: 1, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
-  { ab: 7,  art: "ei",   sub: 2, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
-  { ab: 13, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
-  { ab: 16, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
-  { ab: 19, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
-  { ab: 22, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
-  { ab: 25, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
-  { ab: 28, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
+  { ab: 7,  art: "ei",   sub: 1, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
+  { ab: 13, art: "ei",   sub: 2, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
+  { ab: 22, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
+  { ab: 28, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
+  { ab: 34, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
+  { ab: 40, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
+  { ab: 46, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
+  { ab: 52, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
 ];
 /* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
    sie brauchen und eine 3 im Code an der dritten Stelle niemand mehr zuordnet. */
