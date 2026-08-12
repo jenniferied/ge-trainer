@@ -246,23 +246,25 @@ p { margin: 0 0 var(--sp-3); }
    Aenderungen gehoeren nach rose/geteilte-styles/trainer-muster.css, danach
    verteilen.sh. Was hier folgt, sind nur die GE-eigenen Abweichungen. */
 
-/* Die einzige echte Abweichung vom geteilten Muster - und sie muss eine sein:
-   "offen" traegt die Identitaetsfarbe der App, und die ist hier ein helles
-   Blau statt Terracotta. Auf dem hellen Papier ist der Akzent dunkel genug
-   fuer weisse Schrift (4,5:1); nachts braucht das helle Blau dunkle Schrift
-   (5,3:1). Steht deshalb hier und nicht im Paket - style.css wird nach
-   geteilt.css geladen und gewinnt bei gleicher Spezifitaet. */
-:root { --offen-ink: #10233a; }
-/* Auf dem hellen Papier traegt der Akzent weisse Schrift - aber knapp: --accent
-   #4a7d9e kommt auf 4,45:1 und verfehlt die 4,5:1 fuer ~11 px fett um Haaresbreite
-   (der alte Kommentar hier behauptete 4,5:1, nachgerechnet stimmt das nicht ganz).
-   Das Abzeichen nimmt deshalb einen Hauch dunkleres Blau als die Flaechen ringsum:
-   #477a9a, 4,65:1, vom Akzent mit blossem Auge nicht zu unterscheiden.
-   (Jennifer, 12.08., zusammen mit der Nacht-Fassung drueben entschieden.) */
-:root[data-theme="hell"] {
-  --offen-ink: var(--accent-ink, #fff);
-  --offen-bg: #477a9a;
-}
+/* HIER STANDEN ZWEI ABWEICHUNGEN, DIE ES SEIT DEM 12.08. ABENDS NICHT MEHR
+   GIBT: `:root { --offen-ink: #10233a; }` fuer die Nacht und ein eigenes
+   `--offen-bg: #477a9a` fuers helle Papier. Beide waren sauber begruendet,
+   solange die Regel galt, dass "offen" die Identitaetsfarbe der App traegt -
+   hier ein helles Blau, drueben Terracotta.
+
+   Jennifer hat die Regel abgeschafft ("Da ist immer noch das offen blau, wo es
+   bei ST-Trainer orange ist. ... Überall gleich"). Das Abzeichen ist jetzt ein
+   neutraler --ink-Tint aus dem geteilten Paket und damit in allen vier
+   Zustaenden automatisch richtig.
+
+   Das dunkle Navy war dabei nicht nur ueberfluessig, sondern nach dem Umbau
+   aktiv schaedlich: dunkle Schrift auf dem neuen hellen Tint kam im Nachtmodus
+   auf 1,29:1, also unlesbar. Der Messlauf hat es gefunden, das Auge haette es
+   auf dem Screenshot fuer "etwas blass" gehalten.
+
+   MERKE, weil die Falle wiederkommt: ein lokales --offen-* ueberstimmt das
+   geteilte Paket immer (style.css laedt nach geteilt.css). Wer eine Farbe des
+   Musters aendert, muss beide Apps nach solchen Resten absuchen. */
 
 /* GE-Zusatz, nicht Teil des geteilten Musters: der kleine Belohnungsmoment,
    wenn ein Thema einmal komplett durch ist. Kurz und leise - eine
@@ -946,46 +948,31 @@ p { margin: 0 0 var(--sp-3); }
    Titel stehen, und flex-shrink:0, damit die Gruppe auf 360 px nicht umbricht
    (dort gibt der Titel nach). */
 .topbar-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; margin-left: auto; }
-/* Querlink zum ST-Trainer: traegt dessen Identitaetsfarbe (Terracotta), damit
-   die beiden Apps sichtbar aufeinander zeigen. Kontrast gerechnet, nicht
-   geschaetzt: #d0703d auf der Nachtkarte 4,8:1, #b4552d auf hellem Papier
-   4,9:1 - beides ueber 4,5. */
-.app-link {
-  --st: var(--st-farbe);
-  flex: 0 0 auto; white-space: nowrap; text-decoration: none;
-  font-size: .76rem; font-weight: 700; line-height: 1.5;
-  padding: 3px 7px; border-radius: 999px;
-  color: var(--st); border: 1.5px solid color-mix(in srgb, var(--st) 45%, transparent);
-  background: color-mix(in srgb, var(--st) 10%, transparent);
-}
-/* Zustand des ST-Trainers im Link (nachbar.js). Bleibt leer, solange nichts
-   Belastbares bekannt ist - dann sieht der Link genau so aus wie vorher.
-   Deshalb kein reservierter Platz, kein Platzhalter-Strich, kein Ladezustand. */
-.nachbar-stand:empty { display: none; }
-.nachbar-stand { display: inline-flex; align-items: center; gap: 4px; margin-left: 5px; }
-.nachbar-stand .q-pille { margin-left: 0; font-size: .68rem; padding: 0 5px; }
-.nachbar-stand .stand-badge { font-size: .66rem; padding: 1px 5px; }
-/* Unter 400 px muessen Titel, Link, Theme und Zahnrad zusammen in EINE Zeile.
-   Dort schrumpft die Quote auf ihren Punkt zusammen: die Farbe ist die
-   Botschaft, die Ziffern sind der Zusatz - und beides steht vollstaendig im
-   title und im aria-label. Damit bleibt Platz fuer "✦ offen", das hier den
-   Vorrang hat. */
+/* Querlink zum ST-Trainer: Bauteil und Zustandsfeld liegen seit dem 12.08.
+   abends im geteilten Style-Paket (geteilt.css, Block 5) - hier steht nur noch
+   die ZIELFARBE, also die Identitaetsfarbe der anderen App.
+
+   Anlass war Jennifers Frage, warum die beiden Querlinks verschieden aussehen.
+   Der Befund: die Regeln waren schon zeichengleich, aber das Zustandsfeld hatte
+   hier eine eigene Verkleinerung des Abzeichens (.66rem/1px 5px), drueben
+   nicht - zwei verschieden grosse Abzeichen fuer dieselbe Sache. Dazu in beiden
+   Apps tote .q-pille-Regeln aus der Zeit vor der Tages-Pille. Beides weg, das
+   Bauteil ist jetzt eins.
+
+   Kontrast gerechnet, nicht geschaetzt: #d0703d auf der Nachtkarte 4,8:1,
+   #b4552d auf hellem Papier 4,9:1 - beides ueber 4,5. */
+.app-link { --ziel-farbe: var(--st-farbe); }
+
+/* Die q-pille-Leiter gilt weiterhin app-weit (Beherrschungsquoten in Statistik
+   und Baukasten) - nur ihre Fassung IM Querlink ist weggefallen. */
 .q-pille.q0 { --q-punkt: var(--line); }
 .q-pille.q1 { --q-punkt: var(--zone-o); }
 .q-pille.q2 { --q-punkt: var(--zone-y); }
 .q-pille.q3 { --q-punkt: var(--zone-g); }
 .q-pille.q4 { --q-punkt: var(--zone-top); }
 .q-pille.q5 { --q-punkt: var(--tag-4-ring); }
-@media (max-width: 399px) {
-  .nachbar-stand .q-pille {
-    width: 9px; height: 9px; padding: 0; font-size: 0; border: none;
-    border-radius: 50%; background: var(--q-punkt);
-  }
-}
-/* Am Handy steht nur "ST ↗" - mehr passt neben Titel, Theme und Zahnrad nicht
-   in eine Zeile. Sobald Platz da ist, steht der volle Name da. */
-.app-link .nur-breit { display: none; }
-@media (min-width: 560px) { .app-link .nur-breit { display: inline; } }
+/* Die Regel "am Handy nur ST ↗, ab 560 px der volle Name" steht jetzt im
+   geteilten Paket (Block 5) und gilt damit in beiden Apps gleich. */
 
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand

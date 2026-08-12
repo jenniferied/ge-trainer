@@ -129,12 +129,31 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  /* "offen" traegt die Identitaetsfarbe der jeweiligen App — drueben
-     Terracotta, hier Blau. Das ist der eine Punkt, an dem das gemeinsame
-     Muster absichtlich verschieden aussieht: Rose soll auf einen Blick sehen,
-     in welchem Trainer sie ist. */
-  --offen-bg: var(--accent);
-  --offen-ink: var(--accent-ink, #fff);
+  /* "offen" war bis zum 12.08. abends die Identitaetsfarbe der jeweiligen App
+     (drueben Terracotta, hier Blau) — mit der Begruendung, Rose solle auf einen
+     Blick sehen, in welchem Trainer sie ist. Jennifer hat das nach dem
+     Nebeneinandersehen abgeschafft: "Da ist immer noch das offen blau, wo es
+     bei ST-Trainer orange ist. ... Überall gleich."
+
+     Gewaehlt ist ein ruhiges NEUTRAL, nicht eines der beiden Identitaetstoene,
+     und dafuer gibt es zwei Gruende:
+
+     1. Terracotta liegt gefaehrlich nah am neuen Alarmrot (#c8362a). Ein
+        Abzeichen, das "noch nie geuebt" heisst, darf nicht wie "dringend"
+        aussehen — sonst ist das rote Signal nach zwei Tagen wertlos. Neutral
+        ist von Rot maximal weit weg.
+     2. Es passt zur Regel, die in beiden Repos steht: "nicht angefangen ist
+        kein Befund". Ein ungeuebtes Thema ist eine Feststellung, keine
+        Aufforderung — und Aufforderung ist genau das, was eine Akzentfarbe
+        macht.
+
+     Gebaut aus --ink statt aus festen Werten: damit ist es in allen vier
+     Zustaenden (2 Apps x 2 Themes) automatisch richtig, ohne Theme-Gabel.
+     Die Identitaet der App traegt weiterhin die Kopfzeile, der Querlink, die
+     Themenfarben und die Knoepfe — sie hing nie an diesem Abzeichen. */
+  --offen-bg: color-mix(in srgb, var(--ink) 11%, transparent);
+  --offen-ink: var(--ink);
+  --offen-rand: color-mix(in srgb, var(--ink) 22%, transparent);
   --fertig-bg: var(--ok-bg);
   --fertig-ink: var(--ok);
   --puls-dauer: 2.8s;
@@ -156,7 +175,13 @@
   font-size: .7rem; font-weight: 800; letter-spacing: .02em; white-space: nowrap;
   border-radius: 999px; padding: 2px 8px;
 }
-.stand-badge.neu { background: var(--offen-bg); color: var(--offen-ink); }
+/* Die STILLE Fassung: "noch nie geuebt". Traegt seit dem 12.08. abends denselben
+   Rand wie .sitzt — ohne ihn schwebt ein Tint ohne Kante auf der Karte, und die
+   beiden Zustaende sollen sich als Paar lesen. */
+.stand-badge.neu {
+  background: var(--offen-bg); color: var(--offen-ink);
+  border: 1px solid var(--offen-rand);
+}
 .stand-badge.sitzt {
   background: var(--fertig-bg); color: var(--fertig-ink);
   border: 1px solid color-mix(in srgb, var(--fertig-ink) 40%, transparent);
@@ -232,8 +257,12 @@
   --dringend-dauer: 1.15s;
 }
 
+/* Der Rand muss hier mitgesetzt werden: .stand-badge.neu traegt seit dem
+   Neutral-Umbau eine ruhige Kante, und die wuerde sonst auf dem roten Grund
+   stehenbleiben. Gleiche Spezifitaet, spaeter in der Datei — .dringend gewinnt. */
 .stand-badge.dringend {
   background: var(--dringend-bg); color: var(--dringend-ink);
+  border-color: color-mix(in srgb, #000 18%, var(--dringend-bg));
 }
 /* Der schnellere Takt. Eigene Keyframes statt nur einer kürzeren Dauer: die
    Deckkraft geht tiefer (0,35 statt 0,5), damit der Unterschied zum ruhigen
@@ -360,3 +389,146 @@
   background: var(--dringend-bg); color: var(--dringend-ink);
 }
 .tag-pille.los .los-zeichen { font-weight: 900; font-size: .78rem; line-height: 1; }
+
+
+/* ---------------------------------------------------------------------------
+   5. KOPFZEILE / QUERLINK
+   Der Weg zur anderen App, oben rechts, mit dem Zustand von drueben.
+   Das war Stufe 2 der Angleichung und ist am 12.08. abends faellig geworden,
+   weil Jennifer fragte: "Warum sieht der Link zu ST-Trainer vom GE-Trainer aus
+   anders aus als ST-Trainer zu GE-Trainer? Ich finde ST-Trainer zu GE-Trainer
+   sehr schoen, so wie es gemacht wurde."
+
+   DER BEFUND WAR EIN ANDERER ALS ERWARTET. Die beiden .app-link-Regeln waren
+   schon Zeichen fuer Zeichen gleich gebaut — gleiche Polsterung, gleiche
+   1,5-px-Kante auf 45 %, gleicher 10-%-Grund. Verschieden waren drei Dinge:
+
+     1. Die FARBE, und die bleibt verschieden: jeder Link traegt die
+        Identitaetsfarbe seines ZIELS (der Link zum GE-Trainer ist blau, der zum
+        ST-Trainer terracotta). Das ist keine Nachlaessigkeit, sondern die
+        Aussage des Bauteils — er zeigt auf die andere App, also sieht er aus wie
+        sie. Weil Terracotta mehr Buntheit hat als das entsaettigte Blau, wirkt
+        dieselbe Prozentzahl waermer und schwerer; DAS hat Jennifer gesehen.
+        Ausgeglichen wird es ueber die Kante (unten), nicht ueber die Farbe.
+     2. Das Zustandsfeld hiess in den Apps verschieden (.ge-stand gegen
+        .nachbar-stand) und hatte deshalb je EIGENE Regeln — im GE-Trainer war
+        das Abzeichen darin auf .66rem/1px 5px verkleinert, im ST-Trainer nicht.
+        Nach Jahren Drift zwei verschieden grosse Abzeichen fuer dasselbe.
+        Der Name ist jetzt in beiden Apps .nachbar-stand (JS mitgeaendert).
+     3. Beide trugen noch .q-pille-Regeln fuer die alte Quoten-Pille, die am
+        12.08. mittags durch .tag-pille ersetzt wurde. Toter Code, raus.
+   --------------------------------------------------------------------------- */
+
+.app-link {
+  /* Jede App setzt --ziel-farbe auf die Identitaetsfarbe der ANDEREN. */
+  flex: 0 0 auto; white-space: nowrap; text-decoration: none;
+  font-size: .76rem; font-weight: 700; line-height: 1.5;
+  padding: 3px 7px; border-radius: 999px;
+  color: var(--ziel-farbe);
+  /* 34 % statt der frueheren 45 %: bei einer bunten Zielfarbe (Terracotta) las
+     sich die Kante als Umrandung, bei einer entsaettigten (Blau) nur als
+     Andeutung — derselbe Wert, zwei Wirkungen. Weicher gefasst sehen beide
+     Links wie dasselbe Bauteil aus, und das ist der Punkt. */
+  border: 1.5px solid color-mix(in srgb, var(--ziel-farbe) 34%, transparent);
+  background: color-mix(in srgb, var(--ziel-farbe) 10%, transparent);
+}
+.app-link .nur-breit { display: none; }
+@media (min-width: 560px) { .app-link .nur-breit { display: inline; } }
+
+/* Das Zustandsfeld im Link. Leer heisst weg — ein Link, der nichts zu sagen
+   hat, soll nicht breiter sein als noetig. */
+.nachbar-stand:empty { display: none; }
+.nachbar-stand { display: inline-flex; align-items: center; gap: 4px; margin-left: 5px; }
+/* EINE Groesse fuer das Abzeichen an dieser Stelle, in beiden Apps. .kompakt
+   aus Block 2 liefert sie schon; hier steht bewusst NICHTS mehr, damit nicht
+   wieder eine App ihre eigene Verkleinerung dazuschreibt. */
+
+
+/* ---------------------------------------------------------------------------
+   6. TAGESAUFGABEN ALS KACHELREIHE
+   Jennifer, 12.08. abends, nach dem Vergleich beider Startseiten: "Ich glaube,
+   das ist ok, dass die taeglichen Sachen in einer eigenen Bubble sind, aber
+   macht sie in der gleichen Form wie bei ST-Trainer. Bei ST-Trainer wiederum
+   koennte man die fuenf Dinge auch in einem eigenen Kasten machen, genauso wie
+   die Klausuruebersichten."
+
+   Vorher: der ST-Trainer hatte fuenf breite Karten in einem Raster ohne Kasten
+   drumherum (und einen schiefen 4+1-Umbruch), der GE-Trainer eine Zeilenliste
+   in einer Karte. Zwei Formen fuer dieselbe Sache.
+
+   Jetzt beide: EIN Kasten, darin eine Reihe kompakter Kacheln — dasselbe Muster
+   wie die Probeklausur-Reihe I…V im ST-Trainer, die Jennifer als Vorbild
+   genannt hat.
+
+   WARUM DAS SIGNAL HIER EIN PUNKT IST UND KEINE PILLE, und das ist mehr als
+   eine Platzfrage: fuenf rote Pillen nebeneinander sind eine Wand aus Alarm,
+   und damit waere genau die Regel verletzt, die im Block 2 fuer die acht
+   Themenkarten steht ("acht atmende Punkte waeren Flimmern, kein Signal").
+   Ein kleiner roter Punkt je Kachel traegt dieselbe Information ruhig — und die
+   Kachel selbst sagt schon, um welche Aufgabe es geht. Das Wort "offen" steht
+   weiterhin im aria-label und im title, es geht also nichts verloren.
+   --------------------------------------------------------------------------- */
+
+.dailies-reihe {
+  display: flex; gap: 6px; margin-top: 8px;
+  /* Umbruch erlaubt, aber im Regelfall nicht noetig: fuenf Kacheln passen auf
+     360 px in eine Zeile. max-width haelt sie bei zwei oder drei Aufgaben
+     (GE-Trainer) davon ab, sich unfoermig breit zu ziehen. */
+  flex-wrap: wrap;
+}
+.daily-kachel {
+  flex: 1 1 0; min-width: 52px; max-width: 88px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 7px 3px 6px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--card);
+  cursor: pointer; text-align: center;
+  font: inherit; color: inherit;
+  transition: transform .12s ease, border-color .12s ease;
+}
+.daily-kachel:active { transform: scale(.96); }
+.daily-kachel:focus-visible { outline: 2px solid var(--ziel-fokus, currentColor); outline-offset: 2px; }
+.daily-kachel .d-icon { font-size: 1.15rem; line-height: 1; }
+.daily-kachel b {
+  font-size: .6rem; font-weight: 700; line-height: 1.15;
+  /* Lange Namen wie "Signalwoerter" muessen in 57 px umbrechen duerfen. */
+  hyphens: auto; overflow-wrap: anywhere;
+}
+
+/* Das Statuslicht. Offen ist rot und pulsiert im dringenden Takt (Block 2b),
+   erledigt ist ein gruener Haken — kein Punkt, damit die zwei Zustaende sich
+   nicht nur in der Farbe unterscheiden. */
+.d-licht { width: 8px; height: 8px; border-radius: 50%; display: block; }
+.d-licht.offen { background: var(--dringend-bg); }
+.daily-kachel.offen { border-color: color-mix(in srgb, var(--dringend-bg) 45%, var(--line)); }
+.d-haken { font-size: .72rem; line-height: 1; color: var(--fertig-ink); font-weight: 900; }
+.daily-kachel.fertig { border-color: color-mix(in srgb, var(--fertig-ink) 40%, var(--line)); }
+.daily-kachel.fertig .d-icon { opacity: .55; }
+
+/* Das ⓘ "Warum das hilft" sitzt in der Ecke, so wie es vorher in der Ecke der
+   grossen Spielkarte sass — die Erklaerung der Lernmethode geht durch die
+   Verkleinerung NICHT verloren. Der Klick-Handler ist eine delegierte Regel auf
+   .info-btn[data-methode] und funktioniert deshalb unveraendert weiter.
+   Die Kachel bleibt div[role=button] und kein <button>: ein Knopf im Knopf ist
+   ungueltiges HTML, und bindHub() haengt ohnehin an [data-spiel]. */
+.daily-kachel { position: relative; }
+.daily-kachel .d-info {
+  position: absolute; top: 1px; right: 2px;
+  font-size: .7rem; line-height: 1; opacity: .5; padding: 3px; cursor: pointer;
+}
+.daily-kachel .d-info:hover, .daily-kachel .d-info:active { opacity: 1; }
+
+/* Der Belohnungsmoment beim echten Uebergang offen -> erledigt. Lag bisher in
+   beiden Apps getrennt (.spiel-card.frisch-erledigt hier, eigenes Aufleuchten
+   drueben) und ist jetzt EIN Bauteil. Nur der echte Uebergang leuchtet — sonst
+   blitzt beim Zurueckkommen auf die Startseite jedes Mal alles auf, was heute
+   frueher schon gelaufen ist. */
+.daily-kachel.frisch-erledigt { animation: daily-glanz 1.1s cubic-bezier(.16, 1, .3, 1) 1; }
+@keyframes daily-glanz {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--fertig-ink) 55%, transparent); }
+  35% { transform: scale(1.07); box-shadow: 0 0 0 5px color-mix(in srgb, var(--fertig-ink) 28%, transparent); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .daily-kachel.frisch-erledigt { animation: none; }
+  .daily-kachel:active { transform: none; }
+}

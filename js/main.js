@@ -841,21 +841,47 @@ function zeigeRunde(r) {
     "Nur zum Ansehen. ↻ heißt: die Aufgabe kommt wieder – sie steht in deinem Wiederholen-Stapel."));
 }
 
-/* Eine Zeile der Tagesliste. Offen und erledigt sprechen dieselbe Sprache wie
-   der Querlink oben rechts (Jennifer, 12.08.): was offen ist, pulst ruhig,
-   was erledigt ist, behaelt den kleinen Belohnungsmoment. Gepulst wird nur der
-   kleine Punkt am Wort "offen" - nicht die ganze Zeile und nicht das Emoji.
-   Drei atmende Zeilen waeren Unruhe; ein Statuslicht je Zeile ist Information. */
-function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
-  var z = el("button", "heute-zeile" + (erledigt ? " erledigt" : ""));
-  z.appendChild(el("span", "heute-icon", icon));
-  var box = el("div", "heute-text");
-  box.appendChild(el("b", null, titel));
-  box.appendChild(el("span", null, klein));
-  z.appendChild(box);
-  z.appendChild(erledigt ? standBadge(true, status) : offenBadge(status));
-  z.addEventListener("click", onClick);
-  return z;
+/* Eine Kachel der Tagesliste — seit dem 12.08. abends eine Kachel und keine
+   Zeile mehr (Jennifer, nach dem Vergleich beider Startseiten: "machen sie die
+   gleiche Form wie bei ST-Trainer"). Das Bauteil liegt im geteilten Style-Paket,
+   Block 6, und ist in beiden Apps dasselbe.
+
+   Das Statuslicht statt der Pille: mehrere rote Pillen nebeneinander waeren eine
+   Wand aus Alarm - dieselbe Ueberlegung, aus der die acht Themenkarten nicht
+   pulsieren. Der Punkt traegt dieselbe Farbe und denselben Takt, und "offen"
+   steht weiterhin vollstaendig im aria-label und im title.
+   Erledigt ist ein Haken und kein gruener Punkt: die zwei Zustaende sollen sich
+   nicht nur in der Farbe unterscheiden. */
+function dailyKachel(a) {
+  var k = el("div", "daily-kachel " + (a.erledigt ? "fertig" : "offen"));
+  k.setAttribute("role", "button");
+  k.setAttribute("tabindex", "0");
+  // titel statt kurz: der Wiederholen-Eintrag traegt seine Anzahl im Titel
+  // ("8 Fragen zum Wiederholen"), und auf der Kachel steht nur das kurze Wort.
+  // Ohne diese Zeile ginge die Zahl verloren.
+  k.title = a.titel + " · " + a.klein + (a.erledigt ? " · heute schon geübt" : " · heute noch offen");
+  k.setAttribute("aria-label", a.titel + (a.erledigt ? " — heute schon geübt" : " — heute noch offen"));
+
+  var ikon = el("span", "d-icon", a.icon);
+  ikon.setAttribute("aria-hidden", "true");
+  k.appendChild(ikon);
+  k.appendChild(el("b", null, a.kurz));
+
+  var licht;
+  if (a.erledigt) {
+    licht = el("span", "d-haken", "✓");
+  } else {
+    licht = el("span", "d-licht offen puls dringend");
+  }
+  licht.setAttribute("aria-hidden", "true");
+  k.appendChild(licht);
+
+  var geh = function () { a.geh(); };
+  k.addEventListener("click", geh);
+  k.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); geh(); }
+  });
+  return k;
 }
 
 /* DIE Tagesliste dieser App — eine Quelle fuer beides: die Zeilen unter
@@ -913,10 +939,9 @@ function heuteDranKarte() {
   karte.appendChild(el("h2", null, "Heute dran"));
 
   var liste = tagesAufgaben();
-  liste.forEach(function (a) {
-    karte.appendChild(heuteZeile(a.icon, a.titel, a.klein,
-      a.erledigt ? "✓ geübt" : "offen", a.erledigt, a.geh));
-  });
+  var reihe = el("div", "dailies-reihe");
+  liste.forEach(function (a) { reihe.appendChild(dailyKachel(a)); });
+  karte.appendChild(reihe);
 
   if (!liste.some(function (a) { return a.key === "wdh"; })) {
     karte.appendChild(el("div", "heute-leer", state.antwortLog.length
