@@ -10,7 +10,7 @@
      hooks.mcKarte(thema, f, fortschritt, weiterText, onWeiter)  -> MC-Karte
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
-import { state, speichern, app, el, leeren, starteRunde } from "./core.js";
+import { state, speichern, app, el, leeren, starteRunde, beendeRunde } from "./core.js";
 import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
@@ -215,8 +215,12 @@ var ART_TEXT = {
   wiederholen: { icon: "🔁", name: "Wiederholen" },
   neu: { icon: "✨", name: "Fünf neue" },
   "mc-quer": { icon: "🔀", name: "MC-Quermischung" },
-  klausur: { icon: "📄", name: "Klausur-Simulation" }
+  klausur: { icon: "📄", name: "Klausur-Simulation" },
+  klausurfrage: { icon: "🧩", name: "Eine Klausurfrage" }
 };
+/* Wer einen neuen Runden-Modus baut, traegt seine art HIER ein. Ohne Eintrag
+   faellt die Zeile auf den Modus-Namen zurueck ("Frei üben") - kein Fehler,
+   aber genau der geratene Name, den dieser Umbau loswerden sollte. */
 
 var SPIEL_TEXT = {
   "spiel-begriffe": { icon: "🃏", name: "Begriffe-Blitz", badge: "Spiel" },
@@ -305,7 +309,9 @@ function zeileAbgeleitet(g, titelMap) {
   return {
     typ: "abgeleitet", id: "abl-" + g.von, art: null,
     von: g.von, bis: g.bis,
-    icon: t.icon, name: t.name, titel: t.name + (mehrere ? " u. a." : ""),
+    // name gleich titel: eine abgeleitete Zeile hat keine Gattung neben ihrem
+    // Namen, und "Konzept-Check u. a. · Konzept-Check" waere Gestotter.
+    icon: t.icon, name: t.name + (mehrere ? " u. a." : ""), titel: t.name + (mehrere ? " u. a." : ""),
     gemischt: mehrere,
     n: g.antworten.length,
     anzahl: null, beantwortet: g.antworten.length, bewertet: roh.bewertet,
@@ -900,6 +906,12 @@ function runde(pool, meta, hooks, wahl) {
   }
 
   function fertig() {
+    /* Die Runde ist hier zu Ende, nicht erst beim naechsten Screenwechsel. Ohne
+       diese Zeile stuende sie im Verlauf noch als "angefangen" und ohne Dauer,
+       solange das Ergebnis-Banner offen ist - und wenn Rose den Tab zumacht,
+       fuer immer. Der Router ruft beendeRunde zusaetzlich; ein zweiter Aufruf
+       ist folgenlos, weil danach keine Runde mehr laeuft. */
+    beendeRunde();
     leeren();
     farbeSetzen();
 

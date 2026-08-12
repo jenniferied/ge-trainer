@@ -266,7 +266,17 @@ export function loescheChatVerlauf() {
    voll. Darum ueberall Minimum/Maximum/ODER und nirgends "der neuere gewinnt". */
 
 /* Deckel nach ANZAHL, nie nach Alter: eine Altersgrenze rechnet gegen Date.now()
-   und ist auf zwei Geraeten nie derselbe Schnitt (ausfuehrlich bei CHAT_MAX). */
+   und ist auf zwei Geraeten nie derselbe Schnitt (ausfuehrlich bei CHAT_MAX).
+
+   Warum ausgerechnet 300: Rose uebt an einem starken Tag sechs Runden. 300
+   Sitzungen sind also rund 50 Uebungstage - deutlich mehr als die Zeit bis zum
+   10.09., mit Reserve fuer Tage, an denen sie viele kurze Runden macht. Kosten
+   dabei rund 60 kB, neben dem Antwort-Log kaum messbar. Der Deckel ist damit
+   kein Sparzwang, sondern nur die Bremse, die verhindert, dass eine Liste ohne
+   jede Obergrenze irgendwann den Lernstand traegt. Wird er einmal erreicht,
+   fallen die AELTESTEN Runden weg - die Antworten selbst bleiben im Log und
+   erscheinen weiter im Verlauf, dann eben ueber das Zeitfenster geschnitten
+   (letzteRunden in stats.js sortiert Antworten ohne aufloesbare sid dorthin). */
 export var SITZUNGEN_MAX = 300;
 
 function sitzungEine(s) {
