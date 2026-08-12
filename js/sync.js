@@ -33,6 +33,10 @@
 
 import { CONFIG } from "./config.js";
 import { state, speichern, antwortId, beiAntwort, beiFremdemStand, el } from "./core.js";
+import { heuteAntworten } from "./stats.js";
+// Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js —
+// diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
+import { heuteBlock, heuteTag } from "./geteilt-tagesstand.js";
 
 /* ---------- Grundlagen ---------- */
 
@@ -112,8 +116,26 @@ export function snapshot(st) {
   // ausserhalb des Snapshots und wurde darum nie gesynct — auf einem zweiten
   // Geraet kam die Ankunft dann ein zweites Mal. Container, damit spaeter
   // Stufe/Kleidung reinpassen.
-  return { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
+  //
+  // heute: der Tagesfortschritt fuer den Querlink im ST-Trainer. Geteilter
+  // Vertrag, Begruendung und Format in geteilt-tagesstand.js. Drei Dinge daran
+  // sind Absicht:
+  //   - ABGELEITET, nicht gespeichert: entsteht hier aus dem antwortLog, das an
+  //     dieser Stelle schon vereinigt ist. Darum braucht er keine Merge-Regel.
+  //   - NICHT in signatur(): heute.n bewegt sich nur, wenn eine Antwort
+  //     dazukommt — und die aendert die Signatur ohnehin. Der Block reist
+  //     huckepack. Stuende tag drin, gaebe es pro Geraet und Tag einen Push ins
+  //     Leere um Mitternacht.
+  //   - Der Plan (state.tzPlan) wird nur genommen, wenn er von HEUTE ist. Sonst
+  //     truege der Block ein heutiges Datum mit gestrigem Ziel.
+  // Das Log wird durchgereicht, damit die Zahl zu genau diesem Stand passt.
+  var plan = state.tzPlan;
+  var heute = plan && plan.tag === heuteTag()
+    ? heuteBlock(heuteAntworten(s.antwortLog || []), plan) : null;
+  var aus = { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
     geloescht: s.geloescht || [], mk: s.mk || {} };
+  if (heute) aus.heute = heute;
+  return aus;
 }
 
 // Kompakte Vergleichs-Signatur. Noetig, weil jsonb aus Postgres mit anderer
@@ -136,8 +158,15 @@ export function signatur(d) {
   // stufeMax gehoert ebenfalls hier rein und NICHT nur in den Snapshot: erreicht
   // Rose auf dem Handy eine neue Stufe, aendert sich sonst die Signatur nicht,
   // es wird nie gepusht, und auf dem Tablet faellt das Tier zurueck.
+  // geschluepft gehoert aus demselben Grund hierher wie stufeMax, nur noch
+  // dringender: es aendert sich durch einen KNOPFDRUCK, ohne dass eine neue
+  // Antwort dazukommt. Es kann also nicht huckepack auf antwortLog reisen wie
+  // ein abgeleiteter Wert. Stuende es nur im Snapshot, wuerde es nie gepusht —
+  // und Rose saehe das Schluepfen auf dem Tablet ein zweites Mal, obwohl es
+  // ausdruecklich genau einmal vorkommen soll (Jennifer, 12.08.).
   var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0) +
-    ":" + ((daten.mk && daten.mk.stufeMax) || 0);
+    ":" + ((daten.mk && daten.mk.stufeMax) || 0) +
+    ":" + ((daten.mk && daten.mk.geschluepft) || 0);
   return [aids, mc, frei, tot, mk].join("|");
 }
 
@@ -275,6 +304,13 @@ export function mergeIn(st, remote) {
   // niedrigerer, aber neuerer Stufe die hoehere ueberschreiben — also genau der
   // Rueckfall, den stufeMax verhindern soll. Darum bedingungslos das Maximum.
   st.mk.stufeMax = Math.max(st.mk.stufeMax || 0, rMk.stufeMax || 0);
+  // geschluepft ist ein Ereignis-Protokoll, kein Messwert: "hat Rose die
+  // Animation gesehen" laesst sich aus der Historie nicht ausrechnen (anders als
+  // "ist Stufe 3 erreicht"). Die Regel ist ein ODER — hat es IRGENDEIN Geraet
+  // gesehen, gilt es als gesehen. Gespeichert wird der frueheste Zeitpunkt,
+  // damit der Wert stabil bleibt und nicht bei jedem Merge hin und her springt.
+  var gs = [st.mk.geschluepft, rMk.geschluepft].filter(Boolean);
+  if (gs.length) st.mk.geschluepft = Math.min.apply(null, gs);
 
   return signatur(snapshot(st)) !== vorher;
 }

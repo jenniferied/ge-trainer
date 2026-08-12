@@ -207,3 +207,63 @@
 .hm-pkt.s3 { background: var(--tag-3); }
 .hm-pkt.s4 { background: var(--tag-4); box-shadow: 0 0 0 1.5px var(--tag-4-ring); }
 .hm-pkt.s5 { background: var(--tag-regenbogen); }
+
+
+/* ---------------------------------------------------------------------------
+   4. TAGES-PILLE AM QUERLINK
+   "● 12 von 60" — der Tagesfortschritt der jeweils anderen App. Ersetzt seit
+   dem 12.08. die alte Quoten-Pille, die in den beiden Apps zwei verschiedene
+   Groessen zeigte (Begruendung in tagesstand.js).
+
+   ZWEI ENTSCHEIDUNGEN, DIE HIER SICHTBAR WERDEN
+
+   1. Die Pille ist NICHT flaechig in der Leiterfarbe eingefaerbt, sondern
+      neutral mit dem geteilten Farbpunkt davor. Grund ist Lesbarkeit: die
+      Leiter laeuft von Orange ueber Gelb nach Gruen, und darauf gibt es keine
+      Textfarbe, die in beiden Themes ueber 4,5:1 bleibt — Weiss auf --tag-1
+      sind 2,7:1, dunkle Schrift auf dem hellen --tag-3 der Nacht kippt
+      andersherum. Der Punkt traegt die Farbe, der Text traegt den Kontrast
+      des Links, in dem die Pille sitzt. Nebeneffekt: es ist derselbe Punkt
+      wie im Kalender und im Punkte-Plot, Rose kennt ihn also schon.
+
+   2. Die ZAHL steht in --ink, nicht in der Identitaetsfarbe des Links, und der
+      Tint kommt ebenfalls aus --ink statt aus currentColor. Das ist gemessen,
+      nicht geschaetzt: die Pille sitzt in einem Link, der selbst schon einen
+      10-%-Tint seiner Identitaetsfarbe traegt: legt man darauf noch 12 % und
+      schreibt in derselben Farbe, bleiben in drei von vier Zustaenden nur
+      3,2 bis 4,0:1 (ST hell 3,20 · GE hell 3,44 · GE dunkel 3,97). Mit --ink
+      sind es ueberall ueber 9:1.
+      Die Identitaetsfarbe geht dabei nicht verloren — sie traegt weiterhin der
+      Link ringsum und der Leiterpunkt. Eine Zahl ist Information und gehoert
+      in Textfarbe; farbig ist, was Zustand kodiert.
+
+   Kein Rot, keine Mahnfarbe: wenig geschafft ist orange, nie mehr.
+   --------------------------------------------------------------------------- */
+
+.tag-pille {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: .68rem; font-weight: 700; letter-spacing: 0; white-space: nowrap;
+  border-radius: 999px; padding: 1px 7px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
+}
+/* Der Punkt in der Pille ist eine Spur kleiner als der freistehende: neben
+   Text auf 0,68 rem wirkten 8 px wie ein Aufzaehlungszeichen. */
+.tag-pille .hm-pkt { width: 7px; height: 7px; vertical-align: 0; }
+
+/* Variante "heute noch nichts" (Jennifer, 12.08.: "wenn noch nichts gemacht
+   wurde am tag ein ausrufezeichen und blinken"). Statt des Leiterpunkts ein
+   pulsierendes Ausrufezeichen, dazu ein warmer Grund — dieselbe Familie wie
+   die unterste Leiterstufe, damit "noch nichts" und "wenig geschafft" als
+   verwandte Zustaende lesbar sind und nicht als zwei Welten.
+
+   Die FLAECHE traegt hier die Signalfarbe, nicht die Schrift: --tag-1 als Text
+   auf dem Tint waeren 2,2:1. Als 22-%-Grund unter --ink-Schrift bleibt der
+   Kontrast ueber 8:1 und das Warme trotzdem sichtbar.
+
+   Kein Rot, kein Blinken im Wortsinn: derselbe langsame Puls wie beim
+   Offen-Abzeichen (2,8 s, .puls), und wer Bewegung reduziert hat, bekommt das
+   Zeichen still in voller Deckkraft. Ein hartes Blinken waere auf einer Seite,
+   die Rose taeglich oeffnet, nach zwei Tagen nur noch nervig. */
+.tag-pille.los { background: color-mix(in srgb, var(--tag-1) 22%, transparent); }
+.tag-pille.los .los-zeichen { font-weight: 900; font-size: .78rem; line-height: 1; }

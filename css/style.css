@@ -1056,3 +1056,44 @@ p { margin: 0 0 var(--sp-3); }
 .mk-atmet { animation: mkAtmen 3.4s ease-in-out infinite; }
 .mk-wackelt { animation: mkWackeln 3.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .mk-atmet, .mk-wackelt, .mk-schwebt { animation: none; } }
+
+/* ---------- Das Schluepfen ----------
+   Wortgleich mit dem ST-Trainer. Bleibt bewusst je App eigen und geht NICHT ins
+   geteilte Style-Paket: .mk-* ist dort ausdruecklich ausgenommen, weil beide
+   Maskottchen noch laufend umgebaut werden.
+   Beide Ebenen liegen im selben Rasterfeld uebereinander, statt eine absolut zu
+   positionieren: so behaelt die Buehne die Groesse der groesseren Figur und die
+   Karte springt nicht, wenn die Schale verschwindet.
+   Die Dauer haengt an MOMENT_MS in maskottchen.js (2200 ms) — wer eine aendert,
+   aendert beide, sonst schneidet das Neuzeichnen die Animation ab. */
+.mk-buehne { display: inline-grid; place-items: center; margin: 6px 0 2px; }
+.mk-buehne > .mk-ei { grid-area: 1 / 1; font-size: 22px; }
+/* Erst zappelt es staerker als das normale Wackeln, dann platzt die Schale nach
+   aussen weg. Kein Aufloesen an Ort und Stelle: etwas, das aufbricht, wird
+   groesser, bevor es verschwindet. */
+@keyframes mkBricht {
+  0%, 30%   { transform: rotate(0) scale(1); opacity: 1 }
+  36%       { transform: rotate(-8deg) }
+  42%       { transform: rotate(8deg) }
+  48%       { transform: rotate(-6deg) }
+  54%       { transform: rotate(6deg) }
+  60%       { transform: rotate(0) scale(1.07); opacity: 1 }
+  78%, 100% { transform: scale(1.4); opacity: 0 }
+}
+/* Kommt aus dem Nichts, ueberschiesst leicht und setzt sich — ein Tier, das
+   herausklettert, nicht ein Bild, das eingeblendet wird. */
+@keyframes mkFrisch {
+  0%, 58% { opacity: 0; transform: scale(.5) }
+  76%     { opacity: 1; transform: scale(1.14) }
+  88%     { transform: scale(.97) }
+  100%    { opacity: 1; transform: scale(1) }
+}
+.mk-schale { animation: mkBricht 2.2s ease-in-out forwards; }
+.mk-frisch { animation: mkFrisch 2.2s ease-out forwards; }
+/* Sicherheitsnetz: bei reduzierter Bewegung ueberspringt maskottchen.js die
+   Animation schon in JS, die Buehne wird also gar nicht gezeichnet. Falls doch,
+   steht hier sofort das fertige Tier statt einer eingefrorenen leeren Buehne. */
+@media (prefers-reduced-motion: reduce) {
+  .mk-schale { display: none; }
+  .mk-frisch { animation: none; opacity: 1; }
+}

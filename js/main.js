@@ -3,13 +3,16 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, quoteStufe, quotePille } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
 import { syncKarte, syncStart, leseTabelle, fremdCache } from "./sync.js";
 import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
+// Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
+// diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
+import { tagesPunktKlasse, tagesText, tagesWorte, losText, losWorte } from "./geteilt-tagesstand.js";
 
 var themen = [];
 
@@ -238,10 +241,18 @@ function querLink() {
       if (s.runden > 0) teile.push(s.runden + (s.runden === 1 ? " angefangene Runde" : " angefangene Runden"));
     }
 
+    /* Wenn drueben heute noch gar nichts lief, tritt der Anstupser weiter unten
+       AN DIE STELLE des Offen-Abzeichens, statt danebenzustehen. Zwei Gruende,
+       beide auf 360 px nachgemessen: die Kopfzeile wurde sonst so breit, dass
+       vom App-Namen links nur noch ein Buchstabe uebrig blieb, und es haetten
+       zwei Dinge gleichzeitig gepulst. "Heute noch nichts" sagt ohnehin das
+       Staerkere - was offen ist, steht weiter im Tooltip. */
+    var losStatt = !!(s && !s.heute && s.los);
+
     if (wissen && summe > 0) {
-      stand.appendChild(offenBadge(summe + " offen", "kompakt"));
+      if (!losStatt) stand.appendChild(offenBadge(summe + " offen", "kompakt"));
       worte.push("noch offen: " + teile.join(" und "));
-    } else if (spieleOffen != null && summe === 0) {
+    } else if (spieleOffen != null && summe === 0 && !losStatt) {
       /* "Nichts offen" darf NUR behauptet werden, wenn die Spiel-Abfrage
          wirklich geantwortet hat. Faellt sie aus und der Snapshot meldet
          zufaellig null angefangene Runden, wuesste die Anzeige ueber die
@@ -252,9 +263,27 @@ function querLink() {
       worte.push("drüben ist gerade nichts offen");
     }
 
-    if (s && s.lernscore != null) {
-      stand.appendChild(quotePille(s.lernscore));
-      worte.push("Lernscore drüben " + s.lernscore + " Prozent");
+    /* Der Tagesfortschritt drueben. Kein Prozent, sondern die nackte Bruchzahl:
+       "12 von 60" sagt von selbst, worauf es sich bezieht - zwei Prozentzahlen
+       laden dazu ein, verglichen zu werden, und genau daran ist die alte Pille
+       gescheitert (Begruendung im Kopf von nachbar.js). Die Farbe traegt der
+       geteilte Leiterpunkt, nicht die Flaeche: auf Orange und Gelb gibt es
+       keine Textfarbe, die in beiden Themes ueber 4,5:1 bleibt. */
+    if (s && s.heute) {
+      var pille = el("span", "tag-pille");
+      pille.appendChild(el("i", "hm-pkt " + tagesPunktKlasse(s.heute)));
+      pille.appendChild(document.createTextNode(tagesText(s.heute)));
+      stand.appendChild(pille);
+      worte.push(tagesWorte(s.heute, "ST"));
+    } else if (s && s.los) {
+      /* Der Anstupser (Jennifer, 12.08.): heute drueben noch nichts. Kein
+         Zahlenpaar, weil wir das dortige Tagesziel gar nicht kennen - und weil
+         "0 von 60" sich wie ein Rueckstand liest statt wie ein offener Tag. */
+      var losPille = el("span", "tag-pille los");
+      losPille.appendChild(el("i", "puls los-zeichen", "!"));
+      losPille.appendChild(document.createTextNode(losText()));
+      stand.appendChild(losPille);
+      worte.push(losWorte("ST"));
     }
 
     if (!worte.length) return;
@@ -322,7 +351,11 @@ function countdownKarte(tz) {
   var karte = el("div", "karte countdown glimmer");
 
   // Das Ei sitzt ganz oben: es ist das Erste, was Rose beim Oeffnen sieht.
-  karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }));
+  // Das Konfetti wird hereingereicht statt importiert — maskottchen.js kennt
+  // main.js nicht. Es ist der seltenste Feier-Anlass der App: genau einmal pro
+  // Trainer, nie wieder (Jennifer, 12.08.). feiereEinmal() waere hier falsch,
+  // das drosselt pro Sitzung — hier gibt es gar keine zweite Gelegenheit.
+  karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }, konfetti));
 
   var tage = tageBisKlausur();
   var gross, klein;

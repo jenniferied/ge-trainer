@@ -84,8 +84,12 @@ function tagVon(ts) { var d = new Date(ts); d.setHours(0, 0, 0, 0); return d.get
    damit beide dieselbe Zahl zeigen. Gezaehlt wird ALLES, auch die Spiele (eine
    kurze Runde ist genauso Uebung wie eine lange); nur die Sofort-Wiederholung
    derselben Frage zaehlt einmal, gleiche Regel wie in zeilen(). */
-export function aktivitaetProTag() {
-  var log = state.antwortLog, tage = {};
+// log ist optional und normalerweise weggelassen (dann gilt der lebende State).
+// snapshot() im Sync reicht dagegen das Log durch, das dort gerade gemergt wird —
+// sonst koennte die Zahl im hochgeladenen Block von der abweichen, die die App
+// im selben Moment auf ihrem Zonen-Balken zeigt.
+export function aktivitaetProTag(logArg) {
+  var log = logArg || state.antwortLog, tage = {};
   for (var i = 0; i < log.length; i++) {
     var a = log[i];
     if (i + 1 < log.length && log[i + 1].qid === a.qid) continue;   // Doppeltippen
@@ -100,8 +104,9 @@ export function aktivitaetProTag() {
 }
 
 // Wie viele Antworten sind heute schon dazugekommen?
-export function heuteAntworten() {
-  var e = aktivitaetProTag()[tagVon(Date.now())];
+// Heisst absichtlich genauso wie im ST-Trainer (core.js) und meint dasselbe.
+export function heuteAntworten(logArg) {
+  var e = aktivitaetProTag(logArg)[tagVon(Date.now())];
   return e ? e.n : 0;
 }
 

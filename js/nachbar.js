@@ -1,7 +1,7 @@
 /* Blick zum ST-Trainer - NUR LESEN (Jennifer, 12.08.).
    Rose schreibt zwei Klausuren und hat zwei Trainer. Der Querlink oben rechts
    soll nicht nur hinueberzeigen, sondern auch sagen, wie es drueben steht:
-   was heute noch offen ist und bei welcher Prozentzahl sie steht.
+   was heute noch offen ist und wie weit sie heute schon gekommen ist.
 
    Gegenstueck zu klausur-trainer/app/js/nachbar.js, das dasselbe in die andere
    Richtung tut. Aufbau, Riegel und Ehrlichkeitsregeln sind von dort uebernommen.
@@ -15,49 +15,44 @@
    3. Jeder Fehler endet still im neutralen Zustand. Ein verlaesslicher Link
       schlaegt eine wacklige Statusanzeige.
 
-   DIE ZAHL, UND WARUM SIE JETZT ANDERS GERECHNET WIRD (Jennifer, 12.08.:
-   "da steht 57 %. Ja, ne, das stimmt gar nicht"):
-   Bis heute stand hier die Punktequote der letzten fuenf Laeufe aus der
-   sessions-Tabelle. Die ist leicht zu holen, aber sie ist NICHT die Zahl, die
-   der ST-Trainer selbst auf seiner Startseite zeigt - dort steht der
-   "Lernscore", und der wird ganz anders gerechnet (core.js: lernscore()):
+   DIE ZAHL: TAGESFORTSCHRITT, NICHT GESAMTSTAND (Jennifer, 12.08.: "es soll
+   nicht total progress sein sondern sowohl bei ge als auch st den daily
+   progress. also wv vom ziel die karten. und halt wv games noch offen/dailies.")
 
-     ueber ALLE zaehlenden Fragen des ST-Korpus der Mittelwert von
-     clamp(Leitner-Level, 0, 3) / 3
+   Vorgeschichte in zwei Saetzen, weil sie die Bauweise erklaert: hier stand
+   erst die Punktequote der letzten fuenf Laeufe (57 %), dann der aus dem
+   fremden Antwort-Log NACHGERECHNETE Lernscore des ST-Trainers (11 %) - und
+   drueben zeigte der Gegenlink derweil "sitzt von den angefassten Aufgaben"
+   (80 %). Drei Zahlen fuer angeblich dieselbe Frage.
 
-   Am 12.08. lieferten die beiden Rechnungen 57 % und 11 % - zwei Zahlen fuer
-   dieselbe Frage, und die groessere war die falsche. Zwei Apps, die dieselbe
-   Groesse verschieden ausrechnen, sind schlimmer als eine App ohne Anzeige.
-   Darum wird der Lernscore hier aus denselben Daten NACHGERECHNET:
+   Das Nachrechnen war der eigentliche Konstruktionsfehler. Es hing an
+   ST-Interna (Leitner-Formel, Quizbar-Filter, Probeklausur-Quarantaene), zog
+   dafuer den ganzen Fragen-Korpus ueber die Leitung, und lief trotzdem still
+   auseinander, sobald sich drueben die Formel bewegte.
 
-     Zaehler  = Leitner-Level, aus dem Antwort-Log des Snapshots nachgespielt
-                (core.js leitnerApply, Zug fuer Zug in Zeitreihenfolge)
-     Nenner   = die zaehlenden Fragen des ST-Korpus. Welche das sind, steht in
-                den Fragen-Dateien der ST-Seite (quizbar, nicht "laut Rose nicht
-                relevant", keine Einfache-Sprache-Variante) abzueglich der
-                Probeklausur-Quarantaene (Fragen einer noch nicht bestandenen
-                Probeklausur zaehlen drueben nicht mit).
+   Jetzt gilt die umgekehrte Regel, und sie ist der Kern des geteilten
+   Vertrags in geteilt-tagesstand.js:
 
-   KOPPLUNG, EHRLICH BENANNT: damit haengt diese Datei an ST-Interna. Aendert
-   der ST-Trainer seine Formel oder seine Filter, laufen die beiden Zahlen
-   wieder auseinander - still. Der saubere Weg waere, dass der ST-Trainer den
-   Wert selbst mitschreibt. Genau darauf ist hier vorbereitet: liegt im
-   Snapshot ein Feld lernscore, wird das genommen und gar nichts nachgerechnet.
-   Dann ist der Umbau drueben eine Zeile und hier keine.
+     Wer die Zahl berechnet, muss die App sein, die sie auch anzeigt.
 
-   KOSTEN: der Snapshot ist gzip rund 96 kB und wird nur geholt, wenn sich der
-   Zeitstempel bewegt hat. Der Fragen-Korpus ist einmalig rund 560 kB (gzip)
-   und wird nur neu geholt, wenn manifest.json einen neuen Stand meldet -
-   dazwischen liegt der abgeleitete Index im localStorage und es geht gar kein
-   grosser Abruf raus. Beides laeuft nach dem ersten Zeichnen und blockiert
-   nichts; solange nichts da ist, zeigt der Link einfach keine Zahl. */
+   Der ST-Trainer legt seinen Tagesstand fertig in sein Feld heute; hier wird
+   er nur noch gelesen und gezeigt. Damit ist diese Datei von ST-Interna
+   entkoppelt, der Korpus-Abruf ist ersatzlos weg, und Pille und Zonen-Balken
+   koennen nicht mehr Verschiedenes behaupten.
+
+   KOSTEN: nur noch der Snapshot, gzip rund 96 kB, und der wird nur geholt,
+   wenn sich der Zeitstempel bewegt hat. Laeuft nach dem ersten Zeichnen und
+   blockiert nichts; solange nichts da ist, zeigt der Link einfach keine
+   Zahl. */
 
 import { CONFIG } from "./config.js";
+// Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
+// diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
+import { liesHeute, tagesPunktKlasse, tagesText, tagesWorte, tagesLos, losText, losWorte } from "./geteilt-tagesstand.js";
 
 export const ST_URL = "https://jenniferied.github.io/st-trainer/";
 const ST_CODE = "rose";
 const CACHE_KEY = "ge-nachbar-st";
-const INDEX_KEY = "ge-nachbar-st-pool";
 // Wie oft ueberhaupt nachgesehen wird. Gefragt wird dabei erst nur nach dem
 // Zeitstempel (ein paar Byte); der Snapshot selbst wird nur geholt, wenn es
 // wirklich einen neuen gibt - also an Tagen, an denen Rose drueben geuebt hat.
@@ -89,104 +84,16 @@ function schreib(key, o) {
    aus der alten Formel und war durch nichts zu bewegen, solange Rose drueben nicht
    uebte (ihr Snapshot ruehrt sich ja nur beim Ueben). Ein Cache muss ungueltig
    werden, wenn sich die Frage aendert - nicht nur, wenn sich die Antwort aendert.
-   WER lernscoreVon() ODER DIE GESPEICHERTEN FELDER AENDERT, ZAEHLT HIER HOCH. */
-const AUSWERTUNG_V = 2;
+   WER DIE AUSWERTUNG ODER DIE GESPEICHERTEN FELDER AENDERT, ZAEHLT HIER HOCH.
+   v3 (12.08.): lernscore ist raus, dafuer der rohe heute-Block. */
+const AUSWERTUNG_V = 3;
 const liesStand = () => { const c = lies(CACHE_KEY); return c && c.v === AUSWERTUNG_V ? c : null; };
 const schreibStand = (o) => schreib(CACHE_KEY, Object.assign({ v: AUSWERTUNG_V }, o));
 
-/* ---------- Der Fragen-Index des ST-Trainers ----------
-   Nur was fuer den Nenner gebraucht wird: die Ids der zaehlenden Fragen und,
-   je Probeklausur, welche Ids gesperrt sind, solange sie nicht bestanden ist.
-   Aus 2,9 MB Fragen werden so rund 25 kB, die im localStorage liegen bleiben.
-   Nachgebaut ist das core.js des ST-Trainers (ladeFragen, pkGesperrt, zaehlt). */
-
-function holeJson(pfad) {
-  return fetch(ST_URL + "data/" + pfad).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-}
-
-let indexLaeuft = null;
-
-function holeIndex() {
-  const c = lies(INDEX_KEY);
-  if (indexLaeuft) return indexLaeuft;
-  indexLaeuft = holeJson("manifest.json").then((man) => {
-    if (!man || !Array.isArray(man.dateien)) return c;             // kein Netz -> alter Index
-    if (c && c.stand === man.stand && Array.isArray(c.basis)) return c;
-    return Promise.all(man.dateien.map(holeJson).concat([holeJson("probeklausuren.json")]))
-      .then((teile) => {
-        const pkDaten = teile.pop();
-        const roh = teile.filter(Array.isArray).flat();
-        if (!roh.length) return c;
-        // ladeFragen: kaputte Eintraege und komplett ausgeschlossene raus,
-        // quizbar heisst "Loesung bekannt".
-        const pool = roh.filter((q) => q && q.id && Array.isArray(q.optionen) && q.optionen.length > 1
-          && q.relevanz !== "ausgeschlossen");
-        for (const q of pool) {
-          q.quizbar = q.optionen.every((o) => o.richtig === true || o.richtig === false)
-            && q.optionen.some((o) => o.richtig === true);
-        }
-        const byId = new Map(pool.map((q) => [q.id, q]));
-        // zaehlt(): quizbar, laut Rose relevant, keine Einfache-Sprache-Variante.
-        const basis = pool.filter((q) => q.quizbar && q.relevanz !== "laut-rose-nicht-relevant"
-          && (q.sprache || "schwer") !== "einfach").map((q) => q.id);
-        const inBasis = new Set(basis);
-        // pkGesperrt(): eine noch nicht bestandene Probeklausur sperrt ihre
-        // Fragen inklusive aller Formulierungs- und Sprachvarianten.
-        const rootOf = (q) => {
-          const orig = q.sprachVarianteVon ? (byId.get(q.sprachVarianteVon) || q) : q;
-          return orig.variantenVon || orig.id;
-        };
-        const lock = {};
-        ((pkDaten && pkDaten.klausuren) || []).forEach((k) => {
-          const roots = new Set();
-          (k.qids || []).forEach((id) => { const q = byId.get(id); if (q && q.quizbar) roots.add(rootOf(q)); });
-          if (!roots.size) return;
-          lock[k.nr] = pool.filter((q) => inBasis.has(q.id) && roots.has(rootOf(q))).map((q) => q.id);
-        });
-        const neu = { stand: man.stand, basis: basis, lock: lock };
-        schreib(INDEX_KEY, neu);
-        return neu;
-      });
-  }).catch(() => c).then((x) => { indexLaeuft = null; return x; });
-  return indexLaeuft;
-}
-
-/* ---------- Lernscore nachrechnen ----------
-   leitnerApply aus core.js des ST-Trainers, Zeichen fuer Zeichen: voll richtig
-   +1 (max 5), teilweise -1 (min -3), komplett falsch -2 und ein positives
-   Level faellt dabei direkt auf 0. */
-function leitnerApply(L, qid, a) {
-  const e = L[qid] || { lvl: 0 };
-  if (a.voll) e.lvl = Math.min(5, e.lvl + 1);
-  else if (a.punkte > 0) e.lvl = Math.max(-3, e.lvl - 1);
-  else e.lvl = Math.max(-3, Math.min(e.lvl - 2, 0));
-  L[qid] = e;
-}
-
-function lernscoreVon(daten, index) {
-  // Wenn der ST-Trainer den Wert eines Tages selbst mitschreibt, gilt seiner -
-  // eine nachgerechnete Zahl ist immer nur die zweitbeste Quelle.
-  if (daten && typeof daten.lernscore === "number") return Math.round(daten.lernscore);
-  if (!index || !index.basis || !index.basis.length) return null;
-
-  const log = (daten && daten.antwortLog) || [];
-  const L = {};
-  [...log].sort((x, y) => x.ts - y.ts).forEach((a) => { if (a && a.qid) leitnerApply(L, a.qid, a); });
-
-  const bestanden = new Set(((daten && daten.sessions) || [])
-    .filter((s) => s.modus === "probeklausur" && s.bestanden && s.cfg && s.cfg.pk)
-    .map((s) => s.cfg.pk));
-  const gesperrt = new Set();
-  Object.keys(index.lock || {}).forEach((nr) => {
-    if (bestanden.has(Number(nr))) return;
-    (index.lock[nr] || []).forEach((id) => gesperrt.add(id));
-  });
-
-  const qs = index.basis.filter((id) => !gesperrt.has(id));
-  if (!qs.length) return null;
-  const summe = qs.reduce((a, id) => a + Math.max(0, Math.min((L[id] || {}).lvl || 0, 3)) / 3, 0);
-  return Math.round((100 * summe) / qs.length);
-}
+// Einmalige Aufraeumaktion: der abgeleitete Fragen-Index des ST-Korpus (rund
+// 25 kB) liegt auf jedem Geraet, das die App vor dem 12.08. offen hatte. Er
+// wird nie wieder gebraucht - der Lernscore wird nicht mehr nachgerechnet.
+try { localStorage.removeItem("ge-nachbar-st-pool"); } catch (e) { /* egal */ }
 
 /* ---------- Was drueben sonst noch offen ist (Jennifer, 12.08.) ----------
    "der link zu GE und ST sollte, falls noch taegliches Ueben offen ist,
@@ -198,15 +105,19 @@ function lernscoreVon(daten, index) {
    exakt, sie muss nicht rekonstruiert werden, und drueben steht sie auf der
    Startseite unter "Angefangen - du kannst weitermachen".
 
-   Was NICHT mitgezaehlt wird und warum:
-   - Das Tagesziel des ST-Trainers. Es wird einmal am Tag eingefroren und liegt
-     in settings.tzPlan - und settings ist im Snapshot bewusst nicht enthalten
-     (dort stehen nur sessions, antwortLog, offen, geloescht). Nachrechnen waere
-     Raten: der eingefrorene Plan von heute frueh ist nicht derselbe wie eine
-     Neuberechnung von jetzt.
-   - Faellige Wiederholungen. Der ST-Trainer hat dafuer keinen Termin je Frage,
-     sondern zieht beim Rundenbau aus dem Wackligen - eine Zahl "so viele sind
-     faellig" gibt es drueben gar nicht, sie waere hier erfunden.
+   Das TAGESZIEL stand hier frueher unter "nicht zaehlbar": es friert einmal am
+   Tag ein und lag in settings.tzPlan, und settings ist im Snapshot bewusst
+   nicht enthalten. Nachrechnen waere Raten gewesen. Seit dem 12.08. schickt
+   der ST-Trainer seinen Tagesstand selbst mit (Feld heute) - deshalb steht die
+   Zahl jetzt als eigene Pille daneben, und zwar als uebernommene, nicht als
+   abgeleitete. Sie gehoert nicht in diese Zaehlung: "12 von 60" ist eine
+   Auskunft ueber den Tag, kein offener Posten. Ein halbvolles Tagesziel als
+   "offen" zu zaehlen wuerde aus jedem normalen Uebungstag eine Mahnung machen.
+
+   Weiterhin NICHT mitgezaehlt: faellige Wiederholungen. Der ST-Trainer hat
+   dafuer keinen Termin je Frage, sondern zieht beim Rundenbau aus dem
+   Wackligen - eine Zahl "so viele sind faellig" gibt es drueben gar nicht, sie
+   waere hier erfunden.
    Lieber "✦ 2 offen", das stimmt, als "✦ 5 offen", das geraten ist. */
 function offeneRunden(daten) {
   const offen = (daten && daten.offen) || [];
@@ -215,8 +126,8 @@ function offeneRunden(daten) {
 
 /* ---------- Abruf ----------
    Schritt 1 fragt nur den Zeitstempel (winzig). Schritt 2 holt den Snapshot nur,
-   wenn es wirklich ein neuer ist. Schritt 3 rechnet - und braucht dafuer den
-   Fragen-Index, der meistens schon im localStorage liegt. */
+   wenn es wirklich ein neuer ist. Einen dritten Schritt gibt es seit dem 12.08.
+   nicht mehr: gerechnet wird hier nichts, der Tagesstand kommt fertig mit. */
 let laeuft = null;
 
 export function hole() {
@@ -230,26 +141,24 @@ export function hole() {
     .then((zeilen) => {
       const ts = zeilen && zeilen[0] && zeilen[0].ts ? new Date(zeilen[0].ts).getTime() : null;
       if (!ts) return null;
-      // Nichts Neues drueben und die Zahl steht schon: nur den Cache auffrischen.
-      if (c && c.ts === ts && typeof c.lernscore === "number") {
+      // Nichts Neues drueben: nur den Cache auffrischen.
+      if (c && c.ts === ts && typeof c.runden === "number") {
         const frisch = Object.assign({}, c, { geholt: Date.now() });
         schreibStand(frisch);
         return frisch;
       }
-      return Promise.all([
-        fetch(leseUrl("&select=daten&order=ts.desc&limit=1"), { headers: leseKopf() })
-          .then((r) => (r.ok ? r.json() : null)).catch(() => null),
-        holeIndex(),
-      ]).then((r) => {
-        const daten = r[0] && r[0][0] && r[0][0].daten;
-        if (!daten) return c;
-        const score = lernscoreVon(daten, r[1]);
-        // Ohne Index gibt es keine ehrliche Zahl - dann bleibt sie weg, statt
-        // eine andere Groesse als Lernscore auszugeben.
-        const neu = { ts: ts, geholt: Date.now(), lernscore: score, runden: offeneRunden(daten) };
-        if (typeof score === "number") schreibStand(neu);
-        return neu;
-      });
+      return fetch(leseUrl("&select=daten&order=ts.desc&limit=1"), { headers: leseKopf() })
+        .then((r) => (r.ok ? r.json() : null)).catch(() => null)
+        .then((rows) => {
+          const daten = rows && rows[0] && rows[0].daten;
+          if (!daten) return c;
+          // Der heute-Block wird roh gespeichert und erst beim Anzeigen mit
+          // liesHeute() geprueft - so faellt er um Mitternacht von selbst weg,
+          // auch wenn drueben seither niemand gepusht hat.
+          const neu = { ts: ts, geholt: Date.now(), heute: daten.heute || null, runden: offeneRunden(daten) };
+          schreibStand(neu);
+          return neu;
+        });
     })
     .catch(() => null)
     .then((x) => { laeuft = null; return x; });
@@ -264,7 +173,12 @@ export function stStand() {
   return {
     ts: c.ts,
     frisch: tagVon(c.ts) === heuteTag(),
-    lernscore: typeof c.lernscore === "number" ? c.lernscore : null,
+    // liesHeute() verwirft alles, was nicht von heute ist - auch einen Block,
+    // der noch im Cache liegt, weil drueben seit gestern niemand gepusht hat.
+    heute: liesHeute(c),
+    // Genau dieser Fall ist der Anstupser: kein frischer Block, weil der letzte
+    // Push von gestern oder aelter ist. Begruendung in tagesLos().
+    los: tagesLos(c.ts),
     runden: typeof c.runden === "number" ? c.runden : null,
   };
 }

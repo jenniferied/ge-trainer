@@ -73,11 +73,39 @@ function herzenHeute(tz) {
 
    Schwellen am 12.08. halbiert (Jennifer): vorher 0/20/45, jetzt 0/10/22. Mit
    45 Herzen bis zum Riss waere es Wochen ohne sichtbare Veraenderung gewesen. */
+/* ---------- Die Leiter, neun Stufen ----------
+   Von Jennifer am 12.08. bestaetigt: 0/4/7/10/13/16/19/22/25. Gerechnet in
+   UEBUNGSTAGEN, nicht in Kalendertagen — ein Uebungstag bringt fast immer genau
+   3 Herzen, das ist die harte Groesse. Rose stand hier am 12.08. bei 3 Herzen
+   aus einem Uebungstag, Klausur ist der 10.09.
+
+     Stufe 3 (schlueft)   10 = 3 Uebungstage
+     Stufe 8 (erwachsen)  25 = 8 Uebungstage, also etwa der 01.09.
+
+   "Halbier da mal die Tage" war als halbierte WARTEZEIT gemeint, nicht als
+   halbierte Schwellen — die Alternative (Schluepfen erst bei 16, Ende August)
+   ist damit vom Tisch. Nicht neu aufmachen.
+
+   Die Schwellen sind hier enger als im ST-Trainer (dort 31 bzw. 48), weil Rose
+   hier fast bei null anfaengt und die Klausur acht Tage frueher liegt. Gleiche
+   Anzahl Stufen, gleiche Bedeutung je Index — nur andere Zahlen.
+
+   ANHAENGEN IST SICHER, UMSORTIEREN NICHT: mk.stufeMax speichert die Stufe als
+   INDEX und synct. Die Stufen 0/1/2 muessen die Ei-Stufen bleiben. */
 var STUFEN = [
-  { ab: 0,  satz: "Ich bin einfach hier hingeploppt. Mal sehen, was aus mir wird." },
-  { ab: 10, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
-  { ab: 22, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
+  { ab: 0,  art: "ei",   sub: 0, satz: "Ich bin einfach hier hingeploppt. Mal sehen, was aus mir wird." },
+  { ab: 4,  art: "ei",   sub: 1, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
+  { ab: 7,  art: "ei",   sub: 2, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
+  { ab: 10, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
+  { ab: 13, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
+  { ab: 16, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
+  { ab: 19, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
+  { ab: 22, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
+  { ab: 25, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
 ];
+/* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
+   sie brauchen und eine 3 im Code an der dritten Stelle niemand mehr zuordnet. */
+export var SCHLUEPF_STUFE = 3;
 
 var SPRUCH = {
   nacht: [
@@ -264,6 +292,100 @@ function gewaehlt() {
 }
 var angesehen = false;
 export function zuruecksetzen() { state.mk = {}; speichern(); angesehen = false; }
+/* Nur den Schluepf-Moment zurueckgeben, ohne die Ei-Wahl und die Stufe
+   mitzunehmen. zuruecksetzen() leert mk KOMPLETT — wer damit einen Testfehler
+   repariert, loescht Roses ausgesuchtes Ei gleich mit. */
+export function momentZurueck() {
+  state.mk = state.mk || {};
+  delete state.mk.geschluepft;
+  speichern();
+  schluepfPhase = null;
+}
+
+/* ---------- Das Tier, ab Stufe 3 ----------
+   Uebernommen aus der Werkstatt (playground/rose/maskottchen/figuren.js), damit
+   Entwurf und App dieselbe Figur zeigen. Hier ist es der Hund; drueben im
+   ST-Trainer die Katze.
+
+   BEWUSSTER STILBRUCH: das Ei ist aus Halbbloecken gebaut (█▟▙), das Tier aus
+   Strichzeichen (╭─╮│). Nebeneinander waere das ein Fehler — nacheinander ist es
+   die Verwandlung. Das Schluepfen ist genau der Moment, an dem ein Stilwechsel
+   erzaehlt wird statt auffaellt. Darum darf die Leiter nie ohne die Figuren
+   live gehen: waere sie allein draussen, erreichte Rose Stufe 3 und saehe
+   weiter dasselbe Ei.
+
+   Gefaerbt wie das Ei ueber eine Maske: Umriss und Ohren in der Fellfarbe,
+   Augen und Maul in der Musterfarbe. Dieselben zwei Farben wie am Ei, damit das
+   Tier erkennbar dasselbe Wesen bleibt. */
+var GESICHT = "◉◡▬ᵕᗢ‿▼✦"; // alles, was Musterfarbe bekommt
+
+function blobZeilen(sub, auge, maul) {
+  var ohren = sub >= 2 ? "   ▲     ▲   " : "             ";
+  var a = sub >= 1 ? auge : "◦";
+  return [
+    ohren,
+    "  ╭───────╮  ",
+    "  │       │  ",
+    "  │ " + a + "   " + a + " │  ",
+    "  │   " + maul + "   │  ",
+    "  ╰───────╯  ",
+  ];
+}
+
+/* Schlappohren als seitliche Buegel — das ist der sichtbare Unterschied zur
+   Katze drueben, die spitze Ohren oben hat. */
+function hundZeilen(jung, auge, maul) {
+  if (jung) return [
+    "  ╭───────╮  ",
+    " ╭┤       ├╮ ",
+    " ││ " + auge + "   " + auge + " ││ ",
+    " ╰┤   ▼   ├╯ ",
+    "  │  ╰" + maul + "╯  │  ",
+    "  ╰───────╯  ",
+  ];
+  return [
+    "   ╭───────────╮   ",
+    "  ╭┤           ├╮  ",
+    "  ││           ││  ",
+    "  ││ " + auge + "       " + auge + " ││  ",
+    "  ╰┤           ├╯  ",
+    "   │     ▼     │   ",
+    "   │   ╰─" + maul + "─╯   │   ",
+    "   ╰───────────╯   ",
+    "     ╵       ╵     ",
+  ];
+}
+
+/* Nachts schlaeft es, wie das Ei nachts leise ist. */
+export function figurHtml(variante, stufe, nacht) {
+  var st = STUFEN[stufe];
+  var auge = nacht ? "▬" : "◉";
+  var maul = nacht ? "‿" : "ᵕ";
+  var zeilen = st.art === "blob" ? blobZeilen(st.sub, auge, maul)
+    : hundZeilen(st.art === "jung", auge, maul);
+  return zeilen.map(function (zeile) {
+    var out = "", puffer = "", k = null;
+    function spuelen() {
+      if (!puffer) return;
+      out += k === " " ? puffer
+        : '<span style="color:' + (k === "G" ? variante.muster : variante.fell) + '">' + puffer + "</span>";
+      puffer = "";
+    }
+    for (var i = 0; i < zeile.length; i++) {
+      var ch = zeile[i];
+      var kk = ch === " " ? " " : GESICHT.indexOf(ch) >= 0 ? "G" : "F";
+      if (kk !== k) { spuelen(); k = kk; }
+      puffer += ch;
+    }
+    spuelen();
+    return out;
+  }).join("\n");
+}
+
+/* Das Bild zur Stufe — Ei oder Tier, eine Entscheidung an einer Stelle. */
+export function bildHtml(variante, stufe, nacht) {
+  return stufe < SCHLUEPF_STUFE ? eiHtml(variante, stufe) : figurHtml(variante, stufe, nacht);
+}
 
 /* ---------- Der Storch ----------
    Bewusst KEINE Textgrafik, anders als das Ei. Blockzeichen wie ▟ ▙ sind
@@ -445,10 +567,92 @@ export function blaseText(w) {
     satz: satzVon(stufe, hh, nacht),
     meta: "<b>" + herzen + "</b> ♥" + (sterne ? " · <b>" + sterne + "</b> ★" : "") +
       " aus " + tage + " Übungstagen — " +
-      (naechste ? "noch <b>" + (naechste.ab - herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") +
+      // Auf der letzten Stufe gibt es kein "bis es weitergeht" mehr. Frueher
+      // stand hier "gleich passiert was" — als Platzhalter gedacht und nie
+      // erreicht, weil die Leiter nur drei Stufen hatte. Jetzt wird sie erreicht.
+      (naechste ? "noch <b>" + Math.max(0, naechste.ab - herzen) + "</b> ♥ bis es weitergeht" : "ausgewachsen") +
       "." + heute,
   };
 }
+
+/* ---------- Das Schluepfen als Moment ----------
+   Kein stiller Bildwechsel. Jennifer am 12.08. woertlich: "wenn es schluepft
+   soll da eine nachricht sein: oh etwas passiert. und dann der button,
+   nachschauen. und dann schluepft es, mit einer animation."
+
+   Dieselbe Dramaturgie wie bei der Ankunft, mit denselben .mk-ank-*-Bauteilen.
+
+   GENAU EINMAL, ABER GARANTIERT (Jennifer, 12.08.). Daraus zwei Dinge:
+
+   1. Der Haken liegt im GESYNCTEN Stand (mk.geschluepft), nicht in localStorage
+      — sonst sieht Rose den Moment auf Handy und Tablet je einmal. Er steht
+      darum auch in signatur(): er aendert sich durch einen KNOPFDRUCK, ohne dass
+      eine neue Antwort dazukommt, kann also nicht huckepack auf antwortLog
+      reisen. Nur im Snapshot hiesse: wird nie gepusht.
+   2. Gesetzt wird er ERST, wenn die Animation durch ist. Sonst reicht es, die
+      App kurz zu oeffnen und wegzustecken, und der Moment ist verbraucht.
+
+   Der Fehler, den das bewusst in Kauf nimmt, ist der harmlose: faellt der Push
+   aus, sieht sie es auf dem zweiten Geraet nochmal. Zweimal feiern ist harmlos,
+   gar nicht feiern ist unwiederbringlich. */
+function geschluepft() { return !!(state.mk && state.mk.geschluepft); }
+/* Reiner Ansichts-Zustand wie `angesehen`: liegt im Modul und synct nie. */
+var schluepfPhase = null; // null | "bricht"
+/* Haengt an der Dauer der CSS-Animation. Wer eine aendert, aendert beide. */
+var MOMENT_MS = 2200;
+
+function schluepfKnoten(neu, feiern) {
+  var box = el("div", "mk-ankunft");
+  box.appendChild(el("div", "mk-ank-kopf", "Oh, etwas passiert."));
+  box.appendChild(el("p", "mk-ank-text", "Es hat sich bewegt, und diesmal nicht nur ein bisschen."));
+  box.appendChild(knopf("Nachschauen", "knopf klein", function () {
+    // Wer Bewegung abgestellt hat, bekommt den Moment trotzdem — nur ohne die
+    // Animation. Der Knopf fuehrt dann direkt zum fertigen Tier.
+    if (REDUCE_MOTION) { schluepfFertig(neu, feiern); return; }
+    schluepfPhase = "bricht";
+    neu();
+    setTimeout(function () { schluepfFertig(neu, feiern); }, MOMENT_MS);
+  }));
+  return box;
+}
+
+/* Zwei Ebenen uebereinander: die Schale bricht und verschwindet, das Tier kommt
+   darunter hervor. Beides im selben Rasterfeld, damit nichts springt. */
+function bruchKnoten() {
+  var v = EIER[eiIndex()];
+  var box = el("div", "mk-ankunft");
+  var buehne = el("div", "mk-buehne");
+  var schale = document.createElement("pre");
+  schale.className = "mk-ei mk-schale";
+  schale.setAttribute("aria-hidden", "true");
+  schale.innerHTML = eiHtml(v, 2);
+  var frisch = document.createElement("pre");
+  frisch.className = "mk-ei mk-frisch";
+  frisch.setAttribute("aria-hidden", "true");
+  frisch.innerHTML = figurHtml(v, SCHLUEPF_STUFE, false);
+  buehne.appendChild(schale);
+  buehne.appendChild(frisch);
+  box.appendChild(buehne);
+  return box;
+}
+
+/* Der Abschluss an EINER Stelle: Haken setzen, sofort hochschieben, neu
+   zeichnen, dann feiern. Reihenfolge ist Absicht — das Konfetti soll ueber dem
+   geschluepften Tier liegen, nicht ueber der Animation. */
+function schluepfFertig(neu, feiern) {
+  schluepfPhase = null;
+  state.mk = state.mk || {};
+  state.mk.geschluepft = Date.now();
+  speichern();
+  syncBald(500);
+  neu();
+  if (typeof feiern === "function") feiern();
+}
+
+/* Die Stufe, die JETZT gilt — inklusive Sperrklinke. Eigene Funktion, weil
+   knoten() und standKnoten() sie beide brauchen und zwei Rechnungen zwei
+   Wahrheiten waeren. */
+function aktuelleStufe(tz) { return stufeJetzt(herzenStand(tz).herzen); }
 
 function standKnoten(tz, neu) {
   var st = herzenStand(tz);
@@ -461,9 +665,12 @@ function standKnoten(tz, neu) {
 
   var zeile = el("div", "mk-zeile");
   var pre = document.createElement("pre");
-  pre.className = "mk-ei" + (REDUCE_MOTION ? "" : stufe === 0 ? " mk-schwebt" : stufe === 1 ? " mk-atmet" : " mk-wackelt");
+  // Das Wackeln gehoert zum Riss kurz vor dem Schluepfen. Danach atmet das Tier
+  // nur noch — ein geschluepftes Tier, das weiter zappelt, sieht aus, als waere
+  // es noch nicht fertig.
+  pre.className = "mk-ei" + (REDUCE_MOTION ? "" : stufe === 0 ? " mk-schwebt" : stufe === 2 ? " mk-wackelt" : " mk-atmet");
   pre.setAttribute("aria-hidden", "true");
-  pre.innerHTML = eiHtml(v, stufe);
+  pre.innerHTML = bildHtml(v, stufe, t.nacht);
   zeile.appendChild(pre);
 
   var text = el("div", "mk-text");
@@ -499,8 +706,14 @@ function standKnoten(tz, neu) {
 /* Reihenfolge wichtig: "schaut gerade die Auswahl an" schlaegt "hat schon eins".
    Frueher wurde beim Wechseln die gespeicherte Wahl auf null gesetzt, damit die
    Auswahl erscheint — das geht nicht mehr, seit die Wahl synct (siehe oben). */
-export function knoten(tz, neuZeichnen) {
+/* feiern() reicht main.js herein (Konfetti aus ui.js). Als Parameter statt
+   Import, damit dieses Modul weiter nur von core/sync abhaengt. */
+export function knoten(tz, neuZeichnen, feiern) {
   if (angesehen) return auswahlKnoten(neuZeichnen);
-  if (gewaehlt()) return standKnoten(tz, neuZeichnen);
-  return ankunftKnoten(neuZeichnen);
+  if (!gewaehlt()) return ankunftKnoten(neuZeichnen);
+  // Laeuft die Animation, schlaegt sie alles andere — sonst reisst ein
+  // Neuzeichnen (Sync-Antwort, Tabwechsel) sie mittendrin weg.
+  if (schluepfPhase === "bricht") return bruchKnoten();
+  if (!geschluepft() && aktuelleStufe(tz) >= SCHLUEPF_STUFE) return schluepfKnoten(neuZeichnen, feiern);
+  return standKnoten(tz, neuZeichnen);
 }
