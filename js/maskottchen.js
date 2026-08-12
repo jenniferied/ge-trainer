@@ -56,11 +56,64 @@ function herzenHeute(tz) {
   return (n > 0 ? 1 : 0) + (n >= tz.minimum ? 1 : 0) + (n >= tz.ziel ? 1 : 0);
 }
 
+/* ---------- Was das Ei sagt ----------
+   Das Ei SPRICHT, es wird nicht beschrieben: "Ich hab mich bewegt" statt "Das
+   Ei hat sich bewegt". So war es von Anfang an in der Werkstatt gedacht
+   (figuren.js), im Trainer stand aber die beschreibende Fassung.
+
+   Der Satz reagiert zuerst auf HEUTE und erst dann auf die Stufe. Mehrere
+   Saetze je Lage, ausgewaehlt nach Kalendertag statt zufaellig — sonst springt
+   der Text bei jedem Neuzeichnen.
+
+   Ton: nie Druck, nie Schuld. "Noch nichts heute" ist eine Feststellung, kein
+   Vorwurf.
+
+   Schwellen am 12.08. halbiert (Jennifer): vorher 0/20/45, jetzt 0/10/22. Mit
+   45 Herzen bis zum Riss waere es Wochen ohne sichtbare Veraenderung gewesen. */
 var STUFEN = [
-  { ab: 0,  satz: "Da liegt ein Ei im Nest. Keine Ahnung, wo das herkommt." },
-  { ab: 20, satz: "Das Ei hat sich bewegt. Nur ein bisschen, aber es hat." },
-  { ab: 45, satz: "Es knackt. Da will jemand raus – bald ist es so weit." },
+  { ab: 0,  satz: "Ich bin einfach hier hingeploppt. Mal sehen, was aus mir wird." },
+  { ab: 10, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
+  { ab: 22, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
 ];
+
+var SPRUCH = {
+  nacht: [
+    "Ich mach die Augen zu. Bis morgen.",
+    "Schlaf gut. Ich bin morgen noch da.",
+    "So spaet noch? Ich leg mich hin.",
+  ],
+  ruhig: [
+    "Ich lieg hier und warte. Kein Stress.",
+    "Noch nichts passiert heute. Ist okay, ich hab Zeit.",
+    "Ich bin da, wenn du magst. Eine Aufgabe reicht mir schon.",
+    "Heute noch gar nichts. Macht nichts, ich mag auch kurze Tage.",
+  ],
+  start: [
+    "Du hast angefangen. Genau das zaehlt bei mir am meisten.",
+    "Da ist mein erstes Herz heute. Angefangen ist das Schwerste.",
+    "Oh, du bist da. Das reicht mir schon fuer heute.",
+  ],
+  mitte: [
+    "Zwei Herzen heute. Das war schon ein richtiger Tag.",
+    "Ich hab zwei bekommen. Von mir aus kannst du jetzt aufhoeren.",
+    "Zwei. Und ich hab nicht mal was dafuer tun muessen.",
+  ],
+  voll: [
+    "Drei Herzen. Mehr kriege ich an einem Tag gar nicht.",
+    "Das war alles, was heute ging. Ich bin satt.",
+    "Voll. Ab jetzt uebst du nur noch fuer dich, nicht fuer mich.",
+  ],
+};
+function spruchVon(liste, tag) { return liste[tag % liste.length]; }
+
+function satzVon(stufe, hh, nacht) {
+  var tag = new Date().getDate();
+  if (nacht) return spruchVon(SPRUCH.nacht, tag);
+  if (hh >= 3) return spruchVon(SPRUCH.voll, tag);
+  if (hh === 2) return spruchVon(SPRUCH.mitte, tag);
+  if (hh === 1) return spruchVon(SPRUCH.start, tag);
+  return tag % 2 === 0 ? STUFEN[stufe].satz : spruchVon(SPRUCH.ruhig, tag);
+}
 export function stufeVon(herzen) {
   var i = 0;
   STUFEN.forEach(function (s, k) { if (herzen >= s.ab) i = k; });
@@ -308,8 +361,36 @@ function auswahlKnoten(neu) {
 
   box.appendChild(el("p", "mk-teaser", v.teaser));
   box.appendChild(knopf("Das nehme ich", "knopf klein", function () {
-    state.mk = state.mk || {}; state.mk.ei = v.key; speichern(); angesehen = false; neu();
+    // ts stempelt die Wahl: beim Merge gewinnt die zuletzt getroffene.
+    state.mk = state.mk || {}; state.mk.ei = v.key; state.mk.ts = Date.now();
+    speichern(); angesehen = false; neu();
   }));
+  return box;
+}
+
+/* ---------- Die Herzen als Meilensteine unter der Tagesziel-Bar ----------
+   Bisher stand nur in der Blase, wie viele Herzen heute dazukamen — man sah
+   nicht, WO die naechste Schwelle liegt. Als Marken unter der Leiste ist beides
+   auf einen Blick da: was schon zaehlt (voll) und was als naechstes kommt (blass).
+
+   Die drei Herzen sitzen auf denselben Schwellen wie herzenHeute(): Anfangen,
+   Minimum, Tagespensum. Der Stern am Ende ist das Streckziel. Die Bar laeuft von
+   0 bis Streckziel, darum liegt der Stern immer bei 100 %. */
+export function markenKnoten(tz, minP, zielP) {
+  var box = el("div", "tz-marken");
+  box.setAttribute("aria-hidden", "true");
+  var n = (tz && tz.n) || 0;
+  [
+    [0, "♥", n > 0, "fürs Anfangen", "erste"],
+    [minP, "♥", n >= tz.minimum, "Minimum: " + tz.minimum, ""],
+    [zielP, "♥", n >= tz.ziel, "Tagespensum: " + tz.ziel, ""],
+    [100, "✦", n >= tz.stretch, "Streckziel: " + tz.stretch, "stern letzte"],
+  ].forEach(function (m) {
+    var s = el("span", "tz-marke" + (m[2] ? " an" : "") + (m[4] ? " " + m[4] : ""), m[1]);
+    s.style.left = m[0] + "%";
+    s.title = m[3];
+    box.appendChild(s);
+  });
   return box;
 }
 
@@ -330,7 +411,7 @@ export function blaseText(w) {
   return {
     stufe: stufe, nacht: nacht,
     gruss: grussVon(stunde),
-    satz: nacht ? "Das Ei ist still. Morgen früh sind wir wieder da." : STUFEN[stufe].satz,
+    satz: satzVon(stufe, hh, nacht),
     meta: "<b>" + herzen + "</b> ♥" + (sterne ? " · <b>" + sterne + "</b> ★" : "") +
       " aus " + tage + " Übungstagen — " +
       (naechste ? "noch <b>" + (naechste.ab - herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") +

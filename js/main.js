@@ -302,7 +302,12 @@ function zonenBalken(tz) {
     m.style.left = p + "%";
     box.appendChild(m);
   });
-  return box;
+  // Die Herz-Meilensteine liegen UNTER der Bar (die hat overflow:hidden), darum
+  // ein Wrapper statt eines Kindes.
+  var wrap = el("div", "tz-leiste");
+  wrap.appendChild(box);
+  wrap.appendChild(Mk.markenKnoten(tz, minP, zielP));
+  return wrap;
 }
 
 function tagesSatz(tz) {

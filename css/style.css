@@ -1019,6 +1019,21 @@ p { margin: 0 0 var(--sp-3); }
   padding: 13px 14px 14px; margin: 0 0 12px; text-align: center; }
 /* Der Storch ist SVG, keine Textgrafik — darum keine font/white-space-Regeln.
    Breite in ch statt px, damit er bei groesserer Schrift mitwaechst. */
+/* Herz-Meilensteine unter der Tagesziel-Leiste. Gehoert zum Maskottchen und
+   ist darum bewusst .mk-Nachbarschaft, sitzt aber an der Bar. */
+.tz-marken { position: relative; height: 15px; margin-top: 2px; }
+.tz-marken .tz-marke {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: 11px; line-height: 1;
+  color: color-mix(in srgb, var(--ink-soft) 45%, transparent);
+  transition: color .4s ease;
+}
+/* Erste und letzte nicht zentrieren, sonst haengen sie ueber dem Kartenrand. */
+.tz-marken .tz-marke.erste { transform: none; }
+.tz-marken .tz-marke.letzte { transform: translateX(-100%); }
+.tz-marken .tz-marke.an { color: var(--mk-riss); }
+.tz-marken .tz-marke.stern.an { color: #d9b93a; }
+
 .mk-wechsel { margin-top: 5px; }
 .mk-storch { display: block; margin: 0 auto 8px; width: 14ch; max-width: 52%; }
 .mk-storch svg { display: block; width: 100%; height: auto; }

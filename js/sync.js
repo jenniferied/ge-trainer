@@ -131,7 +131,9 @@ export function signatur(d) {
   // Push (siehe einSync). Ohne diese Zeile aendert eine reine Ei-Wahl die
   // Signatur nicht und wird nie hochgeladen. Auf "" normiert, damit eine alte
   // Server-Zeile ohne mk nicht dauerhaft als verschieden gilt.
-  var mk = (daten.mk && daten.mk.ei) || "";
+  // ts gehoert mit rein: waehlt jemand dasselbe Ei erneut, ist das eine neue
+  // Wahl und muss den Server erreichen, sonst gewinnt dort der aeltere Stempel.
+  var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0);
   return [aids, mc, frei, tot, mk].join("|");
 }
 
@@ -246,12 +248,24 @@ export function mergeIn(st, remote) {
   Object.keys(abgeleitet.frei).forEach(function (qid) { frei[qid] = abgeleitet.frei[qid]; });
   st.frei = frei;
 
-  // Maskottchen: wer einen Wert hat, behaelt ihn — remote fuellt nur auf, wenn
-  // lokal nichts steht. Es gibt keinen Pfad, der die Wahl auf null zurueckdreht
-  // (das Wechseln laesst den gespeicherten Wert stehen und zeigt nur die
-  // Auswahl), darum kann diese Regel keine getroffene Wahl ueberschreiben.
+  // Maskottchen: die ZULETZT getroffene Wahl gilt.
+  //
+  // Erste Fassung war "wer einen Wert hat, behaelt ihn". Das schuetzt zwar davor,
+  // dass eine Wahl geloescht wird, hat aber kein Konvergenz-Kriterium: zwei
+  // Geraete mit verschiedenen Eiern behalten beide ihres und ueberschreiben beim
+  // Push das jeweils andere — Ping-Pong ohne Ende. Genau das ist am 12.08.
+  // passiert (Roses "karo" wurde zwei Sekunden spaeter von einem zweiten Geraet
+  // mit "ringe" ueberschrieben).
+  //
+  // Anders als beim Antwort-Log gibt es hier keine Vereinigung: ein Einzelwert
+  // laesst sich nicht zusammenfuehren, man muss sich entscheiden. Das einzig
+  // sinnvolle Kriterium ist der Zeitpunkt der Wahl. Altbestand ohne ts zaehlt
+  // als 0 und verliert gegen jede bewusst getroffene Wahl; bei Gleichstand
+  // bleibt der lokale Wert stehen.
   st.mk = st.mk || {};
-  if (!st.mk.ei && r.mk && r.mk.ei) st.mk.ei = r.mk.ei;
+  var rMk = r.mk || {};
+  if (rMk.ei && (rMk.ts || 0) > (st.mk.ts || 0)) { st.mk.ei = rMk.ei; st.mk.ts = rMk.ts || 0; }
+  else if (!st.mk.ei && rMk.ei) { st.mk.ei = rMk.ei; st.mk.ts = rMk.ts || 0; }
 
   return signatur(snapshot(st)) !== vorher;
 }
