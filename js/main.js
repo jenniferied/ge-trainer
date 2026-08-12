@@ -3,7 +3,7 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, konfetti } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
@@ -20,10 +20,15 @@ function zeige(route, arg) {
     case "thema": return zeigeThema(arg);
     case "check": return starteQuiz(arg);
     case "frei": return zeigeFrei(arg);
+    case "freiwahl": return zeigeFreiWahl();
     case "klausur": return Klausur.zeigeKlausur(themen, function () { zeige("start"); });
     case "mcquer": return Klausur.zeigeMcQuer(themen, function () { zeige("start"); });
+    case "mix": return Stats.zeigeMix(themen, HOOKS, false);
+    case "wiederholen": return Stats.zeigeMix(themen, HOOKS, true);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
     case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
+    case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS);
+    case "spiel-bg": return Spiele.starteBegriffe(themen, HOOKS);
     case "start":
     default: return zeigeStart();
   }
@@ -41,7 +46,289 @@ var HOOKS = {
   freiKarte: function (thema, f) { return freiKarte(thema, f); }
 };
 
-/* ---------- Startseite ---------- */
+/* ---------- Startseite ----------
+   Aufbau (Layout-Entscheidung Jennifer, 12.08.): Countdown-Kopf mit dem
+   Vorbereitungsstand, darunter die Tagesliste "Heute dran" mit den kurzen
+   Runden, darunter die Uebungsmodi als Icon-Kacheln, dann erst die Themen.
+   Die Spiele sind damit keine gleichrangigen Karten mehr, sondern tragen
+   die Tagesansicht. */
+
+// Klausurtermin steht fest (ROADMAP.md): 10.09.2026. Monate sind 0-basiert.
+var KLAUSUR_TAG = new Date(2026, 8, 10);
+var KLAUSUR_DATUM = "10.09.";
+
+// Von Mitternacht zu Mitternacht rechnen - sonst haengt die Zahl an der Uhrzeit
+// und springt mitten am Tag um eins.
+function tageBisKlausur() {
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  var ziel = new Date(KLAUSUR_TAG.getTime()); ziel.setHours(0, 0, 0, 0);
+  return Math.round((ziel.getTime() - heute.getTime()) / 86400000);
+}
+
+// Wurde in dem Thema ueberhaupt schon etwas beantwortet? Trennt "noch nicht
+// angefangen" von "laeuft noch nicht gut" - das eine ist kein Befund.
+function beruehrt(thema) {
+  return (thema.mc || []).some(function (f) { return !!state.mc[f.id]; }) ||
+    (thema.frei || []).some(function (f) { return !!state.frei[f.id]; });
+}
+
+// Vorbereitungsstand ueber den ganzen Korpus: was beim letzten Mal saß.
+function gesamtStand() {
+  var sitzt = 0, gesamt = 0;
+  themen.forEach(function (t) {
+    var mc = mcStand(t), fr = freiStand(t);
+    sitzt += mc.richtig + fr.gut;
+    gesamt += mc.gesamt + fr.gesamt;
+  });
+  return { sitzt: sitzt, gesamt: gesamt };
+}
+
+/* Zonen-Balken wie im ST-Trainer: orange bis zum Minimum, gelb bis zum
+   Tagespensum, gruen darueber. Nie rot, und kein Rueckstand von gestern -
+   jeder Tag faengt frisch an. Ab dem Streckziel uebernimmt der Regenbogen. */
+function zonenBalken(tz) {
+  var box = el("div", "zonen-balken");
+  var minP = Math.round(100 * tz.minimum / tz.stretch);
+  var zielP = Math.round(100 * tz.ziel / tz.stretch);
+  box.style.background = "linear-gradient(to right, var(--zone-o) 0 " + minP + "%, var(--zone-y) " +
+    minP + "% " + zielP + "%, var(--zone-g) " + zielP + "% 100%)";
+  box.setAttribute("role", "img");
+  box.setAttribute("aria-label", tz.n + " von " + tz.ziel + " Antworten heute, Streckziel " + tz.stretch);
+
+  // Erreichtes leuchtet in seiner Zonenfarbe, der Rest wird abgedunkelt (CSS
+  // ::after ab --pct). Ab dem Streckziel legt sich der Regenbogen ueber alles -
+  // dieselbe Leiter wie im Kalender, siehe stufe() in wegKarte().
+  box.style.setProperty("--pct", Math.min(100, Math.round(100 * tz.n / tz.stretch)) + "%");
+  if (tz.n >= tz.stretch) box.appendChild(el("i", "fuell regenbogen"));
+  [minP, zielP].forEach(function (p) {
+    var m = el("span", "marke");
+    m.style.left = p + "%";
+    box.appendChild(m);
+  });
+  return box;
+}
+
+function tagesSatz(tz) {
+  if (tz.n >= tz.stretch) return "Streckziel geknackt 🌈 Der heutige Tag leuchtet im Kalender.";
+  if (tz.n >= tz.ziel) return "Tagespensum geschafft 🎉 Alles ab hier ist Vorsprung.";
+  if (!tz.n) return "Frischer Tag. Eine kurze Runde reicht zum Ankommen.";
+  if (tz.n >= tz.minimum) return "Minimum steht ✓ – von hier aus Richtung " + tz.ziel + ".";
+  return "Warmlaufen – erstes Etappenziel: " + tz.minimum + ".";
+}
+
+function countdownKarte(tz) {
+  var karte = el("div", "karte countdown glimmer");
+
+  var tage = tageBisKlausur();
+  var gross, klein;
+  if (tage > 1) { gross = "Noch " + tage + " Tage"; klein = "bis zum " + KLAUSUR_DATUM; }
+  else if (tage === 1) { gross = "Noch 1 Tag"; klein = "bis zum " + KLAUSUR_DATUM; }
+  else if (tage === 0) { gross = "Heute ist der Tag"; klein = "du hast dich vorbereitet"; }
+  else { gross = "Geschafft"; klein = "die Klausur liegt hinter dir"; }
+
+  var zeile = el("div", "countdown-zeile");
+  zeile.appendChild(el("span", "countdown-zahl", gross));
+  zeile.appendChild(el("span", "countdown-datum", klein));
+  karte.appendChild(zeile);
+
+  // Am Klausurtag selbst kein Pensum: da wird nicht mehr aufgeholt, da wird
+  // ruhig geatmet. Ein Balken mit einer Zahl waere an dem Morgen genau das
+  // Falsche.
+  if (tage === 0) {
+    karte.appendChild(el("div", "countdown-meta",
+      "Heute zählt nichts mehr ab. Was du geübt hast, ist da – ruhig atmen, erst die sicheren Aufgaben. 🍀"));
+    return karte;
+  }
+
+  if (tage > 0) {
+    var kopf = el("div", "tz-kopf");
+    kopf.appendChild(el("span", null, "Heute"));
+    var zaehler = el("span", "tz-zahl");
+    zaehler.appendChild(el("b", null, String(tz.n)));
+    zaehler.appendChild(document.createTextNode(" von " + tz.ziel));
+    kopf.appendChild(zaehler);
+    karte.appendChild(kopf);
+    karte.appendChild(zonenBalken(tz));
+    karte.appendChild(el("div", "countdown-meta", tagesSatz(tz)));
+  }
+
+  var g = gesamtStand();
+  karte.appendChild(el("div", "countdown-meta",
+    g.sitzt + " von " + g.gesamt + " Aufgaben sitzen · Tagespensum aus dem Reststoff gerechnet (noch ~" +
+    tz.restBedarf + " Antworten)"));
+  return karte;
+}
+
+/* ---------- Datumsuebersicht ----------
+   Gegenstueck zur Heatmap im ST-Trainer, mit GE-Zahlen. Vergangene Tage zeigen
+   die geuebten Antworten in den Tagesziel-Farben, kommende Tage nur das Datum,
+   😴 = Ruhetag (Pause ist eingeplant, kein Loch im Kalender).
+
+   FARBLEITER pro Tag (Jennifer, 12.08.) - vier Stufen, jede an einer Zahl aus
+   dem Tagesziel festgemacht, nichts dazwischen erfunden:
+     0 Antworten        -> Ruhetag 😴 (grau, nie rot)
+     unter dem Minimum  -> orange
+     ab dem Minimum     -> gelb
+     ab dem Tagespensum -> gruen                    (Ziel erreicht)
+     ab dem Streckziel  -> Regenbogen, leuchtend,
+                           auf sehr tiefem Gruen    (Plan uebertroffen)
+
+   Zwei Entscheidungen dahinter, beide am 12.08. gefallen:
+   1. KEIN Gold. Gold und Orange sind auf einem Handy-Display kaum zu
+      unterscheiden - eine Skala, deren unteres und oberes Ende gleich
+      aussehen, informiert aktiv falsch. Lieber eine Stufe weniger.
+   2. Regenbogen ab dem Streckziel statt erst darueber. Der GE-Trainer hat
+      nur drei ehrliche Schwellen (Minimum/Pensum/Streckziel); eine eigene
+      Stufe fuer "genau das Streckziel getroffen" waere ein einziger
+      Zahlenwert - also keine Stufe, sondern ein Zufall. Die oberen beiden
+      sind deshalb zusammengelegt (Jennifers ausdrueckliche Alternative).
+
+   Der Regenbogen kommt NUR hier vor: waere er Deko, wuerde er nichts mehr
+   bedeuten. Aus demselben Grund traegt keine andere Karte Gruen als Schmuck -
+   Gruen heisst in dieser App Erfolg. */
+
+var WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+var WTAG_VON_JS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+function kurzDatum(d) { return d.getDate() + "." + (d.getMonth() + 1) + "."; }
+
+function wegKarte(tz) {
+  var restTage = tageBisKlausur();
+  if (restTage < 0) return null;
+
+  var karte = el("div", "karte weg-karte");
+  var kopf = el("div", "weg-kopf");
+  kopf.appendChild(el("h3", null, "Dein Weg zur Klausur"));
+  kopf.appendChild(el("span", "weg-rest", "noch " + restTage + (restTage === 1 ? " Tag" : " Tage")));
+  karte.appendChild(kopf);
+
+  var akt = Stats.aktivitaetProTag();
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  var tsHeute = heute.getTime();
+  var ende = new Date(KLAUSUR_TAG.getTime()); ende.setHours(0, 0, 0, 0);
+
+  var geuebte = Object.keys(akt).map(Number);
+  var erster = geuebte.length ? Math.min.apply(null, geuebte) : tsHeute - 7 * 86400000;
+  var start = new Date(Math.min(erster, tsHeute));
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));   // auf Montag ziehen
+
+  var raster = el("div", "hm-raster");
+  WOCHENTAGE.forEach(function (w) { raster.appendChild(el("span", "hm-wtag", w)); });
+
+  // Stufen = dieselben Zonen wie der Balken oben (Leiter im Kopf-Kommentar).
+  function stufe(n) {
+    if (!n) return 0;               // Ruhetag
+    if (n < tz.minimum) return 1;   // orange
+    if (n < tz.ziel) return 2;      // gelb
+    if (n < tz.stretch) return 3;   // gruen
+    return 4;                       // Regenbogen auf tiefem Gruen
+  }
+
+  for (var d = new Date(start); d.getTime() <= ende.getTime(); d.setDate(d.getDate() + 1)) {
+    var ts = d.getTime();
+    var e = akt[ts] || { n: 0, gut: 0 };
+    var datum = kurzDatum(d);
+    var wtag = WTAG_VON_JS[d.getDay()];
+    var zelle, titel;
+
+    if (ts === ende.getTime()) {
+      zelle = el("span", "hm-zelle hm-exam", "🎓");
+      titel = wtag + " " + datum + " – Klausurtag";
+    } else if (ts > tsHeute) {
+      zelle = el("span", "hm-zelle hm-fut", datum);
+      titel = wtag + " " + datum;
+    } else {
+      var s = stufe(e.n);
+      zelle = el("span", "hm-zelle hm-s" + s);
+      if (e.n) {
+        zelle.textContent = String(e.n);
+        titel = wtag + " " + datum + ": " + e.n + (e.n === 1 ? " Antwort" : " Antworten") +
+          (s === 4 ? " – Streckziel geknackt!" : s === 3 ? " – Tagespensum geschafft" : "");
+      } else if (ts === tsHeute) {
+        zelle.textContent = datum;
+        titel = wtag + " " + datum + " – heute";
+      } else {
+        zelle.textContent = "😴";
+        zelle.classList.add("hm-ruhe");
+        titel = wtag + " " + datum + " – Ruhetag";
+      }
+    }
+    if (ts === tsHeute) zelle.classList.add("hm-heute");
+    zelle.title = titel;
+    raster.appendChild(zelle);
+  }
+  karte.appendChild(raster);
+  karte.appendChild(el("p", "hm-legende",
+    "Vergangene Tage zeigen deine Antworten, kommende das Datum. 😴 heißt Ruhetag, die sind eingeplant. Orange, gelb, grün – und Regenbogen, wenn du über das Streckziel hinaus bist."));
+  return karte;
+}
+
+function heuteZeile(icon, titel, klein, status, erledigt, onClick) {
+  var z = el("button", "heute-zeile" + (erledigt ? " erledigt" : ""));
+  z.appendChild(el("span", "heute-icon", icon));
+  var box = el("div", "heute-text");
+  box.appendChild(el("b", null, titel));
+  box.appendChild(el("span", null, klein));
+  z.appendChild(box);
+  z.appendChild(el("span", "heute-status", status));
+  z.addEventListener("click", onClick);
+  return z;
+}
+
+function heuteDranKarte() {
+  var karte = el("div", "karte heute-karte glimmer");
+  karte.appendChild(el("h2", null, "Heute dran"));
+
+  var heute = Spiele.heuteGespielt();
+  karte.appendChild(heuteZeile("🎯", "Signalwörter", "6 Aufgaben · welcher Operator will was",
+    heute.operatoren ? "✓ heute schon" : "offen", !!heute.operatoren,
+    function () { zeige("spiel-op"); }));
+
+  if (Spiele.hatBegriffe()) {
+    karte.appendChild(heuteZeile("🃏", "Begriffe-Blitz", "5 Paare zuordnen · ~2 Minuten",
+      heute.begriffe ? "✓ heute schon" : "offen", !!heute.begriffe,
+      function () { zeige("spiel-bg"); }));
+  }
+
+  // Kein Spaced-Repetition-Termin, also auch kein "faellig": gezaehlt wird, was
+  // beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg.
+  var w = Stats.wiederholPool(themen).length;
+  if (w) {
+    karte.appendChild(heuteZeile("♻️", w + (w === 1 ? " Frage" : " Fragen") + " zum Wiederholen",
+      "zuletzt danebengelegen", "starten", false,
+      function () { zeige("wiederholen"); }));
+  } else {
+    karte.appendChild(el("div", "heute-leer", state.antwortLog.length
+      ? "Nichts liegt gerade quer – alles, was du beantwortet hast, saß beim letzten Mal."
+      : "Eine kurze Runde reicht zum Anfangen. Der Rest kommt von allein."));
+  }
+  return karte;
+}
+
+// Uebungsmodi als Icon-Kacheln. Jede Kachel fuehrt zu einem Modus, der es schon
+// gibt - hier wird nichts eingestellt. Was ein Lauf tut, entscheidet die Seite,
+// auf der er gestartet wird (Klausur-Setup), nicht diese Kachel.
+function uebenKacheln() {
+  var box = el("div", "abschnitt");
+  box.appendChild(el("div", "abschnitt-titel", "Üben"));
+  var grid = el("div", "kachel-grid");
+  [
+    ["📝", "MC", "Alle Themen", function () { zeige("mcquer"); }],
+    ["✍️", "Frei", "Nach Thema", function () { zeige("freiwahl"); }],
+    ["🎲", "Mix", "MC & offen", function () { zeige("mix"); }],
+    ["📄", "Klausur", "Papier & Stift", function () { zeige("klausur"); }],
+    ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }]
+  ].forEach(function (k) {
+    var b = el("button", "kachel glimmer");
+    b.appendChild(el("span", "kachel-icon", k[0]));
+    b.appendChild(el("b", null, k[1]));
+    b.appendChild(el("span", "kachel-klein", k[2]));
+    b.addEventListener("click", k[3]);
+    grid.appendChild(b);
+  });
+  box.appendChild(grid);
+  return box;
+}
 
 function zeigeStart() {
   leeren();
@@ -53,84 +340,48 @@ function zeigeStart() {
   var zeile = el("div", "kopf-zeile");
   var titelBox = el("div");
   titelBox.appendChild(el("h1", null, "GE-Trainer"));
-  titelBox.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung – Konzepte üben, Antworten trainieren."));
+  titelBox.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung"));
   zeile.appendChild(titelBox);
   zeile.appendChild(themeKnopf());
   kopf.appendChild(zeile);
   app.appendChild(kopf);
 
-  var info = el("div", "karte info-karte");
-  info.appendChild(el("h2", null, "So läuft die Klausur"));
-  var ul = document.createElement("ul");
-  [
-    "In der Klausur kommen 5 der 8 Themen dran, pro Thema 3–4 Aufgaben auf den Niveaustufen AFB I–III. Welche 5, weißt du vorher nicht – deshalb übst du hier alle.",
-    "AFB I: beschreiben, (be)nennen · AFB II: erläutern, analysieren, anwenden · AFB III: diskutieren, bewerten, erörtern.",
-    "In ganzen Sätzen antworten (außer die Aufgabe verlangt Stichpunkte) und Fachbegriffe nutzen.",
-    "Die Punkte je Aufgabe stehen dabei – daran orientieren, wie viel du schreibst."
-  ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
-  ul.appendChild(el("li", "hinweis-gruen", "Das Thema Inklusion kommt laut Dozentin nicht dran."));
-  info.appendChild(ul);
-  app.appendChild(info);
+  var tz = Stats.tagesziel(themen, tageBisKlausur());
+  app.appendChild(countdownKarte(tz));
+  app.appendChild(heuteDranKarte());
+  app.appendChild(uebenKacheln());
 
-  // Einstiege zwischen Info-Karte und Themenliste (ARCHITEKTUR.md Hook 2): erst die
-  // beiden Ernstfall-Modi, darunter Statistik und die kurzen Runden. Weitere
-  // Menuepunkte kommen hier dazu - der Sync bleibt unten, siehe Hook 5.
-  var uebung = el("div", "karte");
-  uebung.appendChild(el("h2", null, "Wie im Ernstfall üben"));
-  uebung.appendChild(el("p", null, "Die Simulation teilt dir einen Bogen mit Aufgabenblatt und Schreibseiten aus – voreingestellt mit allen 8 Themen, umstellbar auf 5 wie in der echten Klausur. Die Quermischung ist das kurze Aufwärmen quer durch alle Themen."));
-  var mk = el("div", "modus-knoepfe");
+  var weg = wegKarte(tz);
+  if (weg) app.appendChild(weg);
 
-  var kk = el("button", "modus-knopf primaer");
-  setzeFarbe(kk, "#a83a4f");
-  kk.appendChild(el("span", "gross", "Klausur-Simulation"));
-  kk.appendChild(el("span", "klein", "Alle 8 Themen · Papier & Stift · 120 min, pausierbar"));
-  kk.addEventListener("click", function () { zeige("klausur"); });
-  mk.appendChild(kk);
-
-  var qk = el("button", "modus-knopf");
-  qk.appendChild(el("span", "gross", "Alle Themen (MC)"));
-  qk.appendChild(el("span", "klein", "15 Fragen quer durch – Ungesehenes zuerst"));
-  qk.addEventListener("click", function () { zeige("mcquer"); });
-  mk.appendChild(qk);
-
-  uebung.appendChild(mk);
-  app.appendChild(uebung);
-
-  // Statistik und kurze Runden - bewusst als zweites Paar unter den Ernstfall-
-  // Einstiegen: erst ueben, dann nachschauen, wie es lief.
-  var extras = el("div", "modus-knoepfe");
-
-  var sk = el("button", "modus-knopf");
-  sk.appendChild(el("span", "gross", "Statistik"));
-  sk.appendChild(el("span", "klein", "Thema × AFB – und wo die nächste Runde am meisten bringt"));
-  sk.addEventListener("click", function () { zeige("stats"); });
-  extras.appendChild(sk);
-
-  var gk = el("button", "modus-knopf");
-  gk.appendChild(el("span", "gross", "Kurze Runden"));
-  gk.appendChild(el("span", "klein", "Signalwörter & Begriffe-Blitz · ~2 Minuten"));
-  gk.addEventListener("click", function () { zeige("spiele"); });
-  extras.appendChild(gk);
-
-  app.appendChild(extras);
+  app.appendChild(el("div", "abschnitt-titel", "Nach Thema"));
 
   themen.forEach(function (thema) {
     var k = el("button", "thema-karte");
     setzeFarbe(k, thema.farbe);
 
+    var mc = mcStand(thema), fr = freiStand(thema);
+    var anteil = (mc.gesamt + fr.gesamt) ? Math.round(100 * (mc.richtig + fr.gut) / (mc.gesamt + fr.gesamt)) : 0;
+
     var kz = el("div", "thema-kopfzeile");
     kz.appendChild(el("span", "thema-titel", thema.titel));
     kz.appendChild(el("span", "vl-badge", thema.vorlesung));
     if (thema.beispielthema) kz.appendChild(el("span", "beispiel-badge", "Beispielaufgaben bekannt"));
+    // Die Quote als farbige Pille, ganz rechts: man soll sehen, ob ein Thema
+    // sitzt, ohne die Prozentzahl erst lesen zu muessen. Ein noch gar nicht
+    // angefasstes Thema bekommt bewusst KEINE 0-%-Warnfarbe, sondern eine
+    // neutrale Pille - unbearbeitet ist nicht dasselbe wie schwach.
+    kz.appendChild(quotePille(beruehrt(thema) ? anteil : null));
     k.appendChild(kz);
 
-    var mc = mcStand(thema), fr = freiStand(thema);
     var meta = "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: " + fr.bearbeitet + " von " + fr.gesamt + " angeschaut";
     k.appendChild(el("div", "thema-meta", meta));
 
+    // Der Balken zeigt die Beherrschungs-Quote, faerbt sich also nach dem Wert
+    // und nicht mehr nach dem Thema. Die Themen-Identitaet steckt weiter im
+    // farbigen linken Rand der Karte und im Vorlesungs-Badge.
     var balken = el("div", "balken");
-    var anteil = (mc.gesamt + fr.gesamt) ? Math.round(100 * (mc.richtig + fr.gut) / (mc.gesamt + fr.gesamt)) : 0;
-    var voll = el("div", "voll");
+    var voll = el("div", "voll " + (beruehrt(thema) ? quoteStufe(anteil) : "q0"));
     voll.style.width = anteil + "%";
     balken.appendChild(voll);
     k.appendChild(balken);
@@ -139,12 +390,67 @@ function zeigeStart() {
     app.appendChild(k);
   });
 
-  // Einstellungs-Ecke: Sync-Status und Sync-Code. Bewusst unter den Themen statt im
-  // Hook zwischen Info-Karte und Themenliste - dort gehoeren Uebungs-Einstiege hin,
-  // der Sync soll unsichtbar laufen und nicht der erste Blick sein.
+  // Kurzinfo zur Klausur - bewusst weit unten und auf drei Zeilen gekuerzt.
+  // Die AFB-Operatoren stehen ausfuehrlich im Spickzettel der Signalwoerter
+  // und in der Statistik; hier waeren sie eine dritte Kopie.
+  var info = el("div", "karte info-karte");
+  info.appendChild(el("h3", null, "So läuft die Klausur"));
+  var ul = document.createElement("ul");
+  [
+    "5 der 8 Themen kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle.",
+    "Ganze Sätze und Fachbegriffe. Die Punktzahl an der Aufgabe sagt dir, wie viel sie erwartet."
+  ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+  ul.appendChild(el("li", "hinweis-stark", "Inklusion kommt laut Dozentin nicht dran."));
+  info.appendChild(ul);
+  app.appendChild(info);
+
+  // Einstellungs-Ecke: Sync-Status und Sync-Code. Bewusst unter den Themen statt
+  // weiter oben - dort gehoeren Uebungs-Einstiege hin, der Sync soll unsichtbar
+  // laufen und nicht der erste Blick sein. Hier stehen NUR Geraete-Sachen
+  // (Theme oben im Kopf, Sync-Code, Zuruecksetzen); alles, was einen einzelnen
+  // Uebungslauf betrifft, wird dort eingestellt, wo der Lauf startet.
   app.appendChild(syncKarte());
 
   app.appendChild(el("div", "fusszeile", "Jede Runde zählt – auch eine kurze. Dein Fortschritt bleibt auf diesem Gerät gespeichert."));
+}
+
+/* ---------- Frei ueben: Themenwahl ----------
+   Frei ueben gab es bisher nur ueber die Themen-Ansicht. Die Kachel auf der
+   Startseite braucht ein Ziel, also diese kleine Auswahl - kein neuer Modus,
+   nur ein Einstieg in den vorhandenen. */
+
+function zeigeFreiWahl() {
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+
+  var zurueck = el("button", "zurueck", "← Startseite");
+  zurueck.addEventListener("click", function () { zeige("start"); });
+  app.appendChild(zurueck);
+
+  var kopf = el("div", "kopf");
+  kopf.appendChild(el("h1", null, "Frei üben"));
+  kopf.appendChild(el("div", "untertitel", "Offene Aufgaben wie in der Klausur. Welches Thema?"));
+  app.appendChild(kopf);
+
+  themen.forEach(function (thema) {
+    var fr = freiStand(thema);
+    var anteil = fr.gesamt ? Math.round(100 * fr.gut / fr.gesamt) : 0;
+    var k = el("button", "thema-karte");
+    setzeFarbe(k, thema.farbe);
+    var kz = el("div", "thema-kopfzeile");
+    kz.appendChild(el("span", "thema-titel", thema.titel));
+    kz.appendChild(el("span", "vl-badge", fr.gesamt + " Aufgaben"));
+    kz.appendChild(quotePille(fr.bearbeitet ? anteil : null));
+    k.appendChild(kz);
+    k.appendChild(el("div", "thema-meta", fr.bearbeitet + " angeschaut · " + fr.gut + " saßen gut"));
+    var balken = el("div", "balken");
+    var voll = el("div", "voll " + (fr.bearbeitet ? quoteStufe(anteil) : "q0"));
+    voll.style.width = anteil + "%";
+    balken.appendChild(voll);
+    k.appendChild(balken);
+    k.addEventListener("click", function () { zeige("frei", thema); });
+    app.appendChild(k);
+  });
 }
 
 /* ---------- Themen-Ansicht ---------- */
@@ -189,7 +495,7 @@ function zeigeThema(thema) {
 
   var hinweis = el("div", "karte");
   hinweis.appendChild(el("h3", null, "Empfehlung"));
-  hinweis.appendChild(el("p", null, "Erst den Konzept-Check, bis die Begriffe sitzen – dann die freien Aufgaben laut oder schriftlich durchspielen. Die Klausur fragt offen, nicht multiple choice: Der Check ist dein Aufwärmen, die freien Aufgaben sind das eigentliche Training."));
+  hinweis.appendChild(el("p", null, "Check zum Aufwärmen, freie Aufgaben als eigentliches Training – die Klausur fragt offen."));
   app.appendChild(hinweis);
 }
 
@@ -321,7 +627,7 @@ function zeigeFrei(thema) {
 
   var kopf = el("div", "kopf");
   kopf.appendChild(el("h1", null, "Frei üben · " + thema.titel));
-  kopf.appendChild(el("div", "untertitel", "Wie in der Klausur: erst selbst antworten (schreiben oder laut denken), dann mit der Musterlösung vergleichen und ehrlich einschätzen."));
+  kopf.appendChild(el("div", "untertitel", "Erst selbst antworten, dann mit der Musterlösung vergleichen."));
   app.appendChild(kopf);
 
   thema.frei.forEach(function (f) { app.appendChild(freiKarte(thema, f)); });
@@ -346,7 +652,7 @@ function freiKarte(thema, f) {
   var feld = el("div", "frei-feld");
   var eingabe = document.createElement("textarea");
   eingabe.className = "frei-eingabe handschrift";
-  eingabe.placeholder = "Optional: Antwort hier tippen, mit dem Stift schreiben – oder einfach im Kopf (oder laut) formulieren.";
+  eingabe.placeholder = "Optional: tippen, mit dem Stift schreiben – oder im Kopf formulieren.";
   // Das Feld waechst mit - auf dem Handy gibt es keinen Ziehgriff, und eine
   // AFB-III-Antwort passt nie in vier Zeilen. Gleiche Funktion wie im Klausurmodus.
   eingabe.addEventListener("input", function () { autoWachsen(eingabe); });
@@ -446,12 +752,15 @@ function freiKarte(thema, f) {
 
 themeAnwenden();
 
-ladeThemen()
-  .then(function (geladen) {
-    themen = geladen;
+// begriffe.json wird MIT geladen, nicht nachtraeglich: die Tagesliste der
+// Startseite zeigt den Begriffe-Blitz, und der wuerde sonst beim ersten Aufbau
+// fehlen und erst nach einem Seitenwechsel auftauchen. ladeBegriffe faengt
+// eigene Fehler ab und liefert dann null - der Boot kann daran nicht scheitern.
+Promise.all([ladeThemen(), Spiele.ladeBegriffe()])
+  .then(function (ergebnis) {
+    themen = ergebnis[0];
     zeige("start");
     syncStart(); // Boot-Hook: Offline-Queue leeren + einmal abgleichen (still, ohne Blocker)
-    Spiele.ladeBegriffe(); // optional: fehlt begriffe.json, verschwindet nur die Kachel
   })
   .catch(function (fehler) {
     app.innerHTML = "";

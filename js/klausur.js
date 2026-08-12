@@ -477,9 +477,7 @@ function zeigeSetup() {
   var info = el("div", "karte info-karte");
   var ul = document.createElement("ul");
   [
-    "Voreingestellt kommen alle 8 Themen dran, dafür mit je 2 Aufgaben - so übst du gleichmäßig alles.",
-    "Umstellbar auf 5 Themen wie in der echten Klausur, dann mit je 3 bis 4 Aufgaben.",
-    "Die Punkte stehen an jeder Aufgabe. Bestanden ab der Hälfte. Pausieren geht jederzeit.",
+    "Punkte stehen an jeder Aufgabe, bestanden ab der Hälfte. Pausieren geht jederzeit.",
     "Bewertet wird an den Stichpunkten - du entscheidest, was ein Punkt wert war."
   ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
   info.appendChild(ul);
@@ -489,7 +487,7 @@ function zeigeSetup() {
 
   var z0 = el("div", "zeile");
   var l0 = el("div", "label", "Umfang");
-  l0.appendChild(el("div", "klein", "In der echten Klausur kommen 5 Themen dran - welche, weißt du vorher nicht. Alle 8 zu üben deckt sicher ab."));
+  l0.appendChild(el("div", "klein", "Alle 8 mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben."));
   z0.appendChild(l0);
   z0.appendChild(segment([{ wert: "alle", text: "Alle 8 Themen" }, { wert: "fuenf", text: "5 wie in echt" }], wahl.umfang, function (v) { wahl.umfang = v; }));
   setup.appendChild(z0);
@@ -503,7 +501,7 @@ function zeigeSetup() {
 
   var z2 = el("div", "zeile");
   var l2 = el("div", "label", "Feedback");
-  l2.appendChild(el("div", "klein", "Je Aufgabe hilft beim Lernen, am Ende ist näher an der echten Klausur."));
+  l2.appendChild(el("div", "klein", "Je Aufgabe hilft beim Lernen, am Ende ist näher an echt."));
   z2.appendChild(l2);
   z2.appendChild(segment([{ wert: "ende", text: "Am Ende" }, { wert: "sofort", text: "Je Aufgabe" }], wahl.feedback, function (v) { wahl.feedback = v; }));
   setup.appendChild(z2);
@@ -528,7 +526,7 @@ function zeigeSetup() {
 
   var quer = el("div", "karte");
   quer.appendChild(el("h3", null, "Lieber erst aufwärmen?"));
-  quer.appendChild(el("p", null, "Die MC-Quermischung nimmt 15 Fragen quer durch alle Themen - Ungesehenes und zuletzt Verpatztes zuerst."));
+  quer.appendChild(el("p", null, "15 Fragen quer durch alle Themen, Ungesehenes zuerst."));
   var qk = el("button", "knopf sekundaer", "MC-Quermischung starten");
   qk.addEventListener("click", function () { zeigeMcQuer(THEMEN, ZURUECK); });
   quer.appendChild(qk);
@@ -1461,7 +1459,7 @@ function rendereKorrektur() {
 
   var hinweis = el("div", "karte");
   hinweis.appendChild(el("h2", null, "Jetzt bewertest du"));
-  hinweis.appendChild(el("p", null, "Geh die Stichpunkte durch und sag ehrlich, was du hattest. Halbe Punkte sind erlaubt, und du kannst die Zahl unten jederzeit von Hand nachziehen."));
+  hinweis.appendChild(el("p", null, "Stichpunkte durchgehen und ehrlich sagen, was du hattest. Halbe Punkte sind erlaubt, die Zahl kannst du jederzeit nachziehen."));
   rolle.appendChild(hinweis);
 
   k.aufgaben.forEach(function (a) { rolle.appendChild(korrekturBlatt(a)); });

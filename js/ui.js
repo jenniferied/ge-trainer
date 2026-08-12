@@ -31,6 +31,37 @@ export function themeKnopf() {
 // (im Nachtmodus via color-mix aufgehellt).
 export function setzeFarbe(element, farbe) { element.style.setProperty("--tfarbe-basis", farbe); }
 
+/* ---------- Quoten-Farbleiter (Jennifer, 12.08.) ----------
+   Dieselbe Sprache wie die Datumsuebersicht auf der Startseite, damit die App
+   EINE Farbleiter hat: orange -> gelb -> gruen -> tiefes Gruen -> Regenbogen.
+
+     unter 30 %   q1  orange   da bist du noch dran
+     30 bis 49 %  q2  gelb     im Kommen
+     50 bis 84 %  q3  gruen    ab hier waere die Klausur bestanden (50 %)
+     85 bis 99 %  q4  tiefes Gruen
+     100 %        q5  Regenbogen
+     ohne Wertung q0  neutral
+
+   Die 50-%-Kante ist nicht gegriffen, sondern die Bestehensgrenze der Klausur
+   (ROADMAP: bestehen ab 50 % der Punkte). ROT kommt bewusst NICHT vor: eine
+   niedrige Quote ist warm, kein Vorwurf - Rose sieht diese Zahlen staendig. */
+
+export function quoteStufe(prozent) {
+  if (prozent == null || isNaN(prozent)) return "q0";
+  if (prozent >= 100) return "q5";
+  if (prozent >= 85) return "q4";
+  if (prozent >= 50) return "q3";
+  if (prozent >= 30) return "q2";
+  return "q1";
+}
+
+// Kleine farbige Pille mit der Zahl. Die Zahl bleibt lesbar, die Farbe sagt
+// zusaetzlich auf einen Blick, ob es sitzt.
+export function quotePille(prozent, extra) {
+  var text = prozent == null || isNaN(prozent) ? "–" : Math.round(prozent) + " %";
+  return el("span", "q-pille " + quoteStufe(prozent) + (extra ? " " + extra : ""), text);
+}
+
 /* ---------- Sticker (Meme-Feedback) ---------- */
 
 var STICKER = {

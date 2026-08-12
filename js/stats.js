@@ -10,8 +10,8 @@
      hooks.mcKarte(thema, f, fortschritt, weiterText, onWeiter)  -> MC-Karte
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
-import { state, app, el, leeren } from "./core.js";
-import { themeKnopf, setzeFarbe, standStickerEl, konfetti } from "./ui.js";
+import { state, speichern, app, el, leeren } from "./core.js";
+import { themeKnopf, setzeFarbe, standStickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
    Das GE-antwortLog kennt (anders als der ST-Trainer) keine Punkte, sondern
@@ -75,6 +75,128 @@ function zeilen() {
 }
 
 function tagVon(ts) { var d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); }
+
+/* ---------- Kennzahlen fuer den Startseiten-Kopf ----------
+   main.js zeigt oben den Countdown und den heutigen Uebungsstand. Die Zahlen
+   kommen von hier, damit die Tages-Logik an EINER Stelle steht (tagVon). */
+
+/* Aktivitaet je Kalendertag - Grundlage fuer Tagesziel-Bar UND Datumsuebersicht,
+   damit beide dieselbe Zahl zeigen. Gezaehlt wird ALLES, auch die Spiele (eine
+   kurze Runde ist genauso Uebung wie eine lange); nur die Sofort-Wiederholung
+   derselben Frage zaehlt einmal, gleiche Regel wie in zeilen(). */
+export function aktivitaetProTag() {
+  var log = state.antwortLog, tage = {};
+  for (var i = 0; i < log.length; i++) {
+    var a = log[i];
+    if (i + 1 < log.length && log[i + 1].qid === a.qid) continue;   // Doppeltippen
+    var t = tagVon(a.ts);
+    var e = tage[t] || (tage[t] = { n: 0, gut: 0 });
+    e.n++;
+    var w = wertVon(a);
+    if (w === undefined) w = a.richtig ? 1 : 0;   // Spiele: nur richtig/falsch
+    if (w >= 1) e.gut++;
+  }
+  return tage;
+}
+
+// Wie viele Antworten sind heute schon dazugekommen?
+export function heuteAntworten() {
+  var e = aktivitaetProTag()[tagVon(Date.now())];
+  return e ? e.n : 0;
+}
+
+/* ---------- Tagesziel ----------
+   Gegenstueck zum ST-Trainer (dort core.js tagesPlan), aber mit EIGENEN Zahlen:
+   andere Klausur (10.09.), anderer Korpus, andere Restzeit. Die Rechnung ist
+   bewusst die einfachste, die traegt - der GE-Trainer hat keine Leitner-Level,
+   also gibt es hier auch keine Genauigkeit vorzutaeuschen:
+
+     Restbedarf = wie viele Antworten noch fehlen, bis alles einmal saß
+       MC:   nie beantwortet -> 2 · zuletzt falsch -> 2
+             zuletzt richtig, aber erst einmal -> 1 · sonst 0
+       Frei: nie angeschaut -> 2 · "nochmal" -> 2 · "mittel" -> 1 · "gut" -> 0
+     Tagespensum = Restbedarf / verbleibende Tage, auf 5 gerundet,
+       geklemmt auf 10 bis 40 - der GE-Korpus ist klein (259 Aufgaben),
+       ein dreistelliges Pensum waere Panikmache statt Plan.
+     Minimum    = 40 % des Pensums (Boden fuer zaehe Tage, nie beschaemend)
+     Streckziel = 140 % des Pensums - das ist der Regenbogen-Tag
+
+   Die "2 Antworten je offener Aufgabe" sind eine ANNAHME, kein Messwert:
+   einmal beantworten, einmal bestaetigen. Sie steht hier und nur hier.
+
+   Der Plan friert einmal pro Tag ein (state.tzPlan) - ein Ziel, das mittags
+   waechst oder schrumpft, waere Psycho-Gift. tzPlan ist geraetelokal und wird
+   nie hochgeladen: snapshot() in sync.js waehlt seine Felder gezielt aus. */
+
+var TZ_MIN = 10, TZ_MAX = 40;
+function r5(x) { return Math.max(5, Math.round(x / 5) * 5); }
+
+function planRechnen(themen, tage, heute) {
+  var bedarf = 0;
+  themen.forEach(function (t) {
+    (t.mc || []).forEach(function (f) {
+      var s = state.mc[f.id];
+      if (!s || !s.zuletztRichtig) { bedarf += 2; return; }
+      if ((s.richtig || 0) < 2) bedarf += 1;
+    });
+    (t.frei || []).forEach(function (f) {
+      var r = state.frei[f.id];
+      bedarf += r === "gut" ? 0 : r === "mittel" ? 1 : 2;
+    });
+  });
+  var restTage = Math.max(1, tage == null ? 21 : tage);
+  var ziel = Math.max(TZ_MIN, Math.min(TZ_MAX, r5(bedarf / restTage)));
+  // Vortag festigen statt pauken; am Klausurtag selbst steht das Pensum nur
+  // noch der Vollstaendigkeit halber im Plan - die Startseite zeigt es nicht
+  // mehr an, sonst waere der Balken am Klausurmorgen eine Forderung.
+  if (tage === 1) ziel = Math.min(ziel, 15);
+  if (tage === 0) ziel = TZ_MIN;
+  return {
+    v: 1, tag: heute, ziel: ziel,
+    minimum: r5(ziel * 0.4), stretch: r5(ziel * 1.4), restBedarf: bedarf
+  };
+}
+
+export function tagesziel(themen, tage) {
+  var heute = tagVon(Date.now());
+  var plan = state.tzPlan;
+  if (!plan || plan.tag !== heute || plan.v !== 1) {
+    plan = planRechnen(themen, tage, heute);
+    state.tzPlan = plan;
+    speichern();
+  }
+  return {
+    n: heuteAntworten(), tage: tage,
+    ziel: plan.ziel, minimum: plan.minimum, stretch: plan.stretch, restBedarf: plan.restBedarf
+  };
+}
+
+// Alle Uebungs-Items quer ueber die Themen, in derselben Form wie fragenFuerZelle.
+export function alleItems(themen) {
+  var out = [];
+  themen.forEach(function (t) {
+    (t.mc || []).forEach(function (f) { out.push({ typ: "mc", f: f, thema: t }); });
+    (t.frei || []).forEach(function (f) { out.push({ typ: "frei", f: f, thema: t }); });
+  });
+  return out;
+}
+
+// Was zuletzt danebenlag: MC-Fragen, die beim letzten Mal falsch waren, und
+// frei-Aufgaben mit der Selbsteinschaetzung "nochmal".
+// BEWUSST keine Faelligkeit im Sinne von Spaced Repetition - die gibt es hier
+// noch nicht (steht in der ROADMAP). Deshalb heisst es in der Oberflaeche auch
+// nicht "faellig", sondern ehrlich "zuletzt danebengelegen".
+// Gezaehlt wird ueber die geladenen Themen, nicht ueber state.mc - so blaehen
+// Ids von Fragen, die es nicht mehr gibt, die Zahl nicht auf.
+export function wiederholPool(themen) {
+  return alleItems(themen).filter(function (i) {
+    if (i.typ === "mc") {
+      var s = state.mc[i.f.id];
+      return !!s && !s.zuletztRichtig;
+    }
+    return state.frei[i.f.id] === "nochmal";
+  });
+}
 
 export function statistik(themen) {
   var z = zeilen();
@@ -203,7 +325,7 @@ export function zeigeStats(themen, hooks) {
   if (!st.uebungen) {
     var leer = el("div", "karte");
     leer.appendChild(el("h2", null, "Hier wird bald was stehen"));
-    leer.appendChild(el("p", null, "Sobald du die erste Runde Konzept-Check oder Frei üben gemacht hast, siehst du hier, wie es je Thema und AFB-Stufe läuft. Es zählt jede Antwort, auch eine einzelne."));
+    leer.appendChild(el("p", null, "Nach der ersten Runde siehst du hier, wie es je Thema und AFB-Stufe läuft. Jede Antwort zählt, auch eine einzelne."));
     var los = el("button", "knopf", "Zu den Themen");
     los.addEventListener("click", function () { hooks.home(); });
     leer.appendChild(los);
@@ -223,12 +345,12 @@ function kachelKarte(st) {
   var karte = el("div", "karte");
   var grid = el("div", "stat-grid");
   [
-    [String(st.antwortenGesamt), st.antwortenGesamt === 1 ? "Antwort insgesamt" : "Antworten insgesamt"],
-    [st.quote == null ? "–" : st.quote + " %", "Schnitt über alles"],
-    [String(st.uebungsTage), st.uebungsTage === 1 ? "Übungstag" : "Übungstage"],
-    [String(st.gewertet), "gewertete Versuche"]
+    [String(st.antwortenGesamt), st.antwortenGesamt === 1 ? "Antwort insgesamt" : "Antworten insgesamt", null],
+    [st.quote == null ? "–" : st.quote + " %", "Schnitt über alles", quoteStufe(st.quote)],
+    [String(st.uebungsTage), st.uebungsTage === 1 ? "Übungstag" : "Übungstage", null],
+    [String(st.gewertet), "gewertete Versuche", null]
   ].forEach(function (paar) {
-    var k = el("div", "stat-tile");
+    var k = el("div", "stat-tile" + (paar[2] ? " tile-" + paar[2] : ""));
     k.appendChild(el("b", null, paar[0]));
     k.appendChild(el("span", null, paar[1]));
     grid.appendChild(k);
@@ -262,7 +384,7 @@ function chipKarte(st, themen, hooks) {
   wacklig.sort(function (a, b) { return b.hebel - a.hebel; });
 
   if (wacklig.length) {
-    karte.appendChild(el("p", null, "Diese Stellen wackeln noch. Ein Tipp startet eine kurze Runde nur daraus – gut, dass es hier passiert und nicht in der Klausur."));
+    karte.appendChild(el("p", null, "Antippen startet eine kurze Runde nur aus dieser Stelle."));
     karte.appendChild(chipReihe(wacklig, "wacklig", hooks));
   } else {
     karte.appendChild(el("p", null, "Keine Stelle fällt gerade ab. Schön! Am meisten bringt jetzt das, was du noch gar nicht angeschaut hast."));
@@ -281,9 +403,12 @@ function chipReihe(eintraege, art, hooks) {
     var text = e.r.thema.titel + " · " + AFB_KURZ[e.s.afb];
     var chip = el("button", "uebe-chip" + (art === "wacklig" ? " wacklig" : ""));
     setzeFarbe(chip, e.r.thema.farbe);
-    chip.appendChild(el("span", "chip-titel", "⚡ " + text));
+    var titelZeile = el("span", "chip-titel");
+    titelZeile.appendChild(document.createTextNode("⚡ " + text + " "));
+    titelZeile.appendChild(quotePille(e.s.quote));
+    chip.appendChild(titelZeile);
     chip.appendChild(el("span", "chip-klein",
-      (e.s.quote == null ? "noch ohne Wertung" : e.s.quote + " % aus " + e.s.n + " Versuchen") +
+      (e.s.quote == null ? "noch ohne Wertung" : "aus " + e.s.n + " Versuchen") +
       " · " + anzahl + (anzahl === 1 ? " Aufgabe" : " Aufgaben")));
     chip.addEventListener("click", function () { uebeRunde(e.r.thema, e.s.afb, hooks); });
     reihe.appendChild(chip);
@@ -332,65 +457,72 @@ function rasterKarte(st, hooks) {
   return karte;
 }
 
-// Farbstufen wie im ST-Trainer: unter 50 % ist die Bestehensgrenze, ab 85 %
-// gruen. Zellen mit zu wenig Versuchen bleiben bewusst neutral.
+// Farbstufe der Zelle = dieselbe Leiter wie ueberall sonst (ui.js quoteStufe:
+// orange -> gelb -> gruen ab der Bestehensgrenze 50 % -> tiefes Gruen -> Regen-
+// bogen bei 100 %). Zellen mit zu wenig Versuchen bleiben bewusst neutral -
+// aus zwei Antworten laesst sich kein Urteil bauen.
 function stufenKlasse(s) {
-  if (s.quote == null) return "neu";
-  if (s.n < MIN_N) return "duenn";
-  if (s.quote < 50) return "rot";
-  if (s.quote < 85) return "gelb";
-  return "gruen";
+  if (s.quote == null || s.n < MIN_N) return "duenn";
+  return quoteStufe(s.quote);
 }
 
 function fussnote(st) {
   var box = el("div", "fussnote-karte");
+  // Bewusst sichtbar und nicht zusammengeklappt: hier steht, wie die Zahlen
+  // oben zustande kommen. Gekuerzt, aber inhaltlich vollstaendig.
   box.appendChild(el("p", null,
-    "Wie gerechnet wird: Beim Konzept-Check zählt richtig = 100 %, falsch = 0 %. Beim Frei üben zählt deine eigene Einschätzung: saß gut = 100 %, teilweise = 50 %, nochmal üben = 0 %. Beides landet in derselben Zelle."));
+    "Wie gerechnet wird: Konzept-Check richtig = 100 %, falsch = 0 %. Frei üben nach deiner Einschätzung: saß gut = 100 %, teilweise = 50 %, nochmal üben = 0 %. Beides landet in derselben Zelle."));
   box.appendChild(el("p", null,
-    "Wenn du direkt hintereinander dieselbe Aufgabe nochmal beantwortest – Doppeltippen oder Umentscheiden beim Selbstcheck – zählt nur deine letzte Antwort. Eine ganze Übungsrunde zählt dagegen voll, auch gleich nach dem Konzept-Check. Von " +
+    "Beantwortest du dieselbe Aufgabe direkt nochmal (Doppeltippen, Umentscheiden), zählt nur die letzte Antwort. Eine ganze Übungsrunde zählt voll. Von " +
     st.uebungen + " Übungsantworten sind " + st.gewertet + " in die Quoten geflossen." +
-    (st.ohneAfb ? " " + st.ohneAfb + " Antworten ohne AFB-Angabe zählen oben mit, aber nicht im Raster." : "")));
+    (st.ohneAfb ? " " + st.ohneAfb + " ohne AFB-Angabe zählen oben mit, aber nicht im Raster." : "")));
   box.appendChild(el("p", null,
-    "Spiele-Antworten zählen bei den Antworten insgesamt und den Übungstagen mit, aber nicht im Thema-×-AFB-Raster."));
+    "Spiele zählen bei Antworten und Übungstagen mit, nicht im Thema-×-AFB-Raster."));
   return box;
 }
 
-/* ---------- Ueben-Runde aus einer Zelle ----------
+/* ---------- Uebungs-Runde ----------
    Bewusst dieselben Karten wie im normalen Uebungsmodus (hooks.mcKarte /
    hooks.freiKarte) - eine Runde, die anders aussieht als das Ueben, waere
-   ein zweiter Lernort. Frei-Aufgaben werden mit einem Weiter-Knopf ergaenzt. */
+   ein zweiter Lernort. Frei-Aufgaben werden mit einem Weiter-Knopf ergaenzt.
 
-function uebeRunde(thema, afb, hooks) {
-  var pool = fragenFuerZelle(thema, afb);
-  if (!pool.length) return;
-  var runde = zieh(pool, Math.min(RUNDE, pool.length), gewicht);
+   Zwei Einstiege teilen sich diese Funktion, damit es nur EINE Runden-Mechanik
+   gibt: die Zellen der Statistik (uebeRunde) und die gemischte Runde von der
+   Startseite (zeigeMix). meta traegt alles, was sich unterscheidet. */
+
+function runde(pool, meta, hooks) {
+  if (!pool.length) return meta.zurueck();
+  var liste = zieh(pool, Math.min(RUNDE, pool.length), gewicht);
   var index = 0, richtige = 0, mcAnzahl = 0;
 
-  function zurueckZurStatistik() { hooks.stats(); }
+  function farbeSetzen() {
+    if (meta.farbe) setzeFarbe(app, meta.farbe);
+    else app.style.removeProperty("--tfarbe-basis");
+  }
 
   function schritt() {
     leeren();
-    setzeFarbe(app, thema.farbe);
+    farbeSetzen();
 
-    var zurueck = el("button", "zurueck", "← Statistik");
-    zurueck.addEventListener("click", zurueckZurStatistik);
+    var zurueck = el("button", "zurueck", meta.zurueckText);
+    zurueck.addEventListener("click", meta.zurueck);
     app.appendChild(zurueck);
 
     var kopf = el("div", "kopf");
-    kopf.appendChild(el("h1", null, thema.titel));
-    kopf.appendChild(el("div", "untertitel", AFB_LANG[afb] + " · Aufgabe " + (index + 1) + " von " + runde.length));
+    kopf.appendChild(el("h1", null, meta.titel));
+    kopf.appendChild(el("div", "untertitel", meta.unter + " · Aufgabe " + (index + 1) + " von " + liste.length));
     app.appendChild(kopf);
 
-    var item = runde[index];
-    var letzte = index + 1 >= runde.length;
+    var item = liste[index];
+    var letzte = index + 1 >= liste.length;
     if (item.typ === "mc") {
       mcAnzahl++;
-      app.appendChild(hooks.mcKarte(thema, item.f, null, letzte ? "Runde abschließen" : "Weiter", function (richtig) {
+      app.appendChild(hooks.mcKarte(item.thema, item.f, null, letzte ? "Runde abschließen" : "Weiter", function (richtig) {
         if (richtig) richtige++;
         weiter();
       }));
     } else {
-      app.appendChild(hooks.freiKarte(thema, item.f));
+      app.appendChild(hooks.freiKarte(item.thema, item.f));
       var knopf = el("button", "knopf", letzte ? "Runde abschließen" : "Weiter");
       knopf.addEventListener("click", weiter);
       app.appendChild(knopf);
@@ -399,33 +531,35 @@ function uebeRunde(thema, afb, hooks) {
 
   function weiter() {
     index++;
-    if (index < runde.length) schritt(); else fertig();
+    if (index < liste.length) schritt(); else fertig();
   }
 
   function fertig() {
     leeren();
-    setzeFarbe(app, thema.farbe);
+    farbeSetzen();
 
     var quote = mcAnzahl ? richtige / mcAnzahl : null;
     if (quote === 1 && mcAnzahl >= 3) konfetti();
 
-    var karte = el("div", "karte ergebnis");
+    var karte = el("div", "karte ergebnis glimmer");
     var stk = standStickerEl(quote == null ? 0.7 : quote);
     if (stk) karte.appendChild(stk);
-    karte.appendChild(el("div", "zahl", runde.length + (runde.length === 1 ? " Aufgabe" : " Aufgaben")));
+    karte.appendChild(el("div", "zahl", liste.length + (liste.length === 1 ? " Aufgabe" : " Aufgaben")));
     karte.appendChild(el("div", "satz",
-      "Fertig – " + thema.titel + " auf " + AFB_KURZ[afb] + " durchgearbeitet." +
+      meta.fertigSatz +
       (mcAnzahl ? " Beim Konzept-Check davon: " + richtige + " von " + mcAnzahl + " richtig." : "") +
       " Das taucht gleich in deiner Statistik auf."));
 
     var reihe = el("div", "knopf-reihe");
     reihe.style.justifyContent = "center";
     var nochmal = el("button", "knopf", "Noch eine Runde");
-    nochmal.addEventListener("click", function () { uebeRunde(thema, afb, hooks); });
+    nochmal.addEventListener("click", meta.nochmal);
     reihe.appendChild(nochmal);
-    var zurStat = el("button", "knopf sekundaer", "Zur Statistik");
-    zurStat.addEventListener("click", zurueckZurStatistik);
-    reihe.appendChild(zurStat);
+    if (meta.extraText) {
+      var extra = el("button", "knopf sekundaer", meta.extraText);
+      extra.addEventListener("click", meta.extra);
+      reihe.appendChild(extra);
+    }
     var home = el("button", "knopf sekundaer", "Startseite");
     home.addEventListener("click", function () { hooks.home(); });
     reihe.appendChild(home);
@@ -434,4 +568,40 @@ function uebeRunde(thema, afb, hooks) {
   }
 
   schritt();
+}
+
+function uebeRunde(thema, afb, hooks) {
+  runde(fragenFuerZelle(thema, afb), {
+    titel: thema.titel,
+    unter: AFB_LANG[afb],
+    farbe: thema.farbe,
+    zurueckText: "← Statistik",
+    zurueck: function () { hooks.stats(); },
+    nochmal: function () { uebeRunde(thema, afb, hooks); },
+    extraText: "Zur Statistik",
+    extra: function () { hooks.stats(); },
+    fertigSatz: "Fertig – " + thema.titel + " auf " + AFB_KURZ[afb] + " durchgearbeitet."
+  }, hooks);
+}
+
+/* ---------- Gemischte Runde von der Startseite ----------
+   Quer ueber alle Themen, MC und offene Aufgaben in einer Runde. Zwei Poole:
+   alles (Kachel "Mix") oder nur, was zuletzt danebenlag (Zeile "Wiederholen"
+   in der Tagesliste). Gezogen wird mit demselben Gewicht wie ueberall sonst -
+   Ungeuebtes und Wackliges zuerst. */
+
+export function zeigeMix(themen, hooks, nurWiederholung) {
+  var pool = nurWiederholung ? wiederholPool(themen) : alleItems(themen);
+  if (!pool.length) return hooks.home();
+  runde(pool, {
+    titel: nurWiederholung ? "Wiederholen" : "Gemischte Runde",
+    unter: nurWiederholung ? "Was zuletzt danebenlag" : "Quer durch alle Themen",
+    farbe: null,
+    zurueckText: "← Startseite",
+    zurueck: function () { hooks.home(); },
+    nochmal: function () { zeigeMix(themen, hooks, nurWiederholung); },
+    fertigSatz: nurWiederholung
+      ? "Durch – genau die Stellen, die zuletzt gewackelt haben."
+      : "Gemischte Runde durch, quer über die Themen."
+  }, hooks);
 }

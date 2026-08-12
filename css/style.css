@@ -25,6 +25,31 @@
   --sticker-papier: #fbfbf7;
   /* Themenfarben aufhellen, damit Badges/Balken auf Dunkel tragen */
   --tmix: 72%;
+
+  /* Karten-Akzent: dezentes Rot-Lila. BEWUSST kein Gruen (Jennifer 12.08.) -
+     Gruen ist in dieser App fuer Erfolg reserviert. Waere Gruen auch Deko,
+     wuerde Gruen nichts mehr bedeuten. Der Verlauf liegt nur auf dem Rand und
+     als sehr blasser Hauch dahinter; die Kartenflaeche bleibt --card, damit
+     der Textkontrast unveraendert bleibt. --glimmer-wash steuert den Hauch. */
+  --glimmer-1: #b98ada;
+  --glimmer-2: #d4859b;
+  --glimmer-3: #9c86d8;
+  --glimmer-wash: .07;
+
+  /* Tagesziel-Zonen: orange -> gelb -> gruen -> Regenbogen. Nie rot, nie Gold
+     (Gold sieht auf dem Handy aus wie Orange, Jennifer 12.08.). --zone-top ist
+     das sehr tiefe Gruen unter dem Regenbogen-Ring; Leuchten + Regenbogen
+     zusammen unterscheiden "Streckziel" klar von "Ziel erreicht". */
+  /* Kontrast geprueft: die Zahl in der Kalenderzelle ist ~11 px fett, braucht
+     also 4.5:1. Orange und Gruen tragen weisse Schrift (5.1:1 / 4.8:1), Gelb
+     dunkle (5.7:1). Deshalb sind Orange und Gruen dunkler als ein reiner
+     Signalton - lesbar geht vor knallig. */
+  --zone-o: #a25c28;
+  --zone-y: #b99a3e;
+  --zone-g: #2f8055;
+  --zone-top: #0a7a44;
+  --zone-top-ink: #f0fff6;
+  --regenbogen: linear-gradient(115deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a);
   color-scheme: dark;
 }
 
@@ -45,6 +70,17 @@
   --glow: #f6e8d4;
   --shadow: 0 1px 2px rgba(60,50,30,.06), 0 6px 20px -8px rgba(60,50,30,.18);
   --tmix: 100%;
+  /* Auf dem hellen Papier wirken die Nacht-Stops ausgewaschen - hier tiefere,
+     saettigtere Toene, sonst sieht der Rand nach nichts aus. */
+  --glimmer-1: #7c4dbe;
+  --glimmer-2: #b25470;
+  --glimmer-3: #6d4aa8;
+  --glimmer-wash: .06;
+  --zone-o: #a15d26;
+  --zone-y: #bf9a1f;
+  --zone-g: #2e7d4f;
+  --zone-top: #0b6b3c;
+  --zone-top-ink: #ffffff;
   color-scheme: light;
 }
 
@@ -114,7 +150,8 @@ p { margin: 0 0 var(--sp-3); }
 .info-karte { border-left: 4px solid var(--accent); }
 .info-karte ul { margin: 0; padding-left: 1.2em; }
 .info-karte li { margin-bottom: 4px; }
-.info-karte .hinweis-gruen { color: var(--ok); font-weight: 700; }
+/* Kein Gruen als Deko - Gruen ist in dieser App der Erfolgs-Zustand. */
+.info-karte .hinweis-stark { color: var(--glimmer-1); font-weight: 700; }
 
 /* ---------- Themenliste ---------- */
 .thema-karte {
@@ -361,7 +398,8 @@ p { margin: 0 0 var(--sp-3); }
   transition: transform .08s ease;
 }
 .uebe-chip:active { transform: scale(.985); }
-.uebe-chip.wacklig { border-color: var(--bad); border-left-color: var(--bad); background: var(--bad-bg); }
+/* Warm, nicht rot: eine wacklige Stelle ist ein Angebot, kein Vorwurf. */
+.uebe-chip.wacklig { border-color: var(--zone-o); border-left-color: var(--zone-o); }
 .uebe-chip .chip-titel { display: block; font-weight: 700; font-size: .95rem; }
 .uebe-chip .chip-klein { display: block; font-size: .8rem; color: var(--ink-soft); margin-top: 1px; }
 
@@ -397,13 +435,9 @@ p { margin: 0 0 var(--sp-3); }
 .zelle .q { font-weight: 700; font-size: .95rem; line-height: 1.1; }
 .zelle .n { font-size: .68rem; color: var(--ink-soft); }
 .zelle.leer { cursor: default; color: var(--ink-soft); opacity: .5; border-style: dashed; }
-.zelle.neu, .zelle.duenn { background: var(--paper-2); }
-.zelle.rot { background: var(--bad-bg); border-color: var(--bad); }
-.zelle.rot .q { color: var(--bad); }
-.zelle.gelb { background: var(--warn-bg); border-color: var(--warn-ink); }
-.zelle.gelb .q { color: var(--warn-ink); }
-.zelle.gruen { background: var(--ok-bg); border-color: var(--ok); }
-.zelle.gruen .q { color: var(--ok); }
+.zelle.duenn { background: var(--paper-2); }
+/* Quoten-Zellen tragen die Farbleiter aus ui.js (q1..q5) - siehe unten. */
+.zelle[class*="q"] .n { color: inherit; opacity: .75; }
 
 .fussnote-karte {
   font-size: .8rem; color: var(--ink-soft);
@@ -521,4 +555,236 @@ p { margin: 0 0 var(--sp-3); }
 
 @media (min-width: 600px) {
   .stat-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* =======================================================================
+   Rainbow-Glimmer (Jennifer, 12.08.: die Karten waren zu neutral)
+   Lila und viel Gruen, aber nur auf dem Rand und als sehr blasser Hauch.
+   Traegt bewusst NICHT jede Karte: Countdown, Tagesliste, die Uebungs-
+   Kacheln und die Ergebnis-Karten - der Rest bleibt ruhig, sonst wird es
+   ein Jahrmarkt. Themen-Karten und Ueben-Chips bleiben ausdruecklich aussen
+   vor, ihr linker Rand traegt die Themenfarbe (--tfarbe).
+   ======================================================================= */
+
+.glimmer {
+  position: relative;
+  /* Zwei Hintergruende: die Kartenflaeche im padding-box, der Verlauf im
+     border-box. Der Rand wird dadurch farbig, ohne dass die Flaeche - und
+     damit der Textkontrast - sich aendert. */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--glimmer-1), var(--glimmer-2) 58%, var(--glimmer-3)) border-box;
+}
+.glimmer::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(135deg, var(--glimmer-1), transparent 48%, var(--glimmer-2));
+  opacity: var(--glimmer-wash);
+}
+/* Inhalt ueber den Hauch heben, sonst liegt er darunter */
+.glimmer > * { position: relative; z-index: 1; }
+
+/* Fortschrittsbalken innerhalb einer Glimmer-Karte nimmt den Akzent mit */
+.glimmer .balken .voll {
+  background: linear-gradient(90deg, var(--glimmer-1), var(--glimmer-2));
+}
+
+/* ---------- Countdown-Kopf mit Tagesziel ---------- */
+.countdown { padding: var(--sp-4) var(--sp-5) var(--sp-4); }
+.countdown-zeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.countdown-zahl {
+  font-family: "Fraunces", Georgia, serif; font-weight: 700;
+  font-size: 1.5rem; line-height: 1.15;
+}
+.countdown-datum { color: var(--ink-soft); font-size: .95rem; }
+.countdown-meta { color: var(--ink-soft); font-size: .84rem; margin-top: 6px; }
+
+.tz-kopf {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--sp-2); margin-top: var(--sp-4); font-size: .88rem; color: var(--ink-soft);
+}
+.tz-zahl b { color: var(--ink); font-size: 1.05rem; }
+.zonen-balken {
+  position: relative; height: 11px; border-radius: 999px;
+  margin-top: 6px; overflow: hidden;
+}
+/* Der noch offene Teil wird abgedunkelt, statt den erreichten einzufaerben -
+   so bleibt sichtbar, in welcher Zone Rose gerade steht. */
+.zonen-balken::after {
+  content: ""; position: absolute; z-index: 1;
+  top: 0; right: 0; bottom: 0; left: var(--pct, 0%);
+  background: var(--paper-2); opacity: .82;
+}
+/* Ab dem Streckziel wird der ganze Balken zum Regenbogen. Kein Gold: es
+   sieht auf dem Handy aus wie das Orange am unteren Ende der Skala. */
+.zonen-balken .fuell.regenbogen {
+  position: absolute; z-index: 1; inset: 0;
+  border-radius: 999px; background: var(--regenbogen);
+}
+.zonen-balken .marke {
+  position: absolute; z-index: 2; top: 0; bottom: 0; width: 2px;
+  background: var(--paper); opacity: .6;
+}
+
+/* ---------- Datumsuebersicht ---------- */
+.weg-kopf { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-2); flex-wrap: wrap; }
+.weg-kopf h3 { margin-bottom: 0; }
+.weg-rest { font-size: .8rem; color: var(--ink-soft); }
+.hm-raster {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 3px; margin-top: var(--sp-3);
+}
+.hm-wtag { font-size: .66rem; color: var(--ink-soft); text-align: center; padding-bottom: 2px; }
+.hm-zelle {
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1; min-height: 26px;
+  border-radius: 7px; font-size: .68rem; font-weight: 700;
+  background: var(--paper-2); color: var(--ink-soft);
+  border: 1px solid transparent;
+}
+.hm-zelle.hm-fut { color: var(--ink-soft); opacity: .6; font-weight: 400; }
+.hm-zelle.hm-ruhe { font-size: .8rem; opacity: .5; }
+.hm-zelle.hm-exam { background: var(--glow); font-size: .95rem; border-color: var(--glimmer-1); }
+/* Heute-Marker sitzt bewusst ausserhalb der Zelle - sonst verdeckt er bei
+   einem Streckziel-Tag den Regenbogen-Ring. */
+.hm-zelle.hm-heute { outline: 2px solid var(--glimmer-1); outline-offset: 2px; }
+/* Farbleiter (Jennifer 12.08.), Begruendung im Kopf von wegKarte() in main.js:
+   s1 orange (unter Minimum) · s2 gelb (ab Minimum) · s3 gruen (ab Pensum) ·
+   s4 Regenbogen auf tiefem Gruen (ab Streckziel).
+   KEIN Gold: Gold und Orange sind auf dem Handy kaum zu unterscheiden, und
+   eine Skala mit gleich aussehendem Anfang und Ende informiert falsch. */
+.hm-s1 { background: var(--zone-o); color: #fff; }
+.hm-s2 { background: var(--zone-y); color: #2a2410; }
+.hm-s3 { background: var(--zone-g); color: #fff; }
+/* Ab dem Streckziel: sehr tiefes Gruen, Regenbogen-Ring, gruenes Leuchten.
+   Der Ring ist bewusst ein conic-gradient - auf einer 26-px-Zelle zeigt ein
+   linearer Verlauf nur einen Farbausschnitt und wirkt dann einfarbig, der
+   Kegel legt alle Farben gleichzeitig rundherum. Das Leuchten pulst langsam,
+   damit sich "Ziel erreicht" (mittleres Gruen) und "Streckziel" nicht nur in
+   der Saettigung unterscheiden. */
+.hm-s4 {
+  color: var(--zone-top-ink);
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--zone-top), var(--zone-top)) padding-box,
+    conic-gradient(from 210deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a) border-box;
+  animation: hm-leuchten 3.6s ease-in-out infinite;
+}
+@keyframes hm-leuchten {
+  0%, 100% { box-shadow: 0 0 8px -2px #16a34a, 0 0 14px -7px #4ade80; }
+  50% { box-shadow: 0 0 14px 0 #1fae52, 0 0 26px -5px #86efac; }
+}
+.hm-legende { font-size: .78rem; color: var(--ink-soft); margin: var(--sp-3) 0 0; }
+
+/* =======================================================================
+   Quoten-Farbleiter q1..q5 (Jennifer 12.08.) - dieselbe Sprache wie die
+   Datumsuebersicht, damit die App EINE Farbleiter hat. Stufen und Schwellen
+   stehen in ui.js quoteStufe(). Rot kommt nicht vor: eine niedrige Quote ist
+   warm ("da bist du noch dran"), keine Mahnung.
+   Genutzt von: Pillen (.q-pille), Quoten-Balken (.balken .voll), den Zellen
+   des Thema-x-AFB-Rasters (.zelle) und der Schnitt-Kachel (.stat-tile).
+   ======================================================================= */
+
+.q-pille {
+  display: inline-block; font-size: .72rem; font-weight: 700; line-height: 1.5;
+  border-radius: 999px; padding: 0 8px; white-space: nowrap;
+}
+.q-pille.q0 { background: var(--paper-2); color: var(--ink-soft); }
+
+/* Flaechen-Varianten: Pille, Rasterzelle und Statistik-Kachel teilen sich die
+   Farben. Die Ink-Werte sind auf 4.5:1 geprueft (kleine, fette Schrift). */
+.q-pille.q1, .zelle.q1 { background: var(--zone-o); color: #fff; border-color: transparent; }
+.q-pille.q2, .zelle.q2 { background: var(--zone-y); color: #2a2410; border-color: transparent; }
+.q-pille.q3, .zelle.q3 { background: var(--zone-g); color: #fff; border-color: transparent; }
+.q-pille.q4, .zelle.q4 { background: var(--zone-top); color: var(--zone-top-ink); border-color: transparent; }
+.zelle.q1 .q, .zelle.q2 .q, .zelle.q3 .q, .zelle.q4 .q, .zelle.q5 .q { color: inherit; }
+
+/* 100 %: derselbe Belohnungszustand wie ein Streckziel-Tag. */
+.q-pille.q5, .zelle.q5 {
+  color: var(--zone-top-ink);
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--zone-top), var(--zone-top)) padding-box,
+    conic-gradient(from 210deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a) border-box;
+  box-shadow: 0 0 8px -2px #1fae52;
+}
+
+/* Quoten-Balken: die Fuellung kodiert den Wert, nicht mehr das Thema. Die
+   Themen-Identitaet steckt weiter im farbigen linken Rand der Karte. Reine
+   Fortschrittsbalken ohne Stufenklasse behalten var(--tfarbe). */
+.balken .voll.q0 { background: var(--line); }
+.balken .voll.q1 { background: var(--zone-o); }
+.balken .voll.q2 { background: var(--zone-y); }
+.balken .voll.q3 { background: var(--zone-g); }
+.balken .voll.q4 { background: var(--zone-top); }
+.balken .voll.q5 { background: var(--regenbogen); }
+
+/* Schnitt-Kachel der Statistik: nur die Zahl faerben, nicht die ganze Flaeche -
+   sie steht neben drei neutralen Kacheln und soll die nicht erschlagen. */
+.stat-tile[class*="tile-q"] b { color: var(--ink); }
+.stat-tile.tile-q1 b { color: var(--zone-o); }
+.stat-tile.tile-q2 b { color: var(--warn-ink); }
+.stat-tile.tile-q3 b, .stat-tile.tile-q4 b, .stat-tile.tile-q5 b { color: var(--ok); }
+
+.thema-kopfzeile .q-pille { margin-left: auto; }
+.chip-titel .q-pille { vertical-align: 1px; }
+
+/* ---------- Tagesliste "Heute dran" ---------- */
+.heute-karte h2 { margin-bottom: var(--sp-3); }
+.heute-zeile {
+  display: flex; align-items: center; gap: var(--sp-3);
+  width: 100%; text-align: left;
+  font: inherit; color: var(--ink); cursor: pointer;
+  background: var(--paper-2);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-2);
+  transition: transform .08s ease, border-color .1s ease;
+}
+.heute-zeile:active { transform: scale(.985); }
+.heute-zeile:not(.erledigt) { border-color: color-mix(in srgb, var(--glimmer-1) 50%, var(--line)); }
+.heute-zeile.erledigt { opacity: .72; }
+.heute-icon { font-size: 1.35rem; line-height: 1; flex-shrink: 0; }
+.heute-text { flex: 1; min-width: 0; }
+.heute-text b { display: block; font-size: .96rem; line-height: 1.25; }
+.heute-text span { display: block; font-size: .78rem; color: var(--ink-soft); }
+.heute-status {
+  flex-shrink: 0; font-size: .74rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink-soft);
+}
+/* Gruen bleibt dem Erledigten vorbehalten; "offen" bekommt den Lila-Akzent. */
+.heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
+:root[data-theme="hell"] .heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
+.heute-zeile.erledigt .heute-status { color: var(--ok); }
+.heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
+
+/* ---------- Uebungsmodi als Icon-Kacheln ---------- */
+.abschnitt { margin-bottom: var(--sp-4); }
+.abschnitt-titel {
+  font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); margin: var(--sp-5) 0 var(--sp-2);
+}
+.abschnitt .abschnitt-titel { margin-top: var(--sp-2); }
+.kachel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+.kachel {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; min-height: 88px;
+  font: inherit; color: var(--ink); cursor: pointer; text-align: center;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-3) var(--sp-2);
+  transition: transform .08s ease;
+}
+.kachel:active { transform: scale(.96); }
+.kachel-icon { font-size: 1.55rem; line-height: 1.1; }
+.kachel b { font-size: .92rem; }
+.kachel-klein { font-size: .72rem; color: var(--ink-soft); line-height: 1.2; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand
+     darf nicht verschwinden, nur weil Bewegung reduziert ist. */
+  .hm-s4 { animation: none; box-shadow: 0 0 12px -1px #1fae52, 0 0 22px -5px #86efac; }
+  .heute-zeile:active, .kachel:active { transform: none; }
 }

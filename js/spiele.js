@@ -19,7 +19,7 @@
      hooks.spiele()  -> Spiele-Hub neu rendern */
 
 import { state, speichern, logAntwort, app, el, mischen, leeren } from "./core.js";
-import { themeKnopf, setzeFarbe, stickerEl, konfetti } from "./ui.js";
+import { themeKnopf, setzeFarbe, stickerEl, konfetti, quoteStufe, quotePille } from "./ui.js";
 
 /* ---------- AFB-Grundwissen (Klausurinfo, Folie 5) ---------- */
 
@@ -110,7 +110,9 @@ function fehlerZaehler(spiel) {
   return f;
 }
 
-function heuteGespielt() {
+// Was ist heute schon gelaufen? Treibt sowohl die offen/erledigt-Kacheln im Hub
+// als auch die Tagesliste auf der Startseite (main.js) - eine Zaehlweise fuer beides.
+export function heuteGespielt() {
   var d = new Date(); d.setHours(0, 0, 0, 0);
   var t0 = d.getTime();
   var s = { operatoren: 0, begriffe: 0 };
@@ -153,9 +155,23 @@ export function zeigeSpiele(themen, hooks) {
 
   var info = el("div", "karte");
   info.appendChild(el("h3", null, "Warum das hilft"));
-  info.appendChild(el("p", null, "Die Dozentin sagt: an den Operatoren orientieren. Wer im Aufgabentext sofort sieht, ob nur aufgezählt oder abgewogen werden soll, schreibt in der Klausur das Richtige – und nicht zu viel oder zu wenig."));
+  info.appendChild(el("p", null, "Die Dozentin sagt: an den Operatoren orientieren. Wer sieht, ob aufgezählt oder abgewogen werden soll, schreibt nicht zu viel und nicht zu wenig."));
   if (!BEGRIFFE) info.appendChild(el("p", null, "Der Begriffe-Blitz taucht auf, sobald die Begriffsdatei geladen werden kann."));
   app.appendChild(info);
+}
+
+/* Direkte Einstiege fuer die Tagesliste der Startseite - dieselben Runden wie
+   im Hub, nur ohne Umweg. Der Zurueck-Knopf fuehrt in den Hub, damit man von
+   dort weiterspielen kann. */
+
+export function starteOperatoren(themen, hooks) {
+  setzeThemenFarben(themen);
+  opRunde(themen, hooks);
+}
+
+export function starteBegriffe(themen, hooks) {
+  setzeThemenFarben(themen);
+  bgHome(hooks);
 }
 
 function spielKachel(icon, name, unter, heute, oeffne) {
@@ -433,13 +449,17 @@ function bgHome(hooks) {
 
   var kats = (BEGRIFFE.kategorien || []).map(function (k) {
     var paare = paareVon(k.id);
-    return { k: k, n: paare.length, s: paare.filter(sicher).length };
+    return {
+      k: k, n: paare.length, s: paare.filter(sicher).length,
+      // noch nie gespielt heisst nicht "schwach" - dann bleibt die Pille neutral
+      geuebt: paare.some(function (p) { return !!stand[p.id]; })
+    };
   }).filter(function (x) { return x.n > 0; });
   kats.sort(function (a, b) { return (a.s / a.n) - (b.s / b.n); });
   if (!kats.length) return hooks.spiele();
 
   var info = el("div", "karte");
-  info.appendChild(el("p", null, "Links einen Begriff antippen, rechts das Passende dazu. Fünf Paare pro Runde. Sicher ist ein Paar, wenn du es zweimal beim ersten Anlauf triffst. Oben stehen die wackligsten Kategorien."));
+  info.appendChild(el("p", null, "Fünf Paare pro Runde. Sicher heißt: zweimal beim ersten Anlauf getroffen. Oben stehen die wackligsten Kategorien."));
   app.appendChild(info);
 
   var schwach = el("button", "knopf", "⚡ Wackligste Kategorie starten");
@@ -451,13 +471,16 @@ function bgHome(hooks) {
     var farbe = themenFarbe(x.k.oberthema);
     var karte = el("button", "thema-karte");
     if (farbe) setzeFarbe(karte, farbe);
+    var anteil = Math.round(100 * x.s / x.n);
     var kz = el("div", "thema-kopfzeile");
     kz.appendChild(el("span", "thema-titel", x.k.label));
     kz.appendChild(el("span", "vl-badge", x.s + "/" + x.n + " sicher"));
+    kz.appendChild(quotePille(x.geuebt ? anteil : null));
     karte.appendChild(kz);
+    // Balken zeigt die Quote, nicht die Themenfarbe - die steckt im linken Rand.
     var balken = el("div", "balken");
-    var voll = el("div", "voll");
-    voll.style.width = Math.round(100 * x.s / x.n) + "%";
+    var voll = el("div", "voll " + (x.geuebt ? quoteStufe(anteil) : "q0"));
+    voll.style.width = anteil + "%";
     balken.appendChild(voll);
     karte.appendChild(balken);
     karte.addEventListener("click", function () { bgRunde(x.k.id, hooks); });
