@@ -25,11 +25,14 @@ import * as Stats from "./stats.js";
 
 var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export function herzenStand(tz) {
+/* aktOverride ist NUR fuer die Testseite (playground/rose/maskottchen/viewer/):
+   damit laesst sich ein statischer Abzug von Roses Historie einspeisen, ohne
+   ihre echten Daten anzufassen. Die App ruft die Funktion immer ohne auf. */
+export function herzenStand(tz, aktOverride) {
   var min = tz && tz.minimum ? tz.minimum : 8;
   var ziel = tz && tz.ziel ? tz.ziel : 20;
   var stretch = tz && tz.stretch ? tz.stretch : 30;
-  var akt = Stats.aktivitaetProTag();
+  var akt = aktOverride || Stats.aktivitaetProTag();
   var herzen = 0, sterne = 0, tage = 0;
   Object.keys(akt).forEach(function (k) {
     var n = akt[k].n || 0;
@@ -197,7 +200,7 @@ var STORCH_FARBE = { "#": "var(--mk-fell)", s: "var(--mk-riss)", l: "var(--mk-ri
 
 /* Zellen einer Zeile, die gleich sind, werden zu EINEM Rechteck zusammengefasst
    (Lauflaenge) — sonst stehen ~300 rects im DOM statt ~40. */
-function storchHtml() {
+export function storchHtml() {
   var Z = 10, teile = "", breite = 0;
   STORCH.forEach(function (zeile) { if (zeile.length > breite) breite = zeile.length; });
   STORCH.forEach(function (zeile, y) {
@@ -279,12 +282,36 @@ function auswahlKnoten(neu) {
   return box;
 }
 
+/* Alles, was die Blase SAGT, an einer Stelle — und zwar genau der Fassung, die
+   die App zeigt. Die Testseite (playground/rose/maskottchen/viewer/) ruft
+   dieselbe Funktion mit gedrehten Werten auf; damit kann die Vorschau nicht von
+   der App wegdriften, was bei einer nachgebauten Kopie sicher passiert waere.
+   Reine Funktion: kein Zugriff auf state, Uhr oder Historie. */
+export function blaseText(w) {
+  var herzen = w.herzen, sterne = w.sterne, tage = w.tage, stunde = w.stunde, hh = w.hh;
+  var stufe = stufeVon(herzen);
+  var naechste = STUFEN[stufe + 1];
+  var nacht = stunde >= 22 || stunde < 6;
+  // Was heute schon dazukam. Nachts bleibt das weg — kein Abend-Mahnmal.
+  var heute = nacht ? ""
+    : hh === 0 ? " Heute noch keins – das erste kommt mit der ersten Aufgabe."
+    : " Heute schon <b>" + hh + "</b> ♥ dazu" + (hh < 3 ? ", da geht noch was." : " – mehr geht an einem Tag nicht.");
+  return {
+    stufe: stufe, nacht: nacht,
+    gruss: grussVon(stunde),
+    satz: nacht ? "Das Ei ist still. Morgen früh sind wir wieder da." : STUFEN[stufe].satz,
+    meta: "<b>" + herzen + "</b> ♥" + (sterne ? " · <b>" + sterne + "</b> ★" : "") +
+      " aus " + tage + " Übungstagen — " +
+      (naechste ? "noch <b>" + (naechste.ab - herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") +
+      "." + heute,
+  };
+}
+
 function standKnoten(tz, neu) {
   var st = herzenStand(tz);
-  var stufe = stufeVon(st.herzen);
-  var naechste = STUFEN[stufe + 1];
-  var stunde = new Date().getHours();
-  var nacht = stunde >= 22 || stunde < 6;
+  var t = blaseText({ herzen: st.herzen, sterne: st.sterne, tage: st.tage,
+    stunde: new Date().getHours(), hh: herzenHeute(tz) });
+  var stufe = t.stufe;
   var v = EIER[eiIndex()];
 
   var zeile = el("div", "mk-zeile");
@@ -296,18 +323,10 @@ function standKnoten(tz, neu) {
 
   var text = el("div", "mk-text");
   var satz = el("p", "mk-satz");
-  satz.innerHTML = "<b>" + grussVon(stunde) + ".</b> " +
-    (nacht ? "Das Ei ist still. Morgen früh sind wir wieder da." : STUFEN[stufe].satz);
+  satz.innerHTML = "<b>" + t.gruss + ".</b> " + t.satz;
   text.appendChild(satz);
-  var hh = herzenHeute(tz);
-  // Was heute schon dazukam. Nachts bleibt das weg — kein Abend-Mahnmal.
-  var heute = nacht ? ""
-    : hh === 0 ? " Heute noch keins – das erste kommt mit der ersten Aufgabe."
-    : " Heute schon <b>" + hh + "</b> ♥ dazu" + (hh < 3 ? ", da geht noch was." : " – mehr geht an einem Tag nicht.");
   var meta = el("p", "mk-meta");
-  meta.innerHTML = "<b>" + st.herzen + "</b> ♥" + (st.sterne ? " · <b>" + st.sterne + "</b> ★" : "") +
-    " aus " + st.tage + " Übungstagen — " +
-    (naechste ? "noch <b>" + (naechste.ab - st.herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") + "." + heute;
+  meta.innerHTML = t.meta;
   text.appendChild(meta);
   // Der Wechsel-Knopf stand frueher am Ende des Fliesstexts hinter einem
   // Mittelpunkt und war praktisch unauffindbar. Eigene Zeile — auffindbar,
