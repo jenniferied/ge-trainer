@@ -100,12 +100,12 @@ var STUFEN = [
   { ab: 0,  art: "ei",   sub: 0, satz: "Ich bin einfach hier hingeploppt. Mal sehen, was aus mir wird." },
   { ab: 4,  art: "ei",   sub: 1, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
   { ab: 7,  art: "ei",   sub: 2, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
-  { ab: 10, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
-  { ab: 13, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
-  { ab: 16, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
-  { ab: 19, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
-  { ab: 22, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
-  { ab: 25, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
+  { ab: 13, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
+  { ab: 16, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
+  { ab: 19, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
+  { ab: 22, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
+  { ab: 25, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
+  { ab: 28, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
 ];
 /* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
    sie brauchen und eine 3 im Code an der dritten Stelle niemand mehr zuordnet. */
