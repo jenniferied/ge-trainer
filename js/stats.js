@@ -11,7 +11,7 @@
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
 import { state, speichern, app, el, leeren } from "./core.js";
-import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille } from "./ui.js";
+import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
    Das GE-antwortLog kennt (anders als der ST-Trainer) keine Punkte, sondern
@@ -177,11 +177,12 @@ export function letzteRunden(themen, max) {
   state.antwortLog.forEach(function (a) {
     if (!a || !a.ts) return;
     if (!aktuell || a.ts - aktuell.bis > RUNDEN_PAUSE) {
-      aktuell = { von: a.ts, bis: a.ts, n: 0, modi: {}, themen: {} };
+      aktuell = { von: a.ts, bis: a.ts, n: 0, modi: {}, themen: {}, antworten: [] };
       runden.push(aktuell);
     }
     aktuell.bis = a.ts;
     aktuell.n++;
+    aktuell.antworten.push(a);
     var m = MODUS_TEXT[a.modus] ? a.modus : "check";
     aktuell.modi[m] = (aktuell.modi[m] || 0) + 1;
     if (a.thema && titel[a.thema]) aktuell.themen[a.thema] = (aktuell.themen[a.thema] || 0) + 1;
@@ -192,12 +193,19 @@ export function letzteRunden(themen, max) {
     var themenListe = Object.keys(r.themen)
       .sort(function (a, b) { return r.themen[b] - r.themen[a]; })
       .map(function (id) { return titel[id]; });
+    // wert() ist derselbe Massstab wie im Raster (0..1 je Antwort) - damit die
+    // Detailansicht einer Runde dieselbe Sprache spricht wie die Statistik.
+    var bewertet = r.antworten.map(wertVon).filter(function (w) { return w !== undefined; });
     return {
       von: r.von, bis: r.bis, n: r.n,
       icon: MODUS_TEXT[haupt].icon,
       name: MODUS_TEXT[haupt].name,
       gemischt: Object.keys(r.modi).length > 1,
-      themen: themenListe
+      themen: themenListe,
+      antworten: r.antworten,
+      quote: bewertet.length
+        ? Math.round(100 * bewertet.reduce(function (a, w) { return a + w; }, 0) / bewertet.length)
+        : null
     };
   });
 }
@@ -587,9 +595,13 @@ function fussnote(st) {
    gibt: die Zellen der Statistik (uebeRunde) und die gemischte Runde von der
    Startseite (zeigeMix). meta traegt alles, was sich unterscheidet. */
 
-function runde(pool, meta, hooks) {
+function runde(pool, meta, hooks, wahl) {
   if (!pool.length) return meta.zurueck();
-  var liste = zieh(pool, Math.min(RUNDE, pool.length), gewicht);
+  var w = wahl || { anzahl: RUNDE, auswahl: "wacklig" };
+  // Bunt gemischt heisst: jede Aufgabe gleich wahrscheinlich. Sonst zieht
+  // gewicht() das nach vorn, was zuletzt gewackelt hat.
+  var gew = w.auswahl === "bunt" ? function () { return 1; } : gewicht;
+  var liste = zieh(pool, Math.min(w.anzahl || RUNDE, pool.length), gew);
   var index = 0, richtige = 0, mcAnzahl = 0;
 
   function farbeSetzen() {
@@ -689,18 +701,49 @@ function uebeRunde(thema, afb, hooks) {
    in der Tagesliste). Gezogen wird mit demselben Gewicht wie ueberall sonst -
    Ungeuebtes und Wackliges zuerst. */
 
+/* Die gemischte Runde bekommt seit dem 12.08. denselben Baukasten wie die
+   Klausur-Simulation und die MC-Quermischung (Jennifer: was zur Runde gehoert,
+   steht dort, wo die Runde startet). Die Wiederholen-Runde bleibt bewusst OHNE
+   Vorschaltseite: sie hat genau eine Aufgabe - das nachholen, was zuletzt
+   danebenlag - und ein Baukasten davor waere eine Huerde vor der leichtesten
+   Runde der App. Ihre Laenge ist der Stapel selbst. */
 export function zeigeMix(themen, hooks, nurWiederholung) {
   var pool = nurWiederholung ? wiederholPool(themen) : alleItems(themen);
   if (!pool.length) return hooks.home();
+  if (nurWiederholung) return mixRunde(pool, themen, hooks, true, { anzahl: RUNDE, auswahl: "wacklig" });
+
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  var zurueck = el("button", "zurueck", "← Startseite");
+  zurueck.addEventListener("click", function () { hooks.home(); });
+  app.appendChild(zurueck);
+  var kopf = el("div", "kopf");
+  kopf.appendChild(el("h1", null, "Gemischte Runde"));
+  kopf.appendChild(el("div", "untertitel", "Quer durch alle Themen, MC und offene Aufgaben gemischt."));
+  app.appendChild(kopf);
+  app.appendChild(rundenSetup({
+    wahl: rundenEinstellungen(),
+    zeilen: rundenZeilen("Aufgaben"),
+    startText: "Runde starten",
+    aufStart: function (wahl) {
+      rundenEinstellungenMerken(wahl);
+      mixRunde(pool, themen, hooks, false, wahl);
+    }
+  }));
+}
+
+function mixRunde(pool, themen, hooks, nurWiederholung, wahl) {
   runde(pool, {
     titel: nurWiederholung ? "Wiederholen" : "Gemischte Runde",
     unter: nurWiederholung ? "Was zuletzt danebenlag" : "Quer durch alle Themen",
     farbe: null,
     zurueckText: "← Startseite",
     zurueck: function () { hooks.home(); },
-    nochmal: function () { zeigeMix(themen, hooks, nurWiederholung); },
+    // Nochmal laeuft direkt mit derselben Einstellung weiter - der Baukasten
+    // steht vor der Runde, nicht zwischen zwei Runden.
+    nochmal: function () { mixRunde(pool, themen, hooks, nurWiederholung, wahl); },
     fertigSatz: nurWiederholung
       ? "Durch – genau die Stellen, die zuletzt gewackelt haben."
       : "Gemischte Runde durch, quer über die Themen."
-  }, hooks);
+  }, hooks, wahl);
 }

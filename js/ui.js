@@ -62,6 +62,93 @@ export function quotePille(prozent, extra) {
   return el("span", "q-pille " + quoteStufe(prozent) + (extra ? " " + extra : ""), text);
 }
 
+/* ---------- Baukasten fuer eine Runde (Jennifer, 12.08.) ----------
+   "Die Runden-Optionen: ST hat einen Baukasten, in dem alles, was zu einer
+   Runde gehoert, an einer Stelle steht ... was zur Runde gehoert, steht dort,
+   wo die Runde startet."
+
+   Der GE-Trainer hatte das schon - aber nur fuer die Klausur-Simulation
+   (klausur.js, zeigeSetup: Umfang, Zeit, Feedback, Blatt). Die anderen Runden
+   starteten sofort, mit fest verdrahteter Laenge. Damit es davon nicht zwei
+   Bauweisen gibt, liegen die zwei Bauteile jetzt hier und werden von beiden
+   Seiten benutzt: segmentWahl fuer eine Reihe Schalter, rundenSetup fuer die
+   ganze Karte samt Startknopf.
+
+   Bewusst nur SO viele Schalter, wie diese App wirklich hat. Der ST-Trainer
+   kann Timer, Sprachvarianten, Erklaer-Abfrage und Pingo-Filter, weil es das
+   drueben gibt; hier waeren das leere Knoepfe. Ein Schalter, der nichts tut,
+   ist schlimmer als kein Schalter. */
+
+/* Die Einstellungen dieser Runde stehen dort, wo die Runde startet (Jennifer,
+   12.08.) - genauso wie beim Klausur-Setup darueber, mit demselben Baukasten
+   aus ui.js. Gemerkt wird die letzte Wahl in state.rundenEinst; das Feld ist
+   geraetelokal, snapshot() in sync.js waehlt seine Felder gezielt aus und nimmt
+   es nicht mit. */
+export function rundenEinstellungen() {
+  var e = state.rundenEinst || {};
+  return {
+    anzahl: [10, 15, 25].indexOf(e.anzahl) >= 0 ? e.anzahl : 15,
+    auswahl: e.auswahl === "bunt" ? "bunt" : "wacklig"
+  };
+}
+
+export function rundenEinstellungenMerken(neu) {
+  state.rundenEinst = Object.assign(rundenEinstellungen(), neu);
+  speichern();
+}
+
+// Die zwei Schalter, die beide Uebungsrunden teilen. Als Funktion und nicht als
+// Konstante, damit die Texte an einer Stelle stehen und nicht zweimal.
+export function rundenZeilen(einheit) {
+  return [
+    {
+      schluessel: "anzahl", label: "Wie lang",
+      klein: "Kurz ist besser als gar nicht - 10 " + einheit + " sind in ein paar Minuten durch.",
+      werte: [{ wert: 10, text: "10" }, { wert: 15, text: "15" }, { wert: 25, text: "25" }]
+    },
+    {
+      schluessel: "auswahl", label: "Auswahl",
+      klein: "Wackliges zuerst holt das nach vorn, was zuletzt danebenlag. Bunt gemischt zieht querbeet.",
+      werte: [{ wert: "wacklig", text: "Wackliges zuerst" }, { wert: "bunt", text: "Bunt gemischt" }]
+    }
+  ];
+}
+
+export function segmentWahl(werte, aktuell, aufWahl) {
+  var box = el("div", "kl-seg");
+  werte.forEach(function (w) {
+    var b = el("button", "kl-seg-knopf" + (w.wert === aktuell ? " an" : ""), w.text);
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(box.querySelectorAll(".kl-seg-knopf"), function (x) { x.classList.remove("an"); });
+      b.classList.add("an");
+      aufWahl(w.wert);
+    });
+    box.appendChild(b);
+  });
+  return box;
+}
+
+/* cfg = { zeilen: [{ schluessel, label, klein, werte:[{wert,text}] }],
+          wahl: {schluessel: wert}, startText, aufStart(wahl) }
+   Die Wahl wird IN PLACE geaendert - der Aufrufer haelt das Objekt und kann es
+   sich merken, wo es hingehoert (z. B. state.rundenEinst). */
+export function rundenSetup(cfg) {
+  var karte = el("div", "karte kl-setup");
+  cfg.zeilen.forEach(function (z) {
+    var zeile = el("div", "zeile");
+    var label = el("div", "label", z.label);
+    if (z.klein) label.appendChild(el("div", "klein", z.klein));
+    zeile.appendChild(label);
+    zeile.appendChild(segmentWahl(z.werte, cfg.wahl[z.schluessel], function (v) { cfg.wahl[z.schluessel] = v; }));
+    karte.appendChild(zeile);
+  });
+  var start = el("button", "knopf", cfg.startText || "Los geht es");
+  start.style.marginTop = "16px";
+  start.addEventListener("click", function () { cfg.aufStart(cfg.wahl); });
+  karte.appendChild(start);
+  return karte;
+}
+
 /* ---------- Sticker (Meme-Feedback) ---------- */
 
 var STICKER = {

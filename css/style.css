@@ -57,7 +57,13 @@
      34-px-Zelle darf einen in die Karte gemischten Ton tragen; ein 3-px-Punkt im
      Diagramm verschwindet damit. Nachts muessen die obersten Stufen HELLER
      werden, nicht dunkler - tiefes Gruen auf indigoschwarzem Grund ist kein
-     Punkt mehr. */
+     Punkt mehr.
+
+     Fuenf Namen, obwohl der GE-Trainer nur VIER Stufen kennt: drueben ist
+     "genau das Streckziel" (--tag-4) von "darueber" (--tag-5) getrennt, hier
+     sind beide zusammengelegt. Die Namen bleiben trotzdem vollstaendig - sie
+     gehoeren zum geteilten Style-Paket, und ein Paket, in dem die eine App
+     zwei Variablen weniger definiert, laesst sich nicht gemeinsam pflegen. */
   --tag-1: #e08a2e;
   --tag-2: #cfa62c;
   --tag-3: var(--ok);
@@ -798,21 +804,52 @@ p { margin: 0 0 var(--sp-3); }
 .fq-plot { margin-top: var(--sp-3); }
 .fq-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .fq-tick { font-size: 9px; fill: var(--ink-soft); font-family: "Karla", system-ui, sans-serif; }
+/* Die Zahl am Ende der Prognoselinie - wie .kt-wert drueben im ST-Trainer. */
+.fq-wert { font-size: 10px; font-weight: 700; fill: var(--accent); font-family: "Karla", system-ui, sans-serif; }
 
 /* ---------- Zuletzt geuebt ----------
    Nur zum Ansehen: keine Klickflaeche, kein Loeschen-Knopf (anders als im
    ST-Trainer). Grabsteine neben Roses echtem Lernstand sind nichts fuer eine
    Uebersichtsliste. */
 .zuletzt-liste { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-2); }
+/* Seit 12.08. antippbar (Jennifer: "auch die Ansicht, weil man sie auch ansehen
+   soll") - deshalb ein button und kein div, mit sichtbarem Chevron. */
 .zuletzt-zeile {
+  display: flex; align-items: center; gap: var(--sp-3);
+  width: 100%; text-align: left; font: inherit; color: var(--ink);
+  background: none; border: none; cursor: pointer;
+  padding: var(--sp-2) 0; border-top: 1px solid var(--line);
+  transition: transform .08s ease;
+}
+.zuletzt-zeile:active { transform: scale(.99); }
+.zuletzt-zeile:first-child { border-top: none; padding-top: 0; }
+.zuletzt-icon { font-size: 1.1rem; line-height: 1.3; flex-shrink: 0; }
+.zuletzt-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.zuletzt-text b { font-size: .92rem; }
+.zuletzt-text span { font-size: .8rem; color: var(--ink-soft); }
+.zuletzt-pfeil { color: var(--ink-soft); font-size: 1.1rem; flex-shrink: 0; }
+.zuletzt-karte .knopf { margin-top: var(--sp-3); width: 100%; }
+
+/* Detailansicht einer Runde: eine Zeile je Aufgabe. Die Zeichen sind ✓ (saß),
+   ~ (halb) und ↻ (kommt wieder) - nie ein rotes Kreuz und nie das Wort
+   "falsch". Eine danebengegangene Aufgabe ist eine, die noch dran ist. */
+.runde-liste { display: flex; flex-direction: column; gap: 0; }
+.runde-zeile {
   display: flex; align-items: flex-start; gap: var(--sp-3);
   padding: var(--sp-2) 0; border-top: 1px solid var(--line);
 }
-.zuletzt-zeile:first-child { border-top: none; padding-top: 0; }
-.zuletzt-icon { font-size: 1.1rem; line-height: 1.3; flex-shrink: 0; }
-.zuletzt-text { display: flex; flex-direction: column; min-width: 0; }
-.zuletzt-text b { font-size: .92rem; }
-.zuletzt-text span { font-size: .8rem; color: var(--ink-soft); }
+.runde-zeile:first-child { border-top: none; padding-top: 0; }
+.runde-zeichen {
+  flex-shrink: 0; min-width: 26px; text-align: center;
+  font-weight: 800; font-size: .86rem; line-height: 1.5;
+  border-radius: 999px; padding: 0 6px;
+}
+.runde-zeichen.gut { background: var(--ok-bg); color: var(--ok); }
+.runde-zeichen.mittel { background: var(--warn-bg); color: var(--warn-ink); }
+.runde-zeichen.offen { background: color-mix(in srgb, var(--glimmer-1) 22%, var(--card)); color: var(--glimmer-1); }
+.runde-text { display: flex; flex-direction: column; min-width: 0; }
+.runde-text b { font-size: .9rem; font-weight: 600; line-height: 1.35; }
+.runde-text span { font-size: .78rem; color: var(--ink-soft); }
 
 /* =======================================================================
    Quoten-Farbleiter q1..q5 (Jennifer 12.08.) - dieselbe Sprache wie die

@@ -176,6 +176,31 @@ function lernscoreVon(daten, index) {
   return Math.round((100 * summe) / qs.length);
 }
 
+/* ---------- Was drueben sonst noch offen ist (Jennifer, 12.08.) ----------
+   "der link zu GE und ST sollte, falls noch taegliches Ueben offen ist,
+   anzeigen, dass noch was offen ist. Offene Dailies oder was auch immer, offene
+   Uebungen oder so."
+
+   Aus dem Snapshot laesst sich dazu genau EINE Sache sauber ablesen: die Liste
+   der angefangenen, noch nicht abgeschlossenen Runden (daten.offen). Die ist
+   exakt, sie muss nicht rekonstruiert werden, und drueben steht sie auf der
+   Startseite unter "Angefangen - du kannst weitermachen".
+
+   Was NICHT mitgezaehlt wird und warum:
+   - Das Tagesziel des ST-Trainers. Es wird einmal am Tag eingefroren und liegt
+     in settings.tzPlan - und settings ist im Snapshot bewusst nicht enthalten
+     (dort stehen nur sessions, antwortLog, offen, geloescht). Nachrechnen waere
+     Raten: der eingefrorene Plan von heute frueh ist nicht derselbe wie eine
+     Neuberechnung von jetzt.
+   - Faellige Wiederholungen. Der ST-Trainer hat dafuer keinen Termin je Frage,
+     sondern zieht beim Rundenbau aus dem Wackligen - eine Zahl "so viele sind
+     faellig" gibt es drueben gar nicht, sie waere hier erfunden.
+   Lieber "✦ 2 offen", das stimmt, als "✦ 5 offen", das geraten ist. */
+function offeneRunden(daten) {
+  const offen = (daten && daten.offen) || [];
+  return Array.isArray(offen) ? offen.length : 0;
+}
+
 /* ---------- Abruf ----------
    Schritt 1 fragt nur den Zeitstempel (winzig). Schritt 2 holt den Snapshot nur,
    wenn es wirklich ein neuer ist. Schritt 3 rechnet - und braucht dafuer den
@@ -209,7 +234,7 @@ export function hole() {
         const score = lernscoreVon(daten, r[1]);
         // Ohne Index gibt es keine ehrliche Zahl - dann bleibt sie weg, statt
         // eine andere Groesse als Lernscore auszugeben.
-        const neu = { ts: ts, geholt: Date.now(), lernscore: score };
+        const neu = { ts: ts, geholt: Date.now(), lernscore: score, runden: offeneRunden(daten) };
         if (typeof score === "number") schreib(CACHE_KEY, neu);
         return neu;
       });
@@ -228,5 +253,6 @@ export function stStand() {
     ts: c.ts,
     frisch: tagVon(c.ts) === heuteTag(),
     lernscore: typeof c.lernscore === "number" ? c.lernscore : null,
+    runden: typeof c.runden === "number" ? c.runden : null,
   };
 }

@@ -14,7 +14,7 @@
    ueber Handschrift-Bild als Anhang bzw. reine Selbstbewertung weiter. */
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen } from "./core.js";
-import { setzeFarbe, stickerEl, standStickerEl, konfetti } from "./ui.js";
+import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 import { syncSession } from "./sync.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
 // das Modul nie ausgewertet und der KI-Pfad waere still tot (kein Import-Zyklus,
@@ -452,19 +452,9 @@ function zeigeFortsetzen() {
   app.appendChild(karte);
 }
 
-function segment(werte, aktuell, aufWahl) {
-  var box = el("div", "kl-seg");
-  werte.forEach(function (w) {
-    var b = el("button", "kl-seg-knopf" + (w.wert === aktuell ? " an" : ""), w.text);
-    b.addEventListener("click", function () {
-      Array.prototype.forEach.call(box.querySelectorAll(".kl-seg-knopf"), function (x) { x.classList.remove("an"); });
-      b.classList.add("an");
-      aufWahl(w.wert);
-    });
-    box.appendChild(b);
-  });
-  return box;
-}
+// segment() ist nach ui.js gewandert (segmentWahl) - dieselben Schalter
+// bauen seit dem 12.08. auch die anderen Runden ihren Baukasten.
+var segment = segmentWahl;
 
 function zeigeSetup() {
   imLauf = false;
@@ -1560,8 +1550,6 @@ function zeigeErgebnis(k) {
 
 /* ---------- MC-Quermischung ueber alle Themen ---------- */
 
-var QUER_ANZAHL = 15;
-
 export function zeigeMcQuer(themen, zurueck) {
   THEMEN = themen || [];
   ZURUECK = zurueck || ZURUECK;
@@ -1579,8 +1567,24 @@ export function zeigeMcQuer(themen, zurueck) {
     return;
   }
 
-  // Falsches und Ungesehenes zuerst, Bekanntes seltener.
-  var gezogen = mischen(zieh(pool, Math.min(QUER_ANZAHL, pool.length), function (e) {
+  leeren();
+  kopfLeiste("Alle Themen", "Konzept-Check quer durch alle acht Themen.");
+  app.appendChild(rundenSetup({
+    wahl: rundenEinstellungen(),
+    zeilen: rundenZeilen("Fragen"),
+    startText: "Runde starten",
+    aufStart: function (wahl) {
+      rundenEinstellungenMerken(wahl);
+      starteMcQuer(pool, wahl);
+    }
+  }));
+}
+
+function starteMcQuer(pool, wahl) {
+  // Wackliges zuerst: Falsches und Ungesehenes bevorzugt, Bekanntes seltener.
+  // Bunt gemischt: alle Fragen gleich wahrscheinlich.
+  var gezogen = mischen(zieh(pool, Math.min(wahl.anzahl, pool.length), function (e) {
+    if (wahl.auswahl === "bunt") return 1;
     var s = state.mc[e.f.id];
     if (!s) return 3.5;
     if (!s.zuletztRichtig) return 4.5;
@@ -1676,8 +1680,10 @@ export function zeigeMcQuer(themen, zurueck) {
 
     var reihe = el("div", "knopf-reihe");
     reihe.style.justifyContent = "center";
-    var nochmal = el("button", "knopf", "Nochmal 15");
-    nochmal.addEventListener("click", function () { zeigeMcQuer(THEMEN, ZURUECK); });
+    // Direkt nochmal mit derselben Einstellung - der Baukasten steht davor,
+    // nicht dazwischen. Wer umstellen will, geht ueber die Startseite zurueck.
+    var nochmal = el("button", "knopf", "Nochmal " + wahl.anzahl);
+    nochmal.addEventListener("click", function () { starteMcQuer(pool, wahl); });
     reihe.appendChild(nochmal);
     var kl = el("button", "knopf sekundaer", "Klausur-Simulation");
     kl.addEventListener("click", function () { zeigeKlausur(THEMEN, ZURUECK); });

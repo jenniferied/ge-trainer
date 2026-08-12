@@ -209,18 +209,43 @@ function querLink() {
   /* Erst synchron aus dem Cache zeichnen (damit beim Blaettern nichts flackert),
      dann noch einmal nach dem Abruf. Der Abruf blockiert nichts und meldet
      keinen Fehler - schlaegt er fehl, bleibt der Link stehen, wie er war. */
-  var male = function (offen) {
+  var male = function (spieleOffen) {
     if (!a.isConnected) return;
     stand.innerHTML = "";
     var worte = [];
     var s = Nachbar.stStand();
 
-    if (offen > 0) {
-      stand.appendChild(offenBadge(offen + " offen", "kompakt"));
-      worte.push(offen + (offen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute noch offen");
-    } else if (offen === 0) {
-      stand.appendChild(standBadge(true, "\u2713 heute", "kompakt"));
-      worte.push("die Mini-Runden von heute sind durch");
+    /* Alles, was drueben aussteht, in EINER Zahl (Jennifer, 12.08.: "falls noch
+       taegliches Ueben offen ist, anzeigen, dass noch was offen ist. Offene
+       Dailies oder was auch immer, offene Uebungen oder so"). Zusammengezaehlt
+       wird nur, was wirklich ablesbar ist: die Mini-Runden von heute (aus der
+       events-Tabelle) und die angefangenen, nicht abgeschlossenen Runden (aus
+       dem Snapshot). Das Tagesziel drueben ist von aussen NICHT lesbar und
+       zaehlt deshalb nicht mit - Begruendung in nachbar.js, offeneRunden(). */
+    var teile = [], summe = 0, wissen = false;
+    if (spieleOffen != null) {
+      wissen = true;
+      summe += spieleOffen;
+      if (spieleOffen > 0) teile.push(spieleOffen + (spieleOffen === 1 ? " Mini-Runde" : " Mini-Runden") + " heute");
+    }
+    if (s && s.runden != null) {
+      wissen = true;
+      summe += s.runden;
+      if (s.runden > 0) teile.push(s.runden + (s.runden === 1 ? " angefangene Runde" : " angefangene Runden"));
+    }
+
+    if (wissen && summe > 0) {
+      stand.appendChild(offenBadge(summe + " offen", "kompakt"));
+      worte.push("noch offen: " + teile.join(" und "));
+    } else if (spieleOffen != null && summe === 0) {
+      /* "Nichts offen" darf NUR behauptet werden, wenn die Spiel-Abfrage
+         wirklich geantwortet hat. Faellt sie aus und der Snapshot meldet
+         zufaellig null angefangene Runden, wuesste die Anzeige ueber die
+         Mini-Runden gar nichts und gaebe trotzdem Entwarnung. Die Anzeige
+         darf in Richtung "zu viel offen" irren, nie in Richtung "alles
+         erledigt". */
+      stand.appendChild(standBadge(true, "✓ heute", "kompakt"));
+      worte.push("drüben ist gerade nichts offen");
     }
 
     if (s && s.lernscore != null) {
@@ -235,7 +260,7 @@ function querLink() {
 
   var offenStand = null;
   male(null);
-  stOffen().then(function (o) { offenStand = o && o.offen; male(offenStand); }).catch(function () { /* neutral bleiben */ });
+  stOffen().then(function (o) { offenStand = o ? o.offen : null; male(offenStand); }).catch(function () { /* neutral bleiben */ });
   Nachbar.hole().then(function () { male(offenStand); }).catch(function () { /* neutral bleiben */ });
   return a;
 }
@@ -438,32 +463,45 @@ function wegKarte(tz) {
   return karte;
 }
 
-/* ---------- Uebungsfrequenz als Punkte ----------
+/* ---------- Uebungsfrequenz als Punkte-Plot ----------
    Jennifer, 12.08.: "bei dem, wie viel du uebst, da sollte auch das tatsaechlich
-   Geuebte drauf sein, als Punkte geplottet mit den entsprechenden Farben."
+   Geuebte drauf sein, als Punkte geplottet mit den entsprechenden Farben." Und
+   spaeter am selben Tag: "Der Punkte-Plot soll bei beiden gleich sein - dieselbe
+   Grafik, dieselbe Mechanik ... der Regenbogenpunkt sollte kleiner sein, so wie
+   die anderen auch, und gleich bei beiden."
 
-   Ein Punkt je Uebungstag, Hoehe = die Antworten dieses Tages, Farbe = dieselbe
-   Tagesleiter wie im Kalender darueber. Bewusst KEINE Balken und KEINE
-   geglaettete Linie: der ST-Trainer zeigt dort 3- und 7-Tage-Schnitte, und ein
-   Schnitt erzaehlt einen ruhigen Verlauf, den es so nie gab. Hier soll der echte
-   Wert stehen - ein Tag mit 40 Antworten ist ein Punkt weit oben, und daneben
-   darf Luft sein.
+   Dieser Plot ist deshalb die Fassung des ST-Trainers (dort main.js, Chart 1
+   "Menge"), Zeile fuer Zeile uebernommen und nur an die Zahlen dieser App
+   angepasst (Antworten statt Karten, Klausur am 10.09.). Zwei fast gleiche
+   Fassungen zu pflegen ist muehsamer als eine gemeinsame - und wenn beide Apps
+   nebeneinander liegen, muss derselbe Tag auch gleich aussehen.
 
-   Der Plot ERSETZT den Kalender nicht: der Kalender beantwortet "Ziel erreicht?",
-   der Plot "wie viel war es wirklich?".
+   ACHTUNG, das ist eine bewusste Kehrtwende gegenueber dem ROADMAP-Eintrag vom
+   selben Tag ("kein geglaetteter Schnitt wie im ST-Trainer"): die 3- und
+   7-Tage-Linien sind wieder da, weil der ST-Plot sie hat. Die echten Tageswerte
+   stehen weiter als Punkte darueber und bleiben die Hauptaussage - der Schnitt
+   liegt als duenne Linie darunter. Steht im Bericht, Jennifer entscheidet.
 
-   Ruhetage bekommen keinen Punkt (siehe stats.uebungsTage) - sonst laege eine
-   Reihe Nullen auf der Achse und das saehe aus wie eine Mahnung. */
+   ALLE PUNKTE SIND GLEICH GROSS. Vorher waren Streckziel-Tage groesser; damit
+   las sich ein starker Tag als "mehr Antworten", obwohl die Hoehe das schon
+   sagt. Unterschieden wird jetzt ausschliesslich ueber die FARBE, in Fuellung
+   und Rand. Radius und Strichstaerke sind fuer jeden Punkt identisch.
+
+   Der Plot ERSETZT den Kalender nicht: der Kalender beantwortet "Ziel
+   erreicht?", der Plot "wie viel war es wirklich?". Ruhetage bekommen KEINEN
+   Punkt - die Luecke ist die Aussage, und eine Null auf der Grundlinie saehe
+   aus wie ein Einbruch statt wie Pause. */
 
 function frequenzKarte(tz, themen) {
-  var tage = Stats.uebungsTage();
+  var akt = Stats.aktivitaetProTag();
   var alt = Stats.altFortschritt(themen);
-  if (!tage.length && !alt.antworten) return null;
+  var geuebte = Object.keys(akt).map(Number);
+  if (!geuebte.length && !alt.antworten) return null;
 
   var karte = el("div", "karte freq-karte");
   karte.appendChild(el("h3", null, "Wie viel du übst"));
 
-  if (!tage.length) {
+  if (!geuebte.length) {
     // Nur undatierter Alt-Fortschritt: kein Plot, aber die Arbeit wird benannt.
     karte.appendChild(el("p", "hm-legende", altSatz(alt, true) +
       " Sobald du hier übst, wächst darunter eine Punktereihe mit deinen Tagen."));
@@ -471,83 +509,129 @@ function frequenzKarte(tz, themen) {
   }
 
   var heute = new Date(); heute.setHours(0, 0, 0, 0);
-  var ersterTs = tage[0].ts;
-  var letzterTs = Math.max(tage[tage.length - 1].ts, heute.getTime());
+  var ende = new Date(KLAUSUR_TAG.getTime()); ende.setHours(0, 0, 0, 0);
+  var erster = Math.min.apply(null, geuebte.concat([heute.getTime()]));
 
-  var W = 340, H = 132, x0 = 28, x1 = W - 12, yBoden = H - 22, yOben = 12;
-  var hoechster = tage.reduce(function (a, t) { return Math.max(a, t.n); }, 0);
-  // Der Plot soll das Zielband immer zeigen, auch an schwachen Tagen - sonst
-  // haengt der einzige Punkt oben am Rand und man sieht nicht, wo er steht.
-  var maxY = Math.max(tz.stretch, hoechster) * 1.12;
-  var y = function (v) { return yBoden - (v / maxY) * (yBoden - yOben); };
-  var spanne = letzterTs - ersterTs;
-  // Ein einziger Uebungstag ist der Normalfall am Anfang: dann steht der Punkt
-  // in der Mitte statt am linken Rand zu kleben.
-  var x = spanne > 0
-    ? function (ts) { return x0 + ((ts - ersterTs) / spanne) * (x1 - x0); }
-    : function () { return (x0 + x1) / 2; };
-
-  var teile = [];
-  // Der Verlauf spannt sich ueber das Rechteck um den Kreis - vom Rechteck sieht
-  // man aber nur die eingeschriebene Scheibe, also grob die mittleren 70 % der
-  // Diagonalen. Werden die Stops auf 0..100 % gelegt, bleiben Rot und Violett
-  // in den Ecken haengen und der Punkt sieht gelbgruen aus. Deshalb 15..85 %:
-  // dann liegt der ganze Regenbogen im sichtbaren Teil.
-  teile.push('<defs><linearGradient id="ge-regenbogen" x1="0" y1="1" x2="1" y2="0">' +
-    ['#ff6b7a', '#ffb46b', '#ffe873', '#4ade80', '#5ad7ff', '#b98cff']
-      .map(function (f, i, arr) { return '<stop offset="' + (15 + 70 * i / (arr.length - 1)).toFixed(1) + '%" stop-color="' + f + '"/>'; })
-      .join("") + '</linearGradient></defs>');
-
-  // Zielband und Etappen als ruhige Hilfslinien - dieselben drei Zahlen wie im
-  // Balken der Countdown-Karte, damit der Plot keine vierte Wahrheit aufmacht.
-  teile.push('<rect x="' + x0 + '" y="' + y(tz.stretch).toFixed(1) + '" width="' + (x1 - x0) +
-    '" height="' + (y(tz.ziel) - y(tz.stretch)).toFixed(1) + '" fill="var(--zone-g)" opacity=".14"/>');
-  [
-    { v: tz.ziel, stark: true },
-    { v: tz.minimum, stark: false }
-  ].forEach(function (linie) {
-    teile.push('<line x1="' + x0 + '" y1="' + y(linie.v).toFixed(1) + '" x2="' + x1 + '" y2="' + y(linie.v).toFixed(1) +
-      '" stroke="' + (linie.stark ? "var(--zone-g)" : "var(--line)") + '" stroke-width="1"' +
-      (linie.stark ? ' opacity=".7"' : ' stroke-dasharray="4 4"') + '/>');
-    teile.push('<text x="' + (x0 - 5) + '" y="' + (y(linie.v) + 3.5).toFixed(1) + '" text-anchor="end" class="fq-tick"' +
-      (linie.stark ? ' font-weight="700"' : '') + '>' + linie.v + '</text>');
-  });
-  teile.push('<line x1="' + x0 + '" y1="' + yBoden + '" x2="' + x1 + '" y2="' + yBoden + '" stroke="var(--line)" stroke-width="1"/>');
-
-  tage.forEach(function (t) {
-    var s = tagesStufe(t.n, tz);
-    var d = new Date(t.ts);
-    var cx = x(t.ts).toFixed(1), cy = y(t.n).toFixed(1);
-    // Streckziel-Tage sind groesser. Ein 9-px-Punkt zeigt von einem Verlauf nur
-    // einen Farbausschnitt und saehe dann einfarbig aus - mit mehr Flaeche ist
-    // der Regenbogen wirklich einer, und der Tag hebt sich ab wie im Kalender.
-    var r = s === 4 ? 6.5 : 5;
-    if (s === 4) teile.push('<circle cx="' + cx + '" cy="' + cy + '" r="10" fill="var(--zone-top)" opacity=".28"/>');
-    teile.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' +
-      STUFEN_FARBE[s] + '" stroke="var(--card)" stroke-width="1.5"><title>' +
-      WTAG_VON_JS[d.getDay()] + " " + kurzDatum(d) + ": " + t.n + (t.n === 1 ? " Antwort" : " Antworten") +
-      (s === 4 ? " – Streckziel geknackt" : s === 3 ? " – Tagespensum geschafft" : "") +
-      '</title></circle>');
-  });
-
-  if (spanne > 0) {
-    teile.push('<text x="' + x0 + '" y="' + (H - 6) + '" class="fq-tick">' + kurzDatum(new Date(ersterTs)) + '</text>');
-    teile.push('<text x="' + x1 + '" y="' + (H - 6) + '" text-anchor="end" class="fq-tick">heute</text>');
-  } else {
-    // Erster Uebungstag ist heute: zwei Beschriftungen fuer denselben Tag waeren
-    // nur verwirrend.
-    teile.push('<text x="' + ((x0 + x1) / 2) + '" y="' + (H - 6) + '" text-anchor="middle" class="fq-tick">heute</text>');
+  // Luecken auffuellen: die Schnitte brauchen eine luecklose Tagesreihe,
+  // sonst waere ein Ruhetag einfach uebersprungen statt eingerechnet.
+  var tage = [];
+  for (var d = new Date(erster); d.getTime() <= heute.getTime(); d.setDate(d.getDate() + 1)) {
+    var e = akt[d.getTime()] || { n: 0, gut: 0 };
+    tage.push({ ts: d.getTime(), n: e.n, gut: e.gut });
   }
+  var glatt = function (fenster) {
+    return tage.map(function (_, i) {
+      var s = tage.slice(Math.max(0, i - (fenster - 1)), i + 1);
+      return s.reduce(function (a, t) { return a + t.n; }, 0) / s.length;
+    });
+  };
+  var g3 = glatt(3), g7 = glatt(7);
+
+  var W = 340;
+  // Geknickte Zeitachse: das Geuebte bekommt mindestens 45 % der Breite, auch
+  // wenn erst ein paar Tage hinter Rose liegen und Wochen vor ihr. Sonst waere
+  // ihre Linie ein unlesbarer Zacken ganz links. Der Knick sitzt genau auf der
+  // Heute-Linie; links steht Gemessenes, rechts die Prognose.
+  var gestern = Math.max(1, heute.getTime() - tage[0].ts);
+  var gesamt = Math.max(1, ende.getTime() - tage[0].ts);
+  var anteil = Math.max(0.45, gestern / gesamt);
+  var xStart = 26, xEnd = W - 8, breite = xEnd - xStart;
+  var xHeute = xStart + breite * anteil;
+  var px = function (ts) {
+    return ts <= heute.getTime()
+      ? xStart + ((ts - tage[0].ts) / gestern) * (xHeute - xStart)
+      : xHeute + ((ts - heute.getTime()) / Math.max(1, ende.getTime() - heute.getTime())) * (xEnd - xHeute);
+  };
+  var hx = xHeute.toFixed(1), ex = xEnd.toFixed(1);
+
+  var H1 = 116;
+  // Die Achse muss die ECHTEN Tageswerte fassen, nicht nur die geglaetteten:
+  // ein starker Tag wuerde sonst oben aus dem Bild ragen.
+  var maxY = Math.max.apply(null, [tz.stretch + 5].concat(g3, g7, tage.map(function (t) { return t.n; })));
+  var py = function (v) { return H1 - 20 - (v / maxY) * (H1 - 30); };
+  var pfad = function (reihe) {
+    return tage.map(function (t, i) { return px(t.ts).toFixed(1) + "," + py(reihe[i]).toFixed(1); }).join(" ");
+  };
+  // Prognose: flach mit dem aktuellen 7-Tage-Schnitt weiter - "wenn du so
+  // weitermachst". Eine steigende Extrapolation wuerde "du musst immer mehr
+  // schaffen" erzaehlen; die Botschaft ist aber Konstanz.
+  var nJetzt = g7[g7.length - 1];
+  // Zielband = Tagespensum bis Streckziel, dieselben drei Zahlen wie im Balken
+  // der Countdown-Karte, damit der Plot keine vierte Wahrheit aufmacht.
+  var bandOben = py(Math.min(maxY, tz.stretch)), bandUnten = py(tz.ziel);
+  // Zukunfts-Schleier rechts von heute: erklaert die leere Flaeche, ohne dort
+  // etwas zu behaupten.
+  var zukunftFeld = '<rect x="' + hx + '" y="6" width="' + Math.max(0, W - 8 - Number(hx)).toFixed(1) +
+    '" height="' + (H1 - 18 - 6) + '" fill="var(--ink-soft)" opacity=".05"/>';
+
+  var raster = zukunftFeld +
+    '<rect x="26" y="' + bandOben.toFixed(1) + '" width="' + (W - 34) + '" height="' +
+      (bandUnten - bandOben).toFixed(1) + '" fill="var(--zone-g)" opacity=".18"/>' +
+    '<line x1="26" y1="' + bandOben.toFixed(1) + '" x2="' + (W - 8) + '" y2="' + bandOben.toFixed(1) +
+      '" stroke="var(--zone-g)" stroke-width="1" opacity=".4"/>' +
+    '<line x1="26" y1="' + py(tz.ziel).toFixed(1) + '" x2="' + (W - 8) + '" y2="' + py(tz.ziel).toFixed(1) +
+      '" stroke="var(--zone-g)" stroke-width="1.2" opacity=".7"/>' +
+    '<line x1="26" y1="' + py(tz.minimum).toFixed(1) + '" x2="' + (W - 8) + '" y2="' + py(tz.minimum).toFixed(1) +
+      '" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 4"/>' +
+    '<text x="22" y="' + (py(tz.ziel) + 3).toFixed(1) + '" text-anchor="end" class="fq-tick" font-weight="700">' + tz.ziel + '</text>' +
+    '<text x="22" y="' + (py(tz.minimum) + 3).toFixed(1) + '" text-anchor="end" class="fq-tick">' + tz.minimum + '</text>';
+
+  // Farbe = dieselbe Stufe wie die Kalenderzelle desselben Tages, damit Kalender
+  // ("Ziel erreicht?") und Plot ("wie viel war es wirklich?") nie auseinander-
+  // laufen koennen.
+  var TAG_FARBE = ["", "var(--tag-1)", "var(--tag-2)", "var(--tag-3)", "var(--tag-4)"];
+  var echteTage = tage.filter(function (t) { return t.n > 0; });
+  var punkte = echteTage.map(function (t) {
+    var s = tagesStufe(t.n, tz);
+    var dt = new Date(t.ts);
+    var r = 2.9;
+    /* Die GE-Leiter hat nur VIER Stufen: der ST-Trainer trennt "genau das
+       Streckziel" (⭐, --tag-4-ring) von "darueber" (🌈); hier sind beide
+       zusammengelegt (ROADMAP 12.08.: eine eigene Stufe fuer genau einen
+       Zahlenwert waere keine Stufe, sondern Zufall). Der Regenbogen-Ring
+       gehoert deshalb an Stufe 4 und sonst nirgendwohin - ein Ring auf
+       Stufe 3 haenge dem Tagespensum eine Auszeichnung an, die die
+       Kalenderzelle desselben Tages nicht kennt. */
+    var ring = s === 4 ? 'stroke="url(#tagRegenbogen)" stroke-width="1"'
+      : 'stroke="var(--card)" stroke-width="1"';
+    var tip = WTAG_VON_JS[dt.getDay()] + " " + kurzDatum(dt) + ": " + t.n +
+      (t.n === 1 ? " Antwort" : " Antworten") +
+      (s === 4 ? " – Streckziel geknackt!" : s === 3 ? " – Tagespensum geschafft" : "");
+    return '<circle cx="' + px(t.ts).toFixed(1) + '" cy="' + py(t.n).toFixed(1) + '" r="' + r +
+      '" fill="' + TAG_FARBE[s] + '" ' + ring + '><title>' + tip + '</title></circle>';
+  }).join("");
+
+  // Der Regenbogen lebt hier als Rand, nicht als Flaeche: auf 6 px Durchmesser
+  // wird ein sechsstufiger Verlauf zu Matsch, ein Ring bleibt lesbar. Dieselben
+  // Stops wie drueben, damit ein Streckziel-Tag in beiden Apps gleich aussieht.
+  var rbDef = echteTage.some(function (t) { return tagesStufe(t.n, tz) === 4; })
+    ? '<defs><linearGradient id="tagRegenbogen" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0%" stop-color="#ff78be"/><stop offset="20%" stop-color="#ffa55a"/>' +
+      '<stop offset="38%" stop-color="#faeb78"/><stop offset="56%" stop-color="#96ffbe"/>' +
+      '<stop offset="74%" stop-color="#78dcff"/><stop offset="100%" stop-color="#b987ff"/>' +
+      '</linearGradient></defs>' : "";
 
   var box = el("div", "fq-plot");
-  var letzter = tage[tage.length - 1];
-  box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="fq-svg" role="img" aria-label="' +
-    tage.length + (tage.length === 1 ? " Übungstag" : " Übungstage") + ", zuletzt " + letzter.n +
-    " Antworten am " + kurzDatum(new Date(letzter.ts)) + ', Tagespensum ' + tz.ziel + '">' + teile.join("") + '</svg>';
+  box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H1 + '" class="fq-svg" role="img" ' +
+    'aria-label="Geübte Antworten pro Tag als Punkte, dazu der 3- und 7-Tage-Schnitt und das Zielband">' +
+    rbDef + raster +
+    '<line x1="' + hx + '" y1="6" x2="' + hx + '" y2="' + (H1 - 18) + '" stroke="var(--line)" stroke-width="1"/>' +
+    '<polyline points="' + pfad(g3) + '" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".4" stroke-linejoin="round" stroke-linecap="round"/>' +
+    '<polyline points="' + pfad(g7) + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' +
+    punkte +
+    '<line x1="' + hx + '" y1="' + py(nJetzt).toFixed(1) + '" x2="' + ex + '" y2="' + py(nJetzt).toFixed(1) +
+      '" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="1.4" opacity=".55"/>' +
+    '<circle cx="' + hx + '" cy="' + py(nJetzt).toFixed(1) + '" r="3" fill="var(--accent)" stroke="var(--card)" stroke-width="1.5"/>' +
+    '<text x="' + (W - 8) + '" y="' + (py(nJetzt) - 7).toFixed(1) + '" text-anchor="end" class="fq-wert">' +
+      Math.round(nJetzt) + ' Antworten/Tag</text>' +
+    '<text x="26" y="' + (H1 - 5) + '" class="fq-tick">' + kurzDatum(new Date(tage[0].ts)) + '</text>' +
+    '<text x="' + hx + '" y="' + (H1 - 5) + '" text-anchor="middle" class="fq-tick">heute</text>' +
+    '<text x="' + (W - 8) + '" y="' + (H1 - 5) + '" text-anchor="end" class="fq-tick">' + KLAUSUR_DATUM + ' 🎓</text>' +
+    '</svg>';
   karte.appendChild(box);
 
   karte.appendChild(el("p", "hm-legende",
-    "Ein Punkt ist ein Übungstag, die Höhe sind deine Antworten an dem Tag – in derselben Farbe wie im Kalender. Die grüne Linie ist dein Tagespensum (" +
+    "Ein Punkt ist ein Übungstag, die Höhe sind deine Antworten an dem Tag – in derselben Farbe wie im Kalender. Die dicke Linie ist dein 7-Tage-Schnitt, die dünne der 3-Tage-Schnitt; gestrichelt geht es damit weiter bis zur Klausur, falls du so weitermachst. Die grüne Linie ist dein Tagespensum (" +
     tz.ziel + "), das Band darüber reicht bis zum Streckziel (" + tz.stretch + "). Ruhetage bekommen keinen Punkt." +
     (alt.antworten ? " " + altSatz(alt) : "")));
   return karte;
@@ -582,6 +666,66 @@ function zeitText(ts) {
   return WTAG_VON_JS[d.getDay()] + " " + kurzDatum(d) + ", " + uhr + " Uhr";
 }
 
+/* Die Aufgabe zu einer Fragen-Id finden. Der GE-Trainer hat keine Session-
+   Liste, die Runden werden aus dem Antwort-Log geschnitten - fuer die
+   Detailansicht muss die Frage darum ueber ihre Id zurueckgesucht werden. */
+function frageVon(qid) {
+  for (var i = 0; i < themen.length; i++) {
+    var t = themen[i];
+    var mc = (t.mc || []).filter(function (f) { return f.id === qid; })[0];
+    if (mc) return { thema: t, frage: mc, typ: "mc" };
+    var fr = (t.frei || []).filter(function (f) { return f.id === qid; })[0];
+    if (fr) return { thema: t, frage: fr, typ: "frei" };
+  }
+  return null;
+}
+
+// Wie eine einzelne Antwort in der Detailansicht dasteht. Nie "falsch" als
+// Wort und nie Rot - eine danebengegangene Aufgabe ist eine, die noch dran ist.
+function antwortZeichen(a) {
+  if (a.modus === "check") return a.richtig ? { z: "✓", k: "gut", w: "saß" } : { z: "↻", k: "offen", w: "kommt wieder" };
+  if (a.modus === "frei") {
+    if (a.selbsteinschaetzung === "gut") return { z: "✓", k: "gut", w: "saß" };
+    if (a.selbsteinschaetzung === "mittel") return { z: "~", k: "mittel", w: "halb" };
+    return { z: "↻", k: "offen", w: "kommt wieder" };
+  }
+  if (a.modus === "klausur" && a.max) {
+    var q = a.punkte / a.max;
+    return { z: a.punkte + "/" + a.max, k: q >= 1 ? "gut" : q > 0 ? "mittel" : "offen", w: a.punkte + " von " + a.max + " Punkten" };
+  }
+  return { z: "·", k: "mittel", w: "" };
+}
+
+/* ---------- Zuletzt geuebt ----------
+   Gegenstueck zur Zuletzt-Liste im ST-Trainer, aber abgeleitet: der GE-Trainer
+   fuehrt keine Session-Liste, die Runden kommen aus dem Antwort-Log
+   (stats.letzteRunden).
+
+   Seit dem 12.08. sind die Zeilen ANTIPPBAR (Jennifer: "das Zuletzt-Trainieren,
+   und auch die Ansicht, weil man sie auch ansehen soll"). Drueben oeffnet ein
+   Tipp die Auswertung der Session, hier die Runden-Ansicht mit allen Aufgaben,
+   die in dem Zeitfenster drankamen. Geloescht wird hier nichts - der ST-Trainer
+   haengt an jede Zeile einen Papierkorb, das bleibt hier bewusst weg: der
+   GE-Trainer hat keine Sessions, ein Loeschen muesste im Antwort-Log
+   herumschneiden, und Datenerhalt geht vor. */
+
+function zuletztZeile(r, onKlick) {
+  var zeile = el("button", "zuletzt-zeile");
+  zeile.appendChild(el("span", "zuletzt-icon", r.icon));
+  var box = el("div", "zuletzt-text");
+  box.appendChild(el("b", null, zeitText(r.bis)));
+  var was = r.n + (r.n === 1 ? " Antwort · " : " Antworten · ") + r.name + (r.gemischt ? " u. a." : "");
+  if (r.themen.length) {
+    was += " · " + r.themen.slice(0, 2).join(", ") + (r.themen.length > 2 ? " +" + (r.themen.length - 2) : "");
+  }
+  box.appendChild(el("span", null, was));
+  zeile.appendChild(box);
+  if (r.quote != null) zeile.appendChild(quotePille(r.quote));
+  zeile.appendChild(el("span", "zuletzt-pfeil", "›"));
+  zeile.addEventListener("click", function () { onKlick(r); });
+  return zeile;
+}
+
 function zuletztKarte(themen) {
   var runden = Stats.letzteRunden(themen, 5);
   if (!runden.length) return null;
@@ -590,21 +734,72 @@ function zuletztKarte(themen) {
   karte.appendChild(el("h3", null, "Zuletzt geübt"));
 
   var liste = el("div", "zuletzt-liste");
-  runden.forEach(function (r) {
-    var zeile = el("div", "zuletzt-zeile");
-    zeile.appendChild(el("span", "zuletzt-icon", r.icon));
-    var box = el("div", "zuletzt-text");
-    box.appendChild(el("b", null, zeitText(r.bis)));
-    var was = r.n + (r.n === 1 ? " Antwort · " : " Antworten · ") + r.name + (r.gemischt ? " u. a." : "");
-    if (r.themen.length) {
-      was += " · " + r.themen.slice(0, 2).join(", ") + (r.themen.length > 2 ? " +" + (r.themen.length - 2) : "");
-    }
-    box.appendChild(el("span", null, was));
+  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde)); });
+  karte.appendChild(liste);
+
+  var alle = Stats.letzteRunden(themen, 999).length;
+  if (alle > runden.length) {
+    var mehr = el("button", "knopf sekundaer", "Alle " + alle + " Runden ansehen ›");
+    mehr.addEventListener("click", function () { zeigeVerlauf(); });
+    karte.appendChild(mehr);
+  }
+  return karte;
+}
+
+function zeigeVerlauf() {
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  var zurueck = el("button", "zurueck", "← Startseite");
+  zurueck.addEventListener("click", function () { zeige("start"); });
+  app.appendChild(zurueck);
+
+  app.appendChild(el("h1", null, "Deine Runden"));
+  var runden = Stats.letzteRunden(themen, 999);
+  var karte = el("div", "karte zuletzt-karte");
+  var liste = el("div", "zuletzt-liste");
+  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde)); });
+  karte.appendChild(liste);
+  app.appendChild(karte);
+  app.appendChild(el("p", "hm-legende",
+    "Eine Runde ist alles, was ohne längere Pause hintereinander lief. Antippen zeigt, welche Aufgaben drankamen."));
+}
+
+function zeigeRunde(r) {
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  var zurueck = el("button", "zurueck", "← Zurück");
+  zurueck.addEventListener("click", function () { zeige("start"); });
+  app.appendChild(zurueck);
+
+  var kopf = el("div", "karte");
+  var kz = el("div", "thema-kopfzeile");
+  kz.appendChild(el("span", "thema-titel", zeitText(r.bis)));
+  if (r.quote != null) kz.appendChild(quotePille(r.quote));
+  kopf.appendChild(kz);
+  kopf.appendChild(el("div", "thema-meta", r.icon + " " + r.name + (r.gemischt ? " u. a." : "") +
+    " · " + r.n + (r.n === 1 ? " Antwort" : " Antworten") +
+    (r.themen.length ? " · " + r.themen.join(", ") : "")));
+  app.appendChild(kopf);
+
+  var liste = el("div", "karte runde-liste");
+  r.antworten.forEach(function (a) {
+    var z = antwortZeichen(a);
+    var zeile = el("div", "runde-zeile");
+    zeile.appendChild(el("span", "runde-zeichen " + z.k, z.z));
+    var box = el("div", "runde-text");
+    var gefunden = frageVon(a.qid);
+    box.appendChild(el("b", null, gefunden ? gefunden.frage.frage : "Aufgabe aus einer früheren Fassung"));
+    var meta = [];
+    if (gefunden) meta.push(gefunden.thema.titel);
+    if (a.afb) meta.push("AFB " + ["", "I", "II", "III"][a.afb]);
+    if (z.w) meta.push(z.w);
+    box.appendChild(el("span", null, meta.join(" · ")));
     zeile.appendChild(box);
     liste.appendChild(zeile);
   });
-  karte.appendChild(liste);
-  return karte;
+  app.appendChild(liste);
+  app.appendChild(el("p", "hm-legende",
+    "Nur zum Ansehen. ↻ heißt: die Aufgabe kommt wieder – sie steht in deinem Wiederholen-Stapel."));
 }
 
 /* Eine Zeile der Tagesliste. Offen und erledigt sprechen dieselbe Sprache wie
