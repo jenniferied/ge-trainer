@@ -1010,6 +1010,7 @@ p { margin: 0 0 var(--sp-3); }
   padding: 13px 14px 14px; margin: 0 0 12px; text-align: center; }
 /* Der Storch ist SVG, keine Textgrafik — darum keine font/white-space-Regeln.
    Breite in ch statt px, damit er bei groesserer Schrift mitwaechst. */
+.mk-wechsel { margin-top: 5px; }
 .mk-storch { display: block; margin: 0 auto 8px; width: 14ch; max-width: 52%; }
 .mk-storch svg { display: block; width: 100%; height: auto; }
 .mk-ank-kopf { font-weight: 700; font-size: 1.02rem; }

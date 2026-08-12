@@ -306,12 +306,17 @@ function standKnoten(tz, neu) {
   var meta = el("p", "mk-meta");
   meta.innerHTML = "<b>" + st.herzen + "</b> ♥" + (st.sterne ? " · <b>" + st.sterne + "</b> ★" : "") +
     " aus " + st.tage + " Übungstagen — " +
-    (naechste ? "noch <b>" + (naechste.ab - st.herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") + "." + heute + " · ";
-  var wechseln = knopf("anderes Ei", "mk-link", function () {
+    (naechste ? "noch <b>" + (naechste.ab - st.herzen) + "</b> ♥ bis es weitergeht" : "gleich passiert was") + "." + heute;
+  text.appendChild(meta);
+  // Der Wechsel-Knopf stand frueher am Ende des Fliesstexts hinter einem
+  // Mittelpunkt und war praktisch unauffindbar. Eigene Zeile — auffindbar,
+  // aber weiter dezent: das Aussuchen soll ein Moment bleiben, kein Menue.
+  var wechseln = knopf("anderes Ei aussuchen", "mk-link", function () {
     blaetterIdx = eiIndex(); state.eiVariante = null; speichern(); angesehen = true; neu();
   });
-  meta.appendChild(wechseln);
-  text.appendChild(meta);
+  var wechselZeile = el("div", "mk-wechsel");
+  wechselZeile.appendChild(wechseln);
+  text.appendChild(wechselZeile);
   zeile.appendChild(text);
   return zeile;
 }
