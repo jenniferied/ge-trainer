@@ -182,6 +182,41 @@ p { margin: 0 0 var(--sp-3); }
 }
 .thema-meta { color: var(--ink-soft); font-size: .88rem; margin-top: 4px; }
 
+/* ---------- Karten-Zustaende (Jennifer 12.08.) ----------
+   Ungeuebt zieht den Blick, Abgearbeitetes fuehlt sich gut an. Beides ohne
+   Mahnfarbe: KEIN Orange fuer "noch nicht geuebt" - Orange heisst in dieser App
+   niedrige Quote, und ungeuebt ist keine niedrige Quote. Auffaellig ist deshalb
+   der rot-lila Karten-Akzent (--glimmer-1), die Aufmerksamkeitsfarbe der App.
+   Gruen fuer "durchgearbeitet" ist erlaubt - Gruen heisst hier Erfolg. Der
+   Regenbogen bleibt dem Kalender vorbehalten. */
+.thema-karte.neu {
+  border-color: color-mix(in srgb, var(--glimmer-1) 60%, var(--line));
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--glimmer-1) 9%, transparent), transparent 55%),
+    var(--card);
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--glimmer-1) 28%, transparent);
+}
+.thema-karte.fertig {
+  border-color: color-mix(in srgb, var(--ok) 45%, var(--line));
+  background: linear-gradient(120deg, color-mix(in srgb, var(--ok) 8%, transparent), transparent 55%), var(--card);
+}
+.zustand-badge {
+  font-size: .7rem; font-weight: 700; letter-spacing: .02em;
+  border-radius: 999px; padding: 1px 8px; white-space: nowrap;
+}
+.zustand-badge.neu { color: var(--glimmer-1); border: 1px solid currentColor; }
+.zustand-badge.fertig {
+  color: var(--ok); background: var(--ok-bg); border: 1px solid transparent;
+  /* Der kleine Belohnungsmoment: der Haken poppt einmal auf, wenn die Karte
+     erscheint. Kurz und leise - Rose uebt am Handy, die App bleibt ruhig. */
+  animation: haken-pop .42s cubic-bezier(.2, 1.5, .4, 1) both;
+}
+@keyframes haken-pop {
+  0% { transform: scale(.5); opacity: 0; }
+  70% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .balken {
   height: 7px; border-radius: 999px; background: var(--paper-2);
   overflow: hidden; margin-top: var(--sp-2);
@@ -678,6 +713,29 @@ p { margin: 0 0 var(--sp-3); }
 }
 .hm-legende { font-size: .78rem; color: var(--ink-soft); margin: var(--sp-3) 0 0; }
 
+/* ---------- Uebungsfrequenz als Punkte (Jennifer 12.08.) ----------
+   Ein Punkt je Uebungstag, Farbe aus derselben Tagesleiter wie die Kalender-
+   zellen darueber. Bewusst keine Balken und keine geglaettete Kurve - der echte
+   Tageswert soll dastehen. Das SVG skaliert ueber die volle Kartenbreite. */
+.fq-plot { margin-top: var(--sp-3); }
+.fq-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fq-tick { font-size: 9px; fill: var(--ink-soft); font-family: "Karla", system-ui, sans-serif; }
+
+/* ---------- Zuletzt geuebt ----------
+   Nur zum Ansehen: keine Klickflaeche, kein Loeschen-Knopf (anders als im
+   ST-Trainer). Grabsteine neben Roses echtem Lernstand sind nichts fuer eine
+   Uebersichtsliste. */
+.zuletzt-liste { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-2); }
+.zuletzt-zeile {
+  display: flex; align-items: flex-start; gap: var(--sp-3);
+  padding: var(--sp-2) 0; border-top: 1px solid var(--line);
+}
+.zuletzt-zeile:first-child { border-top: none; padding-top: 0; }
+.zuletzt-icon { font-size: 1.1rem; line-height: 1.3; flex-shrink: 0; }
+.zuletzt-text { display: flex; flex-direction: column; min-width: 0; }
+.zuletzt-text b { font-size: .92rem; }
+.zuletzt-text span { font-size: .8rem; color: var(--ink-soft); }
+
 /* =======================================================================
    Quoten-Farbleiter q1..q5 (Jennifer 12.08.) - dieselbe Sprache wie die
    Datumsuebersicht, damit die App EINE Farbleiter hat. Stufen und Schwellen
@@ -757,7 +815,13 @@ p { margin: 0 0 var(--sp-3); }
 /* Gruen bleibt dem Erledigten vorbehalten; "offen" bekommt den Lila-Akzent. */
 .heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
 :root[data-theme="hell"] .heute-zeile:not(.erledigt) .heute-status { color: var(--glimmer-1); }
-.heute-zeile.erledigt .heute-status { color: var(--ok); }
+/* Erledigt bekommt denselben kleinen Pop wie der Haken auf einer Themen-Karte -
+   ein Belohnungsmoment, kein Feuerwerk. */
+.heute-zeile.erledigt .heute-status {
+  color: var(--ok);
+  animation: haken-pop .42s cubic-bezier(.2, 1.5, .4, 1) both;
+}
+.heute-zeile.erledigt { border-color: color-mix(in srgb, var(--ok) 32%, var(--line)); }
 .heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
 
 /* ---------- Uebungsmodi als Icon-Kacheln ---------- */
@@ -782,9 +846,33 @@ p { margin: 0 0 var(--sp-3); }
 .kachel b { font-size: .92rem; }
 .kachel-klein { font-size: .72rem; color: var(--ink-soft); line-height: 1.2; }
 
+/* ---------- Querlink zum ST-Trainer (Jennifer 12.08.) ----------
+   Terracotta ist die Identitaetsfarbe des ST-Trainers, so zeigen die beiden Apps
+   optisch aufeinander. Kontrast gerechnet, nicht geschaetzt: #d0703d auf der
+   Nachtkarte 4,8:1, #b4552d auf dem hellen Papier 4,9:1 - beides ueber 4,5. */
+:root { --st-farbe: #d0703d; }
+:root[data-theme="hell"] { --st-farbe: #b4552d; }
+
+.kopf-aktionen { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.quer-link {
+  display: flex; flex-direction: column; align-items: flex-end;
+  text-decoration: none; text-align: right; line-height: 1.25;
+  color: var(--st-farbe);
+  border: 1px solid color-mix(in srgb, var(--st-farbe) 45%, transparent);
+  border-radius: 10px; padding: 4px 9px;
+  background: color-mix(in srgb, var(--st-farbe) 8%, var(--card));
+}
+.quer-link b { font-size: .78rem; white-space: nowrap; }
+.quer-klein { font-size: .64rem; color: var(--ink-soft); white-space: nowrap; }
+/* Zustand drueben - gruen nur, wenn heute drueben schon geuebt wurde. */
+.quer-stand { font-size: .64rem; color: var(--ink-soft); white-space: nowrap; }
+.quer-stand.frisch { color: var(--ok); font-weight: 700; }
+
 @media (prefers-reduced-motion: reduce) {
   /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand
      darf nicht verschwinden, nur weil Bewegung reduziert ist. */
   .hm-s4 { animation: none; box-shadow: 0 0 12px -1px #1fae52, 0 0 22px -5px #86efac; }
   .heute-zeile:active, .kachel:active { transform: none; }
+  /* Der Haken bleibt sichtbar, er hoert nur auf zu huepfen. */
+  .zustand-badge.fertig, .heute-zeile.erledigt .heute-status { animation: none; }
 }

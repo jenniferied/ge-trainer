@@ -105,6 +105,103 @@ export function heuteAntworten() {
   return e ? e.n : 0;
 }
 
+/* ---------- Uebungstage als Punkte ----------
+   Eine Zeile je Tag, an dem tatsaechlich geuebt wurde - aufsteigend sortiert.
+   Ruhetage kommen bewusst NICHT vor: eine Reihe von Nullpunkten auf der Achse
+   liest sich wie eine Reihe von Vorwuerfen, und die Ruhetage stehen schon als
+   😴 im Kalender darueber. */
+export function uebungsTage() {
+  var akt = aktivitaetProTag();
+  return Object.keys(akt).map(Number).sort(function (a, b) { return a - b; })
+    .filter(function (ts) { return akt[ts].n > 0; })
+    .map(function (ts) { return { ts: ts, n: akt[ts].n, gut: akt[ts].gut }; });
+}
+
+/* ---------- Fortschritt ohne Datum ----------
+   Rose hat vor dem Antwort-Log schon geuebt (die App gibt es seit Juli, das Log
+   erst seit dem 10.08.). Dieser Fortschritt liegt nur als mc/frei-Zaehler vor -
+   ohne Zeitstempel. Er laesst sich also weder in den Kalender noch in den
+   Punkte-Plot einsortieren, und geraten wird hier nichts: er wird als das
+   ausgewiesen, was er ist, naemlich undatiert.
+
+   Erkennungsregel: ein gespeicherter Stand, zu dem es KEINEN Log-Eintrag gibt.
+   Dieselbe Unterscheidung benutzt sync.js beim Merge (Log gewinnt, Alt-Stand
+   fuellt die Luecken).
+
+   Einheit ist die Antwort, nicht die Frage - sonst stuende neben den
+   Tageszahlen des Kalenders eine Zahl in einer anderen Waehrung. Bei offenen
+   Aufgaben gibt es keinen Zaehler, da zaehlt eine Bearbeitung als eine Antwort. */
+export function altFortschritt(themen) {
+  var imLog = Object.create(null);
+  state.antwortLog.forEach(function (a) { if (a && a.qid) imLog[a.qid] = true; });
+  var fragen = 0, antworten = 0;
+  (themen || []).forEach(function (t) {
+    (t.mc || []).forEach(function (f) {
+      var s = state.mc[f.id];
+      if (!s || imLog[f.id]) return;
+      fragen++;
+      antworten += Math.max(1, (s.richtig || 0) + (s.falsch || 0));
+    });
+    (t.frei || []).forEach(function (f) {
+      if (!state.frei[f.id] || imLog[f.id]) return;
+      fragen++;
+      antworten++;
+    });
+  });
+  return { fragen: fragen, antworten: antworten };
+}
+
+/* ---------- Zuletzt geuebt ----------
+   Der GE-Trainer fuehrt keine Session-Liste wie der ST-Trainer (dort gibt es
+   state.sessions). Hier wird sie aus dem Antwort-Log abgeleitet: alles, was
+   ohne laengere Pause hintereinander beantwortet wurde, ist eine Runde.
+   Bewusst nur LESEN - kein Loeschen-Knopf je Zeile wie drueben. Loeschen setzt
+   Grabsteine, und Grabsteine neben Roses echtem Lernstand sind genau das
+   Risiko, das hier nichts zu suchen hat. */
+
+var RUNDEN_PAUSE = 30 * 60000;   // 30 Minuten Abstand = neue Runde
+
+var MODUS_TEXT = {
+  check: { icon: "📝", name: "Konzept-Check" },
+  frei: { icon: "✍️", name: "Frei üben" },
+  klausur: { icon: "📄", name: "Klausur-Simulation" },
+  spiel: { icon: "🎯", name: "Spiele" }
+};
+
+export function letzteRunden(themen, max) {
+  var titel = {};
+  (themen || []).forEach(function (t) { titel[t.id] = t.titel; });
+
+  var runden = [];
+  var aktuell = null;
+  state.antwortLog.forEach(function (a) {
+    if (!a || !a.ts) return;
+    if (!aktuell || a.ts - aktuell.bis > RUNDEN_PAUSE) {
+      aktuell = { von: a.ts, bis: a.ts, n: 0, modi: {}, themen: {} };
+      runden.push(aktuell);
+    }
+    aktuell.bis = a.ts;
+    aktuell.n++;
+    var m = MODUS_TEXT[a.modus] ? a.modus : "check";
+    aktuell.modi[m] = (aktuell.modi[m] || 0) + 1;
+    if (a.thema && titel[a.thema]) aktuell.themen[a.thema] = (aktuell.themen[a.thema] || 0) + 1;
+  });
+
+  return runden.reverse().slice(0, max || 5).map(function (r) {
+    var haupt = Object.keys(r.modi).sort(function (a, b) { return r.modi[b] - r.modi[a]; })[0] || "check";
+    var themenListe = Object.keys(r.themen)
+      .sort(function (a, b) { return r.themen[b] - r.themen[a]; })
+      .map(function (id) { return titel[id]; });
+    return {
+      von: r.von, bis: r.bis, n: r.n,
+      icon: MODUS_TEXT[haupt].icon,
+      name: MODUS_TEXT[haupt].name,
+      gemischt: Object.keys(r.modi).length > 1,
+      themen: themenListe
+    };
+  });
+}
+
 /* ---------- Tagesziel ----------
    Gegenstueck zum ST-Trainer (dort core.js tagesPlan), aber mit EIGENEN Zahlen:
    andere Klausur (10.09.), anderer Korpus, andere Restzeit. Die Rechnung ist

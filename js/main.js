@@ -7,7 +7,7 @@ import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, konfe
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
-import { syncKarte, syncStart } from "./sync.js";
+import { syncKarte, syncStart, fremdZuletzt } from "./sync.js";
 
 var themen = [];
 
@@ -70,6 +70,80 @@ function tageBisKlausur() {
 function beruehrt(thema) {
   return (thema.mc || []).some(function (f) { return !!state.mc[f.id]; }) ||
     (thema.frei || []).some(function (f) { return !!state.frei[f.id]; });
+}
+
+/* ---------- Zustand einer Themen-Karte (Jennifer, 12.08.) ----------
+   "Wenn die noch nicht geuebt wurden, dann soll das richtig auffaellig sein.
+   Wenn das abgearbeitet wurde, dann soll das richtig satisfying sein."
+
+   Drei Zustaende, an EINER Zahl festgemacht: wie viele Aufgaben des Themas sind
+   schon einmal beantwortet worden?
+     keine   -> "neu"     der naechste sinnvolle Schritt, zieht den Blick
+     manche  -> "laeuft"  unauffaellig, die Quote erzaehlt den Rest
+     alle    -> "fertig"  einmal komplett durch, mit Haken und kurzem Pop
+
+   Bewusst NICHT an der Quote festgemacht: sonst koennte ein wackliges Thema den
+   Erledigt-Zustand nie erreichen, und aus einer Belohnung wuerde ein Urteil.
+   "Fertig" heisst hier ehrlich "einmal komplett angeschaut", nicht "sitzt".
+
+   Farbe: "neu" bekommt den rot-lila Karten-Akzent, NICHT Orange - Orange steht
+   in dieser App fuer eine niedrige Quote, und ungeuebt ist keine niedrige Quote
+   (ARCHITEKTUR: "Nicht angefangen != schwach"). Gruen bleibt dem Erfolg
+   vorbehalten und darf hier deshalb stehen; der Regenbogen nicht, den gibt es
+   nur im Kalender. */
+function kartenZustand(bearbeitet, gesamt) {
+  if (!gesamt) return "laeuft";
+  if (!bearbeitet) return "neu";
+  return bearbeitet >= gesamt ? "fertig" : "laeuft";
+}
+
+// Das Abzeichen zum Zustand. Der Haken poppt einmal kurz auf - das ist der
+// Belohnungsmoment, den Jennifer gemeint hat. Bewusst klein: Rose uebt am
+// Handy, ein Konfetti-Gewitter je erledigtem Thema waere Krach.
+function zustandBadge(zustand) {
+  if (zustand === "neu") return el("span", "zustand-badge neu", "noch nicht geübt");
+  if (zustand === "fertig") return el("span", "zustand-badge fertig", "✓ durchgearbeitet");
+  return null;
+}
+
+/* ---------- Querlink zum ST-Trainer (Jennifer, 12.08.) ----------
+   Rose hat zwei Klausuren und zwei Trainer. Oben rechts steht deshalb der Weg
+   hinueber - klar beschriftet, damit sie weiss, wo sie landet, und in der
+   Identitaetsfarbe des ST-Trainers (Terracotta), damit die beiden Apps optisch
+   aufeinander zeigen. Der Rueckweg wird drueben spiegelbildlich gebaut.
+
+   Darunter, wenn es sich abrufen laesst, eine Zeile zum Zustand drueben:
+   heute schon geuebt / zuletzt vor N Tagen. Die kommt aus dem Zeitstempel der
+   letzten lernstand-Zeile unter dem ST-Code - nur gelesen, nie geschrieben
+   (sync.fremdZuletzt). Klappt der Abruf nicht, bleibt der Link genau so
+   nuetzlich, nur ohne die Zeile. */
+
+var ST_URL = "https://jenniferied.github.io/st-trainer/";
+var ST_CODE = "rose";
+
+function querLink() {
+  var a = document.createElement("a");
+  a.className = "quer-link";
+  a.href = ST_URL;
+  a.appendChild(el("b", null, "ST-Trainer ↗"));
+  a.appendChild(el("span", "quer-klein", "Schultheorie · 18.09."));
+  a.setAttribute("aria-label", "Zum Schultheorie-Trainer, Roses anderer Klausur am 18.09.");
+
+  var stand = el("span", "quer-stand");
+  stand.hidden = true;
+  a.appendChild(stand);
+
+  fremdZuletzt(ST_CODE).then(function (ts) {
+    if (!ts || !a.isConnected) return;
+    var tag = new Date(ts); tag.setHours(0, 0, 0, 0);
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var diff = Math.round((heute.getTime() - tag.getTime()) / 86400000);
+    if (diff <= 0) { stand.textContent = "heute schon geübt"; stand.classList.add("frisch"); }
+    else if (diff === 1) stand.textContent = "zuletzt gestern";
+    else stand.textContent = "zuletzt vor " + diff + " Tagen";
+    stand.hidden = false;
+  });
+  return a;
 }
 
 // Vorbereitungsstand ueber den ganzen Korpus: was beim letzten Mal saß.
@@ -192,6 +266,17 @@ var WTAG_VON_JS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
 function kurzDatum(d) { return d.getDate() + "." + (d.getMonth() + 1) + "."; }
 
+/* Die Tagesleiter an EINER Stelle: Kalenderzelle und Punkte-Plot muessen
+   denselben Tag in derselben Farbe zeigen, sonst waeren es zwei Skalen. */
+function tagesStufe(n, tz) {
+  if (!n) return 0;               // Ruhetag
+  if (n < tz.minimum) return 1;   // orange
+  if (n < tz.ziel) return 2;      // gelb
+  if (n < tz.stretch) return 3;   // gruen
+  return 4;                       // Regenbogen
+}
+var STUFEN_FARBE = ["var(--line)", "var(--zone-o)", "var(--zone-y)", "var(--zone-g)", "url(#ge-regenbogen)"];
+
 function wegKarte(tz) {
   var restTage = tageBisKlausur();
   if (restTage < 0) return null;
@@ -215,14 +300,7 @@ function wegKarte(tz) {
   var raster = el("div", "hm-raster");
   WOCHENTAGE.forEach(function (w) { raster.appendChild(el("span", "hm-wtag", w)); });
 
-  // Stufen = dieselben Zonen wie der Balken oben (Leiter im Kopf-Kommentar).
-  function stufe(n) {
-    if (!n) return 0;               // Ruhetag
-    if (n < tz.minimum) return 1;   // orange
-    if (n < tz.ziel) return 2;      // gelb
-    if (n < tz.stretch) return 3;   // gruen
-    return 4;                       // Regenbogen auf tiefem Gruen
-  }
+  var stufe = function (n) { return tagesStufe(n, tz); };
 
   for (var d = new Date(start); d.getTime() <= ende.getTime(); d.setDate(d.getDate() + 1)) {
     var ts = d.getTime();
@@ -260,6 +338,175 @@ function wegKarte(tz) {
   karte.appendChild(raster);
   karte.appendChild(el("p", "hm-legende",
     "Vergangene Tage zeigen deine Antworten, kommende das Datum. 😴 heißt Ruhetag, die sind eingeplant. Orange, gelb, grün – und Regenbogen, wenn du über das Streckziel hinaus bist."));
+  return karte;
+}
+
+/* ---------- Uebungsfrequenz als Punkte ----------
+   Jennifer, 12.08.: "bei dem, wie viel du uebst, da sollte auch das tatsaechlich
+   Geuebte drauf sein, als Punkte geplottet mit den entsprechenden Farben."
+
+   Ein Punkt je Uebungstag, Hoehe = die Antworten dieses Tages, Farbe = dieselbe
+   Tagesleiter wie im Kalender darueber. Bewusst KEINE Balken und KEINE
+   geglaettete Linie: der ST-Trainer zeigt dort 3- und 7-Tage-Schnitte, und ein
+   Schnitt erzaehlt einen ruhigen Verlauf, den es so nie gab. Hier soll der echte
+   Wert stehen - ein Tag mit 40 Antworten ist ein Punkt weit oben, und daneben
+   darf Luft sein.
+
+   Der Plot ERSETZT den Kalender nicht: der Kalender beantwortet "Ziel erreicht?",
+   der Plot "wie viel war es wirklich?".
+
+   Ruhetage bekommen keinen Punkt (siehe stats.uebungsTage) - sonst laege eine
+   Reihe Nullen auf der Achse und das saehe aus wie eine Mahnung. */
+
+function frequenzKarte(tz, themen) {
+  var tage = Stats.uebungsTage();
+  var alt = Stats.altFortschritt(themen);
+  if (!tage.length && !alt.antworten) return null;
+
+  var karte = el("div", "karte freq-karte");
+  karte.appendChild(el("h3", null, "Wie viel du übst"));
+
+  if (!tage.length) {
+    // Nur undatierter Alt-Fortschritt: kein Plot, aber die Arbeit wird benannt.
+    karte.appendChild(el("p", "hm-legende", altSatz(alt, true) +
+      " Sobald du hier übst, wächst darunter eine Punktereihe mit deinen Tagen."));
+    return karte;
+  }
+
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  var ersterTs = tage[0].ts;
+  var letzterTs = Math.max(tage[tage.length - 1].ts, heute.getTime());
+
+  var W = 340, H = 132, x0 = 28, x1 = W - 12, yBoden = H - 22, yOben = 12;
+  var hoechster = tage.reduce(function (a, t) { return Math.max(a, t.n); }, 0);
+  // Der Plot soll das Zielband immer zeigen, auch an schwachen Tagen - sonst
+  // haengt der einzige Punkt oben am Rand und man sieht nicht, wo er steht.
+  var maxY = Math.max(tz.stretch, hoechster) * 1.12;
+  var y = function (v) { return yBoden - (v / maxY) * (yBoden - yOben); };
+  var spanne = letzterTs - ersterTs;
+  // Ein einziger Uebungstag ist der Normalfall am Anfang: dann steht der Punkt
+  // in der Mitte statt am linken Rand zu kleben.
+  var x = spanne > 0
+    ? function (ts) { return x0 + ((ts - ersterTs) / spanne) * (x1 - x0); }
+    : function () { return (x0 + x1) / 2; };
+
+  var teile = [];
+  // Der Verlauf spannt sich ueber das Rechteck um den Kreis - vom Rechteck sieht
+  // man aber nur die eingeschriebene Scheibe, also grob die mittleren 70 % der
+  // Diagonalen. Werden die Stops auf 0..100 % gelegt, bleiben Rot und Violett
+  // in den Ecken haengen und der Punkt sieht gelbgruen aus. Deshalb 15..85 %:
+  // dann liegt der ganze Regenbogen im sichtbaren Teil.
+  teile.push('<defs><linearGradient id="ge-regenbogen" x1="0" y1="1" x2="1" y2="0">' +
+    ['#ff6b7a', '#ffb46b', '#ffe873', '#4ade80', '#5ad7ff', '#b98cff']
+      .map(function (f, i, arr) { return '<stop offset="' + (15 + 70 * i / (arr.length - 1)).toFixed(1) + '%" stop-color="' + f + '"/>'; })
+      .join("") + '</linearGradient></defs>');
+
+  // Zielband und Etappen als ruhige Hilfslinien - dieselben drei Zahlen wie im
+  // Balken der Countdown-Karte, damit der Plot keine vierte Wahrheit aufmacht.
+  teile.push('<rect x="' + x0 + '" y="' + y(tz.stretch).toFixed(1) + '" width="' + (x1 - x0) +
+    '" height="' + (y(tz.ziel) - y(tz.stretch)).toFixed(1) + '" fill="var(--zone-g)" opacity=".14"/>');
+  [
+    { v: tz.ziel, stark: true },
+    { v: tz.minimum, stark: false }
+  ].forEach(function (linie) {
+    teile.push('<line x1="' + x0 + '" y1="' + y(linie.v).toFixed(1) + '" x2="' + x1 + '" y2="' + y(linie.v).toFixed(1) +
+      '" stroke="' + (linie.stark ? "var(--zone-g)" : "var(--line)") + '" stroke-width="1"' +
+      (linie.stark ? ' opacity=".7"' : ' stroke-dasharray="4 4"') + '/>');
+    teile.push('<text x="' + (x0 - 5) + '" y="' + (y(linie.v) + 3.5).toFixed(1) + '" text-anchor="end" class="fq-tick"' +
+      (linie.stark ? ' font-weight="700"' : '') + '>' + linie.v + '</text>');
+  });
+  teile.push('<line x1="' + x0 + '" y1="' + yBoden + '" x2="' + x1 + '" y2="' + yBoden + '" stroke="var(--line)" stroke-width="1"/>');
+
+  tage.forEach(function (t) {
+    var s = tagesStufe(t.n, tz);
+    var d = new Date(t.ts);
+    var cx = x(t.ts).toFixed(1), cy = y(t.n).toFixed(1);
+    // Streckziel-Tage sind groesser. Ein 9-px-Punkt zeigt von einem Verlauf nur
+    // einen Farbausschnitt und saehe dann einfarbig aus - mit mehr Flaeche ist
+    // der Regenbogen wirklich einer, und der Tag hebt sich ab wie im Kalender.
+    var r = s === 4 ? 6.5 : 5;
+    if (s === 4) teile.push('<circle cx="' + cx + '" cy="' + cy + '" r="10" fill="var(--zone-top)" opacity=".28"/>');
+    teile.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' +
+      STUFEN_FARBE[s] + '" stroke="var(--card)" stroke-width="1.5"><title>' +
+      WTAG_VON_JS[d.getDay()] + " " + kurzDatum(d) + ": " + t.n + (t.n === 1 ? " Antwort" : " Antworten") +
+      (s === 4 ? " – Streckziel geknackt" : s === 3 ? " – Tagespensum geschafft" : "") +
+      '</title></circle>');
+  });
+
+  if (spanne > 0) {
+    teile.push('<text x="' + x0 + '" y="' + (H - 6) + '" class="fq-tick">' + kurzDatum(new Date(ersterTs)) + '</text>');
+    teile.push('<text x="' + x1 + '" y="' + (H - 6) + '" text-anchor="end" class="fq-tick">heute</text>');
+  } else {
+    // Erster Uebungstag ist heute: zwei Beschriftungen fuer denselben Tag waeren
+    // nur verwirrend.
+    teile.push('<text x="' + ((x0 + x1) / 2) + '" y="' + (H - 6) + '" text-anchor="middle" class="fq-tick">heute</text>');
+  }
+
+  var box = el("div", "fq-plot");
+  var letzter = tage[tage.length - 1];
+  box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="fq-svg" role="img" aria-label="' +
+    tage.length + (tage.length === 1 ? " Übungstag" : " Übungstage") + ", zuletzt " + letzter.n +
+    " Antworten am " + kurzDatum(new Date(letzter.ts)) + ', Tagespensum ' + tz.ziel + '">' + teile.join("") + '</svg>';
+  karte.appendChild(box);
+
+  karte.appendChild(el("p", "hm-legende",
+    "Ein Punkt ist ein Übungstag, die Höhe sind deine Antworten an dem Tag – in derselben Farbe wie im Kalender. Die grüne Linie ist dein Tagespensum (" +
+    tz.ziel + "), das Band darüber reicht bis zum Streckziel (" + tz.stretch + "). Ruhetage bekommen keinen Punkt." +
+    (alt.antworten ? " " + altSatz(alt) : "")));
+  return karte;
+}
+
+// Ehrlicher Satz ueber den Fortschritt aus der Zeit vor dem Antwort-Log.
+// Der ist real, aber undatiert - er wird deshalb benannt und nicht auf ein
+// geratenes Datum gesetzt.
+function altSatz(alt, allein) {
+  var zahl = alt.antworten + (alt.antworten === 1 ? " Antwort" : " Antworten") +
+    " (" + alt.fragen + (alt.fragen === 1 ? " Frage" : " Fragen") + ")";
+  return (allein
+    ? "Aus der Zeit vor dem Verlauf sind " + zahl + " gespeichert."
+    : "Dazu kommen " + zahl + " aus der Zeit vor dem Verlauf.") +
+    " Die tragen kein Datum und stehen deshalb in keinem Punkt – gezählt sind sie trotzdem.";
+}
+
+/* ---------- Zuletzt geuebt ----------
+   Gegenstueck zur Zuletzt-Liste im ST-Trainer, aber abgeleitet: der GE-Trainer
+   fuehrt keine Session-Liste, die Runden kommen aus dem Antwort-Log
+   (stats.letzteRunden). Bewusst nur zum Ansehen - der ST-Trainer haengt an jede
+   Zeile einen Loeschen-Knopf, das bleibt hier weg. */
+
+function zeitText(ts) {
+  var d = new Date(ts);
+  var tag = new Date(ts); tag.setHours(0, 0, 0, 0);
+  var heute = new Date(); heute.setHours(0, 0, 0, 0);
+  var diff = Math.round((heute.getTime() - tag.getTime()) / 86400000);
+  var uhr = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+  if (diff === 0) return "Heute, " + uhr + " Uhr";
+  if (diff === 1) return "Gestern, " + uhr + " Uhr";
+  return WTAG_VON_JS[d.getDay()] + " " + kurzDatum(d) + ", " + uhr + " Uhr";
+}
+
+function zuletztKarte(themen) {
+  var runden = Stats.letzteRunden(themen, 5);
+  if (!runden.length) return null;
+
+  var karte = el("div", "karte zuletzt-karte");
+  karte.appendChild(el("h3", null, "Zuletzt geübt"));
+
+  var liste = el("div", "zuletzt-liste");
+  runden.forEach(function (r) {
+    var zeile = el("div", "zuletzt-zeile");
+    zeile.appendChild(el("span", "zuletzt-icon", r.icon));
+    var box = el("div", "zuletzt-text");
+    box.appendChild(el("b", null, zeitText(r.bis)));
+    var was = r.n + (r.n === 1 ? " Antwort · " : " Antworten · ") + r.name + (r.gemischt ? " u. a." : "");
+    if (r.themen.length) {
+      was += " · " + r.themen.slice(0, 2).join(", ") + (r.themen.length > 2 ? " +" + (r.themen.length - 2) : "");
+    }
+    box.appendChild(el("span", null, was));
+    zeile.appendChild(box);
+    liste.appendChild(zeile);
+  });
+  karte.appendChild(liste);
   return karte;
 }
 
@@ -342,7 +589,11 @@ function zeigeStart() {
   titelBox.appendChild(el("h1", null, "GE-Trainer"));
   titelBox.appendChild(el("div", "untertitel", "Didaktik im Förderschwerpunkt geistige Entwicklung"));
   zeile.appendChild(titelBox);
-  zeile.appendChild(themeKnopf());
+  // Rechte Ecke: Theme-Knopf und darunter der Weg zum anderen Trainer.
+  var ecke = el("div", "kopf-aktionen");
+  ecke.appendChild(themeKnopf());
+  ecke.appendChild(querLink());
+  zeile.appendChild(ecke);
   kopf.appendChild(zeile);
   app.appendChild(kopf);
 
@@ -354,19 +605,34 @@ function zeigeStart() {
   var weg = wegKarte(tz);
   if (weg) app.appendChild(weg);
 
+  // Kalender: Ziel erreicht? Punkte-Plot direkt darunter: wie viel war es wirklich?
+  var freq = frequenzKarte(tz, themen);
+  if (freq) app.appendChild(freq);
+
+  var zuletzt = zuletztKarte(themen);
+  if (zuletzt) app.appendChild(zuletzt);
+
   app.appendChild(el("div", "abschnitt-titel", "Nach Thema"));
 
   themen.forEach(function (thema) {
-    var k = el("button", "thema-karte");
+    var mc = mcStand(thema), fr = freiStand(thema);
+    // "Angeschaut" ist bei MC jede Frage mit gespeichertem Stand, bei den
+    // offenen Aufgaben jede mit Selbsteinschaetzung - dieselbe Zaehlung, die
+    // schon in der Meta-Zeile steht.
+    var angeschaut = (thema.mc || []).filter(function (f) { return !!state.mc[f.id]; }).length + fr.bearbeitet;
+    var zustand = kartenZustand(angeschaut, mc.gesamt + fr.gesamt);
+
+    var k = el("button", "thema-karte " + zustand);
     setzeFarbe(k, thema.farbe);
 
-    var mc = mcStand(thema), fr = freiStand(thema);
     var anteil = (mc.gesamt + fr.gesamt) ? Math.round(100 * (mc.richtig + fr.gut) / (mc.gesamt + fr.gesamt)) : 0;
 
     var kz = el("div", "thema-kopfzeile");
     kz.appendChild(el("span", "thema-titel", thema.titel));
     kz.appendChild(el("span", "vl-badge", thema.vorlesung));
     if (thema.beispielthema) kz.appendChild(el("span", "beispiel-badge", "Beispielaufgaben bekannt"));
+    var badge = zustandBadge(zustand);
+    if (badge) kz.appendChild(badge);
     // Die Quote als farbige Pille, ganz rechts: man soll sehen, ob ein Thema
     // sitzt, ohne die Prozentzahl erst lesen zu muessen. Ein noch gar nicht
     // angefasstes Thema bekommt bewusst KEINE 0-%-Warnfarbe, sondern eine
@@ -435,11 +701,14 @@ function zeigeFreiWahl() {
   themen.forEach(function (thema) {
     var fr = freiStand(thema);
     var anteil = fr.gesamt ? Math.round(100 * fr.gut / fr.gesamt) : 0;
-    var k = el("button", "thema-karte");
+    var zustand = kartenZustand(fr.bearbeitet, fr.gesamt);
+    var k = el("button", "thema-karte " + zustand);
     setzeFarbe(k, thema.farbe);
     var kz = el("div", "thema-kopfzeile");
     kz.appendChild(el("span", "thema-titel", thema.titel));
     kz.appendChild(el("span", "vl-badge", fr.gesamt + " Aufgaben"));
+    var freiBadge = zustandBadge(zustand);
+    if (freiBadge) kz.appendChild(freiBadge);
     kz.appendChild(quotePille(fr.bearbeitet ? anteil : null));
     k.appendChild(kz);
     k.appendChild(el("div", "thema-meta", fr.bearbeitet + " angeschaut · " + fr.gut + " saßen gut"));

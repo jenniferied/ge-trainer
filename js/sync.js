@@ -13,6 +13,21 @@
    - Trennung von Roses ST-Lernstand: der GE-Trainer synct ausschliesslich unter
      dem Code aus config.js (Default rose-ge), niemals unter rose. Auf localhost
      ist der Code leer, dann ist der Sync komplett aus.
+   - ES WIRD NIE GEFRAGT (Jennifer, 12.08.). Bis dahin hat der erste Sync eines
+     Geraets mit eigenen Daten eine Rueckfrage gestellt statt zu mergen. An
+     beiden Trainern arbeitet nur Rose - es gibt keine fremden Daten, die eine
+     Frage rechtfertigen wuerden, und die Frage hat im Zweifel Historie
+     zurueckgehalten, die noch gar nicht hochgeladen war (Roses Uebungen von vor
+     dem 10.08. liegen bis heute nur auf ihrem Geraet). Was Testgeraete
+     fernhaelt, steht jetzt in drei Riegeln, die Rose nicht behelligen:
+       1. localhost / 127.0.0.1 / file:// -> leerer Code, Sync komplett aus
+          (config.js). Deckt jede lokale Entwicklungskopie ab.
+       2. Testgeraete tragen einen EIGENEN Code in den Einstellungen.
+       3. Not-Aus fuer die Live-Seite: ?sync=aus in der Adresse schaltet den
+          Sync auf diesem Geraet dauerhaft ab (?sync=an nimmt es zurueck).
+     Und falls doch einmal etwas Falsches hochgeht: lernstand ist append-only,
+     jede fruehere Zeile bleibt stehen. Wiederherstellen heisst, eine aeltere
+     Zeile erneut zu pushen - es geht nichts unwiederbringlich verloren.
 
    Importiert nur core.js + config.js (siehe ARCHITEKTUR.md, keine Zyklen). */
 
@@ -29,10 +44,29 @@ function supaAktiv() { return !!(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey); 
 export var GESPERRTE_CODES = ["rose"];
 function gesperrt(code) { return GESPERRTE_CODES.indexOf(String(code).trim().toLowerCase()) >= 0; }
 
+/* Not-Aus fuer Testgeraete auf der Live-Seite (Riegel 3 im Kopfkommentar).
+   ?sync=aus schaltet den Sync auf DIESEM Geraet dauerhaft ab, ?sync=an nimmt es
+   zurueck. Bewusst ein eigener localStorage-Schluessel und nicht state.syncCode:
+   der Not-Aus soll ein Zuruecksetzen des Fortschritts ueberleben und in keinem
+   Snapshot landen. Rose bekommt davon nichts zu sehen - sie tippt keine
+   Query-Parameter. */
+var AUS_KEY = "ge-sync-aus";
+export function syncAus() {
+  try {
+    var href = (typeof location !== "undefined" && location.href) || "";
+    if (/[?&#]sync=an\b/.test(href)) localStorage.removeItem(AUS_KEY);
+    else if (/[?&#]sync=aus\b/.test(href)) localStorage.setItem(AUS_KEY, "1");
+    return localStorage.getItem(AUS_KEY) === "1";
+  } catch (e) {
+    return false; // kein localStorage -> lieber normal weiterlaufen
+  }
+}
+
 // Geraete-Code (in den Einstellungen gesetzt) gewinnt vor dem Default aus config.js.
 // Bewusst != null statt ||, damit ein leergeraeumter Code wirklich Sync aus heisst
 // und nicht auf den Default zurueckfaellt.
 export function syncCode() {
+  if (syncAus()) return "";
   var s = state.syncCode;
   var code = String(s != null ? s : (CONFIG.syncCode || "")).trim();
   return gesperrt(code) ? "" : code; // gesperrt = Sync aus, nicht etwa Default
@@ -243,7 +277,7 @@ export function fortschrittZuruecksetzen() {
 
 /* ---------- Status + Horcher ---------- */
 
-export var syncStatus = { ts: 0, fehler: null, hinweis: null, laeuft: false, konflikt: null };
+export var syncStatus = { ts: 0, fehler: null, hinweis: null, laeuft: false };
 var horcher = [];
 export function onSync(fn) {
   horcher.push(fn);
@@ -253,40 +287,16 @@ function melde() {
   horcher.forEach(function (f) { try { f(syncStatus); } catch (e) { /* egal */ } });
 }
 
-/* ---------- Erst-Sync-Konflikt ----------
-   Hat dieses Geraet eigene Daten UND liegt online schon ein Stand unter demselben
-   Code, wird gefragt statt gemerged. Sonst rutschen Testdaten in Roses Fortschritt
-   (oder umgekehrt) und man bekommt sie ohne Grabsteine nicht mehr raus. */
+/* ---------- Erstkontakt mit einem Code ----------
+   Frueher stand hier die Rueckfrage (Zusammenlegen / Online / Lokal). Die ist am
+   12.08. entfallen, Begruendung im Kopfkommentar. Geblieben ist nur die Notiz,
+   mit welchen Codes dieses Geraet schon gesprochen hat - sie steht in
+   Bestands-Staenden drin und wird weitergefuehrt, damit ein Rueckbau moeglich
+   bliebe, aber sie entscheidet nichts mehr. */
 
-function hatEigeneDaten(st) {
-  var s = st || state;
-  return !!((s.antwortLog || []).length || Object.keys(s.mc || {}).length || Object.keys(s.frei || {}).length);
-}
-function codeBekannt(code) { return (state.syncCodesOk || []).indexOf(code) >= 0; }
 function merkeCode(code) {
   state.syncCodesOk = state.syncCodesOk || [];
   if (state.syncCodesOk.indexOf(code) < 0) state.syncCodesOk.push(code);
-}
-
-// wahl: "zusammenlegen" | "online" | "lokal"
-export function loeseKonflikt(wahl) {
-  var k = syncStatus.konflikt;
-  if (!k) return Promise.resolve(false);
-  if (wahl === "zusammenlegen") {
-    mergeLernstand(k.remote);
-  } else if (wahl === "online") {
-    var r = k.remote || {};
-    state.antwortLog = (r.antwortLog || []).slice();
-    state.mc = Object.assign({}, r.mc || {});
-    state.frei = Object.assign({}, r.frei || {});
-    state.geloescht = (r.geloescht || []).slice();
-    speichern();
-  } // "lokal": nichts uebernehmen, der naechste Push schreibt unseren Stand
-  merkeCode(k.code);
-  speichern();
-  syncStatus = Object.assign({}, syncStatus, { konflikt: null });
-  melde();
-  return syncLernstand();
 }
 
 /* ---------- Sync-Kette ----------
@@ -297,7 +307,6 @@ var kette = Promise.resolve(false), wartend = 0;
 
 export function syncLernstand() {
   if (!syncAktiv()) return Promise.resolve(false);
-  if (syncStatus.konflikt) return Promise.resolve(false); // erst muss Rose entscheiden
   if (wartend) return kette;
   wartend++;
   kette = kette.then(function () { wartend--; return einSync(); },
@@ -323,15 +332,8 @@ function einSync() {
     .then(function (rows) {
       var remote = (rows && rows[0] && rows[0].daten) || null;
 
-      // Erst-Sync mit diesem Code und beide Seiten haben Daten -> fragen statt mergen
-      if (remote && !codeBekannt(code) && hatEigeneDaten(state)) {
-        // Ergaenzen, nicht ersetzen: sonst faellt z. B. hinweis weg (die Erklaerung,
-        // warum ein gesperrter Code nicht angenommen wurde).
-        syncStatus = Object.assign({}, syncStatus, { fehler: null, laeuft: false, konflikt: { code: code, remote: remote } });
-        melde();
-        return false;
-      }
-
+      // Immer vereinigen, nie ersetzen und nie fragen. mergeIn ist symmetrisch:
+      // ob hier viel und online wenig liegt oder umgekehrt, danach ist beides da.
       var lokalGeaendert = remote ? mergeIn(state, remote) : false;
       merkeCode(code);
       speichern();
@@ -349,7 +351,7 @@ function einSync() {
       });
     })
     .then(function (geaendert) {
-      if (!syncStatus.konflikt) syncStatus = Object.assign({}, syncStatus, { ts: Date.now(), fehler: null, laeuft: false, konflikt: null });
+      syncStatus = Object.assign({}, syncStatus, { ts: Date.now(), fehler: null, laeuft: false });
       melde();
       return !!geaendert;
     })
@@ -358,6 +360,50 @@ function einSync() {
       melde();
       return false;
     });
+}
+
+/* ---------- Blick zum Nachbar-Trainer (NUR LESEN) ----------
+   Der Querlink oben rechts soll zeigen, wie es beim ST-Trainer steht. Beide Apps
+   liegen im selben Supabase-Projekt, nur unter verschiedenen Codes - ein Blick
+   auf den Zeitstempel der letzten lernstand-Zeile genuegt.
+
+   Drei Riegel, damit daraus kein Datenleck und kein Unfall wird:
+   - Es wird ausschliesslich GET gemacht, und ausschliesslich die Spalte ts.
+     Der Snapshot selbst waere ein halbes Megabyte - den will hier niemand, und
+     auf Roses Handy erst recht nicht.
+   - Es wird NIE unter einem fremden Code geschrieben. Die Schreibpfade nehmen
+     ihren Code aus syncCode(), und dort ist rose gesperrt.
+   - Faellt der Abruf aus (offline, geaenderte Rechte, was auch immer), gibt es
+     null und der Link funktioniert trotzdem. Ein verlaesslicher Link schlaegt
+     eine wacklige Statusanzeige.
+
+   Gecacht wird in sessionStorage: beim Blaettern in der App soll nicht bei jedem
+   Aufbau der Startseite ein Request rausgehen. */
+
+var FREMD_CACHE_MS = 10 * 60000;
+
+export function fremdZuletzt(code) {
+  var key = "ge-fremd-" + code;
+  try {
+    var roh = sessionStorage.getItem(key);
+    if (roh) {
+      var c = JSON.parse(roh);
+      if (Date.now() - c.geholt < FREMD_CACHE_MS) return Promise.resolve(c.ts);
+    }
+  } catch (e) { /* kein sessionStorage - dann eben ohne Cache */ }
+
+  if (!supaAktiv()) return Promise.resolve(null);
+  var q = "?code=eq." + encodeURIComponent(code) + "&select=ts&order=ts.desc&limit=1";
+  var kopf = Object.assign({}, headers());
+  kopf.Prefer = "";
+  return fetch(lernstandUrl() + q, { headers: kopf })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (rows) {
+      var ts = (rows && rows[0] && rows[0].ts) ? new Date(rows[0].ts).getTime() : null;
+      try { sessionStorage.setItem(key, JSON.stringify({ ts: ts, geholt: Date.now() })); } catch (e) { /* egal */ }
+      return ts;
+    })
+    .catch(function () { return null; });
 }
 
 var syncTimer = null;
@@ -501,8 +547,8 @@ export function syncStart() {
 function statusText() {
   if (syncStatus.hinweis) return syncStatus.hinweis;
   if (!supaAktiv()) return "Sync ist nicht eingerichtet. Dein Fortschritt bleibt auf diesem Gerät.";
+  if (syncAus()) return "Sync ist auf diesem Gerät abgeschaltet (Testmodus). Der Fortschritt bleibt hier gespeichert.";
   if (!syncCode()) return "Sync ist aus. Dein Fortschritt bleibt auf diesem Gerät gespeichert.";
-  if (syncStatus.konflikt) return "Auf diesem Gerät und online liegen unterschiedliche Stände. Du entscheidest, was gilt.";
   if (syncStatus.laeuft) return "Wird abgeglichen …";
   if (syncStatus.fehler) return "Gerade offline – dein Fortschritt ist lokal sicher und geht später mit.";
   if (syncStatus.ts) {
@@ -593,46 +639,7 @@ export function syncKarte() {
   return karte;
 }
 
-/* Konflikt-Dialog: erscheint von selbst, sobald ein Erst-Sync-Konflikt auftaucht.
-   Drei Wege, keiner davon verliert Daten - der lokale Stand bleibt in jedem Fall
-   im localStorage, und online ist die Historie append-only. */
-
-var sheetOffen = false;
-function zeigeKonflikt() {
-  if (sheetOffen || typeof document === "undefined" || !document.body) return;
-  sheetOffen = true;
-  var k = syncStatus.konflikt || {};
-  var r = k.remote || {};
-
-  var zahl = function (n) { return n + (n === 1 ? " Antwort" : " Antworten"); };
-
-  var huelle = el("div", null);
-  huelle.style.cssText = "position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;background:rgba(10,8,18,.6);padding:16px;";
-  var karte = el("div", "karte");
-  karte.style.cssText = "max-width:520px;width:100%;margin:0;";
-  karte.appendChild(el("h3", null, "Zwei Stände gefunden"));
-  karte.appendChild(el("div", "thema-meta",
-    "Auf diesem Gerät " + zahl((state.antwortLog || []).length) + ", online unter dem Code "
-    + (k.code || "") + " " + zahl((r.antwortLog || []).length) + ". Was soll gelten?"));
-
-  [
-    { wert: "zusammenlegen", text: "Beides zusammenlegen", klasse: "knopf" },
-    { wert: "online", text: "Online-Stand nehmen", klasse: "knopf sekundaer" },
-    { wert: "lokal", text: "Diesen Stand behalten", klasse: "knopf sekundaer" },
-  ].forEach(function (opt) {
-    var b = el("button", opt.klasse, opt.text);
-    b.style.marginTop = "8px";
-    b.addEventListener("click", function () {
-      huelle.remove();
-      sheetOffen = false;
-      loeseKonflikt(opt.wert);
-    });
-    karte.appendChild(b);
-  });
-
-  karte.appendChild(el("div", "thema-meta", "Nichts geht dabei verloren: dein Stand hier bleibt gespeichert, und online wird nur ergänzt."));
-  huelle.appendChild(karte);
-  document.body.appendChild(huelle);
-}
-
-onSync(function (s) { if (s.konflikt) zeigeKonflikt(); });
+/* Hier stand bis zum 12.08. der Konflikt-Dialog ("Zwei Staende gefunden", drei
+   Knoepfe: Zusammenlegen / Online-Stand / Diesen Stand behalten). Er ist
+   ersatzlos raus - es wird immer vereinigt, Begruendung im Kopfkommentar.
+   Wer ihn zurueckholen will, findet ihn in der Git-Historie (Commit vom 12.08.). */
