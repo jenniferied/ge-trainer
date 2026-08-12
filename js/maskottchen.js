@@ -94,6 +94,37 @@ export var EIER = [
     regel: function (z, sp) { return (z + Math.floor(sp / 2)) % 2 === 0; },
     teaser: "Leicht warm, und manchmal wippt es. Als würde es auf etwas horchen." },
 ];
+/* Die Ei-Keys sind seit der ersten Fassung ZWEIMAL umbenannt worden:
+     1. streifen · tupfen · zickzack · schlicht
+     2. gefleckt · gebaendert · gesprenkelt
+     3. blueten · ringe · karo   (heute)
+   Wer damals ausgesucht hat, haette danach eine tote Wahl im Stand: die
+   Ankunft kaeme neu, obwohl laengst gewaehlt wurde. Genau das ist Rose
+   passiert — sie hatte "Gestreift" gewaehlt, der Key stand noch im Sync und
+   zeigte ins Leere.
+
+   Zuordnung auf das jeweils naechstliegende heutige Ei (Linien zu Ringen,
+   Punkte zu Blueten, Winkliges zu Karo). Wem das nicht gefaellt, wechselt
+   ueber "anderes Ei aussuchen" — die Wahl geht dadurch nicht verloren.
+
+   LEHRE: einen gespeicherten Schluessel umzubenennen entwertet still jede
+   bereits getroffene Wahl. Wenn es sein muss, gehoert die Zuordnung im
+   selben Commit dazu. */
+var ALT_KEYS = {
+  streifen: "ringe", gebaendert: "ringe",
+  tupfen: "blueten", gefleckt: "blueten", schlicht: "blueten",
+  zickzack: "karo", gesprenkelt: "karo",
+};
+(function migriereAltenEiKey() {
+  var k = state.mk && state.mk.ei;
+  if (!k) return;
+  if (EIER.some(function (e) { return e.key === k; })) return; // gueltig, nichts zu tun
+  var neu = ALT_KEYS[k];
+  if (!neu) return; // unbekannt: lieber die Ankunft neu zeigen als raten
+  state.mk.ei = neu;
+  speichern();
+})();
+
 export function eiIndex() {
   var k = state.mk && state.mk.ei;
   for (var i = 0; i < EIER.length; i++) if (EIER[i].key === k) return i;
