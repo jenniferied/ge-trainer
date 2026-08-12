@@ -107,7 +107,13 @@ function lernstandUrl() { return CONFIG.supabaseUrl + "/rest/v1/" + CONFIG.lerns
 // die gehoeren dem Geraet, nicht dem Lernstand.
 export function snapshot(st) {
   var s = st || state;
-  return { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {}, geloescht: s.geloescht || [] };
+  // mk (Maskottchen) gehoert in den Lernstand, nicht aufs Geraet: das gewaehlte Ei
+  // ist eine Entscheidung ueber den Begleiter. Lag frueher als state.eiVariante
+  // ausserhalb des Snapshots und wurde darum nie gesynct — auf einem zweiten
+  // Geraet kam die Ankunft dann ein zweites Mal. Container, damit spaeter
+  // Stufe/Kleidung reinpassen.
+  return { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
+    geloescht: s.geloescht || [], mk: s.mk || {} };
 }
 
 // Kompakte Vergleichs-Signatur. Noetig, weil jsonb aus Postgres mit anderer
@@ -121,7 +127,12 @@ export function signatur(d) {
   }).join(",");
   var frei = Object.keys(daten.frei || {}).sort().map(function (q) { return q + ":" + daten.frei[q]; }).join(",");
   var tot = (daten.geloescht || []).slice().sort().join(",");
-  return [aids, mc, frei, tot].join("|");
+  // Das Maskottchen MUSS hier mit rein: die Signatur ist der Waechter vor dem
+  // Push (siehe einSync). Ohne diese Zeile aendert eine reine Ei-Wahl die
+  // Signatur nicht und wird nie hochgeladen. Auf "" normiert, damit eine alte
+  // Server-Zeile ohne mk nicht dauerhaft als verschieden gilt.
+  var mk = (daten.mk && daten.mk.ei) || "";
+  return [aids, mc, frei, tot, mk].join("|");
 }
 
 /* ---------- Merge ----------
@@ -234,6 +245,13 @@ export function mergeIn(st, remote) {
   Object.keys(frei).forEach(function (qid) { if (verwaist(qid, abgeleitet.frei[qid])) delete frei[qid]; });
   Object.keys(abgeleitet.frei).forEach(function (qid) { frei[qid] = abgeleitet.frei[qid]; });
   st.frei = frei;
+
+  // Maskottchen: wer einen Wert hat, behaelt ihn — remote fuellt nur auf, wenn
+  // lokal nichts steht. Es gibt keinen Pfad, der die Wahl auf null zurueckdreht
+  // (das Wechseln laesst den gespeicherten Wert stehen und zeigt nur die
+  // Auswahl), darum kann diese Regel keine getroffene Wahl ueberschreiben.
+  st.mk = st.mk || {};
+  if (!st.mk.ei && r.mk && r.mk.ei) st.mk.ei = r.mk.ei;
 
   return signatur(snapshot(st)) !== vorher;
 }

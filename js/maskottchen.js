@@ -15,7 +15,8 @@
    individuelle, keins doppelt.
 
    WICHTIG: Ob die Ankunft laeuft, haengt allein daran, ob schon ein Ei gewaehlt
-   wurde (state.eiVariante). Beim Testen mit Roses Sync-Code also NICHT
+   wurde (state.mk.ei — synct mit, siehe sync.js snapshot). Beim Testen mit
+   Roses Sync-Code also NICHT
    auswaehlen — sonst ist der Moment fuer sie weg, bevor sie ihn hatte.
 
    Entwurf, Archiv und Werkstatt: playground/rose/maskottchen/ */
@@ -91,7 +92,7 @@ export var EIER = [
     teaser: "Leicht warm, und manchmal wippt es. Als würde es auf etwas horchen." },
 ];
 export function eiIndex() {
-  var k = state.eiVariante;
+  var k = state.mk && state.mk.ei;
   for (var i = 0; i < EIER.length; i++) if (EIER[i].key === k) return i;
   return 0;
 }
@@ -145,11 +146,11 @@ export function eiHtml(variante, stufe) {
    Ankunft wird uebersprungen und eiIndex() faellt still auf Ei 0 zurueck —
    die Ankunft ist dann weg, ohne dass je jemand ausgesucht hat. */
 function gewaehlt() {
-  var k = state.eiVariante;
+  var k = state.mk && state.mk.ei;
   return !!k && EIER.some(function (e) { return e.key === k; });
 }
 var angesehen = false;
-export function zuruecksetzen() { state.eiVariante = null; speichern(); angesehen = false; }
+export function zuruecksetzen() { state.mk = {}; speichern(); angesehen = false; }
 
 /* ---------- Der Storch ----------
    Bewusst KEINE Textgrafik, anders als das Ei. Blockzeichen wie ▟ ▙ sind
@@ -273,7 +274,7 @@ function auswahlKnoten(neu) {
 
   box.appendChild(el("p", "mk-teaser", v.teaser));
   box.appendChild(knopf("Das nehme ich", "knopf klein", function () {
-    state.eiVariante = v.key; speichern(); angesehen = false; neu();
+    state.mk = state.mk || {}; state.mk.ei = v.key; speichern(); angesehen = false; neu();
   }));
   return box;
 }
@@ -312,7 +313,12 @@ function standKnoten(tz, neu) {
   // Mittelpunkt und war praktisch unauffindbar. Eigene Zeile — auffindbar,
   // aber weiter dezent: das Aussuchen soll ein Moment bleiben, kein Menue.
   var wechseln = knopf("anderes Ei aussuchen", "mk-link", function () {
-    blaetterIdx = eiIndex(); state.eiVariante = null; speichern(); angesehen = true; neu();
+    // angesehen ist reiner Ansichts-Zustand im Modul und synct nie. Der
+    // gespeicherte Wert bleibt bewusst stehen: seit die Wahl synct, wuerde ein
+    // zwischenzeitlicher Sync ein auf null gesetztes Ei sonst wieder
+    // zurueckholen und einen aus der Auswahl werfen. Nebeneffekt, der ohnehin
+    // besser ist: bricht man ab, behaelt man sein Ei.
+    blaetterIdx = eiIndex(); angesehen = true; neu();
   });
   var wechselZeile = el("div", "mk-wechsel");
   wechselZeile.appendChild(wechseln);
@@ -321,7 +327,11 @@ function standKnoten(tz, neu) {
   return zeile;
 }
 
+/* Reihenfolge wichtig: "schaut gerade die Auswahl an" schlaegt "hat schon eins".
+   Frueher wurde beim Wechseln die gespeicherte Wahl auf null gesetzt, damit die
+   Auswahl erscheint — das geht nicht mehr, seit die Wahl synct (siehe oben). */
 export function knoten(tz, neuZeichnen) {
+  if (angesehen) return auswahlKnoten(neuZeichnen);
   if (gewaehlt()) return standKnoten(tz, neuZeichnen);
-  return angesehen ? auswahlKnoten(neuZeichnen) : ankunftKnoten(neuZeichnen);
+  return ankunftKnoten(neuZeichnen);
 }

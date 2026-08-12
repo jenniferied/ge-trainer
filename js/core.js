@@ -26,6 +26,13 @@ function laden() {
   if (!Array.isArray(s.geloescht)) s.geloescht = []; // Grabsteine (aids) fuer Geloeschtes
   if (!Array.isArray(s.pending)) s.pending = [];     // Offline-Queue fuer sessions/events
   if (!s.deviceId) s.deviceId = "d-" + Math.random().toString(36).slice(2, 10);
+  // Maskottchen: gehoert in den Lernstand und wird gesynct (siehe snapshot()).
+  // Migration aus dem alten, ungesyncten state.eiVariante — muss VOR dem ersten
+  // Sync laufen, sonst laedt das Geraet ein leeres Maskottchen hoch und die
+  // Ankunft kommt ein zweites Mal.
+  if (!s.mk || typeof s.mk !== "object") s.mk = {};
+  if (!s.mk.ei && s.eiVariante) s.mk.ei = s.eiVariante;
+  delete s.eiVariante;
   // Stabiler Dedupe-Schluessel je Antwort an Altbestand nachtragen (siehe ARCHITEKTUR.md).
   s.antwortLog.forEach(function (a) { if (a && !a.aid && a.qid) a.aid = antwortId(a); });
   return s;
