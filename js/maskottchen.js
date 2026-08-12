@@ -22,6 +22,9 @@
    Entwurf, Archiv und Werkstatt: playground/rose/maskottchen/ */
 import { state, speichern, el } from "./core.js";
 import * as Stats from "./stats.js";
+// Nur fuer syncBald: speichern() schreibt nach localStorage, es schiebt nichts hoch.
+// Ei-Wahl und Stufe sollen aber sofort auf dem anderen Geraet stehen.
+import { syncBald } from "./sync.js";
 
 var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -135,7 +138,11 @@ export function stufeVon(herzen) {
 export function stufeJetzt(herzen) {
   state.mk = state.mk || {};
   var stufe = Math.min(Math.max(stufeVon(herzen), state.mk.stufeMax || 0), STUFEN.length - 1);
-  if (stufe > (state.mk.stufeMax || 0)) { state.mk.stufeMax = stufe; speichern(); }
+  // syncBald, weil speichern() nur nach localStorage schreibt: eine neu erreichte
+  // Stufe soll sofort auf dem anderen Geraet stehen, nicht erst beim naechsten
+  // Sync-Anlass. Buendelt mit einer halben Sekunde, damit nicht jede Neuzeichnung
+  // einen Request ausloest — steigen kann die Stufe ohnehin nur achtmal.
+  if (stufe > (state.mk.stufeMax || 0)) { state.mk.stufeMax = stufe; speichern(); syncBald(500); }
   return stufe;
 }
 
@@ -382,7 +389,9 @@ function auswahlKnoten(neu) {
   box.appendChild(knopf("Das nehme ich", "knopf klein", function () {
     // ts stempelt die Wahl: beim Merge gewinnt die zuletzt getroffene.
     state.mk = state.mk || {}; state.mk.ei = v.key; state.mk.ts = Date.now();
-    speichern(); angesehen = false; neu();
+    // Sofort hochschieben: die Wahl ist ein Moment, und auf dem zweiten Geraet
+    // soll dann nicht das alte Ei liegen.
+    speichern(); syncBald(500); angesehen = false; neu();
   }));
   return box;
 }
