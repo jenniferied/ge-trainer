@@ -8,6 +8,7 @@ import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
 import { syncKarte, syncStart, fremdZuletzt } from "./sync.js";
+import * as Mk from "./maskottchen.js";
 
 var themen = [];
 
@@ -192,6 +193,9 @@ function tagesSatz(tz) {
 
 function countdownKarte(tz) {
   var karte = el("div", "karte countdown glimmer");
+
+  // Das Ei sitzt ganz oben: es ist das Erste, was Rose beim Oeffnen sieht.
+  karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }));
 
   var tage = tageBisKlausur();
   var gross, klein;

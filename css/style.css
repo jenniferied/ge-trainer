@@ -876,3 +876,24 @@ p { margin: 0 0 var(--sp-3); }
   /* Der Haken bleibt sichtbar, er hoert nur auf zu huepfen. */
   .zustand-badge.fertig, .heute-zeile.erledigt .heute-status { animation: none; }
 }
+
+/* ---------- Maskottchen: das Ei in der Countdown-Karte ----------
+   Farbe pro Zeichen ueber Tokens, damit die Strichzeichnung in hell und dunkel
+   genug Kontrast hat. Entwurf: playground/rose/maskottchen/ */
+:root { --mk-rand: #9a8f7e; --mk-innen: #b9af9c; --mk-riss: var(--akzent, #d0703d); }
+[data-theme="hell"] { --mk-rand: #8a8070; --mk-innen: #a99f8c; }
+.mk-zeile { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; }
+.mk-ei { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px; line-height: 1; white-space: pre; margin: 0; flex-shrink: 0; }
+.mk-text { min-width: 0; flex: 1; }
+.mk-satz { margin: 0; font-size: .95rem; }
+.mk-meta { margin: 2px 0 0; font-size: .78rem; opacity: .75; }
+.mk-wahl { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.mk-chip { font: inherit; font-size: .72rem; padding: 3px 9px; border-radius: 999px; cursor: pointer;
+  border: 1px solid currentColor; background: transparent; color: inherit; opacity: .6; }
+.mk-chip.an { opacity: 1; font-weight: 700; border-color: var(--mk-riss); color: var(--mk-riss); }
+@keyframes mkAtmen { 0%,100% { transform: translateY(0) } 50% { transform: translateY(1px) } }
+@keyframes mkWackeln { 0%,88%,100% { transform: rotate(0) } 91% { transform: rotate(-4deg) } 94% { transform: rotate(4deg) } 97% { transform: rotate(-2deg) } }
+.mk-atmet { animation: mkAtmen 3.4s ease-in-out infinite; }
+.mk-wackelt { animation: mkWackeln 3.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .mk-atmet, .mk-wackelt { animation: none; } }
