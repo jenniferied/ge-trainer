@@ -902,20 +902,28 @@ export function flushSync() {
 beiAntwort(function (e) {
   syncBald();
   if (!e || !e.qid) return;
+  /* Seit 13.08. loggt der Klausurmodus auch BEARBEITETE, aber noch nicht
+     bewertete Aufgaben (punkte === null). Fuer die geht hier bewusst GAR KEINE
+     Zeile raus. Drei Gruende:
+       - events kennt nur punkte/max/voll. Eine 0 waere schlicht falsch (niemand
+         hat die Aufgabe beurteilt), und voll: false waere dieselbe Luege.
+       - Ob die Spalte punkte ueberhaupt NULL erlaubt, weiss diese Datei nicht.
+         Tut sie es nicht, antwortet PostgREST mit 4xx - und die Queue oben
+         bricht bei einem 4xx den ganzen Durchlauf ab. Eine einzige unbewertete
+         Aufgabe wuerde also alle nachfolgenden Ereignisse aufhalten.
+       - Es geht nichts verloren: was zaehlt (der Text, hand, bearbeitet), steht
+         im Lernstand-Snapshot, und der faehrt vollstaendig hoch. events ist die
+         Auswertungs-, nicht die Datenhaltungsschicht.
+     Bewusst NACH syncBald(): der Lernstand-Push muss trotzdem angestossen werden. */
+  if (e.modus === "klausur" && e.punkte == null) return;
   var voll = e.voll != null ? !!e.voll : e.richtig === true;
-  /* punkte: seit 13.08. loggt der Klausurmodus auch BEARBEITETE, aber noch nicht
-     bewertete Aufgaben (punkte === null). Die duerfen hier nicht als 0 in die
-     gemeinsame events-Tabelle laufen - das waere eine falsche Zahl in der
-     Datenbank, nicht nur in der Anzeige. Nur wo es wirklich eine Bewertung gibt,
-     steht eine Zahl. */
-  var punkte = e.punkte != null ? e.punkte : (e.modus === "klausur" ? null : (e.richtig === true ? 1 : 0));
   syncEvent({
     frage_id: e.qid,
     // Seit 13.08. merkt sich GE die angetippte Option (Index in der Original-
     // reihenfolge). Als Array, damit die Spalte dieselbe Form traegt wie beim
     // ST-Trainer, der dort mehrere Kreuze ablegt.
     gewaehlt: e.gewaehlt != null ? [e.gewaehlt] : null,
-    punkte: punkte,
+    punkte: e.punkte != null ? e.punkte : (e.richtig === true ? 1 : 0),
     max_punkte: e.max != null ? e.max : 1,
     voll: voll,
     modus: e.modus || "ueben",

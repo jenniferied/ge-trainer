@@ -608,6 +608,14 @@ p { margin: 0 0 var(--sp-3); }
   padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3); font-size: .95rem;
 }
 .op-tipp { font-size: .88rem; color: var(--ink-soft); margin-top: 4px; }
+
+/* Die drei Schritte im Modus "Eine Klausurfrage" (klausurfrage.js). Steht
+   direkt bei .op-stamm, weil derselbe Schirm beides benutzt. Eigene Regel und
+   nicht .info-karte ul: die traegt eine Akzentkante, die hier eine Warnung
+   andeuten wuerde, wo nur ein Ablauf steht. */
+.kf-schritte { margin: 0 0 var(--sp-4); padding-left: 1.3em; font-size: .92rem; }
+.kf-schritte li { margin-bottom: var(--sp-2); }
+.kf-schritte li::marker { color: var(--tfarbe, var(--accent)); font-weight: 700; }
 .op-karte { border-bottom: 1px solid var(--line); padding: var(--sp-2) 0; }
 .op-karte summary { cursor: pointer; }
 

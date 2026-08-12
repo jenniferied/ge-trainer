@@ -8,6 +8,9 @@ import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feier
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
+// Eigenes Modul, obwohl der Modus nur ein Ablauf ueber vorhandene Bausteine ist
+// (Details im Kopf der Datei): so kostet er main.js drei Zeilen statt zweihundert.
+import * as Klausurfrage from "./klausurfrage.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler } from "./sync.js";
@@ -44,21 +47,34 @@ function zeige(route, arg) {
     case "freiwahl": return zeigeFreiWahl();
     case "klausur": return Klausur.zeigeKlausur(themen, function () { zeige("start"); });
     case "mcquer": return Klausur.zeigeMcQuer(themen, function () { zeige("start"); });
-    /* Die Runde beginnt SCHON HIER, vor dem Baukasten - und nicht erst in
-       stats.js, wenn die erste Karte steht. Grund: die Runden-Mechanik in
-       stats.js (runde()) wird von vier Einstiegen benutzt, und der Titel, den
-       Rose gedrueckt hat, ist nur hier bekannt. Steigt sie im Baukasten wieder
-       aus, raeumt beendeRunde die leere Sitzung von selbst weg. */
-    case "mix":
-      starteRunde({ art: "mix", titel: "Gemischte Runde", modus: "gemischt" });
-      return Stats.zeigeMix(themen, HOOKS, false);
-    case "wiederholen":
-      starteRunde({ art: "wiederholen", titel: "Wiederholen", modus: "gemischt" });
-      return Stats.zeigeMix(themen, HOOKS, true);
+    /* KEIN starteRunde hier, bei keinem der Rundeneinstiege. Die Sitzung
+       schreibt runde() in stats.js, und zwar erst, wenn die Liste steht - also
+       wenn feststeht, wie viele Aufgaben Rose gleich vor sich hat.
+
+       Hier stand bis zum 13.08. das Gegenteil, mit der Begruendung, der Titel
+       sei nur an dieser Stelle bekannt. Das stimmt seit MIX_TEXT nicht mehr:
+       dort stehen "Gemischte Runde" und "Wiederholen" neben der Rundenart.
+       Schaden angerichtet hat der doppelte Aufruf nie - beendeRunde() wirft
+       eine Sitzung ohne Antwort weg, die leere Vorlauf-Sitzung verschwand also
+       von selbst. Er war nur ueberfluessig und las sich wie eine Regel, die es
+       nicht gibt. EINE Schreibstelle fuer die Sitzung, das ist die Regel. */
+    case "mix": return Stats.zeigeMix(themen, HOOKS, false);
+    case "wiederholen": return Stats.zeigeMix(themen, HOOKS, true);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
     case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
     case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS);
     case "spiel-bg": return Spiele.starteBegriffe(themen, HOOKS);
+    /* Fuenf neue: wie "wiederholen" ohne Baukasten, der Modus IST die
+       Einstellung, es gibt keine Vorschaltseite. Wie bei "mix" und
+       "wiederholen" schreibt runde() (stats.js) die Sitzung. */
+    case "neu": return Stats.zeigeNeu(themen, HOOKS);
+    /* Eine Klausurfrage: eigene Runde, aber KEIN "gemischt" - hier steht genau
+       eine freie Aufgabe auf dem Schirm, und der Aufdroesel-Schritt davor
+       schreibt bewusst nichts ins Log (Begruendung im Kopf von
+       klausurfrage.js). Ein Durchlauf ergibt also genau einen Eintrag. */
+    case "klausurfrage":
+      starteRunde({ art: "klausurfrage", titel: "Eine Klausurfrage", modus: "frei" });
+      return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
     case "start":
     default: return zeigeStart();
   }
@@ -991,7 +1007,14 @@ function antwortZeichen(a) {
     if (a.selbsteinschaetzung === "mittel") return { z: "~", k: "mittel", w: "halb" };
     return { z: "↻", k: "offen", w: "kommt wieder" };
   }
-  if (a.modus === "klausur" && a.max) {
+  if (a.modus === "klausur") {
+    // Seit 13.08. stehen auch BEARBEITETE, aber noch nicht bewertete Aufgaben im
+    // Log (sonst saehe eine Aufgabe, an der Rose geschrieben hat, aus wie eine,
+    // die sie nie angefasst hat). Dann gibt es keine Punktzahl - und es wird
+    // auch keine erfunden, sonst stuende hier "null/5".
+    if (typeof a.punkte !== "number" || !a.max) {
+      return { z: "·", k: "mittel", w: a.bearbeitet ? "geschrieben, noch nicht bewertet" : "" };
+    }
     var q = a.punkte / a.max;
     return { z: a.punkte + "/" + a.max, k: q >= 1 ? "gut" : q > 0 ? "mittel" : "offen", w: a.punkte + " von " + a.max + " Punkten" };
   }
@@ -1011,20 +1034,82 @@ function antwortZeichen(a) {
    GE-Trainer hat keine Sessions, ein Loeschen muesste im Antwort-Log
    herumschneiden, und Datenerhalt geht vor. */
 
+// Dauer in Worten. Unter einer Minute wird nicht auf "0 min" gerundet - das
+// saehe aus, als waere nichts passiert.
+function dauerText(sek) {
+  if (!sek || sek < 30) return null;
+  if (sek < 90) return "1 min";
+  return Math.round(sek / 60) + " min";
+}
+
+/* Wie viel geschafft: "8 von 8" wenn die Runde eine geplante Laenge hatte,
+   sonst die nackte Zahl. Zwei Zahlen sind Absicht (Vertrag): eine abgebrochene
+   Runde soll man sehen, ohne dass irgendwo "abgebrochen" steht. */
+function geschafftText(r) {
+  if (typeof r.anzahl === "number" && r.anzahl > 0) {
+    return r.beantwortet + " von " + r.anzahl + (r.typ === "spiel" ? " Karten" : " Aufgaben");
+  }
+  if (r.typ === "spiel") return r.n + (r.n === 1 ? " Karte" : " Karten");
+  return r.n + (r.n === 1 ? " Antwort" : " Antworten");
+}
+
+/* Die Zeile unter der Ueberschrift: wann, wie viel geschafft, wie lange, welche
+   Themen. Bei der Klausur zusaetzlich die Punkte, bei Spielen die Treffer.
+   Die Quote traegt ihre Grundgesamtheit sichtbar mit ("6 gewertet"), sobald sie
+   von der Zahl der Aufgaben abweicht - sonst stuenden zwei Zahlen nebeneinander,
+   die aus verschiedenen Toepfen kommen. */
+function rundenMeta(r) {
+  var teile = [zeitText(r.bis), geschafftText(r)];
+  var d = dauerText(r.dauerSek);
+  if (d) teile.push(d);
+  if (typeof r.punkte === "number" && r.max) teile.push(r.punkte + " von " + r.max + " Punkten");
+  if (r.typ === "spiel") teile.push(r.richtig + " gleich richtig");
+  else if (r.quote != null && r.bewertet && r.bewertet !== r.beantwortet) teile.push(r.bewertet + " gewertet");
+  if (r.themen.length) {
+    teile.push(r.themen.slice(0, 2).join(", ") + (r.themen.length > 2 ? " +" + (r.themen.length - 2) : ""));
+  }
+  return teile.join(" · ");
+}
+
+// Wie Rose selbst geurteilt hat - bei offenen Aufgaben ist das die eigentliche
+// Rueckmeldung. Nie das Wort falsch, nie Rot: "kommt wieder" ist ein Plan.
+function selbstText(s) {
+  if (!s) return null;
+  var t = [];
+  if (s.gut) t.push(s.gut + "× saß");
+  if (s.mittel) t.push(s.mittel + "× halb");
+  if (s.nochmal) t.push(s.nochmal + "× kommt wieder");
+  if (s.hand) t.push("✍️ " + s.hand + "× mit der Hand");
+  return t.length ? t.join(" · ") : null;
+}
+
 function zuletztZeile(r, onKlick) {
-  var zeile = el("button", "zuletzt-zeile");
+  // Spiel-Tage sind KEINE Runde und bekommen darum auch keine Detailansicht:
+  // dort stuenden 24 Zeilen "Aufgabe aus einer frueheren Fassung", weil
+  // Begriffs-Karten keine Frage-Id im Themenkorpus haben.
+  var tippbar = r.typ !== "spiel";
+  var zeile = el(tippbar ? "button" : "div", "zuletzt-zeile" + (tippbar ? "" : " starr"));
   zeile.appendChild(el("span", "zuletzt-icon", r.icon));
   var box = el("div", "zuletzt-text");
-  box.appendChild(el("b", null, zeitText(r.bis)));
-  var was = r.n + (r.n === 1 ? " Antwort · " : " Antworten · ") + r.name + (r.gemischt ? " u. a." : "");
-  if (r.themen.length) {
-    was += " · " + r.themen.slice(0, 2).join(", ") + (r.themen.length > 2 ? " +" + (r.themen.length - 2) : "");
-  }
-  box.appendChild(el("span", null, was));
+
+  var kopf = el("b", null, r.titel);
+  box.appendChild(kopf);
+  // Gattung nur dazu, wenn sie etwas hinzufuegt (bei "Wiederholen" waere
+  // "Wiederholen · Wiederholen" albern).
+  if (r.name && r.name !== r.titel) box.appendChild(el("span", "zuletzt-art", r.name));
+  if (r.typ === "sitzung" && !r.fertig) box.appendChild(el("span", "zuletzt-offen", "angefangen"));
+  if (r.badge) box.appendChild(el("span", "zuletzt-art", r.badge));
+
+  box.appendChild(el("span", null, rundenMeta(r)));
+  var st = selbstText(r.selbst);
+  if (st) box.appendChild(el("span", "zuletzt-selbst", st));
+
   zeile.appendChild(box);
   if (r.quote != null) zeile.appendChild(quotePille(r.quote));
-  zeile.appendChild(el("span", "zuletzt-pfeil", "›"));
-  zeile.addEventListener("click", function () { onKlick(r); });
+  if (tippbar) {
+    zeile.appendChild(el("span", "zuletzt-pfeil", "›"));
+    zeile.addEventListener("click", function () { onKlick(r); });
+  }
   return zeile;
 }
 
@@ -1068,7 +1153,7 @@ function zeigeVerlauf() {
   karte.appendChild(liste);
   app.appendChild(karte);
   app.appendChild(el("p", "hm-legende",
-    "Eine Runde ist alles, was ohne längere Pause hintereinander lief. Antippen zeigt, welche Aufgaben drankamen."));
+    "Eine Runde ist, was du als Runde gestartet hast – sie behält den Namen, den du gedrückt hast. Antippen zeigt, welche Aufgaben drankamen. Spiele stehen als Tageszeile dabei und zählen nicht in den Rundenschnitt: Karten sind leichter als Klausuraufgaben."));
 }
 
 function zeigeRunde(r) {
@@ -1080,15 +1165,16 @@ function zeigeRunde(r) {
 
   var kopf = el("div", "karte");
   var kz = el("div", "thema-kopfzeile");
-  kz.appendChild(el("span", "thema-titel", zeitText(r.bis)));
+  kz.appendChild(el("span", "thema-titel", r.icon + " " + r.titel));
   if (r.quote != null) kz.appendChild(quotePille(r.quote));
   kopf.appendChild(kz);
-  kopf.appendChild(el("div", "thema-meta", r.icon + " " + r.name + (r.gemischt ? " u. a." : "") +
-    " · " + r.n + (r.n === 1 ? " Antwort" : " Antworten") +
-    (r.themen.length ? " · " + r.themen.join(", ") : "")));
+  kopf.appendChild(el("div", "thema-meta", rundenMeta(r)));
+  var st = selbstText(r.selbst);
+  if (st) kopf.appendChild(el("div", "thema-meta", st));
   app.appendChild(kopf);
 
   var liste = el("div", "karte runde-liste");
+  var hatHand = false;
   r.antworten.forEach(function (a) {
     var z = antwortZeichen(a);
     var zeile = el("div", "runde-zeile");
@@ -1100,13 +1186,34 @@ function zeigeRunde(r) {
     if (gefunden) meta.push(gefunden.thema.titel);
     if (a.afb) meta.push("AFB " + ["", "I", "II", "III"][a.afb]);
     if (z.w) meta.push(z.w);
+    if (a.zeit) meta.push(a.zeit < 60 ? a.zeit + " s" : Math.round(a.zeit / 60) + " min");
+    // Der Vermerk ueberlebt das Bild: gezeichnet wurde, auch wenn die Zeichnung
+    // laengst nur noch auf dem Geraet liegt, auf dem sie entstanden ist.
+    if (a.hand) { meta.push("✍️ mit der Hand"); hatHand = true; }
     box.appendChild(el("span", null, meta.join(" · ")));
+
+    /* Roses eigener Text - bei offenen Aufgaben IST das die Leistung, die
+       Punktzahl nur ihr Schatten. Bei Handschrift steht hier die Umschrift, die
+       die KI daraus gemacht hat: genau daran kann Rose gegenlesen, ob die
+       Maschine sie richtig verstanden hat. Erst zugeklappt, damit eine Runde mit
+       zehn offenen Aufgaben nicht zur Textwand wird. */
+    if (a.text) {
+      var falt = el("details", "runde-text-falt");
+      var zus = el("summary", null, a.hand
+        ? (a.quelle === "gemischt" ? "Getippt und geschrieben – anzeigen" : "Umschrift deiner Handschrift – anzeigen")
+        : "Deine Antwort – anzeigen");
+      falt.appendChild(zus);
+      falt.appendChild(el("p", "runde-antworttext", a.text));
+      box.appendChild(falt);
+    }
+
     zeile.appendChild(box);
     liste.appendChild(zeile);
   });
   app.appendChild(liste);
   app.appendChild(el("p", "hm-legende",
-    "Nur zum Ansehen. ↻ heißt: die Aufgabe kommt wieder – sie steht in deinem Wiederholen-Stapel."));
+    "Nur zum Ansehen. ↻ heißt: die Aufgabe kommt wieder – sie steht in deinem Wiederholen-Stapel." +
+    (hatHand ? " ✍️ heißt: du hast mit dem Stift geschrieben. Gespeichert ist die Umschrift – dein Blatt selbst bleibt auf dem Gerät, auf dem du es geschrieben hast." : "")));
 }
 
 /* Eine Kachel der Tagesliste — seit dem 12.08. abends eine Kachel und keine
@@ -1248,6 +1355,11 @@ function uebenKacheln() {
   box.appendChild(el("h2", "abschnitt-titel", "Üben"));
   var grid = el("div", "kachel-grid");
   [
+    // Die zwei kurzen Einstiege stehen vorn (Jennifer, 13.08.): "Neu" ist die
+    // kuerzeste Runde der App, "Klausurfrage" die einzige mit dem
+    // Aufdroesel-Schritt davor. Beide starten sofort, ohne Setup-Seite.
+    ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }],
+    ["🧩", "Klausurfrage", "Aufdröseln, dann schreiben", function () { zeige("klausurfrage"); }],
     ["📝", "MC", "Alle Themen", function () { zeige("mcquer"); }],
     ["✍️", "Frei", "Nach Thema", function () { zeige("freiwahl"); }],
     ["🎲", "Mix", "MC & offen", function () { zeige("mix"); }],

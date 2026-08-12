@@ -87,11 +87,14 @@ export function quotePille(prozent, extra) {
    aus ui.js. Gemerkt wird die letzte Wahl in state.rundenEinst; das Feld ist
    geraetelokal, snapshot() in sync.js waehlt seine Felder gezielt aus und nimmt
    es nicht mit. */
+export var RUNDEN_LAENGEN = [5, 10, 15, 25];
+export var RUNDEN_AUSWAHL = ["neu", "wacklig", "bunt"];
+
 export function rundenEinstellungen() {
   var e = state.rundenEinst || {};
   return {
-    anzahl: [10, 15, 25].indexOf(e.anzahl) >= 0 ? e.anzahl : 15,
-    auswahl: e.auswahl === "bunt" ? "bunt" : "wacklig"
+    anzahl: RUNDEN_LAENGEN.indexOf(e.anzahl) >= 0 ? e.anzahl : 15,
+    auswahl: RUNDEN_AUSWAHL.indexOf(e.auswahl) >= 0 ? e.auswahl : "wacklig"
   };
 }
 
@@ -102,17 +105,28 @@ export function rundenEinstellungenMerken(neu) {
 
 // Die zwei Schalter, die beide Uebungsrunden teilen. Als Funktion und nicht als
 // Konstante, damit die Texte an einer Stelle stehen und nicht zweimal.
+//
+// Die 5 kam am 13.08. dazu (Jennifer: "5 Fragen, gemischt, groesstenteils neu
+// oder wackeliges"). Sie steht bewusst VOR der 10: die kuerzeste Runde ist die,
+// die man auch an einem schlechten Tag noch anfaengt.
+//
+// "Neues zuerst" ist die dritte Auswahl und NICHT dasselbe wie "Wackliges
+// zuerst" - gewicht() gibt Ungesehenem dieselbe 3 wie zuletzt Falschem, damit
+// verschwindet Neues zwischen den Wacklern. gewichtNeu() in stats.js zieht es
+// klar nach vorn. Wer hier einen Wert ergaenzt, muss ihn auch in
+// RUNDEN_AUSWAHL eintragen, sonst faellt die gemerkte Wahl beim naechsten
+// Laden auf "wacklig" zurueck.
 export function rundenZeilen(einheit) {
   return [
     {
       schluessel: "anzahl", label: "Wie lang",
-      klein: "Kurz ist besser als gar nicht - 10 " + einheit + " sind in ein paar Minuten durch.",
-      werte: [{ wert: 10, text: "10" }, { wert: 15, text: "15" }, { wert: 25, text: "25" }]
+      klein: "Kurz ist besser als gar nicht - 5 " + einheit + " sind in ein paar Minuten durch.",
+      werte: [{ wert: 5, text: "5" }, { wert: 10, text: "10" }, { wert: 15, text: "15" }, { wert: 25, text: "25" }]
     },
     {
       schluessel: "auswahl", label: "Auswahl",
-      klein: "Wackliges zuerst holt das nach vorn, was zuletzt danebenlag. Bunt gemischt zieht querbeet.",
-      werte: [{ wert: "wacklig", text: "Wackliges zuerst" }, { wert: "bunt", text: "Bunt gemischt" }]
+      klein: "Neues zuerst bringt vor allem, was du noch nicht hattest. Wackliges zuerst holt das nach vorn, was zuletzt danebenlag. Bunt gemischt zieht querbeet.",
+      werte: [{ wert: "neu", text: "Neues zuerst" }, { wert: "wacklig", text: "Wackliges zuerst" }, { wert: "bunt", text: "Bunt gemischt" }]
     }
   ];
 }

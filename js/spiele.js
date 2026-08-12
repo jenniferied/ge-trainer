@@ -445,6 +445,34 @@ function opRunde(themen, hooks) {
   schritt();
 }
 
+/* ---------- Fenster fuer den Modus "Eine Klausurfrage" (klausurfrage.js) ----
+   Die Operatoren-Tabelle ist Klausurstoff (Klausurinfo, Folie 5) und steht
+   genau EINMAL, naemlich hier oben. Der Klausurfrage-Modus stellt denselben
+   Aufdroesel-Schritt vor das Schreiben und darf sie deshalb nicht nachbauen -
+   sonst driften zwei Tabellen auseinander, sobald eine Folie korrigiert wird.
+
+   op bleibt null, wenn im Stamm kein bekanntes Signalwort steht. Dann erklaert
+   der Modus nur die Anforderungsstufe und behauptet kein Signalwort, das da
+   nicht ist.
+
+   stimmig sagt, ob Signalwort und gepflegtes afb-Feld dasselbe sagen. Das Spiel
+   wirft solche Aufgaben ganz raus (aufgabenPool), weil eine Uebung mit
+   widerspruechlicher Aufloesung nichts taugt. Im Klausurfrage-Modus darf die
+   Aufgabe bleiben - sie ist ja echter Klausurstoff -, nur die
+   Signalwort-Erklaerung faellt weg. Die zwei bekannten Faelle (fr-f-2, wo-f-2)
+   stehen als offener Punkt in der ROADMAP. */
+export function afbAnalyse(frage, afb) {
+  var op = signalwortIn(frage);
+  return {
+    afb: afb || (op ? op.afb : null),
+    op: op ? { wort: anzeige(op.wort), afb: op.afb, tipp: op.tipp } : null,
+    stimmig: !!(op && afb && op.afb === afb)
+  };
+}
+
+export function afbOption(afb) { return AFB_OPTION[afb] || ""; }
+export function afbKurz(afb) { return AFB_KURZ[afb] ? AFB_KURZ[afb] + " (" + AFB_WOERTER[afb] + ")" : ""; }
+
 function erklaerungZu(item) {
   if (item.art === "wort") {
     return anzeige(item.op.wort) + " gehört zu " + AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + item.op.tipp;

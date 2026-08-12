@@ -76,29 +76,35 @@ export function herzenHeute(tz) {
    Vorwurf.
 
    Schwellen am 12.08. halbiert (Jennifer): vorher 0/20/45, dann 0/10/22, seit
-   dem 13.08. 0/22/52 (siehe Leiter unten). Mit 45 Herzen bis zum Riss waere es
+   dem 13.08. 0/22/42 (siehe Leiter unten). Mit 45 Herzen bis zum Riss waere es
    Wochen ohne sichtbare Veraenderung gewesen, mit 10 ging es zu schnell. */
 /* ---------- Die Leiter, neun Stufen ----------
-   Stand 13.08.: 0/7/13/22/28/34/40/46/52. Gerechnet in UEBUNGSTAGEN, nicht in
+   Stand 13.08.: 0/7/13/22/26/30/34/38/42. Gerechnet in UEBUNGSTAGEN, nicht in
    Kalendertagen — ein voller Uebungstag (n >= ziel) bringt genau 3 Herzen, ein
    angefangener 1 bis 2. Das ist die harte Groesse. Rose stand am 12.08. bei
    3 Herzen aus einem Uebungstag, Klausur ist der 10.09.
 
      Stufe 3 (schluepft)   22 = 8 volle Uebungstage
-     Stufe 8 (erwachsen)   52 = 18 volle Uebungstage
+     Stufe 8 (erwachsen)   42 = 14 volle Uebungstage
 
-   Die Geschichte der Zahl in drei Schritten, damit sie niemand rueckwaerts
+   Die Geschichte der Zahl in vier Schritten, damit sie niemand rueckwaerts
    dreht: am 12.08. "halbier da mal die Tage" (als halbierte WARTEZEIT gemeint,
    nicht als halbierte Schwellen) → Schluepfen bei 10. Am 12.08. spaet drei
    Herzen drauf → 13. Am 13.08. Jennifer: "nicht so schnell schluepfen bitte,
    einfach ein paar Herzen (2-3) hinzufuegen pro Stufe" — das sind die
-   ABSTAENDE, nicht die Schwellen, also +3 auf jede Luecke. Damit ist die
-   fruehere Ansage "Schluepfen erst bei 16 ist vom Tisch" bewusst ueberholt: 22
-   liegt spaeter als 16, und das ist so gewollt.
+   ABSTAENDE, nicht die Schwellen, also +3 auf jede Luecke → 0/7/13/22/…/52.
+   Damit ist die fruehere Ansage "Schluepfen erst bei 16 ist vom Tisch" bewusst
+   ueberholt: 22 liegt spaeter als 16, und das ist so gewollt.
 
-   Erwachsen (52) ist vor dem 10.09. nur mit fast taeglichem vollen Pensum
-   erreichbar. Bewusst in Kauf genommen — die Leiter soll bis zur Klausur
-   tragen, nicht vorher auslaufen.
+   Vierter Schritt, gleicher Tag: 52 waeren 18 volle Uebungstage bei 28 Tagen
+   bis zur Klausur gewesen — erwachsen haette Rose realistisch nie gesehen.
+   Jennifer: "ne doch etwas kuerzer, etwas dazwischen". Also bleibt die lange
+   EI-PHASE (Schluepfen erst bei 22, das war der eigentliche Wunsch) und die
+   sechs Stufen danach ruecken von +6 auf +4 zusammen. Erwachsen bei 42, das
+   sind 14 volle Uebungstage und damit erreichbar.
+
+   WER HIER WIEDER DREHT: die Ei-Abstaende (7/6/9) sind das Ergebnis, die
+   Abstaende danach (4) sind die Stellschraube. Nicht umgekehrt.
 
    Die Schwellen liegen jetzt ueber denen des ST-Trainers (dort 31 bzw. 48),
    obwohl Rose hier spaeter angefangen hat. Gleiche Anzahl Stufen, gleiche
@@ -115,11 +121,11 @@ var STUFEN = [
   { ab: 7,  art: "ei",   sub: 1, satz: "Ich hab mich bewegt. Nur ein bisschen, aber ich hab." },
   { ab: 13, art: "ei",   sub: 2, satz: "Es knackt. Nicht erschrecken – ich glaub, es geht bald los." },
   { ab: 22, art: "blob", sub: 0, satz: "Oh. Hallo. Ich bin … irgendwas." },
-  { ab: 28, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
-  { ab: 34, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
-  { ab: 40, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
-  { ab: 46, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
-  { ab: 52, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
+  { ab: 26, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
+  { ab: 30, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
+  { ab: 34, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
+  { ab: 38, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
+  { ab: 42, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
 ];
 /* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
    sie brauchen und eine 3 im Code an der dritten Stelle niemand mehr zuordnet. */

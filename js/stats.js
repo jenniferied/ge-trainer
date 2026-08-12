@@ -10,7 +10,7 @@
      hooks.mcKarte(thema, f, fortschritt, weiterText, onWeiter)  -> MC-Karte
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
-import { state, speichern, app, el, leeren } from "./core.js";
+import { state, speichern, app, el, leeren, starteRunde } from "./core.js";
 import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
@@ -157,15 +157,44 @@ export function altFortschritt(themen) {
 }
 
 /* ---------- Zuletzt geuebt ----------
-   Der GE-Trainer fuehrt keine Session-Liste wie der ST-Trainer (dort gibt es
-   state.sessions). Hier wird sie aus dem Antwort-Log abgeleitet: alles, was
-   ohne laengere Pause hintereinander beantwortet wurde, ist eine Runde.
+   Seit dem 13.08. fuehrt der GE-Trainer echte Sitzungen (core.js, state.sitzungen).
+   Der Verlauf mischt drei Quellen zu EINER nach Zeit sortierten Liste - genauso
+   wie histEintraege() im ST-Trainer zwei Quellen mischt:
+
+     A) Sitzungen  - eine Runde, die Rose bewusst gestartet hat. Ihr Titel ist,
+                     was sie gedrueckt hat ("Wiederholen"), nicht der haeufigste
+                     Modus im Stapel.
+     B) Abgeleitet - Antworten OHNE aufloesbare sid: der Altbestand von vor dem
+                     Umbau und einzeln angetippte Aufgaben in der Themenkarte.
+                     Fuer sie gilt weiter der 30-Minuten-Schnitt. Das ist ein
+                     Fallback und kein Normalfall.
+     C) Spiele     - je Tag und Spielart EINE Zeile.
+
+   INVARIANTE, uebernommen aus dem ST-Trainer (core.js, "INVARIANTE (Jennifer
+   12.08.)") und hier genauso gemeint: SPIELE BEKOMMEN NIE EINE SITZUNG. Sie
+   entstehen ausschliesslich hier zur Anzeige und leben sonst nur im Antwort-Log.
+   Grund: Karten sind deutlich leichter als Klausuraufgaben (drueben bei Rose
+   75 % gegen 64 %). Eine Begriffe-Runde als Sitzung wuerde den Rundenschnitt
+   nach oben ziehen, und der soll Klausurnaehe messen. Weil eine Kartenrunde
+   strukturell gar keine Sitzung IST, kann sie die Sitzungs-Quote nicht
+   beruehren - es braucht dafuer keinen einzigen Filter, den jemand vergessen
+   koennte. Wer Spiele je als Sitzung speichert, kippt diesen Schnitt still.
+   Aus demselben Grund tragen Spiel-Zeilen KEINE Quotenpille: die Zahl waere
+   neben den Rundenquoten nicht dieselbe Waehrung.
+
+   ZWEITE INVARIANTE, die die Aufteilung erst sicher macht: JEDER Log-Eintrag
+   landet in GENAU EINER Zeile GENAU EINER Quelle. Deshalb wird nach der
+   aufloesbaren sid einsortiert und nicht danach, ob ueberhaupt eine dasteht -
+   sonst verschwaenden Antworten, deren Sitzung geloescht oder aus dem Deckel
+   (SITZUNGEN_MAX) gefallen ist, aus beiden Toepfen zugleich.
+
    Bewusst nur LESEN - kein Loeschen-Knopf je Zeile wie drueben. Loeschen setzt
    Grabsteine, und Grabsteine neben Roses echtem Lernstand sind genau das
    Risiko, das hier nichts zu suchen hat. */
 
-var RUNDEN_PAUSE = 30 * 60000;   // 30 Minuten Abstand = neue Runde
+var RUNDEN_PAUSE = 30 * 60000;   // 30 Minuten Abstand = neue Runde (nur noch Fallback)
 
+// Fallback fuer Antworten ohne art: der Altbestand von vor dem 13.08.
 var MODUS_TEXT = {
   check: { icon: "📝", name: "Konzept-Check" },
   frei: { icon: "✍️", name: "Frei üben" },
@@ -173,46 +202,192 @@ var MODUS_TEXT = {
   spiel: { icon: "🎯", name: "Spiele" }
 };
 
-export function letzteRunden(themen, max) {
-  var titel = {};
-  (themen || []).forEach(function (t) { titel[t.id] = t.titel; });
+/* Icon und Gattungsname je Runden-Art. Die Ueberschrift der Zeile ist der
+   TITEL der Sitzung (das Wort, das auf dem Knopf stand); dieser Name steht
+   daneben als Gattung. Beides zu haben ist Absicht: bei einer Zellen-Runde
+   heisst der Titel "Wohnen · AFB II" und braucht das Wort Uebungsrunde dazu. */
+var ART_TEXT = {
+  "thema-check": { icon: "📝", name: "Konzept-Check" },
+  "thema-frei": { icon: "✍️", name: "Frei üben" },
+  "uebe-zelle": { icon: "🎯", name: "Übungsrunde" },
+  ueben: { icon: "🎯", name: "Übungsrunde" },
+  mix: { icon: "🎲", name: "Gemischte Runde" },
+  wiederholen: { icon: "🔁", name: "Wiederholen" },
+  neu: { icon: "✨", name: "Fünf neue" },
+  "mc-quer": { icon: "🔀", name: "MC-Quermischung" },
+  klausur: { icon: "📄", name: "Klausur-Simulation" }
+};
 
-  var runden = [];
-  var aktuell = null;
-  state.antwortLog.forEach(function (a) {
+var SPIEL_TEXT = {
+  "spiel-begriffe": { icon: "🃏", name: "Begriffe-Blitz", badge: "Spiel" },
+  "spiel-operatoren": { icon: "🔎", name: "Operatoren-Training", badge: "Spiel" }
+};
+
+function istSpielAntwort(a) { return a.modus === "spiel" || a.sid === "spiel"; }
+
+// Themen-Ids -> Titel, Unbekanntes faellt weg (Fragen aus einer alten Fassung).
+function themenTitel(ids, titelMap) {
+  return (ids || []).map(function (id) { return titelMap[id]; })
+    .filter(function (t) { return !!t; });
+}
+
+// Themen-Ids einer Antwortliste, haeufigste zuerst - fuer die abgeleiteten
+// Zeilen und die Spiel-Tage, die keine Sitzung haben, die das schon weiss.
+function themenAus(arr) {
+  var zaehler = {}, reihe = [];
+  arr.forEach(function (a) {
+    if (!a.thema) return;
+    if (zaehler[a.thema] === undefined) { zaehler[a.thema] = 0; reihe.push(a.thema); }
+    zaehler[a.thema]++;
+  });
+  return reihe.sort(function (x, y) { return zaehler[y] - zaehler[x]; });
+}
+
+function quoteAus(arr) {
+  var werte = arr.map(wertVon).filter(function (w) { return w !== undefined; });
+  if (!werte.length) return { bewertet: 0, quote: null };
+  var summe = werte.reduce(function (a, w) { return a + w; }, 0);
+  return { bewertet: werte.length, quote: Math.round(100 * summe / werte.length) };
+}
+
+/* Wie oft welche Selbsteinschaetzung - nur fuer offene Aufgaben, wo Rose selbst
+   geurteilt hat. Steht in der Verlaufszeile, weil bei offenen Aufgaben genau das
+   die Rueckmeldung ist (eine Prozentzahl allein sagt darueber wenig). */
+export function selbstZaehler(arr) {
+  var z = { gut: 0, mittel: 0, nochmal: 0, hand: 0, text: 0 };
+  (arr || []).forEach(function (a) {
+    if (a.modus !== "frei") {
+      // Handschrift gibt es auch in der Klausur-Simulation.
+      if (a.modus === "klausur" && a.hand) z.hand++;
+      if (a.modus === "klausur" && a.text) z.text++;
+      return;
+    }
+    if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
+    if (a.hand) z.hand++;
+    if (a.text) z.text++;
+  });
+  return z;
+}
+
+// A) Eine echte Sitzung. Die abgeleiteten Zahlen kommen von der Sitzung selbst
+// (core.js rechnet sie aus dem Log nach und kennt dabei die Umentscheiden-Regel);
+// nur wo sie fehlen, wird hier aus den Antworten gerechnet.
+function zeileSitzung(s, arr, titelMap) {
+  var t = ART_TEXT[s.art] || MODUS_TEXT[s.modus] || ART_TEXT.ueben;
+  var roh = quoteAus(arr);
+  return {
+    typ: "sitzung", id: s.id, art: s.art || null,
+    von: s.erstellt, bis: s.ts || arr[arr.length - 1].ts,
+    icon: t.icon, name: t.name, titel: s.titel || t.name,
+    gemischt: s.modus === "gemischt",
+    n: s.beantwortet || arr.length,
+    anzahl: typeof s.anzahl === "number" ? s.anzahl : null,
+    beantwortet: typeof s.beantwortet === "number" ? s.beantwortet : arr.length,
+    bewertet: typeof s.bewertet === "number" ? s.bewertet : roh.bewertet,
+    dauerSek: s.dauerSek || Math.round((((s.ts || 0) - s.erstellt) / 1000)) || 0,
+    fertig: !!s.fertig,
+    punkte: typeof s.punkte === "number" ? s.punkte : null,
+    max: typeof s.max === "number" ? s.max : null,
+    bestanden: s.bestanden === undefined ? null : s.bestanden,
+    themen: themenTitel(s.themen && s.themen.length ? s.themen : themenAus(arr), titelMap),
+    antworten: arr,
+    selbst: selbstZaehler(arr),
+    quote: typeof s.quote === "number" ? Math.round(100 * s.quote) : roh.quote
+  };
+}
+
+// B) Antworten ohne aufloesbare sid, in 30-Minuten-Fenster geschnitten.
+function zeileAbgeleitet(g, titelMap) {
+  var haupt = Object.keys(g.modi).sort(function (a, b) { return g.modi[b] - g.modi[a]; })[0] || "check";
+  var t = MODUS_TEXT[haupt] || MODUS_TEXT.check;
+  var roh = quoteAus(g.antworten);
+  var mehrere = Object.keys(g.modi).length > 1;
+  return {
+    typ: "abgeleitet", id: "abl-" + g.von, art: null,
+    von: g.von, bis: g.bis,
+    icon: t.icon, name: t.name, titel: t.name + (mehrere ? " u. a." : ""),
+    gemischt: mehrere,
+    n: g.antworten.length,
+    anzahl: null, beantwortet: g.antworten.length, bewertet: roh.bewertet,
+    dauerSek: Math.round((g.bis - g.von) / 1000),
+    fertig: true, punkte: null, max: null, bestanden: null,
+    themen: themenTitel(themenAus(g.antworten), titelMap),
+    antworten: g.antworten,
+    selbst: selbstZaehler(g.antworten),
+    quote: roh.quote
+  };
+}
+
+// C) Ein Spieltag. KEINE Sitzung und keine Quotenpille - siehe Invariante oben.
+function zeileSpiel(g, titelMap) {
+  var t = SPIEL_TEXT[g.art] || { icon: "🎯", name: "Spiele", badge: "Spiel" };
+  var richtig = g.antworten.filter(function (a) { return a.richtig; }).length;
+  return {
+    typ: "spiel", einzel: true, id: "spiel-" + g.art + "-" + g.von, art: g.art,
+    von: g.von, bis: g.bis,
+    icon: t.icon, name: t.name, titel: t.name, badge: t.badge,
+    gemischt: false,
+    n: g.antworten.length,
+    anzahl: g.antworten.length, beantwortet: g.antworten.length,
+    bewertet: 0, richtig: richtig,
+    dauerSek: Math.round((g.bis - g.von) / 1000),
+    fertig: true, punkte: null, max: null, bestanden: null,
+    themen: themenTitel(themenAus(g.antworten), titelMap),
+    antworten: g.antworten,
+    selbst: selbstZaehler(g.antworten),
+    quote: null
+  };
+}
+
+export function letzteRunden(themen, max) {
+  var titelMap = {};
+  (themen || []).forEach(function (t) { titelMap[t.id] = t.titel; });
+
+  var sitzungen = state.sitzungen || [];
+  var proSid = {};
+  sitzungen.forEach(function (s) { if (s && s.id) proSid[s.id] = []; });
+
+  // Genau ein Topf je Antwort - siehe zweite Invariante oben.
+  var lose = [], spiele = {};
+  (state.antwortLog || []).forEach(function (a) {
     if (!a || !a.ts) return;
+    if (istSpielAntwort(a)) {
+      var art = SPIEL_TEXT[a.art] ? a.art : (a.spiel === "operatoren" ? "spiel-operatoren" : "spiel-begriffe");
+      var key = new Date(a.ts).toDateString() + "|" + art;
+      var g = spiele[key] || (spiele[key] = { art: art, von: a.ts, bis: a.ts, antworten: [] });
+      g.bis = a.ts;
+      g.antworten.push(a);
+      return;
+    }
+    if (a.sid && proSid[a.sid]) { proSid[a.sid].push(a); return; }
+    lose.push(a);
+  });
+
+  var zeilen = [];
+  sitzungen.forEach(function (s) {
+    var arr = proSid[s.id] || [];
+    // Eine Sitzung ohne Antworten kann nach einem Merge oder nach geloeschten
+    // Antworten uebrig bleiben. Sie waere eine leere Zeile - also keine Zeile.
+    if (arr.length) zeilen.push(zeileSitzung(s, arr, titelMap));
+  });
+
+  var gruppen = [], aktuell = null;
+  lose.forEach(function (a) {
     if (!aktuell || a.ts - aktuell.bis > RUNDEN_PAUSE) {
-      aktuell = { von: a.ts, bis: a.ts, n: 0, modi: {}, themen: {}, antworten: [] };
-      runden.push(aktuell);
+      aktuell = { von: a.ts, bis: a.ts, modi: {}, antworten: [] };
+      gruppen.push(aktuell);
     }
     aktuell.bis = a.ts;
-    aktuell.n++;
     aktuell.antworten.push(a);
     var m = MODUS_TEXT[a.modus] ? a.modus : "check";
     aktuell.modi[m] = (aktuell.modi[m] || 0) + 1;
-    if (a.thema && titel[a.thema]) aktuell.themen[a.thema] = (aktuell.themen[a.thema] || 0) + 1;
   });
+  gruppen.forEach(function (g) { zeilen.push(zeileAbgeleitet(g, titelMap)); });
 
-  return runden.reverse().slice(0, max || 5).map(function (r) {
-    var haupt = Object.keys(r.modi).sort(function (a, b) { return r.modi[b] - r.modi[a]; })[0] || "check";
-    var themenListe = Object.keys(r.themen)
-      .sort(function (a, b) { return r.themen[b] - r.themen[a]; })
-      .map(function (id) { return titel[id]; });
-    // wert() ist derselbe Massstab wie im Raster (0..1 je Antwort) - damit die
-    // Detailansicht einer Runde dieselbe Sprache spricht wie die Statistik.
-    var bewertet = r.antworten.map(wertVon).filter(function (w) { return w !== undefined; });
-    return {
-      von: r.von, bis: r.bis, n: r.n,
-      icon: MODUS_TEXT[haupt].icon,
-      name: MODUS_TEXT[haupt].name,
-      gemischt: Object.keys(r.modi).length > 1,
-      themen: themenListe,
-      antworten: r.antworten,
-      quote: bewertet.length
-        ? Math.round(100 * bewertet.reduce(function (a, w) { return a + w; }, 0) / bewertet.length)
-        : null
-    };
-  });
+  Object.keys(spiele).forEach(function (k) { zeilen.push(zeileSpiel(spiele[k], titelMap)); });
+
+  zeilen.sort(function (a, b) { return b.bis - a.bis; });
+  return zeilen.slice(0, max || 5);
 }
 
 /* ---------- Tagesziel ----------
@@ -401,6 +576,29 @@ function gewicht(item) {
   var r = state.frei[item.f.id];
   if (!r) return 3;
   return r === "gut" ? 1 : r === "mittel" ? 2 : 3;
+}
+
+/* Ob eine Aufgabe ueberhaupt schon dran war. Zwei verschiedene Ablagen, weil MC
+   und frei verschieden Buch fuehren: state.mc traegt ein Objekt je gesehener
+   Frage, state.frei die letzte Selbsteinschaetzung als String. */
+function ungesehen(item) {
+  return item.typ === "mc" ? !state.mc[item.f.id] : !state.frei[item.f.id];
+}
+
+/* "Neues zuerst" (Jennifer, 13.08.: "groesstenteils neu oder wackeliges").
+   gewicht() taugt dafuer NICHT: dort bekommt Ungesehenes dieselbe 3 wie zuletzt
+   Falsches, Neues verschwindet also zwischen den Wacklern, sobald ein paar
+   Runden gelaufen sind.
+
+   Die 8 ist mit Absicht kein Ausschluss. zieh() multipliziert das Gewicht mit
+   (0.4 + Math.random()), ein Ungesehenes landet also zwischen 3.2 und 11.2, ein
+   Wackler zwischen 1.2 und 4.2. Die Bereiche ueberlappen knapp — eine Runde ist
+   damit GROESSTENTEILS neu und nimmt ab und zu einen Wackler mit. Genau das war
+   die Ansage; ein harter Filter waere etwas anderes und wuerde ausserdem leer
+   laufen, sobald der Bestand durch ist. */
+function gewichtNeu(item) {
+  if (ungesehen(item)) return 8;
+  return gewicht(item);
 }
 
 /* ---------- Zahlen-Hochzaehl-Animation (belebeStats-Muster aus dem ST) ---------- */
@@ -621,14 +819,46 @@ function fussnote(st) {
    gibt: die Zellen der Statistik (uebeRunde) und die gemischte Runde von der
    Startseite (zeigeMix). meta traegt alles, was sich unterscheidet. */
 
+// Womit eine Runde ueberwiegend gelaufen ist - nur fuer Icon und Beschriftung
+// im Verlauf. Gemischt ist ein eigener Wert und nicht "check mit ein paar
+// Freien": eine Runde aus beidem soll auch so dastehen.
+function modusVon(liste) {
+  var mc = 0, frei = 0;
+  liste.forEach(function (x) { if (x.typ === "mc") mc++; else frei++; });
+  if (mc && frei) return "gemischt";
+  return frei ? "frei" : "check";
+}
+
 function runde(pool, meta, hooks, wahl) {
   if (!pool.length) return meta.zurueck();
   var w = wahl || { anzahl: RUNDE, auswahl: "wacklig" };
-  // Bunt gemischt heisst: jede Aufgabe gleich wahrscheinlich. Sonst zieht
-  // gewicht() das nach vorn, was zuletzt gewackelt hat.
-  var gew = w.auswahl === "bunt" ? function () { return 1; } : gewicht;
+  // Drei Auswahlen, drei Gewichtungen. Bunt gemischt heisst: jede Aufgabe gleich
+  // wahrscheinlich. Neues zuerst zieht Ungesehenes klar nach vorn, wacklig (der
+  // Vorgabewert) das, was zuletzt danebenlag.
+  var gew = w.auswahl === "bunt" ? function () { return 1; }
+    : w.auswahl === "neu" ? gewichtNeu
+    : gewicht;
   var liste = zieh(pool, Math.min(w.anzahl || RUNDE, pool.length), gew);
   var index = 0, richtige = 0, mcAnzahl = 0;
+
+  /* EINE Schreibstelle fuer die Sitzung, und zwar hier - nicht bei den vier
+     Einstiegen. Alles, was eine Runde ist, laeuft durch diese Funktion:
+     die Zellen-Runde der Statistik, Mix, Wiederholen und die fuenf Neuen.
+     Ein starteRunde je Einstieg waere an einer Stelle vergessen worden, und der
+     Fehler waere still gewesen (die Antworten liefen dann ohne sid ins Log).
+     Wichtig ist auch die Stelle IM Ablauf: erst hier steht liste fest, also die
+     Zahl, die Rose gleich vor sich sieht ("Aufgabe 1 von 8").
+
+     Deckt zugleich "Noch eine Runde" ab: das ruft uebeRunde/mixRunde direkt auf,
+     laeuft also NICHT durch den Router und haette sonst an die vorige Sitzung
+     weiter angebaut - aus zwei Runden waere eine Zeile mit doppelter Zahl
+     geworden. starteRunde schliesst die vorige selbst ab. */
+  starteRunde({
+    art: meta.art || "ueben",
+    titel: meta.titel,
+    modus: modusVon(liste),
+    anzahl: liste.length
+  });
 
   function farbeSetzen() {
     if (meta.farbe) setzeFarbe(app, meta.farbe);
@@ -709,7 +939,8 @@ function runde(pool, meta, hooks, wahl) {
 
 function uebeRunde(thema, afb, hooks) {
   runde(fragenFuerZelle(thema, afb), {
-    titel: thema.titel,
+    art: "uebe-zelle",
+    titel: thema.titel + " · " + AFB_KURZ[afb],
     unter: AFB_LANG[afb],
     farbe: thema.farbe,
     zurueckText: "← Statistik",
@@ -736,7 +967,7 @@ function uebeRunde(thema, afb, hooks) {
 export function zeigeMix(themen, hooks, nurWiederholung) {
   var pool = nurWiederholung ? wiederholPool(themen) : alleItems(themen);
   if (!pool.length) return hooks.home();
-  if (nurWiederholung) return mixRunde(pool, themen, hooks, true, { anzahl: RUNDE, auswahl: "wacklig" });
+  if (nurWiederholung) return mixRunde(pool, themen, hooks, "wdh", { anzahl: RUNDE, auswahl: "wacklig" });
 
   leeren();
   app.style.removeProperty("--tfarbe-basis");
@@ -753,23 +984,61 @@ export function zeigeMix(themen, hooks, nurWiederholung) {
     startText: "Runde starten",
     aufStart: function (wahl) {
       rundenEinstellungenMerken(wahl);
-      mixRunde(pool, themen, hooks, false, wahl);
+      mixRunde(pool, themen, hooks, "mix", wahl);
     }
   }));
 }
 
-function mixRunde(pool, themen, hooks, nurWiederholung, wahl) {
+/* Fuenf neue, gemischt - die Kurzrunde von der Startseite (Jennifer, 13.08.).
+   Wie die Wiederholen-Runde OHNE Baukasten: der Modus IST die Einstellung, ein
+   Setup davor waere eine Huerde vor der kuerzesten Runde der App. Wer die
+   Auswahl bewusst variieren will, nimmt die gemischte Runde - dort steht der
+   Baukasten und kann jetzt dasselbe.
+
+   Die Einstellung wird ABSICHTLICH nicht mit rundenEinstellungenMerken
+   gespeichert: sie gehoert dieser Kachel und soll nicht die naechste gemischte
+   Runde umstellen, die Rose ueber den Baukasten startet. */
+export function zeigeNeu(themen, hooks) {
+  var pool = alleItems(themen);
+  if (!pool.length) return hooks.home();
+  mixRunde(pool, themen, hooks, "neu", { anzahl: 5, auswahl: "neu" });
+}
+
+/* art ist der Schluessel, unter dem die Runde spaeter im Verlauf steht (ART_TEXT
+   weiter oben). Er wandert mit in jeden Log-Eintrag, damit eine
+   Wiederholen-Runde auch dann "Wiederholen" heisst, wenn zufaellig lauter
+   MC-Fragen im Stapel lagen - genau das war der Fehler, den Jennifer gesehen
+   hat ("sie hat wiederholen gemacht ... sieht komisch aus"). */
+var MIX_TEXT = {
+  mix: {
+    art: "mix",
+    titel: "Gemischte Runde", unter: "Quer durch alle Themen",
+    fertig: "Gemischte Runde durch, quer über die Themen."
+  },
+  wdh: {
+    art: "wiederholen",
+    titel: "Wiederholen", unter: "Was zuletzt danebenlag",
+    fertig: "Durch – genau die Stellen, die zuletzt gewackelt haben."
+  },
+  neu: {
+    art: "neu",
+    titel: "Fünf neue", unter: "Größtenteils Ungesehenes",
+    fertig: "Fünf durch, überwiegend Sachen, die du noch nicht hattest."
+  }
+};
+
+function mixRunde(pool, themen, hooks, art, wahl) {
+  var t = MIX_TEXT[art] || MIX_TEXT.mix;
   runde(pool, {
-    titel: nurWiederholung ? "Wiederholen" : "Gemischte Runde",
-    unter: nurWiederholung ? "Was zuletzt danebenlag" : "Quer durch alle Themen",
+    art: t.art,
+    titel: t.titel,
+    unter: t.unter,
     farbe: null,
     zurueckText: "← Startseite",
     zurueck: function () { hooks.home(); },
     // Nochmal laeuft direkt mit derselben Einstellung weiter - der Baukasten
     // steht vor der Runde, nicht zwischen zwei Runden.
-    nochmal: function () { mixRunde(pool, themen, hooks, nurWiederholung, wahl); },
-    fertigSatz: nurWiederholung
-      ? "Durch – genau die Stellen, die zuletzt gewackelt haben."
-      : "Gemischte Runde durch, quer über die Themen."
+    nochmal: function () { mixRunde(pool, themen, hooks, art, wahl); },
+    fertigSatz: t.fertig
   }, hooks, wahl);
 }
