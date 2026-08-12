@@ -12,7 +12,7 @@ import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
-import { tagesPilleKlasse, tagesText, tagesWorte, losText, losWorte } from "./geteilt-tagesstand.js";
+import { tagesPilleKlasse, tagesText, tagesWorte, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
 
 var themen = [];
 
@@ -123,17 +123,32 @@ function zustandBadge(zustand) {
    tatsaechlich, dass dort steht offen und es pulsiert. Das kann man natuerlich
    jetzt uebernehmen in die Karten."). Dieselbe Bauweise wie im ST-Trainer,
    nicht eine aehnliche: gleiche Klassen, gleiches Zeichen, gleiches Wort,
-   gleicher Takt. Das ✦ atmet nur, wo wenige Abzeichen nebeneinander stehen -
-   pulsierend uebergeben wir es deshalb ausdruecklich (puls = true). */
+   gleicher Takt.
+
+   Die STILLE Fassung, fuer alles, was nicht heute dran ist: Themenkarten,
+   Aufgabenlisten. Acht atmende Zeichen untereinander waeren Flimmern statt
+   Signal, und "noch nie geuebt" ist auch keine Tagesaufgabe. */
 function standBadge(erledigt, text, extra) {
   var b = el("span", "stand-badge " + (erledigt ? "sitzt" : "neu") + (extra ? " " + extra : ""));
   b.appendChild(document.createTextNode(text));
   return b;
 }
 
+/* Die DRINGENDE Fassung — und sie ist ausschliesslich fuer Tagesaufgaben da.
+   Genau zwei Stellen rufen sie auf, und das sind genau die Dailies: die Zeilen
+   unter "Heute dran" und der Querlink zum ST-Trainer.
+
+   Seit dem 12.08. nachmittags rot und mit schnellerem Puls (Jennifer: "lass uns
+   auf jeden Fall Rot, ja oder so ein Orange blinkendes fuer offene Dailies
+   machen"). Die Klasse .dringend steckt hier IN der Funktion statt an den
+   Aufrufstellen — dann kann kein spaeterer Aufruf sie versehentlich weglassen
+   und kein Aufruf sie versehentlich an eine Themenkarte haengen. Wer das
+   Abzeichen kuenftig woanders braucht, muss sich entscheiden: ist es eine
+   Tagesaufgabe, nimmt er offenBadge, sonst standBadge.
+   Farbe, Takt und die Grenze zur Farbleiter stehen im CSS, Block 2b. */
 function offenBadge(text, extra) {
-  var b = el("span", "stand-badge neu" + (extra ? " " + extra : ""));
-  b.appendChild(el("i", "puls", "✦"));
+  var b = el("span", "stand-badge neu dringend" + (extra ? " " + extra : ""));
+  b.appendChild(el("i", "puls dringend", "✦"));
   b.appendChild(document.createTextNode(" " + text));
   return b;
 }
@@ -250,7 +265,9 @@ function querLink() {
     var losStatt = !!(s && !s.heute && s.los);
 
     if (wissen && summe > 0) {
-      if (!losStatt) stand.appendChild(offenBadge(summe + " offen", "kompakt"));
+      // Wortwahl aus offenText(), damit sie nicht getrennt von der Gegenrichtung
+      // driftet - drueben stand bis zum 12.08. nachmittags "offen" ohne Zahl.
+      if (!losStatt) stand.appendChild(offenBadge(offenText(summe), "kompakt"));
       worte.push("noch offen: " + teile.join(" und "));
     } else if (spieleOffen != null && summe === 0 && !losStatt) {
       /* "Nichts offen" darf NUR behauptet werden, wenn die Spiel-Abfrage
@@ -280,7 +297,7 @@ function querLink() {
          Zahlenpaar, weil wir das dortige Tagesziel gar nicht kennen - und weil
          "0 von 60" sich wie ein Rueckstand liest statt wie ein offener Tag. */
       var losPille = el("span", "tag-pille los");
-      losPille.appendChild(el("i", "puls los-zeichen", "!"));
+      losPille.appendChild(el("i", "puls dringend los-zeichen", "!"));
       losPille.appendChild(document.createTextNode(losText()));
       stand.appendChild(losPille);
       worte.push(losWorte("ST"));

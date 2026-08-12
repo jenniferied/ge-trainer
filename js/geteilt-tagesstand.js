@@ -246,6 +246,30 @@ export function losWorte(appName) {
   return "in " + appName + " heute noch nichts geuebt — schon eine kurze Runde zaehlt";
 }
 
+/* ---------- Das Offen-Abzeichen am Querlink (Angleich 12.08. nachmittags) ----
+   Jennifer: "updatet den GE Trainer, dass er auch die gleiche Pillenlogik hat
+   mit dem Link auf ST Trainer, wie umgekehrt."
+
+   Bis dahin sagte der GE-Querlink "✦ 3 offen" und der ST-Querlink nur
+   "✦ offen" — dieselbe Frage, zwei Auskuenfte, und die schweigsamere war nicht
+   die ehrlichere, sondern nur die aeltere. Die Zahl steht jetzt auf beiden
+   Seiten, und sie kommt aus dieser einen Funktion.
+
+   Was die Zahl NICHT ist: gleich gross auf beiden Seiten. Der GE-Trainer zaehlt
+   drueben zwei Dinge zusammen (Mini-Runden von heute plus angefangene Runden
+   aus dem Snapshot), der ST-Trainer nur eines (Mini-Spiele, die drueben heute
+   noch nicht liefen) — denn der GE-Trainer kennt gar keine fortsetzbaren
+   Runden, es gibt in seinem Snapshot kein Feld offen. Symmetrie heisst hier
+   also: gleiche Regel, gleiches Aussehen, gleiches Wort. Nicht: gleiche
+   Bezugsgroesse. Eine dazuerfundene dritte Quelle waere genau der Fehler, an
+   dem die alte Quoten-Pille gestorben ist.
+
+   Kein "noch", kein "!" und keine Gesamtzahl dahinter ("3 von 5 offen"):
+   ein Nenner macht aus einer Auskunft eine Bilanz. */
+export function offenText(n) {
+  return n + " offen";
+}
+
 /* Fuer title/aria — ein ganzer Satz, kein Zahlensalat. Kein Ausrufezeichen und
    kein Lob unterhalb des Pensums: die Pille ist eine Auskunft, keine Wertung. */
 export function tagesWorte(h, appName) {

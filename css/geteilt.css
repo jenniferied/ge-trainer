@@ -181,6 +181,81 @@
 
 
 /* ---------------------------------------------------------------------------
+   2b. VARIANTE "dringend" — DAS SIGNAL FÜR OFFENE TAGESAUFGABEN
+   Jennifer, 12.08.: "lass uns auf jeden Fall Rot, ja oder so ein Orange
+   blinkendes für offene Dailies machen."
+
+   Gebaut ist beides zusammen: rote Fläche UND ein deutlich schnellerer Puls.
+   Die Farbe trägt, wer sie unterscheiden kann, die Bewegung trägt den Rest —
+   und Jennifers zwei Vorschläge widersprechen sich nicht, sie verstärken sich.
+
+   >>> DIE GRENZE, UND SIE IST DER GANZE PUNKT DIESES BLOCKS <<<
+
+   In den Trainern gilt seit Anfang an: niedrige Werte sind orange, NIE rot.
+   Diese Regel bleibt vollständig in Kraft — sie handelt von Roses LEISTUNG.
+   Zonen-Balken, Kalender, Punkte-Plot und die Leiterstufen der Tages-Pille
+   (.s1….s4) sind von diesem Block nicht berührt und bekommen nie ein Rot.
+
+   Rot heißt hier etwas anderes, und zwar ausschließlich:
+   "Diese Aufgabe ist HEUTE dran und noch offen."
+   Das ist kein Urteil über Rose, sondern eine Auskunft über den Tag. Ein
+   offenes Daily am Mittag ist völlig normal; rot ist es, damit sie es sieht,
+   nicht damit sie sich schlecht fühlt. Deshalb steht auch nirgends eine Zahl
+   dabei, die wie ein Rückstand aussieht, und nirgends ein Wort wie
+   "überfällig".
+
+   WO ES GILT — die Regel ist bewusst an .puls gekoppelt:
+   dringend darf genau dort stehen, wo schon vorher gepulst wurde, nämlich am
+   TAGES-Signal (Spiele-Hub beider Apps, Querlink, "heute noch nichts").
+   Die acht Themenkarten und die Stöbern-Listen tragen dasselbe Wort "✦ offen"
+   in der Identitätsfarbe und OHNE Puls — die meinen "noch nie geübt", nicht
+   "heute offen". Würden die rot, wäre die Startseite eine Wand aus Alarm und
+   das Signal wäre nichts mehr wert.
+
+     Kurzformel: rot pulsiert nur, was heute dran ist.
+
+   FARBE: ein Rot, das in BEIDEN Themes als Fläche unter weißer Schrift trägt
+   (gemessen 5,2:1) — deshalb hier fest und nicht über --bad. --bad dreht sich
+   nämlich je Theme (hell #b3362b, dunkel #e77f74), und das hellere Rot der
+   Nacht käme unter Weiß nur auf 2,7:1. Als Fläche muss die Farbe konstant sein,
+   sonst kippt der Kontrast in einem der vier Zustände. Der Ton liegt in
+   derselben Familie wie das vorhandene --bad, damit er nicht wie eine fremde
+   Farbe aus einem anderen Baukasten aussieht.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --dringend-bg: #c8362a;
+  --dringend-ink: #fff;
+  /* Deutlich kürzer als der ruhige Atem (2,8 s) — das ist das "Blinken", das
+     Jennifer gemeint hat. Bewusst nicht kürzer als 1 s: darunter wird es zum
+     Stroboskop, und die Seite öffnet Rose jeden Tag. */
+  --dringend-dauer: 1.15s;
+}
+
+.stand-badge.dringend {
+  background: var(--dringend-bg); color: var(--dringend-ink);
+}
+/* Der schnellere Takt. Eigene Keyframes statt nur einer kürzeren Dauer: die
+   Deckkraft geht tiefer (0,35 statt 0,5), damit der Unterschied zum ruhigen
+   Puls auch dann zu sehen ist, wenn beide Zeichen nicht nebeneinander stehen —
+   und sie stehen nie nebeneinander, weil "offen" und "heute noch nichts" sich
+   gegenseitig ausschließen. */
+.puls.dringend { animation-name: dringend-puls; animation-duration: var(--dringend-dauer); }
+@keyframes dringend-puls {
+  0%, 100% { opacity: .35; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+/* Wer Bewegung reduziert hat, verliert nur den Takt, nicht das Signal: die rote
+   Fläche bleibt, das Zeichen steht still in voller Deckkraft. Das ist der Grund,
+   warum hier überhaupt eine Farbe dazukommt und nicht nur ein schnellerer Puls —
+   ein Signal, das ausschließlich aus Bewegung besteht, ist für einen Teil der
+   Leute gar kein Signal. */
+@media (prefers-reduced-motion: reduce) {
+  .puls.dringend { animation: none; opacity: 1; transform: none; }
+}
+
+
+/* ---------------------------------------------------------------------------
    3. PLOT-PUNKTE
    Der kleine runde Punkt, der einen Uebungstag in seiner Leiterfarbe zeigt —
    in der Legende unter dem Diagramm und in Fliesstexten. Die Punkte IM
@@ -264,17 +339,24 @@
 
 /* Variante "heute noch nichts" (Jennifer, 12.08.: "wenn noch nichts gemacht
    wurde am tag ein ausrufezeichen und blinken"). Statt des Leiterpunkts ein
-   pulsierendes Ausrufezeichen, dazu ein warmer Grund — dieselbe Familie wie
-   die unterste Leiterstufe, damit "noch nichts" und "wenig geschafft" als
-   verwandte Zustaende lesbar sind und nicht als zwei Welten.
+   pulsierendes Ausrufezeichen.
 
-   Die FLAECHE traegt hier die Signalfarbe, nicht die Schrift: --tag-1 als Text
-   auf dem Tint waeren 2,2:1. Als 22-%-Grund unter --ink-Schrift bleibt der
-   Kontrast ueber 8:1 und das Warme trotzdem sichtbar.
+   ROT SEIT DEM 12.08. NACHMITTAG. Hier stand vorher ein 22-%-Tint von --tag-1
+   und daneben die Begruendung "kein Rot, kein Blinken im Wortsinn". Jennifer hat
+   das nach dem Live-Blick umgedreht: "lass uns auf jeden Fall Rot, ja oder so
+   ein Orange blinkendes fuer offene Dailies machen." Der Zustand ist die
+   staerkste Form von "heute ist noch was offen" — und damit derselbe Fall wie
+   das dringende Abzeichen, nicht ein leiserer Verwandter davon. Er traegt
+   deshalb GENAU dasselbe Rot und denselben schnellen Takt (Block 2b), inklusive
+   der Grenze, die dort steht: die Leiterstufen .s1….s4 daneben bleiben orange
+   bis gruen, weil die von Leistung reden und nicht von offenen Aufgaben.
 
-   Kein Rot, kein Blinken im Wortsinn: derselbe langsame Puls wie beim
-   Offen-Abzeichen (2,8 s, .puls), und wer Bewegung reduziert hat, bekommt das
-   Zeichen still in voller Deckkraft. Ein hartes Blinken waere auf einer Seite,
-   die Rose taeglich oeffnet, nach zwei Tagen nur noch nervig. */
-.tag-pille.los { background: color-mix(in srgb, var(--tag-1) 22%, transparent); }
+   Warum das nicht mit dem Abzeichen kollidiert: die beiden schliessen sich
+   gegenseitig aus. "N offen" setzt einen Schnappschuss von HEUTE voraus,
+   "heute noch nichts" gerade dessen Fehlen; im GE-Trainer erzwingt das
+   zusaetzlich losStatt in querLink(). Es pulst also immer hoechstens ein
+   rotes Ding pro Link. */
+.tag-pille.los {
+  background: var(--dringend-bg); color: var(--dringend-ink);
+}
 .tag-pille.los .los-zeichen { font-weight: 900; font-size: .78rem; line-height: 1; }
