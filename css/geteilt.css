@@ -4,7 +4,7 @@
    die geshared sind."
 
    QUELLE dieser Datei: rose/geteilte-styles/trainer-muster.css
-   KOPIEN:              rose/klausur-trainer/app/css/geteilt.css
+   KOPIEN:              rose/st-trainer/app/css/geteilt.css
                         rose/ge-trainer/app/css/geteilt.css
 
    Die Kopien werden mitcommittet, damit jedes Repo fuer sich deploybar
@@ -469,6 +469,27 @@
    weiterhin im aria-label und im title, es geht also nichts verloren.
    --------------------------------------------------------------------------- */
 
+/* DIE UEBERSCHRIFT UEBER DER REIHE HEISST IN BEIDEN APPS "Heute dran".
+   Entschieden am 12.08. abends (Jennifer: "die Ueberschrift bei taegliche
+   Uebungen muessen bei beiden gleich sein"). Vorher: "Tägliches Training" (ST)
+   gegen "Heute dran" (GE).
+
+   Warum "Heute dran" und nicht "Tägliches Training": der rote Punkt an der
+   Kachel bedeutet laut Block 2b ausschliesslich "diese Aufgabe ist HEUTE dran
+   und noch offen". Die Ueberschrift benennt damit genau die Regel, die
+   darunter gilt — sie sagt nicht nur, WAS in dem Kasten steht, sondern warum
+   etwas davon rot ist. "Tägliches Training" beschreibt eine Gewohnheit,
+   "Heute dran" beschreibt diesen Tag, und der Kasten zeigt diesen Tag.
+   Nebenbei ist es kuerzer, was der Kopfzeile auf 360 px hilft.
+
+   Den Text setzt die jeweilige App (JS), hier steht nur die Festlegung.
+   Darunter gehoert in BEIDE Apps die Erklaerzeile, die es bisher nur im
+   ST-Trainer gibt ("Kleine Runden, je ~2 Minuten … Der rote Punkt heißt:
+   heute noch nicht dran gewesen …") — und zwar als
+   <p class="karten-hinweis"> statt als Inline-style am <p class="muted">.
+   Der GE-Trainer zeigt seit dem 12.08. denselben roten Punkt und hat keine
+   Legende dazu; ein Signal ohne Legende muss man raten. */
+
 /* MASSE: exakt die der Probeklausur-Reihe im ST-Trainer (.pk-box) — Jennifer,
    12.08. abends: "Die sollen so breit sein wie bei Klausurtrainern, diese
    Probeklausuren sowohl bei GE als auch ST. Also die sind jetzt kleiner
@@ -476,24 +497,68 @@
 
    Nachgemessen war der erste Wurf tatsaechlich 8 px flacher (73 statt 81 px) und
    innen deutlich kleiner skaliert: 0,6 rem Beschriftung gegen 0,68, dazu weniger
-   Polsterung und ein schmalerer Abstand. In der Breite lag er mit 56 zu 54 px
-   sogar knapp darueber — was zeigt, dass "zu klein" hier nicht die Breite meinte,
-   sondern die Wirkung. Deshalb sind jetzt ALLE Masse uebernommen (Polsterung
-   10/4/8, Abstand 8, Radius 14, Kante 1,5) statt nur der Breite. Wer eines davon
-   aendert, sollte drueben mitziehen: die zwei Reihen stehen in derselben App
-   uebereinander und sollen als Geschwister lesbar sein. */
+   Polsterung und ein schmalerer Abstand. Deshalb sind ALLE Masse uebernommen
+   (Polsterung 10/4/8, Abstand 8, Radius 14, Kante 1,5) statt nur der Breite. Wer
+   eines davon aendert, sollte drueben mitziehen: die zwei Reihen stehen in
+   derselben App uebereinander und sollen als Geschwister lesbar sein.
+
+   ---------------------------------------------------------------------------
+   RASTER STATT FLEX, seit 12.08. abends. Der erste Wurf war
+   "flex: 1 1 0; min-width: 52px; max-width: 104px", und die Messung hat gezeigt,
+   dass das nur auf genau 360 px stimmte:
+
+     Viewport   .daily-kachel (ST)   .pk-box (ST)   .daily-kachel (GE, 3 Stueck)
+     360        54                   54             90
+     430        68                   68             104  (Deckel)
+     768        104 (Deckel)         129            104  (Deckel)
+
+   Drei Fehler auf einmal: (a) ab Tablet-Breite war jede Tageskachel 25 px
+   schmaler als der Klausurversuch direkt darunter und die Reihe endete 126 px
+   vor ihm in einer sichtbar abgehackten Kante; (b) im GE-Trainer haengt die
+   Breite an der ANZAHL, die Startseite sah also je nach Tagesstand anders aus
+   (104 px bei zwei Aufgaben, 90 px bei dreien); (c) zwischen den Apps war sie
+   ohnehin verschieden.
+
+   Jetzt dieselbe Rasterform wie .pk-track: fuenf feste Spalten. Damit ist eine
+   Kachel per KONSTRUKTION so breit wie ein Klausurversuch, statt es bei einer
+   Breite zufaellig zu sein, und ein Raster mit fester Spaltenzahl kann nicht
+   umbrechen — der schiefe 4+1-Umbruch ist strukturell ausgeschlossen.
+   Nachgemessen mit diesem CSS: 54 / 60 / 129,19 px bei 360 / 390 / 768 px,
+   identisch mit .pk-box auf jeder Breite.
+
+   minmax(0, 1fr) und nicht 1fr: blankes 1fr ist minmax(auto, 1fr) und kippt
+   unter 360 px in ungleiche Spalten (bei .pk-track heute nachweisbar —
+   42/51/51/42/42 px auf 320 px). Wer .pk-track anfasst, zieht das dort nach.
+
+   DER PREIS, und er ist bewusst bezahlt: hat der GE-Trainer nur zwei oder drei
+   Tagesaufgaben, stehen die links in zwei bzw. drei von fuenf Spalten und
+   rechts bleibt Platz. Eine Kachel ist dafuer ueberall gleich gross — genau
+   das war die Forderung.
+
+   >>> --dailies-spalten NICHT ZUM AUSGLEICHEN BENUTZEN. <<< Die Variable steht
+   hier, damit die Spaltenzahl an EINER Stelle steht, nicht als Ausweg fuer
+   halbleere Reihen. Setzt eine App sie auf ihre eigene Aufgabenzahl, werden
+   ihre Kacheln wieder breiter als die der anderen — also genau die Divergenz,
+   gegen die dieser Block gebaut ist. Sie zu aendern ist nur legitim, wenn eine
+   App dauerhaft eine andere Zahl von Tagesaufgaben hat UND jemand bewusst
+   entscheidet, dass Breitengleichheit dann nicht mehr gilt.
+
+   HOEHE: min-height 81px. Ohne sie ist die Kachel ab 600 px 70 px hoch, der
+   Klausurversuch daneben aber konstant 81,08 px — die zwei Reihen stehen in
+   derselben App uebereinander, und 11 px Unterschied liest sich als
+   Ausrutscher. min-height HEBT nur: auf 360 px bleibt die Kachel bei 82,52 px
+   (der Name bricht dort um), nachgemessen. Mit justify-content: center sitzt
+   der Inhalt in der gewonnenen Hoehe mittig statt oben zu kleben; wo der
+   Inhalt hoeher ist als 81 px, ist das ein Nulleffekt. Der Wert ist an
+   .pk-box gemessen — wer dort die Beschriftung aendert, misst hier nach. */
 .dailies-reihe {
-  display: flex; gap: 8px; margin-top: 10px;
-  /* Umbruch erlaubt, aber im Regelfall nicht noetig: fuenf Kacheln passen auf
-     360 px in eine Zeile. max-width haelt sie bei zwei oder drei Aufgaben
-     (GE-Trainer) davon ab, sich unfoermig breit zu ziehen — die Grenze liegt
-     auf der Breite der dortigen Uebungs-Kacheln (101 px), damit auch dort zwei
-     Reihen untereinander wie Geschwister aussehen. */
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(var(--dailies-spalten, 5), minmax(0, 1fr));
+  gap: 8px; margin-top: 10px;
 }
 .daily-kachel {
-  flex: 1 1 0; min-width: 52px; max-width: 104px;
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-width: 0; min-height: 81px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   padding: 10px 4px 8px; border-radius: 14px;
   border: 1.5px solid var(--line); background: var(--card);
   cursor: pointer; text-align: center;
@@ -547,3 +612,494 @@
   .daily-kachel.frisch-erledigt { animation: none; }
   .daily-kachel:active { transform: none; }
 }
+
+
+/* ===========================================================================
+   STUFE 2 — DIE BAUTEILE, DIE BEIDE APPS ALS "EINS" LESEN SOLLEN
+   Jennifer, 12.08. abends: "geteilte Bausteine visuell UND programmatisch,
+   ein Kasten, eine Ueberschrift, verschiedene Ueberschriftentiefen aber nicht
+   zu viele, einheitliche Groessen."
+
+   Die Bloecke 7 bis 11 sind der Umbau dazu. Sie sind bewusst so gebaut, dass
+   das blosse Verteilen dieser Datei NICHTS kaputt macht: fast jede Regel hier
+   hat in beiden Apps noch ein lokales Gegenstueck in style.css, und style.css
+   laedt NACH geteilt.css, gewinnt also. Die Regeln hier sind bis dahin inert.
+
+   >>> INERT IST NICHT FERTIG. <<< Jeder Hub hierher braucht ein LOESCHEN in
+   BEIDEN Apps, sonst ist der geteilte Block toter Code und die naechste
+   Aenderung an ihm wirkt nur in einer App. Die vollstaendige Loeschliste steht
+   je Block unter "APP-SEITE".
+
+   Was NICHT in Stufe 2 gewandert ist, mit Begruendung, damit es niemand fuer
+   vergessen haelt:
+     - Der Knopf (.btn eckig-vollbreit gegen .knopf Pille-inhaltsbreit): ~200
+       Aufrufstellen, und die Themenfarbe ist im GE-Trainer Bedeutungstraeger.
+       Eigener ROADMAP-Punkt, Vorentscheidung Pillenform plus --akzent, das die
+       App setzt.
+     - Der Karten-Akzent (.glim gegen .glimmer): die FARBEN bleiben je App
+       verschieden, weil sie Identitaet sind — geteilt waere nur die Bauweise,
+       und die sieht man nicht. Kosten dagegen hoch: --glimmer-1 hat im
+       GE-Trainer neun weitere Verwendungen ausserhalb des Akzents.
+       ROADMAP-Punkt mit vorentschiedener Bauweise (ST-Fassung, Name .glimmer).
+     - Kleinschrift (.muted gegen zehn GE-Einzelklassen), Zonen-Balken und
+       .tz-kopf/.tz-zahl: alle drei sind Aufraeumen mit JS-Anfassen in beiden
+       Apps und ohne sichtbaren Gewinn fuer Jennifers Frage. ROADMAP.
+     - Umbenennung .card -> .karte auf EINEN Namen: siehe Block 10, der
+       Doppel-Selektor liefert 100 % des Nutzens fuer 0 % des Risikos.
+   =========================================================================== */
+
+
+/* ---------------------------------------------------------------------------
+   7. TYPOGRAFIE — GRUNDGROESSE UND DREI UEBERSCHRIFTEN-EBENEN
+
+   7a. DIE GRUNDGROESSE, und warum sie eine Treppe ist statt einer Zahl
+
+   Ohne gemeinsame Basis kann keine gemeinsame rem-Tabelle greifen. Bisher:
+   ST setzt 16.5px und faellt unter 461 px auf 16px zurueck, GE setzt gar nichts
+   (also 16px auf jeder Breite).
+
+   ZWEI KORREKTUREN AM DIVERGENZ-INVENTAR, beide nachgemessen:
+
+   1. Auf 360 px — der einzigen Breite, auf der Rose uebt — sind beide Apps
+      HEUTE SCHON gleich, naemlich 16px, weil der ST-Trainer unter 461 px
+      selbst zurueckfaellt. Nachgemessen an .daily-kachel b: 10,88 px in
+      beiden Apps. Der Unterschied existiert erst ab 461 px.
+   2. Das hier ist die BODY-Groesse, nicht die rem-Basis. rem haengt am <html>,
+      und das steht in beiden Apps auf den 16px des Browsers. Die Behauptung
+      des Inventars, "jede rem-Groesse ist in ST 3 % groesser" und die Masse
+      dieses Pakets liefen in GE zu klein, ist deshalb an keiner Breite wahr.
+      Betroffen ist nur Text, der seine Groesse erbt statt sie in rem zu
+      setzen. Die rem-Basis absichtlich NICHT angefasst: sie am <html> zu
+      aendern wuerde jedes rem-Mass in beiden Apps auf einen Schlag um 3 %
+      verschieben, und beide Apps sind gegen 16px gezeichnet worden.
+
+   Die TREPPE wandert trotzdem ganz hierher, nicht nur der eine Wert: 16.5px
+   ab Tablet, 16px auf dem Handy. Der GE-Trainer bekommt dadurch ueber 460 px
+   3 % groesseren Fliesstext — die gewollte Angleichung, und sie trifft die
+   Breite, auf der Jennifer vergleicht, nicht die, auf der Rose lernt. */
+
+body { font-size: 16.5px; }
+@media (max-width: 460px) { body { font-size: 16px; } }
+
+/* ---------------------------------------------------------------------------
+   7b. DREI EBENEN, MEHR NICHT
+
+   Jennifer: "verschiedene Ueberschriftentiefen aber nicht zu viele."
+
+     Ebene 1  h1                    Seitentitel. GENAU EINER pro Screen.
+     Ebene 2  h2                    Abschnitt der Seite. Zwei Erscheinungs-
+                                    formen, siehe unten.
+     Ebene 3  h3                    Gliederung INNERHALB einer Karte.
+
+   h2 hat zwei Erscheinungsformen, und das ist Absicht statt einer vierten
+   Ebene:
+     - <h2> im Kasten            — "Heute dran", "Klausurtraining", "Wo du
+                                   stehst". Fraunces, Kartenueberschrift.
+     - <h2 class="abschnitt-titel"> ueber einer Gruppe von Kacheln oder Karten
+                                   — "Üben", "Nach Thema", "Neue Session",
+                                   "Stöbern". Karla, klein, gesperrt, versal.
+
+   WARUM BEIDE h2 SIND und nicht Label plus Ueberschrift auf zwei Ebenen: auf
+   der GE-Startseite sind "Heute dran" (eine Karte, die selbst ein Abschnitt
+   ist) und "Üben" (ein Abschnitt aus fuenf Kacheln ohne Karte) tatsaechlich
+   Geschwister — beide sind Abschnitte der Seite, direkt unter dem Seitentitel.
+   Sie auf zwei Ebenen zu legen waere semantisch falsch, und die
+   Kartenueberschriften auf h3 zu schieben, um Platz zu machen, waere die
+   vierte Tiefe, die Jennifer nicht will. Zwei Optiken auf einer Ebene loesen
+   das: die Optik unterscheidet Karte von Gruppenlabel, die Ebene sagt die
+   Wahrheit ueber die Gliederung.
+
+   Nebengewinn, der bisher fehlte: im GE-Trainer war das Gruppenlabel ein
+   <div>, ein Screenreader ist also ueber die komplette Startseiten-Gliederung
+   hinweggesprungen. Im ST-Trainer hiess dasselbe Bauteil .stat-sek und war
+   0,06 rem groesser — derselbe Klassiker aus zwei Namen fuer ein Bauteil.
+
+   WAS BEWUSST NICHT FOLGT: Fraunces steht in beiden Apps auch auf Dingen, die
+   keine Ueberschriften sind — .pk-head b, .pk-box b, .mode-card b (ST),
+   .thema-titel, .kachel b (GE). Die tragen ihre Groesse selbst und sollen
+   dieser Tabelle NICHT folgen; sie sind Beschriftungen in einem Bauteil, keine
+   Gliederung. Wer sie "der Einheitlichkeit halber" nachzieht, baut die vierte
+   Ebene durch die Hintertuer wieder ein.
+
+   APP-SEITE, in BEIDEN Apps zu loeschen:
+     ST  style.css  `h1, h2, h3 { font-family: "Fraunces"` samt der drei
+                    Einzelregeln darunter
+     ST  style.css  in @media (min-width: 640px):  `h1 { font-size: 2.3rem; }`
+     ST  style.css  in @media (max-width: 460px):  `body { font-size: 16px; }`
+                    und `h1 { font-size: 1.6rem; }`
+     ST  style.css  `body { ... font-size: 16.5px; ... }` (nur die Zeile)
+     ST  style.css  `.stat-sek {` und `.stat-sek:first-of-type` — ersatzlos,
+                    das JS schreibt stattdessen class="abschnitt-titel"
+     ST  main.js    `<h2 class="stat-sek">` -> `<h2 class="abschnitt-titel">`
+     ST  main.js    `<h2 class="mt">Neue Session</h2>` und die Geschwister
+                    ("Stöbern", "Wo du stehst") -> `<h2 class="abschnitt-titel">`
+                    (das .mt faellt weg, der Abstand steckt in der Klasse)
+     ST  spiele.js + main.js: alle `<h1 style="font-size:…">` aufloesen — ein
+                    Inline-style ueberstimmt dieses Paket auf genau den
+                    Screens, auf denen man es am ehesten sieht
+     GE  style.css  `h1, h2, h3 { font-family: "Fraunces"` samt Einzelregeln
+     GE  style.css  in @media (min-width: 600px):  `h1 { font-size: 2rem; }`
+     GE  style.css  `.abschnitt-titel {` (die Optik steht jetzt hier)
+     GE  main.js    `el("div", "abschnitt-titel", …)` -> `el("h2", "abschnitt-titel", …)`
+     GE  klausur.js die drei `el("h4"` auf h3 heben (vierte Ebene faellt weg)
+     GE  index.html `family=Fraunces:opsz,wght@9..144,500;9..144,700`
+                    -> `…;9..144,700;9..144,900`. OHNE das faellt h1 hier still
+                    auf 700 zurueck und niemand sieht warum.
+   --------------------------------------------------------------------------- */
+
+h1, h2, h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 700;
+}
+/* Ebene 1. clamp() statt fester Groesse, weil in der Kopfzeile neben dem Titel
+   noch Querlink, Hell/Dunkel und Zahnrad stehen — auf 360 px ist das der
+   engste Platz der ganzen App. Die Werte sind die des GE-Trainers, sie sind
+   die vorsichtigeren und auf 360 px nachgemessen. Deckel 1.7rem: darueber
+   braucht ein Seitentitel keine weitere Groesse, er braucht Weissraum. */
+h1 {
+  font-size: clamp(1.05rem, 4.6vw, 1.7rem);
+  font-weight: 900; letter-spacing: -.01em; line-height: 1.2;
+  margin: 0 0 var(--sp-3);
+}
+/* Ebene 2, Form A: die Ueberschrift IM Kasten. */
+h2 { font-size: 1.25rem; line-height: 1.25; margin: 0 0 var(--sp-3); }
+/* Ebene 3. */
+h3 { font-size: 1.05rem; line-height: 1.3; margin: 0 0 var(--sp-2); }
+
+/* Ebene 2, Form B: das Gruppenlabel ueber mehreren Karten oder Kacheln.
+   Bewusst KARLA und klein: es soll die Gruppe benennen, nicht mit den
+   Ueberschriften in den Karten konkurrieren. Im ST-Trainer sind "Neue
+   Session", "Stöbern" und "Wo du stehst" heute normale h2 und damit optisch
+   genau so schwer wie "Heute dran" INNERHALB einer Karte — dadurch liest die
+   Startseite flach, obwohl sie zwei Ebenen hat. Das ist die eine Stelle der
+   ganzen Angleichung, an der der ST-Trainer sichtbar anders wird als heute. */
+h2.abschnitt-titel, .abschnitt-titel {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .76rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: var(--sp-5) 0 var(--sp-2);
+}
+/* Steht das Label direkt am Anfang seines Abschnitts, braucht es oben keine
+   volle Stufe Luft mehr — die bringt der Abschnitt schon mit. */
+.abschnitt .abschnitt-titel { margin-top: var(--sp-2); }
+
+/* Die Erklaerzeile unter einer Kartenueberschrift. Ersetzt im ST-Trainer das
+   Inline-style an dem <p class="muted"> unter "Tägliches Training" und bringt
+   dem GE-Trainer die Legende zum roten Punkt, die dort bisher fehlte. */
+.karten-hinweis {
+  margin: -2px 2px var(--sp-2);
+  font-size: .82rem; line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+
+/* ---------------------------------------------------------------------------
+   8. SEITENRAHMEN — EINE LESEBREITE, EIN SEITENRAND
+
+   80 px Unterschied in der Lesebreite (760 gegen 680) ist der Grund, warum
+   dieselbe Karte in den zwei Apps verschieden aussieht, sobald man nicht am
+   Handy schaut. 760 px gewinnt (ST): dort liegen die fuenfspaltige .pk-track
+   UND die fuenf Tageskacheln, und bei 680 px werden fuenf Spalten eng.
+
+   Der Seitenrand kommt ebenfalls vom ST-Trainer, wegen env(safe-area-inset-*):
+   im Querformat auf dem iPhone laeuft der Inhalt des GE-Trainers heute unter
+   die Notch.
+
+   ACHTUNG, hier wird eine Falle scharf: beide Apps setzen #app-Polsterung als
+   KURZSCHREIBWEISE. Eine Kurzschreibweise in style.css setzt padding-inline
+   mit zurueck und loescht damit die safe-area wieder. Die lokale Regel muss
+   deshalb auf die Langform padding-bottom REDUZIERT werden, nicht "angepasst".
+
+   padding-bottom bleibt bewusst lokal und verschieden: der ST-Trainer braucht
+   dort 90 px fuer seine feste Leiste, der GE-Trainer nicht.
+
+   APP-SEITE:
+     ST  style.css  `#app {` — max-width, margin und die padding-Kurzschreibweise
+                    raus, es bleibt nur
+                    `#app { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }`
+     ST  style.css  in @media (min-width: 640px): `#app { padding-top: var(--sp-8); }`
+     GE  style.css  `#app {` — komplett raus bis auf
+                    `#app { padding-bottom: calc(var(--sp-8) * 2); }`
+     GE  style.css  in @media (min-width: 600px): `#app { padding-top: var(--sp-8); }`
+                    (der Breakpoint war 600, hier ist er 640 — einer reicht)
+   --------------------------------------------------------------------------- */
+
+#app {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-top: var(--sp-4);
+  padding-left: max(var(--sp-4), env(safe-area-inset-left));
+  padding-right: max(var(--sp-4), env(safe-area-inset-right));
+}
+@media (min-width: 640px) { #app { padding-top: var(--sp-8); } }
+
+
+/* ---------------------------------------------------------------------------
+   9. DIE KOPFZEILE
+
+   Jennifer: "Die beiden Ueberschriften von GE-Trainer und Schultheorie sind
+   beide verschieden, muss das sein?"
+
+   Nein. Die GE-Form gewinnt, weil sie die reichere ist: sie hat einen
+   Untertitel-Slot (.kopf > .kopf-zeile + .untertitel), den der ST-Trainer
+   nicht hat und in dem sein ausgeschriebener Name Platz haette. Die
+   Klassennamen kommen deshalb von dort.
+
+   .topbar steht hier als ZWEITNAME auf derselben Zeile, nicht als Altlast:
+   der ST-Trainer hat echtes Routing und traegt .topbar auf jedem Unterschirm
+   (Einstellungen, Spiele, Probeklausur) zusammen mit einem Zurueck-Knopf. Die
+   Startseite soll auf .kopf umgestellt werden, die Unterschirme duerfen
+   .topbar behalten — beide sehen dann gleich aus.
+
+   DIE WERKZEUG-KNOEPFE: der GE-Trainer zeigt Hell/Dunkel und Zahnrad als
+   umrandete Pillen, der ST-Trainer als randlose Geister-Knoepfe. Die GE-Form
+   gewinnt, und zwar nicht aus Geschmack: direkt daneben steht der Querlink
+   (.app-link, Block 5) und der IST eine umrandete Pille. Die GE-Fassung liest
+   die drei als eine Gruppe, die ST-Fassung mischt zwei Pillen mit einem
+   randlosen Icon. Nebengewinn: die Trefferflaeche wird im ST-Trainer sichtbar
+   statt nur fuehlbar.
+
+   .topbar-tools stand bereits ZEICHENGLEICH in beiden style.css, inklusive
+   desselben Kommentars — reine Verschiebung, keine Entscheidung.
+
+   WAS BEWUSST VERSCHIEDEN BLEIBT: wohin das Zahnrad fuehrt. Der ST-Trainer
+   oeffnet einen eigenen Screen, der GE-Trainer scrollt zu einer Karte am
+   Seitenfuss, weil er bewusst eine Ein-Seiten-App ist. Gleiches Icon, gleicher
+   Inhalt, Weg passend zur Architektur — das ist keine Divergenz, die weh tut.
+
+   APP-SEITE:
+     ST  style.css  `.topbar { display: flex` -> nur noch das, was hier fehlt
+                    (nichts; die Regel faellt weg)
+     ST  style.css  `.topbar h1 {` — faellt weg, steht hier
+     ST  style.css  `.topbar .btn.ghost.small { padding: 8px 9px; }` — faellt weg
+     ST  style.css  `.topbar-tools { display: flex` — faellt weg
+     ST  style.css  `.back { background: none` — faellt weg
+     ST  main.js    themeBtn und gear: `class="btn ghost small"` ->
+                    `class="kopf-knopf"`; Startseite auf
+                    `.kopf > (.kopf-zeile > h1 + .topbar-tools) + .untertitel`
+     GE  style.css  `.kopf {`, `.kopf .untertitel {`, `.kopf-zeile {`,
+                    `.kopf-zeile h1 {`, `.zurueck {`, `.theme-knopf {`,
+                    `.topbar-tools { display: flex` — alle sieben fallen weg
+     GE  ui.js      `el("button", "theme-knopf"` -> `"kopf-knopf"`
+     GE  main.js    `el("button", "theme-knopf", "⚙️")` -> `"kopf-knopf"`
+     GE  style.css  wenn der Zurueck-Knopf die Themenfarbe behalten soll:
+                    `.zurueck { --zurueck-farbe: var(--tfarbe); }` als
+                    EINZIGE verbleibende lokale Zeile
+   --------------------------------------------------------------------------- */
+
+.kopf { margin: var(--sp-4) 0 var(--sp-5); }
+.kopf-zeile, .topbar { display: flex; align-items: center; gap: var(--sp-2); }
+/* Nur .topbar traegt den Abstand selbst: sie steht ohne .kopf-Huelle da. */
+.topbar { margin-bottom: var(--sp-4); }
+@media (min-width: 640px) { .topbar { margin-bottom: var(--sp-5); } }
+
+/* Der Titel gibt nach, nicht die Werkzeuge: flex:1 + min-width:0 + Ellipse.
+   Lieber ein abgeschnittener Titel als Text, der unter den Querlink laeuft. */
+.kopf-zeile h1, .topbar h1 {
+  flex: 1; min-width: 0; margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* Der Untertitel steht UNTER der Zeile ueber die volle Breite, nie in ihr —
+   in der Zeile quetscht ihn die Werkzeug-Gruppe auf vier Zeilen. */
+.untertitel { color: var(--ink-soft); font-size: .95rem; margin-top: 2px; }
+
+/* Die Werkzeug-Gruppe oben rechts: Querlink, Hell/Dunkel, Einstellungen.
+   Enger gesetzt als der Kopf-Abstand, damit die drei als EIN Block gegen den
+   Titel stehen; flex:0 0 auto, damit die Gruppe auf 360 px nicht umbricht. */
+.topbar-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; margin-left: auto; }
+
+/* Der Werkzeug-Knopf. Pillenform wie der Querlink daneben. */
+.kopf-knopf {
+  font-size: 1.15rem; line-height: 1; cursor: pointer;
+  font-family: inherit; color: inherit;
+  background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+  padding: 8px 10px; box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+.kopf-knopf:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* Der Zurueck-Knopf. Hiess .back (ST) und .zurueck (GE) und war zweimal
+   verschieden gebaut. Die Farbe bleibt steuerbar, weil sie im GE-Trainer die
+   Themenfarbe traegt und dort etwas bedeutet. */
+.zurueck, .back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  padding: var(--sp-2) var(--sp-3) var(--sp-2) 0;
+  font: inherit; font-weight: 700; font-size: 1.15rem;
+  color: var(--zurueck-farbe, var(--ink));
+  cursor: pointer;
+}
+
+
+/* ---------------------------------------------------------------------------
+   10. DER KASTEN
+
+   Jennifer: "Die Kaesten sind verschieden? Genau, bestimmte Sachen sind
+   einfach verschieden, die gleich sein koennen." — und im selben Atemzug:
+   "ein Kasten".
+
+   Das war der Punkt, der in beiden ROADMAPs unter @jennifer geparkt war.
+   ENTSCHIEDEN am 12.08. abends, ohne Rueckfrage auf ausdruecklichen Wunsch.
+
+   ZWEI ENTSCHEIDUNGEN, GETRENNT GEHALTEN:
+
+   1. EIN BAUTEIL, ZWEI NAMEN. Der Kasten steht hier unter dem Doppel-Selektor
+      `.card, .karte`. Kein JS wird angefasst, kein Klassenname wandert, das
+      Risiko ist praktisch null. Die Umbenennung auf EINEN Namen fasst rund
+      190 Stellen in zwei Repos an und ist als eigener ROADMAP-Punkt fuer nach
+      den Klausuren notiert (Vorentscheidung: .karte gewinnt — deutsch wie der
+      Rest der GE-Codebasis, und im ST-Trainer geht die Umbenennung mechanisch,
+      weil dort alles Template-Strings sind).
+
+   2. DIE POLSTERUNG: die ST-Treppe gewinnt, GEGEN die Empfehlung des
+      Divergenz-Inventars, und der Grund ist eine Messung statt einer Meinung.
+
+      Heute: ST 20/16 (auf dem Handy 16/12), GE konstant 16/20 — also genau
+      vertauscht, und GE ohne Handy-Stufe. Innenbreite auf 360 px deshalb
+      302 px gegen 286 px.
+
+      Das Inventar empfiehlt GEs 16/20 ("mehr Luft an den Seiten ist auf 360 px
+      die wichtigere"). Das kollidiert direkt mit Jennifers anderer Ansage, den
+      Tageskacheln: sie sollen so breit sein wie die Klausurversuche, und die
+      messen 54 px auf 360 px — erreichbar nur bei 302 px Innenbreite, also bei
+      12 px Seitenpolsterung. Nachgemessen mit `padding-inline: 12px` an der
+      GE-Karte: 54 / 60 px bei 360 / 390 px, auf den Pixel wie im ST-Trainer.
+      Dazu kommt: die 12 px sind der Wert, der heute auf Roses Handy laeuft,
+      also der erprobte.
+
+      Die Treppe hat drei Stufen, weil eine Karte auf 360 px und auf 1280 px
+      nicht denselben Rand haben will:
+        <= 460 px   16 / 12   (Handy — Rose)
+        bis 639 px  20 / 16
+        >= 640 px   24 / 24   (Tablet und Desktop — Jennifer)
+
+   DREI STELLEN, DIE DIESEN BLOCK SONST STILL SCHLAGEN. Alle drei liegen in
+   style.css und laden damit spaeter:
+     a) GE `.countdown { padding: var(--sp-4) var(--sp-5) var(--sp-4) }` ist ein
+        Modifikator AUF .karte und ueberschreibt die Treppe an der obersten
+        Karte der GE-Startseite — genau der Karte, die Jennifer zuerst
+        vergleicht. Die padding-Zeile muss raus.
+     b) GE `.thema-karte` und ST `.mode-card` schreiben dieselbe Polsterung hart
+        mit, sind aber KEINE .karte / .card und folgen deshalb gar nicht. Sie
+        muessen von Hand auf die Treppe gezogen werden, sonst hat eine App zwei
+        Kartenpolsterungen.
+     c) ST hat in @media (max-width: 460px) und @media (min-width: 640px) je eine
+        eigene .card-Zeile. Beide raus, die Treppe steht jetzt hier.
+
+   APP-SEITE:
+     ST  style.css  `.card {` — die padding- und margin-Zeilen raus (Rest faellt
+                    ganz weg, er steht hier)
+     ST  style.css  in @media (min-width: 640px): `.card { padding: var(--sp-6); margin-bottom: var(--sp-5); }`
+     ST  style.css  in @media (max-width: 460px): `.card { padding: var(--sp-4) var(--sp-3); }`
+     ST  style.css  `.mode-card` padding auf die Treppe ziehen (heute
+                    `16px 14px`, im 640er-Block `var(--sp-5) var(--sp-4)`)
+     GE  style.css  `.karte {` — faellt ganz weg
+     GE  style.css  `.countdown { padding: …` — die padding-Zeile raus
+     GE  style.css  `.thema-karte` padding auf die Treppe ziehen
+   --------------------------------------------------------------------------- */
+
+.card, .karte {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--sp-5) var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+@media (max-width: 460px) {
+  .card, .karte { padding: var(--sp-4) var(--sp-3); }
+}
+@media (min-width: 640px) {
+  .card, .karte { padding: var(--sp-6); margin-bottom: var(--sp-5); }
+}
+
+
+/* ---------------------------------------------------------------------------
+   11. CHAT — DAS SHEET DES KREATUREN-CHATS
+
+   >>> GEHOERT ZUM KREATUREN-CHAT. <<< Der Baustein selbst (maskottchen-chat.js)
+   ist noch nicht gebaut; dieser Block liegt hier, damit er nicht zweimal
+   entsteht, und weil der ST-Trainer sein Fragen-Chat-Sheet bereits benutzt.
+
+   Jennifer: "wenn die gleichen Games sind mit der gleichen Funktion im
+   Hintergrund, dann sollen sie sich natuerlich auch irgendeine Art von Logik
+   Package teilen. Zum anderen sollten sie ja auch gleich aussehen."
+
+   Nach diesem Block sind der ST-Fragenchat und der Maskottchen-Chat in beiden
+   Apps EIN Bauteil mit EINEM Aussehen. Die Regeln stammen woertlich aus
+   st-trainer/app/css/style.css, mit drei Aenderungen:
+
+     1. .chat-tipp haengt nicht mehr an sticker-idle. Dieser Keyframe liegt
+        LOKAL in beiden style.css — dass es heute in beiden funktioniert, ist
+        Zufall und macht das Paket von den Apps abhaengig, statt umgekehrt.
+        Eigener Keyframe chat-tippt, mit reduced-motion-Ausnahme.
+     2. Die Eingabe steht auf 1rem statt .95rem (= 15,2 px). Unter 16 px zoomt
+        iOS Safari beim Fokussieren die ganze Seite — auf Roses Handy also
+        jedes Mal.
+     3. Neu: .chat-schnell (die Chip-Reihe der Schnellfragen, die aus dem
+        lokalen Stand antworten und ohne Netz funktionieren) und .chat-hinweis.
+
+   Die Huelle (.sheet, .sheet-ov) bleibt lokal, sie ist bereits je App gebaut.
+   Ebenso lokal bleiben .llm-fb und .llm-chat-btn (nur ST) und der
+   Ausloeser .mk-chat-knopf, der in den .mk-*-Bereich am Ende der jeweiligen
+   style.css gehoert — .mk-* ist aus diesem Paket ausdruecklich ausgenommen.
+
+   APP-SEITE:
+     ST  style.css  `.chat-sheet { display: flex;` bis
+                    `.chat-eingabe textarea:focus` — der ganze Block raus.
+                    style.css laedt NACH geteilt.css: bleibt er stehen, gewinnt
+                    er und dieser Block hier ist toter Code.
+     GE  —          nichts zu loeschen, der GE-Trainer hatte noch kein Chat-CSS
+   --------------------------------------------------------------------------- */
+
+.chat-sheet { display: flex; flex-direction: column; max-height: 82vh; }
+.chat-verlauf { flex: 1; overflow-y: auto; min-height: 140px; max-height: 48vh; padding: 4px 0; }
+.chat-msg {
+  border-radius: 12px; padding: 9px 12px; margin: 6px 0;
+  font-size: .92rem; line-height: 1.5; max-width: 92%;
+}
+.chat-msg.du { background: color-mix(in srgb, var(--accent) 12%, var(--card)); margin-left: auto; }
+.chat-msg.ki { background: var(--paper); border: 1px solid var(--line); margin-right: auto; white-space: pre-wrap; }
+
+/* "…" waehrend die Antwort laeuft. Eigener Keyframe statt des lokalen
+   sticker-idle, siehe Kopf dieses Blocks. */
+.chat-tipp { opacity: .6; display: inline-block; animation: chat-tippt 1.2s ease-in-out infinite; }
+@keyframes chat-tippt {
+  0%, 100% { opacity: .35; transform: translateY(0); }
+  50% { opacity: .85; transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-tipp { animation: none; opacity: .7; transform: none; }
+}
+
+/* Die Schnellfragen. Sie sind KEIN Platzhalter fuer den Freitext, sondern die
+   erste Ebene und gleichzeitig das Netz: sie antworten aus Roses lokalem Stand
+   und funktionieren deshalb auch, wenn keine Function deployt ist. Deshalb
+   stehen sie oberhalb der Eingabe und nicht als Notloesung darunter. */
+.chat-schnell { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+.chat-schnell button {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+  border-radius: 999px; padding: 6px 12px;
+  font: inherit; font-size: .82rem; font-weight: 600;
+  cursor: pointer; text-align: left;
+}
+.chat-schnell button:active { transform: scale(.97); }
+.chat-schnell button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .chat-schnell button:active { transform: none; } }
+
+/* Der ruhige Nebensatz im Sheet (z. B. "Fuer heute hab ich genug geredet").
+   Nie eine Fehlermeldung, nie ein Hinweis auf ein fehlendes Feature — das
+   Maskottchen ist verschlafen, nicht kaputt. */
+.chat-hinweis { font-size: .8rem; color: var(--ink-soft); margin: 6px 2px 0; line-height: 1.45; }
+
+.chat-eingabe { display: flex; gap: 8px; align-items: flex-end; margin: 8px 0 6px; }
+.chat-eingabe textarea {
+  flex: 1; resize: none;
+  border: 1.5px solid var(--line); border-radius: 12px; padding: 9px 11px;
+  /* 1rem und nicht kleiner: unter 16 px zoomt iOS Safari beim Fokussieren die
+     ganze Seite hoch, und Rose bedient die App am Handy. */
+  font: inherit; font-size: 1rem;
+  background: var(--card); color: var(--ink); min-height: 40px;
+}
+.chat-eingabe textarea:focus { outline: none; border-color: var(--accent); }

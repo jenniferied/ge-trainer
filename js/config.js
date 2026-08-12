@@ -36,6 +36,20 @@ export const CONFIG = {
   llmFunktion: "llm-ge",
   llmTagKey: "ge-llm-tag", // localStorage-Key fuers Client-Tageslimit (NICHT "st-llm-tag")
   llmTagesLimit: 100,      // zweiter Kostenschutz neben dem serverseitigen Limit
+
+  // ---- Kreaturen-Chat (Maskottchen) ----
+  // Der freie Text laeuft ueber art "maskottchen" in der Edge Function. Der
+  // Zweig ist im Repo fertig, aber NOCH NICHT DEPLOYT — deshalb steht der
+  // Schalter auf false und der Chat zeigt nur die Schnellantworten (die aus
+  // Roses lokalem Stand kommen und kein Netz brauchen).
+  //
+  // WARUM EIN SCHALTER UND KEIN PROBEAUFRUF: gegen die alte Function schlaegt
+  // ein unbekanntes art nicht sauber fehl. Sie wuerde stillen Muell liefern
+  // oder einen 502, und llm.js schluckt beides. Also erst deployen, dann hier
+  // auf true drehen, dann im echten Pfad testen.
+  mkChatFreitext: false,
+  mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
+  mkTagesLimit: 20,        // (ge-llm-tag, 100) nicht aufessen.
 };
 
 if (typeof window !== "undefined") window.GE_CONFIG = CONFIG;

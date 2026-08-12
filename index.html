@@ -16,7 +16,11 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Fraunces 900 gehoert dazu, seit die Ueberschriften-Hierarchie im geteilten
+       Paket steht (geteilt.css, Block 7b: h1 { font-weight: 900 }). Ohne das
+       Gewicht faellt die h1 still auf einen synthetisch fett gerechneten
+       700er-Schnitt zurueck - sichtbar anders als im ST-Trainer, ohne Fehler. -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- Geteiltes Style-Paket beider Trainer (Farbleiter, Muster "offen/erledigt",
        Plot-Punkte). Quelle: rose/geteilte-styles/trainer-muster.css — diese Kopie
        NICHT bearbeiten, sondern die Quelle und dann verteilen.sh laufen lassen.

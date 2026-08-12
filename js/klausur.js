@@ -515,7 +515,7 @@ function zeigeSetup() {
   app.appendChild(setup);
 
   var quer = el("div", "karte");
-  quer.appendChild(el("h3", null, "Lieber erst aufwärmen?"));
+  quer.appendChild(el("h2", null, "Lieber erst aufwärmen?"));
   quer.appendChild(el("p", null, "15 Fragen quer durch alle Themen, Ungesehenes zuerst."));
   var qk = el("button", "knopf sekundaer", "MC-Quermischung starten");
   qk.addEventListener("click", function () { zeigeMcQuer(THEMEN, ZURUECK); });
@@ -1080,7 +1080,7 @@ function bewertungsBlock(a, aufAenderung) {
     a.bewertung = stichpunkte.map(function () { return null; });
   }
 
-  box.appendChild(el("h4", null, "Das gehört in die Antwort"));
+  box.appendChild(el("h3", null, "Das gehört in die Antwort"));
   var ul = el("ul", "kl-stich");
   stichpunkte.forEach(function (sp, i) {
     var li = el("li");
@@ -1112,13 +1112,13 @@ function bewertungsBlock(a, aufAenderung) {
 
   if (f.muster) {
     var m = el("div", "kl-muster");
-    m.appendChild(el("h4", null, "So könnte es klingen"));
+    m.appendChild(el("h3", null, "So könnte es klingen"));
     m.appendChild(el("div", null, f.muster));
     box.appendChild(m);
   }
   if (f.tipp) {
     var t = el("div", "kl-muster");
-    t.appendChild(el("h4", null, "Tipp"));
+    t.appendChild(el("h3", null, "Tipp"));
     t.appendChild(el("div", null, f.tipp));
     box.appendChild(t);
   }

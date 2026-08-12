@@ -5,7 +5,7 @@
    und halt wv games noch offen/dailies."
 
    QUELLE dieser Datei: rose/geteilte-styles/tagesstand.js
-   KOPIEN:              rose/klausur-trainer/app/js/geteilt-tagesstand.js
+   KOPIEN:              rose/st-trainer/app/js/geteilt-tagesstand.js
                         rose/ge-trainer/app/js/geteilt-tagesstand.js
 
      Verteilen:   rose/geteilte-styles/verteilen.sh

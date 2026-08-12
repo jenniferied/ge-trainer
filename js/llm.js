@@ -93,6 +93,68 @@ function tagVerbrauch() {
 }
 const tagFrei = () => tagBudget().n < TAG_LIMIT();
 
+// ---- Eigenes, kleines Budget fuer den Kreaturen-Chat ----
+// Bewusst NICHT ge-llm-tag: der Maskottchen-Chat ist Geplauder, die Korrektur
+// im Klausurmodus ist Roses Uebung. Ein geschwaetziger Tag darf ihr nicht die
+// Korrektur wegnehmen. Zweiter Zaehler, eigener Key, eigenes Limit — deshalb
+// laeuft der Chat auch nicht durch ruf(), das wuerde ge-llm-tag belasten.
+const MK_LIMIT = () => cfg().mkTagesLimit || 20;
+const MK_KEY = () => cfg().mkTagKey || "ge-mk-tag";
+
+function mkBudget() {
+  const heute = new Date().toDateString();
+  let d;
+  try { d = JSON.parse(localStorage.getItem(MK_KEY()) || "{}"); } catch { d = {}; }
+  if (d.tag !== heute) d = { tag: heute, n: 0 };
+  return d;
+}
+function mkVerbrauch() {
+  const d = mkBudget();
+  d.n++;
+  try { localStorage.setItem(MK_KEY(), JSON.stringify(d)); } catch { /* privater Modus */ }
+}
+// Der Aufrufer fragt VOR dem Senden: nur so kann er den Budget-Satz sagen statt
+// des allgemeinen Fallbacks (zwei verschiedene Lagen, zwei verschiedene Saetze).
+export const mkTagFrei = () => mkBudget().n < MK_LIMIT();
+
+// Ist der freie Text ueberhaupt eingeschaltet? Haengt am expliziten Schalter in
+// config.js, nie an einem Probeaufruf gegen die Function.
+export const mkFreitext = () => !!(aktiv() && cfg().mkChatFreitext);
+
+/* Freier Chat mit der Kreatur. Liefert den Antworttext oder null — null heisst
+   IMMER "sag etwas Freundliches aus dem lokalen Stand", nie eine Fehlermeldung.
+   Die Persona lebt serverseitig (SYSTEM_MASKOTTCHEN in der Edge Function), hier
+   gehen nur der Stand-Block und der Verlauf hoch. */
+export async function maskottchen(messages, stand) {
+  if (!mkFreitext() || !mkTagFrei()) return null;
+  if (!Array.isArray(messages) || !messages.length) return null;
+  const steuerung = new AbortController();
+  const wecker = setTimeout(() => steuerung.abort(), 20000);
+  try {
+    mkVerbrauch();
+    const r = await fetch(url(), {
+      method: "POST",
+      headers: kopf(),
+      signal: steuerung.signal,
+      body: JSON.stringify({
+        art: "maskottchen",
+        stand: stand && typeof stand === "object" ? stand : {},
+        messages: messages.slice(-12).map((m) => ({
+          role: m.role === "assistant" ? "assistant" : "user",
+          content: String(m.content || "").slice(0, 1200),
+        })),
+      }),
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return d && typeof d.antwort === "string" && d.antwort.trim() ? d.antwort.trim() : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(wecker);
+  }
+}
+
 function kopf() {
   const k = cfg().supabaseAnonKey || "";
   return { "Content-Type": "application/json", apikey: k, Authorization: "Bearer " + k };
@@ -300,4 +362,4 @@ export function stelleFinden(text, textstelle) {
 // Aufrufer.
 
 // Globale Schnittstelle fuer klausur.js und den Uebungsmodus.
-window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden };
+window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkFreitext, mkTagFrei };

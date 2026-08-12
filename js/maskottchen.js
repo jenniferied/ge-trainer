@@ -52,8 +52,12 @@ function grussVon(h) {
   return h < 5 ? "Nanu, so spät noch" : h < 11 ? "Guten Morgen" : h < 14 ? "Hallo" : h < 18 ? "Hey" : h < 22 ? "Guten Abend" : "Psst";
 }
 
-/* Was das Ei heute schon bekommen hat — dieselbe Rechnung wie fuer die Historie. */
-function herzenHeute(tz) {
+/* Was das Ei heute schon bekommen hat — dieselbe Rechnung wie fuer die Historie.
+   Seit dem Kreaturen-Chat exportiert: der Chat-Adapter in main.js braucht die
+   Zahl und darf sie nicht nachrechnen. Zwei Rechnungen waeren zwei Wahrheiten,
+   und genau daran hingen am 12.08. drei Bugs (HANDOFF: wer die Zahl berechnet,
+   muss die App sein, die sie anzeigt). */
+export function herzenHeute(tz) {
   if (!tz) return 0;
   var n = tz.n || 0;
   return (n > 0 ? 1 : 0) + (n >= tz.minimum ? 1 : 0) + (n >= tz.ziel ? 1 : 0);
@@ -106,6 +110,54 @@ var STUFEN = [
 /* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
    sie brauchen und eine 3 im Code an der dritten Stelle niemand mehr zuordnet. */
 export var SCHLUEPF_STUFE = 3;
+
+/* ---------- Nur-Lesen-Fenster fuer den Kreaturen-Chat ----------
+   Der Chat darf ueber mk NICHTS aendern, nur lesen. Diese vier Funktionen sind
+   das ganze Fenster: sie geben zurueck, was maskottchen.js ohnehin schon
+   ausgerechnet hat, damit der Adapter in main.js nichts nachbaut.
+
+   Abgeleitet und nicht hingeschrieben: die Stufe, ab der die Tierart bekannt
+   ist, ist die erste mit art "jung" — dort sagt die Kreatur selbst "Ich bin ein
+   Hund". Vorher bleibt bewusst offen, was daraus wird (siehe figurEbenen: das
+   Raetsel haelt drei Stufen laenger als bis zum Schluepfen). Wer die Leiter
+   umbaut, aendert damit automatisch auch, ab wann der Chat die Art verraet. */
+export var TIER_STUFE = (function () {
+  for (var i = 0; i < STUFEN.length; i++) if (STUFEN[i].art === "jung") return i;
+  return STUFEN.length;
+})();
+
+/* Die Tierart dieses Trainers. Drueben im ST-Trainer ist es die Katze. */
+export var TIERART = "Hund";
+
+/* Die Art der Stufe: ei | blob | jung | erwachsen. */
+export function stufeArt(stufe) {
+  var s = STUFEN[Math.min(Math.max(stufe | 0, 0), STUFEN.length - 1)];
+  return s ? s.art : "ei";
+}
+
+/* Was die Kreatur ueber sich selbst wissen DARF. null heisst: noch offen. */
+export function tierartVon(stufe) { return stufe >= TIER_STUFE ? TIERART : null; }
+
+/* Herzen bis zur naechsten Stufe. null heisst ausgewachsen — genau dieselbe
+   Rechnung wie in blaseText(), damit Blase und Chat nie verschiedene Zahlen
+   nennen. Eine Anzahl TAGE gibt es hier bewusst nicht: herzenStand() rechnet
+   die Historie mit dem HEUTIGEN Tagesziel, das taeglich schwankt. "Noch 3 ♥"
+   ist wahr, "noch zwei Uebungstage" waere eine Luege, die auffliegt. */
+export function herzenBisNaechste(herzen, stufe) {
+  var naechste = STUFEN[stufe + 1];
+  return naechste ? Math.max(0, naechste.ab - herzen) : null;
+}
+
+/* Ob der Schluepf-Moment schon stattgefunden hat. Reines Lesen. */
+export function istGeschluepft() { return geschluepft(); }
+
+/* Die Ueberschrift des Chat-Sheets und das aria-label des Ausloesers — eine
+   Stelle, damit Knopf und Sheet nie verschiedene Namen tragen. */
+export function chatTitel(stufe) {
+  if (stufe < SCHLUEPF_STUFE) return "Mit deinem Ei reden";
+  if (stufe < TIER_STUFE) return "Mit deiner Kreatur reden";
+  return "Mit deinem " + TIERART + " reden";
+}
 
 var SPRUCH = {
   nacht: [
@@ -721,7 +773,7 @@ function schluepfFertig(neu, feiern) {
    Wahrheiten waeren. */
 function aktuelleStufe(tz) { return stufeJetzt(herzenStand(tz).herzen); }
 
-function standKnoten(tz, neu) {
+function standKnoten(tz, neu, chatAuf) {
   var st = herzenStand(tz);
   // stufeJetzt() zieht die Sperrklinke nach; blaseText() bekommt sie herein und
   // rechnet nicht selbst. Sonst haette die Blase eine andere Stufe als das Bild.
@@ -738,7 +790,22 @@ function standKnoten(tz, neu) {
   pre.className = "mk-ei" + (REDUCE_MOTION ? "" : stufe === 0 ? " mk-schwebt" : stufe === 2 ? " mk-wackelt" : " mk-atmet");
   pre.setAttribute("aria-hidden", "true");
   pre.innerHTML = bildHtml(v, stufe, t.nacht);
-  zeile.appendChild(pre);
+  /* Der Einstieg in den Chat: das Bild wird in einen echten Knopf gewickelt.
+     Das <pre> bleibt aria-hidden (Blockgrafik ist fuer einen Screenreader
+     Zeichensalat), der Knopf traegt das Label. Nur in DIESER ruhigen Ansicht —
+     Ankunft, Auswahl und Schluepfen sind Momente, die genau einmal
+     stattfinden, dort darf nichts konkurrieren.
+     Ohne chatAuf bleibt alles wie vorher: das Maskottchen funktioniert auch,
+     wenn main.js den Chat nicht hereinreicht. */
+  if (typeof chatAuf === "function") {
+    var ausloeser = knopf("", "mk-chat-knopf", function () { chatAuf(stufe); });
+    ausloeser.setAttribute("aria-label", chatTitel(stufe));
+    ausloeser.title = chatTitel(stufe);
+    ausloeser.appendChild(pre);
+    zeile.appendChild(ausloeser);
+  } else {
+    zeile.appendChild(pre);
+  }
 
   var text = el("div", "mk-text");
   var satz = el("p", "mk-satz");
@@ -775,12 +842,16 @@ function standKnoten(tz, neu) {
    Auswahl erscheint — das geht nicht mehr, seit die Wahl synct (siehe oben). */
 /* feiern() reicht main.js herein (Konfetti aus ui.js). Als Parameter statt
    Import, damit dieses Modul weiter nur von core/sync abhaengt. */
-export function knoten(tz, neuZeichnen, feiern) {
+/* chatAuf reicht main.js herein wie feiern — als Parameter statt Import, damit
+   dieses Modul weiter nur von core/sync/stats abhaengt und den Chat gar nicht
+   kennen muss. Es bekommt die aktuelle Stufe uebergeben, damit der Adapter
+   nicht selbst danach fragen muss. */
+export function knoten(tz, neuZeichnen, feiern, chatAuf) {
   if (angesehen) return auswahlKnoten(neuZeichnen);
   if (!gewaehlt()) return ankunftKnoten(neuZeichnen);
   // Laeuft die Animation, schlaegt sie alles andere — sonst reisst ein
   // Neuzeichnen (Sync-Antwort, Tabwechsel) sie mittendrin weg.
   if (schluepfPhase === "bricht") return bruchKnoten();
   if (!geschluepft() && aktuelleStufe(tz) >= SCHLUEPF_STUFE) return schluepfKnoten(neuZeichnen, feiern);
-  return standKnoten(tz, neuZeichnen);
+  return standKnoten(tz, neuZeichnen, chatAuf);
 }

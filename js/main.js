@@ -12,6 +12,13 @@ import * as Spiele from "./spiele.js";
 import { syncKarte, syncStart, setzeOffenZaehler } from "./sync.js";
 import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
+// Der Kreaturen-Chat. Geteilt mit dem ST-Trainer, Quelle
+// rose/geteilte-styles/maskottchen-chat.js - diese Datei ist eine verteilte
+// KOPIE und wird NIE hier bearbeitet. Was der GE-Trainer beisteuert, steht
+// weiter unten im Adapter (mkChatAdapter). llm.js liefert den freien Text,
+// sobald die Edge Function den art-Zweig "maskottchen" kennt.
+import * as MkChat from "./geteilt-maskottchen-chat.js";
+import * as Llm from "./llm.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
 import { tagesPilleKlasse, tagesText, tagesWorte, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
@@ -159,7 +166,7 @@ function offenBadge(text, extra) {
    Rose hat zwei Klausuren und zwei Trainer. Oben rechts steht deshalb der Weg
    hinueber - in der Identitaetsfarbe des ST-Trainers (Terracotta), damit die
    beiden Apps optisch aufeinander zeigen. Der Rueckweg ist drueben
-   spiegelbildlich gebaut (klausur-trainer/app/js/nachbar.js), und seit dem
+   spiegelbildlich gebaut (st-trainer/app/js/nachbar.js), und seit dem
    12.08. sieht die Werkzeug-Gruppe oben rechts in beiden Apps gleich aus:
    Querlink, Hell/Dunkel, Zahnrad.
 
@@ -338,6 +345,160 @@ function tagesSatz(tz) {
   return "Warmlaufen – erstes Etappenziel: " + tz.minimum + ".";
 }
 
+/* ---------- Der Kreaturen-Chat: der App-spezifische Adapter ----------
+   maskottchen-chat.js baut das Sheet und weiss NICHTS ueber diese App. Alles,
+   was der GE-Trainer beisteuert, steht hier: der Stand-Block, die
+   Schnellantworten, der Freitext-Schalter und der Fallback.
+
+   DIE EISERNE REGEL DIESES BLOCKS: hier wird NICHTS nachgerechnet. Jede Zahl
+   kommt aus der Funktion, die sie ohnehin schon berechnet — tz aus
+   Stats.tagesziel(), die offenen Aufgaben aus offeneDailies() (derselben
+   Quelle wie die Kacheln unter "Heute dran" und die Zahl im Querlink drueben),
+   Herzen und Stufe aus maskottchen.js. Wer die Zahl berechnet, muss die App
+   sein, die sie anzeigt.
+
+   Was die Kreatur NIE sagt: ein Datum, eine Anzahl Tage bis zur naechsten
+   Stufe (herzenStand() rechnet die Historie mit dem HEUTIGEN Tagesziel, das
+   schwankt), ein Urteil ueber Roses Leistung, ein Klausurinhalt. Fachfragen
+   gehen an die Uebungen, nicht an die Kreatur — der Korpus dieser App ist auf
+   die acht Vorlesungen begrenzt, und geraten wird hier nichts.
+
+   Die Kreatur weiss ihre Tierart erst ab Mk.TIER_STUFE. Vorher bleibt offen,
+   was aus ihr wird; die Frage danach wird gar nicht erst angeboten. */
+function mkStand(tz, stufe) {
+  var hs = Mk.herzenStand(tz);
+  return {
+    appName: "GE-Trainer",
+    fach: "Didaktik im Förderschwerpunkt geistige Entwicklung",
+    tageBisKlausur: tageBisKlausur(),
+    stufe: stufe,
+    geschluepft: Mk.istGeschluepft(),
+    tierart: Mk.tierartVon(stufe) || "",
+    herzen: hs.herzen,
+    sterne: hs.sterne,
+    uebungstage: hs.tage,
+    herzenHeute: Mk.herzenHeute(tz),
+    herzenBisNaechste: Mk.herzenBisNaechste(hs.herzen, stufe),
+    heute: { n: tz.n, ziel: tz.ziel, minimum: tz.minimum, stretch: tz.stretch },
+    // Leere Liste heisst "heute alles erledigt" und ist etwas ANDERES als keine
+    // Liste. offeneDailies() liefert hier immer eine Liste - null kann nur
+    // entstehen, wenn die Themen noch nicht geladen sind, und dann steht auch
+    // keine Startseite.
+    offen: offeneDailies(),
+    // Der Baustein leitet daraus istNacht() ab; die Stunde einmal hier zu holen
+    // heisst, dass Fallback und Schnellantworten dieselbe Nacht meinen.
+    stunde: new Date().getHours(),
+  };
+}
+
+function mkSchnellFragen(s) {
+  var liste = [];
+
+  // heuteSatz() kommt aus dem geteilten Baustein - dieselbe Quelle, aus der
+  // sich auch der Fallback bedient. Zwei Formulierungen desselben Tages waeren
+  // zwei Wahrheiten.
+  liste.push({
+    text: "Wie steht es heute?",
+    antwort: !s.heute || !s.heute.n
+      ? "Heute noch nichts. Ist okay, ich hab Zeit."
+      : "Ich seh, " + MkChat.heuteSatz(s) + "."
+        + (s.herzenHeute ? " Dafür hab ich schon " + s.herzenHeute + " ♥ bekommen." : ""),
+  });
+
+  // Nachts wird das Offene nicht verschwiegen (Rose fragt ja danach), aber es
+  // wird nicht zur Aufgabe gemacht. Von selbst faengt die Kreatur nachts nie
+  // davon an - dieselbe Grenze wie in blaseText().
+  var nacht = MkChat.istNacht(s);
+  liste.push({
+    text: "Was ist heute noch offen?",
+    // Aus "wir wissen es nicht" nie eine Entwarnung machen - dieselbe Regel wie
+    // beim Querlink: null und leere Liste sind streng zu unterscheiden.
+    antwort: !s.offen
+      ? "Weiß ich gerade nicht."
+      : s.offen.length === 0
+        ? "Heute ist alles durch. Ich bin beeindruckt und leicht satt."
+        : "Auf dem Zettel steht noch: " + s.offen.join(", ") + "."
+          + (nacht ? " Läuft aber nicht weg, das steht morgen auch noch da." : ""),
+  });
+
+  liste.push({
+    text: "Wie weit bist du?",
+    antwort: (s.geschluepft ? "Ich bin geschlüpft" : "Ich bin noch ein Ei")
+      + " und steh bei " + s.herzen + " ♥ aus " + s.uebungstage
+      + (s.uebungstage === 1 ? " Übungstag." : " Übungstagen.")
+      + (s.herzenBisNaechste === null
+        ? " Ausgewachsen. Weiter geht es nicht, jetzt sammeln wir zusammen."
+        : " Noch " + s.herzenBisNaechste + " ♥ bis es weitergeht."),
+  });
+
+  liste.push({
+    text: "Was mach ich als Nächstes?",
+    antwort: nacht
+      ? "Schlafen. Ehrlich. Ich mach die Augen auch gleich zu."
+      : !s.offen
+        ? "Weiß ich gerade nicht. Such dir was aus, ich schau zu."
+        : s.offen.length === 0
+          ? "Gar nichts müssen. Wenn du magst, eine kurze Runde, wenn nicht, auch gut."
+          : "Wenn du magst, fang mit " + s.offen[0] + " an. Wenn nicht, auch gut.",
+  });
+
+  // Die Grenze dieser App, in der Rolle gesagt. Fachliches gehoert in die
+  // Uebungen: der Korpus endet bei den acht Vorlesungen, und die Kreatur
+  // erfindet nichts dazu - keine Folienzahl, keine Definition, keine
+  // Klausurinhalte. Auch der Freitext-Zweig sagt spaeter genau das
+  // (SYSTEM_MASKOTTCHEN in supabase/functions/llm-ge).
+  liste.push({
+    text: "Kannst du mir was erklären?",
+    antwort: "Fachlich bin ich raus, ich hab die Folien nicht im Kopf. Was ich kann: mit dir hier sitzen "
+      + "und zählen. Zum Erklären nimm eine Aufgabe – da steht die Erklärung direkt drunter, "
+      + "und im Klausurmodus schaut die Korrektur über deine Antwort.",
+  });
+
+  // Erst wenn die Kreatur selbst weiss, was sie ist.
+  if (s.tierart) {
+    liste.push({
+      text: "Was bist du eigentlich?",
+      antwort: "Ich bin ein " + s.tierart + ". Gemerkt hab ich das auch erst, als die Ohren kamen.",
+    });
+  }
+
+  return liste;
+}
+
+function mkChatAdapter(tz, stufe) {
+  return {
+    titel: Mk.chatTitel(stufe),
+    // Geraetelokal und tagesfrisch, der Baustein raeumt selbst auf. NICHT im
+    // Lernstand, nicht in snapshot(), nicht in signatur(): ein Chatverlauf ist
+    // kein Lernstand. Eigener Key - der ST-Trainer liegt auf demselben
+    // github.io-Origin und darf hier weder mitlesen noch ueberschreiben.
+    verlaufKey: "ge-mk-chat",
+    // Der ruhige Nebensatz unter den Knoepfen. Er sagt, was die Kreatur kann und
+    // was nicht - sonst probiert Rose Fachfragen an der falschen Stelle. Der
+    // ST-Trainer hat denselben Satz in seiner Fassung (mk-chat.js); die Grenze
+    // ist dort der Chat an der Uebungsfrage, hier sind es die Aufgaben selbst.
+    hinweis: Llm.mkFreitext()
+      ? "Ich weiß, wie dein Tag läuft. Vom Stoff versteh ich nichts."
+      : "Ich weiß, wie dein Tag läuft. Für den Stoff nimm eine Aufgabe – da steht die Erklärung dabei.",
+    stand: function () { return mkStand(tz, stufe); },
+    schnellFragen: mkSchnellFragen,
+    // Stufe 2. Solange die Edge Function den art-Zweig "maskottchen" nicht
+    // kennt, wird das Eingabefeld gar nicht erst gebaut - kein ausgegrautes
+    // Feld, kein Hinweis auf etwas Fehlendes.
+    freitext: function () { return Llm.mkFreitext(); },
+    // Eigenes kleines Tagesbudget (ge-mk-tag, 20), damit Geplauder Roses
+    // Klausur-Korrektur (ge-llm-tag, 100) nie wegnimmt.
+    budgetFrei: function () { return Llm.mkTagFrei(); },
+    senden: function (messages, s) { return Llm.maskottchen(messages, s); },
+    fallback: function (s) {
+      // Nachts leise und ohne ein Wort ueber offene Aufgaben.
+      if (MkChat.istNacht(s)) return "Ich bin schon halb eingeschlafen und find die Worte nicht. Morgen wieder.";
+      return "Ich bin gerade ein bisschen verschlafen und finde die Worte nicht. Was ich aber sehe: "
+        + MkChat.heuteSatz(s) + ".";
+    },
+  };
+}
+
 function countdownKarte(tz) {
   var karte = el("div", "karte countdown glimmer");
 
@@ -346,7 +507,14 @@ function countdownKarte(tz) {
   // main.js nicht. Es ist der seltenste Feier-Anlass der App: genau einmal pro
   // Trainer, nie wieder (Jennifer, 12.08.). feiereEinmal() waere hier falsch,
   // das drosselt pro Sitzung — hier gibt es gar keine zweite Gelegenheit.
-  karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }, konfetti));
+  // Der vierte Parameter ist der Chat: Rose tippt die Kreatur an, das Sheet geht
+  // auf. Wie das Konfetti wird er hereingereicht statt importiert -
+  // maskottchen.js kennt weder main.js noch den Chat. Das Sheet haengt danach an
+  // document.body, nicht in dieser Karte: ein Sync oder ein Tabwechsel zeichnet
+  // die Karte neu und risse es sonst mitten im Satz weg.
+  karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }, konfetti, function (stufe) {
+    MkChat.chatOeffnen(mkChatAdapter(tz, stufe));
+  }));
 
   var tage = tageBisKlausur();
   var gross, klein;
@@ -438,7 +606,7 @@ function wegKarte(tz) {
 
   var karte = el("div", "karte weg-karte");
   var kopf = el("div", "weg-kopf");
-  kopf.appendChild(el("h3", null, "Dein Weg zur Klausur"));
+  kopf.appendChild(el("h2", null, "Dein Weg zur Klausur"));
   kopf.appendChild(el("span", "weg-rest", "noch " + restTage + (restTage === 1 ? " Tag" : " Tage")));
   karte.appendChild(kopf);
 
@@ -532,7 +700,7 @@ function frequenzKarte(tz, themen) {
   if (!geuebte.length && !alt.antworten) return null;
 
   var karte = el("div", "karte freq-karte");
-  karte.appendChild(el("h3", null, "Wie viel du übst"));
+  karte.appendChild(el("h2", null, "Wie viel du übst"));
 
   if (!geuebte.length) {
     // Nur undatierter Alt-Fortschritt: kein Plot, aber die Arbeit wird benannt.
@@ -770,7 +938,7 @@ function zuletztKarte(themen) {
   if (!runden.length) return null;
 
   var karte = el("div", "karte zuletzt-karte");
-  karte.appendChild(el("h3", null, "Zuletzt geübt"));
+  karte.appendChild(el("h2", null, "Zuletzt geübt"));
 
   var liste = el("div", "zuletzt-liste");
   runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde)); });
@@ -792,7 +960,12 @@ function zeigeVerlauf() {
   zurueck.addEventListener("click", function () { zeige("start"); });
   app.appendChild(zurueck);
 
-  app.appendChild(el("h1", null, "Deine Runden"));
+  // In die .kopf-Huelle wie jede andere Unterseite: der Seitentitel stand hier
+  // als einziger nackt im #app und bekam dadurch weder den Kopf-Abstand noch
+  // die Titelgroesse der Unterseiten.
+  var kopf = el("div", "kopf");
+  kopf.appendChild(el("h1", null, "Deine Runden"));
+  app.appendChild(kopf);
   var runden = Stats.letzteRunden(themen, 999);
   var karte = el("div", "karte zuletzt-karte");
   var liste = el("div", "zuletzt-liste");
@@ -937,6 +1110,23 @@ function offeneDailies() {
 function heuteDranKarte() {
   var karte = el("div", "karte heute-karte glimmer");
   karte.appendChild(el("h2", null, "Heute dran"));
+  /* Die Legende zum roten Punkt. Sie stand bisher nur im ST-Trainer, obwohl
+     beide Apps seit dem 12.08. abends denselben roten Punkt zeigen - ein
+     Signal ohne Legende ist eine halbe Auskunft. Der Wortlaut sagt genau das,
+     was dailyKachel() baut und nicht mehr - und das ist NICHT "heute noch nicht
+     dran gewesen", so wie es der ST-Trainer formuliert: die Wiederholen-Kachel
+     steht in tagesAufgaben() fest auf erledigt:false und pulst deshalb auch dann
+     weiter, wenn Rose die Runde heute schon gespielt hat und dabei wieder etwas
+     danebenlag. "Hier ist heute noch etwas offen" ist fuer alle drei Kacheln
+     wahr, der ST-Satz waere es fuer eine davon nicht. Kein Urteil, eine Auskunft
+     ueber den Tag.
+     "Meist zwei Minuten" statt einer festen Zahl, weil die Wiederholen-Kachel
+     laenger dauern kann als die zwei Spiele.
+     Klasse .karten-hinweis aus dem geteilten Paket (Block 7b) statt eines
+     Inline-style, damit die Zeile in beiden Apps gleich aussieht. */
+  karte.appendChild(el("p", "karten-hinweis",
+    "Kurze Runden für zwischendurch, meist zwei Minuten. Ein Tipp startet direkt. "
+    + "Der rote Punkt heißt: hier ist heute noch etwas offen. Alles zählt fürs Tagesziel."));
 
   var liste = tagesAufgaben();
   var reihe = el("div", "dailies-reihe");
@@ -956,7 +1146,11 @@ function heuteDranKarte() {
 // auf der er gestartet wird (Klausur-Setup), nicht diese Kachel.
 function uebenKacheln() {
   var box = el("div", "abschnitt");
-  box.appendChild(el("div", "abschnitt-titel", "Üben"));
+  // Echtes <h2>, nicht mehr ein <div>: das Gruppenlabel ist eine Ueberschrift
+  // und war bisher keine - ein Screenreader ist ueber die komplette Gliederung
+  // der Startseite hinweggesprungen. Optik unveraendert, sie steht im
+  // geteilten Paket (Block 7b, h2.abschnitt-titel).
+  box.appendChild(el("h2", "abschnitt-titel", "Üben"));
   var grid = el("div", "kachel-grid");
   [
     ["📝", "MC", "Alle Themen", function () { zeige("mcquer"); }],
@@ -992,7 +1186,7 @@ function zeigeStart() {
   var ecke = el("div", "topbar-tools");
   ecke.appendChild(querLink());
   ecke.appendChild(themeKnopf());
-  var zahnrad = el("button", "theme-knopf", "⚙️");
+  var zahnrad = el("button", "kopf-knopf", "⚙️");
   zahnrad.title = "Einstellungen";
   zahnrad.setAttribute("aria-label", "Einstellungen");
   zahnrad.addEventListener("click", function () {
@@ -1024,7 +1218,7 @@ function zeigeStart() {
   var zuletzt = zuletztKarte(themen);
   if (zuletzt) app.appendChild(zuletzt);
 
-  app.appendChild(el("div", "abschnitt-titel", "Nach Thema"));
+  app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
 
   themen.forEach(function (thema) {
     var mc = mcStand(thema), fr = freiStand(thema);
@@ -1072,7 +1266,7 @@ function zeigeStart() {
   // Die AFB-Operatoren stehen ausfuehrlich im Spickzettel der Signalwoerter
   // und in der Statistik; hier waeren sie eine dritte Kopie.
   var info = el("div", "karte info-karte");
-  info.appendChild(el("h3", null, "So läuft die Klausur"));
+  info.appendChild(el("h2", null, "So läuft die Klausur"));
   var ul = document.createElement("ul");
   [
     "5 der 8 Themen kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle.",
@@ -1177,7 +1371,7 @@ function zeigeThema(thema) {
   app.appendChild(knoepfe);
 
   var hinweis = el("div", "karte");
-  hinweis.appendChild(el("h3", null, "Empfehlung"));
+  hinweis.appendChild(el("h2", null, "Empfehlung"));
   hinweis.appendChild(el("p", null, "Check zum Aufwärmen, freie Aufgaben als eigentliches Training – die Klausur fragt offen."));
   app.appendChild(hinweis);
 }

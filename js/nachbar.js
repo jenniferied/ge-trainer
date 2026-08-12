@@ -3,7 +3,7 @@
    soll nicht nur hinueberzeigen, sondern auch sagen, wie es drueben steht:
    was heute noch offen ist und wie weit sie heute schon gekommen ist.
 
-   Gegenstueck zu klausur-trainer/app/js/nachbar.js, das dasselbe in die andere
+   Gegenstueck zu st-trainer/app/js/nachbar.js, das dasselbe in die andere
    Richtung tut. Aufbau, Riegel und Ehrlichkeitsregeln sind von dort uebernommen.
 
    DREI RIEGEL, damit daraus kein Unfall wird:

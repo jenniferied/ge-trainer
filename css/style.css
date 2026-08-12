@@ -116,56 +116,53 @@ body {
   min-height: 100dvh;
 }
 
-#app {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: var(--sp-4) var(--sp-4) calc(var(--sp-8) * 2);
-}
+/* Lesebreite, Seitenrand und die Ueberschriften-Treppe stehen seit dem
+   12.08. abends im geteilten Paket (geteilt.css, Bloecke 7 und 8). Hier bleibt
+   NUR das, was diese App eigen hat.
 
-h1, h2, h3 { font-family: "Fraunces", Georgia, serif; line-height: 1.25; margin: 0 0 var(--sp-2); }
-h1 { font-size: 1.7rem; }
-h2 { font-size: 1.25rem; }
-h3 { font-size: 1.05rem; }
+   ACHTUNG, die Falle steht im Paket beschrieben: padding hier als
+   KURZSCHREIBWEISE zu setzen wuerde padding-inline mit zuruecksetzen und damit
+   die safe-area des Pakets loeschen (iPhone quer, Notch). Deshalb die Langform. */
+#app { padding-bottom: calc(var(--sp-8) * 2); }
+
 p { margin: 0 0 var(--sp-3); }
+
+/* Der einzige bewusste Aufschlag auf die geteilte Ueberschriften-Treppe, und er
+   ist gemessen, nicht geschmeckt: das Paket deckelt h1 auf
+   clamp(1.05rem, 4.6vw, 1.7rem), weil auf der STARTSEITE drei Werkzeug-Pillen
+   neben dem Titel stehen. Auf den Unterseiten steht der Titel allein in der
+   .kopf-Huelle (kopf > h1, ohne .kopf-zeile) - dort ergibt der 1.05rem-Boden auf
+   360 px 16,8 px, also einen Seitentitel, der KLEINER ist als jede h2 im Kasten
+   (20 px). Die Hierarchie stuende auf dem Kopf. Boden deshalb hoeher; Deckel,
+   Schriftart und Gewicht bleiben die des Pakets, damit die zwei Apps auf breiten
+   Schirmen dieselbe h1 zeigen.
+   NICHT eins zu eins ins Paket hebbar: der ST-Trainer baut seine Unterschirme
+   mit .topbar statt mit .kopf, sein Seitentitel steht dort also MIT dem
+   Zurueck-Knopf in einer Zeile und faellt unter `.topbar h1`. Wer das hier ins
+   Paket zieht, braucht dort beide Faelle, nicht nur `.kopf > h1`. */
+.kopf > h1 { font-size: clamp(1.35rem, 5.6vw, 1.7rem); }
 
 .laden { padding: var(--sp-8); text-align: center; color: var(--ink-soft); }
 
-/* ---------- Kopf ---------- */
-.kopf { margin: var(--sp-4) 0 var(--sp-5); }
-.kopf .untertitel { color: var(--ink-soft); font-size: .95rem; margin-top: 2px; }
-.kopf-zeile { display: flex; align-items: center; gap: var(--sp-2); }
-/* Titel skaliert mit, damit er neben Querlink, Theme und Zahnrad auch auf
-   360 px in EINE Zeile passt; Ellipse als Fangnetz fuer noch schmalere
-   Geraete - lieber ein abgeschnittener Titel als Text, der unter dem Link
-   verschwindet. Der Untertitel steht darunter ueber die volle Breite, sonst
-   quetscht ihn die Werkzeug-Gruppe auf vier Zeilen. (Regel aus dem
-   ST-Trainer uebernommen.) */
-.kopf-zeile h1 {
-  flex: 1; min-width: 0; margin: 0;
-  font-size: clamp(1.05rem, 4.6vw, 1.7rem);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.zurueck {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: none; border: none; padding: var(--sp-2) 0;
-  font: inherit; font-weight: 700; color: var(--tfarbe); cursor: pointer;
-}
-.theme-knopf {
-  font-size: 1.15rem; line-height: 1; cursor: pointer;
-  background: var(--card); border: 1px solid var(--line); border-radius: 999px;
-  padding: 8px 10px; box-shadow: var(--shadow);
-  flex-shrink: 0;
-}
+/* ---------- Kopf ----------
+   Die ganze Kopfzeile liegt seit dem 12.08. abends im geteilten Paket
+   (geteilt.css, Block 9): .kopf, .kopf-zeile (Zweitname .topbar), .kopf-zeile h1
+   mit clamp und Ellipse, .untertitel, .topbar-tools, .kopf-knopf und .zurueck
+   (Zweitname .back). Der GE-Aufbau hat gewonnen, die Klassennamen kommen also
+   von hier - geloescht wurde trotzdem alles, sonst waere der geteilte Block
+   toter Code und die naechste Aenderung an ihm wirkte nur drueben.
 
-/* ---------- Karten ---------- */
-.karte {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: var(--sp-4) var(--sp-5);
-  margin-bottom: var(--sp-4);
-}
+   Es bleibt genau eine Zeile lokal: der Zurueck-Knopf traegt hier die
+   Themenfarbe und die bedeutet etwas (man sieht, aus welchem Thema man kommt).
+   Das Paket macht die Farbe deshalb steuerbar statt sie festzulegen. */
+.zurueck { --zurueck-farbe: var(--tfarbe); }
+
+/* ---------- Karten ----------
+   .karte selbst steht im geteilten Paket (geteilt.css, Block 10) unter dem
+   Doppel-Selektor `.card, .karte` - ein Bauteil, zwei Namen, kein JS angefasst.
+   Die Polsterung ist dort eine Treppe (16/12 auf dem Handy, 20/16, 24/24 ab
+   Tablet); die 12 px an den Seiten sind der Grund, warum eine Tageskachel hier
+   jetzt genauso breit ist wie ein Klausurversuch drueben. */
 
 .info-karte { border-left: 4px solid var(--accent); }
 .info-karte ul { margin: 0; padding-left: 1.2em; }
@@ -182,10 +179,17 @@ p { margin: 0 0 var(--sp-3); }
   border-left: 5px solid var(--tfarbe);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: var(--sp-4) var(--sp-5);
+  /* Von Hand auf die Karten-Treppe des Pakets gezogen (geteilt.css, Block 10).
+     .thema-karte ist ein <button> und traegt KEIN .karte, folgt dem Paket also
+     nicht von selbst - haette sie ihre alte 16/20 behalten, gaebe es in dieser
+     App zwei Kartenpolsterungen nebeneinander. Breakpoints 460/640 wie im
+     Paket, nicht die alten 600 dieser App. */
+  padding: var(--sp-5) var(--sp-4);
   margin-bottom: var(--sp-3);
   transition: transform .08s ease;
 }
+@media (max-width: 460px) { .thema-karte { padding: var(--sp-4) var(--sp-3); } }
+@media (min-width: 640px) { .thema-karte { padding: var(--sp-6); } }
 .thema-karte:active { transform: scale(.985); }
 .thema-kopfzeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
 .thema-titel { font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.08rem; }
@@ -459,10 +463,10 @@ p { margin: 0 0 var(--sp-3); }
   .konfetti { display: none; }
 }
 
-@media (min-width: 600px) {
-  h1 { font-size: 2rem; }
-  #app { padding-top: var(--sp-8); }
-}
+/* Hier stand `@media (min-width: 600px) { h1 { 2rem } #app { padding-top } }`.
+   Beides steht jetzt im geteilten Paket, dort am Breakpoint 640 - ein
+   Breakpoint fuer beide Apps reicht, und 640 ist der, den das Paket auch fuer
+   die Karten-Treppe benutzt. */
 
 /* =======================================================================
    Statistik (js/stats.js) und Spiele (js/spiele.js)
@@ -695,8 +699,11 @@ p { margin: 0 0 var(--sp-3); }
   background: linear-gradient(90deg, var(--glimmer-1), var(--glimmer-2));
 }
 
-/* ---------- Countdown-Kopf mit Tagesziel ---------- */
-.countdown { padding: var(--sp-4) var(--sp-5) var(--sp-4); }
+/* ---------- Countdown-Kopf mit Tagesziel ----------
+   Hier stand `.countdown { padding: var(--sp-4) var(--sp-5) var(--sp-4); }`.
+   Das war ein Modifikator AUF .karte und hat die Karten-Treppe des geteilten
+   Pakets ausgerechnet an der obersten Karte der Startseite ueberschrieben -
+   also an der Karte, die man beim Vergleich der zwei Apps zuerst sieht. */
 .countdown-zeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
 .countdown-zahl {
   font-family: "Fraunces", Georgia, serif; font-weight: 700;
@@ -734,7 +741,7 @@ p { margin: 0 0 var(--sp-3); }
 
 /* ---------- Datumsuebersicht ---------- */
 .weg-kopf { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-2); flex-wrap: wrap; }
-.weg-kopf h3 { margin-bottom: 0; }
+.weg-kopf h2 { margin-bottom: 0; }
 .weg-rest { font-size: .8rem; color: var(--ink-soft); }
 .hm-raster {
   display: grid; grid-template-columns: repeat(7, 1fr);
@@ -889,36 +896,22 @@ p { margin: 0 0 var(--sp-3); }
 .thema-kopfzeile .q-pille { margin-left: auto; }
 .chip-titel .q-pille { vertical-align: 1px; }
 
-/* ---------- Tagesliste "Heute dran" ---------- */
-.heute-karte h2 { margin-bottom: var(--sp-3); }
-.heute-zeile {
-  display: flex; align-items: center; gap: var(--sp-3);
-  width: 100%; text-align: left;
-  font: inherit; color: var(--ink); cursor: pointer;
-  background: var(--paper-2);
-  border: 1.5px solid var(--line); border-radius: 12px;
-  padding: var(--sp-2) var(--sp-3);
-  margin-bottom: var(--sp-2);
-  transition: transform .08s ease, border-color .1s ease;
-}
-.heute-zeile:active { transform: scale(.985); }
-.heute-zeile:not(.erledigt) { border-color: color-mix(in srgb, var(--glimmer-1) 50%, var(--line)); }
-.heute-zeile.erledigt { opacity: .72; }
-.heute-icon { font-size: 1.35rem; line-height: 1; flex-shrink: 0; }
-.heute-text { flex: 1; min-width: 0; }
-.heute-text b { display: block; font-size: .96rem; line-height: 1.25; }
-.heute-text span { display: block; font-size: .78rem; color: var(--ink-soft); }
-.heute-zeile .stand-badge { flex-shrink: 0; }
-.heute-zeile.erledigt { border-color: color-mix(in srgb, var(--ok) 32%, var(--line)); }
+/* ---------- Tagesliste "Heute dran" ----------
+   Hier standen .heute-zeile, .heute-icon und .heute-text: die alte Zeilen-Optik
+   der Tagesliste. Seit dem Kachel-Umbau baut heuteDranKarte() dailyKachel() aus
+   dem geteilten Paket, kein JS erzeugte diese Klassen mehr - toter Code, der
+   beim naechsten Angleichen nur Suchzeit gekostet haette. (Gegengeprueft ueber
+   den ganzen app/js-Baum. Aufgepasst: .spiel-grid und .spiel-karte sehen
+   aehnlich verwaist aus, sind hier aber weiter in Gebrauch - spiele.js.)
+   `.heute-karte h2 { margin-bottom: var(--sp-3) }` ist ebenfalls weg: die
+   geteilte h2 bringt genau diesen Abstand schon mit. */
 .heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
 
 /* ---------- Uebungsmodi als Icon-Kacheln ---------- */
 .abschnitt { margin-bottom: var(--sp-4); }
-.abschnitt-titel {
-  font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--ink-soft); margin: var(--sp-5) 0 var(--sp-2);
-}
-.abschnitt .abschnitt-titel { margin-top: var(--sp-2); }
+/* .abschnitt-titel (Optik und der Sonderfall am Abschnitts-Anfang) steht jetzt
+   im geteilten Paket, Block 7b - dort als h2.abschnitt-titel, weil das Label im
+   JS vom <div> zum echten <h2> geworden ist. */
 .kachel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
 .kachel {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -941,13 +934,10 @@ p { margin: 0 0 var(--sp-3); }
 :root { --st-farbe: #d0703d; }
 :root[data-theme="hell"] { --st-farbe: #b4552d; }
 
-/* Werkzeug-Gruppe oben rechts (Jennifer 12.08.): Querlink zum anderen Trainer,
-   Hell/Dunkel und Einstellungen gehoeren zusammen und sollen auch so aussehen -
-   beide Apps bekommen dieselbe Kopfzeile. Regeln woertlich aus dem ST-Trainer.
-   Enger gesetzt als der Kopf-Abstand, damit die drei als EIN Block gegen den
-   Titel stehen, und flex-shrink:0, damit die Gruppe auf 360 px nicht umbricht
-   (dort gibt der Titel nach). */
-.topbar-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; margin-left: auto; }
+/* Die Werkzeug-Gruppe oben rechts (.topbar-tools) stand hier ZEICHENGLEICH mit
+   der des ST-Trainers, inklusive desselben Kommentars. Sie liegt jetzt im
+   geteilten Paket, Block 9 - zusammen mit .kopf-knopf, der Pillenform der zwei
+   Knoepfe daneben. */
 /* Querlink zum ST-Trainer: Bauteil und Zustandsfeld liegen seit dem 12.08.
    abends im geteilten Style-Paket (geteilt.css, Block 5) - hier steht nur noch
    die ZIELFARBE, also die Identitaetsfarbe der anderen App.
@@ -978,7 +968,7 @@ p { margin: 0 0 var(--sp-3); }
   /* Ohne Pulsieren, aber mit dauerhaftem Leuchten - der Belohnungszustand
      darf nicht verschwinden, nur weil Bewegung reduziert ist. */
   .hm-s4 { animation: none; box-shadow: 0 0 12px -1px #1fae52, 0 0 22px -5px #86efac; }
-  .heute-zeile:active, .kachel:active { transform: none; }
+  .kachel:active { transform: none; }
   /* Der Haken bleibt sichtbar, er hoert nur auf zu huepfen. */
   .thema-karte .stand-badge.sitzt { animation: none; }
   /* Wer Bewegung reduziert hat, bekommt dieselbe Hervorhebung - nur still.
@@ -1083,4 +1073,66 @@ p { margin: 0 0 var(--sp-3); }
 @media (prefers-reduced-motion: reduce) {
   .mk-schale { display: none; }
   .mk-frisch { animation: none; opacity: 1; }
+}
+
+/* ---------- Einstieg in den Kreaturen-Chat ----------
+   Das Sheet selbst kommt aus dem geteilten Paket (geteilt.css, Block 11) und
+   sieht in beiden Trainern gleich aus. Der AUSLOESER bleibt lokal: .mk-* ist
+   aus dem Paket ausdruecklich ausgenommen, weil Ei und Tier hier andere sind.
+
+   Ein antippbares Ei ohne sichtbare Marke findet niemand - deshalb die kleine
+   Sprechblase unten rechts. Sie sitzt als ::after auf dem Knopf, damit sie
+   nicht in die Blockgrafik hineinrutscht und die Zellen verschiebt.
+   Der Knopf selbst ist unsichtbar: die Kreatur soll das Bedienelement sein,
+   nicht ein Kasten um sie herum. */
+.mk-chat-knopf {
+  display: block; position: relative;
+  border: 0; background: none; padding: 0; margin: 0;
+  font: inherit; color: inherit; text-align: left;
+  cursor: pointer; border-radius: 12px;
+  transition: transform .08s ease;
+}
+.mk-chat-knopf::after {
+  content: "💬";
+  position: absolute; right: -7px; bottom: -3px;
+  font-size: .66rem; line-height: 1;
+  padding: 2px 4px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--line);
+  /* Die Marke ist Dekoration - die Auskunft steht im aria-label des Knopfes. */
+  pointer-events: none;
+}
+.mk-chat-knopf:focus-visible { outline: 2px solid var(--mk-riss); outline-offset: 4px; }
+.mk-chat-knopf:active { transform: scale(.97); }
+@media (prefers-reduced-motion: reduce) {
+  .mk-chat-knopf { transition: none; }
+  .mk-chat-knopf:active { transform: none; }
+}
+
+/* ---------- Drei Knopf-Namen, die der geteilte Chat-Baustein mitbringt ----------
+   geteilt-maskottchen-chat.js baut Griff, Senden-Knopf und Schliessen-Knopf mit
+   den Namen des ST-Trainers (.sheet-grip, .btn.small, .linkish). Die kennt der
+   GE-Trainer nicht - hier heissen Knoepfe .knopf. Ohne diese drei Regeln waere
+   das Sheet in dieser App zwei unformatierte Systemknoepfe lang.
+
+   Bewusst auf .chat-sheet eingeschraenkt: es sind KEINE neuen App-weiten Namen,
+   sondern die Uebersetzung genau dort, wo der geteilte Baustein sie braucht.
+   Faellt weg, sobald das Knopf-System zusammengelegt ist (.btn vs .knopf steht
+   als offener Punkt in beiden ROADMAPs). */
+.chat-sheet .sheet-grip {
+  width: 42px; height: 4px; border-radius: 2px;
+  background: var(--line); margin: 0 auto 12px;
+}
+.chat-sheet .btn.small {
+  font: inherit; font-weight: 700; font-size: 1.05rem; line-height: 1; cursor: pointer;
+  background: var(--tfarbe); color: #14111f;
+  border: none; border-radius: 999px;
+  padding: 10px 16px; min-height: 40px;
+  box-shadow: var(--shadow);
+}
+:root[data-theme="hell"] .chat-sheet .btn.small { color: #fff; }
+.chat-sheet .btn.small:disabled { opacity: .45; cursor: default; }
+.chat-sheet .linkish {
+  border: 0; background: none; cursor: pointer; font: inherit; font-size: .82rem;
+  color: var(--ink-soft); text-decoration: underline;
+  padding: 8px 4px 0; display: inline-block;
 }

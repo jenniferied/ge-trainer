@@ -1,5 +1,5 @@
 /* GE-Trainer core.js - State, localStorage, Antwort-Log, Daten laden, DOM-Helfer.
-   Vanilla JS als ES-Modul, kein Build. Muster wie beim ST-Trainer (../klausur-trainer).
+   Vanilla JS als ES-Modul, kein Build. Muster wie beim ST-Trainer (../st-trainer).
    Kein UI-Code hier - Theme/Sticker/Konfetti liegen in ui.js, Screens in main.js. */
 
 export const STORE_KEY = "ge-trainer-v1";

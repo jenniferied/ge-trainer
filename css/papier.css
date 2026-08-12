@@ -285,7 +285,13 @@
 }
 
 .kl-bewertung { margin-top: 10px; }
-.kl-bewertung h4, .kl-muster h4 {
+/* Waren bis zum 12.08. abends <h4>. Vier Ueberschriften-Ebenen sind die "zu
+   vielen", die Jennifer nicht will - das geteilte Paket kennt drei. Gehoben auf
+   h3, die Optik bleibt exakt dieselbe: diese Zeilen sind Beschriftungen auf dem
+   Klausurblatt, keine Gliederung, und tragen deshalb weiter Karla klein und
+   versal statt der Fraunces-Groesse aus dem Paket. papier.css laedt zuletzt,
+   diese Regel gewinnt also gegen geteilt.css. */
+.kl-bewertung h3, .kl-muster h3 {
   font-family: "Karla", system-ui, sans-serif;
   font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: var(--blatt-ink-2);
@@ -312,7 +318,7 @@
   color: var(--blatt-ink-2);
   border-left: 2px solid var(--blatt-rand); padding-left: 10px; margin-top: 10px;
 }
-.kl-muster h4 {
+.kl-muster h3 {
   font-family: "Karla", system-ui, sans-serif; font-size: .72rem; letter-spacing: .1em;
   text-transform: uppercase; margin: 0 0 4px; color: var(--blatt-ink-2);
 }

@@ -15,7 +15,10 @@ export function themeAnwenden() {
 }
 
 export function themeKnopf() {
-  var k = el("button", "theme-knopf", state.theme === "hell" ? "🌙" : "☀️");
+  // .kopf-knopf ist seit dem 12.08. abends der geteilte Name fuer die Pillen
+  // oben rechts (geteilt.css, Block 9) - hiess hier .theme-knopf und drueben
+  // .btn.ghost.small, war also zweimal verschieden gebaut.
+  var k = el("button", "kopf-knopf", state.theme === "hell" ? "🌙" : "☀️");
   k.setAttribute("aria-label", state.theme === "hell" ? "Nachtmodus" : "Heller Modus");
   k.addEventListener("click", function () {
     state.theme = state.theme === "hell" ? "dunkel" : "hell";

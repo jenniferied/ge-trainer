@@ -681,7 +681,7 @@ function statusText() {
 
 export function syncKarte() {
   var karte = el("div", "karte");
-  karte.appendChild(el("h3", null, "Auf allen Geräten"));
+  karte.appendChild(el("h2", null, "Auf allen Geräten"));
 
   var text = el("div", "thema-meta", statusText());
   karte.appendChild(text);

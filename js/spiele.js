@@ -20,6 +20,12 @@
 
 import { state, speichern, logAntwort, app, el, mischen, leeren } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
+/* Die Mechanik des Begriffe-Blitz liegt seit dem 12.08.2026 im geteilten
+   Baustein — dieselbe Datei treibt drueben den Begriffe-Blitz UND das
+   Zuordnen-Spiel des ST-Trainers. Quelle: rose/geteilte-styles/spiel-zuordnen.js,
+   nie die Kopie hier bearbeiten. Was die Engine bewusst NICHT tut: loggen und
+   feiern. Beides steht weiter hier, weil beide Apps es verschieden machen. */
+import { SICHER_AB, paarGewicht, baueZuordnen } from "./geteilt-zuordnen.js";
 
 /* ---------- AFB-Grundwissen (Klausurinfo, Folie 5) ---------- */
 
@@ -145,7 +151,7 @@ export function zeigeSpiele(themen, hooks) {
 
   var heute = heuteGespielt();
   var grid = el("div", "spiel-grid");
-  grid.appendChild(spielKachel("🔎", "Signalwörter", "Welche AFB-Stufe verlangt das?", heute.operatoren,
+  grid.appendChild(spielKachel("🎯", "Signalwörter", "Welche AFB-Stufe verlangt das?", heute.operatoren,
     function () { opRunde(themen, hooks); }));
   if (BEGRIFFE) {
     grid.appendChild(spielKachel("🃏", "Begriffe-Blitz", "Paare zuordnen, beide Richtungen", heute.begriffe,
@@ -154,7 +160,7 @@ export function zeigeSpiele(themen, hooks) {
   app.appendChild(grid);
 
   var info = el("div", "karte");
-  info.appendChild(el("h3", null, "Warum das hilft"));
+  info.appendChild(el("h2", null, "Warum das hilft"));
   info.appendChild(el("p", null, "Die Dozentin sagt: an den Operatoren orientieren. Wer sieht, ob aufgezählt oder abgewogen werden soll, schreibt nicht zu viel und nicht zu wenig."));
   if (!BEGRIFFE) info.appendChild(el("p", null, "Der Begriffe-Blitz taucht auf, sobald die Begriffsdatei geladen werden kann."));
   app.appendChild(info);
@@ -268,7 +274,7 @@ function spickzettel() {
 }
 
 function spickKnopf() {
-  var k = el("button", "theme-knopf", "📖");
+  var k = el("button", "kopf-knopf", "📖");
   k.title = "Alle Signalwörter nachschlagen";
   k.setAttribute("aria-label", "Alle Signalwörter nachschlagen");
   k.addEventListener("click", spickzettel);
@@ -333,7 +339,7 @@ function opRunde(themen, hooks) {
   function schritt() {
     leeren();
     app.style.removeProperty("--tfarbe-basis");
-    spielKopf("🔎 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
+    spielKopf("🎯 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
 
     var item = runde[index];
     var karte = el("div", "karte");
@@ -392,7 +398,7 @@ function opRunde(themen, hooks) {
   function ende() {
     leeren();
     app.style.removeProperty("--tfarbe-basis");
-    spielKopf("🔎 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
+    spielKopf("🎯 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
 
     var karte = el("div", "karte");
     var extra = null;
@@ -446,7 +452,7 @@ function bgHome(hooks) {
   spielKopf("🃏 Begriffe-Blitz", function () { hooks.spiele(); });
 
   var stand = begriffStand();
-  var sicher = function (p) { return (stand[p.id] ? stand[p.id].ok : 0) >= 2; };
+  var sicher = function (p) { return (stand[p.id] ? stand[p.id].ok : 0) >= SICHER_AB; };
 
   var kats = (BEGRIFFE.kategorien || []).map(function (k) {
     var paare = paareVon(k.id);
@@ -501,12 +507,9 @@ function bgRunde(kat, hooks) {
   var alle = paareVon(kat);
   if (!alle.length) return bgHome(hooks);
   var stand = begriffStand();
-  var gew = function (p) {
-    var s = stand[p.id];
-    if (!s) return 3;                 // nie geuebt zuerst
-    return s.ok >= 2 ? 1 : 4;         // unsicher am haeufigsten
-  };
-  var paare = zieh(alle, Math.min(BG_RUNDE, alle.length), gew);
+  // Gewicht (nie geuebt zuerst, unsicher am haeufigsten) kommt aus dem
+  // geteilten Baustein — drueben zieht der Begriffe-Blitz mit denselben Zahlen.
+  var paare = zieh(alle, Math.min(BG_RUNDE, alle.length), function (p) { return paarGewicht(stand[p.id]); });
 
   // Sicherheitsnetz: identische Antworttexte in einer Runde waeren nicht
   // eindeutig zuzuordnen. In begriffe.json ist das ausgeschlossen, aber hier
@@ -525,11 +528,6 @@ function bgRunde(kat, hooks) {
   var linksText = function (p) { return drehen ? p.antwort : p.begriff; };
   var rechtsText = function (p) { return drehen ? p.begriff : p.antwort; };
 
-  var links = mischen(paare), rechts = mischen(paare);
-  var offen = {}, fehler = {}, gewertet = {};
-  paare.forEach(function (p) { offen[p.id] = true; });
-  var aktiv = null;
-
   leeren();
   app.style.removeProperty("--tfarbe-basis");
   var info = katInfo(kat);
@@ -543,58 +541,24 @@ function bgRunde(kat, hooks) {
   hinweis.style.marginBottom = "12px";
   app.appendChild(hinweis);
 
-  var spiel = el("div", "bg-spiel");
-  var spalteL = el("div", "bg-col"), spalteR = el("div", "bg-col");
-  var linkKnoepfe = [];
-
-  links.forEach(function (p) {
-    var b = el("button", "bg-card links", linksText(p));
-    b.dataset.id = p.id;
-    linkKnoepfe.push(b);
-    b.addEventListener("click", function () {
-      if (b.classList.contains("done")) return;
-      linkKnoepfe.forEach(function (x) { x.classList.remove("sel"); });
-      b.classList.add("sel");
-      aktiv = p.id;
-    });
-    spalteL.appendChild(b);
-  });
-
   var fazitPlatz = el("div");
 
-  rechts.forEach(function (p) {
-    var b = el("button", "bg-card rechts", rechtsText(p));
-    b.dataset.id = p.id;
-    b.addEventListener("click", function () {
-      if (b.classList.contains("done") || !aktiv) return;
-      var erster = !gewertet[aktiv];
-      if (p.id === aktiv) {
-        if (erster) {
-          gewertet[aktiv] = true;
-          logSpiel("begriffe", aktiv, !fehler[aktiv]);
-        }
-        delete offen[aktiv];
-        b.classList.add("done");
-        linkKnoepfe.forEach(function (x) { if (x.dataset.id === aktiv) x.classList.add("done"); });
-        aktiv = null;
-        if (!Object.keys(offen).length) rundeFertig();
-      } else {
-        if (erster) fehler[aktiv] = true;
-        b.classList.add("shake");
-        setTimeout(function () { b.classList.remove("shake"); }, 450);
-      }
-    });
-    spalteR.appendChild(b);
-  });
-
-  spiel.appendChild(spalteL);
-  spiel.appendChild(spalteR);
-  app.appendChild(spiel);
+  // Spalten, Auswahl, Fehlgriff-Wackler und die Zaehlung des ersten Anlaufs
+  // macht der geteilte Baustein. Hier bleibt nur, was GE eigen ist: der
+  // Log-Eintrag (modus spiel + Feld spiel, daran haengen heuteGespielt() und
+  // begriffStand()) und das Fazit ohne Konfetti.
+  app.appendChild(baueZuordnen({
+    paare: paare,
+    linksText: linksText,
+    rechtsText: rechtsText,
+    onTreffer: function (id, voll) { logSpiel("begriffe", id, voll); },
+    onFertig: rundeFertig
+  }));
   app.appendChild(fazitPlatz);
 
-  function rundeFertig() {
-    var daneben = paare.filter(function (p) { return fehler[p.id]; });
-    var ok = paare.length - daneben.length;
+  function rundeFertig(erg) {
+    var daneben = paare.filter(function (p) { return erg.fehler.indexOf(p.id) >= 0; });
+    var ok = erg.ok;
     var extra = null;
     if (daneben.length) {
       extra = el("div", "nachlesen");
