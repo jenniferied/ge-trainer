@@ -62,7 +62,9 @@ const SATZ = {
   freizeit:             { basis: 223, seiten: 39, luecken: [],                vorlesung: "V8 Freizeit" },
 };
 
-export const TOTAL = 262;
+// Nicht von Hand gepflegt: die Summe der Seitenzahlen oben IST die Gesamtzahl.
+export const TOTAL = Object.keys(SATZ).reduce((n, id) => n + SATZ[id].seiten, 0); // 262
+
 export const bildUrl = (seite) => `data/folien/folie-${String(seite).padStart(3, "0")}.jpg`;
 
 /* Aufgedruckte Foliennummer -> Bildnummer. null heisst: kein Chip.
