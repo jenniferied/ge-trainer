@@ -36,7 +36,7 @@
    Importiert nur core.js + config.js (siehe ARCHITEKTUR.md, keine Zyklen). */
 
 import { CONFIG } from "./config.js";
-import { state, speichern, antwortId, beiAntwort, beiFremdemStand, sitzungenNachziehen, el } from "./core.js";
+import { state, speichern, antwortId, aktiveRunde, beiAntwort, beiFremdemStand, sitzungenNachziehen, el } from "./core.js";
 import { heuteAntworten } from "./stats.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js —
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
@@ -335,6 +335,175 @@ export function sitzungSchnitt(liste) {
   return aus.slice(-SITZUNGEN_MAX);
 }
 
+/* ---------- Gespraeche zur einzelnen Frage (frageChat) ----------
+   Der Chat "Über diese Frage sprechen". Vorbild ist state().frageChat im
+   ST-Trainer (core.js, seit 13.08.) - dort lag der Verlauf bis dahin in einer
+   Map im Speicher und war beim Neuladen weg.
+
+   WARUM EIN EIGENER, FLACHER SPEICHER UND KEIN FELD AN DER ANTWORT:
+   mergeIn ersetzt bei gleicher aid das GANZE Antwort-Objekt (Schritt 2 unten).
+   Haenge das Gespraech an die Antwort, und ein Geraet, das nur die nackte
+   Fassung kennt, buegelt die angereicherte beim naechsten Sync weg - lautlos.
+   Eine Zeile je Nachricht mit eigener Id laesst sich dagegen vereinigen, genau
+   wie mkChat und die Sitzungen.
+
+   Eine Zeile:
+
+     { id, aid, qid, sid, art, role, content, ts }
+
+     id       stabil und geraeteuebergreifend eindeutig; Dedupe-Schluessel.
+     aid      die beantwortete Einheit, an der die Zeile haengt. Traegt der
+              Grabstein: wird die Antwort geloescht, geht das Gespraech mit.
+              Gibt es noch keine Antwort, steht hier "q:<qid>" (siehe
+              frageChatAid).
+     qid      der TRAGENDE Anker fuers Lesen - versuchsuebergreifend. Uebt Rose
+              eine Frage zweimal, steht trotzdem EIN Gespraech da, ihres.
+     sid      die Runde, in der geredet wurde. Noetig, damit ein Loeschen der
+              Runde ("sit:<id>") das Gespraech mitnimmt.
+     art      "frage" (Chat) - "feedback" ist im ST-Trainer belegt und hier
+              bewusst freigehalten, falls die KI-Korrektur spaeter mit soll.
+     role     "user" (Rose) oder "assistant" (die KI). Bewusst role/content und
+              nicht rolle/text wie bei mkChat zwanzig Zeilen weiter oben: das
+              ist die Form, die der Adapter-Vertrag der geteilten Bausteine
+              spricht (laden/merken liefern { role, content }), und diese Zeilen
+              sollen beim Umzug nach rose/geteilte-styles/ nicht umgeschrieben
+              werden muessen. mkChat kann seine Form nicht mehr aendern - die
+              liegt schon in Roses Lernstand.
+     ts       Millisekunden, Sortierschluessel. */
+
+/* Zwei Deckel, und die Reihenfolge ist wichtig: erst je Frage, dann global.
+   Andersherum frisst ein einziges langes Gespraech den globalen Deckel auf und
+   loescht damit die Gespraeche aller anderen Fragen. */
+export var FQ_PRO_FRAGE = 30;
+export var FQ_MAX = 400;
+
+/* Laengster Text, den eine Zeile mit in den Lernstand nimmt. Gekuerzt wird beim
+   SCHREIBEN (frageChatSagen) und NUR dort - dieselbe Begruendung wie bei
+   CHAT_TEXT_MAX: wuerde fqSchnitt den Text anfassen, aenderte sich Roses Text
+   still bei jedem Sync, und die Begruendung, warum in der Signatur die Ids
+   allein genuegen, waere nur noch ungefaehr wahr. */
+var FQ_TEXT_MAX = 4000;
+
+function fqEine(m) {
+  if (!m) return null;
+  var id = m.id == null ? "" : String(m.id);
+  var aid = m.aid == null ? "" : String(m.aid);
+  var content = typeof m.content === "string" ? m.content : "";
+  var ts = typeof m.ts === "number" && isFinite(m.ts) ? m.ts : null;
+  // Ohne Id kein Dedupe-Schluessel, ohne aid kein Grabstein, ohne ts keine
+  // Sortierung - lieber sichtbar weglassen als unsichtbar verschmelzen
+  // (dieselbe Regel wie chatEine und sitzungEine).
+  if (!id || !aid || ts === null || !content.replace(/\s+/g, "")) return null;
+  return {
+    id: id, aid: aid,
+    qid: m.qid == null ? null : String(m.qid),
+    sid: m.sid == null ? null : String(m.sid),
+    art: m.art === "feedback" ? "feedback" : "frage",
+    // Alles, was nicht ausdruecklich Rose ist, ist die KI. So kann eine Zeile
+    // nie wegen eines unbekannten Rollennamens verschwinden.
+    role: m.role === "user" ? "user" : "assistant",
+    content: content, ts: ts,
+  };
+}
+
+/* Reine Mengen-Operation: putzen, ueber die Id deduplizieren, deterministisch
+   sortieren, beide Deckel anwenden. Wird von snapshot(), signatur() und
+   mergeIn() benutzt - deshalb darf sie den Inhalt einer Zeile NICHT anfassen.
+   Idempotent: zweimal angewandt kommt dasselbe raus, darauf beruht die
+   Konvergenz zweier Geraete. */
+export function fqSchnitt(liste) {
+  var map = {}, ids = [];
+  (liste || []).forEach(function (roh) {
+    var m = fqEine(roh);
+    if (!m) return;
+    if (!map[m.id]) ids.push(m.id);
+    map[m.id] = m; // gleiche Id = dieselbe Zeile, der Text aendert sich nie
+  });
+  var alle = ids.map(function (id) { return map[id]; });
+  // Zweiter Sortierschluessel ist Pflicht (siehe chatSchnitt): bei gleichem ts
+  // haengt die Reihenfolge sonst davon ab, welches Geraet zuerst gemerged hat.
+  alle.sort(function (a, b) {
+    return (a.ts - b.ts) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  });
+  // Deckel je Frage ZUERST, danach der globale.
+  var proAid = {}, behalten = {};
+  alle.forEach(function (m) {
+    (proAid[m.aid] || (proAid[m.aid] = [])).push(m);
+  });
+  Object.keys(proAid).forEach(function (aid) {
+    proAid[aid].slice(-FQ_PRO_FRAGE).forEach(function (m) { behalten[m.id] = true; });
+  });
+  return alle.filter(function (m) { return behalten[m.id]; }).slice(-FQ_MAX);
+}
+
+/* Alles, was jemals zu DIESER Frage besprochen wurde, versuchsuebergreifend.
+   Das Sheet liest hierueber: hat Rose die Frage zweimal geuebt, steht trotzdem
+   EIN Gespraech da. Gehaengt wird die neue Zeile dagegen an den juengsten
+   Versuch (frageChatAid), damit sie im Verlauf an der richtigen Zeile sitzt. */
+export function frageChatZuFrage(qid) {
+  return fqSchnitt(state.frageChat || []).filter(function (m) { return m.qid === String(qid); });
+}
+
+/* Gibt es zu dieser Frage ueberhaupt ein Gespraech? Fuer eine Marke im Verlauf,
+   damit die Historie nicht fuer jede Zeile die ganze Liste durchsucht. */
+export function frageChatQids() {
+  var raus = {};
+  (state.frageChat || []).forEach(function (m) { if (m && m.qid) raus[m.qid] = true; });
+  return raus;
+}
+
+/* An WELCHE Einheit ein Gespraech geht: an die zuletzt gegebene Antwort auf
+   genau diese Frage.
+
+   Gibt es noch keine (Rose oeffnet den Chat, bevor sie geantwortet hat), traegt
+   die Zeile die Ersatz-aid "q:<qid>". Deshalb ist die qid der tragende Anker
+   und die aid nur der genauere Zusatz, wo es ihn schon gibt.
+
+   sidJetzt ist die LAUFENDE Runde, und sie SCHLAEGT die Runde der alten
+   Antwort. Das ist der ganze Witz an der Zeile: uebt Rose eine Frage ein
+   zweites Mal (Wiederholen, Mix, Klausurfrage), ist "neuste" die Antwort aus
+   der ALTEN Runde. Stuende deren sid hier, bekaeme das Gespraech von heute den
+   Grabstein von gestern - Loeschen der alten Runde raeumte ein Gespraech weg,
+   das in der neuen stattfand. Wer gerade redet, bestimmt die Zugehoerigkeit. */
+export function frageChatAid(qid, sidJetzt) {
+  var runde = sidJetzt === undefined ? aktiveRunde() : null;
+  var sid = sidJetzt === undefined ? (runde ? runde.id : null) : sidJetzt;
+  var neuste = null;
+  (state.antwortLog || []).forEach(function (a) {
+    if (!a || a.qid !== qid) return;
+    if (!neuste || (a.ts || 0) > (neuste.ts || 0)) neuste = a;
+  });
+  return neuste
+    ? { aid: neuste.aid || antwortId(neuste), sid: sid || neuste.sid || null }
+    : { aid: "q:" + qid, sid: sid || null };
+}
+
+/* Eine Zeile anhaengen und SOFORT syncen - dieselbe Begruendung wie bei
+   chatNotiere: ein Gespraech ist der Ort, an dem man das andere Geraet
+   unmittelbar erwartet. Ohne aid wird nichts gespeichert (eine Zeile, die an
+   keiner Antwort haengt, findet nie wieder jemand). */
+export function frageChatSagen(zeile) {
+  var z = zeile || {};
+  if (!z.aid) return null;
+  var liste = state.frageChat || [];
+  // ts muss je Zeile eindeutig sein, sonst haengt die Reihenfolge zweier
+  // Nachrichten derselben Millisekunde an der Id (gleiche Sorge wie in
+  // logAntwort).
+  var letzte = liste.reduce(function (mx, m) { return Math.max(mx, (m && m.ts) || 0); }, 0);
+  var ts = Math.max(Date.now(), letzte + 1);
+  var m = fqEine({
+    id: ts + "-" + Math.random().toString(36).slice(2, 8),
+    aid: z.aid, qid: z.qid, sid: z.sid, art: z.art, role: z.role,
+    content: typeof z.content === "string" ? z.content.slice(0, FQ_TEXT_MAX) : "",
+    ts: ts,
+  });
+  if (!m) return null;
+  state.frageChat = fqSchnitt(liste.concat([m]));
+  speichern();
+  syncBald(400);
+  return m;
+}
+
 /* ---------- Snapshot + Signatur ---------- */
 
 // Was hochgeladen wird. deviceId/pending/syncCode/theme bleiben geraetelokal -
@@ -365,7 +534,12 @@ export function snapshot(st) {
                  offenZaehler ? offenZaehler() : null) : null;
   var aus = { antwortLog: s.antwortLog || [], mc: s.mc || {}, frei: s.frei || {},
     geloescht: s.geloescht || [], mk: s.mk || {}, mkChat: chatSchnitt(s.mkChat || []),
-    sitzungen: sitzungSchnitt(s.sitzungen || []) };
+    sitzungen: sitzungSchnitt(s.sitzungen || []),
+    // frageChat: die Gespraeche zu einzelnen Fragen. Wie mkChat hier geschnitten
+    // und nicht roh durchgereicht, damit auf dem Server nie mehr steht als der
+    // Deckel erlaubt - auch dann nicht, wenn der lokale Stand aus einem alten
+    // Backup importiert wurde.
+    frageChat: fqSchnitt(s.frageChat || []) };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -420,7 +594,18 @@ export function signatur(d) {
   var sit = sitzungSchnitt(daten.sitzungen || []).map(function (s) {
     return s.id + ":" + (s.beantwortet || 0) + ":" + (s.fertig ? 1 : 0);
   }).sort().join(",");
-  return [aids, mc, frei, tot, mk, chat, sit].join("|");
+  /* Die Gespraeche zu den Fragen, aus demselben Grund wie mkChat: signatur()
+     entscheidet, OB gepusht wird. Stuende frageChat nur im Snapshot, aenderte
+     eine neue Zeile die Signatur nicht, es ginge nie etwas hoch, und das
+     Gespraech bliebe fuer immer auf dem Geraet, auf dem es getippt wurde -
+     lokal sieht dabei alles perfekt aus. Die Ids genuegen: eine Zeile bekommt
+     ihren Text bei der Geburt und behaelt ihn.
+     Gerechnet wird ueber fqSchnitt und nicht ueber die rohe Liste, weil
+     signatur() auch auf die SERVER-Antwort angewandt wird (siehe einSync). Eine
+     aeltere, ungedeckelte Zeile von dort gilt sonst fuer immer als verschieden
+     und erzeugt bei jedem Sync einen Push ins Leere. */
+  var fq = fqSchnitt(daten.frageChat || []).map(function (m) { return m.id; }).join(",");
+  return [aids, mc, frei, tot, mk, chat, sit, fq].join("|");
 }
 
 /* ---------- Merge ----------
@@ -433,6 +618,9 @@ export function signatur(d) {
    - "<ts>-<qid>"    = aid einer einzelnen Antwort
    - "stand:<qid>"   = der Alt-Stand dieser Frage (nur was NICHT im Log steht)
    - "chat:<id>"     = eine geloeschte Chat-Nachricht
+   - "q:<qid>"       = die Ersatz-aid eines Gespraechs, das gefuehrt wurde, bevor
+                       die Frage beantwortet war (frageChatAid). Steht nur beim
+                       Zuruecksetzen in der Liste.
    - "sit:<id>"      = eine geloeschte Sitzung. Es gibt heute keinen Knopf, der
                        so einen Grabstein setzt - die Regel steht trotzdem hier
                        und ist getestet, damit sie stimmt, sobald jemand einen
@@ -485,6 +673,22 @@ function bessererFrei(a, b) {
   return (FREI_RANG[b] || 0) > (FREI_RANG[a] || 0) ? b : a;
 }
 
+/* Jeder Grabstein mit einem dieser Praefixe ist KEINE aid. Die Liste ist scharf:
+   die Schleife unten liest aus einer aid "<ts>-<qid>" die Frage-Id ab, indem sie
+   am ersten Bindestrich trennt. Ein Grabstein "chat:<ts>-<zufall>" oder
+   "q:gr-mc-1" sieht genauso aus - ohne diese Ausnahme wuerde er den Alt-Stand
+   einer Frage abraeumen, die zufaellig so heisst wie der Rest hinter dem Strich.
+   Datenverlust ohne jede Spur. Wer einen neuen Grabstein-Typ mit Bindestrich
+   erfindet, traegt sein Praefix HIER ein. */
+var GRAB_PRAEFIXE = ["stand:", "chat:", "sit:", "q:"];
+function istAid(s) {
+  if (s.indexOf("-") <= 0) return false;
+  for (var i = 0; i < GRAB_PRAEFIXE.length; i++) {
+    if (s.indexOf(GRAB_PRAEFIXE[i]) === 0) return false;
+  }
+  return true;
+}
+
 // Vereinigt den Remote-Stand in st. Gibt true zurueck, wenn sich lokal etwas geaendert hat.
 export function mergeIn(st, remote) {
   var r = remote || {};
@@ -500,13 +704,8 @@ export function mergeIn(st, remote) {
     // Aus der aid "<ts>-<qid>" faellt die Frage-Id ab. Bleibt fuer eine Frage keine
     // lebende Antwort uebrig, muss auch ihr gespeicherter Stand weg - sonst holt
     // ihn der naechste Merge zurueck, obwohl die Antwort geloescht wurde.
-    // Die Praefixe muessen hier ausgenommen werden: ein Chat-Grabstein
-    // "chat:<ts>-<zufall>" sieht sonst aus wie eine aid und wuerde den
-    // Alt-Stand einer Frage abraeumen, die zufaellig so heisst wie der
-    // Zufallsteil. Unwahrscheinlich, aber es waere ein Datenverlust ohne
-    // jede Spur.
-    var i = s.indexOf("-");
-    if (i > 0 && s.indexOf("stand:") !== 0 && s.indexOf("chat:") !== 0 && s.indexOf("sit:") !== 0) totQids[s.slice(i + 1)] = true;
+    // Was KEINE aid ist, steht in GRAB_PRAEFIXE (Begruendung dort).
+    if (istAid(s)) totQids[s.slice(s.indexOf("-") + 1)] = true;
   });
 
   // 2. Antwort-Log: Map per aid, remote zuerst, lokale Fassung gewinnt.
@@ -607,6 +806,24 @@ export function mergeIn(st, remote) {
   st.sitzungen = sitzungSchnitt(sitzungen);
   sitzungenNachziehen(st);
 
+  /* Gespraeche zur einzelnen Frage: dieselbe Vereinigung ueber die Ids. Kein
+     Ersetzen und kein "der laengere gewinnt" - Rose kann am Handy zu Frage A
+     gechattet haben, waehrend auf dem Tablet das Gespraech zu Frage B steht,
+     und danach muessen beide da sein.
+       - Ein Snapshot OHNE frageChat (jede Zeile, die vor dem 13.08. hochging)
+         entwertet nichts: r.frageChat ist dann leer, und die Vereinigung mit
+         nichts laesst den lokalen Verlauf unveraendert stehen.
+       - Getilgt wird ueber DIESELBE geloescht-Liste, die oben schon die
+         Antworten raeumt, und `tot` ist hier bereits die vereinigte Fassung
+         beider Geraete. Zwei Wege hinein: die aid der Antwort (Rose loescht
+         eine einzelne Antwort oder setzt den Fortschritt zurueck) und
+         "sit:<sid>" (die ganze Runde ist weg). Ohne den zweiten bliebe das
+         Gespraech einer geloeschten Runde stehen. */
+  var gespraeche = (r.frageChat || []).concat(st.frageChat || []).filter(function (m) {
+    return m && !tot[String(m.aid)] && !(m.sid && tot["sit:" + String(m.sid)]);
+  });
+  st.frageChat = fqSchnitt(gespraeche);
+
   return signatur(snapshot(st)) !== vorher;
 }
 
@@ -643,10 +860,20 @@ export function fortschrittZuruecksetzen() {
   // Die Runden gehoeren zum Fortschritt und muessen mit weg - sonst stuenden im
   // Verlauf lauter leere Zeilen, deren Antworten es nicht mehr gibt.
   (state.sitzungen || []).forEach(function (s) { if (s && s.id) grabstein("sit:" + s.id); });
+  /* Die Gespraeche gehen mit: sie haengen an genau den Antworten, die hier
+     verschwinden. Die meisten aids stehen durch die Schleife oben schon in der
+     Liste - hier kommen die dazu, deren Frage nie beantwortet wurde ("q:<qid>",
+     siehe frageChatAid). Ohne den Grabstein schoebe das andere Geraet sie beim
+     naechsten Sync zurueck.
+     Der Chat mit der Kreatur ist bewusst NICHT dabei (siehe
+     loescheChatVerlauf) - hier geht es um Fortschritt, und ein Gespraech UEBER
+     eine Frage ist Teil davon, ein Gespraech mit dem Begleittier nicht. */
+  (state.frageChat || []).forEach(function (m) { if (m && m.aid) grabstein(m.aid); });
   state.antwortLog = [];
   state.mc = {};
   state.frei = {};
   state.sitzungen = [];
+  state.frageChat = [];
   speichern();
   syncBald(500);
 }

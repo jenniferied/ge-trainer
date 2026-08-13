@@ -365,6 +365,15 @@ p { margin: 0 0 var(--sp-3); }
 :root[data-theme="hell"] .knopf { color: #fff; }
 .knopf:active { transform: scale(.96); }
 .knopf.sekundaer { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+/* Und die Ausnahme von der Ausnahme. Die Regel eine Zeile ueber .sekundaer
+   schlaegt sie durch Spezifitaet (Attribut + Klasse gegen zwei Klassen) - im
+   hellen Modus stand damit weisser Text auf --card #fffdf8, gemessenes
+   Kontrastverhaeltnis 1,01:1. Also unsichtbar, auf JEDEM sekundaeren Knopf der
+   App, nicht nur auf einem. Gefunden am 13.08.2026 beim Chat-Sheet, dessen
+   Schliessen-Knopf ein leeres weisses Oval war; der Fehler war aber schon
+   vorher da. Das weisse #fff gehoert nur dem gefuellten Knopf, der auf der
+   Themenfarbe sitzt. */
+:root[data-theme="hell"] .knopf.sekundaer { color: var(--ink); }
 .knopf-reihe { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-3); }
 
 /* ---------- Sticker (Meme-Feedback, Roses & Jennifers WhatsApp-Sticker) ---------- */
@@ -1313,3 +1322,73 @@ p { margin: 0 0 var(--sp-3); }
 .eigene-notiz {
   font-size: .9rem; color: var(--ink-soft); line-height: 1.5;
 }
+
+/* ---------- Chat an der einzelnen Frage (frage-chat.js) ----------
+   Bewusst KEINE eigene Sheet-Huelle: das Sheet ist .sheet-ov/.sheet wie der
+   Spickzettel und die Rueckfrage, damit es sich in dieser App nicht wie ein
+   Fremdkoerper anfuehlt. Eigene Namen bekommt nur, was es hier vorher nicht
+   gab - Verlauf, Blasen, Eingabezeile.
+
+   Der Unterschied zu .mk-chat-* ist Absicht: das ist der geteilte
+   Kreaturen-Chat, dessen Optik in beiden Apps identisch sein MUSS und der sich
+   deshalb nichts aus style.css borgen darf. Dieser Chat ist GE-lokal (siehe
+   Kopf von frage-chat.js) und darf. Wandert er spaeter nach
+   rose/geteilte-styles/, wandert dieser Block als eigenes Paket mit und darf
+   sich dann nichts mehr borgen. */
+.fq-hinweis { margin: 0 0 var(--sp-3); }
+
+/* Feste Hoehe statt max-height: die Eingabezeile soll beim Tippen nicht
+   wandern, und ein wachsender Verlauf darf das Feld nicht aus dem Bild
+   schieben. 46dvh laesst auf einem 360er Handy rund vier Blasen sehen. */
+.fq-verlauf {
+  height: 46dvh; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+}
+.fq-leer { margin: 0; }
+
+.fq-msg {
+  max-width: 88%; padding: var(--sp-2) var(--sp-3);
+  border-radius: 14px; font-size: .92rem; line-height: 1.5;
+  overflow-wrap: anywhere; white-space: pre-wrap;
+}
+/* Roses Zeilen rechts, die der KI links - die Messenger-Optik, die der
+   Kreaturen-Chat schon hat. Ohne Avatar: hier redet keine Figur, hier steht
+   eine Erklaerung zur Aufgabe. */
+.fq-msg.du {
+  align-self: flex-end; background: var(--glow);
+  border: 1px solid var(--line); border-bottom-right-radius: 4px;
+}
+.fq-msg.ki {
+  align-self: flex-start; background: var(--paper-2);
+  border: 1px solid var(--line); border-bottom-left-radius: 4px;
+}
+/* Der fluechtige Hinweis (kein Netz, Budget leer). Sieht wie eine KI-Blase aus,
+   ist aber blasser - und steht nie im gespeicherten Verlauf. */
+.fq-notiz { color: var(--ink-soft); font-style: italic; }
+/* Waehrend der Strom laeuft: white-space bleibt pre-wrap, damit der Text beim
+   Fertigwerden nicht springt. */
+.fq-tipp { color: var(--ink-soft); letter-spacing: .15em; }
+
+.fq-eingabe {
+  display: flex; gap: var(--sp-2); align-items: flex-end;
+  margin-top: var(--sp-2);
+}
+.fq-eingabe textarea {
+  flex: 1; min-width: 0; box-sizing: border-box; resize: none;
+  max-height: 30dvh; overflow-y: auto;
+  padding: var(--sp-3); border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: .95rem; line-height: 1.4;
+}
+.fq-senden {
+  flex: none; width: 44px; height: 44px; border-radius: 999px;
+  border: none; background: var(--accent); color: var(--accent-ink);
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+.fq-senden:disabled { opacity: .5; cursor: default; }
+.fq-zu { width: 100%; margin-top: var(--sp-3); }
+
+/* Der Knopf, der das Sheet oeffnet, steht unter der Aufloesung einer Aufgabe.
+   Volle Breite, damit er auf dem Handy sicher zu treffen ist. */
+.fq-knopf { width: 100%; margin-top: var(--sp-3); }

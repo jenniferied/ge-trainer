@@ -51,6 +51,13 @@ export const CONFIG = {
   // Frage." dastand.
   mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
   mkTagesLimit: 20,        // (ge-llm-tag, 100) nicht aufessen.
+
+  // ---- Chat an der einzelnen Frage ("Über diese Frage sprechen") ----
+  // Dritter Topf, aus demselben Grund wie der zweite: Nachfragen zum Stoff und
+  // die Klausur-Korrektur duerfen sich nicht gegenseitig das Budget wegnehmen.
+  // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.chat, 60).
+  chatTagKey: "ge-chat-tag",
+  chatTagesLimit: 40,
 };
 
 if (typeof window !== "undefined") window.GE_CONFIG = CONFIG;

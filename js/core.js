@@ -24,6 +24,12 @@ function laden() {
   // Migration 13.08.: Sitzungen (Runden). Vorher gab es in GE ueberhaupt keine
   // Liste - der Verlauf wurde aus dem Log ueber ein 30-Minuten-Fenster geraten.
   if (!Array.isArray(s.sitzungen)) s.sitzungen = [];
+  // Migration 13.08.: die Gespraeche zum Chat an der einzelnen Frage. Flacher
+  // Speicher mit einer Zeile je Nachricht - die Regeln stehen bei fqSchnitt()
+  // in sync.js. NICHT als Feld an der Antwort: mergeIn ersetzt bei gleicher aid
+  // das ganze Objekt, ein Geraet mit der nackten Fassung buegelte die
+  // angereicherte weg.
+  if (!Array.isArray(s.frageChat)) s.frageChat = [];
   // Migration Sync-Port: Felder fuer den Geraete-Sync ergaenzen. Alle drei sind
   // GERAETE-lokal und werden nie hochgeladen (snapshot() in sync.js waehlt gezielt aus).
   if (!Array.isArray(s.geloescht)) s.geloescht = []; // Grabsteine (aids) fuer Geloeschtes

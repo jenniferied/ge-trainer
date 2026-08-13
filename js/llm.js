@@ -1,8 +1,15 @@
 // ============ LLM-Anbindung (Port vom ST-Trainer) ============
-// Zwei Einsatzorte im Klausurmodus: (1) Handschrift-Canvas in Text umwandeln,
-// (2) eine fertige Antwort gegen Stichpunkte/Muster/Notizen korrigieren.
-// Beides laeuft ueber die Supabase Edge Function llm-ge (Proxy vor der
+// Vier Einsatzorte: (1) Handschrift-Canvas in Text umwandeln, (2) eine fertige
+// Antwort gegen Stichpunkte/Muster/Folien korrigieren — beides im Klausurmodus;
+// (3) der Kreaturen-Chat auf der Startseite, (4) seit 13.08. das Gespraech an
+// der einzelnen Aufgabe ("Über diese Frage sprechen").
+// Alles laeuft ueber die Supabase Edge Function llm-ge (Proxy vor der
 // Anthropic API) — der Key liegt NUR dort als Secret.
+//
+// DREI GETRENNTE TAGES-TOEPFE, und das ist Absicht: ge-llm-tag (Klausur-Arbeit),
+// ge-mk-tag (Geplauder mit der Kreatur), ge-chat-tag (Nachfragen zum Stoff).
+// Keiner darf einem anderen das Budget wegnehmen. Serverseitig steht dasselbe
+// noch einmal in llm-ge (TOPF).
 //
 // EISERNE REGEL: Das LLM ist nie Voraussetzung. Jeder Fehler (Function nicht
 // deployed, Limit erreicht, offline, Timeout, kaputtes JSON) faellt lautlos auf
@@ -57,6 +64,22 @@
 //   stelleFinden(text, textstelle) -> { start, ende } | null
 //       Findet ein LLM-Zitat robust im Antworttext (Whitespace- und
 //       Anfuehrungszeichen-tolerant). Fuer das rough-notation-Rendering.
+//
+//   frageChat({ thema, aufgabe, messages }, aufTeil) -> Promise<string | null>
+//       Das Gespraech an der einzelnen Aufgabe. EINZIGER streamender Pfad:
+//       aufTeil(text) bekommt bei jedem Stueck den BISHER vollstaendigen Text,
+//       nicht den Zuwachs. Rueckgabe ist der fertige Text oder null.
+//       thema:   Themen-Id wie bei korrigiere(); danach waehlt der Server die
+//                Folien aus (Ground Truth, siehe SYSTEM_CHAT in llm-ge).
+//       aufgabe: { id, frage, afb, optionen?, erklaerung?, stichpunkte?,
+//                  muster?, tipp?, antwort? } - MC und freie Aufgaben, was
+//                fehlt, faellt weg. Gebaut von chatAufgabe() in main.js.
+//       Eigener Tages-Topf (ge-chat-tag), NICHT ge-llm-tag: Nachfragen duerfen
+//       der Klausur-Korrektur das Budget nicht wegnehmen.
+//
+//   chatTagFrei() -> boolean
+//       Vor dem Senden fragen, damit der Aufrufer den Budget-Satz sagen kann
+//       statt des allgemeinen Fallbacks.
 // ---------------------------------------------------------------------------
 
 import { CONFIG } from "./config.js";
@@ -160,6 +183,105 @@ export async function maskottchen(messages, stand) {
     return d && typeof d.antwort === "string" && d.antwort.trim() ? d.antwort.trim() : null;
   } catch {
     return null;
+  } finally {
+    clearTimeout(wecker);
+  }
+}
+
+// ---- Dritter Topf: der Chat an der einzelnen Frage ----
+// Gleiche Begruendung wie beim Maskottchen, nur eine Ebene naeher am Stoff:
+// Nachfragen zu einer Aufgabe sind nicht dasselbe wie die Korrektur im
+// Klausurmodus, und keins von beiden darf dem anderen das Budget wegnehmen.
+// Eigener Key, eigenes Limit, laeuft deshalb nicht durch ruf().
+const CHAT_LIMIT = () => cfg().chatTagesLimit || 40;
+const CHAT_KEY = () => cfg().chatTagKey || "ge-chat-tag";
+
+function chatBudget() {
+  const heute = new Date().toDateString();
+  let d;
+  try { d = JSON.parse(localStorage.getItem(CHAT_KEY()) || "{}"); } catch { d = {}; }
+  if (d.tag !== heute) d = { tag: heute, n: 0 };
+  return d;
+}
+function chatVerbrauch() {
+  const d = chatBudget();
+  d.n++;
+  try { localStorage.setItem(CHAT_KEY(), JSON.stringify(d)); } catch { /* privater Modus */ }
+}
+// Der Aufrufer fragt VOR dem Senden, damit er den Budget-Satz sagen kann statt
+// des allgemeinen Fallbacks - zwei verschiedene Lagen, zwei verschiedene Saetze.
+export const chatTagFrei = () => chatBudget().n < CHAT_LIMIT();
+
+/* Ein Gespraech ueber eine einzelne Aufgabe. EINZIGER streamender Pfad der App:
+   die Antwort ist laenger als zwei Saetze, und Rose soll beim Lesen zusehen
+   koennen statt auf ein leeres Feld zu warten. Die Function reicht den
+   SSE-Strom von Anthropic unveraendert durch (llm-ge, art "chat").
+
+   aufTeil(text) wird bei jedem Stueck mit dem BISHER vollstaendigen Text
+   gerufen - nicht mit dem Zuwachs. Der Aufrufer schreibt ihn einfach jedes Mal
+   neu hin und muss selbst nichts zusammensetzen.
+
+   Rueckgabe: der fertige Text, oder null. null heisst wie ueberall hier
+   "sag etwas Freundliches", nie eine Fehlermeldung — die eiserne Regel im Kopf
+   dieser Datei gilt auch hier. Kam der Strom mittendrin zum Erliegen, wird das
+   zurueckgegeben, was schon da war: ein halber Satz ist mehr wert als nichts.
+   Ob das eine ECHTE Antwort war, entscheidet der Aufrufer daran, ob etwas
+   zurueckkam — eine Stoerungsmeldung darf nie im Verlauf landen. */
+export async function frageChat(nutzlast, aufTeil) {
+  if (!aktiv() || !chatTagFrei()) return null;
+  const n = nutzlast || {};
+  if (!Array.isArray(n.messages) || !n.messages.length) return null;
+  const steuerung = new AbortController();
+  // Grosszuegig: 1200 max_tokens brauchen im Stream deutlich weniger, aber ein
+  // haengender Socket darf den Senden-Knopf nicht fuer immer sperren.
+  const wecker = setTimeout(() => steuerung.abort(), 60000);
+  let text = "";
+  try {
+    const r = await fetch(url(), {
+      method: "POST",
+      headers: kopf(),
+      signal: steuerung.signal,
+      body: JSON.stringify({
+        art: "chat",
+        thema: typeof n.thema === "string" ? n.thema : "",
+        aufgabe: n.aufgabe && typeof n.aufgabe === "object" ? n.aufgabe : {},
+        messages: n.messages.slice(-12).map((m) => ({
+          role: m.role === "assistant" ? "assistant" : "user",
+          content: String(m.content || "").slice(0, 4000),
+        })),
+      }),
+    });
+    // Erst zaehlen, wenn wirklich ein Status zurueckkam — dieselbe Reihenfolge
+    // und dieselbe Begruendung wie bei maskottchen() oben: ein Zaehler vor dem
+    // fetch laeuft auch dann hoch, wenn die Function gar nicht antwortet, und
+    // dann sagt die App irgendwann "genug fuer heute", was nicht stimmt.
+    chatVerbrauch();
+    if (!r.ok || !r.body) return null;
+
+    const leser = r.body.getReader();
+    const dec = new TextDecoder();
+    let puffer = "";
+    for (;;) {
+      const { done, value } = await leser.read();
+      if (done) break;
+      puffer += dec.decode(value, { stream: true });
+      const zeilen = puffer.split("\n");
+      puffer = zeilen.pop();
+      for (const z of zeilen) {
+        if (!z.startsWith("data:")) continue;
+        try {
+          const ev = JSON.parse(z.slice(5));
+          if (ev.type === "content_block_delta" && ev.delta && ev.delta.type === "text_delta") {
+            text += ev.delta.text;
+            if (typeof aufTeil === "function") aufTeil(text);
+          }
+        } catch { /* keep-alive oder halbe Zeile - egal */ }
+      }
+    }
+    return text.trim() ? text.trim() : null;
+  } catch {
+    // Abbruch mitten im Strom: das schon Gelesene ist trotzdem Roses Antwort.
+    return text.trim() ? text.trim() : null;
   } finally {
     clearTimeout(wecker);
   }
@@ -372,4 +494,4 @@ export function stelleFinden(text, textstelle) {
 // Aufrufer.
 
 // Globale Schnittstelle fuer klausur.js und den Uebungsmodus.
-window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei };
+window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei, frageChat, chatTagFrei };

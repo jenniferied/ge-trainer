@@ -13,7 +13,13 @@ import * as Spiele from "./spiele.js";
 import * as Klausurfrage from "./klausurfrage.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
-import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf } from "./sync.js";
+import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
+  frageChatZuFrage, frageChatSagen, frageChatAid } from "./sync.js";
+// Der Chat an der einzelnen Aufgabe. GE-LOKAL, nicht geteilt - die Begruendung
+// steht ausfuehrlich im Kopf der Datei, der Umzug nach rose/geteilte-styles/
+// als Punkt in der ROADMAP. Alles App-spezifische steckt im Adapter
+// (frageChatAdapter weiter unten).
+import * as FrageChat from "./frage-chat.js";
 import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 // Der Kreaturen-Chat. Geteilt mit dem ST-Trainer, Quelle
@@ -1672,6 +1678,73 @@ function zeigeThema(thema) {
   app.appendChild(hinweis);
 }
 
+/* ---------- Chat an der einzelnen Aufgabe ----------
+   Der Adapter fuer frage-chat.js: alles, was diese App beisteuert, steht hier,
+   und der Baustein selbst weiss von GE nichts.
+
+   DER KNOPF ERSCHEINT ERST NACH DER AUFLOESUNG. Vorher waere er eine Abkuerzung
+   um die Aufgabe herum - Rose soll erst selbst antworten und dann nachfragen
+   koennen, nicht umgekehrt. In der Klausur-Simulation gibt es ihn gar nicht:
+   die ist closed book, und mitten in einer Klausur zu chatten uebt genau das
+   Falsche.
+
+   Zwei Dinge, die hier leicht durchrutschen:
+   - Die Fundstellen im KI-Text werden ueber Beleg.belegZeile zu Knoepfen. Das
+     baut KNOTEN, kein HTML - fuer Modelltext gibt es in dieser App keinen
+     innerHTML-Pfad (core.js reichFuellen).
+   - Beim Erwartungshorizont geht nur der KERN raus, der Zusatz faehrt als
+     Kontext im Tipp mit. Dieselbe Trennung wie bei der KI-Korrektur
+     (stichpunkteTeilen): was nur zur Einordnung dasteht, wird nie eingefordert. */
+function chatAufgabe(f, extra) {
+  var a = { id: f.id, frage: f.frage, afb: f.afb || null };
+  if (Array.isArray(f.optionen)) {
+    a.optionen = f.optionen.map(function (o) { return { text: o.text, korrekt: !!o.korrekt }; });
+  }
+  if (f.erklaerung) a.erklaerung = f.erklaerung;
+  var tipp = f.tipp || "";
+  if (Array.isArray(f.stichpunkte) && f.stichpunkte.length) {
+    var t = stichpunkteTeilen(f);
+    a.stichpunkte = t.kern;
+    if (t.zusatz.length) {
+      tipp += (tipp ? " " : "") + "Nur zur Einordnung, nicht gefordert: " + t.zusatz.join(" ");
+    }
+  }
+  if (f.muster) a.muster = f.muster;
+  if (tipp) a.tipp = tipp;
+  // Roses eigene Antwort, wo es sie gibt - dann setzt das Gespraech an dem an,
+  // was sie geschrieben hat, statt bei null anzufangen.
+  if (extra && extra.antwort) a.antwort = extra.antwort;
+  return a;
+}
+
+function frageChatKnopf(thema, f, extra) {
+  if (!Llm.aktiv() || !f || !f.id) return null;
+  return FrageChat.chatKnopf({
+    hinweis: "Die Antworten kommen aus den Vorlesungsfolien – Folien-Nummern sind antippbar. Wo deine Notizen den Folien widersprechen, gewinnt die Folie.",
+    // Gelesen wird ueber die qid, also VERSUCHSUEBERGREIFEND: hat Rose die
+    // Aufgabe zweimal geuebt, steht hier trotzdem EIN Gespraech, und zwar ihres.
+    // Gehaengt wird die neue Zeile dagegen an den juengsten Versuch und die
+    // LAUFENDE Runde (frageChatAid) - Begruendung dort.
+    laden: function () {
+      return frageChatZuFrage(f.id)
+        .filter(function (m) { return m.art === "frage"; })
+        .map(function (m) { return { role: m.role, content: m.content }; });
+    },
+    // Erst beim Absenden aufgeloest, nicht beim Oeffnen: das Sheet kann laenger
+    // offen sein als die Runde, und die Zeile gehoert an den Versuch, der beim
+    // Tippen der aktuelle war.
+    merken: function (role, content) {
+      var anker = frageChatAid(f.id);
+      frageChatSagen({ aid: anker.aid, sid: anker.sid, qid: f.id, art: "frage", role: role, content: content });
+    },
+    budgetFrei: Llm.chatTagFrei,
+    senden: function (messages, aufTeil) {
+      return Llm.frageChat({ thema: thema.id, aufgabe: chatAufgabe(f, extra), messages: messages }, aufTeil);
+    },
+    kiKnoten: function (text) { return Beleg.belegZeile("div", text, thema.id); },
+  });
+}
+
 /* ---------- Konzept-Check (MC) ---------- */
 
 // Eine MC-Karte als wiederverwendbarer Baustein: Konzept-Check UND die
@@ -1752,6 +1825,10 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
         text.appendChild(Beleg.belegZeile("div", f.erklaerung, thema.id));
         erk.appendChild(text);
         karte.appendChild(erk);
+
+        // Nachfragen - erst hier, wenn die Aufloesung steht (siehe frageChatKnopf).
+        var chat = frageChatKnopf(thema, f);
+        if (chat) karte.appendChild(chat);
 
         var weiter = el("button", "knopf", weiterText);
         weiter.addEventListener("click", function () { onWeiter(richtig); });
@@ -2377,6 +2454,14 @@ function freiKarte(thema, f, opts) {
       t.appendChild(Beleg.belegZeile("span", f.tipp, thema.id));
       box.appendChild(t);
     }
+
+    /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
+       mit - dann kann das Gespraech an dem ansetzen, was sie geschrieben hat.
+       Der Text wird HIER eingesammelt und nicht erst beim Oeffnen des Sheets:
+       zu diesem Zeitpunkt ist das Feld eingefroren, spaeter kaeme im
+       ungluecklichen Fall eine halb geloeschte Fassung mit. */
+    var chat = frageChatKnopf(thema, f, { antwort: (eingabe.value || "").trim() });
+    if (chat) box.appendChild(chat);
 
     karte.insertBefore(box, check);
     // Und jetzt die KI - sie muss nicht bestellt werden.
