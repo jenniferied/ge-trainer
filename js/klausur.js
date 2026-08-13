@@ -1156,13 +1156,35 @@ function bewertungsBlock(a, aufAenderung) {
     box.appendChild(el("div", "kl-anhang-hinweis", "Zu dieser Aufgabe gibt es keine Stichpunkte mehr."));
     return box;
   }
-  // Bewertet wird nur der Kern - "Weitere: ...", "Quelle: ..." sind Einordnung
-  // und waren bisher stille Punktabzuege (core.js stichpunkteTeilen).
+  /* Bewertet wird nur der Kern - "Weitere: ...", "Quelle: ..." sind Einordnung
+     und waren bisher stille Punktabzuege (core.js stichpunkteTeilen).
+
+     ROSES ARBEIT WIRD DABEI UMGELEGT, NICHT WEGGEWORFEN. Ein Bogen, den sie
+     vor dieser Aenderung schon korrigiert hat, liegt noch im Lernstand ("Der
+     Bogen bleibt liegen") und traegt eine bewertung in der Laenge der VOLLEN
+     Stichpunktliste. Der Laengen-Vergleich unten haette sie beim naechsten
+     Oeffnen kommentarlos auf lauter null zurueckgesetzt - und mit ihr die
+     Punkte. Also erst umlegen, dann pruefen. */
+  var alle = f.stichpunkte || [];
   var geteilt = stichpunkteTeilen(f);
   var stichpunkte = geteilt.kern;
+  if (Array.isArray(a.bewertung) && a.bewertung.length === alle.length
+    && alle.length !== stichpunkte.length) {
+    a.bewertung = geteilt.kernIndex.map(function (i) { return a.bewertung[i]; });
+  }
+  // Ein KI-Tipp aus der alten Laenge zeigt auf die falschen Stichpunkte. Der
+  // ist ersetzbar (ein Knopfdruck), Roses Bewertung nicht - also wegwerfen.
+  if (Array.isArray(a.kiTipp) && a.kiTipp.length !== stichpunkte.length) a.kiTipp = null;
   if (!a.bewertung || a.bewertung.length !== stichpunkte.length) {
     a.bewertung = stichpunkte.map(function () { return null; });
   }
+  /* Fertig bewertet, aber ohne Punktestand: der Fall entsteht genau einmal, bei
+     einem Bogen aus der Zeit vor der Kern-Trennung. Punkte gab es dort erst,
+     wenn ALLE (damals mehr) Stichpunkte eingeschaetzt waren - der Zusatz blieb
+     offen, also blieb der Stand auf "-". Einmal nachrechnen, statt Rose einen
+     Fingertipp abzuverlangen, damit ihre eigene Arbeit sichtbar wird. */
+  if (a.punkte === null && !a.punkteHand && a.bewertung.length
+    && !a.bewertung.some(function (x) { return x === null; })) punkteNeuRechnen(a);
 
   box.appendChild(el("h3", null, "Das gehört in die Antwort"));
   var ul = el("ul", "kl-stich");

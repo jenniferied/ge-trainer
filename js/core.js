@@ -431,19 +431,29 @@ export function el(tag, klasse, text) {
    stehen so schon im Bestand, und ein Schema-Umbau haette 69 freie Aufgaben
    angefasst, um dieselbe Information anders hinzuschreiben.
 
-   kern    -> das, was die Aufgabe wirklich verlangt. Danach wird bewertet.
-   zusatz  -> Einordnung. Wird angezeigt und der KI als Kontext mitgegeben,
-              zaehlt aber nie gegen Rose. */
+   kern       -> das, was die Aufgabe wirklich verlangt. Danach wird bewertet.
+   zusatz     -> Einordnung. Wird angezeigt und der KI als Kontext mitgegeben,
+                 zaehlt aber nie gegen Rose.
+   kernIndex  -> an welcher Stelle der VOLLEN Liste jeder Kernpunkt stand.
+                 Der Klausurmodus braucht das: dort liegt Roses Bewertung als
+                 Array neben den Stichpunkten im Lernstand, und ein Bogen aus
+                 der Zeit vor dieser Trennung traegt noch die alte, laengere
+                 Liste. Ohne die Indizes muesste man ihre Arbeit wegwerfen,
+                 statt sie umzulegen - und der Zusatz steht nicht immer am
+                 Ende ("Vorbemerkung:" ist in eb-fol-f-2 der erste Punkt). */
 var ZUSATZ_PRAEFIX = /^(Weitere|Quelle|Vorbemerkung|Hinweis|Anmerkung|Zusaetzlich moeglich|Zusätzlich möglich|Dahinter|Merkhilfe|Eselsbruecke|Eselsbrücke)\s*[:.]/i;
 
 export function stichpunkteTeilen(f) {
   var alle = (f && f.stichpunkte) || [];
-  var kern = [], zusatz = [];
-  alle.forEach(function (s) { (ZUSATZ_PRAEFIX.test(String(s)) ? zusatz : kern).push(s); });
+  var kern = [], zusatz = [], kernIndex = [];
+  alle.forEach(function (s, i) {
+    if (ZUSATZ_PRAEFIX.test(String(s))) return void zusatz.push(s);
+    kern.push(s); kernIndex.push(i);
+  });
   // Nur-Zusatz waere ein Datenfehler; dann lieber alles als gefordert behandeln
   // als eine Aufgabe ganz ohne Erwartungshorizont zu bewerten.
-  if (!kern.length) return { kern: alle, zusatz: [] };
-  return { kern: kern, zusatz: zusatz };
+  if (!kern.length) return { kern: alle, zusatz: [], kernIndex: alle.map(function (s, i) { return i; }) };
+  return { kern: kern, zusatz: zusatz, kernIndex: kernIndex };
 }
 
 /* ---------- Etwas Auszeichnung im Text ----------
