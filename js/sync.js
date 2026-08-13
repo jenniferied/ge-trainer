@@ -373,7 +373,16 @@ export function sitzungSchnitt(liste) {
 
 /* Zwei Deckel, und die Reihenfolge ist wichtig: erst je Frage, dann global.
    Andersherum frisst ein einziges langes Gespraech den globalen Deckel auf und
-   loescht damit die Gespraeche aller anderen Fragen. */
+   loescht damit die Gespraeche aller anderen Fragen.
+
+   Was das kostet, wie bei CHAT_MAX ausgerechnet, weil der Lernstand bei JEDEM
+   Push komplett hoch UND runter faehrt - auf Roses Handy: 400 Zeilen mal
+   FQ_TEXT_MAX waeren rechnerisch 1,6 MB, also das Sechzehnfache des
+   Kreaturen-Chats. Realistisch sind es rund 70 kB (KI-Antworten liegen bei
+   400-600 Zeichen, ihre Fragen darunter, und 400 Zeilen sind ueber 13 Fragen
+   verteilt schon sehr viel Gespraech). Die Zahl ist also eine Notbremse gegen
+   eine Liste ohne Obergrenze, kein geplanter Normalfall. Wer FQ_TEXT_MAX
+   anhebt, sollte hier nachrechnen: das Produkt ist es, was zaehlt. */
 export var FQ_PRO_FRAGE = 30;
 export var FQ_MAX = 400;
 
