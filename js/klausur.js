@@ -916,6 +916,10 @@ export function stiftFlaeche(beiFertig, opts) {
 
   var ctx = cv.getContext("2d");
   var striche = [], aktiv = null, radiert = false;
+  // Wem gehoert der laufende Strich? Siehe die Handballen-Notiz an den
+  // pointer-Handlern weiter unten - ohne diese Id schreibt der Handballen in
+  // Roses Stiftstrich hinein.
+  var aktivId = null;
 
   // Die Striche liegen in CSS-Pixeln der Huelle. Aendert sich die Huelle (Drehen,
   // ein- und ausblendende Adressleiste auf iOS), muessen sie mitwandern - sonst
@@ -977,25 +981,48 @@ export function stiftFlaeche(beiFertig, opts) {
     return [e.clientX - r.left, e.clientY - r.top];
   }
 
+  /* ---------- Handballen ----------
+     Rose schreibt auf einem Windows-Laptop mit echtem Stift (13.08.2026). Zwei
+     Dinge muessen dafuer stimmen, und bis zum 13.08. stimmte nur das erste:
+
+     1. WER DARF ANFANGEN. Wurde einmal ein echter Stift gesehen, ignorieren wir
+        Finger. Das faengt den Handballen ab, der VOR der Stiftspitze aufsetzt.
+        stiftGesehen bleibt absichtlich ueber die ganze Sitzung stehen.
+
+     2. WEM GEHOERT DER LAUFENDE STRICH. Das war der eigentliche Fehler: move
+        und up pruefen bis heute nicht, VON WELCHEM Zeiger sie kommen. Der
+        Handballen schickt zwar kein pointerdown mehr (Punkt 1 wirft es weg),
+        seine pointermove-Ereignisse liefen aber weiter in aktiv.punkte hinein -
+        das sind die langen Striche quer ueber das Blatt. Und sein pointerup
+        beendete Roses Strich mitten im Buchstaben.
+
+     Deshalb: der erste Zeiger gewinnt, alle anderen werden ignoriert, bis er
+     losgelassen hat. Das haelt auch, wenn der Handballen zuerst da war und der
+     Stift danach dazukommt - dann faengt Punkt 1 den Handballen bereits ab. */
   cv.addEventListener("pointerdown", function (e) {
-    // Handballen-Pragmatik: wurde einmal ein echter Stift gesehen, ignorieren wir Finger.
     if (e.pointerType === "pen") stiftGesehen = true;
     if (stiftGesehen && e.pointerType === "touch") return;
+    if (aktiv) return;                       // ein Strich laeuft schon
     e.preventDefault();
     if (cv.setPointerCapture) cv.setPointerCapture(e.pointerId);
+    aktivId = e.pointerId;
     aktiv = { punkte: [pos(e)], radierer: radiert, breite: radiert ? 26 : 2.6 };
     striche.push(aktiv);
     malStrich(aktiv);
   });
 
   cv.addEventListener("pointermove", function (e) {
-    if (!aktiv) return;
+    if (!aktiv || e.pointerId !== aktivId) return;
     e.preventDefault();
     aktiv.punkte.push(pos(e));
     zeichneAlles();
   });
 
-  function ende() { aktiv = null; }
+  function ende(e) {
+    if (e && e.pointerId !== aktivId) return;
+    aktiv = null;
+    aktivId = null;
+  }
   cv.addEventListener("pointerup", ende);
   cv.addEventListener("pointercancel", ende);
   cv.addEventListener("pointerleave", ende);
@@ -1146,7 +1173,10 @@ function bewertungsBlock(a, aufAenderung) {
       { wert: 0.5, text: "Halb", cls: "halb" },
       { wert: 0, text: "Fehlte", cls: "keine" }
     ].forEach(function (o) {
-      var b = el("button", "kl-wahl-knopf " + o.cls + (a.bewertung[i] === o.wert ? " gewaehlt" : ""), o.text);
+      // Markierung statt Vorauswahl: der KI-Tipp bekommt einen Ring, angetippt
+      // wird er nie von allein (siehe kiUebernehmen).
+      var tipp = a.kiTipp && a.kiTipp[i] === o.wert ? " ki-tipp" : "";
+      var b = el("button", "kl-wahl-knopf " + o.cls + tipp + (a.bewertung[i] === o.wert ? " gewaehlt" : ""), o.text);
       b.addEventListener("click", function () {
         a.bewertung[i] = o.wert;
         Array.prototype.forEach.call(wahl.querySelectorAll(".kl-wahl-knopf"), function (x) { x.classList.remove("gewaehlt"); });
@@ -1411,9 +1441,18 @@ function korrekturBlatt(a) {
   return wrap;
 }
 
-// Vorschlag der KI in die Selbstbewertung uebernehmen - Rose behaelt das letzte
-// Wort, jeder Stichpunkt bleibt antippbar. Defensiv gelesen, damit ein
-// abweichendes Feld nicht den ganzen Pfad kippt.
+/* Vorschlag der KI NEBEN die Selbstbewertung legen - nicht hinein.
+
+   Bis zum 13.08.2026 fuellte diese Funktion jeden noch offenen Stichpunkt mit
+   dem Urteil der KI und setzte den Punktestand gleich mit. Formal behielt Rose
+   das letzte Wort (alles blieb antippbar), praktisch war die Aufgabe damit
+   fertig bewertet, bevor sie hingeschaut hatte. Rose ueber Jennifer: der
+   KI-Vorschlag soll markiert sein, ausgewaehlt nie.
+
+   Seitdem schreibt hier nichts mehr nach a.bewertung oder a.punkte. Der
+   Vorschlag liegt in a.kiTipp (ein Wert je Stichpunkt) und wird von
+   bewertungsBlock nur als Markierung gezeigt. Defensiv gelesen, damit ein
+   abweichendes Feld nicht den ganzen Pfad kippt. */
 var GETROFFEN = { ja: 1, teilweise: 0.5, nein: 0 };
 
 function kiUebernehmen(a, erg) {
@@ -1423,16 +1462,9 @@ function kiUebernehmen(a, erg) {
 
   var vorschlag = erg.punkteVorschlag;
   if (Array.isArray(vorschlag) && a.bewertung && vorschlag.length === a.bewertung.length) {
-    vorschlag.forEach(function (v, i) {
-      if (a.bewertung[i] === null && v && GETROFFEN[v.getroffen] !== undefined) a.bewertung[i] = GETROFFEN[v.getroffen];
+    a.kiTipp = vorschlag.map(function (v) {
+      return v && GETROFFEN[v.getroffen] !== undefined ? GETROFFEN[v.getroffen] : null;
     });
-    punkteNeuRechnen(a);
-  }
-  // Punktestand aus dem KI-Gesamtwert: als von Hand gesetzt markieren, sonst
-  // raeumt punkteNeuRechnen ihn beim naechsten angetippten Stichpunkt wieder weg.
-  if (a.punkte === null && a.punkteKi !== null && a.punkteKi !== undefined) {
-    a.punkte = a.punkteKi;
-    a.punkteHand = true;
   }
 
   var notizen = [];

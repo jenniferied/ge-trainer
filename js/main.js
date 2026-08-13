@@ -3,7 +3,7 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
-  starteRunde, beendeRunde, antwortText, sekundenSeit } from "./core.js";
+  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
@@ -1824,28 +1824,41 @@ var CHECK_OPTIONEN = [
   { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal", stk: "sanft" }
 ];
 
-/* Der Selbstcheck steht nur EINMAL je Karte, auch wenn ihn zwei Boxen zeigen
-   koennen (Musterloesung und KI-Urteil). appendChild verschiebt den Knoten, statt
-   ihn zu kopieren - so kann es keine zwei Staende geben, die sich widersprechen.
-   waehleWert() ist der Draht fuer die KI: sie darf denselben Weg gehen wie Roses
-   Finger, mehr nicht.
+/* Der Selbstcheck steht nur EINMAL je Karte. Er sitzt seit dem 13.08.2026 fest
+   ganz unten in der Karte und wandert NICHT mehr in die Musterloesungs- oder
+   KI-Box (frueher schob appendChild ihn dorthin). Zwei Gruende:
+
+     1. Er war frueher NUR in diesen beiden Boxen. Kam die KI nicht durch und
+        Rose oeffnete die Musterloesung nicht, standen die Knoepfe gar nicht im
+        Dokument - mit der Weiter-Sperre unten waere sie damit festgesessen.
+     2. Die KI-Box kommt asynchron. Ein Knoten, der unter Roses Finger
+        wegspringt, waehrend sie gerade tippt, ist ein Fehlklick mit Folgen.
+
+   DIE KI KLICKT HIER NICHTS MEHR (Rose ueber Jennifer, 13.08.2026). Frueher
+   setzte waehleWert() ihre Einschaetzung fuer sie - genau der Moment, in dem
+   Lernen passiert, wurde ihr damit abgenommen. Jetzt gibt es nur noch
+   vorschlagen(): der Vorschlag wird am passenden Knopf MARKIERT, ausgewaehlt
+   wird er nie. Dieselbe Linie wie kiUebernehmen im Klausurmodus.
 
    dazu() liefert das, was nur die Karte weiss: Roses Antworttext, ob sie mit dem
    Stift geschrieben hat und wie lange sie gebraucht hat. Als Funktion und nicht
    als Wert, weil der Selbstcheck spaeter laeuft als der Aufbau der Karte - der
    Text entsteht erst dazwischen. */
-function selbstCheck(thema, f, dazu) {
+function selbstCheck(thema, f, dazu, frisch) {
   var check = el("div", "selbstcheck");
   check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
   var stickerPlatz = null;
   var knoepfe = {};
+  var kiTipp = null;            // was die KI vorschlaegt - reine Anzeige
 
-  function waehlen(opt, vonKi) {
+  function waehlen(opt) {
     state.frei[f.id] = opt.wert;
     speichern();
     var eintrag = Object.assign({}, dazu ? dazu() : null,
       { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" });
-    if (vonKi) eintrag.ki = true;   // ehrlich mitschreiben, woher die Einschaetzung kam
+    // Stand ein KI-Vorschlag daneben, schreiben wir ihn mit - so bleibt spaeter
+    // ablesbar, wo Rose der KI widersprochen hat. Ihr Wert bleibt der Wert.
+    if (kiTipp) eintrag.kiVorschlag = kiTipp;
     logAntwort(eintrag);
     Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
       btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
@@ -1855,20 +1868,36 @@ function selbstCheck(thema, f, dazu) {
     if (stickerPlatz) stickerPlatz.remove();
     stickerPlatz = stickerEl(opt.stk, "mini");
     if (stickerPlatz) check.appendChild(stickerPlatz);
+    // Wer auf die Einschaetzung wartet (die Weiter-Sperre der Uebungsrunde),
+    // haengt sich hier dran statt an einen neuen Hook-Parameter.
+    check.dispatchEvent(new CustomEvent("selbsteinschaetzung",
+      { bubbles: true, detail: { qid: f.id, wert: opt.wert } }));
   }
 
+  /* frisch = eine Runde oder eine gezogene Klausurfrage. Dort steht der ALTE
+     Wert absichtlich NICHT schon angetippt da: die Runde ist ein eigener
+     Durchgang, und die Weiter-Sperre wartet auf eine Einschaetzung von heute.
+     Ein vorgefaerbter Knopf neben einer Sperre, die trotzdem zu ist, laese sich
+     nur als Fehler lesen. Auf der Themenseite (alle Karten untereinander,
+     keine Sperre) bleibt der letzte Stand sichtbar - dort ist er der Ueberblick. */
   CHECK_OPTIONEN.forEach(function (opt) {
     var k = el("button", "check-knopf", opt.text);
     knoepfe[opt.wert] = k;
-    if (state.frei[f.id] === opt.wert) k.classList.add(opt.klasse);
-    k.addEventListener("click", function () { waehlen(opt, false); });
+    if (!frisch && state.frei[f.id] === opt.wert) k.classList.add(opt.klasse);
+    k.addEventListener("click", function () { waehlen(opt); });
     check.appendChild(k);
   });
 
-  check.waehleWert = function (wert) {
-    for (var i = 0; i < CHECK_OPTIONEN.length; i++) {
-      if (CHECK_OPTIONEN[i].wert === wert) return void waehlen(CHECK_OPTIONEN[i], true);
-    }
+  /* Markieren, nicht waehlen. Der Knopf bekommt einen Ring und ein KI-Faehnchen
+     (style.css .check-knopf.ki-tipp), state.frei bleibt unberuehrt. */
+  check.vorschlagen = function (wert) {
+    kiTipp = null;
+    Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
+      btn.classList.remove("ki-tipp");
+    });
+    if (!knoepfe[wert]) return;
+    kiTipp = wert;
+    knoepfe[wert].classList.add("ki-tipp");
   };
   return check;
 }
@@ -1949,6 +1978,52 @@ function freiKarte(thema, f, opts) {
   if (eingabe.value) requestAnimationFrame(function () { autoWachsen(eingabe); });
   feld.appendChild(eingabe);
 
+  /* ---------- Die eingefrorene Fassung ----------
+     Sobald Rose ein Transkript bestaetigt hat, ist der Text FEST: er steht als
+     Blatt da (Papier-Optik wie im Klausurmodus, Hoehe nach Inhalt statt A4) und
+     nicht mehr als Textfeld. Zwei Dinge werden dadurch wahr:
+
+       - Was die KI bewertet, ist genau das, was Rose bestaetigt hat. Sie sieht
+         es unveraendert vor sich, waehrend das Urteil daneben steht.
+       - Ein zweiter Griff zum Stift haengt nicht mehr stillschweigend ein
+         zweites Transkript unten an.
+
+     Das BILD wird nie erneut an die KI geschickt - korrigiere() bekommt
+     ohnehin nur Text (llm.js). Eingefroren ist trotzdem noetig, weil der Text
+     sonst weiter editierbar unter dem Urteil steht.
+
+     "Ändern" taut wieder auf. Es ist ihr Text, kein Protokoll. */
+  var blatt = el("div", "frei-blatt");
+  blatt.hidden = true;
+  var blattText = el("div", "frei-blatt-text");
+  blatt.appendChild(blattText);
+  var auftauen = el("button", "frei-blatt-aendern", "✎ ändern");
+  auftauen.type = "button";
+  auftauen.addEventListener("click", function () {
+    entwurf(f.id).eingefroren = false;
+    entwurfSichern(f.id);
+    ansichtSetzen();
+    eingabe.focus();
+  });
+  blatt.appendChild(auftauen);
+
+  function eingefroren() { return !!entwurfLesen(f.id).eingefroren; }
+
+  function ansichtSetzen() {
+    var fest = eingefroren();
+    blattText.textContent = eingabe.value;
+    blatt.hidden = !fest;
+    feld.hidden = fest;
+    if (!fest) requestAnimationFrame(function () { autoWachsen(eingabe); });
+  }
+
+  function einfrieren() {
+    entwurf(f.id).text = eingabe.value;
+    entwurf(f.id).eingefroren = true;
+    entwurfSichern(f.id);
+    ansichtSetzen();
+  }
+
   var handPlatz = el("div", "frei-hand");
   handPlatz.hidden = true;
 
@@ -2023,17 +2098,18 @@ function freiKarte(thema, f, opts) {
           hinweis: "Ändere frei, was danebenlag. Erst wenn du bestätigst, steht es im Feld.",
           beiOk: function (wert) {
             eingabe.value = (eingabe.value ? eingabe.value + "\n" : "") + wert;
-            entwurf(f.id).text = eingabe.value;
-            entwurfSichern(f.id);
-            autoWachsen(eingabe);
+            // Bestaetigt heisst fest: ab hier ist das die Fassung, die zaehlt.
+            einfrieren();
           }
         });
       });
   }
 
   karte.appendChild(feld);
+  karte.appendChild(blatt);
   karte.appendChild(handPlatz);
   karte.appendChild(kiZeile);
+  ansichtSetzen();
 
   /* Was am Log-Eintrag haengt, wenn Rose sich einschaetzt. Alles steht zu diesem
      Zeitpunkt fertig da - es wird nichts nachtraeglich angehaengt (eiserne Regel
@@ -2055,53 +2131,54 @@ function freiKarte(thema, f, opts) {
     return zus;
   }
 
-  // Nur einmal gebaut, wandert in die Box, die zuerst aufgeht.
-  var check = selbstCheck(thema, f, logZusatz);
+  // Nur einmal gebaut, steht fest am Fuss der Karte (siehe selbstCheck).
+  var check = selbstCheck(thema, f, logZusatz, !!o.einzeln);
 
+  /* EIN Knopf statt zwei (Rose ueber Jennifer, 13.08.2026: "lass die KI-Antwort
+     einfach automatisch kommen"). Frueher gab es "Musterlösung anzeigen" und
+     daneben "Von der KI prüfen lassen" - Rose musste das Urteil also selbst
+     bestellen, und wer den unangenehmen Teil ueberspringen will, bestellt es
+     nicht. Jetzt sagt sie einmal "fertig", und beides kommt: die Musterloesung
+     sofort, das KI-Urteil, sobald es da ist.
+
+     Das Tagesbudget (ge-llm-tag, geteilt mit der Klausurkorrektur) bleibt
+     trotzdem geschuetzt: der Knopf verschwindet nach dem Klick, kiGelaufen
+     sperrt einen zweiten Lauf, und ohne Text laeuft gar nichts. */
   var reihe = el("div", "knopf-reihe");
-  var zeigen = el("button", "knopf", "Musterlösung anzeigen");
+  var zeigen = el("button", "knopf", "Fertig – vergleichen");
   reihe.appendChild(zeigen);
-
-  // Die KI-Pruefung ist ein eigener Knopf und laeuft nie von allein: sie kostet
-  // vom Tagesbudget (ge-llm-tag), das sich Ueben und Klausurkorrektur teilen.
-  if (Llm.aktiv()) {
-    var kiKnopf = el("button", "knopf sekundaer", "Von der KI prüfen lassen");
-    kiKnopf.addEventListener("click", function () {
-      var antwort = (eingabe.value || "").trim();
-      if (!antwort) {
-        return void sagen("Schreib oder zeichne erst etwas – dann schaut die KI drüber.");
-      }
-      kiKnopf.disabled = true;
-      var vorher = kiKnopf.textContent;
-      kiKnopf.textContent = "Die KI liest …";
-      sagen("");
-      Promise.resolve()
-        // Signatur laut llm.js: korrigiere(themaId, aufgabe, antwort). Frei-Aufgaben
-        // tragen keine Punktzahl - ein Punkt je Stichpunkt macht den Vorschlag
-        // ablesbar und die Quote unten ehrlich.
-        .then(function () {
-          return Llm.korrigiere(thema.id, {
-            id: f.id, frage: f.frage, afb: f.afb || null,
-            punkte: (f.stichpunkte || []).length || 1,
-            stichpunkte: f.stichpunkte || [], muster: f.muster || "", tipp: f.tipp || ""
-          }, antwort);
-        })
-        .catch(function () { return null; })
-        .then(function (erg) {
-          kiKnopf.disabled = false;
-          kiKnopf.textContent = "KI nochmal fragen";
-          if (!erg) {
-            kiKnopf.textContent = vorher;
-            return void sagen("Die KI war gerade nicht erreichbar. Deine eigene Einschätzung zählt sowieso mehr.");
-          }
-          kiUrteilZeigen(erg);
-        });
-    });
-    reihe.appendChild(kiKnopf);
-  }
   karte.appendChild(reihe);
 
   var kiBox = null;
+  var kiGelaufen = false;
+
+  function kiPruefen() {
+    if (kiGelaufen || !Llm.aktiv()) return;
+    var antwort = (eingabe.value || "").trim();
+    if (!antwort) return;                    // nichts geschrieben, nichts zu lesen
+    kiGelaufen = true;
+    sagen("Die KI liest mit …");
+    Promise.resolve()
+      // Signatur laut llm.js: korrigiere(themaId, aufgabe, antwort). Frei-Aufgaben
+      // tragen keine Punktzahl - ein Punkt je Stichpunkt macht den Vorschlag
+      // ablesbar und die Quote unten ehrlich. Das Bild geht hier NIE mit: die
+      // Handschrift wurde einmal gelesen, bewertet wird die bestaetigte Fassung.
+      .then(function () {
+        return Llm.korrigiere(thema.id, {
+          id: f.id, frage: f.frage, afb: f.afb || null,
+          punkte: (f.stichpunkte || []).length || 1,
+          stichpunkte: f.stichpunkte || [], muster: f.muster || "", tipp: f.tipp || ""
+        }, antwort);
+      })
+      .catch(function () { return null; })
+      .then(function (erg) {
+        // Kein Netz, kein Budget, kaputte Antwort: dann steht eben nur die
+        // Musterloesung da. Ein Satz dazu, kein Fehler-Getue.
+        if (!erg) return void sagen("Die KI ist gerade nicht erreichbar – vergleich einfach mit der Zusammenfassung.");
+        sagen("");
+        kiUrteilZeigen(erg);
+      });
+  }
 
   /* Das Urteil der KI. Sie schlaegt vor, Rose entscheidet: der Vorschlag geht
      durch denselben Selbstcheck wie ein Fingertipp und bleibt danach anklickbar.
@@ -2118,8 +2195,8 @@ function freiKarte(thema, f, opts) {
         if (!v) return;
         var li = el("li", "treffer-" + (v.getroffen || "nein"));
         li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[v.getroffen] || "–"));
-        li.appendChild(el("span", "was", v.stichpunkt || ""));
-        if (v.kommentar) li.appendChild(el("div", "dazu", v.kommentar));
+        li.appendChild(reichZeile("span", v.stichpunkt || "", "was"));
+        if (v.kommentar) li.appendChild(reichZeile("div", v.kommentar, "dazu"));
         ul.appendChild(li);
       });
       kiBox.appendChild(ul);
@@ -2129,50 +2206,54 @@ function freiKarte(thema, f, opts) {
     if (Array.isArray(erg.randkommentare)) saetze = saetze.concat(erg.randkommentare);
     if (erg.gesamtkommentar) saetze.push(erg.gesamtkommentar);
     else if (erg.kommentar) saetze.push(erg.kommentar);
-    if (saetze.length) kiBox.appendChild(el("div", "muster", saetze.join(" ")));
+    if (saetze.length) kiBox.appendChild(reichZeile("div", saetze.join(" "), "muster"));
 
     var wert = kiEinschaetzung(erg);
     if (wert) {
       var satz = wert === "gut" ? "Das saß." : wert === "mittel" ? "Teilweise getroffen." : "Das üben wir nochmal.";
-      // Hatte Rose sich schon selbst eingeschaetzt, bleibt IHR Wort stehen - die
-      // KI sagt dann nur ihre Meinung dazu. Gleiche Linie wie kiUebernehmen im
-      // Klausurmodus, das auch nur fuellt, was noch offen ist. Sonst koennte ein
-      // KI-Aufruf ihre Einschaetzung ueberschreiben, ohne dass sie hinschaut -
-      // und state.frei haengt an der Fortschrittsanzeige des Themas.
-      var schonBewertet = !!state.frei[f.id];
-      kiBox.appendChild(el("div", "ki-vorschlag", schonBewertet
-        ? "Die KI liest es so: " + satz + " Deine eigene Einschätzung bleibt stehen – tipp sie an, wenn du sie ändern willst."
-        : "Die KI liest es so: " + satz + " Stimmt das nicht, tipp einfach was anderes an."));
-      kiBox.appendChild(check);
-      if (!schonBewertet) check.waehleWert(wert);
-    } else {
-      kiBox.appendChild(check);
+      kiBox.appendChild(el("div", "ki-vorschlag",
+        "Die KI liest es so: " + satz + " Unten ist das markiert – entscheiden tust du."));
+      // MARKIEREN, NICHT WAEHLEN. Bis zum 13.08.2026 klickte die KI hier den
+      // Knopf fuer Rose, wenn sie sich noch nicht eingeschaetzt hatte. Damit
+      // fiel genau der Moment weg, um den es geht: selbst zu sagen, wie es lief.
+      check.vorschlagen(wert);
     }
-    karte.appendChild(kiBox);
+    // Der Selbstcheck steht fest unter der Karte - die Box legt sich davor.
+    karte.insertBefore(kiBox, check);
   }
 
   zeigen.addEventListener("click", function () {
     zeigen.remove();
+    // Getipptes friert mit dem Fertig-Knopf ebenfalls ein: ab jetzt wird
+    // verglichen, nicht mehr geschrieben. Handschrift ist schon fest.
+    if (!eingefroren() && (eingabe.value || "").trim()) einfrieren();
 
     var box = el("div", "loesung");
-    box.appendChild(el("h3", null, "Das gehört in die Antwort"));
+    box.appendChild(el("h3", null, "📌 Das gehört in die Antwort"));
     var ul = el("ul", "stichpunkte");
-    f.stichpunkte.forEach(function (p) { ul.appendChild(el("li", null, p)); });
+    f.stichpunkte.forEach(function (p) { ul.appendChild(reichZeile("li", p)); });
     box.appendChild(ul);
 
-    box.appendChild(el("h3", null, "So könnte es klingen"));
-    box.appendChild(el("div", "muster", f.muster));
+    box.appendChild(el("h3", null, "✍️ So könnte es klingen"));
+    // Zetteloptik und Handschrift wie bei Roses eigenem Blatt (papier.css).
+    box.appendChild(reichZeile("div", f.muster, "muster muster-blatt"));
 
     if (f.tipp) {
       var t = el("div", "tipp");
-      t.appendChild(el("b", null, "Tipp: "));
-      t.appendChild(document.createTextNode(f.tipp));
+      t.appendChild(el("b", null, "💡 Tipp: "));
+      t.appendChild(reichZeile("span", f.tipp));
       box.appendChild(t);
     }
 
-    box.appendChild(check);
-    karte.appendChild(box);
+    karte.insertBefore(box, check);
+    // Und jetzt die KI - sie muss nicht bestellt werden.
+    kiPruefen();
   });
+
+  /* Der Selbstcheck ganz unten, IMMER. Er ist die Bedingung fuers Weiterkommen
+     (stats.js/klausurfrage.js), also darf er nie an einer Box haengen, die aus
+     Netzgruenden ausbleibt. */
+  karte.appendChild(check);
 
   return karte;
 }

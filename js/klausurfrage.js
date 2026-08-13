@@ -258,7 +258,8 @@ export function zeigeKlausurfrage(themen, hooks) {
     kopf("Eine Klausurfrage", item.thema.titel + " · " + afbKurz(item.f.afb),
       "← Abbrechen", function () { start(); });
 
-    app.appendChild(hooks.freiKarte(item.thema, item.f));
+    var karte = hooks.freiKarte(item.thema, item.f);
+    app.appendChild(karte);
 
     var reihe = el("div", "knopf-reihe");
     reihe.style.justifyContent = "center";
@@ -269,6 +270,18 @@ export function zeigeKlausurfrage(themen, hooks) {
     heim.addEventListener("click", function () { hooks.home(); });
     reihe.appendChild(heim);
     app.appendChild(reihe);
+
+    /* Dieselbe Sperre wie in der Uebungsrunde (stats.js): die NAECHSTE Frage
+       gibt es erst nach der eigenen Einschaetzung. Gesperrt wird nur das
+       Weitermachen - "Startseite" und "Abbrechen" oben bleiben offen, damit
+       das hier nie ein Zimmer ohne Tuer wird. */
+    noch.disabled = true;
+    var sperre = el("div", "weiter-sperre", "Sag erst, wie es lief – dann kommt die nächste.");
+    app.appendChild(sperre);
+    karte.addEventListener("selbsteinschaetzung", function () {
+      noch.disabled = false;
+      sperre.hidden = true;
+    });
   }
 
   start();

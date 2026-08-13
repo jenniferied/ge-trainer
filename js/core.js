@@ -410,6 +410,41 @@ export function el(tag, klasse, text) {
   return e;
 }
 
+/* ---------- Etwas Auszeichnung im Text ----------
+   Rose ueber Jennifer (13.08.2026): die Texte in der App sollen mit Fett,
+   Kursiv und Emojis "aufgepimpt" werden, damit man sie schneller erfasst.
+
+   Emojis brauchen dafuer nichts - die laufen als normale Zeichen durch. Fett
+   und kursiv brauchen Markup, und genau da liegt die Falle: die App schreibt
+   ueberall textContent, also stuenden **Sterne** woertlich auf dem Schirm. Der
+   naheliegende Griff waere innerHTML - der ist hier verboten, weil derselbe
+   Weg auch KI-Text traegt (Kommentare, Randnotizen), und der ist nie
+   vertrauenswuerdig.
+
+   Darum wird hier GEPARST, nicht gerendert: **fett** und *kursiv* werden zu
+   echten <b>/<i>-Knoten, alles andere zu Textknoten. Es gibt keinen Pfad, auf
+   dem eine Zeichenkette als HTML interpretiert wird.
+
+   Absichtlich nur zwei Auszeichnungen. Wer mehr braucht, meint Markdown, und
+   Markdown gehoert nicht in eine Karteikarte. */
+export function reichFuellen(knoten, text) {
+  var roh = (text === undefined || text === null) ? "" : String(text);
+  var re = /\*\*([^*]+)\*\*|\*([^*\n]+)\*/g;
+  var pos = 0, m;
+  while ((m = re.exec(roh)) !== null) {
+    if (m.index > pos) knoten.appendChild(document.createTextNode(roh.slice(pos, m.index)));
+    knoten.appendChild(el(m[1] ? "b" : "i", null, m[1] || m[2]));
+    pos = re.lastIndex;
+  }
+  if (pos < roh.length) knoten.appendChild(document.createTextNode(roh.slice(pos)));
+  return knoten;
+}
+
+// Bequemer Zwilling zu el(): baut das Element gleich mit ausgezeichnetem Text.
+export function reichZeile(tag, text, klasse) {
+  return reichFuellen(el(tag, klasse), text);
+}
+
 export function mischen(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {

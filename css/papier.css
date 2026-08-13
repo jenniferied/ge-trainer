@@ -312,6 +312,10 @@
 }
 .kl-wahl-knopf.gewaehlt { border-color: var(--rotstift); color: var(--rotstift); background: var(--rotstift-2); }
 .kl-wahl-knopf.gewaehlt.voll { border-color: var(--gruenstift); color: var(--gruenstift); background: transparent; }
+/* Der KI-Tipp am Stichpunkt: gestrichelt und mit Faehnchen, nie gefuellt -
+   gewaehlt hat ihn erst, wer ihn antippt (klausur.js kiUebernehmen). */
+.kl-wahl-knopf.ki-tipp:not(.gewaehlt) { border-style: dashed; border-color: var(--blatt-ink-2); }
+.kl-wahl-knopf.ki-tipp::after { content: " ✦"; font-size: .85em; opacity: .8; }
 
 .kl-muster {
   font-family: "Karla", system-ui, sans-serif; font-size: .86rem; line-height: 1.5;
@@ -510,6 +514,72 @@
   font-size: .9rem; padding: 6px 0; border-top: 1px solid var(--line);
 }
 .kl-themenbilanz b { font-variant-numeric: tabular-nums; }
+
+/* ---------- Eingefrorene Antwort im Frei-ueben ----------
+   Ist Roses Text bestaetigt, steht er nicht mehr in einem Textfeld, sondern als
+   Blatt da: dieselbe Optik wie im Klausurmodus, aber die Hoehe kommt vom
+   Inhalt - kein leeres A4 unter drei Zeilen (Jennifer, 13.08.2026: "nicht ganz
+   in A4-Hoehe, eben so hoch wie es sein muss").
+
+   Eigener Token-Satz wie bei .stiftblatt: diese Karte haengt nicht in
+   .klausur-rolle und wuerde sonst nichts erben. Papier bleibt hier auch im
+   Nachtmodus hell - es soll wie ein abgegebenes Blatt wirken, nicht wie ein
+   weiteres Feld der App. */
+.frei-blatt, .muster-blatt {
+  --blatt: #f7f0dd;
+  --blatt-rand: #ddd1b2;
+  --blatt-ink-2: #5d5445;
+  --lineatur: rgba(60, 82, 120, .26);
+  --bleistift: #14110c;
+  --lin-hoehe: 30px;
+  position: relative;
+  background: var(--blatt);
+  border: 1px solid var(--blatt-rand);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(5,0,20,.35), 0 8px 22px -14px rgba(5,0,20,.6);
+  /* Oben Luft fuer den aendern-Knopf - sonst liegt er auf der ersten Zeile
+     Handschrift. Sieht am Blatt ohnehin nach Kopfsteg aus. */
+  padding: 34px 16px 14px 26px;
+  margin-bottom: var(--sp-3);
+  /* Heftrand wie auf dem Klausurblatt, nur schmaler */
+  background-image:
+    linear-gradient(to right, transparent 17px, rgba(179,54,43,.28) 17px, rgba(179,54,43,.28) 18px, transparent 18px);
+}
+.frei-blatt-text, .muster-blatt {
+  font-family: "Caveat", "Bradley Hand", cursive;
+  font-size: 1.3rem; line-height: var(--lin-hoehe);
+  color: var(--bleistift);
+  white-space: pre-wrap; word-break: break-word;
+  background-image: repeating-linear-gradient(to bottom,
+    transparent 0, transparent calc(var(--lin-hoehe) - 1px),
+    var(--lineatur) calc(var(--lin-hoehe) - 1px), var(--lineatur) var(--lin-hoehe));
+}
+
+/* "So könnte es klingen" ist das ZWEITE Blatt neben Roses eigenem (Jennifer,
+   13.08.2026: "so könnte es aussehen dann auch mit Zetteloptik und Schrift,
+   damit es passt"). Dieselbe Lineatur, dieselbe Handschrift - der Vergleich
+   liest sich dadurch als zwei Blaetter nebeneinander und nicht als Loesung
+   gegen Versuch. Der Heftrand liegt hier auf dem Kasten selbst, darum eigene
+   Hintergrund-Reihenfolge: erst die Lineatur (oben geerbt), dann der Rand. */
+.muster-blatt {
+  background-color: var(--blatt);
+  border: 1px solid var(--blatt-rand); border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(5,0,20,.35), 0 8px 22px -14px rgba(5,0,20,.6);
+  padding: 14px 16px 14px 26px;
+  background-image:
+    repeating-linear-gradient(to bottom,
+      transparent 0, transparent calc(var(--lin-hoehe) - 1px),
+      var(--lineatur) calc(var(--lin-hoehe) - 1px), var(--lineatur) var(--lin-hoehe)),
+    linear-gradient(to right, transparent 17px, rgba(179,54,43,.28) 17px, rgba(179,54,43,.28) 18px, transparent 18px);
+}
+.frei-blatt-aendern {
+  font: inherit; font-family: "Karla", system-ui, sans-serif;
+  font-size: .78rem; cursor: pointer;
+  position: absolute; top: 6px; right: 8px;
+  background: transparent; color: var(--blatt-ink-2);
+  border: 1px solid var(--blatt-rand); border-radius: 999px;
+  padding: 3px 10px;
+}
 
 /* ---------- Breakpoints ---------- */
 

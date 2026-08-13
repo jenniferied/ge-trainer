@@ -893,10 +893,28 @@ function runde(pool, meta, hooks, wahl) {
         weiter();
       }));
     } else {
-      app.appendChild(hooks.freiKarte(item.thema, item.f));
+      /* WEITER ERST NACH DER EIGENEN EINSCHAETZUNG (Rose ueber Jennifer,
+         13.08.2026). Vorher konnte sie von Aufgabe zu Aufgabe durchklicken,
+         ohne je zu sagen, wie es lief - und genau das Sagen ist der Schritt,
+         an dem etwas haengen bleibt. Gleiche Linie wie im ST-Trainer, wo das
+         Ueberspringen von Fehlererklaerung und Retry rausgeflogen ist.
+
+         Die Sperre haengt am Ereignis der Karte, nicht an state.frei: es zaehlt
+         eine Einschaetzung von JETZT, nicht die vom letzten Durchgang (siehe
+         das frisch-Argument in selbstCheck, main.js). Der Zurueck-Weg oben
+         bleibt immer offen - eine Sackgasse ist das hier nie. */
+      var karte = hooks.freiKarte(item.thema, item.f);
+      app.appendChild(karte);
       var knopf = el("button", "knopf", letzte ? "Runde abschließen" : "Weiter");
+      knopf.disabled = true;
+      var sperre = el("div", "weiter-sperre", "Sag erst, wie es lief – dann geht es weiter.");
+      karte.addEventListener("selbsteinschaetzung", function () {
+        knopf.disabled = false;
+        sperre.hidden = true;
+      });
       knopf.addEventListener("click", weiter);
       app.appendChild(knopf);
+      app.appendChild(sperre);
     }
   }
 
