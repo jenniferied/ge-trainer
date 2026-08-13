@@ -35,7 +35,7 @@ export const CONFIG = {
   // Von llm.js genutzt; hier zentral, damit es nur eine Stelle gibt.
   llmFunktion: "llm-ge",
   llmTagKey: "ge-llm-tag", // localStorage-Key fuers Client-Tageslimit (NICHT "st-llm-tag")
-  llmTagesLimit: 100,      // zweiter Kostenschutz neben dem serverseitigen Limit
+  llmTagesLimit: 200,      // zweiter Kostenschutz neben dem serverseitigen Limit
 
   // ---- Kreaturen-Chat (Maskottchen) ----
   // Der freie Text laeuft ueber art "maskottchen" in der Edge Function.
@@ -50,14 +50,14 @@ export const CONFIG = {
   // im ST-Trainer dafuer gesorgt, dass statt eines Eingabefelds "Tipp auf eine
   // Frage." dastand.
   mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
-  mkTagesLimit: 20,        // (ge-llm-tag, 100) nicht aufessen.
+  mkTagesLimit: 60,        // (ge-llm-tag, 200) nicht aufessen.
 
   // ---- Chat an der einzelnen Frage ("Über diese Frage sprechen") ----
   // Dritter Topf, aus demselben Grund wie der zweite: Nachfragen zum Stoff und
   // die Klausur-Korrektur duerfen sich nicht gegenseitig das Budget wegnehmen.
-  // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.chat, 60).
+  // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.chat, 200).
   chatTagKey: "ge-chat-tag",
-  chatTagesLimit: 40,
+  chatTagesLimit: 120,
 };
 
 if (typeof window !== "undefined") window.GE_CONFIG = CONFIG;
