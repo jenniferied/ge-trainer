@@ -90,16 +90,27 @@ export function quotePille(prozent, extra) {
 export var RUNDEN_LAENGEN = [5, 10, 15, 25];
 export var RUNDEN_AUSWAHL = ["neu", "wacklig", "bunt"];
 
+export var RUNDEN_ERKLAER = ["aus", "begruenden", "raten"];
+
 export function rundenEinstellungen() {
   var e = state.rundenEinst || {};
   return {
     anzahl: RUNDEN_LAENGEN.indexOf(e.anzahl) >= 0 ? e.anzahl : 15,
-    auswahl: RUNDEN_AUSWAHL.indexOf(e.auswahl) >= 0 ? e.auswahl : "wacklig"
+    auswahl: RUNDEN_AUSWAHL.indexOf(e.auswahl) >= 0 ? e.auswahl : "wacklig",
+    // Die Erklaer-Abfrage wird BEWUSST NICHT gemerkt: sie steht bei jeder Runde
+    // wieder auf "raten". Im ST-Trainer hat genau diese Merkfunktion einen Tag
+    // lang die Voreinstellung ausgehebelt - ein einziger Tipp auf die bequeme
+    // Variante machte sie dauerhaft zum Default, und danach kam die Abfrage nie
+    // wieder von selbst. Laenge und Auswahl duerfen gemerkt werden, die sind
+    // Geschmack; hier geht es darum, ob ueberhaupt nachgedacht wird.
+    erklaer: "raten"
   };
 }
 
 export function rundenEinstellungenMerken(neu) {
-  state.rundenEinst = Object.assign(rundenEinstellungen(), neu);
+  var merken = Object.assign(rundenEinstellungen(), neu);
+  delete merken.erklaer;   // siehe oben - wird nie gespeichert
+  state.rundenEinst = merken;
   speichern();
 }
 
@@ -127,6 +138,11 @@ export function rundenZeilen(einheit) {
       schluessel: "auswahl", label: "Auswahl",
       klein: "Neues zuerst bringt vor allem, was du noch nicht hattest. Wackliges zuerst holt das nach vorn, was zuletzt danebenlag. Bunt gemischt zieht querbeet.",
       werte: [{ wert: "neu", text: "Neues zuerst" }, { wert: "wacklig", text: "Wackliges zuerst" }, { wert: "bunt", text: "Bunt gemischt" }]
+    },
+    {
+      schluessel: "erklaer", label: "Wenn du danebenliegst",
+      klein: "Einfach Feedback: die Lösung kommt sofort. Begründen: du sagst erst kurz, warum es falsch war, dann kommt sie. Zweiter Versuch: die anderen Antworten bleiben offen und du wählst neu – triffst du, bist du durch, sonst fragt die App noch, warum du es angekreuzt hattest. Für den Lernstand zählt immer der erste Versuch.",
+      werte: [{ wert: "aus", text: "Einfach Feedback" }, { wert: "begruenden", text: "Begründen" }, { wert: "raten", text: "Zweiter Versuch" }]
     }
   ];
 }
@@ -285,5 +301,132 @@ export function frag(text, opts) {
 
     document.body.appendChild(ov);
     nein.focus();                  // der harmlose Knopf hat den Fokus, nicht der endgueltige
+  });
+}
+
+/* ---------- Erklaer-Abfrage bei falscher Antwort ----------
+   Der Zwischenschritt zwischen "falsch angekreuzt" und "hier ist die Loesung".
+   Der ST-Trainer hat ihn seit dem 21.07., hier kam er am 13.08.2026 dazu
+   (Jennifer). Der Sinn dahinter ist immer derselbe: selbst denken sitzt besser
+   als lesen, und was Rose selbst formuliert hat, kann sie danach mit der
+   Erklaerung abgleichen.
+
+   Drei Modi, im Runden-Setup waehlbar, Vorauswahl "raten":
+
+     aus         falsch -> sofort Loesung und Erklaerung (wie vor dem 13.08.)
+     begruenden  falsch -> "warum, glaubst du, war das falsch?" -> dann Loesung
+     raten       falsch -> die uebrigen Knoepfe bleiben offen, Rose waehlt neu.
+                 Trifft sie, ist sie sofort durch. Trifft sie wieder nicht,
+                 kommt zusaetzlich die Begruendungsfrage.
+
+   WARUM IN ui.js UND NICHT IN main.js: gebraucht wird derselbe Ablauf an zwei
+   Stellen (mcKarte in main.js fuer Konzept-Check und Statistik-Ueben,
+   frageZeigen in klausur.js fuer die MC-Quermischung). main.js exportiert
+   nichts und ist damit fuer klausur.js unerreichbar; ui.js importieren beide
+   ohnehin. Ohne diesen Umzug gaebe es den Ablauf zweimal.
+
+   NICHT GEFAERBT WIRD VOR DER ABFRAGE. Im ST-Trainer darf "begruenden" die
+   Faerbung sofort zeigen, weil dort mehrere Kreuze moeglich sind und die Farbe
+   nur sagt, WELCHE der eigenen daneben lagen. Hier gibt es genau eine richtige
+   Option - faerben hiesse die Loesung verraten, und danach ist "warum war das
+   falsch" keine Frage mehr, sondern eine Leseaufgabe.
+
+   SCORING: die Wertung haengt immer am ERSTEN Versuch. Der zweite ist ein
+   Lernschritt, keine zweite Pruefung - sonst wandern die Quoten nach oben und
+   der Lernstand luegt. Der Aufrufer loggt entsprechend weiter mit `richtig` aus
+   dem ersten Klick und bekommt den Rest nur zum Mitschreiben.
+
+   cfg = {
+     karte        Element, an das die Abfrage angehaengt wird
+     modus        "aus" | "begruenden" | "raten"
+     richtig      Boolean, war der ERSTE Versuch richtig?
+     knoepfe      Array der Options-Knoepfe
+     gewaehlt     der angeklickte Knopf
+     istKorrekt   fn(knopf) -> Boolean
+   }
+   fertig({ versuch2, selbst })
+     versuch2  true/false, wenn ein zweiter Versuch stattfand, sonst null
+     selbst    Roses getippte Begruendung oder null
+*/
+export function erklaerAbfrage(cfg, fertig) {
+  var karte = cfg.karte;
+  var modus = cfg.modus === "begruenden" || cfg.modus === "raten" ? cfg.modus : "aus";
+
+  // Richtig beantwortet oder Abfrage aus: nichts einschieben.
+  if (cfg.richtig || modus === "aus") { fertig({ versuch2: null, selbst: null }); return; }
+
+  var kasten = el("div", "erklaer-abfrage");
+  karte.appendChild(kasten);
+
+  // Ein Textfeld plus Knopf. Bewusst OHNE Ueberspringen-Link: wer die Abfrage
+  // eingeschaltet hat, will den Denkmoment, und ein Link, der ihn wegklickt,
+  // gehoert dann nicht daneben (dieselbe Entscheidung wie im ST-Trainer).
+  function begruendenFragen(frageText, knopfText, aufFertig) {
+    kasten.innerHTML = "";
+    kasten.appendChild(el("div", "erklaer-frage", frageText));
+    var feld = el("textarea", "erklaer-feld");
+    feld.rows = 2;
+    feld.placeholder = "Stichworte reichen";
+    feld.setAttribute("autocapitalize", "sentences");
+    kasten.appendChild(feld);
+    var ok = el("button", "knopf sekundaer", knopfText);
+    ok.addEventListener("click", function () {
+      var t = feld.value.trim();
+      kasten.innerHTML = "";
+      // Das eigene Wort bleibt stehen, neben der Erklaerung - sonst ist der
+      // Moment vorbei, sobald die Loesung da ist, und der Abgleich faellt weg.
+      if (t) {
+        var notiz = el("div", "eigene-notiz");
+        notiz.appendChild(el("b", null, "Deine Vermutung: "));
+        notiz.appendChild(document.createTextNode(t));
+        kasten.appendChild(notiz);
+      } else {
+        kasten.remove();
+      }
+      aufFertig(t || null);
+    });
+    kasten.appendChild(ok);
+    feld.focus();
+  }
+
+  if (modus === "begruenden") {
+    begruendenFragen("Warum, glaubst du, war das falsch?", "Lösung ansehen", function (selbst) {
+      fertig({ versuch2: null, selbst: selbst });
+    });
+    return;
+  }
+
+  /* ---- raten = Zweiter Versuch ----
+     Nur der eigene Fehlgriff wird gesperrt, die uebrigen bleiben anklickbar.
+     Rose weiss ohnehin schon, dass ihre Wahl falsch war - das ist keine
+     zusaetzliche Information, sondern nur eine ehrliche Anzeige. */
+  cfg.gewaehlt.disabled = true;
+  cfg.gewaehlt.classList.add("falsch");
+  kasten.appendChild(el("div", "erklaer-frage", "Nicht ganz. Schau nochmal - welche könnte es sein?"));
+  kasten.appendChild(el("div", "erklaer-klein",
+    "Für deinen Lernstand zählt der erste Versuch. Hier geht es nur ums Finden."));
+
+  var zweiterLaeuft = true;
+  cfg.knoepfe.forEach(function (btn) {
+    if (btn === cfg.gewaehlt) return;
+    btn.addEventListener("click", function zweiter() {
+      if (!zweiterLaeuft) return;
+      zweiterLaeuft = false;
+      var traf = cfg.istKorrekt(btn);
+      kasten.innerHTML = "";
+      if (traf) {
+        // Ein Urteil, keine Rueckfrage: die App weiss es selbst.
+        kasten.appendChild(el("div", "erklaer-urteil gut",
+          "✨ Beim zweiten Blick hattest du's. Genau dafür ist der zweite Versuch da."));
+        fertig({ versuch2: true, selbst: null });
+        return;
+      }
+      btn.disabled = true;
+      btn.classList.add("falsch");
+      begruendenFragen("Auch das war es nicht. Warum hast du es angekreuzt?",
+        "Lösung ansehen", function (selbst) {
+          fertig({ versuch2: false, selbst: selbst });
+        });
+    });
   });
 }

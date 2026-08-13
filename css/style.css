@@ -1286,3 +1286,30 @@ p { margin: 0 0 var(--sp-3); }
   font-size: .78rem; color: var(--ink-soft); flex-wrap: wrap;
 }
 .fv-hint { flex: 1; min-width: 0; }
+
+/* ---------- Erklaer-Abfrage bei falscher Antwort (ui.js erklaerAbfrage) ----------
+   Schiebt sich zwischen "falsch angekreuzt" und die Loesung. Bewusst ruhig
+   gehalten: das ist kein Fehler-Banner, sondern eine Frage an Rose. Deshalb
+   neutrale Flaeche statt der roten .schade-Farbe. */
+.erklaer-abfrage {
+  margin-top: var(--sp-4); padding: var(--sp-4);
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.erklaer-frage { font-weight: 600; margin-bottom: var(--sp-2); }
+.erklaer-klein { font-size: .84rem; color: var(--ink-soft); margin-bottom: var(--sp-3); }
+.erklaer-feld {
+  width: 100%; box-sizing: border-box; resize: vertical;
+  padding: var(--sp-3); border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: .95rem;
+}
+.erklaer-abfrage .knopf { margin-top: var(--sp-3); }
+/* Das Urteil nach einem geglueckten zweiten Versuch. Gruen, weil es ein Erfolg
+   ist - auch wenn die Wertung am ersten Versuch haengt. */
+.erklaer-urteil.gut { color: var(--ok); font-weight: 600; }
+/* Roses eigene Vermutung bleibt neben der Erklaerung stehen, sonst ist der
+   Moment vorbei, sobald die Loesung da ist. */
+.eigene-notiz {
+  font-size: .9rem; color: var(--ink-soft); line-height: 1.5;
+}

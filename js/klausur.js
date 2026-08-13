@@ -15,7 +15,7 @@
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
   starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, stichpunkteTeilen } from "./core.js";
-import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
+import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, erklaerAbfrage } from "./ui.js";
 import { syncSession } from "./sync.js";
 // Beleg-Chips: aus "Folie 29" im Text wird ein Sprung in den Folien-Viewer.
 import * as Beleg from "./beleg.js";
@@ -1839,6 +1839,7 @@ function starteMcQuer(pool, wahl) {
 
     var optionen = mischen(f.optionen);
     var beantwortet = false;
+    var knoepfe = [];
 
     optionen.forEach(function (o) {
       var knopf = el("button", "option", o.text);
@@ -1847,49 +1848,64 @@ function starteMcQuer(pool, wahl) {
         beantwortet = true;
         var richtig = !!o.korrekt;
         if (richtig) treffer++;
+        // Zeit beim ERSTEN Klick nehmen, nicht am Ende: die Erklaer-Abfrage ist
+        // Extra-Arbeit, keine Antwortzeit (gleiche Regel wie in mcKarte).
+        var zeit = sekundenSeit(uhr);
 
         state.mc[f.id] = state.mc[f.id] || { richtig: 0, falsch: 0 };
         if (richtig) state.mc[f.id].richtig++; else state.mc[f.id].falsch++;
         state.mc[f.id].zuletztRichtig = richtig;
         speichern();
-        logAntwort({
-          qid: f.id, thema: t.id, afb: f.afb || null, richtig: richtig, modus: "check", quer: true,
-          // Index in der ORIGINALreihenfolge - mischen() gibt eine Kopie zurueck.
-          gewaehlt: f.optionen.indexOf(o), zeit: sekundenSeit(uhr)
+
+        erklaerAbfrage({
+          karte: karte, modus: wahl.erklaer, richtig: richtig,
+          knoepfe: knoepfe, gewaehlt: knopf,
+          istKorrekt: function (btn) {
+            return optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
+          }
+        }, function (ergebnis) {
+          logAntwort({
+            qid: f.id, thema: t.id, afb: f.afb || null, richtig: richtig, modus: "check", quer: true,
+            // Index in der ORIGINALreihenfolge - mischen() gibt eine Kopie zurueck.
+            gewaehlt: f.optionen.indexOf(o), zeit: zeit,
+            // Nur mitgeschrieben, nie gewertet - die Quote haengt am ersten Versuch.
+            versuch2: ergebnis.versuch2, selbst: ergebnis.selbst
+          });
+
+          Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
+            btn.disabled = true;
+            var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
+            if (istKorrekt) btn.classList.add("richtig");
+            else if (btn === knopf) btn.classList.add("falsch");
+            else if (!btn.classList.contains("falsch")) btn.classList.add("blass");
+          });
+
+          // Thema erst nach der Antwort zeigen - vorher waere es ein Hinweis.
+          var chips = el("div", "chip-reihe");
+          chips.appendChild(el("span", "chip", t.titel));
+          if (f.unterthema) chips.appendChild(el("span", "chip", f.unterthema));
+          karte.appendChild(chips);
+
+          var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
+          var st = stickerEl(richtig ? "good" : "part");
+          if (st) erk.appendChild(st);
+          var txt = el("div", "text");
+          txt.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast - merk dir:"));
+          txt.appendChild(Beleg.belegZeile("div", f.erklaerung, t.id));
+          erk.appendChild(txt);
+          karte.appendChild(erk);
+
+          var weiter = el("button", "knopf", index + 1 < gezogen.length ? "Weiter" : "Fertig");
+          weiter.addEventListener("click", function () {
+            index++;
+            if (index < gezogen.length) frageZeigen(); else endeZeigen();
+          });
+          karte.appendChild(weiter);
+          weiter.focus();
         });
-
-        Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
-          btn.disabled = true;
-          var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
-          if (istKorrekt) btn.classList.add("richtig");
-          else if (btn === knopf) btn.classList.add("falsch");
-          else btn.classList.add("blass");
-        });
-
-        // Thema erst nach der Antwort zeigen - vorher waere es ein Hinweis.
-        var chips = el("div", "chip-reihe");
-        chips.appendChild(el("span", "chip", t.titel));
-        if (f.unterthema) chips.appendChild(el("span", "chip", f.unterthema));
-        karte.appendChild(chips);
-
-        var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
-        var st = stickerEl(richtig ? "good" : "part");
-        if (st) erk.appendChild(st);
-        var txt = el("div", "text");
-        txt.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast - merk dir:"));
-        txt.appendChild(Beleg.belegZeile("div", f.erklaerung, t.id));
-        erk.appendChild(txt);
-        karte.appendChild(erk);
-
-        var weiter = el("button", "knopf", index + 1 < gezogen.length ? "Weiter" : "Fertig");
-        weiter.addEventListener("click", function () {
-          index++;
-          if (index < gezogen.length) frageZeigen(); else endeZeigen();
-        });
-        karte.appendChild(weiter);
-        weiter.focus();
       });
       karte.appendChild(knopf);
+      knoepfe.push(knopf);
     });
 
     app.appendChild(karte);

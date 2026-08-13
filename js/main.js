@@ -4,7 +4,7 @@
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
   starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
@@ -1677,7 +1677,10 @@ function zeigeThema(thema) {
 // Eine MC-Karte als wiederverwendbarer Baustein: Konzept-Check UND die
 // Ueben-Runden der Statistik zeigen dieselbe Karte, damit es sich ueberall
 // gleich anfuehlt. onWeiter(richtig) laeuft beim Klick auf den Weiter-Knopf.
-function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
+/* modus (6. Parameter, seit 13.08.2026) steuert die Erklaer-Abfrage:
+   "aus" | "begruenden" | "raten". Fehlt er, gilt die Vorauswahl der Runde
+   ("raten") - stats.js ruft weiter mit fuenf Argumenten, das bleibt gueltig. */
+function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
   var karte = el("div", "karte");
   // Eine MC-Karte steht immer allein auf dem Schirm, egal ueber welchen Einstieg
   // - die Uhr darf hier also beim Bauen loslaufen.
@@ -1691,6 +1694,10 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
   // sagen laesst, WELCHE falsche Antwort Rose gewaehlt hat.
   var optionen = mischen(f.optionen);
   var beantwortet = false;
+  // Alle Options-Knoepfe, damit der zweite Versuch die uebrigen wieder oeffnen
+  // kann - querySelectorAll wuerde hier auch gehen, aber die Liste steht ohnehin
+  // schon beim Bauen fest.
+  var knoepfe = [];
 
   optionen.forEach(function (o) {
     var knopf = el("button", "option", o.text);
@@ -1698,39 +1705,61 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
       if (beantwortet) return;
       beantwortet = true;
       var richtig = !!o.korrekt;
+      // Die Zeit wird HIER genommen, nicht am Ende: die Erklaer-Abfrage ist
+      // Extra-Arbeit, keine Antwortzeit. Sonst stuende in der Statistik die
+      // Tippdauer mit drin und jede Runde mit Abfrage saehe langsam aus.
+      var zeit = sekundenSeit(uhr);
 
       state.mc[f.id] = state.mc[f.id] || { richtig: 0, falsch: 0 };
       if (richtig) state.mc[f.id].richtig++; else state.mc[f.id].falsch++;
       state.mc[f.id].zuletztRichtig = richtig;
-      logAntwort({
-        qid: f.id, thema: thema.id, afb: f.afb || null, richtig: richtig, modus: "check",
-        gewaehlt: f.optionen.indexOf(o), zeit: sekundenSeit(uhr)
+
+      // Erst die Abfrage, dann Faerbung, Erklaerung und Log. Geloggt wird zum
+      // Schluss, weil GE alle Felder ZUM LOG-ZEITPUNKT stempelt (eiserne Regel
+      // in core.js: nachtraegliches Anreichern geht im Sync verloren) - versuch2
+      // und selbst gibt es aber erst nach der Abfrage.
+      erklaerAbfrage({
+        karte: karte, modus: modus || rundenEinstellungen().erklaer,
+        richtig: richtig, knoepfe: knoepfe, gewaehlt: knopf,
+        istKorrekt: function (btn) {
+          return optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
+        }
+      }, function (ergebnis) {
+        logAntwort({
+          qid: f.id, thema: thema.id, afb: f.afb || null, richtig: richtig, modus: "check",
+          gewaehlt: f.optionen.indexOf(o), zeit: zeit,
+          // Nur mitschreiben, nie werten: die Quote haengt an `richtig`, also am
+          // ersten Versuch. Sonst wandert der Lernstand nach oben, ohne dass
+          // Rose mehr kann.
+          versuch2: ergebnis.versuch2, selbst: ergebnis.selbst
+        });
+
+        Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
+          btn.disabled = true;
+          var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
+          if (istKorrekt) btn.classList.add("richtig");
+          else if (btn === knopf) btn.classList.add("falsch");
+          else if (!btn.classList.contains("falsch")) btn.classList.add("blass");
+        });
+
+        var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
+        var st = stickerEl(richtig ? "good" : "part");
+        if (st) erk.appendChild(st);
+        var text = el("div", "text");
+        text.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast – merk dir:"));
+        // Die MC-Erklaerungen tragen ihre Fundstelle im Text ("Folie 10, Pitsch &
+        // Thuemmel 2019, 12") - hier wird sie anklickbar.
+        text.appendChild(Beleg.belegZeile("div", f.erklaerung, thema.id));
+        erk.appendChild(text);
+        karte.appendChild(erk);
+
+        var weiter = el("button", "knopf", weiterText);
+        weiter.addEventListener("click", function () { onWeiter(richtig); });
+        karte.appendChild(weiter);
+        weiter.focus();
       });
-
-      Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
-        btn.disabled = true;
-        var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
-        if (istKorrekt) btn.classList.add("richtig");
-        else if (btn === knopf) btn.classList.add("falsch");
-        else btn.classList.add("blass");
-      });
-
-      var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
-      var st = stickerEl(richtig ? "good" : "part");
-      if (st) erk.appendChild(st);
-      var text = el("div", "text");
-      text.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast – merk dir:"));
-      // Die MC-Erklaerungen tragen ihre Fundstelle im Text ("Folie 10, Pitsch &
-      // Thuemmel 2019, 12") - hier wird sie anklickbar.
-      text.appendChild(Beleg.belegZeile("div", f.erklaerung, thema.id));
-      erk.appendChild(text);
-      karte.appendChild(erk);
-
-      var weiter = el("button", "knopf", weiterText);
-      weiter.addEventListener("click", function () { onWeiter(richtig); });
-      karte.appendChild(weiter);
-      weiter.focus();
     });
+    knoepfe.push(knopf);
     karte.appendChild(knopf);
   });
 
