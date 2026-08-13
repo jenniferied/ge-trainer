@@ -14,7 +14,7 @@
    ueber Handschrift-Bild als Anhang bzw. reine Selbstbewertung weiter. */
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
-  starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit } from "./core.js";
+  starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 import { syncSession } from "./sync.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
@@ -1156,7 +1156,10 @@ function bewertungsBlock(a, aufAenderung) {
     box.appendChild(el("div", "kl-anhang-hinweis", "Zu dieser Aufgabe gibt es keine Stichpunkte mehr."));
     return box;
   }
-  var stichpunkte = f.stichpunkte || [];
+  // Bewertet wird nur der Kern - "Weitere: ...", "Quelle: ..." sind Einordnung
+  // und waren bisher stille Punktabzuege (core.js stichpunkteTeilen).
+  var geteilt = stichpunkteTeilen(f);
+  var stichpunkte = geteilt.kern;
   if (!a.bewertung || a.bewertung.length !== stichpunkte.length) {
     a.bewertung = stichpunkte.map(function () { return null; });
   }
@@ -1385,8 +1388,11 @@ function korrekturBlatt(a) {
 
   // Randnotiz: erst sagen was da ist, dann was fehlt.
   if (f && a.bewertung) {
-    var fehlt = (f.stichpunkte || []).filter(function (sp, i) { return a.bewertung[i] === 0; });
-    var da = (f.stichpunkte || []).filter(function (sp, i) { return a.bewertung[i] === 1; });
+    // Gegen den KERN, nicht gegen alle Stichpunkte - a.bewertung ist genauso
+    // lang wie der Kern (bewertungsBlock).
+    var kern = stichpunkteTeilen(f).kern;
+    var fehlt = kern.filter(function (sp, i) { return a.bewertung[i] === 0; });
+    var da = kern.filter(function (sp, i) { return a.bewertung[i] === 1; });
     if (da.length || fehlt.length) {
       var notiz = el("p", "kl-randnotiz");
       notiz.textContent = (da.length ? da.length + " Punkt(e) saßen. " : "") +
@@ -1413,10 +1419,19 @@ function korrekturBlatt(a) {
       kiKnopf.textContent = "Die KI liest …";
       Promise.resolve()
         .then(function () {
-          // Signatur laut llm.js: korrigiere(themaId, aufgabe, antwort)
+          // Signatur laut llm.js: korrigiere(themaId, aufgabe, antwort).
+          // Nur der Kern ist Erwartungshorizont, der Zusatz faehrt als Kontext
+          // im Tipp mit (core.js stichpunkteTeilen) - sonst kostet eine
+          // Quellenangabe, die niemand verlangt hat, echte Punkte.
+          var g = stichpunkteTeilen(f);
+          var tipp = f.tipp || "";
+          if (g.zusatz.length) {
+            tipp += (tipp ? " " : "") + "Nur zur Einordnung, nicht gefordert und nie ein Punktabzug: "
+              + g.zusatz.join(" ");
+          }
           return kiFn(a.thema, {
             id: a.qid, frage: f.frage, afb: a.afb, punkte: a.max,
-            stichpunkte: f.stichpunkte || [], muster: f.muster || "", tipp: f.tipp || ""
+            stichpunkte: g.kern, muster: f.muster || "", tipp: tipp
           }, text);
         })
         .catch(function () { return null; })

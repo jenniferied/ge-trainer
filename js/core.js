@@ -410,6 +410,42 @@ export function el(tag, klasse, text) {
   return e;
 }
 
+/* ---------- Gefordert oder nur zur Einordnung? ----------
+   Rose ueber Jennifer (13.08.2026): "da wurde sehr viel verlangt, ohne dass die
+   Aufgabenstellung ausfuehrlich war. Das sollte zusammenpassen." Und: sie muss
+   die Quelle nicht aus dem Kopf angeben.
+
+   Beides ist derselbe Fehler in den Daten. Ein Teil der Stichpunkte ist gar
+   kein Erwartungshorizont, sondern Hintergrund:
+
+     "Nennen Sie die 4 Entwicklungsbereiche"  -> 5 Stichpunkte, der fuenfte
+                                                 lautet "Quelle: KMK 2021, 6 ff."
+     "Nennen Sie fuenf didaktische Prinzipien" -> 6 Stichpunkte, der sechste
+                                                 faengt mit "Weitere:" an
+
+   Weil die App JEDEN Stichpunkt als gefordert weitergibt, konnte Rose in diesen
+   Aufgaben nie voll punkten - die KI hakte den Zusatz pflichtschuldig als
+   "nicht genannt" ab, obwohl die Aufgabe ihn nie verlangt hat.
+
+   Getrennt wird am Praefix, nicht an einem neuen Feld im Schema: die Praefixe
+   stehen so schon im Bestand, und ein Schema-Umbau haette 69 freie Aufgaben
+   angefasst, um dieselbe Information anders hinzuschreiben.
+
+   kern    -> das, was die Aufgabe wirklich verlangt. Danach wird bewertet.
+   zusatz  -> Einordnung. Wird angezeigt und der KI als Kontext mitgegeben,
+              zaehlt aber nie gegen Rose. */
+var ZUSATZ_PRAEFIX = /^(Weitere|Quelle|Vorbemerkung|Hinweis|Anmerkung|Zusaetzlich moeglich|Zusätzlich möglich|Dahinter|Merkhilfe|Eselsbruecke|Eselsbrücke)\s*[:.]/i;
+
+export function stichpunkteTeilen(f) {
+  var alle = (f && f.stichpunkte) || [];
+  var kern = [], zusatz = [];
+  alle.forEach(function (s) { (ZUSATZ_PRAEFIX.test(String(s)) ? zusatz : kern).push(s); });
+  // Nur-Zusatz waere ein Datenfehler; dann lieber alles als gefordert behandeln
+  // als eine Aufgabe ganz ohne Erwartungshorizont zu bewerten.
+  if (!kern.length) return { kern: alle, zusatz: [] };
+  return { kern: kern, zusatz: zusatz };
+}
+
 /* ---------- Etwas Auszeichnung im Text ----------
    Rose ueber Jennifer (13.08.2026): die Texte in der App sollen mit Fett,
    Kursiv und Emojis "aufgepimpt" werden, damit man sie schneller erfasst.

@@ -3,7 +3,7 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
-  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile } from "./core.js";
+  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
@@ -22,6 +22,9 @@ import * as Mk from "./maskottchen.js";
 // weiter unten im Adapter (mkChatAdapter). llm.js liefert den freien Text,
 // sobald die Edge Function den art-Zweig "maskottchen" kennt.
 import * as MkChat from "./geteilt-maskottchen-chat.js";
+// Sprechblase mit dem Maskottchen, ueberall wo die KI redet (geteilter Baustein,
+// Quelle rose/geteilte-styles/ki-blase.js).
+import * as KiBlase from "./geteilt-ki-blase.js";
 import * as Llm from "./llm.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
@@ -431,6 +434,32 @@ function sitztGesamt(liste) {
     gesamt += mc.gesamt + fr.gesamt;
   });
   return { n: n, gesamt: gesamt };
+}
+
+/* ---------- Das Gesicht der KI ----------
+   Rose ueber Jennifer (13.08.2026): wo die KI redet, soll das Maskottchen
+   danebenstehen, als Sprechblase, ueberall gleich. Diese beiden Helfer sind
+   die einzige Stelle, an der das Bild dafuer geholt wird.
+
+   JEDES MAL FRISCH GERECHNET, nie in eine Konstante gelegt: die Kreatur kann
+   genau auf der Antwort wachsen, neben der die Blase steht. Ein gemerktes Bild
+   zeigte den Rest der Sitzung die alte Stufe.
+
+   Defensiv, weil hier nichts kaputtgehen darf: faellt etwas aus (Themen noch
+   nicht geladen, Stand kaputt), liefert es "" bzw. "KI" - der Baustein setzt
+   dann seinen Funken ein und die Blase steht trotzdem. */
+function kiStand() {
+  var tz = Stats.tagesziel(themen || [], tageBisKlausur());
+  return mkStand(tz, Mk.stufeJetzt(Mk.herzenStand(tz).herzen));
+}
+function kiAvatarHtml() {
+  try {
+    var s = kiStand();
+    return Mk.bildHtml(Mk.EIER[Mk.eiIndex()], s.stufe, MkChat.istNacht(s));
+  } catch (e) { return ""; }
+}
+function kiSprecher() {
+  try { return MkChat.kreaturName(kiStand()); } catch (e) { return "KI"; }
 }
 
 function mkStand(tz, stufe) {
@@ -2053,9 +2082,17 @@ function freiKarte(thema, f, opts) {
   // haengt in klausur.js und gehoert dem Klausurmodus.
   var kiZeile = el("div", "ki-status");
   kiZeile.hidden = true;
+  var statusBlase = null;
   function sagen(text) {
     if (!text) { kiZeile.hidden = true; return; }
-    kiZeile.textContent = text;
+    // Auch die Zwischenstaende ("liest gerade", "nicht erreichbar") kommen aus
+    // der Kreatur - es soll nie zwei Stimmen geben, eine mit Bild und eine ohne.
+    if (statusBlase) {
+      KiBlase.blaseSagen(statusBlase, text);
+    } else {
+      statusBlase = KiBlase.kiBlase({ avatarHtml: kiAvatarHtml, name: kiSprecher(), text: text });
+      kiZeile.appendChild(statusBlase);
+    }
     kiZeile.hidden = false;
   }
 
@@ -2164,10 +2201,19 @@ function freiKarte(thema, f, opts) {
       // ablesbar und die Quote unten ehrlich. Das Bild geht hier NIE mit: die
       // Handschrift wurde einmal gelesen, bewertet wird die bestaetigte Fassung.
       .then(function () {
+        // NUR der Kern geht als Erwartungshorizont raus. Der Zusatz faehrt als
+        // Kontext im Tipp mit - die KI darf ihn kennen, aber nicht einfordern
+        // (core.js stichpunkteTeilen).
+        var t = stichpunkteTeilen(f);
+        var tipp = f.tipp || "";
+        if (t.zusatz.length) {
+          tipp += (tipp ? " " : "") + "Nur zur Einordnung, nicht gefordert und nie ein Punktabzug: "
+            + t.zusatz.join(" ");
+        }
         return Llm.korrigiere(thema.id, {
           id: f.id, frage: f.frage, afb: f.afb || null,
-          punkte: (f.stichpunkte || []).length || 1,
-          stichpunkte: f.stichpunkte || [], muster: f.muster || "", tipp: f.tipp || ""
+          punkte: t.kern.length || 1,
+          stichpunkte: t.kern, muster: f.muster || "", tipp: tipp
         }, antwort);
       })
       .catch(function () { return null; })
@@ -2180,13 +2226,13 @@ function freiKarte(thema, f, opts) {
       });
   }
 
-  /* Das Urteil der KI. Sie schlaegt vor, Rose entscheidet: der Vorschlag geht
-     durch denselben Selbstcheck wie ein Fingertipp und bleibt danach anklickbar.
-     So steht nie etwas im Lernstand, das Rose nicht aendern koennte. */
+  /* Das Urteil der KI - als Sprechblase der Kreatur (geteilt-ki-blase.js).
+     Sie schlaegt vor, Rose entscheidet: markiert wird der Vorschlag unten am
+     Selbstcheck, angetippt nie. So steht nie etwas im Lernstand, das Rose
+     nicht selbst gesagt hat. */
   function kiUrteilZeigen(erg) {
     if (kiBox) kiBox.remove();
-    kiBox = el("div", "loesung ki-urteil");
-    kiBox.appendChild(el("h3", null, "Die KI hat mitgelesen"));
+    var teile = [];
 
     var vorschlag = Array.isArray(erg.punkteVorschlag) ? erg.punkteVorschlag : [];
     if (vorschlag.length) {
@@ -2199,27 +2245,33 @@ function freiKarte(thema, f, opts) {
         if (v.kommentar) li.appendChild(reichZeile("div", v.kommentar, "dazu"));
         ul.appendChild(li);
       });
-      kiBox.appendChild(ul);
+      teile.push(ul);
     }
 
     var saetze = [];
     if (Array.isArray(erg.randkommentare)) saetze = saetze.concat(erg.randkommentare);
     if (erg.gesamtkommentar) saetze.push(erg.gesamtkommentar);
     else if (erg.kommentar) saetze.push(erg.kommentar);
-    if (saetze.length) kiBox.appendChild(reichZeile("div", saetze.join(" "), "muster"));
+    if (saetze.length) teile.push(reichZeile("div", saetze.join(" "), "ki-fazit"));
 
     var wert = kiEinschaetzung(erg);
     if (wert) {
       var satz = wert === "gut" ? "Das saß." : wert === "mittel" ? "Teilweise getroffen." : "Das üben wir nochmal.";
-      kiBox.appendChild(el("div", "ki-vorschlag",
-        "Die KI liest es so: " + satz + " Unten ist das markiert – entscheiden tust du."));
+      teile.push(el("div", "ki-vorschlag",
+        "Ich lese es so: " + satz + " Unten ist das markiert – entscheiden tust du."));
       // MARKIEREN, NICHT WAEHLEN. Bis zum 13.08.2026 klickte die KI hier den
       // Knopf fuer Rose, wenn sie sich noch nicht eingeschaetzt hatte. Damit
       // fiel genau der Moment weg, um den es geht: selbst zu sagen, wie es lief.
       check.vorschlagen(wert);
     }
-    // Der Selbstcheck steht fest unter der Karte - die Box legt sich davor.
+
+    kiBox = KiBlase.kiBlase({
+      avatarHtml: kiAvatarHtml, name: kiSprecher(), inhalt: teile, klasse: "ki-urteil"
+    });
+    // Der Selbstcheck steht fest unter der Karte - die Blase legt sich davor.
     karte.insertBefore(kiBox, check);
+    // Die Statuszeile hat ihren Zweck erfuellt, sonst stuenden zwei Blasen da.
+    sagen("");
   }
 
   zeigen.addEventListener("click", function () {
@@ -2229,10 +2281,20 @@ function freiKarte(thema, f, opts) {
     if (!eingefroren() && (eingabe.value || "").trim()) einfrieren();
 
     var box = el("div", "loesung");
+    var geteilt = stichpunkteTeilen(f);
     box.appendChild(el("h3", null, "📌 Das gehört in die Antwort"));
     var ul = el("ul", "stichpunkte");
-    f.stichpunkte.forEach(function (p) { ul.appendChild(reichZeile("li", p)); });
+    geteilt.kern.forEach(function (p) { ul.appendChild(reichZeile("li", p)); });
     box.appendChild(ul);
+
+    // Hintergrund steht unter eigener Ueberschrift und nicht mehr als sechster
+    // Punkt einer Aufgabe, die fuenf verlangt hat.
+    if (geteilt.zusatz.length) {
+      box.appendChild(el("h3", null, "🔎 Nur zur Einordnung"));
+      var ulz = el("ul", "stichpunkte zusatz");
+      geteilt.zusatz.forEach(function (p) { ulz.appendChild(reichZeile("li", p)); });
+      box.appendChild(ulz);
+    }
 
     box.appendChild(el("h3", null, "✍️ So könnte es klingen"));
     // Zetteloptik und Handschrift wie bei Roses eigenem Blatt (papier.css).

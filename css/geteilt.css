@@ -1075,6 +1075,21 @@ h2.abschnitt-titel, .abschnitt-titel {
 }
 .chat-msg.du { background: color-mix(in srgb, var(--accent) 12%, var(--card)); margin-left: auto; }
 .chat-msg.ki { background: var(--paper); border: 1px solid var(--line); margin-right: auto; white-space: pre-wrap; }
+/* Blase mit Bauteilen statt Absatz (Liste, Tipp, Musterloesung) - siehe
+   geteilt-ki-blase.js. Ohne das Zuruecksetzen von white-space reisst pre-wrap
+   jede Liste darin auseinander. */
+.chat-msg.ki.reich { white-space: normal; }
+.chat-msg.ki.reich > :last-child { margin-bottom: 0; }
+
+/* Die KI-Sprechblase steht ausserhalb des Chat-Sheets mitten in einer Karte:
+   dort braucht sie etwas Luft nach oben und darf breiter werden als im
+   Gespraech, wo eine schmale Blase die Wechselrede zeigt.
+
+   .chat-reihe.ki-blase, nicht nur .ki-blase: die Regel fuer .chat-reihe steht
+   weiter unten in dieser Datei und haette bei gleicher Spezifitaet gewonnen -
+   der Avatar klebte dann am unteren Rand einer langen Korrektur. */
+.chat-reihe.ki-blase { margin: 12px 0 0; align-items: flex-start; }
+.chat-reihe.ki-blase .chat-msg { max-width: 100%; }
 
 /* Aufgehobenes Gespraech in der Nachschau (Verlauf, Frage-Detail), seit dem
    13.08.2026. Zugeklappt, damit es beim Durchblaettern nicht im Weg steht — die

@@ -446,6 +446,11 @@ p { margin: 0 0 var(--sp-3); }
   font-size: .88rem; color: var(--ink-soft);
   margin-bottom: var(--sp-2);
 }
+/* Der zusammenfassende Satz IN der Sprechblase. Frueher lief er ueber .muster
+   und trug damit den Kasten der Musterloesung - in einer Blase sitzt Kasten in
+   Kasten. Hier reicht etwas Abstand. */
+.ki-fazit { margin: var(--sp-2) 0; }
+.ki-urteil .ki-treffer li:first-child { border-top: none; padding-top: 0; }
 
 .loesung { border-top: 1px dashed var(--line); margin-top: var(--sp-3); padding-top: var(--sp-3); }
 .loesung h3 { margin-bottom: var(--sp-2); }
