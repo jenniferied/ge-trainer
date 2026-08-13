@@ -1107,17 +1107,21 @@ export function transkriptPruefen(text, opts) {
   var d = el("div", "kl-dialog");
   d.appendChild(el("h3", null, "So habe ich das gelesen"));
   d.appendChild(el("p", null, o.hinweis || "Ändere frei, was danebenlag. Erst wenn du bestätigst, wird es übernommen."));
-  /* Was hier steht, hat transkribiere() gerade aus Roses Blatt gelesen - also
-     Modelltext, also Pixelschrift.
+  /* KEIN ki-live hier, obwohl transkribiere() den Satz erzeugt hat.
 
-     ZWEI DINGE, DIE DAGEGEN SPRECHEN, damit sie nicht neu erwogen werden
-     muessen: das Feld ist eingabefaehig, ab dem ersten Tastendruck steht Roses
-     eigener Text in Pixelschrift da. Und bis heute war es bewusst in Caveat
-     gesetzt, also so, wie sie selbst geschrieben hat. Die Regel ist trotzdem
-     eindeutig - erzeugt hat den Satz das Modell. Umgedreht ist es diese eine
-     Klasse und die Regel in papier.css. */
+     Beim ersten Bauen stand die Klasse drin, mit der Begruendung "erzeugt hat
+     es das Modell, die Regel ist eindeutig". Wieder heraus, weil die Regel
+     dahinter eine andere ist als der Buchstabe: pixelig wird, was die KI SAGT.
+     Dieses Feld ist eingabefaehig - ab Roses erstem Tastendruck stuende ihr
+     eigener Text in Pixelschrift, und Roses Text ist an keiner Stelle dieser
+     App pixelig. Dazu war das Feld bewusst in Caveat gesetzt: es zeigt ihre
+     eigene Handschrift zurueckgelesen, es ist ihr Blatt und nicht die Stimme
+     der Maschine.
+
+     Der Dialog sagt ohnehin in der Ueberschrift, wer hier geredet hat ("So
+     habe ich das gelesen"). Dafuer braucht es keine zweite Schriftart, die im
+     selben Moment falsch wird, in dem Rose etwas korrigiert. */
   var ta = document.createElement("textarea");
-  ta.className = "ki-live";
   ta.value = text;
   d.appendChild(ta);
   var reihe = el("div", "reihe");

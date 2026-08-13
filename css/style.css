@@ -446,7 +446,15 @@ p { margin: 0 0 var(--sp-3); }
   font-size: .92rem; line-height: 1.45;
   padding: 6px 0; border-top: 1px solid var(--line);
 }
-.ki-treffer .zeichen { font-weight: 700; text-align: center; }
+/* Die Spalte mit den Zeichen bleibt in der App-Schrift, auch in einer
+   Pixelblase: VT323 hat ✓ und ✗ nicht, ~ aber schon. In der Pixelschrift
+   stuenden also drei Zeichen einer Spalte in ZWEI Schriften untereinander,
+   weil CSS pro Zeichen zurueckfaellt. Ein Zeichen ist ohnehin kein Text, den
+   die KI "sagt" - es ist die Wertung als Symbol. */
+.ki-treffer .zeichen {
+  font-weight: 700; text-align: center;
+  font-family: "Karla", system-ui, sans-serif;
+}
 .ki-treffer .dazu { grid-column: 2; font-size: .85rem; color: var(--ink-soft); }
 .ki-treffer .treffer-ja .zeichen { color: var(--ok); }
 .ki-treffer .treffer-teilweise .zeichen { color: var(--warn-ink); }
