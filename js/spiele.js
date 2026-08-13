@@ -187,14 +187,22 @@ export function zeigeSpiele(themen, hooks) {
    im Hub, nur ohne Umweg. Der Zurueck-Knopf fuehrt in den Hub, damit man von
    dort weiterspielen kann. */
 
-export function starteOperatoren(themen, hooks) {
+export function starteOperatoren(themen, hooks, zurueck) {
   setzeThemenFarben(themen);
-  opRunde(themen, hooks);
+  opRunde(themen, hooks, zurueck);
 }
 
-export function starteBegriffe(themen, hooks) {
+/* Von der Startseite aus wird SOFORT gespielt, nicht erst ausgewaehlt: dort
+   steht woertlich "Ein Tipp startet direkt", und die Kategorienliste war
+   genau der Zwischenschirm, den das Versprechen ausschliesst. Gespielt wird
+   die wackligste Kategorie - dieselbe Wahl, die der grosse Knopf in der Liste
+   trifft. Ueber den Spiele-Hub bleibt die Liste erreichbar. */
+export function starteBegriffe(themen, hooks, zurueck) {
   setzeThemenFarben(themen);
-  bgHome(hooks);
+  if (!zurueck) return bgHome(hooks);
+  var kats = bgKategorien();
+  if (!kats.length) return zurueck();
+  bgRunde(kats[0].k.id, hooks, zurueck);
 }
 
 function spielKachel(icon, name, unter, heute, oeffne) {
@@ -330,7 +338,13 @@ function signalwortIn(text) {
   return treffer;
 }
 
-function opRunde(themen, hooks) {
+/* zurueck() ist der Weg hinaus: von der Spieleseite zurueck in den Hub, von
+   der Startseite direkt dorthin zurueck. Ohne den Parameter landete Rose nach
+   JEDEM Spiel im Hub "Kurze Runden" - einer Seite, die sie nie geoeffnet
+   hatte, wenn sie von der Tageskachel kam (Jennifer, 13.08.2026: "es gibt eine
+   redundante Page bei den Games, wo sie drauf zurueckgeworfen wird"). */
+function opRunde(themen, hooks, zurueck) {
+  var raus = zurueck || function () { hooks.spiele(); };
   var fehler = fehlerZaehler("operatoren");
   var gew = function (item) { return 1 + Math.min(3, fehler[item.id] || 0); };
 
@@ -348,7 +362,7 @@ function opRunde(themen, hooks) {
     teilA = teilA.concat(zieh(rest, OP_RUNDE - teilA.length - teilB.length, gew));
   }
   var runde = mischen(teilA.concat(teilB));
-  if (!runde.length) return hooks.spiele();
+  if (!runde.length) return raus();
 
   var index = 0, richtige = 0;
   var gepatzt = [];
@@ -356,7 +370,7 @@ function opRunde(themen, hooks) {
   function schritt() {
     leeren();
     app.style.removeProperty("--tfarbe-basis");
-    spielKopf("🎯 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
+    spielKopf("🎯 Signalwörter", raus, spickKnopf());
 
     var item = runde[index];
     var uhr = Date.now();   // eine Karte je Schirm, die Uhr darf hier loslaufen
@@ -421,7 +435,7 @@ function opRunde(themen, hooks) {
   function ende() {
     leeren();
     app.style.removeProperty("--tfarbe-basis");
-    spielKopf("🎯 Signalwörter", function () { hooks.spiele(); }, spickKnopf());
+    spielKopf("🎯 Signalwörter", raus, spickKnopf());
 
     var karte = el("div", "karte");
     var extra = null;
@@ -436,8 +450,8 @@ function opRunde(themen, hooks) {
       });
     }
     fazit(karte, richtige, runde.length,
-      function () { opRunde(themen, hooks); },
-      function () { hooks.spiele(); },
+      function () { opRunde(themen, hooks, zurueck); },
+      raus,
       extra);
     app.appendChild(karte);
   }
@@ -496,15 +510,14 @@ function begriffStand() {
   return s;
 }
 
-function bgHome(hooks) {
-  if (!BEGRIFFE) return hooks.spiele();
-  leeren();
-  app.style.removeProperty("--tfarbe-basis");
-  spielKopf("🃏 Begriffe-Blitz", function () { hooks.spiele(); });
-
+/* Die Kategorien mit ihrem Stand, wackligste zuerst. Eigene Funktion, seit die
+   Startseite direkt in die wackligste springt: zwei Sortierungen waeren zwei
+   Wahrheiten, und der grosse Knopf in der Liste soll dieselbe Kategorie starten
+   wie die Tageskachel. */
+function bgKategorien() {
+  if (!BEGRIFFE) return [];
   var stand = begriffStand();
   var sicher = function (p) { return (stand[p.id] ? stand[p.id].ok : 0) >= SICHER_AB; };
-
   var kats = (BEGRIFFE.kategorien || []).map(function (k) {
     var paare = paareVon(k.id);
     return {
@@ -514,7 +527,18 @@ function bgHome(hooks) {
     };
   }).filter(function (x) { return x.n > 0; });
   kats.sort(function (a, b) { return (a.s / a.n) - (b.s / b.n); });
-  if (!kats.length) return hooks.spiele();
+  return kats;
+}
+
+function bgHome(hooks, zurueck) {
+  var raus = zurueck || function () { hooks.spiele(); };
+  if (!BEGRIFFE) return raus();
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  spielKopf("🃏 Begriffe-Blitz", raus);
+
+  var kats = bgKategorien();
+  if (!kats.length) return raus();
 
   var info = el("div", "karte");
   info.appendChild(el("p", null, "Fünf Paare pro Runde. Sicher heißt: zweimal beim ersten Anlauf getroffen. Oben stehen die wackligsten Kategorien."));
@@ -522,7 +546,7 @@ function bgHome(hooks) {
 
   var schwach = el("button", "knopf", "⚡ Wackligste Kategorie starten");
   schwach.style.width = "100%";
-  schwach.addEventListener("click", function () { bgRunde(kats[0].k.id, hooks); });
+  schwach.addEventListener("click", function () { bgRunde(kats[0].k.id, hooks, zurueck); });
   app.appendChild(schwach);
 
   kats.forEach(function (x) {
@@ -541,7 +565,7 @@ function bgHome(hooks) {
     voll.style.width = anteil + "%";
     balken.appendChild(voll);
     karte.appendChild(balken);
-    karte.addEventListener("click", function () { bgRunde(x.k.id, hooks); });
+    karte.addEventListener("click", function () { bgRunde(x.k.id, hooks, zurueck); });
     app.appendChild(karte);
   });
 }
@@ -554,9 +578,9 @@ function setzeThemenFarben(themen) {
 }
 function themenFarbe(id) { return id ? THEMEN_FARBEN[id] : null; }
 
-function bgRunde(kat, hooks) {
+function bgRunde(kat, hooks, zurueck) {
   var alle = paareVon(kat);
-  if (!alle.length) return bgHome(hooks);
+  if (!alle.length) return bgHome(hooks, zurueck);
   var stand = begriffStand();
   // Gewicht (nie geuebt zuerst, unsicher am haeufigsten) kommt aus dem
   // geteilten Baustein — drueben zieht der Begriffe-Blitz mit denselben Zahlen.
@@ -625,9 +649,12 @@ function bgRunde(kat, hooks) {
       });
     }
     var karte = el("div", "karte");
+    /* Nach der Runde zurueck in die Kategorienliste - ausser Rose kam von der
+       Startseite, dann fuehrt "Fertig" dorthin zurueck. Sie ist sonst auf einer
+       Seite gelandet, die sie nie geoeffnet hatte. */
     fazit(karte, ok, paare.length,
-      function () { bgRunde(kat, hooks); },
-      function () { bgHome(hooks); },
+      function () { bgRunde(kat, hooks, zurueck); },
+      zurueck || function () { bgHome(hooks); },
       extra);
     fazitPlatz.appendChild(karte);
     karte.scrollIntoView({ block: "nearest" });

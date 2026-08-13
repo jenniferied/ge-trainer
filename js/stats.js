@@ -213,6 +213,7 @@ var ART_TEXT = {
   ueben: { icon: "🎯", name: "Übungsrunde" },
   mix: { icon: "🎲", name: "Gemischte Runde" },
   wiederholen: { icon: "🔁", name: "Wiederholen" },
+  wdh6: { icon: "🔂", name: "Sechs zum Wiederholen" },
   neu: { icon: "✨", name: "Fünf neue" },
   "mc-quer": { icon: "🔀", name: "MC-Quermischung" },
   klausur: { icon: "📄", name: "Klausur-Simulation" },
@@ -997,7 +998,12 @@ function uebeRunde(thema, afb, hooks) {
 export function zeigeMix(themen, hooks, nurWiederholung) {
   var pool = nurWiederholung ? wiederholPool(themen) : alleItems(themen);
   if (!pool.length) return hooks.home();
-  if (nurWiederholung) return mixRunde(pool, themen, hooks, "wdh", { anzahl: RUNDE, auswahl: "wacklig" });
+  /* Der GANZE Stapel, nicht die ersten zehn (Jennifer, 13.08.2026: die eine
+     Wiederholung ist die feste Sechser-Runde, die andere "infinite"). Bis dahin
+     stand hier RUNDE, und damit unterschieden sich die beiden Einstiege nur um
+     vier Aufgaben - ein Unterschied, den man nicht sieht und nicht erklaeren
+     kann. Jetzt heisst Wiederholen: bis der Stapel durch ist. */
+  if (nurWiederholung) return mixRunde(pool, themen, hooks, "wdh", { anzahl: pool.length, auswahl: "wacklig" });
 
   leeren();
   app.style.removeProperty("--tfarbe-basis");
@@ -1034,6 +1040,30 @@ export function zeigeNeu(themen, hooks) {
   mixRunde(pool, themen, hooks, "neu", { anzahl: 5, auswahl: "neu" });
 }
 
+/* Sechs zum Wiederholen - die abhakbare Tagesrunde aus dem Wackel-Stapel.
+   Kein Baukasten, gleiche Bauart wie zeigeNeu. Liegen weniger als sechs im
+   Stapel, laeuft sie eben kuerzer; die Kachel gilt dann trotzdem als getan,
+   denn mehr gab es nicht zu wiederholen. */
+export var WDH6 = 6;
+
+export function zeigeWiederhol6(themen, hooks) {
+  var pool = wiederholPool(themen);
+  if (!pool.length) return hooks.home();
+  mixRunde(pool, themen, hooks, "wdh6", { anzahl: Math.min(WDH6, pool.length), auswahl: "wacklig" });
+}
+
+/* Lief heute schon eine Sechser-Runde? Gleiche Form wie Spiele.heuteGespielt():
+   die Startseite fragt es, um die Tageskachel abzuhaken. Gezaehlt werden
+   Sitzungen, nicht einzelne Antworten - eine abgebrochene Runde ohne Antwort
+   wirft beendeRunde() ohnehin weg. */
+export function wiederhol6Heute() {
+  var d = new Date(); d.setHours(0, 0, 0, 0);
+  var t0 = d.getTime();
+  return (state.sitzungen || []).some(function (s) {
+    return s.art === "wdh6" && (s.ts || s.erstellt || 0) >= t0;
+  });
+}
+
 /* art ist der Schluessel, unter dem die Runde spaeter im Verlauf steht (ART_TEXT
    weiter oben). Er wandert mit in jeden Log-Eintrag, damit eine
    Wiederholen-Runde auch dann "Wiederholen" heisst, wenn zufaellig lauter
@@ -1049,6 +1079,19 @@ var MIX_TEXT = {
     art: "wiederholen",
     titel: "Wiederholen", unter: "Was zuletzt danebenlag",
     fertig: "Durch – genau die Stellen, die zuletzt gewackelt haben."
+  },
+  /* Die kurze Wiederhol-Runde mit fester Laenge (Jennifer, 13.08.2026: "mach
+     ein game 6 wiederholen und wiederholen (infinite) was anderes").
+
+     Der Unterschied zu wdh ist NICHT die Auswahl - beide ziehen aus demselben
+     Stapel - sondern das Ende. Sechs Aufgaben sind ein Pensum, das man heute
+     abhaken kann; der Stapel selbst ist nie leer zu kriegen, solange etwas
+     wieder danebengeht. Genau deshalb konnte die Tageskachel bisher nie fertig
+     werden (main.js tagesAufgaben, erledigt stand hart auf false). */
+  wdh6: {
+    art: "wdh6",
+    titel: "Sechs zum Wiederholen", unter: "Feste Runde aus dem Stapel",
+    fertig: "Sechs Wiederholungen durch - das Tagespensum an alten Bekannten steht."
   },
   neu: {
     art: "neu",

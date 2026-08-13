@@ -26,6 +26,10 @@ import * as MkChat from "./geteilt-maskottchen-chat.js";
 // Quelle rose/geteilte-styles/ki-blase.js).
 import * as KiBlase from "./geteilt-ki-blase.js";
 import * as Llm from "./llm.js";
+// Macht aus "Folie 29" und "Art. 11 Abs. 1 GG" anklickbare Chips. belegZeile()
+// ist der Ersatz fuer reichZeile() ueberall dort, wo eine Fundstelle im Text
+// stehen kann - auch in KI-Text, denn es baut DOM-Knoten und kein HTML.
+import * as Beleg from "./beleg.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
 import { tagesPilleKlasse, tagesText, tagesWorte, zeigAnstupser, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
@@ -63,10 +67,18 @@ function zeige(route, arg) {
        nicht gibt. EINE Schreibstelle fuer die Sitzung, das ist die Regel. */
     case "mix": return Stats.zeigeMix(themen, HOOKS, false);
     case "wiederholen": return Stats.zeigeMix(themen, HOOKS, true);
+    // Die feste Sechserrunde aus dem Wackel-Stapel - die abhakbare Tagesaufgabe,
+    // im Gegensatz zu "wiederholen", das den ganzen Stapel nimmt.
+    case "wdh6": return Stats.zeigeWiederhol6(themen, HOOKS);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
     case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
-    case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS);
-    case "spiel-bg": return Spiele.starteBegriffe(themen, HOOKS);
+    /* Die beiden Direkteinstiege der Tagesliste. Sie geben ihren Rueckweg mit:
+       wer von der Startseite kommt, landet nach dem Spiel wieder dort und nicht
+       im Hub "Kurze Runden", den er nie geoeffnet hat (Jennifer, 13.08.2026).
+       Ohne Rueckweg - also aus dem Hub oder aus klausurfrage.js - bleibt es
+       beim alten Verhalten, dort ist der Hub ja der Herkunftsort. */
+    case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS, function () { zeige("start"); });
+    case "spiel-bg": return Spiele.starteBegriffe(themen, HOOKS, function () { zeige("start"); });
     /* Fuenf neue: wie "wiederholen" ohne Baukasten, der Modus IST die
        Einstellung, es gibt keine Vorschaltseite. Wie bei "mix" und
        "wiederholen" schreibt runde() (stats.js) die Sitzung. */
@@ -1334,16 +1346,41 @@ function tagesAufgaben() {
       erledigt: !!heute.begriffe, geh: function () { zeige("spiel-bg"); }
     });
   }
-  // Kein Spaced-Repetition-Termin, also auch kein "faellig": gezaehlt wird, was
-  // beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg — und damit
-  // auch der Posten in der Zahl, denn nichts zu wiederholen ist nichts Offenes.
+  /* Kein Spaced-Repetition-Termin, also auch kein "faellig": gezaehlt wird, was
+     beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg — und damit
+     auch der Posten in der Zahl, denn nichts zu wiederholen ist nichts Offenes.
+
+     ZWEI EINSTIEGE, ZWEI VERSCHIEDENE DINGE (Jennifer, 13.08.2026):
+
+       🔂 Sechs zum Wiederholen — feste Runde, heute abhakbar. DAS ist die
+          Tagesaufgabe. Vorher stand hier "erledigt: false" hart im Code: die
+          Zeile blieb den ganzen Tag offen, egal wie viel Rose wiederholt hat,
+          und verschwand erst, wenn der Stapel leer war. Leer wird er aber nur,
+          wenn alles sitzt - eine Aufgabe, die man nicht erfuellen kann.
+       🔁 Ganzer Stapel — laeuft, bis nichts mehr da ist. Kein Tagespensum,
+          sondern das Angebot fuer einen langen Nachmittag.
+
+     Der ganze Stapel steht nur dann als zweite Zeile da, wenn er groesser ist
+     als die Sechserrunde. Sonst waeren es zwei Zeilen fuer dieselbe Handlung. */
   var w = Stats.wiederholPool(themen).length;
   if (w) {
+    var sechs = Math.min(Stats.WDH6, w);
     liste.push({
-      key: "wdh", icon: "♻️", titel: w + (w === 1 ? " Frage" : " Fragen") + " zum Wiederholen",
-      kurz: "Wiederholen", klein: "zuletzt danebengelegen",
-      erledigt: false, geh: function () { zeige("wiederholen"); }
+      key: "wdh6", icon: "🔂", titel: "Sechs zum Wiederholen",
+      kurz: "Sechs wiederholen",
+      klein: sechs + (sechs === 1 ? " Frage" : " Fragen") + " aus deinem Stapel · feste Runde",
+      erledigt: Stats.wiederhol6Heute(), geh: function () { zeige("wdh6"); }
     });
+    if (w > Stats.WDH6) {
+      liste.push({
+        key: "wdh", icon: "🔁", titel: "Ganzer Stapel: " + w + (w === 1 ? " Frage" : " Fragen"),
+        kurz: "Ganzer Stapel", klein: "alles, was zuletzt danebenlag · ohne festes Ende",
+        // Kein Tagespensum: der Stapel ist ein Angebot, keine Aufgabe. Damit er
+        // die Offen-Zahl nicht dauerhaft hochhaelt, gilt er als erledigt, sobald
+        // die Sechserrunde heute gelaufen ist.
+        erledigt: Stats.wiederhol6Heute(), geh: function () { zeige("wiederholen"); }
+      });
+    }
   }
   return liste;
 }
@@ -1683,7 +1720,9 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter) {
       if (st) erk.appendChild(st);
       var text = el("div", "text");
       text.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast – merk dir:"));
-      text.appendChild(el("div", null, f.erklaerung));
+      // Die MC-Erklaerungen tragen ihre Fundstelle im Text ("Folie 10, Pitsch &
+      // Thuemmel 2019, 12") - hier wird sie anklickbar.
+      text.appendChild(Beleg.belegZeile("div", f.erklaerung, thema.id));
       erk.appendChild(text);
       karte.appendChild(erk);
 
@@ -2241,8 +2280,8 @@ function freiKarte(thema, f, opts) {
         if (!v) return;
         var li = el("li", "treffer-" + (v.getroffen || "nein"));
         li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[v.getroffen] || "–"));
-        li.appendChild(reichZeile("span", v.stichpunkt || "", "was"));
-        if (v.kommentar) li.appendChild(reichZeile("div", v.kommentar, "dazu"));
+        li.appendChild(Beleg.belegZeile("span", v.stichpunkt || "", thema.id, "was"));
+        if (v.kommentar) li.appendChild(Beleg.belegZeile("div", v.kommentar, thema.id, "dazu"));
         ul.appendChild(li);
       });
       teile.push(ul);
@@ -2252,7 +2291,10 @@ function freiKarte(thema, f, opts) {
     if (Array.isArray(erg.randkommentare)) saetze = saetze.concat(erg.randkommentare);
     if (erg.gesamtkommentar) saetze.push(erg.gesamtkommentar);
     else if (erg.kommentar) saetze.push(erg.kommentar);
-    if (saetze.length) teile.push(reichZeile("div", saetze.join(" "), "ki-fazit"));
+    // Auch der KI-Text bekommt Chips - die Function nennt Fundstellen als
+    // "Folie N". belegZeile baut Knoten, kein HTML: dieselbe Linie wie
+    // reichFuellen, es gibt keinen innerHTML-Pfad fuer Modelltext.
+    if (saetze.length) teile.push(Beleg.belegZeile("div", saetze.join(" "), thema.id, "ki-fazit"));
 
     var wert = kiEinschaetzung(erg);
     if (wert) {
@@ -2284,7 +2326,7 @@ function freiKarte(thema, f, opts) {
     var geteilt = stichpunkteTeilen(f);
     box.appendChild(el("h3", null, "📌 Das gehört in die Antwort"));
     var ul = el("ul", "stichpunkte");
-    geteilt.kern.forEach(function (p) { ul.appendChild(reichZeile("li", p)); });
+    geteilt.kern.forEach(function (p) { ul.appendChild(Beleg.belegZeile("li", p, thema.id)); });
     box.appendChild(ul);
 
     // Hintergrund steht unter eigener Ueberschrift und nicht mehr als sechster
@@ -2292,18 +2334,18 @@ function freiKarte(thema, f, opts) {
     if (geteilt.zusatz.length) {
       box.appendChild(el("h3", null, "🔎 Nur zur Einordnung"));
       var ulz = el("ul", "stichpunkte zusatz");
-      geteilt.zusatz.forEach(function (p) { ulz.appendChild(reichZeile("li", p)); });
+      geteilt.zusatz.forEach(function (p) { ulz.appendChild(Beleg.belegZeile("li", p, thema.id)); });
       box.appendChild(ulz);
     }
 
     box.appendChild(el("h3", null, "✍️ So könnte es klingen"));
     // Zetteloptik und Handschrift wie bei Roses eigenem Blatt (papier.css).
-    box.appendChild(reichZeile("div", f.muster, "muster muster-blatt"));
+    box.appendChild(Beleg.belegZeile("div", f.muster, thema.id, "muster muster-blatt"));
 
     if (f.tipp) {
       var t = el("div", "tipp");
       t.appendChild(el("b", null, "💡 Tipp: "));
-      t.appendChild(reichZeile("span", f.tipp));
+      t.appendChild(Beleg.belegZeile("span", f.tipp, thema.id));
       box.appendChild(t);
     }
 

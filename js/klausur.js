@@ -17,6 +17,8 @@ import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren
   starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 import { syncSession } from "./sync.js";
+// Beleg-Chips: aus "Folie 29" im Text wird ein Sprung in den Folien-Viewer.
+import * as Beleg from "./beleg.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
 // das Modul nie ausgewertet und der KI-Pfad waere still tot (kein Import-Zyklus,
 // llm.js haengt nur an config.js).
@@ -1190,7 +1192,9 @@ function bewertungsBlock(a, aufAenderung) {
   var ul = el("ul", "kl-stich");
   stichpunkte.forEach(function (sp, i) {
     var li = el("li");
-    var txt = el("span", "sp-text", sp);
+    // Fundstellen im Stichpunkt anklickbar machen (beleg.js). a.thema traegt
+    // die Themen-Id, dieselbe, die auch an die KI-Korrektur geht.
+    var txt = Beleg.belegZeile("span", sp, a.thema, "sp-text");
     li.appendChild(txt);
     var wahl = el("div", "wahl");
     [
@@ -1222,13 +1226,13 @@ function bewertungsBlock(a, aufAenderung) {
   if (f.muster) {
     var m = el("div", "kl-muster");
     m.appendChild(el("h3", null, "So könnte es klingen"));
-    m.appendChild(el("div", null, f.muster));
+    m.appendChild(Beleg.belegZeile("div", f.muster, a.thema));
     box.appendChild(m);
   }
   if (f.tipp) {
     var t = el("div", "kl-muster");
     t.appendChild(el("h3", null, "Tipp"));
-    t.appendChild(el("div", null, f.tipp));
+    t.appendChild(Beleg.belegZeile("div", f.tipp, a.thema));
     box.appendChild(t);
   }
   return box;
@@ -1470,8 +1474,8 @@ function korrekturBlatt(a) {
   }
 
   if (a.kiNotiz) {
-    var kn = el("p", "kl-randnotiz");
-    kn.textContent = a.kiNotiz;
+    // KI-Text mit Chips, aber ohne innerHTML - belegZeile baut Knoten.
+    var kn = Beleg.belegZeile("p", a.kiNotiz, a.thema, "kl-randnotiz");
     b.appendChild(kn);
   }
 
@@ -1873,7 +1877,7 @@ function starteMcQuer(pool, wahl) {
         if (st) erk.appendChild(st);
         var txt = el("div", "text");
         txt.appendChild(el("div", "titel", richtig ? "Genau!" : "Fast - merk dir:"));
-        txt.appendChild(el("div", null, f.erklaerung));
+        txt.appendChild(Beleg.belegZeile("div", f.erklaerung, t.id));
         erk.appendChild(txt);
         karte.appendChild(erk);
 
