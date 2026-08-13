@@ -553,7 +553,45 @@
   background-image: repeating-linear-gradient(to bottom,
     transparent 0, transparent calc(var(--lin-hoehe) - 1px),
     var(--lineatur) calc(var(--lin-hoehe) - 1px), var(--lineatur) var(--lin-hoehe));
+  background-position: 0 var(--lin-versatz, 0px);
 }
+
+/* ---------- Die Lineatur an der Grundlinie ausrichten ----------
+   Jennifer, 13.08.2026: "a lot of the times the text is exactly on the line
+   not on the white part of the lined paper". Stimmt, und es lag am Blatt.
+
+   Der Gradient oben beginnt an der OBERKANTE des Innenraums, der Text sitzt
+   aber dort, wo Polster, halbe Durchschuss-Zeile und Schriftmetrik ihn
+   hinstellen. Beides hat nichts miteinander zu tun, und die Differenz ist
+   gemessen worden statt gerechnet (Strut auf der Grundlinie, Werte unten).
+   Ohne Korrektur laeuft die Linie irgendwo durch das Zeilenbild.
+
+   ZWEI VERSCHIEDENE SYMPTOME, EINE URSACHE:
+     .muster-blatt      Grundlinie 36 px, Linie auf 29 px  -> die Linie
+                        schneidet 7 px ueber der Grundlinie durch die
+                        Buchstaben. Das ist der Fall, den Jennifer gesehen hat.
+     .frei-blatt-text   Grundlinie 22 px, naechste Linie 29 px -> der Text
+                        schwebt 7 px ueber seiner Linie statt auf ihr zu sitzen.
+     .kl-text/.kl-schrift  Grundlinie 27,5 px, Linie 29 px -> 1,5 px daneben,
+                        mit blossem Auge nicht zu sehen. BLEIBT UNANGETASTET:
+                        das ist die Flaeche, auf der Rose mit dem Stift
+                        schreibt, und 1,5 px sind kein Grund, daran zu ruehren.
+
+   Der Versatz verschiebt die Lineatur so weit nach unten, dass eine Linie
+   exakt auf der Grundlinie sitzt - so, wie man auf liniertem Papier schreibt.
+   Beim frei-blatt sind 23 px dasselbe wie -7 px, weil sich das Muster alle
+   --lin-hoehe wiederholt; positiv geschrieben, damit niemand ueber ein
+   negatives calc() stolpert.
+
+   WER SCHRIFT ODER ZEILENHOEHE AENDERT, MUSS NEU MESSEN. Die Zahlen gelten
+   fuer Caveat in 1.3 rem bei --lin-hoehe 30 px. Nachmessen geht so: einen
+   0x0-Span mit vertical-align: baseline ans Ende des Textes haengen, seine
+   Oberkante gegen die Blatt-Innenkante messen, dann
+   versatz = (grundlinie + 1) % lin-hoehe. Genau das tut auch
+   werkstatt/arabische-schriften.html, dort zur Laufzeit fuer jeden
+   Reglerstand. */
+.muster-blatt { --lin-versatz: 7px; }
+.frei-blatt-text { --lin-versatz: 23px; }
 
 /* "So könnte es klingen" ist das ZWEITE Blatt neben Roses eigenem (Jennifer,
    13.08.2026: "so könnte es aussehen dann auch mit Zetteloptik und Schrift,
@@ -571,6 +609,11 @@
       transparent 0, transparent calc(var(--lin-hoehe) - 1px),
       var(--lineatur) calc(var(--lin-hoehe) - 1px), var(--lineatur) var(--lin-hoehe)),
     linear-gradient(to right, transparent 17px, rgba(179,54,43,.28) 17px, rgba(179,54,43,.28) 18px, transparent 18px);
+  /* Zwei Ebenen, darum zwei Positionen: die Lineatur wandert um den Versatz
+     nach unten, der Heftrand bleibt, wo er ist. Ohne diese Zeile gewaenne die
+     einwertige background-position aus der Regel darueber und der Heftrand
+     ruckte mit. */
+  background-position: 0 var(--lin-versatz, 0px), 0 0;
 }
 .frei-blatt-aendern {
   font: inherit; font-family: "Karla", system-ui, sans-serif;
