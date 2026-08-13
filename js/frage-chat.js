@@ -119,8 +119,17 @@ export function chatSheet(adapter) {
   }
   var notiz = null;   // fluechtiger Hinweis, gehoert nie in den Verlauf
 
+  /* Alles, was durch blase() geht, steht im echten Verlauf - und in den kommen
+     nur Roses Frage und die Antwort, die adapter.senden() aus dem Netz
+     mitgebracht hat (siehe der Kommentar bei verlauf). Die Assistant-Zeile ist
+     hier also IMMER Modelltext und bekommt ki-live, die Pixelschrift.
+
+     Die Stoerungs- und Budget-Saetze brauchen dafuer nichts: sie stehen als
+     notiz in malen() und laufen bewusst an blase() vorbei - genau deshalb, weil
+     sie kein Gespraechsinhalt sind. Sie bleiben damit von allein normal
+     gesetzt, so wie es die Regel verlangt. */
   function blase(m) {
-    var wer = m.role === "user" ? "du" : "ki";
+    var wer = m.role === "user" ? "du" : "ki ki-live";
     var b = el("div", "fq-msg " + wer);
     if (m.role === "user") b.textContent = m.content;
     else if (typeof adapter.kiKnoten === "function") b.appendChild(adapter.kiKnoten(m.content));
@@ -200,6 +209,15 @@ export function chatSheet(adapter) {
     box.scrollTop = box.scrollHeight;
 
     adapter.senden(verlauf.slice(), function (teil) {
+      /* Ab dem ersten Stueck steht hier Modelltext, also ki-live - und zwar
+         SCHON WAEHREND DES STROMS. Ohne diese Zeile bekaeme die Blase die
+         Klasse erst, wenn malen() sie am Ende neu baut: die Antwort liefe in
+         normaler Schrift ein und spraenge im Moment des Fertigwerdens auf
+         Pixelschrift um. Bei 360 px sieht das wie ein Fehler aus.
+
+         Angelegt wird die Blase bewusst OHNE die Klasse: bis das erste Stueck
+         da ist, stehen darin nur die drei Punkte, und die sind die App. */
+      if (teil) live.className = "fq-msg ki fq-live ki-live";
       // Waehrend des Stroms bewusst reiner Text: die Fundstellen-Knoepfe werden
       // EINMAL am Ende gebaut, wenn der Satz fertig ist. Sonst entstuende bei
       // jedem Stueck ein halber Chip ("Folie 1" statt "Folie 12").

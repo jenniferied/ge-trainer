@@ -1107,7 +1107,17 @@ export function transkriptPruefen(text, opts) {
   var d = el("div", "kl-dialog");
   d.appendChild(el("h3", null, "So habe ich das gelesen"));
   d.appendChild(el("p", null, o.hinweis || "Ändere frei, was danebenlag. Erst wenn du bestätigst, wird es übernommen."));
+  /* Was hier steht, hat transkribiere() gerade aus Roses Blatt gelesen - also
+     Modelltext, also Pixelschrift.
+
+     ZWEI DINGE, DIE DAGEGEN SPRECHEN, damit sie nicht neu erwogen werden
+     muessen: das Feld ist eingabefaehig, ab dem ersten Tastendruck steht Roses
+     eigener Text in Pixelschrift da. Und bis heute war es bewusst in Caveat
+     gesetzt, also so, wie sie selbst geschrieben hat. Die Regel ist trotzdem
+     eindeutig - erzeugt hat den Satz das Modell. Umgedreht ist es diese eine
+     Klasse und die Regel in papier.css. */
   var ta = document.createElement("textarea");
+  ta.className = "ki-live";
   ta.value = text;
   d.appendChild(ta);
   var reihe = el("div", "reihe");
@@ -1474,8 +1484,17 @@ function korrekturBlatt(a) {
   }
 
   if (a.kiNotiz) {
-    // KI-Text mit Chips, aber ohne innerHTML - belegZeile baut Knoten.
-    var kn = Beleg.belegZeile("p", a.kiNotiz, a.thema, "kl-randnotiz");
+    /* KI-Text mit Chips, aber ohne innerHTML - belegZeile baut Knoten.
+
+       ki-live, weil hier ausschliesslich Modelltext steht: kiUebernehmen()
+       setzt a.kiNotiz allein aus erg.randkommentare und erg.gesamtkommentar
+       zusammen, kein einziger Satz davon ist hartcodiert.
+
+       Die Randnotiz ist KEINE .chat-msg, die geteilte Regel greift also nicht -
+       die Groesse steht als eigene Regel in papier.css. Und anders als im Chat
+       ueberlebt die Pixelschrift hier den Neustart: a.kiNotiz liegt im
+       Lernstand, sie wird bei jedem Zeichnen neu gesetzt. */
+    var kn = Beleg.belegZeile("p", a.kiNotiz, a.thema, "kl-randnotiz ki-live");
     b.appendChild(kn);
   }
 

@@ -160,6 +160,30 @@ function istText(x) {
   return typeof x === "string" && x.replace(/\s+/g, "") !== "";
 }
 
+/* ---------- Pixelschrift: nur, was das Modell GERADE gesagt hat ----------
+
+   Die Achse laeuft nicht zwischen "Kreatur" und "App", sondern zwischen live
+   erzeugtem und fest eingebautem Text. Pixelig ist allein die Antwort, die
+   adapter.senden() aus dem Netz mitgebracht hat. Normal bleiben: Roses eigene
+   Zeilen, der Name ueber der Blase, die Schnellantworten (die stehen als
+   Strings im Adapter), der Fallback und der Budget-Satz. Die drei letzten
+   sehen im Sheet aus wie eine Antwort, sind aber hartcodiert - genau da wird
+   der Fehler gemacht.
+
+   Getragen wird die Unterscheidung an der Verlaufszeile, nicht am DOM-Knoten:
+   malen() raeumt bei JEDER Nachricht den ganzen Kasten leer und baut ihn neu
+   auf. Eine Klasse, die nur am Knoten haengt, waere nach der naechsten Frage
+   wieder weg - die erste Antwort spraenge dann mitten im Gespraech von Pixel
+   auf normal zurueck.
+
+   Die Zeilen tragen dafuer ein drittes Feld live. Es ist reine Optik und darf
+   den Verlauf an keiner Stelle verlassen, an der er weitergereicht wird:
+   nurZeile() streift es ab, bevor der Verlauf ins Modell oder in den Speicher
+   geht. Sonst haengt ein Anzeigefeld im Prompt und im Lernstand. */
+function nurZeile(m) {
+  return { role: m.role, content: m.content };
+}
+
 /* ---------- Verlauf, geraetelokal und tagesfrisch ----------
    In localStorage, damit ein versehentliches Wegwischen des Sheets das
    Gespraech nicht verschluckt. NICHT im Lernstand, nicht im Snapshot, nicht in
@@ -189,7 +213,10 @@ function ladeVerlauf(key) {
 function sichereVerlauf(key, verlauf) {
   if (!key) return;
   try {
-    localStorage.setItem(key, JSON.stringify({ tag: heuteTag(), m: verlauf.slice(-MAX_NACHRICHTEN) }));
+    localStorage.setItem(key, JSON.stringify({
+      tag: heuteTag(),
+      m: verlauf.slice(-MAX_NACHRICHTEN).map(nurZeile),
+    }));
   } catch (e) { /* voller Speicher o.ae. — ein Chatverlauf ist es nicht wert */ }
 }
 
@@ -496,7 +523,19 @@ export function chatOeffnen(adapter) {
       if (duSeite) av.textContent = ICH_BILD;
       else av.innerHTML = kreaturBild;
     }
-    reihe.appendChild(av);
+    /* Der Hof traegt das Glimmen; .chat-avatar selbst hat overflow: hidden und
+       5,5 px Schrift und kann es nicht tragen (ausfuehrlich in ki-blase.js bei
+       hof()). Er kommt an BEIDE Seiten, obwohl nur die Kreatur glimmt: eine
+       Reihe, ein Aufbau. Welche Seite leuchtet, entscheidet allein das CSS
+       ueber .chat-reihe.du.
+
+       hat-bild nur bei mitKopf: die Avatarspalte bleibt auch bei Folgeblasen
+       stehen, damit sie buendig untereinander liegen, ist dort aber LEER. Ohne
+       den Schalter stuende neben jeder Folgeblase ein waagerechter
+       Lichtstreifen statt eines Scheins um eine Figur. */
+    var kranz = el("div", "chat-avatar-hof" + (mitKopf ? " hat-bild" : ""));
+    kranz.appendChild(av);
+    reihe.appendChild(kranz);
 
     var spalte = el("div", "chat-spalte");
     /* Der Name steht nur an der Kreatur. Roses eigene Blasen bekommen keinen —
@@ -515,15 +554,21 @@ export function chatOeffnen(adapter) {
     for (var i = 0; i < verlauf.length; i++) {
       var m = verlauf[i];
       var reihe = reiheBauen(m.role, m.role !== vorher);
-      reihe.spalte.appendChild(el("div", "chat-msg " + (m.role === "user" ? "du" : "ki"), m.content));
+      /* ki-live nur an echten Modellantworten, siehe nurZeile() weiter oben.
+         Roses Zeilen und alle hartcodierten Saetze kommen ohne. */
+      var art = m.role === "user" ? "du" : (m.live ? "ki ki-live" : "ki");
+      reihe.spalte.appendChild(el("div", "chat-msg " + art, m.content));
       box.appendChild(reihe);
       vorher = m.role;
     }
     box.scrollTop = box.scrollHeight;
   }
 
-  function sagen(rolle, text) {
-    verlauf.push({ role: rolle, content: text });
+  /* live ist optional und heisst: dieser Satz kam gerade aus dem Netz. Wer den
+     dritten Parameter weglaesst, bekommt normale Schrift - und das ist bei
+     allen Aufrufern hier ausser einem richtig so. */
+  function sagen(rolle, text, live) {
+    verlauf.push(live ? { role: rolle, content: text, live: true } : { role: rolle, content: text });
     if (verlauf.length > MAX_NACHRICHTEN) verlauf = verlauf.slice(-MAX_NACHRICHTEN);
     /* Zwei Wege, und die App entscheidet welchen — nicht dieses Modul.
        Mit merken() geht die Zeile in den Lernstand und damit ueber den Sync auf
@@ -532,7 +577,14 @@ export function chatOeffnen(adapter) {
        Wichtig fuer die Arbeitsteilung: das Modul faengt hier NICHT selbst an,
        den Lernstand anzufassen — es ruft eine Funktion, die die App
        hereingereicht hat. snapshot() und signatur() bleiben Sache der App, wie
-       im Kopf dieser Datei versprochen. */
+       im Kopf dieser Datei versprochen.
+
+       merken() bekommt ABSICHTLICH kein drittes Argument fuer live. Ein
+       Anzeigefeld gehoert nicht in den Lernstand, und ein optionaler dritter
+       Parameter, den nur eine der beiden Apps speichert, waere ein halber
+       Vertrag. Die Folge ist bekannt und in Ordnung: nach dem Neuladen steht
+       eine frueher live erzeugte Antwort wieder in normaler Schrift da - sie
+       ist dann auch nicht mehr live, sondern Verlauf. */
     if (typeof adapter.merken === "function") adapter.merken(rolle, text);
     else sichereVerlauf(adapter.verlaufKey, verlauf);
     malen();
@@ -587,7 +639,8 @@ export function chatOeffnen(adapter) {
     box.appendChild(warte);
     box.scrollTop = box.scrollHeight;
 
-    var nachrichten = verlauf.slice(-MAX_NACHRICHTEN);
+    /* Ohne nurZeile() reiste das Anzeigefeld live in den Prompt. */
+    var nachrichten = verlauf.slice(-MAX_NACHRICHTEN).map(nurZeile);
     var versprechen;
     try {
       versprechen = adapter.senden ? adapter.senden(nachrichten, st) : Promise.resolve(null);
@@ -602,8 +655,14 @@ export function chatOeffnen(adapter) {
       if (warte.parentNode) warte.parentNode.removeChild(warte);
       /* Leer oder nur Leerzeichen wird GENAUSO behandelt wie null. Das alte
          "(keine Antwort)" aus dem Fragenchat ist genau die leere Blase, die
-         hier verboten ist. */
-      sagen("assistant", istText(antwort) ? String(antwort).trim() : fallbackText());
+         hier verboten ist.
+
+         Genau diese Verzweigung ist die EINZIGE Stelle im ganzen Modul, an der
+         ki-live entsteht: echt ist true, wenn wirklich etwas aus dem Netz kam.
+         Im else-Zweig steht ein Satz aus der App - der bleibt normal gesetzt,
+         auch wenn er an derselben Stelle in derselben Blase erscheint. */
+      var echt = istText(antwort);
+      sagen("assistant", echt ? String(antwort).trim() : fallbackText(), echt);
       laeuft = false;
       sendKnopf.disabled = false;
     });

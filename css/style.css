@@ -461,6 +461,49 @@ p { margin: 0 0 var(--sp-3); }
 .ki-fazit { margin: var(--sp-2) 0; }
 .ki-urteil .ki-treffer li:first-child { border-top: none; padding-top: 0; }
 
+/* ---------------------------------------------------------------------------
+   PIXELSCHRIFT IN DER URTEILS-BLASE (14.08.2026)
+
+   Die Blase selbst bekommt ki-live in main.js, die Schrift kommt aus
+   geteilt.css. Hier stehen nur die Stellen, die eine EIGENE font-size tragen
+   und die Vererbung deshalb gar nicht erreicht: font-size wird nicht vom
+   Elternteil durchgereicht, sobald eine Regel das Kind selbst trifft. Ohne die
+   zwei Zeilen unten stuende die Liste in Pixelschrift auf .92rem da - also in
+   der Groesse, die fuer Karla gerechnet ist, und damit ein Sechstel zu klein.
+
+   Der Umrechnungsfaktor ist nicht neu gewaehlt, sondern derselbe wie in
+   geteilt.css: .92 -> 1.08 (Faktor 1,174), also .85 -> 1.00. Alle Pixelschrift
+   der App sitzt damit auf EINER Eichung; wer sie spaeter nachzieht, zieht sie
+   an einer Stelle nach.
+
+   Die Blase ist absichtlich nicht in Modelltext und App-Text zerlegt: die
+   Stichpunkte in .ki-treffer stammen aus dem Fragenkorpus und kommen nur durch
+   das Modell zurueck, die Kommentare daneben sind echter Modelltext. Zwei
+   Schriften innerhalb einer Liste sehen schlechter aus als eine durchgehende. */
+.chat-msg.ki-live .ki-treffer li { font-size: 1.08rem; }
+.chat-msg.ki-live .ki-treffer .dazu { font-size: 1rem; }
+
+/* Die eine Ausnahme, und die ist hart: "Ich lese es so: ... entscheiden tust
+   du." steht als String in main.js (kiUrteilZeigen). Der Satz sitzt zwar in
+   einer Live-Blase, ist aber die App, die spricht - und die Regel sagt: was in
+   der App steht, bleibt normal gesetzt. Ausdruecklich mit eigener
+   font-family-Angabe statt inherit: inherit holte sich hier die Pixelschrift
+   der Blase. */
+.chat-msg.ki-live .ki-vorschlag {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .88rem; line-height: 1.5;
+}
+
+/* Der Chat zur Frage (frage-chat.js) hat eigene Blasen und wird von der
+   geteilten Regel nicht getroffen. Grundgroesse und Zeilenhoehe sind dieselben
+   wie bei .chat-msg (.92rem/1.5), also gilt hier dieselbe Umrechnung. Der
+   Stoerungshinweis .fq-notiz bekommt ki-live nie - er laeuft in malen() an
+   blase() vorbei. */
+.fq-msg.ki-live {
+  font-family: 'VT323', 'Noto Naskh Arabic', ui-monospace, monospace;
+  font-size: 1.08rem; line-height: 1.3;
+}
+
 .loesung { border-top: 1px dashed var(--line); margin-top: var(--sp-3); padding-top: var(--sp-3); }
 .loesung h3 { margin-bottom: var(--sp-2); }
 .stichpunkte { margin: 0 0 var(--sp-3); padding-left: 1.25em; }

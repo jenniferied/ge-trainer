@@ -49,6 +49,24 @@
    an dem jemand die Blasen-Optik nachziehen muesste.
 
    ---------------------------------------------------------------------------
+   PIXELIG IST NUR, WAS DAS MODELL GERADE GESAGT HAT (13.08.2026)
+
+   Die Achse laeuft NICHT zwischen "KI-Bereich" und "App-Bereich", sondern
+   zwischen live erzeugtem und fest eingebautem Text:
+
+     pixelig   was zur Laufzeit aus dem Netz kam und morgen anders lautet -
+               die Korrektur, die Chatantwort, die gelesene Handschrift
+     normal    alles, was in der App steht: der Name ueber der Blase, die
+               Statuszeilen ("liest mit ..."), die Musterloesung, jeder Knopf -
+               und ausdruecklich auch die vorgefertigten Ersatzsaetze, wenn
+               kein Netz da ist oder das Tagesbudget aufgebraucht ist
+
+   Darum gibt es KEINE Blanko-Regel auf .chat-msg.ki: diese Klasse traegt auch
+   die Statuszeilen. Die Pixelschrift haengt an der Zusatzklasse ki-live, und
+   die setzt nur, wer opts.live uebergibt. blaseSagen() setzt sie nie - das ist
+   die Statuszeilen-Funktion.
+
+   ---------------------------------------------------------------------------
    FALLBACK-ZEICHEN
 
    Fehlt das Maskottchen (kein Stand, Fehler beim Zeichnen, eine App ohne
@@ -79,6 +97,31 @@ function funkePre() {
   return p;
 }
 
+/* Der Hof, in dem das Glimmen sitzt.
+
+   WARUM EIN EIGENES ELEMENT UND NICHT EIN SCHEIN AM <pre>: .chat-avatar steht
+   auf overflow: hidden, einer harten 44-px-Spalte und 5,5 px Schrift (die drei
+   Zahlen sind in trainer-muster.css bei .chat-avatar begruendet). Ein
+   aeusserer box-shadow wird dort abgeschnitten, ein text-shadow innen macht
+   aus der 5,5-px-Blockgrafik Matsch. Der Schein braucht also eine eigene
+   Flaeche um das <pre> herum.
+
+   ECHTES LAYOUTRISIKO, deshalb hier und nicht nur im CSS notiert: .chat-avatar
+   war das direkte Flex-Kind der Reihe und trug flex: 0 0 44px. Der Hof
+   uebernimmt genau das (siehe .chat-avatar-hof in trainer-muster.css) - ohne
+   diese Uebernahme rutscht die ganze Blase. Der Funke bekommt denselben Hof,
+   sonst haette die Reihe je nach Bild zwei verschiedene Breiten.
+
+   hat-bild sagt dem CSS, dass wirklich eine Figur drinsteht. Hier ist das immer
+   so (notfalls der Funke); im Chat gibt es auch leere Avatarspalten, und ohne
+   den Schalter stuende neben jeder Folgeblase ein waagerechter Lichtstreifen. */
+function hof(kind) {
+  var h = document.createElement("div");
+  h.className = "chat-avatar-hof hat-bild";
+  h.appendChild(kind);
+  return h;
+}
+
 /* Baut die Blase.
 
    opts:
@@ -88,7 +131,15 @@ function funkePre() {
                  keine Namenszeile.
      text        Einfacher Text fuer die Blase. Alternativ:
      inhalt      Node oder Array von Nodes - fuer Blasen mit Liste, Tipp usw.
-     klasse      Zusatzklasse an der Reihe, zum Anhaengen von App-Regeln.
+     klasse      Zusatzklasse an der REIHE, zum Anhaengen von App-Regeln.
+     live        true, wenn in der Blase steht, was das Modell GERADE erzeugt
+                 hat. Setzt ki-live an der Blase und damit die Pixelschrift.
+                 Zwei Dinge, die man hier falsch macht:
+                   - klasse: "ki-live" tut es NICHT. Die Klasse muss an der
+                     Blase haengen, nicht an der Reihe, sonst wird der Name
+                     ueber der Blase mitpixelig - und der kommt aus der App.
+                   - Fuer eine Statuszeile oder einen Ersatzsatz aus der App
+                     bleibt live weg, auch wenn die Blase daneben live ist.
 
    Rueckgabe: das fertige Element. Wer den Inhalt spaeter tauschen will, nimmt
    das .chat-msg-Kind aus blase.inhaltEl. */
@@ -104,7 +155,7 @@ export function kiBlase(opts) {
   } else if (typeof o.avatarHtml === "string") {
     bild = o.avatarHtml;
   }
-  reihe.appendChild(bild ? pre(bild) : funkePre());
+  reihe.appendChild(hof(bild ? pre(bild) : funkePre()));
 
   var spalte = document.createElement("div");
   spalte.className = "chat-spalte";
@@ -118,7 +169,7 @@ export function kiBlase(opts) {
   var msg = document.createElement("div");
   // reich = die Blase traegt Elemente statt eines Absatzes. Ohne das Zuruecksetzen
   // von white-space (chat-msg.ki steht auf pre-wrap) reisst jede Liste darin auf.
-  msg.className = "chat-msg ki" + (o.inhalt ? " reich" : "");
+  msg.className = "chat-msg ki" + (o.inhalt ? " reich" : "") + (o.live ? " ki-live" : "");
   if (o.inhalt) {
     var teile = Array.isArray(o.inhalt) ? o.inhalt : [o.inhalt];
     teile.forEach(function (t) { if (t) msg.appendChild(t); });
@@ -133,7 +184,13 @@ export function kiBlase(opts) {
 }
 
 /* Nur den Text einer bestehenden Blase austauschen - fuer Statuszeilen, die
-   von "liest gerade" auf "fertig" wechseln, ohne dass der Avatar neu aufploppt. */
+   von "liest gerade" auf "fertig" wechseln, ohne dass der Avatar neu aufploppt.
+
+   Die Zeile unten setzt ki-live nicht nur nicht, sie NIMMT SIE WEG: className
+   wird komplett neu gesetzt. Das ist gewollt. Wer hier landet, ersetzt
+   Modelltext durch einen Satz aus der App, und der gehoert in die normale
+   Schrift. Wer eine Blase live NACHtragen will, setzt die Klasse selbst an
+   blase.inhaltEl - oder baut sie gleich mit kiBlase({ live: true }). */
 export function blaseSagen(blase, text) {
   if (!blase || !blase.inhaltEl) return;
   blase.inhaltEl.className = "chat-msg ki";

@@ -265,6 +265,26 @@
   border-left: 2px solid var(--rotstift); padding-left: 8px;
   margin: 8px 0 0;
 }
+/* Die Randnotiz ist reiner Modelltext (klausur.js kiUebernehmen setzt sie aus
+   randkommentare + gesamtkommentar zusammen), also Pixelschrift. Rot und
+   Randstrich bleiben - es ist weiter der Rotstift am Blatt, nur eben in der
+   Schrift, die in dieser App "das hat die KI gerade gesagt" heisst.
+
+   0,95rem STATT DER 1,08rem AUS DEM CHAT, und das ist keine Schlamperei: 1,08
+   ist auf .92rem KARLA gerechnet. Hier wird 1,15rem CAVEAT ersetzt, und Caveat
+   hat eine viel kleinere x-Hoehe - gemessen am 14.08.2026 in Chromium mit
+   geladenen Schriften: Caveat 0,357 pro em, system-ui 0,508, Verhaeltnis 0,703.
+   1,15 * 0,703 sind 0,81rem in system-ui-Groesse, mal demselben Faktor 1,174
+   wie ueberall sonst ergibt 0,95rem. Wer stattdessen 1,08 einsetzt, macht die
+   Randnotiz um ein Achtel groesser als die Handschrift daneben.
+
+   Zeilenhoehe 1,5 statt 1,25: 0,95 * 1,5 = 1,425rem ist fast genau die
+   bisherige Zeile (1,15 * 1,25 = 1,4375rem). Der Block bleibt damit gleich hoch
+   und in der 168-px-Spalte des Breakpoints unten passiert nichts Neues. */
+.kl-randnotiz.ki-live {
+  font-family: 'VT323', 'Noto Naskh Arabic', ui-monospace, monospace;
+  font-size: .95rem; line-height: 1.5;
+}
 .kl-punkte-zeile {
   display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap;
   border-top: 1px dashed var(--blatt-rand); margin-top: 12px; padding-top: 10px;
@@ -472,6 +492,28 @@
   border: 1.5px solid var(--line); border-radius: 12px;
   padding: var(--sp-3);
 }
+/* Der Transkript-Dialog zeigt, was transkribiere() aus Roses Blatt gelesen hat
+   - Modelltext, also Pixelschrift. Dieselbe Rechnung wie bei .kl-randnotiz:
+   1,3rem Caveat entsprechen 0,914rem system-ui, mal 1,174 sind 1,07rem. Dass
+   das fast auf der Grundgroesse der Chatblasen landet (1,08rem), ist Zufall und
+   kein Grund, die Zahl anzugleichen.
+
+   ZWEI DINGE, DIE HIER UNRUND SIND, damit sie nicht neu entdeckt werden
+   muessen: das Feld ist eingabefaehig - was Rose hineintippt, steht ab dem
+   ersten Zeichen ebenfalls in Pixelschrift, obwohl es ihr Text ist. Und die
+   Caveat-Fassung war bewusst gewaehlt, weil sie ihre eigene Handschrift
+   zurueckgelesen bekommt. Beides zusammen kann dazu fuehren, dass Jennifer die
+   Regel wieder herausnimmt; dann sind es diese vier Zeilen und das
+   ta.className in klausur.js transkriptPruefen.
+
+   Zeilenhoehe bleibt 1,5: die Zeilen werden dadurch enger (1,3*1,5 = 1,95rem
+   gegen 1,07*1,5 = 1,6rem), es passt also mehr Text in dieselben 140 px, bevor
+   gescrollt wird. Beim Gegenlesen ist das eher hilfreich. */
+.kl-dialog textarea.ki-live {
+  font-family: 'VT323', 'Noto Naskh Arabic', ui-monospace, monospace;
+  font-size: 1.07rem;
+}
+
 .kl-dialog .reihe { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-3); }
 
 .kl-toast {

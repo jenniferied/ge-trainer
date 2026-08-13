@@ -1081,6 +1081,74 @@ h2.abschnitt-titel, .abschnitt-titel {
 .chat-msg.ki.reich { white-space: normal; }
 .chat-msg.ki.reich > :last-child { margin-bottom: 0; }
 
+/* ---------------------------------------------------------------------------
+   PIXELSCHRIFT: NUR, WAS DAS MODELL GERADE ERZEUGT HAT (13.08.2026)
+
+   Die Trennlinie laeuft NICHT zwischen "KI-Bereich" und "App-Bereich", sondern
+   zwischen live erzeugtem und fest eingebautem Text. Pixelig ist die Korrektur,
+   die Chatantwort, die gelesene Handschrift. Normal bleiben der Name ueber der
+   Blase, die Statuszeilen ("liest mit ..."), die Musterloesung, jeder Knopf -
+   und ausdruecklich auch die vorgefertigten Ersatzsaetze ohne Netz und bei
+   aufgebrauchtem Tagesbudget. Die sehen im Sheet aus wie eine Antwort, stehen
+   aber als Strings im Code.
+
+   DARUM HAENGT HIER NICHTS AN .chat-msg.ki. Diese Klasse traegt auch die
+   Statuszeilen. Es braucht die Zusatzklasse ki-live, die geteilt-ki-blase.js
+   nur bei opts.live setzt und geteilt-maskottchen-chat.js nur an einer einzigen
+   Stelle - dort, wo adapter.senden() wirklich etwas mitgebracht hat.
+
+   Die Klasse gehoert an die BLASE, nie an die Reihe: an der Reihe wuerde sie
+   den Namen darueber mitnehmen, und der kommt aus kreaturName().
+
+   DIE GROESSE IST GEMESSEN, NICHT GERATEN (Chromium, 13.08.2026). Was die
+   Groesse einer Schrift AUSMACHT, ist nicht die Punktzahl, sondern die x-Hoehe:
+
+     x-Hoehe pro em   system-ui 0,508 bis 0,526   VT323 0,449
+     Zeichenbreite    system-ui 0,446             VT323 0,394
+
+   Gemessen wurde gegen system-ui und nicht gegen Karla: Karla kommt in beiden
+   Apps vom Google-CDN, und im abgeschotteten Testbrowser war das Netz zu. Karla
+   hat eine eher GROSSE x-Hoehe, liegt also am oberen Ende der Spanne oder
+   knapp darueber - die Zahl unten ist damit eher zu klein als zu gross.
+
+   Faktor 1,17 macht die x-Hoehen gleich: aus .92rem werden 1.08rem, aus den
+   .86rem der Nachschau 1.01rem. Danach nebeneinander bei 360 px angesehen, hell
+   und dunkel. Ohne die Anpassung liest sich die Antwort wie Kleingedrucktes.
+
+   Die Zeile wird dabei nicht laenger: VT323 ist pro Zeichen 12 Prozent
+   schmaler, das frisst die groessere Punktzahl fast auf (nachgezaehlt bei
+   360 px: derselbe Satz bricht auf gleich viele Zeilen um).
+
+   Die ZEILENHOEHE geht dabei von 1.5 auf 1.3 herunter. Zwei Gruende: VT323 hat
+   kurze Ober- und Unterlaengen und braucht die Luft nicht, und 17,28 px * 1,3 =
+   22,5 px ist fast genau die Zeile der normalen Blase (14,72 * 1,5 = 22,1) -
+   eine Antwort in Pixelschrift ist damit so hoch wie dieselbe Antwort normal
+   gesetzt, und im Gespraech springt nichts.
+
+   DER FONT-STACK FAELLT PRO ZEICHEN ZURUECK, ohne Regel und ohne
+   Spracherkennung: jedes Zeichen, das VT323 nicht hat (arabische Schrift,
+   Sonderzeichen), kommt aus der naechsten Familie. Darum steht Noto Naskh
+   Arabic ausdruecklich benannt dahinter statt einer Sonderregel fuer Arabisch.
+   Der monospace-Rueckfall ganz hinten ist kein Schmuck, sondern die Bedingung,
+   unter der diese geteilte Regel ueberhaupt geteilt sein darf: sie gilt in
+   BEIDEN Apps, und ob eine App VT323 mitbringt, entscheidet die App. Beide tun
+   es seit dem 14.08.2026 (app/fonts/), eine dritte muesste es nicht.
+
+   OHNE VT323 GERAET DIE ANTWORT ETWA EIN FUENFTEL ZU GROSS, denn 1.08rem ist
+   auf VT323s kleine x-Hoehe gerechnet und eine Systemschreibmaschine hat eine
+   groessere (Menlo 0,547). Lesbar bleibt es, es faellt nur auf. font-size-adjust
+   waere das Werkzeug dafuer und wurde ausprobiert: Chromium zieht seinen Wert
+   aus den Schriftmetadaten statt aus der gezeichneten Figur, machte VT323 damit
+   groesser und liess den Rueckfall fast unveraendert - also genau verkehrt
+   herum. Nicht noch einmal versuchen. Wer eine neue App an diese Regel haengt,
+   legt VT323 dort dazu, statt an der Zahl zu drehen.
+   --------------------------------------------------------------------------- */
+.chat-msg.ki-live {
+  font-family: 'VT323', 'Noto Naskh Arabic', ui-monospace, monospace;
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+
 /* Die KI-Sprechblase steht ausserhalb des Chat-Sheets mitten in einer Karte:
    dort braucht sie etwas Luft nach oben und darf breiter werden als im
    Gespraech, wo eine schmale Blase die Wechselrede zeigt.
@@ -1104,6 +1172,12 @@ h2.abschnitt-titel, .abschnitt-titel {
 .ki-verlauf > summary::after { content: " ▾"; opacity: .6; }
 .ki-verlauf[open] > summary::after { content: " ▴"; }
 .ki-verlauf .chat-msg { font-size: .86rem; max-width: 100%; }
+/* Derselbe Faktor 1,174 auf der kleineren Grundgroesse der Nachschau. Eigene
+   Regel und nicht die Reihenfolge im Stylesheet: .ki-verlauf .chat-msg und
+   .chat-msg.ki-live haben dieselbe Spezifitaet, da entschiede sonst, wer
+   zufaellig weiter unten steht - einmal 1.08rem an der falschen Stelle, einmal
+   Pixelschrift auf .86rem und damit unleserlich. */
+.ki-verlauf .chat-msg.ki-live { font-size: 1.01rem; }
 .ki-verlauf .llm-fb { margin: 6px 0; }
 
 /* "…" waehrend die Antwort laeuft. Eigener Keyframe statt des lokalen
@@ -1215,6 +1289,109 @@ h2.abschnitt-titel, .abschnitt-titel {
   text-align: center; white-space: pre; overflow: hidden;
 }
 .chat-reihe.du .chat-avatar { font-size: 7px; color: var(--ink-soft); }
+
+/* ---------------------------------------------------------------------------
+   DER HOF UM DEN AVATAR — hier sitzt das Glimmen (13.08.2026)
+
+   WARUM UEBERHAUPT EIN ZWEITES ELEMENT. Am <pre> selbst ist kein Schein
+   moeglich: .chat-avatar steht auf overflow: hidden (siehe oben, die 44 px sind
+   die gemessene Breite der breitesten Figur), ein aeusserer box-shadow wird
+   dort abgeschnitten. Und ein text-shadow von innen macht aus einer
+   5,5-px-Blockgrafik Matsch statt Licht. Der Schein braucht eine eigene
+   Flaeche. geteilt-ki-blase.js und geteilt-maskottchen-chat.js bauen sie beide.
+
+   WAS HIER DIE BLASE VERSCHIEBEN WUERDE: bis heute war .chat-avatar das direkte
+   Flex-Kind von .chat-reihe und trug flex: 0 0 44px. Der Hof MUSS das
+   uebernehmen, sonst faellt die Spalte auf ihre Inhaltsbreite zusammen und die
+   ganze Reihe rutscht. Nachgemessen bei 360 px, hell und dunkel: Reihe und
+   Blase stehen auf denselben Koordinaten wie vorher.
+
+   display: flex mit align-items: flex-end, damit der Hof genau so hoch wird wie
+   das <pre> samt seinem Rand von 2 px unten - ein Block-Hof haette dessen Rand
+   herausgerechnet und den Schein 2 px zu tief gesetzt.
+
+   DER SCHEIN MUSS UEBER DEN HOF HINAUSRAGEN, sonst sieht ihn niemand: die
+   Figur ist bis zu 43 von 44 px breit und fuellt den Hof fast vollstaendig aus.
+   Ein Verlauf, der innen bleibt, liegt zu 90 Prozent HINTER dem Ei und leuchtet
+   nur in den Ecken. Nachgesehen, nicht vermutet - die erste Fassung sah man
+   praktisch nicht. Darum inset: -6px. Die Luft dafuer schafft die Regel direkt
+   ueber diesem Block; ohne sie waere der Schein links an der Scrollkante
+   abgeschnitten und auf einer Seite platt.
+
+   NUR MIT FIGUR (hat-bild). Die Avatarspalte steht auch bei Folgeblasen, dann
+   aber leer - das <pre> ist da 5,5 px hoch und der Verlauf darin wuerde als
+   waagerechter Lichtstreifen neben der Blase stehen. Sichtbar gewesen im
+   ersten Durchgang, deshalb der ausdrueckliche Schalter statt einer
+   :has()-Abfrage: das JS weiss ohnehin, ob es ein Bild eingesetzt hat.
+
+   DIE FARBE KOMMT VON AUSSEN: --ki-glimm, weil jedes Ei eine andere hat. Der
+   Rueckfall ist --accent, die Identitaetsfarbe der jeweiligen App - damit sieht
+   es auch dann richtig aus, wenn niemand die Variable setzt. Bewusst als
+   Rueckfall IM Aufruf und nicht als eigene Deklaration am Hof: sonst gaebe es
+   nichts mehr zu erben, und die App koennte die Farbe nicht mehr weiter oben
+   im Baum setzen.
+
+   Staerke 2 von 4, Jennifers Wort dafuer ist "spuerbar": ein weicher warmer
+   Schein, kein Ring. Er ist IMMER an. Nur die Bewegung haengt an
+   prefers-reduced-motion - der Schein bleibt dann stehen, wie beim .chat-tipp
+   weiter oben in dieser Datei.
+
+   Roses eigener Avatar glimmt nicht. Den Hof bekommt er trotzdem, damit beide
+   Seiten einer Reihe gleich gebaut sind und nur das CSS entscheidet, wer
+   leuchtet.
+   --------------------------------------------------------------------------- */
+/* Die Luft, in der der Schein stehen darf. Polster und negativer Rand gehoeren
+   zusammen und heben sich AUF: der Kasten waechst um 8 px nach beiden Seiten,
+   das Polster schiebt den Inhalt auf dieselbe Stelle zurueck. Nachgemessen bei
+   360 px, hell und dunkel: keine einzige Koordinate im Gespraech bewegt sich.
+
+   AUSDRUECKLICH NUR IM KREATUREN-CHAT (.mk-chat-ov). .chat-verlauf gehoert auch
+   den beiden Fragenchats - der ST-Trainer baut sich in llm.js einen eigenen -,
+   und dort stehen gar keine Avatare, es gaebe also nichts zu umleuchten. Eine
+   Regel am blossen .chat-verlauf haette einen Kasten angefasst, der mit dieser
+   Aenderung nichts zu tun hat. */
+.mk-chat-ov .chat-verlauf { padding: 4px 8px; margin: 0 -8px; }
+
+.chat-avatar-hof {
+  flex: 0 0 44px;
+  position: relative;
+  display: flex; align-items: flex-end;
+}
+.chat-avatar-hof > .chat-avatar {
+  /* Ueber den Schein, sonst legt sich der Verlauf auf die Figur. */
+  position: relative; z-index: 1;
+}
+.chat-avatar-hof.hat-bild::before {
+  content: ""; position: absolute; inset: -6px;
+  background: radial-gradient(ellipse farthest-side at 50% 50%,
+    color-mix(in srgb, var(--ki-glimm, var(--accent)) 52%, transparent) 0%,
+    color-mix(in srgb, var(--ki-glimm, var(--accent)) 22%, transparent) 52%,
+    transparent 100%);
+  animation: ki-glimmen 3.6s ease-in-out infinite;
+}
+.chat-reihe.du .chat-avatar-hof::before { content: none; }
+
+/* Derselbe Verlauf wirkt auf hellem Papier STAERKER, nicht schwaecher: im
+   Nachtmodus schluckt der dunkle Untergrund einen Teil des Scheins, auf dem
+   hellen Papier steht die Farbe voll da und wird schnell zum Fleck. Die
+   Anteile gehen hier also herunter, nicht herauf - nebeneinander angesehen am
+   13.08.2026 bei 360 px, bis beide gleich deutlich waren. Wer sie angleicht,
+   macht eines von beiden falsch. */
+:root[data-theme="hell"] .chat-avatar-hof.hat-bild::before {
+  background: radial-gradient(ellipse farthest-side at 50% 50%,
+    color-mix(in srgb, var(--ki-glimm, var(--accent)) 48%, transparent) 0%,
+    color-mix(in srgb, var(--ki-glimm, var(--accent)) 20%, transparent) 52%,
+    transparent 100%);
+}
+
+@keyframes ki-glimmen {
+  0%, 100% { opacity: .68; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Der Schein bleibt, das Atmen geht. */
+  .chat-avatar-hof.hat-bild::before { animation: none; opacity: .85; }
+}
 
 .chat-spalte { min-width: 0; display: flex; flex-direction: column; }
 .chat-reihe.du .chat-spalte { align-items: flex-end; }

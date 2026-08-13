@@ -2413,8 +2413,20 @@ function freiKarte(thema, f, opts) {
       check.vorschlagen(wert);
     }
 
+    /* live: true - in dieser Blase steht, was das Modell gerade zu Roses
+       Antwort gesagt hat, also Pixelschrift (geteilt.css .chat-msg.ki-live).
+       Sie haengt an der BLASE, nicht an der Reihe: an der Reihe naehme sie den
+       Namen darueber mit, und der kommt aus kiSprecher().
+
+       Die Blase ist gemischt, und das ist hier bewusst nicht aufgeloest: die
+       Stichpunkte in .ki-treffer stammen aus der App und kommen nur durch das
+       Modell zurueck, die Kommentare daneben sind echter Modelltext. Zwei
+       Schriften innerhalb einer Liste sehen schlechter aus als eine
+       durchgehende - also durchgehend pixelig. Ausgenommen ist einzig der
+       hartcodierte Satz .ki-vorschlag ("Ich lese es so: ..."), siehe
+       style.css. */
     kiBox = KiBlase.kiBlase({
-      avatarHtml: kiAvatarHtml, name: kiSprecher(), inhalt: teile, klasse: "ki-urteil"
+      avatarHtml: kiAvatarHtml, name: kiSprecher(), inhalt: teile, klasse: "ki-urteil", live: true
     });
     // Der Selbstcheck steht fest unter der Karte - die Blase legt sich davor.
     karte.insertBefore(kiBox, check);
