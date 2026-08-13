@@ -79,6 +79,21 @@
        verlaufKey:    String   localStorage-Schluessel (optional; ohne ihn
                                lebt der Verlauf nur, solange das Sheet offen
                                ist). NIE ein Schluessel aus dem Lernstand.
+                               Wird ignoriert, sobald laden/merken da sind.
+       laden:         fn()     -> [{ role, content }] (optional)
+       merken:        fn(role, content) (optional)
+                               Das Paar ersetzt verlaufKey und haengt den
+                               Verlauf dorthin, wo die App ihn haben will —
+                               beim ST-Trainer in den gesyncten Lernstand, damit
+                               das Gespraech auf allen Geraeten steht. Dieses
+                               Modul weiss davon nichts: es ruft nur die zwei
+                               Funktionen und fasst weiterhin weder snapshot()
+                               noch signatur() an.
+       wegwischen:    fn()     -> Promise<Boolean> | Boolean (optional)
+                               Ohne diese Funktion gibt es keinen Wegwisch-Link.
+                               Die App stellt darin ihre eigene Rueckfrage (nie
+                               confirm(), das wird stumm blockiert) und meldet
+                               false zurueck, wenn abgebrochen wurde.
        stand:         fn()     -> reiner Datenblock, siehe standFelder()
        avatarHtml:    fn(st)   -> HTML des Kreaturenbildes (aus maskottchen.js,
                                   damit Chat und Startseite dieselbe Figur
@@ -386,7 +401,9 @@ export function chatOeffnen(adapter) {
   chatSchliessen();
 
   var st = standFelder(adapter.stand ? adapter.stand() : null);
-  var verlauf = ladeVerlauf(adapter.verlaufKey);
+  var verlauf = typeof adapter.laden === "function"
+    ? adapter.laden().slice(-MAX_NACHRICHTEN)
+    : ladeVerlauf(adapter.verlaufKey);
   var name = kreaturName(st);
 
   /* Einmal beim Oeffnen geholt und dann wiederverwendet. Das Bild kommt aus
@@ -433,6 +450,30 @@ export function chatOeffnen(adapter) {
   zeile.appendChild(txt);
   zeile.appendChild(sendKnopf);
   sheet.appendChild(zeile);
+
+  /* Wegwischen. Gibt es nur, wenn die App eine Funktion dafuer mitbringt —
+     solange der Verlauf geraetelokal und tagesweise war, brauchte es keinen
+     Knopf, er verschwand ohnehin ueber Nacht. Sobald er im Sync steht und auf
+     allen Geraeten bleibt, ist er ohne Wegwischen eine Einbahnstrasse: Rose
+     tippt hier auch Persoenliches. Bewusst als stiller Link neben Schliessen,
+     nicht als Knopf, der sich anbietet.
+
+     Die RUECKFRAGE stellt die App, nicht dieses Modul: confirm() wird in
+     iframes und In-App-Browsern stumm blockiert ("es passiert nichts"), beide
+     Trainer haben dafuer ihren eigenen Overlay-Dialog. wegwischen() gibt darum
+     ein Promise zurueck — true heisst wirklich weg, false heisst abgebrochen. */
+  if (typeof adapter.wegwischen === "function") {
+    var weg = el("button", "chat-weg", "Verlauf wegwischen");
+    weg.type = "button";
+    weg.addEventListener("click", function () {
+      Promise.resolve(adapter.wegwischen()).then(function (getan) {
+        if (getan === false) return;
+        verlauf = [];
+        malen();
+      });
+    });
+    sheet.appendChild(weg);
+  }
 
   var zu = el("button", "chat-zu", "Schließen");
   zu.type = "button";
@@ -484,7 +525,16 @@ export function chatOeffnen(adapter) {
   function sagen(rolle, text) {
     verlauf.push({ role: rolle, content: text });
     if (verlauf.length > MAX_NACHRICHTEN) verlauf = verlauf.slice(-MAX_NACHRICHTEN);
-    sichereVerlauf(adapter.verlaufKey, verlauf);
+    /* Zwei Wege, und die App entscheidet welchen — nicht dieses Modul.
+       Mit merken() geht die Zeile in den Lernstand und damit ueber den Sync auf
+       alle Geraete (Jennifer, 13.08.: "sync it all globally"). Ohne merken()
+       bleibt es beim geraetelokalen localStorage von frueher.
+       Wichtig fuer die Arbeitsteilung: das Modul faengt hier NICHT selbst an,
+       den Lernstand anzufassen — es ruft eine Funktion, die die App
+       hereingereicht hat. snapshot() und signatur() bleiben Sache der App, wie
+       im Kopf dieser Datei versprochen. */
+    if (typeof adapter.merken === "function") adapter.merken(rolle, text);
+    else sichereVerlauf(adapter.verlaufKey, verlauf);
     malen();
   }
 

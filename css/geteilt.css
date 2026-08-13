@@ -1076,6 +1076,21 @@ h2.abschnitt-titel, .abschnitt-titel {
 .chat-msg.du { background: color-mix(in srgb, var(--accent) 12%, var(--card)); margin-left: auto; }
 .chat-msg.ki { background: var(--paper); border: 1px solid var(--line); margin-right: auto; white-space: pre-wrap; }
 
+/* Aufgehobenes Gespraech in der Nachschau (Verlauf, Frage-Detail), seit dem
+   13.08.2026. Zugeklappt, damit es beim Durchblaettern nicht im Weg steht — die
+   Zahl in der Zeile sagt vorher, dass ueberhaupt etwas da ist. Bewusst schmaler
+   und ruhiger als das Chat-Sheet: hier wird nachgelesen, nicht geredet. */
+.ki-verlauf { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.ki-verlauf > summary {
+  cursor: pointer; font-size: .84rem; color: var(--muted);
+  list-style: none; padding: 2px 0;
+}
+.ki-verlauf > summary::-webkit-details-marker { display: none; }
+.ki-verlauf > summary::after { content: " ▾"; opacity: .6; }
+.ki-verlauf[open] > summary::after { content: " ▴"; }
+.ki-verlauf .chat-msg { font-size: .86rem; max-width: 100%; }
+.ki-verlauf .llm-fb { margin: 6px 0; }
+
 /* "…" waehrend die Antwort laeuft. Eigener Keyframe statt des lokalen
    sticker-idle, siehe Kopf dieses Blocks. */
 .chat-tipp { opacity: .6; display: inline-block; animation: chat-tippt 1.2s ease-in-out infinite; }
@@ -1228,3 +1243,14 @@ h2.abschnitt-titel, .abschnitt-titel {
   text-decoration: underline; padding: 8px 4px 0;
 }
 .chat-zu:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Wegwischen sieht aus wie Schliessen, nur blasser und OHNE Unterstreichung:
+   es soll auffindbar sein, wenn man es sucht, und nicht einladen, wenn man es
+   nicht sucht. Steht darum ueber dem Schliessen-Knopf und nicht daneben. */
+.chat-weg {
+  align-self: center; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: .78rem; color: var(--muted);
+  padding: 6px 4px 0;
+}
+.chat-weg:hover { text-decoration: underline; }
+.chat-weg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

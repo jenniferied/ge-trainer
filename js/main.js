@@ -4,7 +4,7 @@
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
   starteRunde, beendeRunde, antwortText, sekundenSeit } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
@@ -13,7 +13,7 @@ import * as Spiele from "./spiele.js";
 import * as Klausurfrage from "./klausurfrage.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
-import { syncKarte, syncStart, setzeOffenZaehler } from "./sync.js";
+import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf } from "./sync.js";
 import * as Nachbar from "./nachbar.js";
 import * as Mk from "./maskottchen.js";
 // Der Kreaturen-Chat. Geteilt mit dem ST-Trainer, Quelle
@@ -578,11 +578,32 @@ function mkChatAdapter(tz, stufe) {
     // Chat schlicht so, wie sie GERADE ist - kreaturName() im Baustein macht
     // daraus Ei, Kreatur oder Hund.
     //
-    // Geraetelokal und tagesfrisch, der Baustein raeumt selbst auf. NICHT im
-    // Lernstand, nicht in snapshot(), nicht in signatur(): ein Chatverlauf ist
-    // kein Lernstand. Eigener Key - der ST-Trainer liegt auf demselben
-    // github.io-Origin und darf hier weder mitlesen noch ueberschreiben.
-    verlaufKey: "ge-mk-chat",
+    // Seit 13.08.2026 im LERNSTAND statt in geraetelokalem localStorage
+    // (Jennifer: "sync it all globally"). Der Speicher dafuer lag schon fertig in
+    // sync.js — chatNotiere() haengt an, chatVerlauf() liest, loescheChatVerlauf()
+    // wischt weg, mkChat steht in snapshot() UND signatur() und merged als
+    // Vereinigung ueber die Ids. Benutzt hat ihn nur nie jemand: hier stand
+    // weiter verlaufKey, und damit war das Gespraech auf dem zweiten Geraet nie
+    // da und ueber Nacht ohnehin weg.
+    //
+    // Die Felder heissen im Speicher rolle/text und im Baustein role/content —
+    // umgesetzt wird genau hier, damit weder der eine noch der andere die
+    // Benennung des jeweils anderen kennen muss.
+    laden: function () {
+      return chatVerlauf().map(function (m) { return { role: m.rolle, content: m.text }; });
+    },
+    merken: function (role, content) { chatNotiere(role, content); },
+    // Die Rueckfrage stellt die App: confirm() wird in In-App-Browsern stumm
+    // blockiert. loescheChatVerlauf() setzt Grabsteine je Nachricht, sonst
+    // schoebe das andere Geraet den Verlauf beim naechsten Sync zurueck.
+    wegwischen: function () {
+      return frag("Das ganze Gespräch mit deiner Kreatur wegwischen? Das gilt dann auf allen deinen Geräten.",
+        { ja: "Wegwischen", nein: "Behalten" }).then(function (ja) {
+          if (!ja) return false;
+          loescheChatVerlauf();
+          return true;
+        });
+    },
     // Der ruhige Nebensatz unter den Knoepfen. Er sagt, was die Kreatur kann und
     // was nicht - sonst probiert Rose Fachfragen an der falschen Stelle. Der
     // ST-Trainer hat denselben Satz in seiner Fassung (mk-chat.js); die Grenze

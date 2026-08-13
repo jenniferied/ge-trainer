@@ -241,3 +241,49 @@ export function konfetti() {
   document.body.appendChild(ov);
   setTimeout(function () { ov.remove(); }, 4800);
 }
+
+/* ---------- Rueckfrage vor etwas Endgueltigem ----------
+   confirm() waere die kurze Fassung und faellt hier aus: in iframes und
+   In-App-Browsern wird es stumm blockiert, der Knopf tut dann einfach nichts.
+   Der ST-Trainer hat aus genau diesem Grund seit laengerem sein eigenes frag();
+   hier stand bisher nichts Vergleichbares, weil die einzige heikle Stelle
+   (Fortschritt zuruecksetzen) ihre Rueckfrage direkt in die Karte klappt.
+
+   Gebraucht wird es, seit der Kreaturen-Chat im Lernstand liegt: Wegwischen
+   gilt jetzt auf allen Geraeten, und das darf kein Versehen sein.
+
+   frag(text, opts) -> Promise<Boolean>. Voreingestellt ist NEIN: Wegklicken
+   neben den Kasten und Escape zaehlen als Abbruch, nicht als Zustimmung. */
+export function frag(text, opts) {
+  var o = opts || {};
+  return new Promise(function (aufloesen) {
+    var ov = el("div", "dlg-overlay");
+    var box = el("div", "dlg");
+    box.appendChild(el("p", null, text));
+    var reihe = el("div", "knopf-reihe");
+    var nein = el("button", "knopf sekundaer", o.nein || "Abbrechen");
+    var ja = el("button", "knopf", o.ja || "Ja");
+    reihe.appendChild(nein);
+    reihe.appendChild(ja);
+    box.appendChild(reihe);
+    ov.appendChild(box);
+
+    var fertig = false;
+    function schliessen(antwort) {
+      if (fertig) return;          // zweimal tippen darf nicht zweimal aufloesen
+      fertig = true;
+      document.removeEventListener("keydown", beiTaste);
+      ov.remove();
+      aufloesen(antwort);
+    }
+    function beiTaste(e) { if (e.key === "Escape") schliessen(false); }
+
+    ja.addEventListener("click", function () { schliessen(true); });
+    nein.addEventListener("click", function () { schliessen(false); });
+    ov.addEventListener("click", function (e) { if (e.target === ov) schliessen(false); });
+    document.addEventListener("keydown", beiTaste);
+
+    document.body.appendChild(ov);
+    nein.focus();                  // der harmlose Knopf hat den Fokus, nicht der endgueltige
+  });
+}

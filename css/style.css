@@ -1192,3 +1192,18 @@ p { margin: 0 0 var(--sp-3); }
    Faellt weg, sobald das Knopf-System zusammengelegt ist (.btn vs .knopf steht
    als offener Punkt in beiden ROADMAPs). */
 :root[data-theme="hell"] 
+/* ---------- Rueckfrage vor etwas Endgueltigem (ui.js frag()) ----------
+   Eigener Kasten statt confirm(): das wird in iframes und In-App-Browsern stumm
+   blockiert, der Knopf tut dann nichts. Die Knoepfe darin sind die normalen
+   .knopf/.knopf.sekundaer, damit sich der Dialog nicht wie ein Fremdkoerper
+   anfuehlt. */
+.dlg-overlay {
+  position: fixed; inset: 0; z-index: 95; display: grid; place-items: center;
+  background: rgba(10, 8, 20, .55); padding: var(--sp-4);
+}
+.dlg {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+  padding: var(--sp-4); max-width: 420px; width: 100%;
+}
+.dlg p { margin: 0; font-weight: 500; }
