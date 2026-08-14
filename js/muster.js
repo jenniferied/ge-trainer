@@ -245,8 +245,14 @@ export function musterBereich(f, thema, opts) {
     reichFuellen(blatt, stufen[stufe]);
     if (sprache === "ar") bdiEinsetzen(blatt);
     // Chips ZULETZT: sie sollen auch in einem Einschub landen koennen, nicht
-    // umgekehrt. (Im arabischen Bestand kommt heute keine Fundstelle vor -
-    // nachgezaehlt am 14.08.2026 ueber konzeptionen und freizeit.)
+    // umgekehrt. Das ist keine Vorsichtsmassnahme auf Verdacht: seit alle acht
+    // Themendateien Fassungen tragen, gibt es genau einen Fall, wo eine
+    // Fundstelle im arabischen Text steht - wo-f-1 (wohnen) mit Art. 11 Abs. 1
+    // GG, Art. 2 Abs. 1 GG und Art. 2 Abs. 2 GG in ar.klausur wie ar.einfach.
+    // Am 14.08.2026 im Browser nachgesehen: alle drei Chips sitzen dort in
+    // einer <bdi>-Insel, genau wie im deutschen Zettel, und die Klammern
+    // ringsum bleiben, wo sie hingehoeren. (Art. 19 UN-BRK wird bewusst nicht
+    // zum Chip - beleg.js verlinkt nur GG-Artikel, im Deutschen genauso.)
     chipsEinsetzen(blatt, thema);
     // de/klausur ist der Bestand aus fragen/verified/, alles andere ist erzeugt.
     const roh = !geprueft && !(sprache === "de" && stufe === "klausur");
