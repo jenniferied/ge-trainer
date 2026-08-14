@@ -188,9 +188,19 @@ export function altFortschritt(themen) {
    sonst verschwaenden Antworten, deren Sitzung geloescht oder aus dem Deckel
    (SITZUNGEN_MAX) gefallen ist, aus beiden Toepfen zugleich.
 
-   Bewusst nur LESEN - kein Loeschen-Knopf je Zeile wie drueben. Loeschen setzt
-   Grabsteine, und Grabsteine neben Roses echtem Lernstand sind genau das
-   Risiko, das hier nichts zu suchen hat. */
+   SEIT DEM 14.08.2026 GIBT ES LOESCHEN UND WIEDERHOLEN je Zeile (Jennifer:
+   "gleiche diese an ... mit löschen und wiederholen button"). Bis dahin stand
+   hier das Gegenteil, mit der Begruendung, Grabsteine haetten neben Roses
+   echtem Lernstand nichts zu suchen. Die Begruendung hat sich nicht als falsch
+   erwiesen, sie war nur zu vorsichtig: der Grabstein-Weg existiert seit dem
+   13.08. vollstaendig und ist in mergeIn getestet - eine geloeschte Runde
+   raeumt ihre Antworten, ihre Sitzung UND ihre Gespraeche ab, auf allen
+   Geraeten (sync.js loescheRunde, Grabstein-Tabelle im Merge-Kopf). Ohne
+   Loeschen blieb dafuer jede Testantwort fuer immer in Roses Zahlen stehen.
+
+   Wiederholen baut die Runde aus den qids im Log neu auf (wiederholeRunde
+   unten) - GE fuehrt keinen Fragen-Schnappschuss je Sitzung wie der ST-Trainer,
+   und die alte Zeile bleibt dabei genauso stehen wie drueben. */
 
 var RUNDEN_PAUSE = 30 * 60000;   // 30 Minuten Abstand = neue Runde (nur noch Fallback)
 
@@ -248,11 +258,76 @@ function themenAus(arr) {
   return reihe.sort(function (x, y) { return zaehler[y] - zaehler[x]; });
 }
 
+/* Von einer ununterbrochenen Kette gleicher qid zaehlt nur die LETZTE Antwort.
+   Dieselbe Umentscheiden-Regel wie in zeilen() oben und in sitzungNachziehen()
+   (core.js) - herausgezogen, weil ALLE Zahlen einer Verlaufszeile sie brauchen
+   und eine weitere Kopie die naechste Gelegenheit waere, sie zu vergessen. */
+function letzteJeKette(arr) {
+  return (arr || []).filter(function (a, i) {
+    return !(i + 1 < arr.length && arr[i + 1].qid === a.qid);
+  });
+}
+
+/* EINE REGEL JE ZEILE. quoteAus zaehlte bis zum 14.08. jede Antwort, auch die
+   sofort ueberschriebene; sitzungNachziehen (core.js) tut das nicht. Bei einer
+   Sitzung fiel das nicht auf, weil dort s.quote gewinnt und quoteAus nur
+   einspringt, wenn das Feld fehlt. Bei einer ABGELEITETEN Zeile gibt es dieses
+   Feld nie - dort haetten Quote und die neue Zaehlpille ab sofort nach zwei
+   verschiedenen Regeln gerechnet und nebeneinander gestanden. Genau davor warnt
+   der Kommentar an rundenMeta(): zwei Zahlen aus verschiedenen Toepfen. */
 function quoteAus(arr) {
-  var werte = arr.map(wertVon).filter(function (w) { return w !== undefined; });
+  var werte = letzteJeKette(arr).map(wertVon).filter(function (w) { return w !== undefined; });
   if (!werte.length) return { bewertet: 0, quote: null };
   var summe = werte.reduce(function (a, w) { return a + w; }, 0);
   return { bewertet: werte.length, quote: Math.round(100 * summe / werte.length) };
+}
+
+/* ---------- Punkte statt Prozent (Jennifer, 14.08.2026) ----------
+   "Anzahl der Punkte anstatt Prozent." Roses Klausur rechnet in Punkten, jede
+   Aufgabe traegt ihre Punktzahl aufgedruckt - eine Prozentzahl ist eine
+   Waehrung, die am 10.09. nirgends vorkommt.
+
+   ES WIRD ABER KEINE PUNKTZAHL ERFUNDEN. Genau eine Quelle im GE-Trainer ist
+   eine echte: die bewerteten Klausuraufgaben (a.punkte / a.max, von Rose selbst
+   gesetzt oder von der KI vorgeschlagen und von ihr bestaetigt). MC-Fragen und
+   frei geuebte Aufgaben haben keine Punktzahl - eine Selbsteinschaetzung
+   "teilweise" in "2,5 von 5 P." zu uebersetzen, waere eine Genauigkeit, die
+   Rose nie geaeussert hat, und saehe aus wie das Urteil einer Korrektorin.
+   Dieselbe Linie, die antwortZeichen() in main.js schon faehrt ("es wird auch
+   keine erfunden, sonst stuende hier null/5") und klausurSitzung() in
+   klausur.js (lieber gar nichts als eine 0, die wie Durchfallen aussieht).
+
+   Wo es keine Punkte gibt, steht darum eine GEZAEHLTE Zahl: "6/8 ✓" - wie viele
+   Aufgaben sassen, von wie vielen bewerteten. Auch das ist eine Anzahl und kein
+   Prozent, und die Einheit steht sichtbar an der Zahl ("P." gegen "✓"), damit
+   die zwei Waehrungen nie miteinander verwechselt werden koennen. */
+function punkteAus(arr) {
+  var p = 0, max = 0, n = 0;
+  letzteJeKette(arr).forEach(function (a) {
+    if (typeof a.punkte !== "number" || !(a.max > 0)) return;
+    p += a.punkte; max += a.max; n++;
+  });
+  return n ? { punkte: p, max: max, n: n } : { punkte: null, max: null, n: 0 };
+}
+
+/* Wie viele Aufgaben sassen. "Sass" heisst hier genau das, was auch das ✓ in
+   der Detailansicht heisst (antwortZeichen in main.js): MC richtig, frei
+   "gut". "Teilweise" zaehlt bewusst NICHT als halber Treffer - halbe Zahlen in
+   einer Anzahl waeren wieder die erfundene Genauigkeit von oben. Wie oft es
+   halb war, steht ohnehin ausgeschrieben daneben (selbstText). */
+function zaehlungAus(arr) {
+  var sass = 0, bewertet = 0;
+  letzteJeKette(arr).forEach(function (a) {
+    if (a.modus === "check") { bewertet++; if (a.richtig) sass++; return; }
+    if (a.modus === "frei") {
+      if (!a.selbsteinschaetzung) return;
+      bewertet++;
+      if (a.selbsteinschaetzung === "gut") sass++;
+    }
+    // klausur bleibt draussen: dort gibt es echte Punkte, und eine Aufgabe
+    // gleichzeitig in beiden Waehrungen zu zaehlen macht keine Zahl ehrlicher.
+  });
+  return { sass: sass, bewertet: bewertet };
 }
 
 /* Wie oft welche Selbsteinschaetzung - nur fuer offene Aufgaben, wo Rose selbst
@@ -280,6 +355,7 @@ export function selbstZaehler(arr) {
 function zeileSitzung(s, arr, titelMap) {
   var t = ART_TEXT[s.art] || MODUS_TEXT[s.modus] || ART_TEXT.ueben;
   var roh = quoteAus(arr);
+  var pkt = punkteAus(arr);
   return {
     typ: "sitzung", id: s.id, art: s.art || null,
     von: s.erstellt, bis: s.ts || arr[arr.length - 1].ts,
@@ -291,9 +367,13 @@ function zeileSitzung(s, arr, titelMap) {
     bewertet: typeof s.bewertet === "number" ? s.bewertet : roh.bewertet,
     dauerSek: s.dauerSek || Math.round((((s.ts || 0) - s.erstellt) / 1000)) || 0,
     fertig: !!s.fertig,
-    punkte: typeof s.punkte === "number" ? s.punkte : null,
-    max: typeof s.max === "number" ? s.max : null,
+    // Die Punkte der Sitzung schlagen die nachgerechneten - die Klausur kennt
+    // ihre Gesamtpunktzahl auch fuer Aufgaben, die gar nicht mehr im Log stehen.
+    // Wo sie fehlen, rechnet punkteAus sie aus den Antworten nach.
+    punkte: typeof s.punkte === "number" ? s.punkte : pkt.punkte,
+    max: typeof s.max === "number" ? s.max : pkt.max,
     bestanden: s.bestanden === undefined ? null : s.bestanden,
+    zaehlung: zaehlungAus(arr),
     themen: themenTitel(s.themen && s.themen.length ? s.themen : themenAus(arr), titelMap),
     antworten: arr,
     selbst: selbstZaehler(arr),
@@ -306,6 +386,7 @@ function zeileAbgeleitet(g, titelMap) {
   var haupt = Object.keys(g.modi).sort(function (a, b) { return g.modi[b] - g.modi[a]; })[0] || "check";
   var t = MODUS_TEXT[haupt] || MODUS_TEXT.check;
   var roh = quoteAus(g.antworten);
+  var pkt = punkteAus(g.antworten);
   var mehrere = Object.keys(g.modi).length > 1;
   return {
     typ: "abgeleitet", id: "abl-" + g.von, art: null,
@@ -317,7 +398,10 @@ function zeileAbgeleitet(g, titelMap) {
     n: g.antworten.length,
     anzahl: null, beantwortet: g.antworten.length, bewertet: roh.bewertet,
     dauerSek: Math.round((g.bis - g.von) / 1000),
-    fertig: true, punkte: null, max: null, bestanden: null,
+    // Auch hier koennen echte Punkte stehen: eine Klausuraufgabe, deren Sitzung
+    // aus dem Deckel gefallen oder geloescht worden ist, landet in diesem Topf.
+    fertig: true, punkte: pkt.punkte, max: pkt.max, bestanden: null,
+    zaehlung: zaehlungAus(g.antworten),
     themen: themenTitel(themenAus(g.antworten), titelMap),
     antworten: g.antworten,
     selbst: selbstZaehler(g.antworten),
@@ -338,7 +422,10 @@ function zeileSpiel(g, titelMap) {
     anzahl: g.antworten.length, beantwortet: g.antworten.length,
     bewertet: 0, richtig: richtig,
     dauerSek: Math.round((g.bis - g.von) / 1000),
+    // Keine Punkte und keine Zaehl-Pille: Karten sind keine Klausurwaehrung
+    // (Invariante oben). Die Treffer stehen als Wort in der Meta-Zeile.
     fertig: true, punkte: null, max: null, bestanden: null,
+    zaehlung: { sass: 0, bewertet: 0 },
     themen: themenTitel(themenAus(g.antworten), titelMap),
     antworten: g.antworten,
     selbst: selbstZaehler(g.antworten),
@@ -1053,14 +1140,39 @@ export function zeigeWiederhol6(themen, hooks) {
 }
 
 /* Lief heute schon eine Sechser-Runde? Gleiche Form wie Spiele.heuteGespielt():
-   die Startseite fragt es, um die Tageskachel abzuhaken. Gezaehlt werden
-   Sitzungen, nicht einzelne Antworten - eine abgebrochene Runde ohne Antwort
-   wirft beendeRunde() ohnehin weg. */
+   die Startseite fragt es, um die Tageskachel abzuhaken.
+
+   ES ZAEHLT NUR EINE RUNDE, DIE WIRKLICH GELAUFEN IST (Jennifer, 14.08.2026:
+   "jetzt steht da 6 wdh gemacht, aber kein Eintrag dafür und ich habe ja keine
+   einzige beantwortet").
+
+   Vorher stand hier nur "gibt es heute eine Sitzung mit art wdh6" - mit der
+   Begruendung, eine Runde ohne Antwort werfe beendeRunde() ohnehin weg. Das
+   stimmt nur, wenn beendeRunde ueberhaupt laeuft. starteRunde legt die Sitzung
+   SOFORT an (core.js, bewusst so); wer die Runde oeffnet und dann den Tab
+   zumacht oder neu laedt, hinterlaesst eine Sitzung mit beantwortet 0, und
+   niemand raeumt sie je auf - laufendeId ist modullokal und nach dem Neuladen
+   weg. Genau die hakte hier die Tageskachel ab.
+
+   Sichtbar wurde es an der Luecke zwischen zwei Anzeigen, die dieselbe Runde
+   meinen: die Kachel sagte "geschafft", der Verlauf zeigte keine Zeile - denn
+   letzteRunden() ueberspringt eine Sitzung ohne Antworten (eine leere Zeile
+   waere keine Zeile).
+
+   Gezaehlt wird darum die geplante Laenge: beantwortet >= anzahl, also alle
+   Aufgaben, die in dieser Runde standen (anzahl ist bei einem kleinen Stapel
+   auch mal kleiner als sechs). Nicht s.fertig - das setzt beendeRunde() schon
+   bei der ersten Antwort, wenn der Router die Runde schliesst, und wuerde eine
+   bei 2 von 6 abgebrochene Runde als Tagespensum durchgehen lassen.
+   Angefangene Runden bleiben dafuer im Verlauf stehen und tragen dort seit dem
+   14.08. den Weitermachen-Knopf. */
 export function wiederhol6Heute() {
   var d = new Date(); d.setHours(0, 0, 0, 0);
   var t0 = d.getTime();
   return (state.sitzungen || []).some(function (s) {
-    return s.art === "wdh6" && (s.ts || s.erstellt || 0) >= t0;
+    if (s.art !== "wdh6" || (s.ts || s.erstellt || 0) < t0) return false;
+    var soll = typeof s.anzahl === "number" && s.anzahl > 0 ? s.anzahl : WDH6;
+    return (s.beantwortet || 0) >= soll;
   });
 }
 
@@ -1132,4 +1244,153 @@ function mixRunde(pool, themen, hooks, art, wahl) {
     extraText: t.extraText || null,
     extra: t.extraText ? function () { hooks.spiele(); } : null
   }, hooks, wahl);
+}
+
+/* ---------- Eine Runde nochmal (Jennifer, 14.08.2026) ----------
+   Drueben im ST-Trainer liegt an jeder Session ein Fragen-Schnappschuss, und
+   das Wiederholen zieht ihn hervor. GE hat keinen: die Runden werden aus dem
+   Antwort-Log geschnitten. Die qids stehen aber im Log, und damit laesst sich
+   dieselbe Liste neu aufbauen - GE-nativ und ohne ein neues Feld im Lernstand,
+   das sonst durch snapshot() UND signatur() muesste.
+
+   DREI DINGE, DIE HIER ABSICHTLICH SO SIND:
+
+   1. KEINE VERSUCHSZAEHLUNG. Der ST-Trainer zaehlt "2. Versuch" an der alten
+      Session mit. Hier entsteht schlicht eine zweite, ehrliche Zeile mit
+      demselben Titel - die alte bleibt daneben stehen, und der Vergleich ist
+      genau das, was Rose sehen soll. Eine erfundene Versuchsnummer waere ein
+      Feld ohne Deckung im Log.
+   2. NEU GEMISCHT, ABER VOLLZAEHLIG: anzahl === Poolgroesse, damit zieh()
+      wirklich jede Aufgabe nimmt und nur die Reihenfolge wuerfelt.
+   3. VERSCHWUNDENE AUFGABEN WERDEN GEMELDET, NICHT VERSCHLUCKT. Kommt eine
+      Frage aus einer aelteren Korpus-Fassung, findet sie hier niemand mehr.
+      Die Runde dann klammheimlich mit vier statt acht Aufgaben zu starten
+      hiesse, unter demselben Titel etwas anderes zu tun - darum gibt
+      rundePool() beide Zahlen zurueck und der Aufrufer sagt es. */
+export function rundePool(r, themen) {
+  var index = {};
+  (themen || []).forEach(function (t) {
+    (t.mc || []).forEach(function (f) { index[f.id] = { typ: "mc", f: f, thema: t }; });
+    (t.frei || []).forEach(function (f) { index[f.id] = { typ: "frei", f: f, thema: t }; });
+  });
+  var gesehen = {}, pool = [], gesamt = 0;
+  (r.antworten || []).forEach(function (a) {
+    if (!a || !a.qid || gesehen[a.qid]) return;
+    gesehen[a.qid] = true;
+    gesamt++;
+    if (index[a.qid]) pool.push(index[a.qid]);
+  });
+  return { pool: pool, gesamt: gesamt, fehlend: gesamt - pool.length };
+}
+
+/* Kann diese Zeile ueberhaupt wiederholt werden - und wie?
+     "runde"    -> als Uebungsrunde neu aufbauen (der Normalfall)
+     "klausur"  -> NICHT als Uebungsrunde. Eine Klausur-Simulation durch runde()
+                   zu schicken wuerde ihre Aufgaben als modus "frei" ohne max
+                   ins Log schreiben; die Zeile hiesse dann Klausur und waere
+                   keine. Der Aufrufer schickt Rose stattdessen zu einem neuen
+                   Bogen - dieselbe Handlung, die auch die Auswertung anbietet.
+     "spiel"    -> das Spiel nochmal, ueber seinen eigenen Einstieg.
+     null       -> nichts davon (nichts mehr im Korpus). */
+export function wiederholArt(r, themen) {
+  if (!r) return null;
+  if (r.typ === "spiel") return "spiel";
+  if (r.art === "klausur" || r.art === "klausurfrage") return "klausur";
+  return rundePool(r, themen).pool.length ? "runde" : null;
+}
+
+/* Die Runde neu laufen lassen. Titel und art werden UEBERNOMMEN, nicht neu
+   erfunden: eine wiederholte Wiederholen-Runde heisst wieder "Wiederholen".
+   Faellt der Titel aus (Alt-Zeilen ohne Sitzung), springt MIX_TEXT.mix ein. */
+export function wiederholeRunde(r, themen, hooks) {
+  var p = rundePool(r, themen);
+  if (!p.pool.length) return hooks.home();
+  runde(p.pool, {
+    art: r.art || "ueben",
+    titel: r.titel || MIX_TEXT.mix.titel,
+    unter: "Dieselben Aufgaben nochmal",
+    farbe: null,
+    zurueckText: "← Startseite",
+    zurueck: function () { hooks.home(); },
+    nochmal: function () { wiederholeRunde(r, themen, hooks); },
+    fertigSatz: "Dieselbe Runde nochmal durch – jetzt siehst du im Verlauf beide nebeneinander.",
+    extraText: null, extra: null
+  }, hooks, { anzahl: p.pool.length, auswahl: "bunt" });
+}
+
+/* ---------- Weitermachen (Jennifer, 14.08.2026: "mit continue obvs wenn man
+   zwischendurch aufgehört hat") ----------
+
+   EHRLICH GESAGT, WAS DAS IST UND WAS NICHT. Der ST-Trainer kann eine Session
+   wirklich fortsetzen: dort liegt die Fragenliste am Datensatz, und "Rest
+   bearbeiten" holt genau die Fragen zurueck, die noch leer waren. GE hat diese
+   Liste nicht - runde() haelt sie in einer lokalen Variable, und wenn Rose den
+   Tab zumacht, ist sie weg. Nur die Antworten stehen im Log.
+
+   Deshalb heisst der Knopf "Weitermachen" und nicht "Rest bearbeiten", und was
+   er tut, steht am Knopf: eine neue Runde ueber die FEHLENDE ANZAHL, aus
+   DENSELBEN THEMEN, ohne die Aufgaben, die in dieser Runde schon drankamen.
+   Fuer Rose ist das genau das, was sie will (die Runde von vorhin zu Ende
+   bringen); erfunden wird dabei nichts, weil jede dieser Zahlen im Log steht.
+
+   Eine Fassung, die naeher an ST waere, gaebe es nur mit einem gespeicherten
+   Fragen-Schnappschuss je Runde - ein neues Feld im Lernstand, also snapshot()
+   UND signatur() (siehe CLAUDE.md), fuer einen Fall, den es nur gibt, wenn Rose
+   mitten in einer Runde weggeht. Der Preis passt nicht zum Nutzen.
+
+   Die Klausur-Simulation kommt hier NICHT vor: ein abgebrochener Bogen wird gar
+   nicht erst geloggt (klausur.js logAufgaben laeuft erst beim Abschliessen),
+   steht also nie im Verlauf. Ihr Fortsetzen liegt da, wo ihr Bogen liegt -
+   state.klausur und zeigeFortsetzen(). */
+// Runden, die aus dem Wackel-Stapel ziehen. Ihre Fortsetzung muss aus DEMSELBEN
+// Stapel kommen - sonst hiesse die Zeile weiter "Wiederholen" und servierte
+// Aufgaben, die gar nicht danebenlagen. Genau diese Runde hatte Jennifer offen,
+// als der Kachel-Fehler auffiel.
+var AUS_STAPEL = { wiederholen: true, wdh6: true };
+
+export function restPool(r, themen) {
+  var gehabt = {}, imThema = {};
+  (r.antworten || []).forEach(function (a) {
+    if (!a || !a.qid) return;
+    gehabt[a.qid] = true;
+    if (a.thema) imThema[a.thema] = true;
+  });
+  // Eine reine MC-Runde bleibt eine MC-Runde, eine freie eine freie. Bei
+  // "gemischt" (oder wo der Modus fehlt) bleiben beide Sorten drin.
+  var nurTyp = r.modus === "check" ? "mc" : r.modus === "frei" ? "frei" : null;
+  var quelle = AUS_STAPEL[r.art] ? wiederholPool(themen) : alleItems(themen);
+  return quelle.filter(function (i) {
+    if (gehabt[i.f.id]) return false;
+    // Der Stapel ist selbst schon die Auswahl - ihn zusaetzlich auf die Themen
+    // von vorhin einzudampfen wuerde eine Wiederholen-Runde kuenstlich
+    // verengen. Bei allen anderen Runden ist das Thema die Auswahl.
+    if (!AUS_STAPEL[r.art] && !imThema[i.thema.id]) return false;
+    return !nurTyp || i.typ === nurTyp;
+  });
+}
+
+// Wie viele Aufgaben fehlen noch. Nur wo die Runde eine geplante Laenge hatte
+// (anzahl) und wirklich kuerzer geblieben ist - sonst gibt es keinen Rest, und
+// ohne Rest keinen Knopf. Gedeckelt auf das, was der Pool noch hergibt.
+export function restAnzahl(r, themen) {
+  if (!r || r.typ !== "sitzung" || r.fertig) return 0;
+  if (typeof r.anzahl !== "number" || !(r.anzahl > r.beantwortet)) return 0;
+  return Math.min(r.anzahl - r.beantwortet, restPool(r, themen).length);
+}
+
+export function macheWeiter(r, themen, hooks) {
+  var pool = restPool(r, themen);
+  var n = restAnzahl(r, themen);
+  if (!n || !pool.length) return hooks.home();
+  runde(pool, {
+    art: r.art || "ueben",
+    titel: r.titel || MIX_TEXT.mix.titel,
+    unter: "Der Rest von vorhin",
+    farbe: null,
+    zurueckText: "← Startseite",
+    zurueck: function () { hooks.home(); },
+    nochmal: function () { macheWeiter(r, themen, hooks); },
+    fertigSatz: "Weitergemacht, wo du aufgehört hattest.",
+    extraText: null, extra: null
+  }, hooks, { anzahl: n, auswahl: "wacklig" });
 }

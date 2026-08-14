@@ -1,6 +1,7 @@
 /* Beleg-Sprungmarken: macht aus den Quellen-Ankern im Text ("Folie 29",
-   "Art. 11 Abs. 1 GG") anklickbare Chips.
+   "Notizen S. 44", "Art. 11 Abs. 1 GG") anklickbare Chips.
      - Folien      -> oeffnen die Vorlesungsfolie im In-App-Viewer
+     - Notizen     -> oeffnen Roses eigene Notizenseite im SELBEN Viewer
      - GG-Artikel  -> Deep-Link ins Grundgesetz (gesetze-im-internet)
 
    Portiert vom ST-Trainer (st-trainer/app/js/beleg.js), mit drei bewussten
@@ -43,7 +44,40 @@
 
    Eine Nummer, die selbst in der Luecken-Liste steht, bekommt KEINEN Chip.
    Sie existiert im PDF nicht; die Formel wuerde stillschweigend die
-   Nachbarfolie liefern, und das waere schlimmer als kein Sprung. */
+   Nachbarfolie liefern, und das waere schlimmer als kein Sprung.
+
+   ---- Warum es Notizen-Chips gibt (14.08.2026) ----
+
+   52 der 69 freien Aufgaben tragen als `quelle` eine Notizenseite. Das Feld
+   `quelle` steht aber nur im Repo und wird in der App nirgends angezeigt —
+   Rose konnte bei diesen Aufgaben also nicht nachsehen, worauf sich die
+   Musterloesung stuetzt. Seit dem 14.08. duerfen Roses Notizen deployt werden
+   (die App ist privat und geht nur an sie, und die Notizen sind ihr eigenes
+   Werk), also bekommen sie denselben Weg wie die Folien.
+
+   "Notizen S. 44" ist keine neu erfundene Schreibweise: genau so stand es
+   schon 75-mal in den MC-Erklaerungen des Korpus ("... (Notizen S. 52)"). Mit
+   dieser Datei werden diese 75 Stellen auf einen Schlag anklickbar, ohne dass
+   irgendwo ein Text angefasst werden muesste.
+
+   Die Rechnung ist hier langweilig, und das ist Absicht: notiz-NN.jpg IST die
+   PDF-Seite NN von GE_merged.pdf, dieselbe Nummer wie `quelle: "notizen-sNN"`
+   und wie "### Seite NN" in materialien/notizen-referenz.md. Kein Offset, keine
+   Luecken-Arithmetik. Zwei Stichproben nachgesehen: Seite 44 traegt die
+   KMK-Vierspalten-Tabelle "Entwicklungsbereiche im SGE", Seite 57 den Kopf
+   "V1: Einfuehrung".
+
+   NEU ist trotzdem die Trennung im Kopf: der Folien-Chip springt zur Dozentin,
+   der Notizen-Chip zu Rose selbst. Deshalb 📝 statt 📄 und die warme Farbe
+   statt der blauen (--warn-ink, in beiden Paletten definiert). Und deshalb ist
+   der Rang, der in CLAUDE.md steht, auch optisch sichtbar: bei Widerspruch
+   gewinnt die Folie.
+
+   Fundstellen gehoeren in den TIPP, nicht in die Musterloesung. Die
+   Musterloesung ist der Text, den Rose am 10.09. aus dem Kopf hinschreiben
+   koennen muss; ein "(Notizen S. 44)" mittendrin liesse sie eine Fassung ueben,
+   die es in der Klausur nicht gibt. Der Tipp ist die Meta-Ebene, dort ist die
+   Herkunft richtig aufgehoben. */
 
 import { reichZeile } from "./core.js";
 
@@ -66,6 +100,48 @@ const SATZ = {
 export const TOTAL = Object.keys(SATZ).reduce((n, id) => n + SATZ[id].seiten, 0); // 262
 
 export const bildUrl = (seite) => `data/folien/folie-${String(seite).padStart(3, "0")}.jpg`;
+
+/* ---- Roses Notizen ----
+
+   58 Seiten, gerendert von scripts/baue-notizen.sh nach data/notizen/.
+   Das PDF ist RUECKWAERTS sortiert (V8 zuerst, V1 zuletzt) - die Tabelle unten
+   ist die Seiten-Uebersicht aus materialien/notizen-referenz.md, einmal in
+   Code. Sie dient nur der Beschriftung im Viewer, damit Rose beim Blaettern
+   sieht, in welcher Vorlesung sie gerade ist. */
+export const NOTIZEN_TOTAL = 58;
+
+export const notizUrl = (seite) => `data/notizen/notiz-${String(seite).padStart(2, "0")}.jpg`;
+
+const NOTIZ_SATZ = [
+  { von: 1,  bis: 6,  vorlesung: "V8 Freizeit" },
+  { von: 7,  bis: 15, vorlesung: "V7 Wohnen" },
+  { von: 16, bis: 22, vorlesung: "V6 Mobilitaet" },
+  { von: 23, bis: 33, vorlesung: "V5 Unterrichtsformen" },
+  { von: 34, bis: 42, vorlesung: "V4 Didaktische Prinzipien" },
+  { von: 43, bis: 50, vorlesung: "V3 Entwicklungsbereiche" },
+  { von: 51, bis: 56, vorlesung: "V3 Didaktische Konzeptionen" },
+  { von: 57, bis: 58, vorlesung: "V1 Einfuehrung" },
+];
+
+/* Seiten 06 und 50 sind in Roses Notizen leer (Luecken-Liste im Kopf von
+   materialien/notizen-referenz.md). Sie bekommen KEINEN Chip - dieselbe
+   Ueberlegung wie bei den ausgeblendeten Folien: ein Sprung auf ein leeres
+   Blatt ist schlimmer als kein Sprung, weil Rose dann glaubt, sie haette die
+   Stelle uebersehen. Die Zahl bleibt als Text stehen. Im Bestand zitiert
+   ohnehin keine Aufgabe diese beiden Seiten (nachgezaehlt 14.08.2026). */
+const NOTIZ_LEER = [6, 50];
+
+// Notizenseite -> gueltige Seitenzahl oder null (= kein Chip).
+export function notizSeite(seite) {
+  if (!Number.isFinite(seite) || seite < 1 || seite > NOTIZEN_TOTAL) return null;
+  if (NOTIZ_LEER.indexOf(seite) >= 0) return null;
+  return seite;
+}
+
+function notizVorlesung(seite) {
+  for (const b of NOTIZ_SATZ) if (seite >= b.von && seite <= b.bis) return b.vorlesung;
+  return "";
+}
 
 /* Aufgedruckte Foliennummer -> Bildnummer. null heisst: kein Chip.
    Passiert bei unbekanntem Thema, bei einer ausgeblendeten Folie und bei
@@ -117,6 +193,16 @@ const ANKER = /(?:Folien|Folie|F\.)\s?\d{1,3}(?:\s?(?:und|bis|,|\/|[–—-])\s?
 // wohnen.json steht auch "UN-BRK Art. 19", und das ist ein anderer Vertrag.
 const GG = /Art\.?\s?(\d+)([a-z])?(\s?Abs\.\s?\d+)?\s?GG/g;
 
+/* "Notizen S. 44", "Notizen S. 09", "Notizen S. 44 und 45".
+   Das Wort "Notizen" davor ist Pflicht und traegt die ganze Absicherung: im
+   Korpus wimmelt es von Seitenangaben fremder Werke ("KMK 2021, S. 6 ff.",
+   "Fischer 2008, 30"), und ein Muster auf blosses "S. 6" wuerde Rose auf eine
+   Notizenseite schicken, die mit der Quelle nichts zu tun hat. Gross
+   geschrieben, weil es im Deutschen ein Substantiv ist und die 75 Stellen im
+   Bestand es alle so schreiben.
+   Der Trenner muss von einer Ziffer GEFOLGT sein - gleiche Falle wie oben. */
+const NOTIZ = /Notizen\s?S\.\s?\d{1,3}(?:\s?(?:und|bis|,|\/|[–—-])\s?\d{1,3})*/g;
+
 function folienChip(seite, beschriftung, cap) {
   const b = document.createElement("button");
   b.type = "button";
@@ -124,6 +210,20 @@ function folienChip(seite, beschriftung, cap) {
   b.dataset.seite = String(seite);
   if (cap) b.dataset.cap = cap;
   b.textContent = "📄 " + beschriftung;
+  return b;
+}
+
+/* Eigene Optik, damit Rose auf einen Blick sieht, wohin sie springt: 📝 statt
+   📄, warme Farbe statt der blauen (.beleg.notiz in style.css). Folie = zur
+   Dozentin, Notiz = zu sich selbst. Die Beschriftung wird auf zwei Stellen
+   gepolstert ("Notizen S. 04"), wie die quelle-Felder es auch halten. */
+function notizChip(seite) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "beleg notiz";
+  b.dataset.notiz = String(seite);
+  b.dataset.cap = notizVorlesung(seite);
+  b.textContent = "📝 Notizen S. " + String(seite).padStart(2, "0");
   return b;
 }
 
@@ -170,6 +270,41 @@ function ankerKnoten(treffer, thema, ziel) {
   return true;
 }
 
+/* Gegenstueck zu ankerKnoten fuer die Notizen. Gleiche Mechanik, nur ohne
+   Umrechnung: "Notizen S. 44 und 45" wird zu zwei Chips, das "und" bleibt
+   Text. Eine leere Seite (06/50) faellt still durch und bleibt als Zahl
+   stehen. */
+function notizKnoten(treffer, ziel) {
+  const kopf = /^Notizen\s?S\.\s?/.exec(treffer);
+  const kopfLen = kopf ? kopf[0].length : 0;
+  const teile = [];
+  let letzte = 0, gefunden = false;
+  // \d{1,3} wie bei den Folien, obwohl es nur 58 Seiten gibt: mit zwei Stellen
+  // wuerde "Notizen S. 100" als "10" durchgehen und still auf Seite 10
+  // springen, und "Notizen S. 44, 2008" auf Seite 20. Ein falscher Sprung ist
+  // schlimmer als kein Sprung. Mit drei Stellen faengt notizSeite() die Zahl
+  // ab, und sie bleibt einfach als Text stehen. Betrifft vor allem KI-Text -
+  // das Modell nennt gelegentlich eine Nummer, die es nicht gibt.
+  const re = /\d{1,3}/g;
+  let m;
+  while ((m = re.exec(treffer)) !== null) {
+    const seite = notizSeite(+m[0]);
+    if (seite === null) continue;
+    // Beim ersten Chip verschwindet das "Notizen S." - der Chip bringt es
+    // selbst mit. Steht davor noch etwas (weil die erste Zahl leer war),
+    // bleibt das erhalten.
+    const von = (!gefunden && m.index === kopfLen) ? kopfLen : letzte;
+    if (m.index > von) teile.push(document.createTextNode(treffer.slice(von, m.index)));
+    teile.push(notizChip(seite));
+    letzte = m.index + m[0].length;
+    gefunden = true;
+  }
+  if (!gefunden) return false;
+  if (letzte < treffer.length) teile.push(document.createTextNode(treffer.slice(letzte)));
+  teile.forEach((n) => ziel.appendChild(n));
+  return true;
+}
+
 /* Ersetzt in allen Textknoten unter `knoten` die Anker durch Chips.
    Arbeitet auf einer VORHER eingesammelten Liste: wer waehrend des Laufs
    traversiert, landet in den Chips, die er selbst gerade eingesetzt hat. */
@@ -181,11 +316,11 @@ export function chipsEinsetzen(knoten, thema) {
 
   for (const tn of texte) {
     const roh = tn.nodeValue || "";
-    if (!/Folie|F\.\s?\d|GG/.test(roh)) continue;
+    if (!/Folie|F\.\s?\d|GG|Notizen/.test(roh)) continue;
     const frag = document.createDocumentFragment();
     let pos = 0, etwas = false;
 
-    // Beide Muster in EINEM Durchlauf, nach Position sortiert - sonst muesste
+    // Alle Muster in EINEM Durchlauf, nach Position sortiert - sonst muesste
     // der zweite Lauf um die Chips des ersten herumlaufen.
     const treffer = [];
     ANKER.lastIndex = 0;
@@ -193,6 +328,8 @@ export function chipsEinsetzen(knoten, thema) {
     while ((m = ANKER.exec(roh)) !== null) treffer.push({ i: m.index, t: m[0], art: "folie" });
     GG.lastIndex = 0;
     while ((m = GG.exec(roh)) !== null) treffer.push({ i: m.index, t: m[0], art: "gg", nr: m[1] + (m[2] || "") });
+    NOTIZ.lastIndex = 0;
+    while ((m = NOTIZ.exec(roh)) !== null) treffer.push({ i: m.index, t: m[0], art: "notiz" });
     treffer.sort((a, b) => a.i - b.i);
 
     for (const tr of treffer) {
@@ -202,6 +339,8 @@ export function chipsEinsetzen(knoten, thema) {
       if (tr.art === "gg") {
         frag.appendChild(ggChip(tr.t, tr.nr));
         gesetzt = true;
+      } else if (tr.art === "notiz") {
+        gesetzt = notizKnoten(tr.t, frag);
       } else {
         gesetzt = ankerKnoten(tr.t, thema, frag);
       }
@@ -223,10 +362,50 @@ export function belegZeile(tag, text, thema, klasse) {
   return chipsEinsetzen(reichZeile(tag, text, klasse), thema);
 }
 
-/* ---- Folien-Viewer ---- */
-let vState = null; // { seite, quelle, zoom, ov, img, capEl }
+/* ---- Blatt-Viewer ----
 
-function baueOverlay() {
+   EIN Viewer fuer beide Belegarten. Ein zweiter danebengebaut haette zwei
+   Zoom-Zustaende, zwei Tasten-Hoerer und zwei Stellen, an denen ein
+   Ladefehler abgefangen werden muss - und Rose haette zwei Bedienungen zu
+   lernen fuer dieselbe Geste. Was sich unterscheidet, steckt in ART:
+   Bildpfad, Gesamtzahl, Beschriftung und die Worte auf den Knoepfen. Das
+   Blaettern bleibt innerhalb einer Art (sonst liefe Rose aus Notizenseite 58
+   in Folie 1, ohne es zu merken). */
+const ART = {
+  folie: {
+    total: () => TOTAL,
+    url: bildUrl,
+    alt: "Vorlesungsfolie",
+    vor: "Vorige Folie",
+    zurueck: "Naechste Folie",
+    einzeln: "Folie einzeln öffnen ↗",
+    blatt: (seite, total) => `Blatt ${seite} von ${total} · mit ‹ › blätterst du weiter`,
+    titel: (seite) => {
+      const satz = satzZu(seite);
+      // Immer die Vorlesung dazu: der Viewer blaettert ueber Satzgrenzen, und
+      // ohne diese Zeile merkt Rose nicht, dass sie in der naechsten Vorlesung
+      // gelandet ist. Die aufgedruckte Nummer steht vorn, die Bildnummer hinten.
+      return satz ? `Folie ${satz.nummer} · ${satz.vorlesung}` : `Folie ${seite}`;
+    },
+  },
+  notiz: {
+    total: () => NOTIZEN_TOTAL,
+    url: notizUrl,
+    alt: "Seite aus Roses Notizen",
+    vor: "Vorige Notizenseite",
+    zurueck: "Naechste Notizenseite",
+    einzeln: "Seite einzeln öffnen ↗",
+    blatt: (seite, total) => `Deine Notizen, Seite ${seite} von ${total} · mit ‹ › blätterst du weiter`,
+    titel: (seite) => {
+      const v = notizVorlesung(seite);
+      return v ? `Notizen S. ${String(seite).padStart(2, "0")} · ${v}` : `Notizen S. ${seite}`;
+    },
+  },
+};
+
+let vState = null; // { art, seite, zoom, ov, img, capEl, msg, hint, ext, scroll }
+
+function baueOverlay(art) {
   const ov = document.createElement("div");
   ov.className = "folien-ov";
   const box = document.createElement("div");
@@ -235,11 +414,11 @@ function baueOverlay() {
 
   const bar = document.createElement("div");
   bar.className = "folien-bar";
-  bar.appendChild(fvBtn("prev", "‹", "Vorige Folie"));
+  bar.appendChild(fvBtn("prev", "‹", art.vor));
   const cap = document.createElement("span");
   cap.className = "folien-cap";
   bar.appendChild(cap);
-  bar.appendChild(fvBtn("next", "›", "Naechste Folie"));
+  bar.appendChild(fvBtn("next", "›", art.zurueck));
   const sp = document.createElement("span");
   sp.className = "fv-sp";
   bar.appendChild(sp);
@@ -252,7 +431,7 @@ function baueOverlay() {
   scroll.className = "folien-scroll";
   const img = document.createElement("img");
   img.className = "folien-img";
-  img.alt = "Vorlesungsfolie";
+  img.alt = art.alt;
   img.draggable = false;
   const msg = document.createElement("div");
   msg.className = "folien-msg";
@@ -270,7 +449,7 @@ function baueOverlay() {
   ext.target = "_blank";
   ext.rel = "noopener";
   ext.href = "#";
-  ext.textContent = "Folie einzeln öffnen ↗";
+  ext.textContent = art.einzeln;
   foot.appendChild(hint);
   foot.appendChild(ext);
   box.appendChild(foot);
@@ -289,7 +468,7 @@ function baueOverlay() {
   });
   img.addEventListener("error", () => {
     msg.hidden = false;
-    msg.textContent = "Diese Folie ließ sich nicht laden (offline?). Beim nächsten Mal online wird sie gespeichert.";
+    msg.textContent = "Dieses Blatt ließ sich nicht laden (offline?). Beim nächsten Mal online wird es gespeichert.";
   });
   img.addEventListener("load", () => { msg.hidden = true; });
   document.addEventListener("keydown", tasten);
@@ -326,8 +505,10 @@ function setZoom(z) {
 }
 
 function gehe(seite) {
-  seite = Math.min(TOTAL, Math.max(1, seite));
-  if (!vState || seite === vState.seite) return;
+  if (!vState) return;
+  const total = vState.art.total();
+  seite = Math.min(total, Math.max(1, seite));
+  if (seite === vState.seite) return;
   vState.seite = seite;
   zeige();
 }
@@ -337,35 +518,37 @@ function zeige() {
   if (!st) return;
   st.img.style.width = "100%";
   st.zoom = 1;
-  st.img.src = bildUrl(st.seite);
+  st.img.src = st.art.url(st.seite);
   st.msg.hidden = true;
-  const satz = satzZu(st.seite);
-  // Immer die Vorlesung dazu: der Viewer blaettert ueber Satzgrenzen, und ohne
-  // diese Zeile merkt Rose nicht, dass sie in der naechsten Vorlesung gelandet
-  // ist. Die aufgedruckte Nummer steht vorn, die Bildnummer hinten.
-  st.capEl.textContent = satz ? `Folie ${satz.nummer} · ${satz.vorlesung}` : `Folie ${st.seite}`;
-  st.ext.href = bildUrl(st.seite);
-  st.hint.textContent = `Blatt ${st.seite} von ${TOTAL} · mit ‹ › blätterst du weiter`;
+  st.capEl.textContent = st.art.titel(st.seite);
+  st.ext.href = st.art.url(st.seite);
+  st.hint.textContent = st.art.blatt(st.seite, st.art.total());
   st.scroll.scrollTo(0, 0);
 }
 
-export function oeffneFolie(seite) {
-  seite = Math.min(TOTAL, Math.max(1, +seite || 1));
+function oeffneBlatt(art, seite) {
+  seite = Math.min(art.total(), Math.max(1, +seite || 1));
   // Erst aufraeumen, dann neu bauen: sonst stapeln sich Overlays uebereinander
-  // und jedes alte laesst seinen keydown-Hoerer am document zurueck.
+  // und jedes alte laesst seinen keydown-Hoerer am document zurueck. Gilt auch
+  // ueber die Arten hinweg - ein Notizen-Chip im offenen Folien-Viewer tauscht
+  // das Overlay aus, statt eines daraufzusetzen.
   schliesse();
-  const teile = baueOverlay();
+  const teile = baueOverlay(art);
   vState = {
-    seite, zoom: 1, ov: teile.ov, img: teile.img, capEl: teile.cap,
+    art, seite, zoom: 1, ov: teile.ov, img: teile.img, capEl: teile.cap,
     msg: teile.msg, hint: teile.hint, ext: teile.ext, scroll: teile.scroll,
   };
   zeige();
 }
 
-// Ein delegierter Klick-Handler fuer alle Folien-Chips, egal wo sie stehen.
+export function oeffneFolie(seite) { oeffneBlatt(ART.folie, seite); }
+export function oeffneNotiz(seite) { oeffneBlatt(ART.notiz, seite); }
+
+// Ein delegierter Klick-Handler fuer alle Beleg-Chips, egal wo sie stehen.
 document.addEventListener("click", (e) => {
-  const chip = e.target.closest(".beleg.folie");
+  const chip = e.target.closest(".beleg.folie, .beleg.notiz");
   if (!chip) return;
   e.preventDefault();
-  oeffneFolie(+chip.dataset.seite);
+  if (chip.classList.contains("notiz")) oeffneNotiz(+chip.dataset.notiz);
+  else oeffneFolie(+chip.dataset.seite);
 });

@@ -925,21 +925,65 @@ p { margin: 0 0 var(--sp-3); }
 .fq-wert { font-size: 10px; font-weight: 700; fill: var(--accent); font-family: "Karla", system-ui, sans-serif; }
 
 /* ---------- Zuletzt geuebt ----------
-   Nur zum Ansehen: keine Klickflaeche, kein Loeschen-Knopf (anders als im
-   ST-Trainer). Grabsteine neben Roses echtem Lernstand sind nichts fuer eine
-   Uebersichtsliste. */
+   Seit 14.08. mit denselben Aktionen wie im ST-Trainer (Weitermachen, 🔁, 🗑).
+   Die Zeile besteht deshalb aus ZWEI Teilen nebeneinander: der tippbaren
+   Flaeche (.zuletzt-zeile, ein <button>) und der Knopfreihe daneben
+   (.zuletzt-aktionen). Getrennt, weil ein Knopf im Knopf ungueltiges HTML ist -
+   der Browser zoege ihn beim Parsen heraus, und das Loeschen saesse woanders.
+   Der Trennstrich wandert dafuer an die Reihe: er soll ueber die ganze Breite
+   laufen, nicht nur ueber die Klickflaeche. */
 .zuletzt-liste { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-2); }
+/* DIE KNOEPFE STEHEN UNTER DER ZEILE, NICHT DANEBEN - und das ist zweimal
+   nachgemessen worden. Nebeneinander bleiben bei 390 px fuer den Text keine
+   150 px uebrig (Icon, Pille und Chevron sitzen ja auch in der Klickflaeche);
+   der Titel bricht dann mitten im Wort, im schlimmsten Fall Buchstabe fuer
+   Buchstabe. Rose liest das hier auf dem Handy, und ein Rundentitel, den man
+   buchstabieren muss, ist keine Uebersicht.
+
+   Also: Flex-Basis 100 % fuer die Zeile, danach die Aktionen rechtsbuendig auf
+   eigener Hoehe. Kostet je Zeile rund 34 px - der Preis ist bewusst bezahlt. */
+.zuletzt-reihe {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0 var(--sp-2);
+  border-top: 1px solid var(--line); padding-top: var(--sp-2);
+}
+.zuletzt-reihe:first-child { border-top: none; padding-top: 0; }
 /* Seit 12.08. antippbar (Jennifer: "auch die Ansicht, weil man sie auch ansehen
    soll") - deshalb ein button und kein div, mit sichtbarem Chevron. */
 .zuletzt-zeile {
   display: flex; align-items: center; gap: var(--sp-3);
-  width: 100%; text-align: left; font: inherit; color: var(--ink);
+  flex: 1 1 100%; min-width: 0; text-align: left; font: inherit; color: var(--ink);
   background: none; border: none; cursor: pointer;
-  padding: var(--sp-2) 0; border-top: 1px solid var(--line);
+  padding: 0 0 4px;
   transition: transform .08s ease;
 }
 .zuletzt-zeile:active { transform: scale(.99); }
-.zuletzt-zeile:first-child { border-top: none; padding-top: 0; }
+
+/* Die Aktionen. Klein und ruhig: sie sollen erreichbar sein, aber nicht mit dem
+   Inhalt der Zeile um Aufmerksamkeit ringen. 44 px Mindestflaeche trotzdem -
+   Rose bedient das am Handy. "Weitermachen" traegt als einziges Wort statt
+   Symbol und darf auffallen: es ist ein Angebot, kein Aufraeumwerkzeug. */
+.zuletzt-aktionen {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0; margin-left: auto; padding-bottom: 4px;
+}
+/* 44 px wie ueberall in dieser App (.kl-kopf-knopf, die Tageskacheln). Rose
+   bedient das am Handy, und 🗑 sitzt neben 🔁 - der Fehlgriff waere hier der
+   teure. Der Abstand von 8 px ist aus demselben Grund groesser als das uebliche
+   Knopf-Gedraenge. Die Rueckfrage faengt es zusaetzlich ab. */
+.zuletzt-knopf {
+  font: inherit; font-size: .86rem; cursor: pointer;
+  min-width: 44px; min-height: 44px; padding: 0 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-soft); background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border: 1px solid transparent; border-radius: 999px;
+  transition: transform .08s ease, background .12s ease;
+}
+.zuletzt-knopf:active { transform: scale(.94); }
+.zuletzt-knopf:hover { background: color-mix(in srgb, var(--ink) 11%, transparent); }
+.zuletzt-knopf.stark {
+  font-size: .78rem; font-weight: 700; padding: 0 11px;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
 /* Spiel-Tage sind keine Runde und haben keine Detailansicht - dann auch kein
    Chevron, kein Zeiger und kein Druck-Feedback. */
 .zuletzt-zeile.starr { cursor: default; }
@@ -968,15 +1012,102 @@ p { margin: 0 0 var(--sp-3); }
 .zuletzt-pfeil { color: var(--ink-soft); font-size: 1.1rem; flex-shrink: 0; }
 .zuletzt-karte .knopf { margin-top: var(--sp-3); width: 100%; }
 
-/* Detailansicht einer Runde: eine Zeile je Aufgabe. Die Zeichen sind ✓ (saß),
-   ~ (halb) und ↻ (kommt wieder) - nie ein rotes Kreuz und nie das Wort
-   "falsch". Eine danebengegangene Aufgabe ist eine, die noch dran ist. */
+/* Detailansicht einer Runde. Bis zum 14.08. war das EINE Karte mit einer Zeile
+   je Aufgabe; seitdem ist jede Aufgabe eine eigene Karte, in der drei Sachen
+   untereinander stehen: die Aufgabe, Roses Zettel, und was zurueckkam. Der
+   Grund fuer den Schnitt: ein Zettel in Handschrift braucht Luft um sich, und
+   in einer durchlaufenden Liste haette man nicht mehr gesehen, welcher Zettel
+   zu welcher Aufgabe gehoert.
+
+   Die Zeichen bleiben ✓ (saß), ~ (halb) und ↻ (kommt wieder) - nie ein rotes
+   Kreuz und nie das Wort "falsch". Eine danebengegangene Aufgabe ist eine, die
+   noch dran ist. */
 .runde-liste { display: flex; flex-direction: column; gap: 0; }
+.runde-aufgabe { margin-top: var(--sp-3); }
 .runde-zeile {
   display: flex; align-items: flex-start; gap: var(--sp-3);
   padding: var(--sp-2) 0; border-top: 1px solid var(--line);
 }
 .runde-zeile:first-child { border-top: none; padding-top: 0; }
+.runde-aufgabe > .runde-zeile { border-top: none; padding-top: 0; }
+
+/* ---------- Roses Zettel im Verlauf ----------
+   Derselbe Baustein wie beim Ueben (.frei-blatt in papier.css, die eingefrorene
+   Fassung ihrer Antwort). Hier braucht er nur zwei Korrekturen: der Kopfsteg
+   war fuer den "✎ ändern"-Knopf da, den es hier nicht gibt, und stattdessen
+   sitzt oben die Marke, die sagt, was fuer ein Text das ist. */
+.runde-blatt { padding-top: 12px; margin-top: var(--sp-2); }
+.runde-blatt-marke {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--blatt-ink-2); margin-bottom: 4px;
+}
+
+/* ---------- Was zurueckkam ----------
+   Roses eigenes Urteil steht oben, das der KI darunter und sichtbar als
+   Vorschlag - dieselbe Rangfolge wie ueberall in dieser App. Die KI-Zeilen
+   tragen darum die Akzentfarbe und Roses die volle Tinte: was sie selbst
+   gesagt hat, ist der Haupttext, der Rest ist Kommentar dazu. */
+.runde-rueck {
+  display: flex; flex-direction: column; gap: 5px;
+  margin-top: var(--sp-2); padding: var(--sp-2) var(--sp-3);
+  border-radius: 10px; border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.runde-rueck-zeile { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.runde-rueck-titel {
+  font-size: .7rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.runde-rueck-wert { font-size: .84rem; font-weight: 700; }
+.runde-rueck-ki { font-size: .78rem; color: var(--accent); }
+/* Die Treffer je Stichpunkt als Reihe - Reihenfolge der Stichpunkte, ohne
+   Beschriftung (Begruendung bei trefferReihe() in main.js). */
+/* Die Beschriftung bekommt ihre eigene Zeile (flex-basis 100 %), damit die
+   Zeichenreihe geschlossen darunter steht. Nebeneinander riss sie sonst mitten
+   in der Reihe um - und eine Reihe, die umbricht, laesst sich nicht mehr als
+   Reihenfolge der Stichpunkte lesen, was ihr einziger Zweck ist. */
+.runde-treffer { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.runde-treffer-titel {
+  flex: 1 1 100%;
+  font-size: .7rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 1px;
+}
+.runde-treffer-zeichen {
+  font-size: .74rem; font-weight: 800; line-height: 1.6;
+  min-width: 20px; text-align: center; border-radius: 5px;
+}
+.runde-treffer-zeichen.gut { background: var(--ok-bg); color: var(--ok); }
+.runde-treffer-zeichen.mittel { background: var(--warn-bg); color: var(--warn-ink); }
+.runde-treffer-zeichen.offen { background: color-mix(in srgb, var(--glimmer-1) 22%, var(--card)); color: var(--glimmer-1); }
+
+/* ---------- Die MC-Frage aufgeschluesselt ----------
+   Man soll sehen, WOBEI es danebenlag, nicht nur DASS. Die richtige Option
+   traegt die gruene Marke, Roses Wahl den Rahmen - liegt beides
+   uebereinander, sieht man das an beidem zugleich. Kein Rot: die falsch
+   gewaehlte Option bekommt dasselbe ↻ wie die Zeile darueber. */
+.runde-optionen { display: flex; flex-direction: column; gap: 3px; margin-top: var(--sp-2); }
+.runde-option {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 5px 8px; border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: .82rem; line-height: 1.4; color: var(--ink-soft);
+}
+.runde-option.korrekt { background: var(--ok-bg); color: var(--ink); }
+.runde-option.gewaehlt { border-color: color-mix(in srgb, var(--ink) 24%, transparent); }
+.runde-option-marke { flex-shrink: 0; font-weight: 800; min-width: 12px; }
+.runde-option.korrekt .runde-option-marke { color: var(--ok); }
+.runde-option.gewaehlt:not(.korrekt) .runde-option-marke { color: var(--glimmer-1); }
+.runde-option-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.runde-option-deine {
+  flex-shrink: 0; font-size: .66rem; letter-spacing: .03em;
+  padding: 1px 7px; border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 10%, transparent); color: var(--ink-soft);
+}
+.runde-erklaerung {
+  font-size: .8rem; line-height: 1.45; color: var(--ink-soft);
+  margin: 6px 0 0; padding: 0 8px;
+}
 .runde-zeichen {
   flex-shrink: 0; min-width: 26px; text-align: center;
   font-weight: 800; font-size: .86rem; line-height: 1.5;
@@ -1017,6 +1148,11 @@ p { margin: 0 0 var(--sp-3); }
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   color: var(--ink);
 }
+/* Seit 14.08. steht der KI-Kommentar OFFEN da statt hinter einem <details>.
+   Er ist einer der zwei Gruende, aus denen man diese Seite ueberhaupt oeffnet
+   (der andere ist Roses eigener Text daueber) - was man immer aufklappt, muss
+   nicht zugeklappt sein. */
+.runde-kibox { display: flex; flex-direction: column; gap: 4px; margin-top: var(--sp-2); }
 .runde-kitext {
   font-size: .82rem; line-height: 1.45; color: var(--ink);
   overflow-wrap: anywhere;
@@ -1041,6 +1177,11 @@ p { margin: 0 0 var(--sp-3); }
   border-radius: 999px; padding: 0 8px; white-space: nowrap;
 }
 .q-pille.q0 { background: var(--paper-2); color: var(--ink-soft); }
+/* Die Punkte-/Zaehlpille des Verlaufs (ui.js standPille, seit 14.08.). Gleiche
+   Farbleiter, nur etwas mehr Platz: hier stehen zwei Zahlen und eine Einheit
+   statt einer Prozentzahl, und die Ziffern sollen nicht springen, wenn aus 9
+   eine 10 wird. */
+.stand-pille { font-variant-numeric: tabular-nums; padding: 0 9px; }
 
 /* Flaechen-Varianten: Pille, Rasterzelle und Statistik-Kachel teilen sich die
    Farben. Die Ink-Werte sind auf 4.5:1 geprueft (kleine, fette Schrift). */
@@ -1335,6 +1476,18 @@ p { margin: 0 0 var(--sp-3); }
 }
 .beleg:hover, .beleg:focus-visible { background: color-mix(in srgb, var(--accent) 26%, transparent); }
 .beleg.folie { font-weight: 700; }
+/* Notizen-Chips warm statt blau: Rose soll auf einen Blick sehen, ob sie zur
+   Dozentin springt (Folie, blau, 📄) oder zu sich selbst (ihre Notizen, warm,
+   📝). Genommen wird --warn-ink, weil es in BEIDEN Paletten definiert ist -
+   der helle Modus haengt hier an state.theme, nicht an prefers-color-scheme,
+   ein handgewaehlter Hexwert saehe in einem der beiden falsch aus. Damit ist
+   die Quellen-Rangfolge aus CLAUDE.md auch optisch zu sehen: die kraeftigere
+   Auszeichnung hat die Folie, denn bei Widerspruch gewinnt sie. */
+.beleg.notiz {
+  color: var(--warn-ink); font-weight: 600;
+  background: color-mix(in srgb, var(--warn-ink) 16%, transparent);
+}
+.beleg.notiz:hover, .beleg.notiz:focus-visible { background: color-mix(in srgb, var(--warn-ink) 30%, transparent); }
 
 .folien-ov {
   position: fixed; inset: 0; z-index: 120; background: rgba(10, 8, 20, .72);

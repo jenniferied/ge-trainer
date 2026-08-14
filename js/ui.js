@@ -65,6 +65,52 @@ export function quotePille(prozent, extra) {
   return el("span", "q-pille " + quoteStufe(prozent) + (extra ? " " + extra : ""), text);
 }
 
+/* ---------- Zwei Zahlen statt einer Prozentzahl (Jennifer, 14.08.2026) --------
+   "Anzahl der Punkte anstatt Prozent." Diese Pille zeigt <hat>/<von> und
+   dahinter die EINHEIT - und die Einheit ist der Punkt, an dem alles haengt:
+
+     "12/20 P."  echte Klausurpunkte, von Rose gesetzt oder bestaetigt
+     "6/8 ✓"     gezaehlte Aufgaben, die sassen (MC richtig / frei "gut")
+
+   Warum die Einheit sichtbar mitfaehrt: die zwei Zahlen kommen aus
+   verschiedenen Toepfen und duerfen nie miteinander verrechnet oder
+   verwechselt werden. Wo es keine Punkte gibt, wird auch keine erfunden -
+   die lange Begruendung steht bei punkteAus() in stats.js.
+
+   Die Farbe kommt aus derselben Leiter wie die Quotenpille (quoteStufe), damit
+   die App nicht zwei Farbsprachen fuer denselben Gedanken hat. Der Anteil wird
+   dafuer nur INTERN gerechnet und nirgends als Prozentzahl angezeigt. */
+// Halbe Punkte kommen aus der Klausur vor (klausur.js rechnet in 0,5er-
+// Schritten) - und sie werden deutsch gesetzt: "5,5 P.", nicht "5.5 P.".
+// Ganze Zahlen bleiben ohne Nachkommastelle, "5,0 P." saehe nach Messgeraet aus.
+export function punkteText(n) {
+  var z = Math.round(n * 2) / 2;
+  return (z % 1 === 0 ? String(z) : z.toFixed(1).replace(".", ","));
+}
+
+export function standPille(hat, von, einheit, extra) {
+  var anteil = von > 0 ? 100 * hat / von : null;
+  var zahl = punkteText(hat);
+  var p = el("span", "q-pille stand-pille " + quoteStufe(anteil) + (extra ? " " + extra : ""),
+    zahl + "/" + punkteText(von) + " " + einheit);
+  p.title = einheit === "P."
+    ? zahl + " von " + punkteText(von) + " Punkten"
+    : zahl + " von " + von + " Aufgaben saßen";
+  return p;
+}
+
+/* Welche Pille eine Verlaufszeile traegt - EINE Stelle, damit Liste, Kopf der
+   Detailansicht und alles Spaetere dieselbe Regel benutzen. Punkte schlagen die
+   Zaehlung; wo beides fehlt (ein Spieltag, eine Runde ohne Bewertung), gibt es
+   gar keine Pille statt einer nichtssagenden. */
+export function rundenPille(r) {
+  if (!r) return null;
+  if (typeof r.punkte === "number" && r.max > 0) return standPille(r.punkte, r.max, "P.");
+  var z = r.zaehlung;
+  if (z && z.bewertet > 0) return standPille(z.sass, z.bewertet, "✓");
+  return null;
+}
+
 /* ---------- Baukasten fuer eine Runde (Jennifer, 12.08.) ----------
    "Die Runden-Optionen: ST hat einen Baukasten, in dem alles, was zu einer
    Runde gehoert, an einer Stelle steht ... was zur Runde gehoert, steht dort,

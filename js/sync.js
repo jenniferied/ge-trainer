@@ -860,6 +860,36 @@ export function loescheAntworten(aids) {
   syncBald(500);
 }
 
+/* Eine ganze Runde loeschen (Jennifer, 14.08.2026: "mit löschen und
+   wiederholen button"). Bis dahin gab es hier bewusst keinen Loeschen-Knopf -
+   die Begruendung stand im Kopf des Zuletzt-Blocks (stats.js) und ist dort
+   ersetzt worden.
+
+   Diese Funktion setzt NUR Grabsteine und ruft dann den Merge. Das Aufraeumen
+   selbst passiert komplett in mergeIn: der raeumt begrabsteinte Antworten aus
+   dem Log, leitet mc/frei danach neu ab, wirft die Sitzung ueber "sit:<id>"
+   weg und nimmt die Gespraeche zur Frage gleich mit (ueber die aid der Antwort
+   UND ueber sid === Sitzungs-Id). Genau deshalb steht hier keine einzige
+   filter-Zeile: zwei Aufraeumwege waeren zwei Gelegenheiten, sie
+   auseinanderlaufen zu lassen, und der in mergeIn ist der, der auch fuer den
+   Stand vom anderen Geraet gilt.
+
+   Der zweite Grund fuer den Umweg ueber Grabsteine: ohne sie holt der naechste
+   Sync alles vom anderen Geraet zurueck. Ein Loeschen ohne Grabstein waere
+   sichtbar erfolgreich und beim naechsten Oeffnen rueckgaengig.
+
+   r ist eine Zeile aus stats.letzteRunden. Nur typ "sitzung" hat eine echte Id;
+   "abgeleitet" und "spiel" tragen eine gebaute Anzeige-Id ("abl-…", "spiel-…"),
+   die nirgends gespeichert ist - fuer sie zaehlen allein die aids. */
+export function loescheRunde(r) {
+  if (!r) return;
+  (r.antworten || []).forEach(function (a) { grabstein(a.aid || antwortId(a)); });
+  if (r.typ === "sitzung" && r.id) grabstein("sit:" + r.id);
+  mergeIn(state, {});
+  speichern();
+  syncBald(500);
+}
+
 // Kompletter Neustart des Fortschritts: jede bekannte Antwort und jeder Alt-Stand
 // bekommt einen Grabstein, sonst kaeme beim naechsten Sync alles zurueck.
 export function fortschrittZuruecksetzen() {

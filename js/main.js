@@ -4,7 +4,7 @@
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
   starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
-import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
+import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, standPille, rundenPille, punkteText, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
@@ -14,7 +14,7 @@ import * as Klausurfrage from "./klausurfrage.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
-  frageChatZuFrage, frageChatSagen, frageChatAid } from "./sync.js";
+  frageChatZuFrage, frageChatSagen, frageChatAid, loescheRunde } from "./sync.js";
 // Der Chat an der einzelnen Aufgabe. GE-LOKAL, nicht geteilt - die Begruendung
 // steht ausfuehrlich im Kopf der Datei, der Umzug nach rose/geteilte-styles/
 // als Punkt in der ROADMAP. Alles App-spezifische steckt im Adapter
@@ -1088,7 +1088,11 @@ function antwortZeichen(a) {
       return { z: "·", k: "mittel", w: a.bearbeitet ? "geschrieben, noch nicht bewertet" : "" };
     }
     var q = a.punkte / a.max;
-    return { z: a.punkte + "/" + a.max, k: q >= 1 ? "gut" : q > 0 ? "mittel" : "offen", w: a.punkte + " von " + a.max + " Punkten" };
+    return {
+      z: punkteText(a.punkte) + "/" + punkteText(a.max),
+      k: q >= 1 ? "gut" : q > 0 ? "mittel" : "offen",
+      w: punkteText(a.punkte) + " von " + punkteText(a.max) + " Punkten"
+    };
   }
   return { z: "·", k: "mittel", w: "" };
 }
@@ -1101,10 +1105,25 @@ function antwortZeichen(a) {
    Seit dem 12.08. sind die Zeilen ANTIPPBAR (Jennifer: "das Zuletzt-Trainieren,
    und auch die Ansicht, weil man sie auch ansehen soll"). Drueben oeffnet ein
    Tipp die Auswertung der Session, hier die Runden-Ansicht mit allen Aufgaben,
-   die in dem Zeitfenster drankamen. Geloescht wird hier nichts - der ST-Trainer
-   haengt an jede Zeile einen Papierkorb, das bleibt hier bewusst weg: der
-   GE-Trainer hat keine Sessions, ein Loeschen muesste im Antwort-Log
-   herumschneiden, und Datenerhalt geht vor. */
+   die in dem Zeitfenster drankamen.
+
+   SEIT DEM 14.08. TRAEGT JEDE ZEILE DIESELBEN AKTIONEN WIE DRUEBEN (Jennifer:
+   "gleiche diese an ... mit löschen und wiederholen button. etc." und
+   "mit continue obvs wenn man zwischendurch aufgehört hat"):
+
+     Weitermachen  nur an angefangenen Runden - die fehlende Anzahl aus
+                   denselben Themen (Stats.macheWeiter, Begruendung dort)
+     🔁            dieselben Aufgaben nochmal, die alte Zeile bleibt stehen
+     🗑            die Runde samt ihrer Antworten und Gespraeche loeschen
+
+   Hier stand bis dahin "Geloescht wird hier nichts", weil ein Loeschen im
+   Antwort-Log herumschneiden muesste. Es schneidet auch heute nichts: es setzt
+   Grabsteine und laesst mergeIn aufraeumen, denselben Weg, den der Sync fuer
+   jedes andere Geraet ohnehin geht (sync.js loescheRunde).
+
+   Die Zeile ist deshalb jetzt eine .zuletzt-reihe aus zwei Teilen - der
+   tippbaren Flaeche und den Aktionen daneben. Ein Knopf IN einem Knopf waere
+   ungueltiges HTML, und der Browser zoege ihn beim Parsen heraus. */
 
 // Dauer in Worten. Unter einer Minute wird nicht auf "0 min" gerundet - das
 // saehe aus, als waere nichts passiert.
@@ -1134,7 +1153,7 @@ function rundenMeta(r) {
   var teile = [zeitText(r.bis), geschafftText(r)];
   var d = dauerText(r.dauerSek);
   if (d) teile.push(d);
-  if (typeof r.punkte === "number" && r.max) teile.push(r.punkte + " von " + r.max + " Punkten");
+  if (typeof r.punkte === "number" && r.max) teile.push(punkteText(r.punkte) + " von " + punkteText(r.max) + " Punkten");
   if (r.typ === "spiel") teile.push(r.richtig + " gleich richtig");
   else if (r.quote != null && r.bewertet && r.bewertet !== r.beantwortet) teile.push(r.bewertet + " gewertet");
   if (r.themen.length) {
@@ -1155,11 +1174,83 @@ function selbstText(s) {
   return t.length ? t.join(" · ") : null;
 }
 
-function zuletztZeile(r, onKlick) {
+/* Die Knopfreihe rechts an einer Verlaufszeile - das Gegenstueck zu histRow()
+   im ST-Trainer (dort: "Rest bearbeiten", 🔁, 🗑).
+
+   Bewusst als eigene <button> NEBEN der Zeile und nicht darin: die Zeile ist
+   selbst ein Knopf (sie oeffnet die Detailansicht), und ein Knopf im Knopf ist
+   ungueltiges HTML - der Browser zieht ihn beim Parsen heraus, und dann sitzt
+   das Loeschen ploetzlich woanders. Darum ist die Zeile eine Reihe aus zwei
+   Teilen: der tippbaren Flaeche und den Aktionen daneben.
+
+   Jede Aktion, die etwas veraendert, fragt vorher nach. Das Loeschen sagt dabei
+   ausdruecklich, was passiert (der Lernstand wird ohne die Runde neu gerechnet,
+   auf allen Geraeten) - dieselbe Auskunft wie drueben, und zwar deshalb, weil
+   sie stimmt: die Grabsteine wirken beim naechsten Sync auf jedem Geraet. */
+function zuletztAktionen(r, aufNeu) {
+  var box = el("div", "zuletzt-aktionen");
+
+  var rest = Stats.restAnzahl(r, themen);
+  if (rest) {
+    var weiter = el("button", "zuletzt-knopf stark", "Weitermachen");
+    weiter.title = "Die restlichen " + rest + " Aufgaben aus denselben Themen – frisch gezogen";
+    weiter.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      Stats.macheWeiter(r, themen, HOOKS);
+    });
+    box.appendChild(weiter);
+  }
+
+  var art = Stats.wiederholArt(r, themen);
+  if (art) {
+    var nochmal = el("button", "zuletzt-knopf", "🔁");
+    nochmal.setAttribute("aria-label", "Diese Runde nochmal");
+    nochmal.title = art === "klausur" ? "Einen neuen Bogen schreiben"
+      : art === "spiel" ? "Das Spiel nochmal"
+        : "Dieselben Aufgaben nochmal – die alte Zeile bleibt stehen";
+    nochmal.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      if (art === "klausur") return zeige("klausur");
+      if (art === "spiel") return zeige(r.art === "spiel-operatoren" ? "spiel-op" : "spiel-bg");
+      var p = Stats.rundePool(r, themen);
+      // Fehlt eine Aufgabe (aeltere Korpus-Fassung), wird das gesagt statt
+      // stillschweigend eine kuerzere Runde unter demselben Titel zu starten.
+      var frageText = p.fehlend
+        ? "Von den " + p.gesamt + " Aufgaben dieser Runde gibt es noch " + p.pool.length
+          + " – der Rest stammt aus einer früheren Fassung. Die " + p.pool.length + " nochmal üben?"
+        : "Dieselben " + p.pool.length + " Aufgaben nochmal üben? Sie kommen neu gemischt, die alte Zeile bleibt stehen.";
+      frag(frageText, { ja: "Nochmal üben", nein: "Lieber nicht" }).then(function (ja) {
+        if (ja) Stats.wiederholeRunde(r, themen, HOOKS);
+      });
+    });
+    box.appendChild(nochmal);
+  }
+
+  var weg = el("button", "zuletzt-knopf", "🗑");
+  weg.setAttribute("aria-label", "Diese Runde löschen");
+  weg.title = "Diese Runde aus dem Verlauf löschen";
+  weg.addEventListener("click", function (ev) {
+    ev.stopPropagation();
+    frag("Diese Runde aus dem Verlauf löschen? Ihre " + r.n
+      + (r.n === 1 ? " Antwort verschwindet" : " Antworten verschwinden")
+      + " mit, dein Lernstand wird ohne sie neu gerechnet – auf allen Geräten.",
+    { ja: "Löschen", nein: "Behalten" }).then(function (ja) {
+      if (!ja) return;
+      loescheRunde(r);
+      aufNeu();
+    });
+  });
+  box.appendChild(weg);
+  return box;
+}
+
+function zuletztZeile(r, onKlick, aufNeu) {
   // Spiel-Tage sind KEINE Runde und bekommen darum auch keine Detailansicht:
   // dort stuenden 24 Zeilen "Aufgabe aus einer frueheren Fassung", weil
-  // Begriffs-Karten keine Frage-Id im Themenkorpus haben.
+  // Begriffs-Karten keine Frage-Id im Themenkorpus haben. Loeschen und
+  // Nochmal-Spielen koennen sie trotzdem - dafuer braucht es keine Detailseite.
   var tippbar = r.typ !== "spiel";
+  var reihe = el("div", "zuletzt-reihe");
   var zeile = el(tippbar ? "button" : "div", "zuletzt-zeile" + (tippbar ? "" : " starr"));
   zeile.appendChild(el("span", "zuletzt-icon", r.icon));
   var box = el("div", "zuletzt-text");
@@ -1180,12 +1271,17 @@ function zuletztZeile(r, onKlick) {
   if (st) box.appendChild(el("span", "zuletzt-selbst", st));
 
   zeile.appendChild(box);
-  if (r.quote != null) zeile.appendChild(quotePille(r.quote));
+  // Punkte, wo es echte gibt, sonst die gezaehlten Treffer - nie mehr eine
+  // Prozentzahl (Jennifer, 14.08.). Die Regel steht in ui.js rundenPille().
+  var pille = rundenPille(r);
+  if (pille) zeile.appendChild(pille);
   if (tippbar) {
     zeile.appendChild(el("span", "zuletzt-pfeil", "›"));
     zeile.addEventListener("click", function () { onKlick(r); });
   }
-  return zeile;
+  reihe.appendChild(zeile);
+  reihe.appendChild(zuletztAktionen(r, aufNeu));
+  return reihe;
 }
 
 function zuletztKarte(themen) {
@@ -1196,7 +1292,9 @@ function zuletztKarte(themen) {
   karte.appendChild(el("h2", null, "Zuletzt geübt"));
 
   var liste = el("div", "zuletzt-liste");
-  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde)); });
+  // Nach dem Loeschen die Startseite neu bauen: die Zahlen darueber (Tagesziel,
+  // Themenstaende) haengen an denselben Antworten und waeren sonst von vorhin.
+  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde, function () { zeige("start"); })); });
   karte.appendChild(liste);
 
   var alle = Stats.letzteRunden(themen, 999).length;
@@ -1224,11 +1322,150 @@ function zeigeVerlauf() {
   var runden = Stats.letzteRunden(themen, 999);
   var karte = el("div", "karte zuletzt-karte");
   var liste = el("div", "zuletzt-liste");
-  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde)); });
+  // Nach dem Loeschen bleibt Rose auf dieser Seite - sie ist ja gerade dabei,
+  // aufzuraeumen, und ein Sprung auf die Startseite risse sie da heraus.
+  runden.forEach(function (r) { liste.appendChild(zuletztZeile(r, zeigeRunde, zeigeVerlauf)); });
   karte.appendChild(liste);
   app.appendChild(karte);
   app.appendChild(el("p", "hm-legende",
-    "Eine Runde ist, was du als Runde gestartet hast – sie behält den Namen, den du gedrückt hast. Antippen zeigt, welche Aufgaben drankamen. Spiele stehen als Tageszeile dabei und zählen nicht in den Rundenschnitt: Karten sind leichter als Klausuraufgaben."));
+    "Eine Runde ist, was du als Runde gestartet hast – sie behält den Namen, den du gedrückt hast. Antippen zeigt, was du geschrieben hast und was zurückkam. 🔁 übt dieselben Aufgaben nochmal, 🗑 löscht die Runde samt ihrer Antworten. Spiele stehen als Tageszeile dabei und zählen nicht in den Rundenschnitt: Karten sind leichter als Klausuraufgaben."));
+}
+
+/* ---------- Die Detailansicht einer Runde (Umbau 14.08.2026) ----------
+   Jennifer: "Was wurde geschrieben (Zetteloptik wie bei Prüfung/Übung), was war
+   Feedback, was war KI-Feedback."
+
+   Drei Bloecke je Aufgabe, immer in derselben Reihenfolge, weil sie eine
+   Geschichte erzaehlen: WAS STAND DA (die Aufgabe) - WAS HAST DU GESCHRIEBEN
+   (der Zettel) - WAS KAM ZURUECK (deine Einschaetzung, dann die der KI).
+
+   Der Zettel ist derselbe Baustein, den Rose beim Ueben schon sieht: .frei-blatt
+   aus papier.css, die eingefrorene Fassung ihrer Antwort im Frei-ueben.
+   ABSICHTLICH DIESER und nicht .kl-blatt aus dem Klausurmodus - zwei Gruende:
+   .kl-blatt holt seine Farben aus .klausur-rolle und stuende hier ohne Wrapper
+   ungestylt da, und es hat eine Mindesthoehe von 340 px, also ein leeres A4
+   unter drei Zeilen. .frei-blatt bringt seine Tokens selbst mit und waechst mit
+   dem Inhalt. Dieselbe Handschrift, dieselbe Lineatur, derselbe Heftrand.
+
+   Aufgeklappt statt zugeklappt: bis zum 14.08. lagen Text und KI-Kommentar
+   hinter zwei <details>, aus Sorge vor einer Textwand. Genau die zwei Sachen
+   sind aber das, wofuer man diese Seite ueberhaupt oeffnet. Zusammengeklappt
+   bleibt nur, was lang und selten gebraucht ist. */
+
+var AFB_ROEM = ["", "I", "II", "III"];
+
+// Roses Blatt. Bei Handschrift steht hier die Umschrift - genau daran kann sie
+// gegenlesen, ob die Maschine sie richtig verstanden hat. Das Bild selbst ist
+// nicht mehr da (es lebt nur im Klausur-Bogen, und der wird beim Abschliessen
+// geleert); die Legende unten sagt das.
+function antwortZettel(a) {
+  var blatt = el("div", "frei-blatt runde-blatt");
+  blatt.appendChild(el("div", "runde-blatt-marke", a.hand
+    ? (a.quelle === "gemischt" ? "✍️ Getippt und geschrieben" : "✍️ Umschrift deiner Handschrift")
+    : "Deine Antwort"));
+  blatt.appendChild(el("div", "frei-blatt-text", a.text));
+  return blatt;
+}
+
+/* Die Treffer je Stichpunkt als Zeichenreihe. Zwei Quellen, ein Bauteil:
+     a.kiTreffer   (frei)     Strings "ja"|"teilweise"|"nein" - was die KI sah
+     a.bewertung   (klausur)  Zahlen 1|0.5|0 - was ROSE angeklickt hat
+   Die Reihenfolge ist die der Stichpunkte. Sie werden bewusst NICHT namentlich
+   danebengeschrieben: kiTreffer wird beim Loggen gefiltert (main.js, selbstCheck)
+   und kann darum kuerzer sein als die Stichpunktliste - eine Zuordnung Zeichen
+   zu Stichpunkt waere dann still falsch. Als Reihe stimmt sie immer, und was
+   inhaltlich fehlte, steht ohnehin im KI-Kommentar darunter. */
+function trefferReihe(werte, zuZeichen, titel) {
+  if (!werte || !werte.length) return null;
+  var reihe = el("div", "runde-treffer");
+  reihe.appendChild(el("span", "runde-treffer-titel", titel));
+  werte.forEach(function (w) {
+    var z = zuZeichen(w);
+    reihe.appendChild(el("span", "runde-treffer-zeichen " + z.k, z.z));
+  });
+  return reihe;
+}
+
+var BEWERTUNG_ZEICHEN = function (w) {
+  return w >= 1 ? { z: "✓", k: "gut" } : w > 0 ? { z: "~", k: "mittel" } : { z: "✗", k: "offen" };
+};
+var KITREFFER_ZEICHEN = function (w) {
+  return w === "ja" ? { z: "✓", k: "gut" } : w === "teilweise" ? { z: "~", k: "mittel" } : { z: "✗", k: "offen" };
+};
+
+var SELBST_WORT_LANG = { gut: "saß gut", mittel: "teilweise", nochmal: "nochmal üben" };
+
+/* Was zurueckkam. ROSES EIGENES URTEIL STEHT OBEN, das der KI darunter und
+   sichtbar als Vorschlag markiert - dieselbe Rangfolge wie ueberall in dieser
+   App (klausur.js kiUebernehmen, main.js selbstCheck: "der KI-Vorschlag soll
+   markiert sein, ausgewaehlt nie"). Im Verlauf zaehlt das doppelt: hier sieht
+   Rose schwarz auf weiss, wo sie der KI widersprochen hat. */
+function rueckmeldung(a) {
+  var box = el("div", "runde-rueck");
+  var leer = true;
+
+  if (a.selbsteinschaetzung) {
+    var eigen = el("div", "runde-rueck-zeile");
+    eigen.appendChild(el("span", "runde-rueck-titel", "Deine Einschätzung"));
+    eigen.appendChild(el("span", "runde-rueck-wert status-" + a.selbsteinschaetzung,
+      SELBST_WORT_LANG[a.selbsteinschaetzung] || a.selbsteinschaetzung));
+    box.appendChild(eigen);
+    leer = false;
+  }
+
+  if (typeof a.punkte === "number" && a.max > 0) {
+    var p = el("div", "runde-rueck-zeile");
+    p.appendChild(el("span", "runde-rueck-titel", "Punkte"));
+    p.appendChild(standPille(a.punkte, a.max, "P."));
+    // Die Zahl der KI steht daneben, nie an ihrer Stelle. Und nur, wenn sie
+    // wirklich abweicht - "KI schlug dasselbe vor" ist keine Information.
+    if (typeof a.punkteKi === "number" && a.punkteKi !== a.punkte) {
+      p.appendChild(el("span", "runde-rueck-ki", "KI schlug " + punkteText(a.punkteKi) + " P. vor"));
+    }
+    box.appendChild(p);
+    leer = false;
+  }
+
+  var eigenTreffer = trefferReihe(a.bewertung, BEWERTUNG_ZEICHEN, "Stichpunkte, wie du sie abgehakt hast");
+  if (eigenTreffer) { box.appendChild(eigenTreffer); leer = false; }
+
+  var kiTreffer = trefferReihe(a.kiTreffer, KITREFFER_ZEICHEN, "Stichpunkte, wie die KI sie sah");
+  if (kiTreffer) { box.appendChild(kiTreffer); leer = false; }
+
+  if (a.kiVorschlag && a.kiVorschlag !== a.selbsteinschaetzung) {
+    var v = el("div", "runde-rueck-zeile");
+    v.appendChild(el("span", "runde-rueck-titel", "Die KI hätte gesagt"));
+    v.appendChild(el("span", "runde-rueck-ki", SELBST_WORT_LANG[a.kiVorschlag] || a.kiVorschlag));
+    box.appendChild(v);
+    leer = false;
+  }
+
+  return leer ? null : box;
+}
+
+/* Die MC-Frage aufgeschluesselt: welche Option Rose gewaehlt hat, welche
+   richtig war, und die Erklaerung dazu. Bis zum 14.08. stand hier nur ein ✓
+   oder ↻ - man sah, DASS es danebenlag, aber nicht, wobei.
+   a.gewaehlt ist der Index in der ORIGINALEN Optionsreihenfolge (core.js), also
+   genau der, in dem die Optionen auch im JSON stehen. */
+function mcAufloesung(a, gefunden) {
+  if (a.modus !== "check" || !gefunden || gefunden.typ !== "mc") return null;
+  var f = gefunden.frage;
+  var box = el("div", "runde-optionen");
+  (f.optionen || []).forEach(function (o, i) {
+    var gewaehlt = a.gewaehlt === i;
+    var zeile = el("div", "runde-option"
+      + (o.korrekt ? " korrekt" : "")
+      + (gewaehlt ? " gewaehlt" : ""));
+    zeile.appendChild(el("span", "runde-option-marke", o.korrekt ? "✓" : gewaehlt ? "↻" : "·"));
+    zeile.appendChild(el("span", "runde-option-text", o.text));
+    if (gewaehlt) zeile.appendChild(el("span", "runde-option-deine", "deine Wahl"));
+    box.appendChild(zeile);
+  });
+  if (f.erklaerung) {
+    box.appendChild(Beleg.belegZeile("p", f.erklaerung, gefunden.thema.id, "runde-erklaerung"));
+  }
+  return box;
 }
 
 function zeigeRunde(r) {
@@ -1241,78 +1478,92 @@ function zeigeRunde(r) {
   var kopf = el("div", "karte");
   var kz = el("div", "thema-kopfzeile");
   kz.appendChild(el("span", "thema-titel", r.icon + " " + r.titel));
-  if (r.quote != null) kz.appendChild(quotePille(r.quote));
+  var pille = rundenPille(r);
+  if (pille) kz.appendChild(pille);
   kopf.appendChild(kz);
   kopf.appendChild(el("div", "thema-meta", rundenMeta(r)));
   var st = selbstText(r.selbst);
   if (st) kopf.appendChild(el("div", "thema-meta", st));
+  // Dieselben Aktionen wie in der Liste - wer erst hineinschaut und DANN
+  // entscheidet, soll nicht zurueckblaettern muessen. Nach dem Loeschen ist
+  // diese Seite gegenstandslos, darum geht es von hier auf die Startseite.
+  kopf.appendChild(zuletztAktionen(r, function () { zeige("start"); }));
   app.appendChild(kopf);
 
-  var liste = el("div", "karte runde-liste");
   var hatHand = false;
   r.antworten.forEach(function (a) {
+    var gefunden = frageVon(a.qid);
     var z = antwortZeichen(a);
+    var karte = el("div", "karte runde-aufgabe");
+
     var zeile = el("div", "runde-zeile");
     zeile.appendChild(el("span", "runde-zeichen " + z.k, z.z));
     var box = el("div", "runde-text");
-    var gefunden = frageVon(a.qid);
     box.appendChild(el("b", null, gefunden ? gefunden.frage.frage : "Aufgabe aus einer früheren Fassung"));
     var meta = [];
     if (gefunden) meta.push(gefunden.thema.titel);
-    if (a.afb) meta.push("AFB " + ["", "I", "II", "III"][a.afb]);
+    if (a.afb) meta.push("AFB " + AFB_ROEM[a.afb]);
     if (z.w) meta.push(z.w);
     if (a.zeit) meta.push(a.zeit < 60 ? a.zeit + " s" : Math.round(a.zeit / 60) + " min");
     // Der Vermerk ueberlebt das Bild: gezeichnet wurde, auch wenn die Zeichnung
     // laengst nur noch auf dem Geraet liegt, auf dem sie entstanden ist.
     if (a.hand) { meta.push("✍️ mit der Hand"); hatHand = true; }
     box.appendChild(el("span", null, meta.join(" · ")));
+    zeile.appendChild(box);
+    karte.appendChild(zeile);
+
+    var mc = mcAufloesung(a, gefunden);
+    if (mc) karte.appendChild(mc);
 
     /* Roses eigener Text - bei offenen Aufgaben IST das die Leistung, die
-       Punktzahl nur ihr Schatten. Bei Handschrift steht hier die Umschrift, die
-       die KI daraus gemacht hat: genau daran kann Rose gegenlesen, ob die
-       Maschine sie richtig verstanden hat. Erst zugeklappt, damit eine Runde mit
-       zehn offenen Aufgaben nicht zur Textwand wird. */
-    if (a.text) {
-      var falt = el("details", "runde-text-falt");
-      var zus = el("summary", null, a.hand
-        ? (a.quelle === "gemischt" ? "Getippt und geschrieben – anzeigen" : "Umschrift deiner Handschrift – anzeigen")
-        : "Deine Antwort – anzeigen");
-      falt.appendChild(zus);
-      falt.appendChild(el("p", "runde-antworttext", a.text));
-      box.appendChild(falt);
-    }
+       Punktzahl nur ihr Schatten. Steht als Zettel da, in derselben Optik wie
+       beim Ueben und in der Klausur. */
+    if (a.text) karte.appendChild(antwortZettel(a));
+
+    var rueck = rueckmeldung(a);
+    if (rueck) karte.appendChild(rueck);
 
     /* Und was die KI DAMALS dazu gesagt hat. Gefiltert auf genau diese Antwort
        (m.aid === a.aid), nicht auf die Frage: uebt Rose dieselbe Aufgabe im
        Abstand von zwei Wochen, sollen hier zwei verschiedene Rueckmeldungen
        stehen und nicht zweimal die juengste. Genau das ist der Sinn der Sache -
-       am Nebeneinander sieht sie, was sich geaendert hat.
-
-       Zugeklappt wie Roses eigener Text darueber, und nur HIER: waehrend sie
-       uebt, taucht davon nichts auf. */
+       am Nebeneinander sieht sie, was sich geaendert hat. */
     var kiZeilen = frageChatZuFrage(a.qid).filter(function (m) {
       return m.art === "feedback" && m.aid === a.aid;
     });
     if (kiZeilen.length) {
-      var kiFalt = el("details", "runde-text-falt runde-ki-falt");
-      kiFalt.appendChild(el("summary", null, "Was die KI dazu sagte – anzeigen"));
+      var kiBox = el("div", "runde-kibox");
+      kiBox.appendChild(el("div", "runde-rueck-titel", "Was die KI dazu sagte"));
       kiZeilen.forEach(function (m) {
         // belegZeile statt textContent: die Function nennt Fundstellen als
         // "Folie N", und die sollen auch hier antippbar sein. Kein innerHTML -
         // dieselbe Linie wie ueberall bei Modelltext.
-        kiFalt.appendChild(gefunden
+        kiBox.appendChild(gefunden
           ? Beleg.belegZeile("p", m.content, gefunden.thema.id, "runde-kitext")
           : el("p", "runde-kitext", m.content));
       });
-      box.appendChild(kiFalt);
+      karte.appendChild(kiBox);
     }
 
-    zeile.appendChild(box);
-    liste.appendChild(zeile);
+    /* Die Musterloesung zum Nachlesen - hier zugeklappt, weil sie lang ist und
+       nicht das ist, weswegen man diese Seite oeffnet. Muster.musterBereich
+       bringt seinen eigenen Zettel und die Fassungs-Umschalter mit; der zweite
+       Zettel neben Roses eigenem ist genau der Vergleich, fuer den er gebaut
+       wurde (papier.css, .muster-blatt). */
+    if (gefunden && gefunden.typ === "frei" && gefunden.frage.muster) {
+      var mFalt = el("details", "runde-text-falt");
+      mFalt.appendChild(el("summary", null, "So könnte es klingen – anzeigen"));
+      // Ohne opts: die Vorgabe ist genau die Papieroptik des Uebungsmodus
+      // (muster muster-blatt) - derselbe Zettel, den Rose beim Ueben aufklappt.
+      mFalt.appendChild(Muster.musterBereich(gefunden.frage, gefunden.thema.id));
+      karte.appendChild(mFalt);
+    }
+
+    app.appendChild(karte);
   });
-  app.appendChild(liste);
+
   app.appendChild(el("p", "hm-legende",
-    "Nur zum Ansehen. ↻ heißt: die Aufgabe kommt wieder – sie steht in deinem Wiederholen-Stapel." +
+    "Nur zum Ansehen – geübt wird über 🔁 oben. ↻ heißt: die Aufgabe kommt wieder, sie steht in deinem Wiederholen-Stapel." +
     (hatHand ? " ✍️ heißt: du hast mit dem Stift geschrieben. Gespeichert ist die Umschrift – dein Blatt selbst bleibt auf dem Gerät, auf dem du es geschrieben hast." : "")));
 }
 

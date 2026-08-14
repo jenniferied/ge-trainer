@@ -214,19 +214,34 @@ export function musterBereich(f, thema, opts) {
   /* Ungegengelesene Fassungen sagen das. musterVariantenGeprueft steht im
      Schema und waere sonst ein Feld, das niemand sieht - genau der Fall, vor
      dem HANDOVER und ROADMAP warnen ("entweder zweite Meinung oder als
-     maschinell kennzeichnen"). Ohne Kennzeichnung liest Rose einen maschinell
-     erzeugten Satz als gesetzt.
+     maschinell kennzeichnen").
 
-     NUR an den Fassungen, nicht an de/klausur: das ist der von Hand
-     geschriebene Bestand, der war nie maschinell. Sobald das Feld auf true
-     steht, verschwindet der Hinweis von allein.
+     WORTLAUT KORRIGIERT AM 14.08.2026, und der Grund ist wichtig genug fuer
+     einen langen Kommentar. Hier stand vorher "maschinell erstellt, noch nicht
+     gegengelesen", mit der Begruendung, de/klausur sei "der von Hand
+     geschriebene Bestand, der war nie maschinell". Das ist FALSCH und
+     nachgezaehlt falsch: von den 69 freien Aufgaben stammen 24 aus dem
+     generierten Schwung (xx-gen-f-N) und 12 aus den Folien-Generaten
+     (xx-fol-f-N), zusammen also mindestens 36. Auch bei den uebrigen steht als
+     quelle eine Notizenseite ("notizen-s44"), nicht "von Rose geschrieben" -
+     der Text ist in diesem Repo entstanden, geerdet auf ihre Notizen und die
+     Folien.
 
-     Wortlaut bewusst knapp und fuer beide Faelle gueltig - die englische und
-     die arabische Fassung sind uebersetzt, die einfache umformuliert,
-     "erstellt" deckt beides. Die Zeile ist ein Platzhalter fuer die Abnahme,
-     kein gesetzter Text. */
+     Der Unterschied zwischen dem deutschen Zettel und den fuenf Fassungen ist
+     also NICHT die Herkunft, sondern der GRAD DER PRUEFUNG: de/klausur hat eine
+     benannte Fundstelle und ein quelleSicherheit-Feld (63 von 69 stehen auf
+     "geprueft"), die fuenf Fassungen hat bisher niemand angesehen. Genau das
+     sagt der Hinweis jetzt, und nur das.
+
+     "maschinell erstellt" haette Rose zusaetzlich das Falsche suggeriert,
+     naemlich dass der deutsche Satz von einem Menschen stammt. Bei einer
+     Pruefungsvorbereitung ist so eine stille Aufwertung schaedlicher als gar
+     kein Hinweis.
+
+     Sobald musterVariantenGeprueft auf true steht, verschwindet die Zeile von
+     allein. */
   const geprueft = !!(f && f.musterVariantenGeprueft);
-  const hinweis = el("div", "muster-hinweis", "maschinell erstellt, noch nicht gegengelesen");
+  const hinweis = el("div", "muster-hinweis", "noch nicht gegengelesen");
 
   let sprache = alle[sprachWahl] ? sprachWahl : sprachen[0].id;
   let stufe = "klausur";

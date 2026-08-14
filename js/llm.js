@@ -449,7 +449,17 @@ export async function korrigiere(thema, aufgabe, antwort, stand) {
     },
     antwort: text,
     stand: typeof stand === "string" && stand.trim() ? stand.trim().slice(0, 2000) : "",
-  }, 35000);
+    /* 60 s seit dem 14.08.2026, vorher 35 s. Gemessen auf claude-opus-5 mit
+       adaptivem Denken: 27 s kalt, 21-22 s bei warmem Prompt-Cache. Bei 35 s
+       waeren das keine 10 s Luft gewesen - und ein Timeout sieht fuer Rose
+       genauso aus wie ein Ausfall: ruf() bricht ab, gibt null zurueck, und auf
+       der Karte steht "die KI ist gerade nicht erreichbar".
+
+       Warten kostet sie hier wenig: die Musterloesung steht sofort da, das
+       KI-Urteil kommt nach. Ein spaeteres Urteil ist besser als gar keins.
+       Wird es zu zaeh, ist der Hebel effort "medium" in der Function - nicht
+       dieser Wert hier. */
+  }, 60000);
   try {
     return saubereKorrektur(d, aufgabe);
   } catch {
