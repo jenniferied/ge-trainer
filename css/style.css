@@ -545,12 +545,18 @@ p { margin: 0 0 var(--sp-3); }
    Bewusst eine ANDERE Sprache als aktiv-* - gestrichelt statt gefuellt, mit
    Faehnchen. Wer es anschaut, soll sehen "da tippt jemand drauf", nicht
    "das ist schon angeklickt". Faerbt deshalb auch nie in ok/warn/bad. */
+/* --accent, nicht --akzent: die deutsche Schreibweise ist NIRGENDS definiert.
+   Gefunden am 14.08.2026. Folge war kein sichtbarer Fehler, sondern ein stiller:
+   eine undefinierte Custom Property macht die ganze Deklaration ungueltig, also
+   fiel border-color auf currentColor zurueck und der box-shadow-Ring auf none -
+   der Leuchtring um den KI-Vorschlag wurde schlicht nie gezeichnet. Uebrig blieb
+   ein gestrichelter Rand in Textfarbe plus das Faehnchen. */
 .check-knopf.ki-tipp {
-  border-style: dashed; border-color: var(--akzent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--akzent) 22%, transparent);
+  border-style: dashed; border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .check-knopf.ki-tipp::after {
-  content: " ✦"; font-size: .8em; color: var(--akzent);
+  content: " ✦"; font-size: .8em; color: var(--accent);
 }
 
 /* Die Weiter-Sperre der Uebungsrunde und der Klausurfrage. Steht unter dem
@@ -1000,6 +1006,26 @@ p { margin: 0 0 var(--sp-3); }
   border-radius: 10px; border: 1px solid var(--line);
   background: color-mix(in srgb, var(--ink) 4%, transparent);
 }
+
+/* Was die KI damals zu dieser Antwort gesagt hat (seit 14.08.). Sitzt unter
+   Roses eigenem Text und traegt bewusst die Themenfarbe statt des grauen
+   Rahmens darueber: das eine ist ihre Leistung, das andere ein Kommentar dazu.
+   Pixelschrift gibt es hier NICHT - die ist fuer Modelltext reserviert, der
+   gerade LIVE entsteht (geteilt.css .chat-msg.ki-live). Was hier steht, ist
+   Wochen alt und soll sich wie Notiz lesen, nicht wie ein Gespraech. */
+.runde-ki-falt > summary {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--ink);
+}
+.runde-kitext {
+  font-size: .82rem; line-height: 1.45; color: var(--ink);
+  overflow-wrap: anywhere;
+  margin: 0 0 4px; padding: var(--sp-2);
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.runde-kitext:last-child { margin-bottom: 0; }
 
 /* =======================================================================
    Quoten-Farbleiter q1..q5 (Jennifer 12.08.) - dieselbe Sprache wie die

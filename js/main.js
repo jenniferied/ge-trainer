@@ -1282,6 +1282,31 @@ function zeigeRunde(r) {
       box.appendChild(falt);
     }
 
+    /* Und was die KI DAMALS dazu gesagt hat. Gefiltert auf genau diese Antwort
+       (m.aid === a.aid), nicht auf die Frage: uebt Rose dieselbe Aufgabe im
+       Abstand von zwei Wochen, sollen hier zwei verschiedene Rueckmeldungen
+       stehen und nicht zweimal die juengste. Genau das ist der Sinn der Sache -
+       am Nebeneinander sieht sie, was sich geaendert hat.
+
+       Zugeklappt wie Roses eigener Text darueber, und nur HIER: waehrend sie
+       uebt, taucht davon nichts auf. */
+    var kiZeilen = frageChatZuFrage(a.qid).filter(function (m) {
+      return m.art === "feedback" && m.aid === a.aid;
+    });
+    if (kiZeilen.length) {
+      var kiFalt = el("details", "runde-text-falt runde-ki-falt");
+      kiFalt.appendChild(el("summary", null, "Was die KI dazu sagte – anzeigen"));
+      kiZeilen.forEach(function (m) {
+        // belegZeile statt textContent: die Function nennt Fundstellen als
+        // "Folie N", und die sollen auch hier antippbar sein. Kein innerHTML -
+        // dieselbe Linie wie ueberall bei Modelltext.
+        kiFalt.appendChild(gefunden
+          ? Beleg.belegZeile("p", m.content, gefunden.thema.id, "runde-kitext")
+          : el("p", "runde-kitext", m.content));
+      });
+      box.appendChild(kiFalt);
+    }
+
     zeile.appendChild(box);
     liste.appendChild(zeile);
   });
@@ -2029,6 +2054,8 @@ function selbstCheck(thema, f, dazu, frisch) {
   var stickerPlatz = null;
   var knoepfe = {};
   var kiTipp = null;            // was die KI vorschlaegt - reine Anzeige
+  var kiTreffer = null;         // Treffer je Stichpunkt, klein und strukturiert
+  var kiText = null;            // ihr Kommentar im Klartext, fuers Nachschlagen
 
   function waehlen(opt) {
     state.frei[f.id] = opt.wert;
@@ -2038,7 +2065,39 @@ function selbstCheck(thema, f, dazu, frisch) {
     // Stand ein KI-Vorschlag daneben, schreiben wir ihn mit - so bleibt spaeter
     // ablesbar, wo Rose der KI widersprochen hat. Ihr Wert bleibt der Wert.
     if (kiTipp) eintrag.kiVorschlag = kiTipp;
+    /* Treffer je Stichpunkt, in der Reihenfolge der Stichpunkte: ["ja",
+       "teilweise", "nein", ...]. Daraus laesst sich spaeter sagen, WELCHER
+       Stichpunkt regelmaessig fehlt - dieselbe Absicht wie bei a.bewertung im
+       Klausurmodus (klausur.js). Nur die Wertung, nicht die Kommentare: das
+       sind wenige Bytes je Aufgabe und sie duerfen im Lernstand mitfahren. */
+    if (kiTreffer) eintrag.kiTreffer = kiTreffer;
     logAntwort(eintrag);
+    /* Und jetzt der KOMMENTAR - erst HIER, nach logAntwort, und bewusst NICHT
+       am Log-Eintrag.
+
+       Warum nicht am Eintrag: die eiserne Regel in core.js erlaubt nur Felder,
+       die zum Log-Zeitpunkt feststehen (das tut der Text hier), aber klausur.js
+       hat gegen Kommentar-TEXTE im Lernstand schon entschieden - sie wiegen 1-2
+       kB je Aufgabe, und der Lernstand faehrt bei JEDEM Sync komplett hoch UND
+       runter. Roses ganzer Stand wiegt 8,6 kB.
+
+       Warum trotzdem gespeichert: der Satz ist oft das, was beim naechsten Mal
+       traegt, und ohne ihn kann die KI beim Wiederholen nicht sagen, was sich
+       seit dem letzten Versuch geaendert hat.
+
+       Der frageChat-Speicher loest beides: er hat Deckel (FQ_TEXT_MAX,
+       FQ_PRO_FRAGE, FQ_MAX), er vereinigt sauber statt zu ersetzen, und der
+       Grabstein der Antwort nimmt ihn automatisch mit. sync.js haelt art
+       "feedback" seit dem 13.08. genau dafuer frei.
+
+       Warum NACH logAntwort: frageChatAid haengt die Zeile an die juengste
+       Antwort. Vor logAntwort waere das noch die von gestern - der Kommentar
+       zu HEUTE haette dann den Grabstein von gestern getragen. */
+    if (kiText) {
+      var anker = frageChatAid(f.id);
+      frageChatSagen({ aid: anker.aid, sid: anker.sid, qid: f.id,
+        art: "feedback", role: "assistant", content: kiText });
+    }
     Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
       btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
     });
@@ -2078,6 +2137,23 @@ function selbstCheck(thema, f, dazu, frisch) {
     kiTipp = wert;
     knoepfe[wert].classList.add("ki-tipp");
   };
+
+  /* Was die KI gesagt hat, fuer den Moment der Einschaetzung aufheben - sie
+     antwortet frueher, als Rose tippt (die Sprechblase steht schon da, wenn sie
+     zum Selbstcheck runterscrollt). Geschrieben wird beides erst in waehlen():
+     die Treffer ans Log, der Text in den frageChat-Speicher.
+
+     Kommt die KI ausnahmsweise SPAETER als ihr Fingertipp, bleibt beides leer -
+     dann steht im Verlauf eben nur ihre Antwort. Nichts wird nachtraeglich
+     angehaengt; das ist die Regel, nicht die Panne (core.js). */
+  check.kiUrteilMerken = function (vorschlag, text) {
+    var werte = (Array.isArray(vorschlag) ? vorschlag : [])
+      .map(function (v) { return v && v.getroffen; })
+      .filter(function (w) { return w === "ja" || w === "teilweise" || w === "nein"; });
+    kiTreffer = werte.length ? werte : null;
+    var t = typeof text === "string" ? text.trim() : "";
+    kiText = t || null;
+  };
   return check;
 }
 
@@ -2103,6 +2179,70 @@ function kiEinschaetzung(erg) {
 }
 
 var GETROFFEN_ZEICHEN = { ja: "✓", teilweise: "~", nein: "✗" };
+
+/* ---------- Roses Stand als Kontext fuer die Korrektur (seit 14.08.2026) ----------
+
+   Ohne diesen Block korrigiert die KI jede Antwort so, als saehe sie Rose zum
+   ersten Mal. Mit ihm kann sie sagen, was sich seit dem letzten Versuch
+   geaendert hat - und genau das ist die Rueckmeldung, die traegt.
+
+   DREI REGELN, die hier haengen:
+
+   1. Der Block geht in die USER-Message, nie in den System-Prompt und nie in den
+      Folien-Block. Beide sind Cache-Bloecke; der Stand aendert sich mit jeder
+      Antwort und wuerde den Cache bei jedem Request toeten.
+   2. Nur ZAHLEN und ihre eigenen Saetze - kein Urteil ueber sie. Wie die KI das
+      benutzen soll, steht im System-Prompt, nicht hier.
+   3. Spiele zaehlen nicht mit (modus "spiel"): eine Karten-Runde ist strukturell
+      etwas anderes als eine Klausuraufgabe, dieselbe Linie wie in stats.js. */
+
+function tageHer(ts) {
+  var d = Math.floor((Date.now() - ts) / 86400000);
+  return d <= 0 ? "heute" : d === 1 ? "gestern" : "vor " + d + " Tagen";
+}
+
+var SELBST_WORT = { gut: "sass", mittel: "halb", nochmal: "kommt wieder" };
+
+function standFuerKi(thema, f) {
+  var log = (state.antwortLog || []).filter(function (a) {
+    return a && a.modus !== "spiel";
+  });
+  var zeilen = [];
+
+  var dieseAufgabe = log.filter(function (a) { return a.qid === f.id; })
+    .sort(function (a, b) { return a.ts - b.ts; });
+
+  if (!dieseAufgabe.length) {
+    zeilen.push("DIESE AUFGABE: heute zum ersten Mal.");
+  } else {
+    var verlauf = dieseAufgabe.slice(-5).map(function (a) {
+      return tageHer(a.ts) + ": " + (SELBST_WORT[a.selbsteinschaetzung] || "ohne Einschaetzung");
+    });
+    zeilen.push("DIESE AUFGABE: schon " + dieseAufgabe.length + "x geuebt ("
+      + verlauf.join(" | ") + ").");
+    // Was DU beim letzten Mal gesagt hast - der wichtigste Teil des Blocks.
+    // Genau daran kann die Korrektur ansetzen: "das fehlte damals, das steht
+    // jetzt drin". Ohne den gespeicherten Kommentar (siehe waehlen()) bleibt
+    // hier nur die Zahl, und eine Zahl allein klingt wie ein Vorwurf.
+    var kiZeilen = frageChatZuFrage(f.id).filter(function (m) { return m.art === "feedback"; });
+    var letzte = kiZeilen[kiZeilen.length - 1];
+    if (letzte) zeilen.push("DAS HAST DU IHR BEIM LETZTEN MAL GESAGT: " + letzte.content.slice(0, 700));
+  }
+
+  var imThema = log.filter(function (a) { return a.thema === thema.id; });
+  if (imThema.length) {
+    var z = { gut: 0, mittel: 0, nochmal: 0 }, qids = {};
+    imThema.forEach(function (a) {
+      qids[a.qid] = true;
+      if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
+    });
+    zeilen.push("IM THEMA " + thema.titel + ": " + Object.keys(qids).length
+      + " Aufgaben angefasst, ihre eigene Einschaetzung dabei "
+      + z.gut + "x sass, " + z.mittel + "x halb, " + z.nochmal + "x kommt wieder.");
+  }
+
+  return zeilen.join("\n");
+}
 
 function freiKarte(thema, f, opts) {
   var o = opts || {};
@@ -2364,7 +2504,7 @@ function freiKarte(thema, f, opts) {
           id: f.id, frage: f.frage, afb: f.afb || null,
           punkte: t.kern.length || 1,
           stichpunkte: t.kern, muster: f.muster || "", tipp: tipp
-        }, antwort);
+        }, antwort, standFuerKi(thema, f));
       })
       .catch(function () { return null; })
       .then(function (erg) {
@@ -2417,6 +2557,14 @@ function freiKarte(thema, f, opts) {
       // fiel genau der Moment weg, um den es geht: selbst zu sagen, wie es lief.
       check.vorschlagen(wert);
     }
+
+    /* Aufheben, was hier steht - bis zum 14.08.2026 war die Blase mit dem
+       Schliessen der Karte weg, und der Gesamtkommentar ist oft genau der Satz,
+       der beim naechsten Mal traegt. Geschrieben wird erst beim Selbstcheck
+       (siehe kiUrteilMerken), angezeigt erst im Verlauf (zeigeRunde). Waehrend
+       Rose uebt, taucht davon nichts wieder auf: die Aufgabe ist beim naechsten
+       Mal ein leeres Blatt, und der Chat filtert art "feedback" heraus. */
+    check.kiUrteilMerken(vorschlag, saetze.join(" "));
 
     /* live: true - in dieser Blase steht, was das Modell gerade zu Roses
        Antwort gesagt hat, also Pixelschrift (geteilt.css .chat-msg.ki-live).

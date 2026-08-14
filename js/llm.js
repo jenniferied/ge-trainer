@@ -422,7 +422,17 @@ function saubereKorrektur(d, aufgabe) {
   return { annotationen, randkommentare, punkteVorschlag, punkteGesamt, punkteMax, gesamtkommentar: d.gesamtkommentar.trim() };
 }
 
-export async function korrigiere(thema, aufgabe, antwort) {
+/* stand (seit 14.08.2026, optional): was Rose zu DIESER Aufgabe schon geuebt hat
+   und wo sie im Thema steht. Ein fertig formatierter Textblock, gebaut in
+   main.js (standFuerKi) - diese Datei entscheidet ueber die Leitung, nicht
+   ueber den Inhalt.
+
+   WICHTIG fuer jeden, der hier etwas ergaenzt: der Block gehoert serverseitig in
+   die USER-Message, niemals in einen der beiden Cache-Bloecke. Er aendert sich
+   mit jeder Antwort; im System-Prompt oder im Folien-Block wuerde er den
+   Prompt-Cache bei JEDEM Request toeten - und zwar auf dem teuersten Block.
+   Begruendung ausfuehrlich in llm-ge/index.ts beim Aufbau der Anfrage. */
+export async function korrigiere(thema, aufgabe, antwort, stand) {
   const text = typeof antwort === "string" ? antwort.trim() : "";
   if (!text || !aufgabe) return null;
   const d = await ruf({
@@ -438,6 +448,7 @@ export async function korrigiere(thema, aufgabe, antwort) {
       tipp: aufgabe.tipp || "",
     },
     antwort: text,
+    stand: typeof stand === "string" && stand.trim() ? stand.trim().slice(0, 2000) : "",
   }, 35000);
   try {
     return saubereKorrektur(d, aufgabe);
