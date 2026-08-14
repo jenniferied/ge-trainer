@@ -36,6 +36,11 @@ import * as Llm from "./llm.js";
 // ist der Ersatz fuer reichZeile() ueberall dort, wo eine Fundstelle im Text
 // stehen kann - auch in KI-Text, denn es baut DOM-Knoten und kein HTML.
 import * as Beleg from "./beleg.js";
+// Der Zettel "So koennte es klingen" mit seinen zwei Umschaltern (Komplexitaet,
+// Sprache). Eigenes Modul, obwohl es heute nur einen Aufrufer gibt: der
+// Klausurmodus soll denselben Baustein bekommen, sobald sein Musterloesungs-
+// Block Papieroptik hat (siehe Kommentar an der Aufrufstelle).
+import * as Muster from "./muster.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
 import { tagesPilleKlasse, tagesText, tagesWorte, zeigAnstupser, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
@@ -2457,8 +2462,20 @@ function freiKarte(thema, f, opts) {
     }
 
     box.appendChild(el("h3", null, "✍️ So könnte es klingen"));
-    // Zetteloptik und Handschrift wie bei Roses eigenem Blatt (papier.css).
-    box.appendChild(Beleg.belegZeile("div", f.muster, thema.id, "muster muster-blatt"));
+    /* Zetteloptik und Handschrift wie bei Roses eigenem Blatt (papier.css).
+       Seit dem 14.08.2026 kann derselbe Zettel die Fassung wechseln
+       (Komplexitaet, Sprache) - musterBereich baut die Umschalter nur, wenn die
+       Aufgabe wirklich Fassungen hat, sonst kommt exakt der Zettel von vorher
+       zurueck. Chips und **fett** macht das Modul selbst, deshalb hier kein
+       belegZeile mehr.
+
+       NICHT im Klausurmodus verdrahtet: klausur.js baut an dieser Stelle keinen
+       Zettel, sondern .kl-muster - Karla in .86rem mit Randstrich, ohne
+       Lineatur, weil der Block dort schon auf dem Klausurblatt liegt. Ein
+       zweites Papier auf dem Papier waere dort falsch. Der Baustein liegt
+       trotzdem in einem eigenen Modul: wenn dieser Block Papieroptik bekommt
+       (ROADMAP), sind es drei Zeilen. */
+    box.appendChild(Muster.musterBereich(f, thema.id));
 
     if (f.tipp) {
       var t = el("div", "tipp");

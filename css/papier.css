@@ -642,6 +642,148 @@
      ruckte mit. */
   background-position: 0 var(--lin-versatz, 0px), 0 0;
 }
+
+/* ---------- Der Zettel in sechs Fassungen (js/muster.js) ----------
+
+   Zwei Reihen Umschalter ueber dem Blatt: Komplexitaet und Sprache. Sie stehen
+   NICHT auf dem Papier, sondern davor auf der Karte - deshalb App-Tokens
+   (--card, --line, --ink-soft) und nicht die Blatt-Tokens von oben. Die Regeln
+   stehen trotzdem hier und nicht in style.css: sie gehoeren zu diesem Blatt,
+   und wer die Papieroptik anfasst, soll die Schalter dazu im Blick haben.
+
+   KEINE SICHTBARE BESCHRIFTUNG ("Komplexitaet:", "Sprache:") vor den Reihen.
+   Bei 360 px bleiben unter der Kartenbreite rund 300 px, und drei Sprach-
+   knoepfe plus Wort passen da nicht nebeneinander - die Reihe braeche um. Die
+   Beschriftung steht darum als aria-label an der role="group" (js/muster.js):
+   fuer den Screenreader vollstaendig, fuer das Auge selbsterklaerend. */
+.muster-schalter {
+  display: flex; gap: 6px; flex-wrap: nowrap;
+  margin-bottom: 6px;
+}
+.msch-knopf {
+  font: inherit; font-family: "Karla", system-ui, sans-serif;
+  font-size: .78rem; font-weight: 700; line-height: 1.2; cursor: pointer;
+  /* nowrap plus min-width: 0 - so schrumpfen die Knoepfe bei 360 px lieber am
+     Polster, statt die Reihe zu sprengen. */
+  white-space: nowrap; min-width: 0;
+  /* Polster knapp gehalten. Gemessen bei 360 px: die laengere Reihe
+     ("wie in der Klausur" + "Einfache Sprache") braucht 257 von 302 px, bei
+     320 px noch 257 von 262 - auch das kleinste heute uebliche Handy kommt
+     ohne Schrumpfen aus. */
+  padding: 7px 9px;
+  background: var(--card); color: var(--ink-soft);
+  border: 1.5px solid var(--line); border-radius: 999px;
+}
+/* Der Zustand haengt am aria-Attribut, nicht an einer zweiten Klasse: sonst
+   gaebe es zwei Wahrheiten, die auseinanderlaufen koennen (und die Optik
+   koennte gewaehlt aussehen, waehrend der Screenreader "nicht gedrueckt" sagt). */
+.msch-knopf[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent) 15%, var(--card));
+  border-color: var(--accent); color: var(--accent);
+}
+/* Der Sprachknopf traegt selbst arabische Schrift, und Karla hat davon kein
+   Zeichen - ohne diese Zeile faellt genau der Knopf still auf eine
+   Systemschrift zurueck. Bewusst Noto Naskh und nicht Aref Ruqaa: die
+   Handschrift des Blattes ist kalligrafisch und in Knopfgroesse unlesbar. */
+.msch-knopf.arabisch {
+  font-family: 'Noto Naskh Arabic', system-ui, sans-serif;
+  font-size: .88rem;
+}
+
+/* Die Fussnote unter einer nicht gegengelesenen Fassung (js/muster.js setzt sie
+   sichtbar, wenn musterVariantenGeprueft fehlt und die offene Fassung nicht
+   de/klausur ist). Bewusst leise: sie soll ehrlich sein, nicht abschrecken -
+   die Fassungen sind eine Lesehilfe und keine Fehlerquelle, vor der man Rose
+   warnen muesste. Sie sitzt unter dem Blatt, das seinen eigenen Abstand
+   mitbringt, darum hier nur der Ausgleich nach unten. */
+.muster-hinweis {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .72rem; color: var(--ink-soft);
+  margin: -6px 0 var(--sp-3);
+}
+
+/* ---------- Die arabische Fassung ----------
+
+   Aref Ruqaa in 1.50 rem (Jennifer, 13.08.2026, nach dem Vergleich in
+   werkstatt/arabische-schriften.html), Noto Naskh Arabic als benannter
+   Rueckfall - genau dieser Stapel, unveraendert. Um die lateinischen
+   Einschuebe kuemmert sich die Regel darunter, nicht ein dritter Eintrag hier:
+   beide Familien tragen eine unicode-range fuer Arabisch, ein deutsches Wort
+   faellt also durch bis zum generischen sans-serif.
+
+   ZEILENHOEHE 44 px. Gemessen braucht Aref Ruqaa bei dieser Groesse mindestens
+   40 px, sonst beruehren sich die Zeilen - 44 px lassen vier Pixel Luft. Gilt
+   nur hier: Deutsch und Englisch bleiben bei 1.3 rem und 30 px.
+
+   LINEATUR-PHASE NEU GEMESSEN. Die 7 px der Regel oben gelten fuer Caveat in
+   1.3 rem bei 30 px, sonst nichts. Nachgemessen am 14.08.2026 in Chromium mit
+   demselben Strut-Verfahren, das oben beschrieben ist, fuer Aref Ruqaa in
+   1.5 rem bei 44 px Zeilenhoehe (Wurzel-Schriftgroesse 16 px, also 24 px):
+
+     Grundlinie unter der Blatt-Innenkante  836,00 px (Klausur-Fassung)
+                                           1364,00 px (Einfache Sprache)
+     versatz = (Grundlinie + 1) % 44        1,00 px in beiden Faellen
+
+   Zwei Fassungen verschiedener Laenge sind derselbe Wert, weil sich das Muster
+   alle 44 px wiederholt - genau das macht die Zahl vertrauenswuerdig. Zur
+   Gegenprobe mit demselben Aufbau: die deutsche Fassung ergibt 7,00 px, also
+   die Zahl, die oben schon steht. Abstand Grundlinie zu Linie danach: 0 px.
+
+   Der HEFTRAND bleibt links. background-position ist physisch, dir="rtl"
+   verschiebt ihn also ohnehin nicht - aber die Frage war, ob er soll. Er soll
+   nicht: es ist DASSELBE Blatt, das nur seinen Text wechselt, und ein Rand,
+   der beim Umschalten die Seite wechselt, macht daraus zwei verschiedene
+   Gegenstaende. Kollidieren kann er nicht - der Text endet links bei 26 px
+   Polster, der Rand liegt bei 17-18 px. */
+.muster-blatt.ist-ar {
+  font-family: 'Aref Ruqaa', 'Noto Naskh Arabic', sans-serif;
+  font-size: 1.5rem;
+  --lin-hoehe: 44px;
+  --lin-versatz: 1.00px;
+}
+
+/* Die lateinischen Einschuebe IM arabischen Zettel (die Fachbegriffe in
+   Klammern). js/muster.js packt sie in <bdi>, damit die Klammern an ihrem Platz
+   bleiben - die Insel ist damit auch der Griff, an dem sie ihre Schrift
+   bekommen.
+
+   Ohne diese Regel fallen sie durch bis sans-serif und stehen als 24-px-Systemschrift
+   mitten in einer Handschrift: der Zettel sieht dann aus, als waere er aus zwei
+   Dokumenten zusammengeklebt. Mit Caveat bleibt es EIN Blatt von EINER Hand,
+   und das ist der ganze Zweck der Papieroptik.
+
+   0.87em bringt Caveat auf die 1.3 rem zurueck, in denen sie im deutschen
+   Zettel steht (1.5 * 0.87 = 1.305). Ohne das saesse sie 15 Prozent zu gross im
+   Text.
+
+   line-height: 0 IST HIER PFLICHT UND KEINE KOSMETIK. Die Grundlinie einer
+   Zeile liegt dort, wo die hoechste Inline-Box sie hinschiebt; eine zweite
+   Schrift mit eigenen Metriken zieht sie also mit. Gemessen (14.08.2026): ohne
+   diese Zeile lag die Phase je nach Text bei 11, 13 oder 14 px statt konstant -
+   Zeilen MIT Einschub sassen anders als Zeilen ohne, und keine Lineatur der
+   Welt passt dann auf beide. Mit line-height: 0 zaehlt die Insel fuer die
+   Zeilenhoehe nicht mehr mit, die Grundlinie kommt wieder allein vom Strut des
+   Blattes. Nachgemessen ueber 31 Messpunkte quer durch den Text: Phase 0,00 px,
+   Abstand Grundlinie zu Linie 0 px. Gezeichnet wird die Schrift trotzdem
+   vollstaendig - line-height beschneidet nichts. */
+.muster-blatt.ist-ar bdi {
+  font-family: 'Caveat', 'Bradley Hand', cursive;
+  font-size: .87em;
+  line-height: 0;
+}
+
+/* Ueberblenden beim Umschalten - kurz und leise, es ist ein Blattwechsel und
+   keine Show. Die Klasse setzt js/muster.js nur beim WECHSEL, nicht beim
+   ersten Aufbau. */
+@keyframes muster-blatt-ein {
+  from { opacity: .3; }
+  to   { opacity: 1; }
+}
+.muster-blatt.blatt-wechsel { animation: muster-blatt-ein .18s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .muster-blatt.blatt-wechsel { animation: none; }
+}
+
 .frei-blatt-aendern {
   font: inherit; font-family: "Karla", system-ui, sans-serif;
   font-size: .78rem; cursor: pointer;
