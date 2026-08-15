@@ -10,7 +10,8 @@
      hooks.mcKarte(thema, f, fortschritt, weiterText, onWeiter)  -> MC-Karte
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
-import { state, speichern, app, el, leeren, starteRunde, beendeRunde } from "./core.js";
+import { state, speichern, app, el, leeren, starteRunde, beendeRunde,
+  merkeOffeneKarte, vergissOffeneKarte, offeneKarte } from "./core.js";
 import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
@@ -933,6 +934,8 @@ function runde(pool, meta, hooks, wahl) {
     : w.auswahl === "neu" ? gewichtNeu
     : gewicht;
   var liste = zieh(pool, Math.min(w.anzahl || RUNDE, pool.length), gew);
+  // Die angefangene Aufgabe kommt zuerst, wenn eine mitgegeben wurde (macheWeiter).
+  if (w.zuerst) liste = zuerstZeigen(liste, pool, w.zuerst);
   var index = 0, richtige = 0, mcAnzahl = 0;
 
   /* EINE Schreibstelle fuer die Sitzung, und zwar hier - nicht bei den vier
@@ -947,7 +950,7 @@ function runde(pool, meta, hooks, wahl) {
      laeuft also NICHT durch den Router und haette sonst an die vorige Sitzung
      weiter angebaut - aus zwei Runden waere eine Zeile mit doppelter Zahl
      geworden. starteRunde schliesst die vorige selbst ab. */
-  starteRunde({
+  var sitzung = starteRunde({
     art: meta.art || "ueben",
     titel: meta.titel,
     modus: modusVon(liste),
@@ -973,6 +976,10 @@ function runde(pool, meta, hooks, wahl) {
     app.appendChild(kopf);
 
     var item = liste[index];
+    /* Hier liegt die Karte, an der sie GERADE ist - und genau die soll das
+       Weitermachen zurueckholen (core.js merkeOffeneKarte). Gemerkt wird beim
+       Aufschlagen und nicht beim Beantworten: es geht um die, die offen blieb. */
+    merkeOffeneKarte(sitzung && sitzung.id, item.f.id);
     var letzte = index + 1 >= liste.length;
     if (item.typ === "mc") {
       mcAnzahl++;
@@ -1012,6 +1019,8 @@ function runde(pool, meta, hooks, wahl) {
   }
 
   function fertig() {
+    // Durch ist durch: nichts blieb offen, also gibt es auch nichts vorzuziehen.
+    vergissOffeneKarte();
     /* Die Runde ist hier zu Ende, nicht erst beim naechsten Screenwechsel. Ohne
        diese Zeile stuende sie im Verlauf noch als "angefangen" und ohne Dauer,
        solange das Ergebnis-Banner offen ist - und wenn Rose den Tab zumacht,
@@ -1053,6 +1062,31 @@ function runde(pool, meta, hooks, wahl) {
   }
 
   schritt();
+}
+
+/* Die angefangene Karte an den Anfang - auch wenn das Los sie nicht gezogen hat.
+
+   Zwei Wege, je nachdem, wo sie steckt: liegt sie schon in der gezogenen Liste,
+   wandert sie nur nach vorn. Liegt sie bloss im Pool, kommt sie davor und die
+   zuletzt gezogene weicht - sonst waere die Runde eine Aufgabe laenger als die
+   Zahl, die Rose oben liest ("Aufgabe 1 von 4").
+
+   Findet sie sich nirgends, passiert nichts: dann hat Rose sie zwischendurch
+   doch beantwortet (restPool wirft Beantwortetes raus) oder sie ist aus dem
+   Korpus verschwunden. */
+function zuerstZeigen(liste, pool, qid) {
+  for (var i = 0; i < liste.length; i++) {
+    if (liste[i].f.id === qid) {
+      var da = liste[i];
+      return [da].concat(liste.filter(function (x) { return x !== da; }));
+    }
+  }
+  for (var j = 0; j < pool.length; j++) {
+    if (pool[j].f.id === qid) {
+      return [pool[j]].concat(liste.slice(0, Math.max(0, liste.length - 1)));
+    }
+  }
+  return liste;
 }
 
 function uebeRunde(thema, afb, hooks) {
@@ -1392,5 +1426,9 @@ export function macheWeiter(r, themen, hooks) {
     nochmal: function () { macheWeiter(r, themen, hooks); },
     fertigSatz: "Weitergemacht, wo du aufgehört hattest.",
     extraText: null, extra: null
-  }, hooks, { anzahl: n, auswahl: "wacklig" });
+    /* zuerst: die Karte, die beim Abbruch offen auf dem Schirm stand. Ohne sie
+       war "Weitermachen" ein Neuziehen aus dem Stapel, und ausgerechnet die
+       angefangene Aufgabe kam nur mit Glueck zurueck (Jennifer, 15.08.2026).
+       Gehoert sie nicht mehr in den Rest, faellt der Hinweis still weg. */
+  }, hooks, { anzahl: n, auswahl: "wacklig", zuerst: offeneKarte(r.id) });
 }

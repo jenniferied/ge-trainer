@@ -288,6 +288,45 @@ export function beendeRunde() {
   return s;
 }
 
+/* ---------- Die Karte, an der sie gerade war ----------
+   Jennifer, 15.08.2026: "sie kann weitermachen, aber die Aufgabe, an der sie
+   gerade war, wurde nicht mehr gezeigt, sondern nur die naechste. die sollte
+   auf jeden fall wieder gezeigt werden."
+
+   Der Grund steckt in macheWeiter (stats.js): GE haelt keine Fragenliste an der
+   Sitzung, das Weitermachen zieht also eine NEUE Runde aus dem Wackel-Stapel.
+   Die angefangene Aufgabe liegt darin - sie ist ja unbeantwortet - aber nur als
+   eine unter achtzig. Ob ausgerechnet sie gezogen wird, war Glueck.
+
+   Gemerkt wird deshalb genau EINE Karte, und zwar die zuletzt aufgeschlagene.
+   Nicht die ganze Liste: die will Rose gar nicht zurueck (die restlichen
+   Aufgaben duerfen frisch gezogen werden), und ein Fragen-Schnappschuss je
+   Runde waere ein neues Feld im Lernstand, also snapshot() UND signatur().
+
+   GERAETELOKAL, wie theme und pending: "ich war gerade hier" gilt dem Geraet,
+   auf dem sie war. snapshot() in sync.js waehlt gezielt aus, das Feld faehrt
+   also nie mit - und muss es auch nicht, denn wer am Tablet weitermacht, war
+   dort nie mittendrin. */
+export function merkeOffeneKarte(sid, qid) {
+  if (!sid || !qid) return;
+  state.offeneKarte = { sid: sid, qid: qid };
+  speichern();
+}
+
+export function vergissOffeneKarte() {
+  if (!state.offeneKarte) return;
+  state.offeneKarte = null;
+  speichern();
+}
+
+// Die offene Karte GENAU DIESER Runde. Die sid muss passen: startet Rose
+// zwischendurch etwas anderes, gehoert die Erinnerung der neuen Runde, und die
+// alte Zeile im Verlauf soll nicht die Karte von woanders vorziehen.
+export function offeneKarte(sid) {
+  var o = state.offeneKarte;
+  return o && o.sid === sid && o.qid ? o.qid : null;
+}
+
 /* Eine fertige Sitzung von aussen eintragen (die Klausur baut ihre selbst: sie
    hat mit state.klausur schon einen Bogen, der einen Neustart der Seite
    ueberlebt, und braucht darum keinen modullokalen Zeiger). Gleiche Id ersetzt. */
