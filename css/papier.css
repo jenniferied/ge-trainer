@@ -808,3 +808,39 @@
   .sticker.aufgeklebt { transform: none; }
   .kl-stift:active { transform: none; }
 }
+
+/* ---------- Der Rotstift der KI auf Roses Blatt (15.08.2026) ----------
+   Die Korrektur zitiert Stellen aus ihrer Antwort (main.js markiertesBlatt).
+   Drei Sorten, wie sie aus der Function kommen:
+     underline  gut oder wichtig   -> gruen unterstrichen
+     circle     inhaltlich falsch  -> rot, wellig, wie durchgesehen
+     note       Hinweis            -> zart hinterlegt
+
+   KEIN deckender Hintergrund ausser bei note: das Blatt traegt eine Lineatur
+   als background-image, und eine volle Flaeche schnitte sie mitten im Satz
+   durch. Unterstreichungen liegen darueber, ohne das Papier zu loeschen.
+
+   Die Ziffer haengt IM mark und traegt line-height 0 - ohne das schoebe ein
+   <sup> die Zeile auseinander, und die Grundlinien-Rechnung weiter oben waere
+   fuer diese eine Zeile hin. */
+.frei-blatt-text .anno {
+  background: none; color: inherit;
+  text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+.frei-blatt-text .anno-underline { text-decoration: underline; text-decoration-color: var(--ok); }
+.frei-blatt-text .anno-circle {
+  text-decoration: underline wavy; text-decoration-color: var(--bad);
+  text-decoration-thickness: 1.5px;
+}
+.frei-blatt-text .anno-note {
+  background: color-mix(in srgb, var(--warn-ink) 22%, transparent);
+  border-radius: 3px;
+}
+.frei-blatt-text .anno-nr {
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .55em; font-weight: 700; line-height: 0;
+  vertical-align: super; margin-left: 2px;
+}
+.frei-blatt-text .anno-underline .anno-nr { color: var(--ok); }
+.frei-blatt-text .anno-circle .anno-nr { color: var(--bad); }
+.frei-blatt-text .anno-note .anno-nr { color: var(--warn-ink); }

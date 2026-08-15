@@ -1358,13 +1358,132 @@ var AFB_ROEM = ["", "I", "II", "III"];
 // gegenlesen, ob die Maschine sie richtig verstanden hat. Das Bild selbst ist
 // nicht mehr da (es lebt nur im Klausur-Bogen, und der wird beim Abschliessen
 // geleert); die Legende unten sagt das.
-function antwortZettel(a) {
+function antwortZettel(a, marken) {
   var blatt = el("div", "frei-blatt runde-blatt");
   blatt.appendChild(el("div", "runde-blatt-marke", a.hand
     ? (a.quelle === "gemischt" ? "✍️ Getippt und geschrieben" : "✍️ Umschrift deiner Handschrift")
     : "Deine Antwort"));
-  blatt.appendChild(el("div", "frei-blatt-text", a.text));
+  blatt.appendChild(markiertesBlatt(a.text, marken));
   return blatt;
+}
+
+/* ---------- Der Rotstift der KI (Jennifer, 15.08.2026: "ergaenze die
+   Renderung, die Annotationen sind wichtig") ----------
+
+   Die Korrektur liefert seit jeher annotationen: [{ textstelle, typ, kommentar }],
+   textstelle ein WOERTLICHES Zitat aus Roses Antwort. llm.js hat sie gelesen und
+   stelleFinden() stand als robuste Textsuche bereit - gezeichnet hat sie nie
+   jemand. Beides zusammen ergibt jetzt das markierte Blatt.
+
+   Gespeichert wird die Liste als frageChat-Zeile der art "marker" an der aid des
+   Versuchs (Begruendung dort in sync.js). Kurzform im Speicher, damit die 4000
+   Zeichen von FQ_TEXT_MAX reichen: { s: textstelle, t: typ, k: kommentar }.
+
+   ZWEI DINGE, DIE HIER ABSICHTLICH SO SIND:
+
+   1. KEINE ROUGH-NOTATION. Der Klausurbogen zeichnet seine Stichpunkt-Striche
+      mit der Bibliothek, aber die misst Layout: sie braucht ein sichtbares
+      Element, einen IntersectionObserver und ein Neuzeichnen bei jedem Resize
+      (klausur.js beobachter/annos). Fuer Stellen MITTEN im Fliesstext, die auch
+      noch im Verlauf wieder auftauchen sollen, ist das die falsche Maschine -
+      CSS auf einem <mark> haelt Zeilenumbrueche und Handy-Drehungen von selbst
+      aus.
+   2. UEBERLAPPUNGEN FALLEN WEG statt sich zu verschachteln. Zitiert die KI
+      zweimal dieselbe Stelle, gewinnt die erste; die zweite steht trotzdem
+      unten in der Randliste. Verschachtelte Marken waeren ein DOM-Problem
+      ohne Nutzen - lesen kann man sie ohnehin nicht.
+
+   Ziffern statt Tooltips: die Marke im Text traegt eine kleine Zahl, der Satz
+   dazu steht unter dem Blatt. Auf dem Handy gibt es kein Hover, und ein title=
+   waere fuer Rose unsichtbar. */
+
+var ANNO_TYP = { underline: "underline", circle: "circle", note: "note" };
+
+// Liste in die Kurzform bringen, die in den Speicher faehrt. Deckel je Feld,
+// damit eine gespraechige Korrektur das JSON nicht ueber FQ_TEXT_MAX treibt.
+function markenKurz(annotationen) {
+  return (Array.isArray(annotationen) ? annotationen : []).slice(0, 6)
+    .map(function (a) {
+      if (!a || typeof a.textstelle !== "string") return null;
+      return {
+        s: a.textstelle.slice(0, 120),
+        t: ANNO_TYP[a.typ] || "note",
+        k: typeof a.kommentar === "string" ? a.kommentar.slice(0, 300) : "",
+      };
+    })
+    .filter(Boolean);
+}
+
+/* Die gespeicherten Marken einer Antwort. Defensiv: der content ist der einzige
+   Ort in diesem Speicher, an dem JSON steht, und der Deckel in frageChatSagen
+   schneidet notfalls mitten hinein. Kaputt heisst dann einfach "keine Marken"
+   und nie ein kaputter Screen. */
+function markenLesen(qid, aid) {
+  var zeilen = frageChatZuFrage(qid).filter(function (m) {
+    return m.art === "marker" && m.aid === aid;
+  });
+  if (!zeilen.length) return null;
+  try {
+    var liste = JSON.parse(zeilen[zeilen.length - 1].content);
+    return Array.isArray(liste) && liste.length ? liste : null;
+  } catch (e) { return null; }
+}
+
+/* Wo sitzt welche Marke im Text? stelleFinden (llm.js) sucht Whitespace- und
+   Anfuehrungszeichen-tolerant - noetig, weil das Modell zitiert, was es gelesen
+   hat, und Roses Umschrift Zeilenumbrueche mitten im Satz hat. Was sich nicht
+   findet, faellt still weg: ein erfundenes Zitat darf keine Marke setzen. */
+function markenStellen(text, marken) {
+  var roh = [];
+  (marken || []).forEach(function (m, i) {
+    if (!m || !m.s) return;
+    var p = Llm.stelleFinden(text, m.s);
+    if (p) roh.push({ start: p.start, ende: p.ende, m: m, nr: i + 1 });
+  });
+  roh.sort(function (a, b) { return a.start - b.start; });
+  var raus = [], bis = -1;
+  roh.forEach(function (s) { if (s.start >= bis) { raus.push(s); bis = s.ende; } });
+  return raus;
+}
+
+/* Roses Text mit den Marken drin. Ohne Marken exakt das, was vorher hier stand -
+   ein div mit ihrem Text, kein Unterschied im DOM. */
+function markiertesBlatt(text, marken) {
+  var box = el("div", "frei-blatt-text");
+  var t = typeof text === "string" ? text : "";
+  var stellen = markenStellen(t, marken);
+  if (!stellen.length) { box.textContent = t; return box; }
+  var pos = 0;
+  stellen.forEach(function (s) {
+    if (s.start > pos) box.appendChild(document.createTextNode(t.slice(pos, s.start)));
+    var mark = el("mark", "anno anno-" + s.m.t);
+    mark.textContent = t.slice(s.start, s.ende);
+    mark.appendChild(el("sup", "anno-nr", String(s.nr)));
+    box.appendChild(mark);
+    pos = s.ende;
+  });
+  if (pos < t.length) box.appendChild(document.createTextNode(t.slice(pos)));
+  return box;
+}
+
+/* Die Saetze zu den Marken, unter dem Blatt. Auch die, deren Zitat sich im Text
+   nicht wiederfand - der Hinweis gilt dann eben ohne Stelle. Die Nummern sind
+   die aus markiertesBlatt, damit Zahl und Satz zusammenfinden. */
+function markenRandliste(text, marken, themaId) {
+  if (!marken || !marken.length) return null;
+  var gefunden = {};
+  markenStellen(text, marken).forEach(function (s) { gefunden[s.nr] = true; });
+  var box = el("ul", "anno-liste");
+  marken.forEach(function (m, i) {
+    if (!m || !m.k) return;
+    var li = el("li", "anno-zeile anno-" + (m.t || "note"));
+    li.appendChild(el("span", "anno-nr-gross", gefunden[i + 1] ? String(i + 1) : "·"));
+    li.appendChild(themaId
+      ? Beleg.belegZeile("span", m.k, themaId, "anno-text")
+      : el("span", "anno-text", m.k));
+    box.appendChild(li);
+  });
+  return box.children.length ? box : null;
 }
 
 /* Die Treffer je Stichpunkt als Zeichenreihe. Zwei Quellen, ein Bauteil:
@@ -1523,7 +1642,16 @@ function zeigeRunde(r) {
     /* Roses eigener Text - bei offenen Aufgaben IST das die Leistung, die
        Punktzahl nur ihr Schatten. Steht als Zettel da, in derselben Optik wie
        beim Ueben und in der Klausur. */
-    if (a.text) karte.appendChild(antwortZettel(a));
+    /* Mit dem Rotstift von damals: die Marken haengen an DIESER Antwort (aid),
+       nicht an der Frage. Uebt Rose dieselbe Aufgabe naechste Woche noch
+       einmal, steht hier weiter das Blatt von heute mit den Stellen von heute -
+       und die neue Runde faengt trotzdem sauber an. */
+    if (a.text) {
+      var marken = markenLesen(a.qid, a.aid);
+      karte.appendChild(antwortZettel(a, marken));
+      var rand = markenRandliste(a.text, marken, gefunden ? gefunden.thema.id : null);
+      if (rand) karte.appendChild(rand);
+    }
 
     var rueck = rueckmeldung(a);
     if (rueck) karte.appendChild(rueck);
@@ -2362,6 +2490,7 @@ function selbstCheck(thema, f, dazu, frisch) {
   var kiTipp = null;            // was die KI vorschlaegt - reine Anzeige
   var kiTreffer = null;         // Treffer je Stichpunkt, klein und strukturiert
   var kiText = null;            // ihr Kommentar im Klartext, fuers Nachschlagen
+  var kiMarkenFuersLog = null;  // die Stellen im Text, die die KI markiert hat
 
   function waehlen(opt) {
     state.frei[f.id] = opt.wert;
@@ -2403,6 +2532,17 @@ function selbstCheck(thema, f, dazu, frisch) {
       var anker = frageChatAid(f.id);
       frageChatSagen({ aid: anker.aid, sid: anker.sid, qid: f.id,
         art: "feedback", role: "assistant", content: kiText });
+    }
+    /* Der Rotstift wandert mit, als eigene Zeile der art "marker" (sync.js).
+       Denselben Anker wie der Kommentar und aus demselben Grund NACH
+       logAntwort: die Marken gehoeren zu dem Versuch, den Rose gerade abgegeben
+       hat. Damit taucht das markierte Blatt spaeter unter "Zuletzt geübt" genau
+       an dieser einen Antwort wieder auf - und der naechste Durchgang derselben
+       Aufgabe ist wieder leer, ohne dass etwas geloescht werden muss. */
+    if (kiMarkenFuersLog) {
+      var ankerM = frageChatAid(f.id);
+      frageChatSagen({ aid: ankerM.aid, sid: ankerM.sid, qid: f.id,
+        art: "marker", role: "assistant", content: JSON.stringify(kiMarkenFuersLog) });
     }
     Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
       btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
@@ -2452,7 +2592,8 @@ function selbstCheck(thema, f, dazu, frisch) {
      Kommt die KI ausnahmsweise SPAETER als ihr Fingertipp, bleibt beides leer -
      dann steht im Verlauf eben nur ihre Antwort. Nichts wird nachtraeglich
      angehaengt; das ist die Regel, nicht die Panne (core.js). */
-  check.kiUrteilMerken = function (vorschlag, text) {
+  check.kiUrteilMerken = function (vorschlag, text, marken) {
+    kiMarkenFuersLog = Array.isArray(marken) && marken.length ? marken : null;
     var werte = (Array.isArray(vorschlag) ? vorschlag : [])
       .map(trefferWert)
       .filter(function (w) { return w === "ja" || w === "teilweise" || w === "nein" || w === "egal"; });
@@ -2675,9 +2816,21 @@ function freiKarte(thema, f, opts) {
 
   function eingefroren() { return !!entwurfLesen(f.id).eingefroren; }
 
+  /* Der Rotstift der KI auf diesem Blatt. Steht hier und nicht im Entwurf: die
+     Marken gehoeren zu EINER Korrektur, nicht zum Text - taut Rose das Blatt
+     wieder auf und schreibt weiter, sind sie zu Recht weg. Gespeichert werden
+     sie erst beim Selbstcheck (markenMerken), weil dort die aid feststeht. */
+  var kiMarken = null;
+
+  function blattFuellen() {
+    blattText.textContent = "";
+    var neu = markiertesBlatt(eingabe.value, kiMarken);
+    while (neu.firstChild) blattText.appendChild(neu.firstChild);
+  }
+
   function ansichtSetzen() {
     var fest = eingefroren();
-    blattText.textContent = eingabe.value;
+    blattFuellen();
     blatt.hidden = !fest;
     feld.hidden = fest;
     if (!fest) requestAnimationFrame(function () { autoWachsen(eingabe); });
@@ -2871,6 +3024,18 @@ function freiKarte(thema, f, opts) {
     if (kiBox) kiBox.remove();
     var teile = [];
 
+    /* Erst das Blatt, dann das Urteil. Die Marken brauchen einen Fliesstext,
+       und solange die Karte ein <textarea> zeigt, gibt es keinen: einfrieren()
+       macht aus dem Feld das feste Blatt (dieselbe Ansicht wie nach einem
+       bestaetigten Transkript), und darauf zeichnet blattFuellen die Stellen.
+       "✎ ändern" taut jederzeit wieder auf - es ist ihr Text. */
+    kiMarken = markenKurz(erg.annotationen);
+    if (kiMarken.length) {
+      if (!eingefroren()) einfrieren(); else ansichtSetzen();
+      var rand = markenRandliste(eingabe.value, kiMarken, thema.id);
+      if (rand) teile.push(rand);
+    }
+
     var vorschlag = Array.isArray(erg.punkteVorschlag) ? erg.punkteVorschlag : [];
     if (vorschlag.length) {
       var ul = el("ul", "ki-treffer");
@@ -2912,7 +3077,7 @@ function freiKarte(thema, f, opts) {
        (siehe kiUrteilMerken), angezeigt erst im Verlauf (zeigeRunde). Waehrend
        Rose uebt, taucht davon nichts wieder auf: die Aufgabe ist beim naechsten
        Mal ein leeres Blatt, und der Chat filtert art "feedback" heraus. */
-    check.kiUrteilMerken(vorschlag, saetze.join(" "));
+    check.kiUrteilMerken(vorschlag, saetze.join(" "), kiMarken);
 
     /* live: true - in dieser Blase steht, was das Modell gerade zu Roses
        Antwort gesagt hat, also Pixelschrift (geteilt.css .chat-msg.ki-live).

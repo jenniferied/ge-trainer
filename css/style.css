@@ -1628,3 +1628,23 @@ p { margin: 0 0 var(--sp-3); }
 /* Der Knopf, der das Sheet oeffnet, steht unter der Aufloesung einer Aufgabe.
    Volle Breite, damit er auf dem Handy sicher zu treffen ist. */
 .fq-knopf { width: 100%; margin-top: var(--sp-3); }
+
+/* ---------- Was am Rand steht (main.js markenRandliste) ----------
+   Die Saetze zu den Marken auf dem Blatt. Die Ziffer links ist dieselbe wie
+   oben im Text; ein "·" heisst: das Zitat liess sich im Text nicht wiederfinden,
+   der Hinweis gilt trotzdem. Keine Tooltips - auf dem Handy gibt es kein Hover. */
+.anno-liste { list-style: none; margin: 0 0 var(--sp-3); padding: 0; }
+.anno-zeile {
+  display: grid; grid-template-columns: 1.6rem 1fr; gap: var(--sp-1);
+  align-items: baseline;
+  padding: var(--sp-1) 0; font-size: .9rem;
+}
+.anno-nr-gross {
+  font-weight: 700; text-align: center;
+  font-family: "Karla", system-ui, sans-serif;
+  color: var(--ink-soft);
+}
+.anno-zeile.anno-underline .anno-nr-gross { color: var(--ok); }
+.anno-zeile.anno-circle .anno-nr-gross { color: var(--bad); }
+.anno-zeile.anno-note .anno-nr-gross { color: var(--warn-ink); }
+.anno-text { color: var(--ink-soft); }

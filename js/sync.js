@@ -360,8 +360,27 @@ export function sitzungSchnitt(liste) {
               eine Frage zweimal, steht trotzdem EIN Gespraech da, ihres.
      sid      die Runde, in der geredet wurde. Noetig, damit ein Loeschen der
               Runde ("sit:<id>") das Gespraech mitnimmt.
-     art      "frage" (Chat) - "feedback" ist im ST-Trainer belegt und hier
-              bewusst freigehalten, falls die KI-Korrektur spaeter mit soll.
+     art      "frage" (Chat), "feedback" (der Kommentar der KI-Korrektur zu
+              genau dieser Antwort) und seit dem 15.08.2026 "marker".
+
+              "marker" traegt die ANNOTATIONEN der Korrektur - die Stellen im
+              eigenen Text, die die KI unterstrichen, angekringelt oder mit
+              einem Hinweis versehen hat. content ist hier ausnahmsweise kein
+              Klartext, sondern eine JSON-Liste [{s,t,k}] (Stelle, Typ,
+              Kommentar); main.js markenLesen parst sie defensiv und zeigt bei
+              kaputtem JSON einfach nichts.
+
+              WARUM HIER UND NICHT AM LOG-EINTRAG: dieselbe Begruendung wie
+              beim Kommentar (klausur.js hat gegen Texte im Lernstand
+              entschieden - er faehrt bei JEDEM Sync komplett hoch UND runter)
+              plus die eiserne Regel aus core.js, dass an einer geloggten
+              Antwort nichts nachtraeglich angebaut wird. Der frageChat-Speicher
+              hat Deckel, Grabsteine und einen Merge, der vereinigt statt zu
+              ersetzen - und weil die Zeile an der aid haengt, gilt sie genau
+              EINEM Versuch: der naechste Durchgang derselben Aufgabe faengt
+              mit einem leeren Blatt an, ohne dass irgendwer etwas aufraeumen
+              muss (Jennifer, 15.08.2026: "wenn sie eine neue Aufgabe anfaengt,
+              alles neu").
      role     "user" (Rose) oder "assistant" (die KI). Bewusst role/content und
               nicht rolle/text wie bei mkChat zwanzig Zeilen weiter oben: das
               ist die Form, die der Adapter-Vertrag der geteilten Bausteine
@@ -407,7 +426,7 @@ function fqEine(m) {
     id: id, aid: aid,
     qid: m.qid == null ? null : String(m.qid),
     sid: m.sid == null ? null : String(m.sid),
-    art: m.art === "feedback" ? "feedback" : "frage",
+    art: m.art === "feedback" ? "feedback" : m.art === "marker" ? "marker" : "frage",
     // Alles, was nicht ausdruecklich Rose ist, ist die KI. So kann eine Zeile
     // nie wegen eines unbekannten Rollennamens verschwinden.
     role: m.role === "user" ? "user" : "assistant",
