@@ -2247,6 +2247,48 @@ function entwurfSichern(id) {
   speichern();
 }
 
+/* Den Entwurf einer Aufgabe wegwerfen - fuer den frischen Durchgang, siehe
+   freiKarte. Ganz LOESCHEN und nicht Feld fuer Feld leeren, aus zwei Gruenden:
+   entwurf() wuerde beim Leeren erst ein Kaestchen anlegen (genau das, was
+   entwurfLesen oben vermeidet), und ein zurueckgebliebenes eingefroren: true
+   liesse die Karte als leeres, festes Blatt stehen - ein Feld, in das Rose
+   nicht mehr tippen kann. Geschrieben wird nur, wenn wirklich etwas dalag. */
+function entwurfWeg(id) {
+  if (!state.freiEntwurf[id]) return;
+  delete state.freiEntwurf[id];
+  speichern();
+}
+
+/* Wann hat Rose diese Aufgabe zuletzt wirklich abgegeben? Das Log ist
+   chronologisch angehaengt, der erste Treffer von hinten ist also der juengste.
+   0 heisst: noch nie beantwortet. */
+function letzteAntwortTs(qid) {
+  var log = state.antwortLog || [];
+  for (var i = log.length - 1; i >= 0; i--) {
+    if (log[i] && log[i].qid === qid) return log[i].ts || 0;
+  }
+  return 0;
+}
+
+/* Einen Entwurf aus einem ABGESCHLOSSENEN Durchgang wegraeumen - und nur den.
+
+   Der Vergleich laeuft ueber die Zeit, nicht ueber state.frei: im
+   Wackel-Stapel traegt JEDE Aufgabe eine alte Einschaetzung, "schon mal
+   bewertet" wuerde dort also auch den Satz treffen, den Rose gerade mittendrin
+   geschrieben hat. Der Zeitpunkt trennt beides sauber:
+
+     Entwurf AELTER als die letzte Antwort  -> sie hat danach abgegeben, der
+                                               Text gehoert zum alten Durchgang.
+     Entwurf JUENGER (oder gar keine Antwort) -> angefangene Arbeit von jetzt,
+                                               die bleibt liegen. */
+function entwurfAusAltemDurchgangWeg(id) {
+  var e = state.freiEntwurf[id];
+  if (!e) return;
+  var letzte = letzteAntwortTs(id);
+  if (!letzte || (e.ts || 0) > letzte) return;
+  entwurfWeg(id);
+}
+
 // Getipptes wird gebuendelt geschrieben - bei jedem Tastendruck in den
 // localStorage zu gehen waere auf dem Handy spuerbar.
 var tippWecker = null;
@@ -2509,6 +2551,29 @@ function freiKarte(thema, f, opts) {
   }
 
   karte.appendChild(el("div", "frage-text", f.frage));
+
+  /* ---------- Frischer Durchgang heisst leeres Blatt (Jennifer, 15.08.2026:
+     "sie sieht bei 6 wiederholen ihre alten antworten ... jedes mal wenn sie
+     6 wiederholen wieder anfaengt soll es resettet sein") ----------
+
+     Der Entwurf haelt Getipptes und Gezeichnetes fest, damit nichts verloren
+     geht, wenn Rose weiterblaettert. In einer RUNDE war das falsch herum: dort
+     stand die Antwort vom letzten Durchgang schon im Feld, und Wiederholen
+     hiess dann Lesen statt Schreiben.
+
+     Dieselbe Linie wie das frisch-Argument in selbstCheck weiter unten - eine
+     Runde ist ein eigener Durchgang, deshalb steht dort auch die alte
+     Einschaetzung nicht schon angetippt da. o.einzeln IST dieser Fall: eine
+     Karte allein auf dem Schirm, also Runde oder gezogene Klausurfrage. Auf der
+     Themenseite (alle Karten untereinander) bleibt der Entwurf liegen.
+
+     GELEERT WIRD NUR, WAS AUS EINEM ABGESCHLOSSENEN DURCHGANG STAMMT - der
+     Unterschied zwischen "ihre alte Antwort" und "der Satz, den sie gerade
+     mittendrin geschrieben hat". Bricht sie eine Runde bei Aufgabe 3 ab und
+     macht spaeter unten bei "Zuletzt" weiter, kommt Aufgabe 3 unbeantwortet
+     zurueck, und ihr angefangener Text muss dann noch da sein. Wie das
+     unterschieden wird, steht bei entwurfAusAltemDurchgangWeg. */
+  if (o.einzeln) entwurfAusAltemDurchgangWeg(f.id);
 
   var e = entwurfLesen(f.id);
 

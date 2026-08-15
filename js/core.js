@@ -264,7 +264,23 @@ export function beendeRunde() {
     speichern();
     return null;
   }
-  s.fertig = true;
+  /* FERTIG IST NUR, WER DURCH IST (Jennifer, 15.08.2026: "falls sie eine runde
+     abbricht sollte diese unten bei zuletzt weiterfuehrbar sein").
+
+     Hier stand bis dahin ein hartes s.fertig = true, und das machte den
+     Weitermachen-Knopf praktisch unerreichbar: beendeRunde() laeuft bei JEDEM
+     Screenwechsel (zeige() in main.js, erste Zeile). Wer eine Sechserrunde nach
+     zwei Aufgaben ueber "← Startseite" verliess, bekam damit eine als fertig
+     gestempelte Runde - und restAnzahl() in stats.js steigt bei r.fertig aus.
+     Uebrig blieb der Fall, in dem Rose einfach den Tab zumacht; nur dort lief
+     beendeRunde nie, und nur dort stand der Knopf je da.
+
+     Gemessen wird an der GEPLANTEN LAENGE, derselben Zahl, die Rose oben liest
+     ("Aufgabe 3 von 6"), und mit demselben >= wie wiederhol6Heute(). Runden
+     ohne geplante Laenge (anzahl null, z. B. die Themenseite) bleiben fertig,
+     sobald sie geschlossen werden - fuer sie gibt es keinen Rest zu zaehlen. */
+  var soll = typeof s.anzahl === "number" && s.anzahl > 0 ? s.anzahl : 0;
+  s.fertig = !soll || s.beantwortet >= soll;
   // Bis zur LETZTEN ANTWORT, nicht bis jetzt: sonst zaehlt die Zeit mit, die das
   // Ergebnis-Banner offen stand oder das Handy in der Tasche lag.
   s.dauerSek = Math.max(0, Math.round(((s.ts || s.erstellt) - s.erstellt) / 1000));
