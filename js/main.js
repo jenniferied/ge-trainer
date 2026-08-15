@@ -1408,7 +1408,62 @@ var SELBST_WORT_LANG = { gut: "saß gut", mittel: "teilweise", nochmal: "nochmal
    App (klausur.js kiUebernehmen, main.js selbstCheck: "der KI-Vorschlag soll
    markiert sein, ausgewaehlt nie"). Im Verlauf zaehlt das doppelt: hier sieht
    Rose schwarz auf weiss, wo sie der KI widersprochen hat. */
-function rueckmeldung(a) {
+/* Die gespeicherten Begruendungen einer Antwort (art "treffer"). Wie
+   Marken.lesen defensiv: der content ist JSON in einem Textfeld, und der Deckel
+   in frageChatSagen schneidet notfalls hinein. Kaputt heisst "nichts da". */
+function begruendungenLesen(qid, aid) {
+  var zeilen = frageChatZuFrage(qid).filter(function (m) {
+    return m.art === "treffer" && m.aid === aid;
+  });
+  if (!zeilen.length) return null;
+  try {
+    var liste = JSON.parse(zeilen[zeilen.length - 1].content);
+    return Array.isArray(liste) && liste.length ? liste : null;
+  } catch (e) { return null; }
+}
+
+/* Stichpunkt fuer Stichpunkt, mit dem Satz der KI daneben - dieselbe Optik wie
+   live (.ki-treffer).
+
+   DER STICHPUNKT-TEXT KOMMT AUS DEM KORPUS, nicht aus dem Speicher: er steht
+   ohnehin in der Frage, und ihn ein zweites Mal je Antwort abzulegen waere
+   Verdopplung im Lernstand, der bei jedem Sync komplett hoch UND runter faehrt.
+   Die Zuordnung laeuft ueber die Reihenfolge - deshalb wird sie geprueft: passt
+   die Anzahl nicht (die Aufgabe wurde seither umgebaut, wie pr-f-4 am 15.08.),
+   stehen die Saetze ohne Stichpunkt da statt am falschen. */
+function trefferListe(a, gefunden) {
+  var daten = begruendungenLesen(a.qid, a.aid);
+  if (!daten) return null;
+  var f = gefunden && gefunden.frage;
+  var sp = f && Array.isArray(f.stichpunkte) ? f.stichpunkte : [];
+  var passt = sp.length === daten.length;
+  var themaId = gefunden ? gefunden.thema.id : null;
+  var box = el("div", "runde-trefferliste");
+  box.appendChild(el("span", "runde-treffer-titel", "Stichpunkte, wie die KI sie sah"));
+  var ul = el("ul", "ki-treffer");
+  daten.forEach(function (d, i) {
+    if (!d) return;
+    var art = d.g || "nein";
+    var li = el("li", "treffer-" + art);
+    li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[art] || "–"));
+    if (passt && sp[i]) {
+      li.appendChild(themaId
+        ? Beleg.belegZeile("span", String(sp[i]), themaId, "was")
+        : el("span", "was", String(sp[i])));
+    }
+    if (d.k) {
+      li.appendChild(themaId
+        ? Beleg.belegZeile("div", d.k, themaId, "dazu")
+        : el("div", "dazu", d.k));
+    }
+    ul.appendChild(li);
+  });
+  if (!ul.children.length) return null;
+  box.appendChild(ul);
+  return box;
+}
+
+function rueckmeldung(a, gefunden) {
   var box = el("div", "runde-rueck");
   var leer = true;
 
@@ -1437,7 +1492,14 @@ function rueckmeldung(a) {
   var eigenTreffer = trefferReihe(a.bewertung, BEWERTUNG_ZEICHEN, "Stichpunkte, wie du sie abgehakt hast");
   if (eigenTreffer) { box.appendChild(eigenTreffer); leer = false; }
 
-  var kiTreffer = trefferReihe(a.kiTreffer, KITREFFER_ZEICHEN, "Stichpunkte, wie die KI sie sah");
+  /* Die Stichpunkte, wie die KI sie sah. ZWEI FASSUNGEN, und die ausfuehrliche
+     gewinnt, wenn es sie gibt: seit dem 15.08. liegt die Begruendung je
+     Stichpunkt im frageChat-Speicher (art "treffer"), und dann steht hier
+     dasselbe wie live in der Sprechblase - Stichpunkt, Zeichen, ihr Satz dazu.
+     Fuer alles davor bleibt die blosse Zeichenreihe aus dem Log; sie ist alles,
+     was von diesen Antworten je gespeichert wurde. */
+  var kiTreffer = trefferListe(a, gefunden)
+    || trefferReihe(a.kiTreffer, KITREFFER_ZEICHEN, "Stichpunkte, wie die KI sie sah");
   if (kiTreffer) { box.appendChild(kiTreffer); leer = false; }
 
   if (a.kiVorschlag && a.kiVorschlag !== a.selbsteinschaetzung) {
@@ -1537,7 +1599,7 @@ function zeigeRunde(r) {
       if (rand) karte.appendChild(rand);
     }
 
-    var rueck = rueckmeldung(a);
+    var rueck = rueckmeldung(a, gefunden);
     if (rueck) karte.appendChild(rueck);
 
     /* Und was die KI DAMALS dazu gesagt hat. Gefiltert auf genau diese Antwort
@@ -1569,7 +1631,17 @@ function zeigeRunde(r) {
        wurde (papier.css, .muster-blatt). */
     if (gefunden && gefunden.typ === "frei" && gefunden.frage.muster) {
       var mFalt = el("details", "runde-text-falt");
-      mFalt.appendChild(el("summary", null, "So könnte es klingen – anzeigen"));
+      /* AUFGEKLAPPT (Jennifer, 15.08.2026: "sie soll auch den text sehen der
+         standard da ist mit den 6 optionen auswaehlbar"). Hier stand bis dahin
+         ein zugeklapptes details mit der Begruendung, die Musterloesung sei
+         lang und nicht der Grund, weswegen man diese Seite oeffnet. Fuer die
+         Wiederansicht stimmt das nicht: Rose schlaegt eine alte Antwort auf, um
+         sie mit der Musterloesung zu VERGLEICHEN, und ein Klick zwischen beiden
+         ist genau einer zu viel. Zusammenklappen kann sie es weiter.
+         Die Fassungs-Umschalter (wie in der Klausur / Einfache Sprache x
+         Deutsch / English / العربية) bringt musterBereich selbst mit. */
+      mFalt.open = true;
+      mFalt.appendChild(el("summary", null, "So könnte es klingen"));
       // Ohne opts: die Vorgabe ist genau die Papieroptik des Uebungsmodus
       // (muster muster-blatt) - derselbe Zettel, den Rose beim Ueben aufklappt.
       mFalt.appendChild(Muster.musterBereich(gefunden.frage, gefunden.thema.id));
@@ -2375,6 +2447,7 @@ function selbstCheck(thema, f, dazu, frisch) {
   var kiTreffer = null;         // Treffer je Stichpunkt, klein und strukturiert
   var kiText = null;            // ihr Kommentar im Klartext, fuers Nachschlagen
   var kiMarkenFuersLog = null;  // die Stellen im Text, die die KI markiert hat
+  var kiBegruendungen = null;   // ihr Satz JE Stichpunkt, fuer die Wiederansicht
 
   function waehlen(opt) {
     state.frei[f.id] = opt.wert;
@@ -2428,6 +2501,11 @@ function selbstCheck(thema, f, dazu, frisch) {
       frageChatSagen({ aid: ankerM.aid, sid: ankerM.sid, qid: f.id,
         art: "marker", role: "assistant", content: JSON.stringify(kiMarkenFuersLog) });
     }
+    if (kiBegruendungen) {
+      var ankerB = frageChatAid(f.id);
+      frageChatSagen({ aid: ankerB.aid, sid: ankerB.sid, qid: f.id,
+        art: "treffer", role: "assistant", content: JSON.stringify(kiBegruendungen) });
+    }
     Array.prototype.forEach.call(check.querySelectorAll(".check-knopf"), function (btn) {
       btn.classList.remove("aktiv-gut", "aktiv-mittel", "aktiv-nochmal");
     });
@@ -2478,6 +2556,18 @@ function selbstCheck(thema, f, dazu, frisch) {
      angehaengt; das ist die Regel, nicht die Panne (core.js). */
   check.kiUrteilMerken = function (vorschlag, text, marken) {
     kiMarkenFuersLog = Array.isArray(marken) && marken.length ? marken : null;
+    /* Die Begruendung je Stichpunkt - der Satz, der live neben dem Haken steht
+       ("Sinngemaess voll getroffen, inklusive des Gegenpols"). Am Log-Eintrag
+       steht nur das ZEICHEN (kiTreffer), und im Verlauf war damit zu sehen,
+       DASS ein Punkt wackelte, aber nie warum (Jennifer, 15.08.2026: "es wird
+       auch nicht alles gespeichert zur wiederansicht, zb begruendung ki").
+       NICHT gefiltert: der Index ist die Zuordnung zum Stichpunkt, eine
+       ausgelassene Zeile wuerde alle folgenden verschieben. */
+    var texte = (Array.isArray(vorschlag) ? vorschlag : []).map(function (v) {
+      return { g: trefferWert(v) || "nein",
+        k: v && typeof v.kommentar === "string" ? v.kommentar.slice(0, 200) : "" };
+    });
+    kiBegruendungen = texte.some(function (t) { return t.k; }) ? texte : null;
     var werte = (Array.isArray(vorschlag) ? vorschlag : [])
       .map(trefferWert)
       .filter(function (w) { return w === "ja" || w === "teilweise" || w === "nein" || w === "egal"; });

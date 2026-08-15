@@ -426,7 +426,7 @@ function fqEine(m) {
     id: id, aid: aid,
     qid: m.qid == null ? null : String(m.qid),
     sid: m.sid == null ? null : String(m.sid),
-    art: m.art === "feedback" ? "feedback" : m.art === "marker" ? "marker" : "frage",
+    art: FQ_ARTEN[m.art] ? m.art : "frage",
     // Alles, was nicht ausdruecklich Rose ist, ist die KI. So kann eine Zeile
     // nie wegen eines unbekannten Rollennamens verschwinden.
     role: m.role === "user" ? "user" : "assistant",
@@ -510,6 +510,13 @@ export function frageChatAid(qid, sidJetzt) {
    chatNotiere: ein Gespraech ist der Ort, an dem man das andere Geraet
    unmittelbar erwartet. Ohne aid wird nichts gespeichert (eine Zeile, die an
    keiner Antwort haengt, findet nie wieder jemand). */
+/* Die erlaubten Arten. Alles andere wird zur "frage" - so kann eine unbekannte
+   Art nie als Gespraechszeile im Chat-Sheet auftauchen, ohne dass es jemand
+   merkt. "treffer" traegt seit dem 15.08. die BEGRUENDUNGEN je Stichpunkt
+   (JSON [{g,k}]); die blossen Zeichen stehen weiter als kiTreffer am
+   Log-Eintrag, der Text dazu passte dort nie hinein. */
+var FQ_ARTEN = { frage: true, feedback: true, marker: true, treffer: true };
+
 export function frageChatSagen(zeile) {
   var z = zeile || {};
   if (!z.aid) return null;
