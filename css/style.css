@@ -1648,3 +1648,10 @@ p { margin: 0 0 var(--sp-3); }
 .anno-zeile.anno-circle .anno-nr-gross { color: var(--bad); }
 .anno-zeile.anno-note .anno-nr-gross { color: var(--warn-ink); }
 .anno-text { color: var(--ink-soft); }
+
+/* Eine Tageskachel ohne Ziel (main.js: "Sechs wiederholen", wenn der Stapel
+   leer ist). Sie bleibt sichtbar und abgehakt stehen, ist aber kein Knopf -
+   also auch keine Hand und kein Druck-Effekt. Die Regel steht hier und NICHT in
+   geteilt.css: den Zustand gibt es nur im GE-Trainer. */
+.daily-kachel.nur-anzeige { cursor: default; }
+.daily-kachel.nur-anzeige:active { transform: none; }

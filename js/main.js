@@ -1668,14 +1668,23 @@ function zeigeRunde(r) {
    Erledigt ist ein Haken und kein gruener Punkt: die zwei Zustaende sollen sich
    nicht nur in der Farbe unterscheiden. */
 function dailyKachel(a) {
-  var k = el("div", "daily-kachel " + (a.erledigt ? "fertig" : "offen"));
-  k.setAttribute("role", "button");
-  k.setAttribute("tabindex", "0");
+  /* Ohne geh ist die Kachel nur Anzeige - der Fall "Sechs wiederholen, aber der
+     Stapel ist leer" (tagesAufgaben). Dann traegt sie auch keine Knopf-Rolle:
+     ein Knopf, bei dem nichts passiert, ist schlechter als kein Knopf. */
+  var tippbar = typeof a.geh === "function";
+  var k = el("div", "daily-kachel " + (a.erledigt ? "fertig" : "offen") + (tippbar ? "" : " nur-anzeige"));
+  if (tippbar) {
+    k.setAttribute("role", "button");
+    k.setAttribute("tabindex", "0");
+  }
   // titel statt kurz: der Wiederholen-Eintrag traegt seine Anzahl im Titel
   // ("8 Fragen zum Wiederholen"), und auf der Kachel steht nur das kurze Wort.
   // Ohne diese Zeile ginge die Zahl verloren.
-  k.title = a.titel + " · " + a.klein + (a.erledigt ? " · heute schon geübt" : " · heute noch offen");
-  k.setAttribute("aria-label", a.titel + (a.erledigt ? " — heute schon geübt" : " — heute noch offen"));
+  // Bei der reinen Anzeige waere "heute schon geuebt" gelogen - dort ist einfach
+  // nichts offen. Der Zustand steht ohnehin schon in a.klein.
+  var stand = !tippbar ? "nichts offen" : a.erledigt ? "heute schon geübt" : "heute noch offen";
+  k.title = a.titel + " · " + a.klein + " · " + stand;
+  k.setAttribute("aria-label", a.titel + " — " + stand);
 
   var ikon = el("span", "d-icon", a.icon);
   ikon.setAttribute("aria-hidden", "true");
@@ -1691,11 +1700,13 @@ function dailyKachel(a) {
   licht.setAttribute("aria-hidden", "true");
   k.appendChild(licht);
 
-  var geh = function () { a.geh(); };
-  k.addEventListener("click", geh);
-  k.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); geh(); }
-  });
+  if (tippbar) {
+    var geh = function () { a.geh(); };
+    k.addEventListener("click", geh);
+    k.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); geh(); }
+    });
+  }
   return k;
 }
 
@@ -1739,13 +1750,28 @@ function tagesAufgaben() {
      Der ganze Stapel steht nur dann als zweite Zeile da, wenn er groesser ist
      als die Sechserrunde. Sonst waeren es zwei Zeilen fuer dieselbe Handlung. */
   var w = Stats.wiederholPool(themen).length;
-  if (w) {
+  /* DIE ZEILE BLEIBT STEHEN, AUCH WENN DER STAPEL LEER IST (Jennifer,
+     15.08.2026: "wdh ist jetzt weg, sollte als erledigt da stehen bleiben").
+
+     Bis dahin hing sie an "if (w)": wer alles abgearbeitet hatte, bei dem
+     verschwand die Tagesaufgabe kommentarlos - und das liest sich wie ein
+     Fehler, nicht wie ein Erfolg. Ein leerer Stapel IST der erledigte Zustand:
+     es gibt nichts zu wiederholen. Sie steht also weiter da, abgehakt.
+
+     Angetippt fuehrt sie dann nirgendwohin (zeigeWiederhol6 schickt bei leerem
+     Pool zurueck auf die Startseite) - deshalb sagt sie es lieber selbst. */
+  var sechsHeute = Stats.wiederhol6Heute();
+  {
     var sechs = Math.min(Stats.WDH6, w);
     liste.push({
       key: "wdh6", icon: "🔂", titel: "Sechs zum Wiederholen",
       kurz: "Sechs wiederholen",
-      klein: sechs + (sechs === 1 ? " Frage" : " Fragen") + " aus deinem Stapel · feste Runde",
-      erledigt: Stats.wiederhol6Heute(), geh: function () { zeige("wdh6"); }
+      klein: w
+        ? sechs + (sechs === 1 ? " Frage" : " Fragen") + " aus deinem Stapel · feste Runde"
+        : "Dein Stapel ist gerade leer – nichts liegt an",
+      erledigt: sechsHeute || !w,
+      // Leerer Stapel: nur Anzeige, kein Sprung ins Nichts (daily-Kachel oben).
+      geh: w ? function () { zeige("wdh6"); } : null
     });
     if (w > Stats.WDH6) {
       liste.push({
@@ -2827,7 +2853,13 @@ function freiKarte(thema, f, opts) {
     bild.alt = "Dein handschriftlicher Entwurf";
     handPlatz.appendChild(bild);
     var zeile = el("div", "zeile");
-    zeile.appendChild(el("span", null, "Dein Entwurf mit der Hand – er bleibt liegen, auch wenn du weiterblätterst."));
+    /* Der Satz sagte bis zum 15.08. "er bleibt liegen, auch wenn du
+       weiterblaetterst" - das stimmt seit dem Entwurf-Reset von heute frueh
+       nicht mehr und stimmte in einer Runde noch nie: dort geht es eine Aufgabe
+       nach der anderen und nie zurueck (Jennifer: "das ergibt keinen Sinn").
+       Was zaehlt, ist ohnehin etwas anderes: das Bild bleibt AN DIESER Aufgabe,
+       waehrend sie daran arbeitet. */
+    zeile.appendChild(el("span", null, "Dein Blatt mit der Hand – es bleibt hier, solange du an dieser Aufgabe bist."));
     var weg = el("button", null, "entfernen");
     weg.type = "button";
     weg.addEventListener("click", function () {
@@ -2887,20 +2919,38 @@ function freiKarte(thema, f, opts) {
     bildZeigen(bilder.jpeg);
 
     if (!Llm.aktiv()) return;
+    // Ab hier wartet der Fertig-Knopf (wennHandFertig): was jetzt entsteht,
+    // gehoert zu ihrer Antwort und muss vor der Korrektur im Feld stehen.
+    handLaeuft = true;
     sagen("Die KI liest deine Handschrift …");
     Promise.resolve()
       // Der Fragetext hilft dem Modell beim Lesen der Handschrift (Signatur llm.js).
       .then(function () { return Llm.transkribiere(bilder.png, f.frage); })
       .catch(function () { return null; })
       .then(function (text) {
-        if (!text) return void sagen("Die Handschrift konnte gerade nicht gelesen werden – dein Bild bleibt hier liegen.");
+        /* Ein einzelnes Zeichen ist kein Transkript, sondern ein Lesefehler -
+           genau die "\", ":" und ".", die am 15.08. in Roses Antworten
+           standen. Es als ihren Text zu uebernehmen waere schlimmer als
+           ehrlich zu sagen, dass es nicht ging. */
+        var roh = text ? String(text).trim() : "";
+        if (roh.length < 2) {
+          handLaeuft = false;
+          return void sagen("Die Handschrift konnte gerade nicht gelesen werden – dein Bild bleibt hier liegen. Du kannst sie auch abtippen.");
+        }
         sagen("");
-        Klausur.transkriptPruefen(String(text), {
+        Klausur.transkriptPruefen(roh, {
           hinweis: "Ändere frei, was danebenlag. Erst wenn du bestätigst, steht es im Feld.",
           beiOk: function (wert) {
             eingabe.value = (eingabe.value ? eingabe.value + "\n" : "") + wert;
             // Bestaetigt heisst fest: ab hier ist das die Fassung, die zaehlt.
             einfrieren();
+            handLaeuft = false;
+            /* Kam das Transkript erst NACH dem Fertig-Knopf, hat die KI den
+               halben Text gesehen (oder gar keinen). Dann liest sie noch
+               einmal - mit dem, was jetzt wirklich dasteht. Das kostet einen
+               zweiten Aufruf und ist es wert: das erste Urteil galt einem
+               Punkt. */
+            if (loesungOffen) { kiGelaufen = false; kiPruefen(); }
           }
         });
       });
@@ -2952,11 +3002,54 @@ function freiKarte(thema, f, opts) {
 
   var kiBox = null;
   var kiGelaufen = false;
+  var loesungOffen = false;     // "Fertig - vergleichen" wurde schon gedrueckt
+
+  /* Kuerzester Text, den die KI ueberhaupt beurteilen soll.
+
+     WARUM ES DIESE ZAHL BRAUCHT (Rose ueber Jennifer, 15.08.2026: "es entsteht
+     keine antwort ... das stimmte aber nicht, es haette definitiv eine
+     [gegeben]"): am 15.08. gingen drei Aufgaben hintereinander mit einem
+     einzigen Zeichen in die Korrektur - "\", ":" und ".". Die KI tat das
+     einzig Moegliche und schrieb "Auf dem Blatt steht noch nichts". Fuer Rose
+     las sich das wie ein Urteil ueber eine Antwort, an der sie lange gesessen
+     hatte - denn ihr Text kam Sekunden spaeter, aus dem Transkript.
+
+     Ein Zeichen ist keine Antwort, und die KI danach zu fragen kostet nur
+     Budget und Zuversicht. Kein Urteil ist hier besser als ein falsches. */
+  var MIN_TEXT = 10;
+
+  /* Wartet, solange die Handschrift noch gelesen oder noch nicht bestaetigt ist.
+
+     DAS IST DIE URSACHE des Falls oben: die Transkription laeuft asynchron und
+     endet in einem Bestaetigungs-Dialog ("So habe ich das gelesen"). Erst sein
+     "Passt so" schreibt den Text ins Feld. Wer in der Zwischenzeit auf
+     "Fertig - vergleichen" tippt, schickt der KI ein leeres Feld - und weil
+     kiGelaufen danach true ist, bekam sie den echten Text nie zu sehen.
+
+     Gewartet wird hoechstens 90 Sekunden. Haengen darf hier nichts: bricht Rose
+     den Dialog ab oder faellt die Transkription still aus, geht es eben ohne
+     weiter. */
+  var handLaeuft = false;
+  function wennHandFertig(dann) {
+    if (!handLaeuft) return dann();
+    sagen("Ich lese noch deine Handschrift – gleich vergleichen wir.");
+    var seit = Date.now();
+    var uhr2 = setInterval(function () {
+      if (handLaeuft && Date.now() - seit < 90000) return;
+      clearInterval(uhr2);
+      dann();
+    }, 400);
+  }
 
   function kiPruefen() {
     if (kiGelaufen || !Llm.aktiv()) return;
     var antwort = (eingabe.value || "").trim();
     if (!antwort) return;                    // nichts geschrieben, nichts zu lesen
+    /* Zu kurz zum Bewerten - und kiGelaufen bleibt bewusst false: kommt gleich
+       noch ein Transkript, liest die KI dann den richtigen Text. */
+    if (antwort.length < MIN_TEXT) {
+      return void sagen("Hier steht noch fast nichts – schreib erst, dann schauen wir gemeinsam drauf.");
+    }
     kiGelaufen = true;
     sagen("Die KI liest mit …");
     Promise.resolve()
@@ -3128,8 +3221,10 @@ function freiKarte(thema, f, opts) {
     if (chat) box.appendChild(chat);
 
     karte.insertBefore(box, check);
-    // Und jetzt die KI - sie muss nicht bestellt werden.
-    kiPruefen();
+    loesungOffen = true;
+    // Und jetzt die KI - sie muss nicht bestellt werden. Aber erst, wenn die
+    // Handschrift im Feld steht: sonst beurteilt sie ein leeres Blatt.
+    wennHandFertig(kiPruefen);
   });
 
   /* Der Selbstcheck ganz unten, IMMER. Er ist die Bedingung fuers Weiterkommen
