@@ -2280,12 +2280,20 @@ function letzteAntwortTs(qid) {
      Entwurf AELTER als die letzte Antwort  -> sie hat danach abgegeben, der
                                                Text gehoert zum alten Durchgang.
      Entwurf JUENGER (oder gar keine Antwort) -> angefangene Arbeit von jetzt,
-                                               die bleibt liegen. */
+                                               die bleibt liegen.
+
+   Die paar Sekunden Nachlauf sind noetig, weil Getipptes gebuendelt geschrieben
+   wird (entwurfTextBald, 700 ms): tippt Rose den letzten Satz und tippt sofort
+   auf ihre Einschaetzung, faellt der Entwurf-Zeitstempel HINTER den der Antwort,
+   obwohl beides zum selben Durchgang gehoert. Ohne den Nachlauf stuende genau
+   dieser Text beim naechsten Wiederholen wieder da. */
+var ENTWURF_NACHLAUF_MS = 5000;
+
 function entwurfAusAltemDurchgangWeg(id) {
   var e = state.freiEntwurf[id];
   if (!e) return;
   var letzte = letzteAntwortTs(id);
-  if (!letzte || (e.ts || 0) > letzte) return;
+  if (!letzte || (e.ts || 0) > letzte + ENTWURF_NACHLAUF_MS) return;
   entwurfWeg(id);
 }
 
