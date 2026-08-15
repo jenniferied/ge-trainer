@@ -16,9 +16,12 @@
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
   starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, erklaerAbfrage } from "./ui.js";
-import { syncSession } from "./sync.js";
+import { syncSession, frageChatSagen } from "./sync.js";
 // Beleg-Chips: aus "Folie 29" im Text wird ein Sprung in den Folien-Viewer.
 import * as Beleg from "./beleg.js";
+// Der Rotstift der KI auf Roses Blatt. Geteilt mit dem Frei-ueben-Pfad in
+// main.js - deshalb ein eigenes Modul und kein Rueckimport (ARCHITEKTUR.md).
+import * as Marken from "./marken.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
 // das Modul nie ausgewertet und der KI-Pfad waere still tot (kein Import-Zyklus,
 // llm.js haengt nur an config.js).
@@ -284,6 +287,10 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
         punkte: null,         // null = noch nicht bewertet (zaehlt NICHT als 0)
         punkteKi: null,
         kiNotiz: null,
+        // Die markierten Stellen der KI, Kurzform aus marken.js. Wie kiNotiz am
+        // BOGEN und nicht im Lernstand: der Bogen ueberlebt einen Neustart, und
+        // beim Abschliessen wandern beide an die aid der Antwort (logAufgaben).
+        kiMarken: null,
         geloggt: false,
         blaetter: [bid]
       });
@@ -1370,11 +1377,23 @@ function korrekturBlatt(a) {
   if (f) druck.appendChild(el("p", "aufgabentext", f.frage));
   b.appendChild(druck);
 
+  /* Ihr Text - und darauf der Rotstift der KI, wenn eine Korrektur gelaufen ist.
+     marken.js baut dasselbe Element, das hier vorher stand (.kl-text mit ihrem
+     Text), nur mit <mark> um die zitierten Stellen. Ohne Marken ist der Knoten
+     Zeichen fuer Zeichen derselbe wie vorher, die Lineatur-Rechnung in
+     papier.css bleibt also unberuehrt. */
   var text = antwortText(a);
-  var tx = el("div", "kl-text");
-  if (text) tx.textContent = text;
-  else tx.appendChild(el("span", "leer", "Hier ist nichts angekommen - das passiert, wenn die Zeit knapp wird."));
+  var tx = text
+    ? Marken.blatt(text, a.kiMarken, "kl-text")
+    : el("div", "kl-text");
+  if (!text) tx.appendChild(el("span", "leer", "Hier ist nichts angekommen - das passiert, wenn die Zeit knapp wird."));
   b.appendChild(tx);
+  // Die Saetze zu den Ziffern, direkt unter dem Blatt-Text: auf dem Handy gibt
+  // es kein Hover, die Zahl muss ihren Satz in Reichweite haben.
+  if (text && a.kiMarken) {
+    var randMarken = Marken.randliste(text, a.kiMarken, a.thema, "kl-anno-liste");
+    if (randMarken) b.appendChild(randMarken);
+  }
 
   a.blaetter.forEach(function (id) {
     var bl = k.blaetter[id];
@@ -1536,6 +1555,14 @@ function kiUebernehmen(a, erg) {
   if (erg.gesamtkommentar) notizen.push(erg.gesamtkommentar);
   else if (erg.kommentar) notizen.push(erg.kommentar);
   if (notizen.length) a.kiNotiz = notizen.join(" ");
+
+  /* Die markierten Stellen. Ueberschrieben wird nur, wenn die neue Korrektur
+     welche mitbringt - fragt Rose die KI ein zweites Mal und die liefert diesmal
+     keine Annotationen, bleibt der Rotstift von vorhin am Blatt stehen statt
+     kommentarlos zu verschwinden. Dieselbe Linie wie bei kiNotiz eine Zeile
+     drueber. */
+  var m = Marken.kurz(erg.annotationen);
+  if (m.length) a.kiMarken = m;
 }
 
 function summeAktualisieren() {
@@ -1677,7 +1704,38 @@ function logAufgaben(k) {
     };
     if (sp.text) e.text = sp.text;
     if (sp.quelle) e.quelle = sp.quelle;
-    logAntwort(e);
+    var eintrag = logAntwort(e);
+
+    /* Und jetzt, was die KI zu genau DIESER Aufgabe gesagt hat: der Kommentar
+       und die markierten Stellen, als frageChat-Zeilen an der aid des Eintrags
+       (Jennifer, 15.08.2026: "alles soll gespeichert werden fuer das Reviewen
+       der Aufgabe").
+
+       WARUM NICHT AN DEN LOG-EINTRAG: die eiserne Regel in core.js erlaubt nur
+       Felder, die zum Log-Zeitpunkt feststehen - das taeten beide zwar - aber
+       der Kommentar der Klausur wiegt 1 bis 2 kB je Aufgabe, und der Lernstand
+       faehrt bei JEDEM Sync komplett hoch UND runter. Genau deshalb steht im
+       Eintrag oben nur punkteKi und nicht der Text. Der frageChat-Speicher
+       loest das: er hat Deckel (FQ_TEXT_MAX, FQ_PRO_FRAGE, FQ_MAX), sein Merge
+       vereinigt statt zu ersetzen, und die Grabsteine der Antwort und der
+       Sitzung nehmen ihn beide mit (sync.js mergeIn).
+
+       ERST HIER UND NICHT BEIM KORRIGIEREN: waehrend der Klausur laeuft, gehoert
+       die Korrektur dem Bogen. Der wird beim Abschliessen geleert - und bis
+       zum 15.08. war damit im Verlauf von der Klausur-Korrektur gar nichts mehr
+       zu sehen. Jetzt zieht sie beim Abschliessen an die Antwort um, und der
+       naechste Bogen faengt trotzdem leer an: eine neue Klausur schreibt neue
+       aids. */
+    if (eintrag && eintrag.aid) {
+      if (a.kiNotiz) {
+        frageChatSagen({ aid: eintrag.aid, sid: k.id, qid: a.qid,
+          art: "feedback", role: "assistant", content: a.kiNotiz });
+      }
+      if (a.kiMarken && a.kiMarken.length) {
+        frageChatSagen({ aid: eintrag.aid, sid: k.id, qid: a.qid,
+          art: "marker", role: "assistant", content: JSON.stringify(a.kiMarken) });
+      }
+    }
   });
   return n;
 }

@@ -16,6 +16,10 @@
   --rotstift: #c0392b;
   --rotstift-2: rgba(192, 57, 43, .18);
   --gruenstift: #3d7a52;
+  /* Textmarker fuer die Hinweis-Stellen der KI (marken.js, .anno-note). Als
+     halbtransparentes Gelb, damit Lineatur und Handschrift durchscheinen -
+     ein deckender Marker sieht auf Tonpapier aus wie ein Loch. */
+  --textmarker: rgba(196, 158, 46, .30);
   --bleistift: #46403a;          /* Roses Handschrift */
   --blatt-schatten: 0 1px 2px rgba(5,0,20,.5), 0 10px 28px -12px rgba(5,0,20,.7);
   --lin-hoehe: 28px;             /* die EINE Zahl: line-height (px!) UND Gradient-Periode */
@@ -31,6 +35,7 @@
   --rotstift: #b3362b;
   --rotstift-2: rgba(179, 54, 43, .14);
   --gruenstift: #2e7d4f;
+  --textmarker: rgba(214, 176, 50, .38);
   --bleistift: #2c2a35;
   --blatt-schatten: 0 1px 2px rgba(60,50,30,.08), 0 10px 28px -14px rgba(60,50,30,.35);
 }
@@ -810,37 +815,84 @@
 }
 
 /* ---------- Der Rotstift der KI auf Roses Blatt (15.08.2026) ----------
-   Die Korrektur zitiert Stellen aus ihrer Antwort (main.js markiertesBlatt).
-   Drei Sorten, wie sie aus der Function kommen:
+   Die Korrektur zitiert Stellen aus ihrer Antwort (marken.js). Drei Sorten, wie
+   sie aus der Function kommen:
      underline  gut oder wichtig   -> gruen unterstrichen
      circle     inhaltlich falsch  -> rot, wellig, wie durchgesehen
      note       Hinweis            -> zart hinterlegt
 
-   KEIN deckender Hintergrund ausser bei note: das Blatt traegt eine Lineatur
-   als background-image, und eine volle Flaeche schnitte sie mitten im Satz
-   durch. Unterstreichungen liegen darueber, ohne das Papier zu loeschen.
+   KEIN deckender Hintergrund ausser bei note: beide Blaetter tragen ihre
+   Lineatur als background-image, und eine volle Flaeche schnitte sie mitten im
+   Satz durch. Unterstreichungen liegen darueber, ohne das Papier zu loeschen.
+
+   ZWEI BLAETTER, DREI FARBEN, EIN REGELSATZ. Die Stellen sehen ueberall gleich
+   aus, aber die Stifte sind andere: im Frei ueben und im Verlauf liegt das
+   Blatt in der App (--ok/--bad/--warn-ink der Farbleiter), im Klausurbogen auf
+   Papier - und da schreiben die Blatt-Stifte, die sich mit "Helles Blatt"
+   mitdrehen und nichts mit dem App-Theme zu tun haben. Deshalb stehen die
+   Farben als --anno-* am Container und die Regeln darunter nur einmal.
 
    Die Ziffer haengt IM mark und traegt line-height 0 - ohne das schoebe ein
-   <sup> die Zeile auseinander, und die Grundlinien-Rechnung weiter oben waere
-   fuer diese eine Zeile hin. */
-.frei-blatt-text .anno {
+   <sup> die Zeile auseinander, und die gemessene Grundlinien-Rechnung weiter
+   oben (--lin-versatz) waere fuer diese eine Zeile hin. Aus demselben Grund
+   setzt hier nichts font-size oder line-height am Blatt selbst. */
+.frei-blatt-text, .kl-text {
+  --anno-gut: var(--ok);
+  --anno-fehler: var(--bad);
+  --anno-hinweis: color-mix(in srgb, var(--warn-ink) 22%, transparent);
+  --anno-hinweis-ink: var(--warn-ink);
+}
+.kl-text {
+  --anno-gut: var(--gruenstift);
+  --anno-fehler: var(--rotstift);
+  --anno-hinweis: var(--textmarker);
+  /* Die Ziffer am Marker nimmt hier die Blatt-Tinte statt eines dritten Stifts:
+     ein gelbes Zeichen auf gelber Flaeche liest sich nicht, und auf dem Bogen
+     gibt es fuer den Hinweis-Typ keinen eigenen Stift - er IST der Marker. */
+  --anno-hinweis-ink: var(--blatt-ink-2);
+}
+
+.frei-blatt-text .anno, .kl-text .anno {
   background: none; color: inherit;
   text-decoration-thickness: 2px; text-underline-offset: 3px;
 }
-.frei-blatt-text .anno-underline { text-decoration: underline; text-decoration-color: var(--ok); }
-.frei-blatt-text .anno-circle {
-  text-decoration: underline wavy; text-decoration-color: var(--bad);
+.frei-blatt-text .anno-underline, .kl-text .anno-underline {
+  text-decoration: underline; text-decoration-color: var(--anno-gut);
+}
+.frei-blatt-text .anno-circle, .kl-text .anno-circle {
+  text-decoration: underline wavy; text-decoration-color: var(--anno-fehler);
   text-decoration-thickness: 1.5px;
 }
-.frei-blatt-text .anno-note {
-  background: color-mix(in srgb, var(--warn-ink) 22%, transparent);
+.frei-blatt-text .anno-note, .kl-text .anno-note {
+  background: var(--anno-hinweis);
   border-radius: 3px;
 }
-.frei-blatt-text .anno-nr {
+.frei-blatt-text .anno-nr, .kl-text .anno-nr {
   font-family: "Karla", system-ui, sans-serif;
   font-size: .55em; font-weight: 700; line-height: 0;
   vertical-align: super; margin-left: 2px;
 }
-.frei-blatt-text .anno-underline .anno-nr { color: var(--ok); }
-.frei-blatt-text .anno-circle .anno-nr { color: var(--bad); }
-.frei-blatt-text .anno-note .anno-nr { color: var(--warn-ink); }
+.frei-blatt-text .anno-underline .anno-nr, .kl-text .anno-underline .anno-nr { color: var(--anno-gut); }
+.frei-blatt-text .anno-circle .anno-nr, .kl-text .anno-circle .anno-nr { color: var(--anno-fehler); }
+.frei-blatt-text .anno-note .anno-nr, .kl-text .anno-note .anno-nr { color: var(--anno-hinweis-ink); }
+
+/* Die Randliste auf dem Klausurbogen. Grundgeruest steht in style.css; hier
+   wird sie zur Randnotiz: dieselbe Schrift und derselbe rote Randstrich wie
+   .kl-randnotiz darueber, damit auf dem Blatt nicht zwei verschiedene
+   Korrektur-Handschriften nebeneinander stehen. Die Saetze sind Modelltext,
+   aber KEINE Pixelschrift wie .kl-randnotiz.ki-live - dort steht ein Absatz
+   Fliesstext, hier haengen kurze Saetze an Ziffern, und VT323 in dieser Groesse
+   waere neben der Ziffernspalte nur unruhig. */
+.kl-anno-liste {
+  margin-top: 10px;
+  border-left: 2px solid var(--rotstift); padding-left: 8px;
+}
+.kl-anno-liste .anno-zeile { padding: 2px 0; }
+.kl-anno-liste .anno-text {
+  font-family: "Caveat", cursive; font-size: 1.1rem; line-height: 1.3;
+  color: var(--blatt-ink);
+}
+.kl-anno-liste .anno-nr-gross { color: var(--blatt-ink-2); }
+.kl-anno-liste .anno-zeile.anno-underline .anno-nr-gross { color: var(--gruenstift); }
+.kl-anno-liste .anno-zeile.anno-circle .anno-nr-gross { color: var(--rotstift); }
+.kl-anno-liste .anno-zeile.anno-note .anno-nr-gross { color: var(--blatt-ink-2); }
