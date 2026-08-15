@@ -1368,7 +1368,9 @@ function antwortZettel(a) {
 }
 
 /* Die Treffer je Stichpunkt als Zeichenreihe. Zwei Quellen, ein Bauteil:
-     a.kiTreffer   (frei)     Strings "ja"|"teilweise"|"nein" - was die KI sah
+     a.kiTreffer   (frei)     Strings "ja"|"teilweise"|"nein"|"egal" - was die KI
+                             sah; "egal" heisst: dieser Stichpunkt war fuer die
+                             Aufgabe gar nicht verlangt (siehe trefferWert)
      a.bewertung   (klausur)  Zahlen 1|0.5|0 - was ROSE angeklickt hat
    Die Reihenfolge ist die der Stichpunkte. Sie werden bewusst NICHT namentlich
    danebengeschrieben: kiTreffer wird beim Loggen gefiltert (main.js, selbstCheck)
@@ -1390,6 +1392,9 @@ var BEWERTUNG_ZEICHEN = function (w) {
   return w >= 1 ? { z: "✓", k: "gut" } : w > 0 ? { z: "~", k: "mittel" } : { z: "✗", k: "offen" };
 };
 var KITREFFER_ZEICHEN = function (w) {
+  // "egal" = ein Stichpunkt, den die Aufgabe gar nicht verlangt hat (siehe
+  // trefferWert). Der bekommt einen Strich und kein Kreuz - er war nie offen.
+  if (w === "egal") return { z: "–", k: "egal" };
   return w === "ja" ? { z: "✓", k: "gut" } : w === "teilweise" ? { z: "~", k: "mittel" } : { z: "✗", k: "offen" };
 };
 
@@ -2449,8 +2454,8 @@ function selbstCheck(thema, f, dazu, frisch) {
      angehaengt; das ist die Regel, nicht die Panne (core.js). */
   check.kiUrteilMerken = function (vorschlag, text) {
     var werte = (Array.isArray(vorschlag) ? vorschlag : [])
-      .map(function (v) { return v && v.getroffen; })
-      .filter(function (w) { return w === "ja" || w === "teilweise" || w === "nein"; });
+      .map(trefferWert)
+      .filter(function (w) { return w === "ja" || w === "teilweise" || w === "nein" || w === "egal"; });
     kiTreffer = werte.length ? werte : null;
     var t = typeof text === "string" ? text.trim() : "";
     kiText = t || null;
@@ -2463,6 +2468,24 @@ function selbstCheck(thema, f, dazu, frisch) {
 // wenn gar nichts Brauchbares kam. Dann bleibt der Check einfach unberuehrt.
 var GETROFFEN_WERT = { ja: 1, teilweise: 0.5, nein: 0 };
 
+/* Wie ein einzelner Stichpunkt dasteht - mit einem vierten Zustand, den das
+   Schema der Function nicht hat (Jennifer, 15.08.2026: "wirklich, der ganze
+   Satz ist dann fuer ihn falsch").
+
+   Bei "Nennen Sie fuenf ..." ist die Stichpunktliste ein VORRAT und keine
+   Checkliste: der Korpus haelt zu solchen Aufgaben mehr Punkte bereit, als
+   verlangt sind, oft samt einer Sammelzeile "Weitere: ...". Nennt Rose fuenf
+   gueltige, ist die Aufgabe voll erfuellt - die uebrigen Zeilen sind dann kein
+   Versaeumnis. Die Function markiert genau die mit maxPunkte 0 (so steht es in
+   ihrem Prompt); hier wird daraus "egal", damit in der Liste ein Strich steht
+   und kein rotes Kreuz. Ein ✗ neben etwas, das nie gefordert war, liest sich
+   als Fehler - und drueckt ausserdem die abgeleitete Selbsteinschaetzung. */
+function trefferWert(v) {
+  if (!v) return null;
+  if (v.maxPunkte === 0) return "egal";
+  return v.getroffen;
+}
+
 function kiEinschaetzung(erg) {
   var quote = null;
   if (typeof erg.punkteGesamt === "number" && typeof erg.punkteMax === "number" && erg.punkteMax > 0) {
@@ -2470,7 +2493,7 @@ function kiEinschaetzung(erg) {
   } else if (Array.isArray(erg.punkteVorschlag) && erg.punkteVorschlag.length) {
     var summe = 0, n = 0;
     erg.punkteVorschlag.forEach(function (v) {
-      var w = v && GETROFFEN_WERT[v.getroffen];
+      var w = GETROFFEN_WERT[trefferWert(v)];
       if (w !== undefined) { summe += w; n++; }
     });
     if (n) quote = summe / n;
@@ -2479,7 +2502,7 @@ function kiEinschaetzung(erg) {
   return quote >= 0.8 ? "gut" : quote >= 0.5 ? "mittel" : "nochmal";
 }
 
-var GETROFFEN_ZEICHEN = { ja: "✓", teilweise: "~", nein: "✗" };
+var GETROFFEN_ZEICHEN = { ja: "✓", teilweise: "~", nein: "✗", egal: "–" };
 
 /* ---------- Roses Stand als Kontext fuer die Korrektur (seit 14.08.2026) ----------
 
@@ -2853,8 +2876,9 @@ function freiKarte(thema, f, opts) {
       var ul = el("ul", "ki-treffer");
       vorschlag.forEach(function (v) {
         if (!v) return;
-        var li = el("li", "treffer-" + (v.getroffen || "nein"));
-        li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[v.getroffen] || "–"));
+        var art = trefferWert(v) || "nein";
+        var li = el("li", "treffer-" + art);
+        li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[art] || "–"));
         li.appendChild(Beleg.belegZeile("span", v.stichpunkt || "", thema.id, "was"));
         if (v.kommentar) li.appendChild(Beleg.belegZeile("div", v.kommentar, thema.id, "dazu"));
         ul.appendChild(li);

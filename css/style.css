@@ -459,6 +459,10 @@ p { margin: 0 0 var(--sp-3); }
 .ki-treffer .treffer-ja .zeichen { color: var(--ok); }
 .ki-treffer .treffer-teilweise .zeichen { color: var(--warn-ink); }
 .ki-treffer .treffer-nein .zeichen { color: var(--bad); }
+/* "egal" = ein Stichpunkt, den die Aufgabe gar nicht verlangt hat (main.js
+   trefferWert). Blass und ohne Farbe: er ist keine Luecke, sondern Reserve. */
+.ki-treffer .treffer-egal { opacity: .6; }
+.ki-treffer .treffer-egal .zeichen { color: var(--ink-soft); }
 .ki-vorschlag {
   font-size: .88rem; color: var(--ink-soft);
   margin-bottom: var(--sp-2);
@@ -1080,6 +1084,8 @@ p { margin: 0 0 var(--sp-3); }
 .runde-treffer-zeichen.gut { background: var(--ok-bg); color: var(--ok); }
 .runde-treffer-zeichen.mittel { background: var(--warn-bg); color: var(--warn-ink); }
 .runde-treffer-zeichen.offen { background: color-mix(in srgb, var(--glimmer-1) 22%, var(--card)); color: var(--glimmer-1); }
+/* Nicht gefordert (main.js trefferWert) - blass, kein Signal. */
+.runde-treffer-zeichen.egal { background: transparent; color: var(--ink-soft); opacity: .6; }
 
 /* ---------- Die MC-Frage aufgeschluesselt ----------
    Man soll sehen, WOBEI es danebenlag, nicht nur DASS. Die richtige Option
