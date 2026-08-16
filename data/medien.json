@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "medien": [
+    {
+      "id": "wohnen-deck",
+      "thema": "wohnen",
+      "art": "deck",
+      "titel": "Wohnraum. Lebensraum. Freiraum.",
+      "untertitel": "Didaktik, Methodik und gesellschaftliche Realität im Bereich Wohnen",
+      "seiten": 15,
+      "pfad": "data/medien/deck/wohnen-"
+    },
+    {
+      "id": "wohnen-podcast",
+      "thema": "wohnen",
+      "art": "podcast",
+      "titel": "Vom Wohnheim zum selbstbestimmten Wohnen im SGE",
+      "untertitel": "Zwei Stimmen im Gespräch über Geschichte, Wohnformen und Selbstbestimmung",
+      "sekunden": 1353,
+      "datei": "data/medien/wohnen-podcast.m4a"
+    },
+    {
+      "id": "wohnen-video",
+      "thema": "wohnen",
+      "art": "video",
+      "titel": "Evolution des Wohnens",
+      "untertitel": "Vom Anstaltsschlafsaal 1971 zum eigenen Zuhause",
+      "sekunden": 396,
+      "datei": "data/medien/wohnen-video.mp4"
+    },
+    {
+      "id": "freizeit-podcast",
+      "thema": "freizeit",
+      "art": "podcast",
+      "titel": "Das Recht auf selbstbestimmtes Nichtstun",
+      "untertitel": "Warum Freizeit mehr ist als die Zeit zwischen zwei Terminen",
+      "sekunden": 1523,
+      "datei": "data/medien/freizeit-podcast.m4a"
+    },
+    {
+      "id": "freizeit-video",
+      "thema": "freizeit",
+      "art": "video",
+      "titel": "Bedeutung von Freizeit",
+      "untertitel": "Freizeit als Bildungsaufgabe im Förderschwerpunkt",
+      "sekunden": 544,
+      "datei": "data/medien/freizeit-video.mp4"
+    },
+    {
+      "id": "mobilitaet-deck",
+      "thema": "mobilitaet",
+      "art": "deck",
+      "titel": "Der Weg zur Teilhabe",
+      "untertitel": "Verkehrs- und Mobilitätserziehung im SGE (Stöppler)",
+      "seiten": 13,
+      "pfad": "data/medien/deck/mobilitaet-"
+    },
+    {
+      "id": "unterrichtsformen-deck",
+      "thema": "unterrichtsformen",
+      "art": "deck",
+      "titel": "Offener vs. Geschlossener Unterricht",
+      "untertitel": "Strukturen für selbstbestimmtes Lernen",
+      "seiten": 15,
+      "pfad": "data/medien/deck/unterrichtsformen-"
+    }
+  ]
+}

@@ -1519,10 +1519,26 @@ p { margin: 0 0 var(--sp-3); }
 .fv-btn:hover { border-color: var(--accent); color: var(--accent); }
 /* Dunkler Rahmen um das Blatt: die Folien sind weiss, ohne Kontrast schwaemmen
    sie im Nachtmodus in die Karte. */
-.folien-scroll { flex: 1; overflow: auto; background: #14111f; padding: 12px; -webkit-overflow-scrolling: touch; }
+/* align-content: safe center haengt an den erzeugten Foliensaetzen aus dem
+   Stoebern-Raum: die sind 16:9 und damit am Handy nur ein Drittel so hoch wie
+   der Viewer, klebten also oben und hatten eine Handflaeche Schwarz darunter.
+   "safe" ist das entscheidende Wort - bei einer hochkant-Vorlesungsfolie oder
+   bei Zoom ist das Bild HOEHER als der Kasten, und ein blankes center wuerde
+   den oberen Rand abschneiden, weil man nicht ins Negative scrollen kann.
+   Mit safe faellt die Zentrierung dann auf start zurueck. */
+.folien-scroll {
+  flex: 1; overflow: auto; background: #14111f; padding: 12px;
+  -webkit-overflow-scrolling: touch;
+  display: flex; flex-direction: column; align-content: safe center; justify-content: safe center;
+}
 .folien-img {
   display: block; width: 100%; margin: 0 auto; border-radius: 4px; background: #fff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, .35); max-width: none;
+  /* Muss sein, seit .folien-scroll ein Flex-Kasten ist: sonst staucht der
+     Flex-Algorithmus das Bild beim Hineinzoomen in der Hoehe zusammen, statt
+     scrollen zu lassen - das Bild wuerde beim + gleichzeitig breiter und
+     flacher. */
+  flex: none;
 }
 .folien-msg { color: #fff; text-align: center; padding: 24px 16px; font-weight: 600; }
 .folien-foot {
@@ -1655,3 +1671,56 @@ p { margin: 0 0 var(--sp-3); }
    geteilt.css: den Zustand gibt es nur im GE-Trainer. */
 .daily-kachel.nur-anzeige { cursor: default; }
 .daily-kachel.nur-anzeige:active { transform: none; }
+
+/* ---------- Stöbern-Raum (16.08.2026) ----------
+   Der Raum, in dem nichts abgefragt wird: Folien, Notizen, Podcasts, Videos,
+   erzeugte Foliensätze. Aufbau je Thema eine Karte, darin gleich hohe Zeilen.
+
+   Die Zeilen sind <button>, tragen aber bewusst KEINE Knopf-Optik: kein
+   Rahmen, kein Schatten, nur eine Trennlinie. Eine Karte mit fünf
+   vollwertigen Knöpfen darin sähe aus wie fünf Aufgaben, und genau den
+   Eindruck soll dieser Raum nicht machen. Der Druck-Effekt bleibt, damit sie
+   sich trotzdem anfassbar anfühlen. */
+.stb-karte { border-left: 5px solid var(--tfarbe); }
+.stb-zeile {
+  display: flex; align-items: center; gap: var(--sp-3);
+  width: 100%; text-align: left;
+  font: inherit; color: inherit; cursor: pointer;
+  background: none; border: 0;
+  border-top: 1px solid var(--line);
+  padding: var(--sp-3) 2px;
+  transition: transform .08s ease;
+}
+.stb-zeile:active { transform: scale(.99); }
+.stb-icon { font-size: 1.25rem; line-height: 1; flex: none; width: 1.6rem; text-align: center; }
+.stb-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stb-titel { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.stb-unter { font-size: .8rem; color: var(--ink-soft); line-height: 1.35; }
+
+/* Die "erzeugt"-Marke. Gestrichelt und in der leisen Schriftfarbe, nicht in
+   einer Themen- oder Signalfarbe: sie soll lesbar sein und trotzdem nach
+   weniger aussehen als das Vorlesungs-Badge daneben. Der Rang aus CLAUDE.md
+   (Folien schlagen Notizen schlagen Erzeugtes) ist damit auch optisch da. */
+.stb-marke {
+  font-size: .64rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px dashed currentColor; border-radius: 999px;
+  padding: 0 6px;
+}
+.stb-zeile.erzeugt .stb-icon { opacity: .75; }
+.stb-zeile.offen { background: color-mix(in srgb, var(--tfarbe) 8%, transparent); }
+
+.stb-leer {
+  border-top: 1px solid var(--line);
+  padding: var(--sp-3) 2px 0;
+  font-size: .82rem; color: var(--ink-soft);
+}
+
+/* Der aufgeklappte Player. Die native Bedienung bleibt stehen, wie sie ist -
+   Rose kennt sie vom Handy, und ein nachgebauter Balken kann kein
+   Sperrbildschirm-Widget. */
+.stb-player { padding: 0 2px var(--sp-3); }
+.stb-player audio, .stb-player video { width: 100%; display: block; border-radius: 10px; }
+.stb-player video { background: #000; }
+.stb-player-fuss { margin-top: 6px; font-size: .74rem; color: var(--ink-soft); line-height: 1.4; }
+.kachel-grid.stb-material { grid-template-columns: repeat(2, 1fr); }

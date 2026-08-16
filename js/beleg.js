@@ -157,6 +157,16 @@ export function folienSeite(thema, folie) {
   return s.basis + imSatz;
 }
 
+/* Was der Stoebern-Raum je Thema wissen muss: wo der Foliensatz anfaengt und
+   wie dick er ist. Bewusst hier und nicht dort - SATZ bleibt die eine Stelle,
+   an der die Seitenrechnung steht, und der Raum bekommt fertige Zahlen statt
+   der basis-Arithmetik. Unbekanntes Thema -> null, dann faellt die Zeile weg. */
+export function satzInfo(themaId) {
+  const s = SATZ[themaId];
+  if (!s) return null;
+  return { erste: s.basis + 1, seiten: s.seiten, vorlesung: s.vorlesung };
+}
+
 // Umgekehrter Weg: aus einer Bildnummer die Vorlesung ablesen. Der Viewer
 // blaettert ueber Satzgrenzen hinweg (262 Folien am Stueck) - ohne diese Zeile
 // liefe Rose aus Wohnen nach Freizeit, ohne es zu merken.
@@ -543,6 +553,30 @@ function oeffneBlatt(art, seite) {
 
 export function oeffneFolie(seite) { oeffneBlatt(ART.folie, seite); }
 export function oeffneNotiz(seite) { oeffneBlatt(ART.notiz, seite); }
+
+/* Dritte Art, seit dem 16.08.2026: die von NotebookLM erzeugten Slidedecks aus
+   dem Stoebern-Raum. Sie bekommen eine EIGENE Art und haengen sich nicht an
+   ART.folie an - dort steckt die durchlaufende 262er-Nummerierung samt BASIS-
+   Rechnung, und ein Deck zaehlt bei 1 los und hoert nach 13 oder 15 Seiten auf.
+   Die Art wird je Deck gebaut, weil Gesamtzahl und Pfad daran haengen; alles
+   andere (Zoom, Tasten, Ladefehler, Overlay-Aufraeumen) faellt geschenkt ab.
+
+   Die Beschriftung sagt in jeder Zeile "erzeugt". Das ist kein Zierrat: diese
+   Seiten sind Gemini-Paraphrasen der Vorlesung und stehen unter den Folien und
+   unter Roses Notizen. Wer beim Blaettern nicht mehr weiss, was er vor sich
+   hat, zitiert es am 10.09. als waere es die Vorlesung. */
+export function oeffneDeck(deck, seite) {
+  oeffneBlatt({
+    total: () => deck.seiten,
+    url: (s) => deck.pfad + String(s).padStart(2, "0") + ".jpg",
+    alt: "Seite aus dem erzeugten Foliensatz " + deck.titel,
+    vor: "Vorige Seite",
+    zurueck: "Naechste Seite",
+    einzeln: "Seite einzeln öffnen ↗",
+    blatt: (s, total) => `${deck.titel} · Seite ${s} von ${total} · mit ‹ › blätterst du weiter`,
+    titel: (s) => `Erzeugt · Seite ${s}`,
+  }, seite);
+}
 
 // Ein delegierter Klick-Handler fuer alle Beleg-Chips, egal wo sie stehen.
 document.addEventListener("click", (e) => {

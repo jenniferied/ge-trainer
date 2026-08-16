@@ -1,0 +1,263 @@
+/* GE-Trainer stoebern.js - der Raum ohne Abfrage (16.08.2026, Jennifers Wunsch).
+
+   Alles andere in dieser App will etwas von Rose: eine Antwort, ein Kreuz, eine
+   Selbsteinschaetzung. Hier will nichts etwas. Sie schaut sich Material an,
+   hoert einen Podcast beim Spazierengehen, blaettert durch ihre eigenen
+   Notizen - und nichts davon wird gezaehlt, bewertet oder in eine Statistik
+   geschrieben. Das ist der Punkt des Raums, nicht ein Nebeneffekt.
+
+   WAS HIER DRIN STEHT
+     - Roses Material: 262 Vorlesungsfolien und ihre 58 Notizenseiten. Beides
+       gab es schon, aber nur als Sprungziel eines Belegchips mitten in einer
+       Aufgabe - man kam nie hin, ohne vorher eine Frage aufzuschlagen.
+     - Die NotebookLM-Erzeugnisse aus data/medien.json: Slidedecks, Podcasts,
+       Videos. Gebaut von scripts/baue-medien.py.
+     - Je Thema der Weg zu den Fragen (die Themenansicht in main.js).
+
+   RANGFOLGE, UND WARUM SIE SICHTBAR IST. Die NotebookLM-Sachen sind Gemini-
+   Paraphrasen der Vorlesung. Sie stehen damit UNTER Roses Notizen und weit
+   unter den Original-Folien (CLAUDE.md: "Original-Folien schlagen Roses
+   Notizen"). Deshalb tragen sie ueberall ein sichtbares "erzeugt", stehen in
+   der Karte UNTER der Folienzeile, und der Deck-Viewer schreibt es in jede
+   Blattbeschriftung. Sie sind Wiederholung und Ohrwurm, nie Beleg - was Rose
+   am 10.09. hinschreibt, kommt aus den Folien.
+
+   KEIN TRANSKRIPT, KEIN FORTSCHRITT. Zwei bewusste Luecken:
+   - Die Podcasts haben keinen mitlaufenden Text. Ein durchsuchbares Transkript
+     waere ein Skript-Ersatz, und die Klausur ist closed book - dieselbe
+     Begruendung, aus der die Folien-Volltexte nicht nach app/ duerfen.
+   - Es wird NICHT gespeichert, was sie gehoert oder gesehen hat. Sobald das
+     hier einen Haken bekaeme, muessten snapshot() UND signatur() in sync.js
+     mit (steht so in CLAUDE.md), und aus dem Raum ohne Abfrage waere eine
+     weitere Liste mit offenen Punkten geworden. Wenn das Tagesspiel kommt,
+     ist das der richtige Moment dafuer - nicht jetzt.
+
+   Importiert core.js, ui.js und beleg.js; wird von main.js ueber den
+   Router-Fall "stoebern" gerufen. Aus main.js kommt hooks.home() und
+   hooks.thema(t). */
+
+import { app, el, leeren, mcStand, freiStand } from "./core.js";
+import { themeKnopf, setzeFarbe } from "./ui.js";
+import { TOTAL, NOTIZEN_TOTAL, satzInfo, oeffneFolie, oeffneNotiz, oeffneDeck } from "./beleg.js";
+
+// Einmal geladen, dann gehalten: der Raum wird beim Zurueckkommen neu gerendert,
+// die Datei aendert sich dabei nicht. null = noch nicht versucht.
+var medien = null;
+
+/* Fehlt data/medien.json, bleibt der Raum vollstaendig bedienbar und zeigt nur
+   die Folien, Notizen und Fragen - genau wie der Begriffe-Blitz verschwindet,
+   wenn begriffe.json fehlt. Ein halber Raum ist besser als eine Fehlermeldung. */
+function ladeMedien() {
+  if (medien) return Promise.resolve(medien);
+  return fetch("data/medien.json")
+    .then(function (r) { return r.ok ? r.json() : { medien: [] }; })
+    .catch(function () { return { medien: [] }; })
+    .then(function (d) { medien = d && d.medien ? d.medien : []; return medien; });
+}
+
+var ART_TEXT = {
+  deck: { icon: "🖼", wort: "Foliensatz" },
+  podcast: { icon: "🎧", wort: "Podcast" },
+  video: { icon: "🎬", wort: "Video" }
+};
+
+// 1353 -> "22 Min." Aufgerundet: eine als "22 Min." angekuendigte Folge, die
+// 22:40 laeuft, fuehlt sich laenger an als versprochen.
+function dauerText(sek) {
+  return Math.ceil(sek / 60) + " Min.";
+}
+
+export function zeigeStoebern(themen, hooks) {
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+
+  var zurueck = el("button", "zurueck", "← Startseite");
+  zurueck.addEventListener("click", function () { hooks.home(); });
+  app.appendChild(zurueck);
+
+  var kopf = el("div", "kopf");
+  var zeile = el("div", "kopf-zeile");
+  var titelBox = el("div");
+  titelBox.appendChild(el("h1", null, "Stöbern"));
+  titelBox.appendChild(el("div", "untertitel", "Alles Material an einem Ort. Hier fragt dich nichts ab."));
+  zeile.appendChild(titelBox);
+  zeile.appendChild(themeKnopf());
+  kopf.appendChild(zeile);
+  app.appendChild(kopf);
+
+  app.appendChild(materialKarte());
+
+  var themenBox = el("div");
+  app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
+  app.appendChild(themenBox);
+
+  // Erst rendern, dann nachtragen: die Themenkarten stehen sofort da, die
+  // Medienzeilen kommen dazu, sobald die kleine JSON durch ist. Auf einem
+  // langsamen Handy ist das der Unterschied zwischen "laedt" und "leer".
+  themen.forEach(function (t) { themenBox.appendChild(themaKarte(t, [], hooks)); });
+  ladeMedien().then(function (liste) {
+    themenBox.innerHTML = "";
+    themen.forEach(function (t) {
+      themenBox.appendChild(themaKarte(t, liste.filter(function (m) { return m.thema === t.id; }), hooks));
+    });
+    app.appendChild(fussKarte(liste));
+  });
+}
+
+/* ---------- Roses eigenes Material, ganz oben ---------- */
+
+function materialKarte() {
+  var k = el("div", "karte");
+  k.appendChild(el("h2", null, "Dein Material"));
+  k.appendChild(el("p", "muted", "Die Originale. Blättern mit ‹ › oder den Pfeiltasten."));
+
+  // Zwei statt drei Spalten: es sind genau zwei Kacheln, und im Dreier-Raster
+  // stuenden sie schmal am linken Rand mit einem Loch daneben.
+  var grid = el("div", "kachel-grid stb-material");
+  [
+    ["📄", "Vorlesungsfolien", TOTAL + " Seiten", function () { oeffneFolie(1); }],
+    ["📝", "Deine Notizen", NOTIZEN_TOTAL + " Seiten", function () { oeffneNotiz(1); }]
+  ].forEach(function (e) {
+    var b = el("button", "kachel glimmer");
+    b.appendChild(el("span", "kachel-icon", e[0]));
+    b.appendChild(el("b", null, e[1]));
+    b.appendChild(el("span", "kachel-klein", e[2]));
+    b.addEventListener("click", e[3]);
+    grid.appendChild(b);
+  });
+  k.appendChild(grid);
+  return k;
+}
+
+/* ---------- Eine Themenkarte ---------- */
+
+function themaKarte(thema, eigene, hooks) {
+  var k = el("div", "karte stb-karte");
+  setzeFarbe(k, thema.farbe);
+
+  var kz = el("div", "thema-kopfzeile");
+  kz.appendChild(el("span", "thema-titel", thema.titel));
+  kz.appendChild(el("span", "vl-badge", thema.vorlesung));
+  k.appendChild(kz);
+
+  // Zeile 1: die Original-Folien dieses Themas. Steht bewusst zuoberst und vor
+  // allem Erzeugten - das ist die Quelle, an der sich die Klausur orientiert.
+  var satz = satzInfo(thema.id);
+  if (satz) {
+    k.appendChild(stbZeile("📄", "Foliensatz der Vorlesung", satz.seiten + " Seiten · Original",
+      function () { oeffneFolie(satz.erste); }));
+  }
+
+  // Zeile 2: die Fragen, die es zu dem Thema schon gibt.
+  var mc = mcStand(thema), fr = freiStand(thema);
+  k.appendChild(stbZeile("🗂", "Alle Fragen ansehen",
+    mc.gesamt + " Konzept-Checks · " + fr.gesamt + " offene Aufgaben",
+    function () { hooks.thema(thema); }));
+
+  // Zeile 3ff: das Erzeugte, in fester Reihenfolge statt in Manifest-Reihenfolge,
+  // damit die Karten untereinander gleich aussehen.
+  var reihe = ["deck", "podcast", "video"];
+  var sortiert = eigene.slice().sort(function (a, b) {
+    return reihe.indexOf(a.art) - reihe.indexOf(b.art);
+  });
+  sortiert.forEach(function (m) { k.appendChild(medienZeile(m)); });
+
+  if (!sortiert.length) {
+    k.appendChild(el("div", "stb-leer", "Für dieses Thema gibt es noch kein erzeugtes Material."));
+  }
+  return k;
+}
+
+/* Eine anklickbare Zeile in einer Themenkarte. Ein <button>, kein div mit
+   Klick-Hoerer: sonst ist die Zeile per Tastatur nicht erreichbar und ein
+   Screenreader liest sie als Text vor. */
+function stbZeile(icon, titel, unter, aufKlick, erzeugt) {
+  var b = el("button", "stb-zeile" + (erzeugt ? " erzeugt" : ""));
+  b.appendChild(el("span", "stb-icon", icon));
+  var txt = el("span", "stb-text");
+  var kopf = el("span", "stb-titel");
+  kopf.appendChild(el("b", null, titel));
+  if (erzeugt) kopf.appendChild(el("span", "stb-marke", "erzeugt"));
+  txt.appendChild(kopf);
+  txt.appendChild(el("span", "stb-unter", unter));
+  b.appendChild(txt);
+  b.addEventListener("click", aufKlick);
+  return b;
+}
+
+/* Eine Zeile fuer ein NotebookLM-Erzeugnis. Decks oeffnen den Blatt-Viewer,
+   Podcast und Video klappen einen Player unter der Zeile auf.
+
+   Warum der Player INLINE steht und kein Overlay ist: Rose hoert die Podcasts
+   unterwegs. Ein natives <audio> laeuft am Handy weiter, wenn der Bildschirm
+   ausgeht, und taucht auf dem Sperrbildschirm auf; ein Overlay, das beim
+   nächsten Antippen irgendwo zugeht, nimmt ihr genau das. Ausserdem stoppt so
+   nichts, wenn sie daneben weiterliest. */
+function medienZeile(m) {
+  var box = el("div", "stb-medium");
+  var a = ART_TEXT[m.art] || { icon: "•", wort: m.art };
+
+  if (m.art === "deck") {
+    box.appendChild(stbZeile(a.icon, m.titel,
+      a.wort + " · " + m.seiten + " Seiten · " + m.untertitel,
+      function () { oeffneDeck(m, 1); }, true));
+    return box;
+  }
+
+  var player = null;
+  var zeile = stbZeile(a.icon, m.titel,
+    a.wort + " · " + dauerText(m.sekunden) + " · " + m.untertitel,
+    function () {
+      if (player) {
+        // Zweiter Klick auf eine LAUFENDE Zeile klappt nicht zu - das waere
+        // der versehentliche Abbruch mitten im Hoeren. Nur eine pausierte
+        // Zeile verschwindet wieder.
+        if (!player.querySelector("audio, video").paused) return;
+        player.remove();
+        player = null;
+        zeile.classList.remove("offen");
+        return;
+      }
+      player = bauePlayer(m);
+      box.appendChild(player);
+      zeile.classList.add("offen");
+      player.querySelector("audio, video").play().catch(function () {
+        /* Autoplay abgelehnt (iOS ohne vorherige Geste in dieser Sitzung).
+           Die Controls stehen da, sie tippt einmal auf Play - kein Fehlerfall,
+           deshalb auch keine Meldung. */
+      });
+    }, true);
+
+  box.appendChild(zeile);
+  return box;
+}
+
+function bauePlayer(m) {
+  var w = el("div", "stb-player");
+  var p = document.createElement(m.art === "video" ? "video" : "audio");
+  p.src = m.datei;
+  p.controls = true;
+  p.preload = "metadata";
+  if (m.art === "video") p.playsInline = true;
+  // Kein autoplay-Attribut: play() oben ist die kontrollierte Fassung, die den
+  // abgelehnten Fall abfangen kann.
+  w.appendChild(p);
+  w.appendChild(el("div", "stb-player-fuss",
+    "Erzeugt aus den Vorlesungsfolien. Zum Wiederholen gedacht – zitieren solltest du die Folien."));
+  return w;
+}
+
+/* ---------- Fusszeile: was es gibt und was fehlt ---------- */
+
+function fussKarte(liste) {
+  var k = el("div", "karte info-karte");
+  k.appendChild(el("h2", null, "Woher das kommt"));
+  k.appendChild(el("p", null,
+    "Die Foliensätze und deine Notizen sind die Originale. Alles mit dem Wort „erzeugt“ hat NotebookLM aus genau diesen Folien gebaut – gut zum Wiederholen, aber es kann danebenliegen. Im Zweifel gilt die Folie."));
+  if (liste.length) {
+    k.appendChild(el("p", "muted",
+      liste.length + " erzeugte Materialien zu " +
+      new Set(liste.map(function (m) { return m.thema; })).size + " von 8 Themen."));
+  }
+  return k;
+}

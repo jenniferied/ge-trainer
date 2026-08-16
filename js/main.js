@@ -8,6 +8,7 @@ import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feier
 import * as Klausur from "./klausur.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
+import * as Stoebern from "./stoebern.js";
 // Eigenes Modul, obwohl der Modus nur ein Ablauf ueber vorhandene Bausteine ist
 // (Details im Kopf der Datei): so kostet er main.js drei Zeilen statt zweihundert.
 import * as Klausurfrage from "./klausurfrage.js";
@@ -86,6 +87,10 @@ function zeige(route, arg) {
     case "wdh6": return Stats.zeigeWiederhol6(themen, HOOKS);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
     case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
+    /* Der einzige Fall hier, der Rose nichts abverlangt: Material anschauen,
+       Podcast hoeren, blaettern. beendeRunde() oben ist trotzdem richtig -
+       wer mitten in einer Runde ins Stoebern geht, hat die Runde verlassen. */
+    case "stoebern": return Stoebern.zeigeStoebern(themen, HOOKS);
     /* Die beiden Direkteinstiege der Tagesliste. Sie geben ihren Rueckweg mit:
        wer von der Startseite kommt, landet nach dem Spiel wieder dort und nicht
        im Hub "Kurze Runden", den er nie geoeffnet hat (Jennifer, 13.08.2026).
@@ -116,6 +121,9 @@ var HOOKS = {
   home: function () { zeige("start"); },
   stats: function () { zeige("stats"); },
   spiele: function () { zeige("spiele"); },
+  // Der Weg aus dem Stoebern-Raum in die Fragen eines Themas - dieselbe
+  // Themenansicht, die auch die Startseite oeffnet, kein zweiter Bau.
+  thema: function (t) { zeige("thema", t); },
   mcKarte: function (thema, f, fortschritt, weiterText, onWeiter) { return mcKarte(thema, f, fortschritt, weiterText, onWeiter); },
   // einzeln: in den Runden steht genau EINE Karte auf dem Schirm, darum darf die
   // Uhr beim Rendern loslaufen. Auf der Themenseite stehen alle Aufgaben
@@ -1855,7 +1863,10 @@ function uebenKacheln() {
     ["✍️", "Frei", "Nach Thema", function () { zeige("freiwahl"); }],
     ["🎲", "Mix", "MC & offen", function () { zeige("mix"); }],
     ["📄", "Klausur", "Papier & Stift", function () { zeige("klausur"); }],
-    ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }]
+    ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
+    // Faellt aus der Reihe und steht deshalb zuletzt: die einzige Kachel, die
+    // keine Runde startet. Folien, Notizen, Podcasts, Fragen - zum Anschauen.
+    ["🗂", "Stöbern", "Folien, Podcasts & Co.", function () { zeige("stoebern"); }]
   ].forEach(function (k) {
     var b = el("button", "kachel glimmer");
     b.appendChild(el("span", "kachel-icon", k[0]));
