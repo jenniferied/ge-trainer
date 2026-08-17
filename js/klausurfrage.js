@@ -133,7 +133,7 @@ export function zeigeKlausurfrage(themen, hooks) {
     [
       "Du bekommst eine echte Aufgabe aus dem Korpus – meistens eine, die du noch nicht hattest.",
       "Zuerst nur die Frage: Welche Anforderungsstufe verlangt sie, und was heißt das für deine Antwort?",
-      "Dann schreibst du – mit dem Stift oder getippt. Danach die Musterlösung, und die KI schaut drüber."
+      "Dann schreibst du – auf Papier und abfotografiert, mit dem Stift oder getippt. Danach die Musterlösung, und die KI schaut drüber."
     ].forEach(function (s) { liste.appendChild(el("li", null, s)); });
     karte.appendChild(liste);
 

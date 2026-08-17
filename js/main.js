@@ -6,6 +6,9 @@ import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, 
   starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, standPille, rundenPille, punkteText, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
+// Papier abfotografieren / Bild hochladen. Liefert dieselben Bilder wie der
+// Stift-Canvas, deshalb hier derselbe Weg wie dort (Kopf von foto.js).
+import * as Foto from "./foto.js";
 import * as Stats from "./stats.js";
 import * as Spiele from "./spiele.js";
 import * as Stoebern from "./stoebern.js";
@@ -2782,7 +2785,7 @@ function freiKarte(thema, f, opts) {
   var feld = el("div", "frei-feld");
   var eingabe = document.createElement("textarea");
   eingabe.className = "frei-eingabe handschrift";
-  eingabe.placeholder = "Optional: tippen, mit dem Stift schreiben – oder im Kopf formulieren.";
+  eingabe.placeholder = "Optional: tippen, mit dem Stift schreiben, auf Papier schreiben und abfotografieren – oder im Kopf formulieren.";
   eingabe.value = e.text || "";
   // Das Feld waechst mit - auf dem Handy gibt es keinen Ziehgriff, und eine
   // AFB-III-Antwort passt nie in vier Zeilen. Gleiche Funktion wie im Klausurmodus.
@@ -2903,6 +2906,10 @@ function freiKarte(thema, f, opts) {
     kiZeile.hidden = false;
   }
 
+  /* Drei Wege, dasselbe Ziel: digital schreiben, das Papier abfotografieren, ein
+     Bild hochladen. Alle drei landen in handschrift() - siehe die Reihe auf dem
+     Klausurblatt (klausur.js), hier ist es dieselbe Entscheidung. */
+  var werkzeuge = el("div", "frei-werkzeuge");
   var stift = el("button", "frei-stift", "✎");
   stift.type = "button";
   stift.title = "Mit dem Stift schreiben";
@@ -2916,12 +2923,23 @@ function freiKarte(thema, f, opts) {
       nr: AFB_TEXT[f.afb] || "Aufgabe"
     });
   });
-  feld.appendChild(stift);
+  werkzeuge.appendChild(stift);
+  Foto.fotoKnoepfe(function (bilder) { handschrift(bilder); }, {
+    klasse: "frei-stift",
+    // uhrAn() gehoert zur Auswahl, nicht zum Ergebnis: ab dem Moment, in dem sie
+    // die Kamera oeffnet, arbeitet sie an dieser Aufgabe.
+    beiStart: function () { uhrAn(); sagen("Ich schaue mir dein Blatt an …"); },
+    beiFehler: function (satz) { sagen(satz); }
+  }).forEach(function (k) { werkzeuge.appendChild(k); });
+  feld.appendChild(werkzeuge);
 
   /* Gezeichnetes uebernehmen: erst sichern, dann lesen lassen. Die Reihenfolge
      ist Absicht - das Bild ist Roses Arbeit und darf nie an einer wackeligen
      KI-Antwort haengen. Die eiserne Regel aus llm.js gilt auch hier: faellt die
      Transkription aus, bleibt einfach das Bild an der Karte stehen. */
+  // Nimmt beides: Stift-Canvas und abfotografiertes Papier (foto.js). Ein Foto
+  // von echtem Papier ist "hand" im wortwoertlichsten Sinn, der Vermerk unten
+  // stimmt also fuer beide Wege.
   function handschrift(bilder) {
     handBenutzt = true;   // der Vermerk ueberlebt spaeter auch ohne das Bild
     var ent = entwurf(f.id);
@@ -2936,7 +2954,7 @@ function freiKarte(thema, f, opts) {
     sagen("Die KI liest deine Handschrift …");
     Promise.resolve()
       // Der Fragetext hilft dem Modell beim Lesen der Handschrift (Signatur llm.js).
-      .then(function () { return Llm.transkribiere(bilder.png, f.frage); })
+      .then(function () { return Llm.transkribiere(bilder.bild, f.frage, { typ: bilder.typ, foto: bilder.foto }); })
       .catch(function () { return null; })
       .then(function (text) {
         /* Ein einzelnes Zeichen ist kein Transkript, sondern ein Lesefehler -

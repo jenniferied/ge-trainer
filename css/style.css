@@ -763,10 +763,20 @@ p { margin: 0 0 var(--sp-3); }
 
 /* ---------- Frei ueben: Stift-Symbol und Handschrift-Entwurf ---------- */
 .frei-feld { position: relative; }
-.frei-feld .frei-eingabe { padding-right: 56px; }
+/* Werkzeuge an der Antwort-Karte: Stift, Kamera, Bild hochladen (17.08.2026).
+   Steht im Fluss unter dem Feld, nicht schwebend darueber - Begruendung bei
+   .kl-werkzeuge in papier.css, es ist dieselbe. Das padding-right: 56px am
+   Eingabefeld ist damit weg: es hielt Platz fuer den EINEN schwebenden Stift
+   frei, fuer drei Knoepfe waeren es 150 px weniger Schreibbreite gewesen. */
+.frei-werkzeuge {
+  display: flex; justify-content: flex-end; gap: 6px;
+  margin-top: var(--sp-2);
+}
+
 .frei-stift {
-  position: absolute; right: 8px; bottom: 20px;
   width: 40px; height: 40px; cursor: pointer;
+  /* Zentriert das ✎ als Textzeichen und die SVG-Icons aus foto.js gleichermassen. */
+  display: inline-flex; align-items: center; justify-content: center;
   font-size: 1.1rem; line-height: 1;
   color: var(--ink-soft); background: var(--card);
   border: 1px solid var(--line); border-radius: 999px;

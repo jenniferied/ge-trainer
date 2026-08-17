@@ -22,6 +22,10 @@ import * as Beleg from "./beleg.js";
 // Der Rotstift der KI auf Roses Blatt. Geteilt mit dem Frei-ueben-Pfad in
 // main.js - deshalb ein eigenes Modul und kein Rueckimport (ARCHITEKTUR.md).
 import * as Marken from "./marken.js";
+/* Papier abfotografieren. foto.js liefert dieselben Bilder wie der Stift-Canvas
+   hier, also laeuft danach alles durch uebernehmen() - ein Weg, nicht zwei.
+   foto.js haengt nur an core.js, deshalb kein Zyklus. */
+import * as Foto from "./foto.js";
 // Nur wegen der Nebenwirkung: llm.js setzt window.GE_LLM. Ohne diesen Import wuerde
 // das Modul nie ausgewertet und der KI-Pfad waere still tot (kein Import-Zyklus,
 // llm.js haengt nur an config.js).
@@ -733,7 +737,14 @@ function schreibBlattBauen(a, blattId, istLetztes) {
       : "Als Bild angehängt. Beim Bewerten liest du selbst mit."));
   }
 
+  /* Drei Wege auf dasselbe Blatt, alle in einer Reihe unten rechts: digital
+     schreiben, das Papier abfotografieren, ein Bild hochladen. Alle drei enden
+     in uebernehmen() - die Klausur am 10.09. ist auf echtem Papier, also darf
+     das Ueben auf echtem Papier genauso weit kommen wie das digitale. */
+  var werkzeuge = el("div", "kl-werkzeuge");
   var stift = el("button", "kl-stift", "✎");
+  stift.type = "button";
+  stift.title = "Mit dem Stift schreiben";
   stift.setAttribute("aria-label", "Mit Stift schreiben");
   stift.addEventListener("click", function () {
     // Die Aufgabe steht beim Schreiben oben auf dem Blatt - frageTextZuBlatt
@@ -743,7 +754,13 @@ function schreibBlattBauen(a, blattId, istLetztes) {
       nr: "Aufgabe " + blatt.aufgabeNr
     });
   });
-  b.appendChild(stift);
+  werkzeuge.appendChild(stift);
+  Foto.fotoKnoepfe(function (bilder) { uebernehmen(blatt, bilder); }, {
+    klasse: "kl-stift",
+    beiStart: function () { toast("Bild wird vorbereitet …", 2500); },
+    beiFehler: function (satz) { toast(satz, 6000); }
+  }).forEach(function (k) { werkzeuge.appendChild(k); });
+  b.appendChild(werkzeuge);
 
   var box = document.createDocumentFragment();
   box.appendChild(teil.wrap);
@@ -870,13 +887,20 @@ function aufPapier(cv, maxB) {
   return out;
 }
 
+/* Die Bilder, die aus einem geschriebenen Blatt herausfallen. GENAU DIESE FORM
+   liefert auch foto.js (abfotografiertes Papier), damit uebernehmen() und der
+   Frei-ueben-Pfad in main.js nicht wissen muessen, woher das Blatt kommt:
+
+     bild  DataURL fuer die KI - hier PNG, ein Strich-Canvas wird damit winzig
+     typ   Media-Type von bild. Faehrt bis in die Vision-API mit (llm.js ->
+           llm-ge). Beim Foto steht hier "image/jpeg".
+     jpeg  kleine Fassung fuer den localStorage - dort zaehlt jedes Kilobyte,
+           das Kontingent teilt sich der GE-Trainer auf github.io mit dem
+           ST-Trainer. 700 px bei q0.5 bleibt gut lesbar. */
 function exportBilder(cv) {
-  // PNG geht an die KI (Vision) und braucht Aufloesung. Das JPEG landet im
-  // localStorage - dort zaehlt jedes Kilobyte, das Kontingent teilt sich der
-  // GE-Trainer auf github.io mit dem ST-Trainer. 700 px breit bei q0.5 bleibt
-  // gut lesbar und ist ein Bruchteil der vollen Aufloesung.
   return {
-    png: aufPapier(cv, 1400).toDataURL("image/png"),
+    bild: aufPapier(cv, 1400).toDataURL("image/png"),
+    typ: "image/png",
     jpeg: aufPapier(cv, 700).toDataURL("image/jpeg", 0.5)
   };
 }
@@ -1068,6 +1092,12 @@ function neuZeichnen() {
   scrollZurueck(y);
 }
 
+/* canvasBild traegt seit dem 17.08.2026 BEIDES: das Stift-Canvas-Bild und ein
+   abfotografiertes Blatt. Absichtlich kein zweites Feld - an dieser einen
+   Eigenschaft haengen vier Mechanismen (die Anzeige am Blatt, "hat schon
+   geantwortet", der Hand-Vermerk in der Auswertung und vor allem der Notabwurf
+   bei vollem Speicher ganz oben). Ein fotoBild waere aus allen vier
+   herausgefallen, und ein Foto ist das Schwerste, was im State liegt. */
 function bildAnhaengen(blatt, jpeg, satz) {
   blatt.canvasBild = jpeg;
   speichernJetzt();
@@ -1087,19 +1117,48 @@ function frageTextZuBlatt(blatt) {
   return "";
 }
 
+// Nimmt beides: den Stift-Canvas und ein Foto von echtem Papier (foto.js).
+// Beide liefern { bild, typ, jpeg, foto? } - ab hier ist der Weg derselbe.
 function uebernehmen(blatt, bilder) {
   var fn = window.GE_LLM && window.GE_LLM.transkribiere;
   if (!fn) return bildAnhaengen(blatt, bilder.jpeg);
 
+  /* ERST SICHERN, DANN LESEN LASSEN - dasselbe Muster wie in main.js
+     handschrift(). Das Bild ist Roses Arbeit und darf nicht an einer wackeligen
+     KI-Antwort haengen.
+
+     Bis zum 17.08.2026 stand das hier nicht, und das war ein Loch: der Commit
+     vom 13.08. hat aus dem Dialog das `canvasBild = null` entfernt, damit ihr
+     Blatt nach einem bestaetigten Transkript liegen bleibt ("Deine Handschrift -
+     oben steht die Umschrift" steht seither am Blatt). Gesetzt hat es auf diesem
+     Weg aber NIEMAND - nur der Notfallpfad bildAnhaengen tat das. Wer das
+     Transkript bestaetigte, verlor genau dabei sein Blatt und konnte nie
+     gegenlesen, was die KI aus ihrer Schrift gemacht hatte. Beim Foto waere das
+     noch schwerer zu verzeihen: das Blatt liegt dann zwar auf dem Tisch, aber die
+     Umschrift steht daneben und will verglichen werden. */
+  blatt.canvasBild = bilder.jpeg;
+  speichernJetzt();
+
   var laden = toast("Die KI liest deine Handschrift …", 20000);
   Promise.resolve()
     // Der Fragetext hilft dem Modell beim Lesen der Handschrift (Signatur llm.js).
-    .then(function () { return fn(bilder.png, frageTextZuBlatt(blatt)); })
+    .then(function () { return fn(bilder.bild, frageTextZuBlatt(blatt), { typ: bilder.typ, foto: bilder.foto }); })
     .catch(function () { return null; })
     .then(function (text) {
       laden.remove();
-      if (!text) return bildAnhaengen(blatt, bilder.jpeg, "Keine Transkription bekommen - dein Bild bleibt am Blatt.");
-      transkriptDialog(blatt, String(text), bilder.jpeg);
+      /* Ein einzelnes Zeichen ist kein Transkript, sondern ein Lesefehler - die
+         "\", ":" und "." aus Roses Antworten vom 15.08. Der Frei-ueben-Pfad
+         filtert das seit damals (main.js), hier fehlte es noch: bis zum 17.08.
+         reichte ein Zeichen, um im Dialog wie eine echte Lesung auszusehen.
+         Beim Foto zaehlt es doppelt - ein Blatt in Kuechenlicht liefert viel
+         eher ein Krakel-Zeichen als ein Canvas-Export. */
+      var roh = text ? String(text).trim() : "";
+      if (roh.length < 2) {
+        return bildAnhaengen(blatt, bilder.jpeg, roh
+          ? "Da war nichts Lesbares drauf - dein Bild bleibt am Blatt, tippen geht weiter."
+          : "Keine Transkription bekommen - dein Bild bleibt am Blatt.");
+      }
+      transkriptDialog(blatt, roh, bilder.jpeg);
     });
 }
 
@@ -1155,12 +1214,12 @@ function transkriptDialog(blatt, text, jpeg) {
     beiOk: function (wert) {
       blatt.text = (blatt.text ? blatt.text + "\n" : "") + wert;
       blatt.transkribiert = true;
-      /* Bis zum 13.08. stand hier blatt.canvasBild = null - Roses Blatt war in
-         dem Moment weg, in dem sie das Transkript bestaetigt hat. Damit konnte
-         sie beim Bewerten nie gegenlesen, was die KI aus ihrer Schrift gemacht
-         hat. Das Bild bleibt jetzt liegen, solange der Bogen offen ist; es geht
-         nie ueber die Leitung (snapshot() nimmt state.klausur nicht mit) und der
-         Notabwurf oben raeumt es weg, wenn der Speicher knapp wird. */
+      /* Hier stand bis zum 13.08. blatt.canvasBild = null - Roses Blatt war in
+         dem Moment weg, in dem sie das Transkript bestaetigt hat. Es bleibt
+         jetzt liegen, solange der Bogen offen ist (angehaengt wird es in
+         uebernehmen(), noch vor dem KI-Aufruf); es geht nie ueber die Leitung
+         (snapshot() nimmt state.klausur nicht mit) und der Notabwurf ganz oben
+         raeumt es weg, wenn der Speicher knapp wird. */
       speichernJetzt();
       neuZeichnen();
     },

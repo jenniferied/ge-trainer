@@ -178,9 +178,24 @@
   font-size: .76rem; color: var(--blatt-ink-2); margin-top: 4px;
 }
 
+/* Die Werkzeug-Reihe am Blatt: Stift, Kamera, Bild hochladen (17.08.2026).
+   Bis dahin schwebte das ✎ allein absolut in der Blattecke.
+
+   MIT DREI KNOEPFEN STEHT DIE REIHE IM FLUSS, unten rechts UNTER dem
+   Geschriebenen, und das ist kein Geschmack: 150 px schwebende Knoepfe legen
+   sich sonst ueber das Ende der letzten Zeile - und genau dort liest Rose die
+   Umschrift gegen, die die KI aus ihrer Handschrift gemacht hat. Ausserdem
+   wandert die Blattecke mit: haengt ein Foto am Blatt, lag die schwebende Reihe
+   plotzlich auf dem Bild. Im Fluss stimmt es in jedem Zustand. */
+.kl-werkzeuge {
+  display: flex; justify-content: flex-end; gap: 6px;
+  margin-top: 8px;
+}
+
 .kl-stift {
-  position: absolute; right: 10px; bottom: 8px;
   width: 44px; height: 44px; cursor: pointer;
+  /* Zentriert beides: das ✎ als Textzeichen und die SVG-Icons von foto.js. */
+  display: inline-flex; align-items: center; justify-content: center;
   font-size: 1.2rem; line-height: 1;
   color: var(--blatt-ink-2);
   background: var(--blatt);

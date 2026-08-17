@@ -28,14 +28,28 @@
 //       Ist eine Function-URL konfiguriert? Nur zum Ein-/Ausblenden von
 //       Knoepfen. Ein true garantiert nichts — es kann trotzdem null kommen.
 //
-//   transkribiere(quelle, aufgabe?) -> Promise<string | null>
-//       quelle: HTMLCanvasElement ODER PNG-DataURL ODER reines base64.
+//   transkribiere(quelle, aufgabe?, opts?) -> Promise<string | null>
+//       quelle: HTMLCanvasElement ODER Bild-DataURL ODER reines base64.
 //               Bei einem Canvas wird hier verkleinert (max. 1400 px Kante)
 //               und WEISS hinterlegt — ein transparentes PNG sieht fuer das
 //               Modell aus wie ein leeres Blatt.
 //       aufgabe: optionaler Fragetext, hilft beim Lesen der Handschrift.
+//       opts:   { typ, foto } — seit 17.08.2026, wegen des Foto-Wegs (foto.js).
+//               typ  Media-Type der DataURL: "image/png" (Standard, Stift-
+//                    Canvas) oder "image/jpeg" (Foto von echtem Papier). Ein
+//                    Foto MUSS JPEG sein, als PNG waegt es 3 bis 5 MB und
+//                    laeuft in die Groessengrenze der Bild-API.
+//               foto true, wenn es ein abfotografiertes Blatt ist. Dann sagt
+//                    der Prompt dem Modell, dass Tisch, Schatten, Lineatur und
+//                    Rand mit im Bild sind und nicht ins Transkript gehoeren.
+//               Beide Werte reist die Function als bildTyp/bildArt.
+//               Bequem aufzurufen: der Aufrufer hat ein Objekt
+//               { bild, typ, jpeg, foto } vom Canvas oder von foto.js.
 //       Rueckgabe: der woertlich transkribierte Text. "" heisst: Blatt leer
 //       bzw. nichts Lesbares. null heisst: KI war nicht erreichbar.
+//       EIN EINZELNES ZEICHEN IST KEIN TRANSKRIPT: die Aufrufer werfen alles
+//       unter zwei Zeichen weg (klausur.js uebernehmen, main.js handschrift) -
+//       es waren die "\", ":" und "." in Roses Antworten vom 15.08.2026.
 //
 //   korrigiere(thema, aufgabe, antwort) -> Promise<Korrektur | null>
 //       thema:   Themen-Id wie in app/data/<thema>.json ("mobilitaet", ...).
@@ -351,12 +365,33 @@ function zuBase64(quelle) {
 }
 
 // ---- Einsatzort 1: Handschrift -> Text ----
-export async function transkribiere(quelle, aufgabe) {
-  const bildPng = zuBase64(quelle);
-  if (!bildPng) return null;
+export async function transkribiere(quelle, aufgabe, opts) {
+  const o = opts || {};
+  const bild = zuBase64(quelle);
+  if (!bild) return null;
+  /* Nur diese zwei Typen, und der Standard ist PNG: bildTyp faehrt bis in das
+     media_type-Feld der Vision-API. Steht dort etwas anderes als im Bild, kommt
+     eine 400, und ruf() schluckt sie still zu null. */
+  const bildTyp = o.typ === "image/jpeg" ? "image/jpeg" : "image/png";
   const d = await ruf(
-    { art: "transkribiere", bildPng, aufgabe: typeof aufgabe === "string" ? aufgabe : "" },
-    25000,
+    {
+      art: "transkribiere",
+      bild,
+      // Historischer Name derselben Sache. Bleibt eine Weile mitgeschickt, weil
+      // GitHub Pages einen alten Client noch aus dem Cache ausliefern kann und
+      // die Function beide Namen liest - andersherum waere Roses Handschrift
+      // fuer einen Nachmittag stumm.
+      bildPng: bild,
+      bildTyp,
+      // "foto" schaltet in der Function einen Satz im Prompt zu: Tisch, Schatten,
+      // Lineatur und Rand ignorieren. Beim Canvas gibt es die nicht.
+      bildArt: o.foto ? "foto" : "canvas",
+      aufgabe: typeof aufgabe === "string" ? aufgabe : "",
+    },
+    // Ein Foto waegt mehr als ein Strich-Canvas, und hochgeladen wird es oft
+    // ueber Mobilfunk. Die paar Sekunden mehr sind billiger als ein Timeout,
+    // nach dem sie alles abtippen muesste.
+    o.foto ? 35000 : 25000,
   );
   return d && typeof d.transkript === "string" ? d.transkript.trim() : null;
 }
