@@ -162,7 +162,9 @@ if (typeof window !== "undefined" && window.addEventListener) {
    - selbsteinschaetzung "gut"|"mittel"|"nochmal", ki (frei)
    - abruf "auswendig"|"hilfsmittel" (frei, seit 18.08.: kam die Antwort aus
      dem Kopf oder lagen Folien/Lernmaterial daneben? Fehlt bei Altbestand -
-     Leser deuten fehlend als "unbekannt", nie als "auswendig".)
+     die LESER deuten fehlend als "hilfsmittel" (Jennifer, 18.08.: alle freien
+     Antworten vor der Einfuehrung entstanden mit Material). Nie nachtraeglich
+     an alte Eintraege schreiben - eiserne Regel unten.)
    - punkte (darf null sein), max, bearbeitet, bewertung[], punkteKi, kid (klausur)
    - text, hand, quelle "getippt"|"hand"|"gemischt" (frei + klausur)
    - spiel (spiel)

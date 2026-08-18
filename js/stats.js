@@ -344,8 +344,9 @@ export function selbstZaehler(arr) {
       return;
     }
     if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
-    // Abruf-Modus (seit 18.08.): aus dem Kopf oder mit Vorlage. Altbestand
-    // ohne Feld zaehlt nicht mit - fehlend heisst "unbekannt", nie "auswendig".
+    // Abruf-Modus (seit 18.08.): aus dem Kopf oder mit Vorlage. Fehlendes Feld
+    // heisst "hilfsmittel" (Jennifer: alles vor der Einfuehrung entstand mit
+    // Material) und zaehlt deshalb nicht als auswendig.
     if (a.abruf === "auswendig") z.auswendig++;
     if (a.hand) z.hand++;
     if (a.text) z.text++;

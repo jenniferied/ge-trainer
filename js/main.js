@@ -1488,9 +1488,9 @@ function rueckmeldung(a, gefunden) {
     leer = false;
   }
 
-  // Der Abruf-Modus der Antwort. Altbestand hat das Feld nicht - dann steht
-  // hier schlicht nichts, nie eine geratene Zuordnung.
-  if (a.abruf === "auswendig" || a.abruf === "hilfsmittel") {
+  // Der Abruf-Modus der Antwort. Fehlt das Feld (Altbestand), gilt der Eintrag
+  // als "mit Hilfsmitteln" - siehe ABRUF_OPTIONEN.
+  if (a.modus === "frei" && a.selbsteinschaetzung) {
     var ab = el("div", "runde-rueck-zeile");
     ab.appendChild(el("span", "runde-rueck-titel", "Abgerufen"));
     ab.appendChild(el("span", "runde-rueck-wert",
@@ -2489,8 +2489,12 @@ var CHECK_OPTIONEN = [
    jetzigen Lernphase braucht Rose die Vorlagen noch. Beides ist in Ordnung -
    nur muss ablesbar bleiben, was schon OHNE Vorlage sitzt. Deshalb faehrt der
    Modus als eigenes Feld (abruf) an jedem frei-Log-Eintrag mit, unabhaengig von
-   gut/mittel/nochmal. Bewusst kein Boolean: Altbestand ohne Feld bleibt von
-   "nicht auswendig" unterscheidbar. */
+   gut/mittel/nochmal. Altbestand hat das Feld nicht und GILT als "hilfsmittel"
+   (Jennifer, 18.08.2026: alle freien Antworten bis zur Einfuehrung entstanden
+   mit Material daneben; MC uebt Rose von Anfang an aus dem Kopf, dort gibt es
+   das Feld nicht). Eingetragen wird das NICHT nachtraeglich - die eiserne Regel
+   in core.js verbietet das Anreichern alter Eintraege -, sondern die LESER
+   deuten fehlend als hilfsmittel. */
 var ABRUF_OPTIONEN = [
   { wert: "auswendig", text: "🧠 Auswendig" },
   { wert: "hilfsmittel", text: "📖 Mit Hilfsmitteln" }
@@ -2762,7 +2766,7 @@ function standFuerKi(thema, f) {
   } else {
     var verlauf = dieseAufgabe.slice(-5).map(function (a) {
       return tageHer(a.ts) + ": " + (SELBST_WORT[a.selbsteinschaetzung] || "ohne Einschaetzung")
-        + (a.abruf === "auswendig" ? ", auswendig" : a.abruf === "hilfsmittel" ? ", mit Vorlage" : "");
+        + (a.modus === "frei" ? (a.abruf === "auswendig" ? ", auswendig" : ", mit Vorlage") : "");
     });
     zeilen.push("DIESE AUFGABE: schon " + dieseAufgabe.length + "x geuebt ("
       + verlauf.join(" | ") + ").");
@@ -2782,7 +2786,8 @@ function standFuerKi(thema, f) {
       qids[a.qid] = true;
       if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
       // Die Zahl, auf die es vor der closed-book-Klausur ankommt: sass es
-      // OHNE Vorlage? Altbestand ohne abruf-Feld zaehlt hier ehrlich nicht mit.
+      // OHNE Vorlage? Fehlendes abruf-Feld gilt als hilfsmittel (ABRUF_OPTIONEN)
+      // und zaehlt deshalb hier nicht.
       if (a.abruf === "auswendig" && a.selbsteinschaetzung === "gut") auswendigSass++;
     });
     zeilen.push("IM THEMA " + thema.titel + ": " + Object.keys(qids).length
