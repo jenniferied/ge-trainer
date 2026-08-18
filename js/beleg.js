@@ -372,6 +372,54 @@ export function belegZeile(tag, text, thema, klasse) {
   return chipsEinsetzen(reichZeile(tag, text, klasse), thema);
 }
 
+/* ---- MC-Aufloesung: Faerbung UND Begruendung je Option ----
+
+   Bis zum 18.08.2026 stand unter einer beantworteten MC-Frage genau EINE
+   Erklaerung (f.erklaerung), und die redete fast immer nur ueber die richtige
+   Option. Wer eine falsche angetippt hatte, las also, warum eine ANDERE stimmt
+   - und nicht, was an der eigenen Wahl nicht aufgeht. Genau daran haengt beim
+   Lernen aber der Groschen: Ein Distraktor ist nur dann lehrreich, wenn dabei
+   steht, WARUM er kippt.
+
+   Vorbild ist der ST-Trainer, wo jede Option ihr eigenes `erklaerung`-Feld hat
+   (st-trainer/app/js/main.js, faerbeAntworten). Zwei bewusste Abweichungen:
+
+   1. Drueben erscheint die Begruendung nur an der gewaehlten und an der
+      richtigen Option (`gw || o.richtig`). Hier an ALLEN vieren - so von
+      Jennifer gewuenscht (18.08.2026). GE hat genau vier Optionen je Frage
+      statt drueben bis zu acht; vier kurze Zeilen sind ein Ueberblick, acht
+      waeren eine Textwand.
+   2. Die Faerbung liegt mit in dieser Funktion. Sie stand vorher wortgleich in
+      main.js UND in klausur.js; sobald die Begruendungen dazukommen, braeuchte
+      jede Kopie auch noch die Zuordnung Knopf -> Option. Eine Stelle statt
+      zwei.
+
+   `paare` ist [{ knopf, option }] in ANZEIGEreihenfolge (die Optionen werden
+   gemischt). `gewaehlt` ist der angeklickte Knopf, `thema` die Themen-Id fuer
+   die Fundstellen-Chips.
+
+   Die Bedingung `!classList.contains("falsch")` bleibt erhalten: im Modus
+   "Zweiter Versuch" (ui.js erklaerAbfrage) hat Rose moeglicherweise schon eine
+   zweite Option danebengesetzt, die dann bereits rot ist. Die darf hier nicht
+   nachtraeglich zu "blass" werden - sonst verschwindet ihr zweiter Fehlgriff
+   aus dem Bild. */
+export function optionenAufloesen(paare, gewaehlt, thema) {
+  paare.forEach(function (p) {
+    const knopf = p.knopf, o = p.option;
+    knopf.disabled = true;
+    if (o.korrekt) knopf.classList.add("richtig");
+    else if (knopf === gewaehlt) knopf.classList.add("falsch");
+    else if (!knopf.classList.contains("falsch")) knopf.classList.add("blass");
+
+    // Ohne Text kein Kasten: der Bestand wird themenweise nachgezogen, und eine
+    // Frage ohne Begruendungen soll aussehen wie vorher, nicht wie kaputt.
+    if (!o.erklaerung) return;
+    const kasten = belegZeile("div", o.erklaerung, thema,
+      "warum " + (o.korrekt ? "gut" : "schade"));
+    knopf.insertAdjacentElement("afterend", kasten);
+  });
+}
+
 /* ---- Blatt-Viewer ----
 
    EIN Viewer fuer beide Belegarten. Ein zweiter danebengebaut haette zwei

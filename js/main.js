@@ -1542,6 +1542,12 @@ function mcAufloesung(a, gefunden) {
     zeile.appendChild(el("span", "runde-option-text", o.text));
     if (gewaehlt) zeile.appendChild(el("span", "runde-option-deine", "deine Wahl"));
     box.appendChild(zeile);
+    // Dieselbe Begruendung wie im Quiz. Im Rueckblick zaehlt sie doppelt: hier
+    // sieht Rose die Frage ohne Zeitdruck wieder, oft Tage spaeter.
+    if (o.erklaerung) {
+      box.appendChild(Beleg.belegZeile("div", o.erklaerung, gefunden.thema.id,
+        "warum " + (o.korrekt ? "gut" : "schade")));
+    }
   });
   if (f.erklaerung) {
     box.appendChild(Beleg.belegZeile("p", f.erklaerung, gefunden.thema.id, "runde-erklaerung"));
@@ -2108,7 +2114,13 @@ function zeigeThema(thema) {
 function chatAufgabe(f, extra) {
   var a = { id: f.id, frage: f.frage, afb: f.afb || null };
   if (Array.isArray(f.optionen)) {
-    a.optionen = f.optionen.map(function (o) { return { text: o.text, korrekt: !!o.korrekt }; });
+    // Die Begruendung je Option faehrt mit: sonst erklaert das Gespraech den
+    // Distraktor neu und weicht dabei von dem ab, was Rose gerade gelesen hat.
+    a.optionen = f.optionen.map(function (o) {
+      var m = { text: o.text, korrekt: !!o.korrekt };
+      if (o.erklaerung) m.erklaerung = o.erklaerung;
+      return m;
+    });
   }
   if (f.erklaerung) a.erklaerung = f.erklaerung;
   var tipp = f.tipp || "";
@@ -2181,6 +2193,11 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
   // kann - querySelectorAll wuerde hier auch gehen, aber die Liste steht ohnehin
   // schon beim Bauen fest.
   var knoepfe = [];
+  // Knopf UND Optionsobjekt zusammen: die Aufloesung braucht beides (Faerbung
+  // plus die Begruendung, die an der Option haengt). Ueber den Text zurueck auf
+  // die Option zu schliessen ging, solange nur gefaerbt wurde - bei zwei
+  // gleichlautenden Optionen waere es aber die falsche Begruendung.
+  var paare = [];
 
   optionen.forEach(function (o) {
     var knopf = el("button", "option", o.text);
@@ -2217,13 +2234,8 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
           versuch2: ergebnis.versuch2, selbst: ergebnis.selbst
         });
 
-        Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
-          btn.disabled = true;
-          var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
-          if (istKorrekt) btn.classList.add("richtig");
-          else if (btn === knopf) btn.classList.add("falsch");
-          else if (!btn.classList.contains("falsch")) btn.classList.add("blass");
-        });
+        // Faerbt alle vier und haengt an jede ihre Begruendung (beleg.js).
+        Beleg.optionenAufloesen(paare, knopf, thema.id);
 
         var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
         var st = stickerEl(richtig ? "good" : "part");
@@ -2247,6 +2259,7 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
       });
     });
     knoepfe.push(knopf);
+    paare.push({ knopf: knopf, option: o });
     karte.appendChild(knopf);
   });
 

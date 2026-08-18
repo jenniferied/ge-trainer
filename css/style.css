@@ -342,6 +342,29 @@ p { margin: 0 0 var(--sp-3); }
 .option.falsch { background: var(--bad-bg); border-color: var(--bad); }
 .option.blass { opacity: .55; }
 
+/* Begründung je Option (18.08.2026). Hängt als Geschwister DIREKT unter ihrem
+   Optionsknopf und zieht sich per negativem Rand an ihn heran, damit die
+   Zuordnung ohne Linie klar ist: die Box wächst optisch aus dem Knopf heraus.
+   Bewusst KEIN opacity-Erbe von .option.blass — die Farbe der Option sagt, was
+   Rose angetippt hat, der Text darunter will trotzdem gelesen werden.
+   Der große .erklaerung-Kasten bleibt daneben bestehen: der fasst die Frage als
+   Ganzes zusammen, diese vier sagen je Option, warum sie kippt oder trägt. */
+.warum {
+  margin: -6px 0 var(--sp-2) var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: .87rem; line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper-2);
+  border-left: 4px solid var(--line);
+  border-radius: 0 0 10px 10px;
+  overflow-wrap: anywhere;
+}
+.warum.gut    { border-color: var(--ok);  background: color-mix(in srgb, var(--ok-bg) 60%, var(--card)); }
+.warum.schade { border-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 55%, var(--card)); }
+/* Im Rückblick liegen die Zeilen in einem flex-column-Stapel mit eigenem gap —
+   der negative Rand von oben würde dort die Zeile darüber überlappen. */
+.runde-optionen .warum { margin: 0 0 var(--sp-1) var(--sp-3); font-size: .82rem; }
+
 .erklaerung {
   display: flex; align-items: flex-start; gap: var(--sp-3);
   background: var(--paper-2); border-radius: 12px;

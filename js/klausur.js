@@ -1980,6 +1980,8 @@ function starteMcQuer(pool, wahl) {
     var optionen = mischen(f.optionen);
     var beantwortet = false;
     var knoepfe = [];
+    // Knopf + Option zusammen - gleiche Begruendung wie in main.js mcKarte.
+    var paare = [];
 
     optionen.forEach(function (o) {
       var knopf = el("button", "option", o.text);
@@ -2012,13 +2014,8 @@ function starteMcQuer(pool, wahl) {
             versuch2: ergebnis.versuch2, selbst: ergebnis.selbst
           });
 
-          Array.prototype.forEach.call(karte.querySelectorAll(".option"), function (btn) {
-            btn.disabled = true;
-            var istKorrekt = optionen.some(function (oo) { return oo.korrekt && oo.text === btn.textContent; });
-            if (istKorrekt) btn.classList.add("richtig");
-            else if (btn === knopf) btn.classList.add("falsch");
-            else if (!btn.classList.contains("falsch")) btn.classList.add("blass");
-          });
+          // Faerbt alle vier und haengt an jede ihre Begruendung (beleg.js).
+          Beleg.optionenAufloesen(paare, knopf, t.id);
 
           // Thema erst nach der Antwort zeigen - vorher waere es ein Hinweis.
           var chips = el("div", "chip-reihe");
@@ -2046,6 +2043,7 @@ function starteMcQuer(pool, wahl) {
       });
       karte.appendChild(knopf);
       knoepfe.push(knopf);
+      paare.push({ knopf: knopf, option: o });
     });
 
     app.appendChild(karte);
