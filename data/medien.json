@@ -35,6 +35,116 @@
       "datei": "data/medien/wohnen-v1-video.mp4"
     },
     {
+      "id": "entwicklungsbereiche-v1-deck",
+      "thema": "entwicklungsbereiche",
+      "art": "deck",
+      "version": 1,
+      "titel": "Entwicklungsförderung im Dualen Unterricht",
+      "untertitel": "Die fünf Grundformen und ihre Beispiele — Deck zur Jöhnck-Vorlesung",
+      "anmerkung": "Geprüft 18.08.: Alle fünf Grundformen sind mit den richtigen Beispielen drin (1 Arbeitshaltung, 2 Kooperationsfähigkeit/T-Diagramm, 3 Vergleichen im Geschichtsunterricht, 4 Scherenführerschein, 5 ohne Beispiel — wie im Original), ebenso Leitfrage, alle vier Kompetenzerwartungen und die komplette KMK-Tabelle. Ein erfundener Name auf der Grundform-1-Seite: ein „Fallbeispiel Dennis“ gibt es in den Folien nicht — das Fallbeispiel der Vorlesung heißt Friedemann (Folie 29), die Zielkarte „Ich arbeite 3 Minuten ohne Hilfe“ stammt von Kröger 2024. Im wörtlichen Definitionszitat steht „mit iner“ statt „mit einer Förderung“ (Jöhnck/Baumann 2023, S. 65). Die Waagen-Grafiken auf den Grundform-Seiten sind Gemini-Zutat (im Original nur Folie 27). Komplett fehlen die Lehrplan-Folien (NRW-Tabelle Folie 12: Motorik, Wahrnehmung, Kognition, Sozialisation, Kommunikation; Berlin/Brandenburg Folie 11; „Sich waschen“ Folie 14) und die Disziplingeschichte (Folie 15) — die musst du an den Folien lernen.",
+      "seiten": 15,
+      "pfad": "data/medien/deck/entwicklungsbereiche-v1-"
+    },
+    {
+      "id": "entwicklungsbereiche-v1-podcast",
+      "thema": "entwicklungsbereiche",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Fachwissen und Entwicklungsförderung im dualen Unterricht",
+      "untertitel": "Zwei Stimmen über die Verschränkung von Fach- und Entwicklungszielen",
+      "anmerkung": "Geprüft 18.08. am Transkript: Die fünf Grundformen, die vier KMK-Entwicklungsbereiche samt Unterpunkten, die Definition nach Jöhnck/Baumann 2023 und alle Beispiel-Zuordnungen stimmen. Aber: Die „Fälle Dennis und Anna“ samt Token-System, Wenn-Dann-Plänen, Sitzball und Protokollbögen sind erfunden — der Foliensatz kennt nur den Fall Friedemann (Folie 29), und keine dieser Interventionen steht auf den Folien. Zweiter Fehler: NRW hat nicht „dieselben vier Bereiche“, sondern gliedert in FÜNF Entwicklungsbereiche (Motorik, Wahrnehmung, Kognition, Sozialisation, Kommunikation — Folie 12); nur die KMK nennt vier. Der Gymnasiums-Ausblick am Ende ist freie Podcast-Spekulation, kein Folieninhalt.",
+      "sekunden": 1358,
+      "datei": "data/medien/entwicklungsbereiche-v1-podcast.m4a"
+    },
+    {
+      "id": "entwicklungsbereiche-v1-video",
+      "thema": "entwicklungsbereiche",
+      "art": "video",
+      "version": 1,
+      "titel": "Dualer Unterricht",
+      "untertitel": "Erklärvideo im Kawaii-Stil, neuneinhalb Minuten",
+      "anmerkung": "",
+      "sekunden": 569,
+      "datei": "data/medien/entwicklungsbereiche-v1-video.mp4"
+    },
+    {
+      "id": "prinzipien-v1-deck",
+      "thema": "prinzipien",
+      "art": "deck",
+      "version": 1,
+      "titel": "Didaktische Prinzipien",
+      "untertitel": "Elf Prinzipien für die Unterrichtsplanung im SGE",
+      "anmerkung": "Geprüft 18.08.: Der härteste Test besteht — alle elf Prinzipien stehen namentlich drin, die Weber-2008-Definition, die Hierarchie (Prinzipien → Methoden → Techniken → Sozialformen → Medien) und die Kompetenzerwartungen sind wortgetreu, und die vier nur genannten Prinzipien werden korrekt nicht ausgeschmückt. Ein echter Fehler: Das Elementarisierungs-Schaubild (S. 12) zeigt sechs Felder, weil „elementare Strukturen“ doppelt auftaucht — richtig sind fünf (Grundannahmen, Strukturen, Erfahrungen, Zugänge, Aneignungswege). Die Hilfeniveaus der Handlungsdurchführung sind nur 3 von 5 (es fehlen „Rückmeldung und Begründung → Ausübung“ und „Begleitung → Sicherung“), von den 10 Kriterien innerer Differenzierung stehen nur vier da, und die Handlungsorientierung fehlt als Inhaltsblock fast ganz (keine Jank-&-Meyer-Definition, keine Merkmale, keine vier Handlungsbestandteile). „Pestallozi“ heißt richtig Pestalozzi.",
+      "seiten": 13,
+      "pfad": "data/medien/deck/prinzipien-v1-"
+    },
+    {
+      "id": "prinzipien-v1-podcast",
+      "thema": "prinzipien",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Didaktische Prinzipien im Förderschwerpunkt Geistige Entwicklung",
+      "untertitel": "15 Minuten durch die elf Prinzipien",
+      "anmerkung": "Geprüft 18.08. am Transkript: Alle elf Prinzipien werden vollständig und in Folien-Reihenfolge genannt, die vier nur-genannten bleiben korrekt ohne erfundenen Inhalt; auch Pitsch 2002, die vier Aneignungsebenen und die sieben Entwicklungsbereiche stimmen. Drei Fehler zum Mitkorrigieren: Die „Verschränkung von Lerninhalt und Lernsubjekt“ stammt von Lamers (Folie 15), nicht von „Heinen und Klafki“. Bei Fröhlichs drei Gleich-Aspekten heißt der dritte Gleichgewichtigkeit, nicht „Gleichwertigkeit“. Und was die Folge als Strukturierung erzählt (Taster/Powerlink bei Pia, Schaubilder bei Ali, Phasen von Mithilfe bis Einordnung), ist in Wahrheit Hilfeplanung und Handlungsdurchführung aus der Handlungsorientierung (Folien 26/27) — Strukturierung heißt auf Folie 32: Abläufe verdeutlichen, Verhalten/Konsequenzen vorhersehbar machen, Zeit, Räume.",
+      "sekunden": 901,
+      "datei": "data/medien/prinzipien-v1-podcast.m4a"
+    },
+    {
+      "id": "prinzipien-v1-video",
+      "thema": "prinzipien",
+      "art": "video",
+      "version": 1,
+      "titel": "Grundlagen der Didaktik",
+      "untertitel": "Erklärvideo im Kawaii-Stil, zehneinhalb Minuten",
+      "anmerkung": "",
+      "sekunden": 625,
+      "datei": "data/medien/prinzipien-v1-video.mp4"
+    },
+    {
+      "id": "grundlagen-v1-deck",
+      "thema": "grundlagen",
+      "art": "deck",
+      "version": 1,
+      "titel": "Didaktik im Schwerpunkt Geistige Entwicklung",
+      "untertitel": "Förderschule, Stufenmodell und Organisationsformen des gemeinsamen Unterrichts",
+      "anmerkung": "Geprüft 18.08.: Alle Pflichtlisten stimmen — die 4 Merkmale aus Fischer 2008, 30 (Frühförderung/schulvorbereitende Gruppen, Ganztagsbeschulung, wohnliche Klassenzimmer, kleine Klassenfrequenzen), die 4 Stufen à 3 Jahre samt Werkstufe und Verlängerung 9→12 Jahre (vgl. Fornefeld 2004, 106), die 3+1 Organisationsformen (Integrationsklasse, Integrative Regelklasse, Einzelintegration / Kooperationsklasse) und alle 6 Stundenplan-Annotationen. Aber: Der Fußnotentext unter der Bayern-Abbildung („Dauer in Bayern 3 Jahre“ / „Dienste auch in der Werkstufe“) ist dazuerfunden — auf der Original-Folie 20 sind die Fußnoten nicht lesbar, das nicht mitlernen. Die als „Leitfrage“ betitelte Frage auf S. 3 ist die Rahmenfrage des Moduls; die Leitfrage der Sitzung ist „Welche Merkmale weisen Förderschulen auf?“. Der Termin „23.07.2025“ ist das veraltete Vorjahres-Datum von der Folie — für dich zählt der 10.09.2026. Die Fachzeitschriften-Folien (12/13, difgb.de) fehlen ganz.",
+      "seiten": 15,
+      "pfad": "data/medien/deck/grundlagen-v1-"
+    },
+    {
+      "id": "grundlagen-v1-podcast",
+      "thema": "grundlagen",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Baupläne für den Förderschwerpunkt geistige Entwicklung",
+      "untertitel": "22 Minuten über Förderschulen, Stufen und gemeinsamen Unterricht",
+      "anmerkung": "",
+      "sekunden": 1307,
+      "datei": "data/medien/grundlagen-v1-podcast.m4a"
+    },
+    {
+      "id": "grundlagen-v1-video",
+      "thema": "grundlagen",
+      "art": "video",
+      "version": 1,
+      "titel": "Schulische Bildung im SgE",
+      "untertitel": "Erklärvideo im Kawaii-Stil, siebeneinhalb Minuten",
+      "anmerkung": "",
+      "sekunden": 460,
+      "datei": "data/medien/grundlagen-v1-video.mp4"
+    },
+    {
+      "id": "freizeit-v1-deck",
+      "thema": "freizeit",
+      "art": "deck",
+      "version": 1,
+      "titel": "Freizeitbildung Geistige Entwicklung",
+      "untertitel": "Vom Wandel des Freizeitbegriffs bis zu den Spannungsfeldern",
+      "anmerkung": "Geprüft 18.08.: Keine Erfindungen und keine falsch zugeordnete Zahl — aber zwei echte Fehler und große Lücken. Im Ablauf (S. 3) sind die Stationen 4 und 5 vertauscht (richtig: 4 Teilhaberisiken, 5 Freizeitteilhabe), und der Kasten „PK 2“ (S. 11) zeigt in Wahrheit die individuumsbezogene Förderung von Folie 25 — PK 2 heißt Bewerten & Entscheiden (reflektieren und vergleichen, Vor- und Nachteile abwägen, eigene Interessen berücksichtigen, Kompromisse eingehen), und PK 3 fehlt dort ganz. Die Teilhaberisiken-Tabelle (S. 8) hat nur 5 von 8 Bedürfnissen (es fehlen Integration/Inklusion, Partizipation, Enkulturation). Komplett fehlen die 8 Freizeitbedürfnisse (Folie 8), sämtliche Zahlen (Teilhabe 52→82 %, bei kognitiver Beeinträchtigung 19→47 %, Folie 15; soziale Medien 72 %, Fernsehen 83 %, Faulenzen 62 %, Folie 11), UN-BRK Artikel 30 und die drei Spannungsfelder samt Fazit — Letzteres ist Kompetenzerwartung 5. Was drin ist (Kompetenzerwartungen, Wandel, Zeitmodell, Gegenstandsbereiche), stimmt wortgetreu.",
+      "seiten": 15,
+      "pfad": "data/medien/deck/freizeit-v1-"
+    },
+    {
       "id": "freizeit-v1-podcast",
       "thema": "freizeit",
       "art": "podcast",
