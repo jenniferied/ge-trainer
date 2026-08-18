@@ -22,19 +22,23 @@
       "optionen": [
         {
           "text": "Erholung, Ruhe, Wohlbefinden und angenehmes Körpergefühl",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Rekreation heißt Erholung - Bedürfnis nach Erholung, Ruhe, Wohlbefinden, angenehmem Körpergefühl und sexueller Befriedigung. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kreative Entfaltung und Teilnahme am kulturellen Leben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kreative Entfaltung und Teilnahme am kulturellen Leben ist die Enkulturation. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Beteiligung, Mitbestimmung und Engagement",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Beteiligung, Mitbestimmung und Engagement ist die Partizipation. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kennenlernen, Weiter- und Umlernen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kennenlernen, Weiter- und Umlernen ist die Edukation. (Folie 8, Notizen S. 01)"
         }
       ],
       "erklaerung": "Rekreation (Erholung) meint das Bedürfnis nach Erholung, Ruhe, Wohlbefinden und angenehmem Körpergefühl. Kreative Entfaltung wäre Enkulturation, Beteiligung wäre Partizipation, Weiterlernen wäre Edukation.",
@@ -49,19 +53,23 @@
       "optionen": [
         {
           "text": "Selbsterfahrung und Selbstfindung (Besinnlichkeit)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Kontemplation (Besinnlichkeit) steht für das Bedürfnis nach Selbsterfahrung und Selbstfindung. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Ausgleich, Ablenkung und Vergnügen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ausgleich, Ablenkung und Vergnügen ist die Kompensation. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Mitteilung und Geselligkeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Mitteilung und Geselligkeit ist die Kommunikation. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Zusammensein und Gemeinschaftsbezug",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Zusammensein und Gemeinschaftsbezug ist die Integration bzw. Inklusion. (Folie 8, Notizen S. 01)"
         }
       ],
       "erklaerung": "Kontemplation (Besinnlichkeit) = Selbsterfahrung und Selbstfindung. Ausgleich/Ablenkung/Vergnügen wäre Kompensation, Mitteilung/Geselligkeit wäre Kommunikation, Zusammensein/Gemeinschaftsbezug wäre Integration/Inklusion.",
@@ -76,19 +84,23 @@
       "optionen": [
         {
           "text": "Freizeit muss nicht produktiv sein - sie ist subjektiv und bedürfnisorientiert",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Merksatz der Folie lautet wörtlich: Freizeit muss nicht produktiv sein, Freizeit ist subjektiv und bedürfnisorientiert. (Folie 9, Notizen S. 01)"
         },
         {
           "text": "Nur Sport zählt als sinnvolle Freizeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie stellt Sport gerade als Frage dar (Sport = gute Freizeit?) und beantwortet sie mit dem Merksatz. (Folie 9, Notizen S. 01)"
         },
         {
           "text": "Fernsehen ist objektiv schlechte Freizeit und zu unterbinden",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch Fernsehen steht auf der Folie als Frage, nicht als Urteil. (Folie 9, Notizen S. 01)"
         },
         {
           "text": "Nichtstun ist keine Freizeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Darf Nichtstun Freizeit sein? ist die dritte Karte - und die Antwort des Merksatzes ist ja. (Folie 9, Notizen S. 01)"
         }
       ],
       "erklaerung": "Die Frage, warum wir manche Freizeitaktivitäten als sinnvoller bewerten als andere (Sport = gute Freizeit? Fernsehen = schlechte? Darf Nichtstun Freizeit sein?), löst die Vorlesung so auf: Freizeit muss nicht produktiv sein, Freizeit ist subjektiv und bedürfnisorientiert.",
@@ -103,19 +115,23 @@
       "optionen": [
         {
           "text": "Soziale Barrieren",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal und defizitorientierte Sichtweisen bilden die Spalte der sozialen Barrieren. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Strukturelle Barrieren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Strukturell sind schlechte Erreichbarkeit, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Ressourcenprobleme",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ressourcenprobleme sind fehlende Assistenz, Sicherheitsbedenken und zu wenig Betreuungspersonal. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Rechtliche Barrieren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine rechtliche Kategorie gibt es in dieser Dreiteilung nicht. (Folie 16, Notizen S. 02)"
         }
       ],
       "erklaerung": "Soziale Barrieren: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal, defizitorientierte Sichtweisen. Strukturelle Barrieren: schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse, fehlende Unterstützungssysteme. Ressourcenprobleme: fehlende Assistenz, Sicherheitsbedenken, zu wenig Betreuungspersonal.",
@@ -130,19 +146,23 @@
       "optionen": [
         {
           "text": "2,4 % statt 9,6 % - eine deutlich geringere Beteiligung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: 2,4 Prozent statt 9,6 Prozent - Menschen mit Behinderung sind im Vereinssport deutlich seltener aktiv als der Durchschnitt. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "50 % - jeder Zweite ist im Verein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: 50 Prozent kommt in der Grafik nicht vor. Die 55 Prozent stehen für die, die gar keinen Sport treiben. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "9,6 % statt 2,4 % - eine höhere Beteiligung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Zahlen sind vertauscht - 2,4 Prozent ist der Wert für Menschen mit Behinderung. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "0 % - Vereinssport ist nicht möglich",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: 2,4 Prozent sind wenig, aber nicht null - und die Folie führt Vereinssport ausdrücklich als Chance. (Folie 17, Notizen S. 02)"
         }
       ],
       "erklaerung": "Barrieren beim Sport: geringe Beteiligung im Vereinssport (2,4 % statt 9,6 %), nur 35 % inklusiv arbeitende Vereine, 55 % der Menschen mit Behinderung treiben keinen Sport, nur 4 % inklusive öffentliche Freizeitflächen, hoher Sanierungsbedarf (31 Mrd. Euro). Chancen: Teilhabe und Selbstbestimmung, Begegnung, Abbau von Vorurteilen, soziale Netzwerke, Stärkung von Kompetenzen und Lebensqualität.",
@@ -157,19 +177,23 @@
       "optionen": [
         {
           "text": "Nicht ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Selbstbestimmung bedeutet nicht Hilfeverzicht, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.). (Folie 21, Notizen S. 03)"
         },
         {
           "text": "Vollständig auf jede Unterstützung zu verzichten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau diese Lesart weist Niehoff zurück - es geht nicht um den Verzicht auf Hilfe. (Folie 21, Notizen S. 03)"
         },
         {
           "text": "Dass Betreuer:innen alle Entscheidungen treffen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist Fremdbestimmung, und die erschwert laut Folie das Erlernen von Selbstverantwortung. (Folie 21, Notizen S. 03)"
         },
         {
           "text": "Nur tun zu dürfen, was pädagogisch wertvoll ist",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das wäre die Pädagogisierung von Freizeit, eines der Spannungsfelder - nicht Niehoffs Definition. (Folien 21 und 33, Notizen S. 03 und 05)"
         }
       ],
       "erklaerung": "Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.). Da Fremdbestimmung die Entwicklung erschwert (Hahn 1994), muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006).",
@@ -184,19 +208,23 @@
       "optionen": [
         {
           "text": "Wissen, Können, Wollen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wissen, Können, Wollen - Kenntnisse über Freizeitmöglichkeiten, praktische Fertigkeiten, Interesse und Motivation (Thümmel & Stöppler 2025, 5). (Folie 22, Notizen S. 03)"
         },
         {
           "text": "Geld, Zeit, Ort",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Geld, Zeit und Ort sind Rahmenbedingungen, keine Komponenten des Modells. (Folie 22, Notizen S. 03)"
         },
         {
           "text": "Planen, Buchen, Bezahlen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das klingt nach Handlungsschritten und gehört eher zu PK 3 anwenden und handeln. (Folien 22 und 24, Notizen S. 03 und 04)"
         },
         {
           "text": "Sehen, Hören, Fühlen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Sinne, keine Komponenten selbstbestimmter Freizeitgestaltung. (Folie 22, Notizen S. 03)"
         }
       ],
       "erklaerung": "Wissen (Kenntnisse über Freizeitmöglichkeiten, Bedeutung und Nutzen verstehen), Können (praktische Fertigkeiten erwerben, z. B. sportliche, kreative, musische, organisatorische Kompetenzen) und Wollen (Interesse und Motivation entwickeln, positive Erfahrungen sammeln, Vorlieben reflektieren).",
@@ -211,19 +239,23 @@
       "optionen": [
         {
           "text": "PK 1 informieren und ordnen, PK 2 bewerten und entscheiden, PK 3 anwenden und handeln",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: PK 1 informieren und ordnen, PK 2 bewerten und entscheiden, PK 3 anwenden und handeln - die drei Schritte vom Sammeln über das Abwägen bis zum Tun. (Folien 23 und 24, Notizen S. 04)"
         },
         {
           "text": "PK 1 lesen, PK 2 schreiben, PK 3 rechnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kulturtechniken, kein Teil des Kompetenzstrukturmodells. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "PK 1 planen, PK 2 buchen, PK 3 reisen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Klingt plausibel, steht aber so nicht im Modell. Der dritte Schritt heißt anwenden und handeln. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "PK 1 wahrnehmen, PK 2 spielen, PK 3 ausruhen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Wahrnehmen und Ausruhen kommen im Modell nicht vor. (Folie 24, Notizen S. 04)"
         }
       ],
       "erklaerung": "Die prozessbezogenen Kompetenzen: PK 1 informieren und ordnen (Angebote recherchieren, Informationen sammeln, vergleichen, als Entscheidungsgrundlage ordnen), PK 2 bewerten und entscheiden (Möglichkeiten reflektieren, Vor- und Nachteile abwägen, eigene Interessen berücksichtigen, Kompromisse), PK 3 anwenden und handeln (Aktivitäten planen und umsetzen, Anreise/Kosten/Material organisieren, Hilfen gezielt nutzen). Laut Notizen wichtig für die Klausur!",
@@ -238,19 +270,23 @@
       "optionen": [
         {
           "text": "Aus zwei domänenspezifischen Kompetenzbereichen (DK 1 Planungs- und Gestaltungswissen, DK 2 Wissen über Freizeitaktivitäten) auf Basis der Entwicklungsbereiche",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Zwei domänenspezifische Bereiche - DK 1 Planungs- und Gestaltungswissen, DK 2 Wissen über Freizeitaktivitäten - und darunter quer die Entwicklungsbereiche (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln). (Folie 23, Notizen S. 04)"
         },
         {
           "text": "Aus Schulnoten von 1 bis 6",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Noten kommen im Modell nicht vor. (Folie 23, Notizen S. 04)"
         },
         {
           "text": "Aus einem Belohnungssystem mit Punkten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ein Belohnungssystem ist nicht Teil des Modells. (Folie 23, Notizen S. 04)"
         },
         {
           "text": "Aus den fünf Peschel-Dimensionen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die fünf Peschel-Dimensionen gehören zum offenen Unterricht aus einer anderen Vorlesung. (Folie 23, Notizen S. 04)"
         }
       ],
       "erklaerung": "Das Modell (Thümmel & Stöppler 2025, in Anlehnung an ISB 2022): zwei domänenspezifische Kompetenzbereiche - DK 1 Aneignung und Vertiefung von Planungs- und Gestaltungswissen, DK 2 Aneignung und Vertiefung von Wissen über Freizeitaktivitäten - verbunden mit den prozessbezogenen Kompetenzen PK 1-3, auf der Basis der Entwicklungsbereiche (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln).",
@@ -265,19 +301,23 @@
       "optionen": [
         {
           "text": "Pädagogisierung von Freizeit versus Zweckfreiheit",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Pädagogisierung von Freizeit gegenüber Zweckfreiheit - eines der drei Spannungsfelder, neben Selbstbestimmung/Fürsorge und Struktur/Offenheit. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Sommer versus Winter",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Jahreszeiten sind kein Spannungsfeld der Freizeitbildung. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Drinnen versus draußen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Ort ist kein Spannungsfeld dieser Vorlesung. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Analog versus digital",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Analog gegenüber digital kommt in den drei Waagen nicht vor. (Folie 33, Notizen S. 05)"
         }
       ],
       "erklaerung": "Die Spannungsfelder: a) Selbstbestimmung versus Fürsorge (eigenständige Entscheidungen vs. Unterstützung und stellvertretende Entscheidungen), b) Pädagogisierung von Freizeit versus Zweckfreiheit (Freizeit wird funktionalisiert vs. Raum für freie Entfaltung) und c) Struktur versus Offenheit (Orientierung und Sicherheit vs. Raum für eigene Ideen). Ziel: ausgewogene Balance.",
@@ -292,19 +332,23 @@
       "optionen": [
         {
           "text": "Enkulturation",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Enkulturation - Bedürfnis nach kreativer Entfaltung, produktiver Betätigung und Teilnahme am kulturellen Leben. Genau das passiert in der Kunstwerkstatt mit Ausstellung. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kontemplation",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kontemplation wäre Selbsterfahrung und Selbstfindung, also eher der stille Rückzug. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Edukation",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Edukation wäre das Kennenlernen, Weiter- und Umlernen - Lernen steht hier aber nicht im Vordergrund. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kommunikation",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kommunikation wäre das Bedürfnis nach Mitteilung und Geselligkeit. Das schwingt mit, im Vordergrund steht aber die kreative und kulturelle Teilnahme. (Folie 8, Notizen S. 01)"
         }
       ],
       "erklaerung": "Enkulturation meint das Bedürfnis nach kreativer Entfaltung, produktiver Betätigung und Teilnahme am kulturellen Leben - genau das beschreibt die Kunstwerkstatt samt Ausstellung. Der naheliegende Decoy ist Edukation: Beim Gestalten lernt man zwar auch dazu, Edukation zielt aber auf Kennenlernen, Weiter- und Umlernen in sachlichen und sozialen Handlungsebenen, nicht auf die kulturelle Teilhabe. Kontemplation wäre Selbsterfahrung und Selbstfindung, Kommunikation die Geselligkeit. (Notizen S. 01)",
@@ -320,19 +364,23 @@
       "optionen": [
         {
           "text": "Partizipation",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Partizipation - Bedürfnis nach Beteiligung, Mitbestimmung und Engagement. Sie stimmt mit ab, das ist Mitbestimmung. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Integration/Inklusion",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Integration bzw. Inklusion meint das Bedürfnis nach Zusammensein, Gemeinschaftsbezug und sozialer Stabilität - hier geht es aber ums Mitentscheiden. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kommunikation",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kommunikation meint Mitteilung und Geselligkeit. Sie redet zwar, aber der Kern ist die Mitbestimmung. (Folie 8, Notizen S. 01)"
         },
         {
           "text": "Kompensation",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kompensation meint Ausgleich, Ablenkung und Vergnügen. (Folie 8, Notizen S. 01)"
         }
       ],
       "erklaerung": "Partizipation ist das Bedürfnis nach Beteiligung, Mitbestimmung und Engagement - das Mitplanen und Abstimmen trifft es genau. Der Decoy ist Integration/Inklusion: Auch dort geht es um die Gruppe, aber um Zusammensein, Gemeinschaftsbezug und soziale Stabilität, nicht um Mitentscheiden. Kommunikation wäre Mitteilung und Geselligkeit, Kompensation Ausgleich, Ablenkung und Vergnügen. (Notizen S. 01)",
@@ -348,19 +396,23 @@
       "optionen": [
         {
           "text": "Abbau von Vorurteilen und Aufbau sozialer Netzwerke",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Abbau von Vorurteilen und Aufbau sozialer Netzwerke stehen beide in der grünen Chancen-Spalte, zusammen mit Teilhabe und Selbstbestimmung, Begegnung und Stärkung der Lebensqualität. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "Nur 35 Prozent der Vereine arbeiten inklusiv",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das steht in der roten Barrieren-Spalte. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "Hoher Sanierungsbedarf von 31 Milliarden Euro",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Sanierungsbedarf von 31 Milliarden Euro ist ebenfalls eine Barriere. (Folie 17, Notizen S. 02)"
         },
         {
           "text": "Nur 4 Prozent der öffentlichen Freizeitflächen sind inklusiv",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die 4 Prozent inklusiver Freizeitflächen stehen ebenfalls bei den Barrieren. (Folie 17, Notizen S. 02)"
         }
       ],
       "erklaerung": "Als Chancen nennt die Vorlesung die Förderung von Teilhabe und Selbstbestimmung, die Begegnung zwischen Menschen mit und ohne Behinderung, den Abbau von Vorurteilen, den Aufbau sozialer Netzwerke sowie die Stärkung von Kompetenzen und Lebensqualität. Die drei Zahlenangaben - nur 35 Prozent inklusiv arbeitende Vereine, 31 Milliarden Euro Sanierungsbedarf und nur 4 Prozent inklusive öffentliche Freizeitflächen - gehören dagegen zu den Barrieren: Sie beschreiben, woran Teilhabe im Sport scheitert, nicht was sie bewirkt. (Notizen S. 02)",
@@ -376,19 +428,23 @@
       "optionen": [
         {
           "text": "Strukturelle Barrieren - schlechte Erreichbarkeit von Angeboten und bauliche Hindernisse",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit und bauliche Hindernisse - das ist die Spalte der strukturellen Barrieren. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Soziale Barrieren - defizitorientierte Sichtweisen im Umfeld",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Sozial wären Haltungen und Sichtweisen im Umfeld, nicht Treppen und Busverbindungen. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Ressourcenprobleme - fehlende Assistenz und Sicherheitsbedenken",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ressourcenprobleme wären fehlende Assistenz oder Sicherheitsbedenken - hier fehlt aber der Zugang selbst. (Folie 16, Notizen S. 02)"
         },
         {
           "text": "Kein Barriere-Problem, sondern das Spannungsfeld zwischen Struktur und Offenheit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Spannungsfeld Struktur und Offenheit betrifft die Gestaltung von Angeboten, nicht ihre Erreichbarkeit. (Folien 16 und 33, Notizen S. 02 und 05)"
         }
       ],
       "erklaerung": "Erreichbarkeit, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme stehen in der Spalte der strukturellen Barrieren. Der interessanteste Decoy ist das Spannungsfeld zwischen Struktur und Offenheit: Struktur meint dort verlässliche Rahmenbedingungen im pädagogischen Handeln, nicht Gebäude und Busverbindungen. Soziale Barrieren betreffen Einstellungen, Ressourcenprobleme die fehlende Assistenz. (Notizen S. 02)",
@@ -404,19 +460,23 @@
       "optionen": [
         {
           "text": "Fremdbestimmung erschwert es, Selbstverantwortung und eigenständige Entscheidungen zu erlernen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen (Hahn 1994) - Station 2 der Kette Selbstbestimmung als Ziel der Freizeitbildung. (Folie 21, Notizen S. 03)"
         },
         {
           "text": "Selbstbestimmung heißt, die Unterstützung ganz abzubauen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Gegenteil steht dort: Selbstbestimmung heißt nicht Hilfeverzicht, sondern Unterstützung selbstbestimmt nutzen zu können. (Folie 21, Notizen S. 03)"
         },
         {
           "text": "Freizeit muss produktiv genutzt werden, sonst ist sie verschenkt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Freizeit muss ausdrücklich NICHT produktiv sein. (Folie 9, Notizen S. 01)"
         },
         {
           "text": "Zu viel Offenheit im Angebot führt zur Überforderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Überforderung durch zu viel Offenheit ist ein anderes Spannungsfeld - hier wird gerade zu viel entschieden, nicht zu wenig. (Folie 33, Notizen S. 05)"
         }
       ],
       "erklaerung": "Der Einwand stammt von Hähn (1994): Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen, deshalb muss Selbstbestimmung schon in der Schulzeit gefördert werden (Kulig/Theunissen 2006). Die Aussage, Selbstbestimmung heiße die Unterstützung abzubauen, dreht Niehoff um - dort heißt es ausdrücklich, Selbstbestimmung bedeute nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Der Satz, Freizeit müsse produktiv genutzt werden, widerspricht dem Grundsatz, dass Freizeit nicht produktiv sein muss. Die Überforderung durch zu viel Offenheit ist zwar belegt, gehört aber zum Spannungsfeld Struktur und Offenheit und ist gerade kein Einwand gegen stellvertretende Entscheidungen. (Notizen S. 03)",
@@ -432,19 +492,23 @@
       "optionen": [
         {
           "text": "Wollen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wollen - Interesse und Motivation für Freizeitaktivitäten entwickeln, positive Erfahrungen sammeln, eigene Vorlieben reflektieren. Wissen und Können hat er, es fehlt der Antrieb. (Folie 22, Notizen S. 03)"
         },
         {
           "text": "Wissen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Wissen hat er - er kennt die Angebote im Stadtteil. (Folie 22, Notizen S. 03)"
         },
         {
           "text": "Können",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Können hat er auch - er beherrscht mehrere Sportarten. (Folie 22, Notizen S. 03)"
         },
         {
           "text": "PK 1 informieren und ordnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: PK 1 informieren und ordnen gehört zum Kompetenzstrukturmodell, und Informationen hat er bereits. (Folien 22 und 24, Notizen S. 03 und 04)"
         }
       ],
       "erklaerung": "Wollen umfasst Interesse und Motivation für Freizeitaktivitäten, positive Erfahrungen und das Reflektieren eigener Vorlieben - genau das fehlt hier. Wissen (Kenntnis der Möglichkeiten) und Können (praktische Fertigkeiten) bringt er bereits mit, deshalb scheiden sie aus. Der Decoy PK 1 informieren und ordnen stammt aus dem Kompetenzstrukturmodell und beschreibt das Recherchieren und Ordnen von Informationen, also eher die Wissensseite. (Notizen S. 03)",
@@ -460,19 +524,23 @@
       "optionen": [
         {
           "text": "DK 1 - Aneignung und Vertiefung von Planungs- und Gestaltungswissen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: DK 1 - Aneignung und Vertiefung von Planungs- und Gestaltungswissen. Es geht um das WIE des Planens, nicht um einzelne Aktivitäten. (Folie 23, Notizen S. 04)"
         },
         {
           "text": "DK 2 - Aneignung und Vertiefung von Wissen über Freizeitaktivitäten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: DK 2 wäre Wissen über Freizeitaktivitäten selbst, also welche es gibt und was sie ausmacht. Genau daran unterscheiden sich die beiden DK. (Folie 23, Notizen S. 04)"
         },
         {
           "text": "PK 3 - anwenden und handeln",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: PK 3 anwenden und handeln wäre die konkrete Umsetzung, nicht der systematische Wissensaufbau. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "Entwicklungsbereich Denken und Lernstrategien",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Entwicklungsbereiche liegen im Modell quer darunter und sind kein Kompetenzbereich der Freizeitgestaltung. (Folie 23, Notizen S. 04)"
         }
       ],
       "erklaerung": "Die beiden domänenspezifischen Bereiche unterscheiden sich nach dem Gegenstand des Wissens: DK 1 ist das Planungs- und Gestaltungswissen, DK 2 das Wissen über die Freizeitaktivitäten selbst. Der Decoy PK 3 ist deshalb reizvoll, weil dort ebenfalls geplant wird - PK 3 meint aber das tatsächliche Umsetzen samt Anreise, Kosten und Material, also den Prozess, nicht den Wissensaufbau. Die Entwicklungsbereiche liegen im Modell quer darunter und sind mit allen Kompetenzbereichen verknüpft. (Notizen S. 04)",
@@ -488,19 +556,23 @@
       "optionen": [
         {
           "text": "PK 3 - anwenden und handeln",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: PK 3 anwenden und handeln - Freizeitaktivitäten planen und umsetzen, Organisation von Anreise, Kosten und Material, eigenen Unterstützungsbedarf einschätzen. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "PK 2 - bewerten und entscheiden",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: PK 2 bewerten und entscheiden wäre die Wahl zwischen den Möglichkeiten - die ist hier schon getroffen. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "PK 1 - informieren und ordnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: PK 1 informieren und ordnen wäre das Recherchieren und Vergleichen der Angebote, also der Schritt davor. (Folie 24, Notizen S. 04)"
         },
         {
           "text": "DK 1 - Planungs- und Gestaltungswissen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: DK 1 ist Wissen, keine prozessbezogene Kompetenz. (Folie 23, Notizen S. 04)"
         }
       ],
       "erklaerung": "PK 3 umfasst das Planen und Umsetzen von Aktivitäten samt Organisation von Anreise, Kosten und Material, das Einschätzen des eigenen Unterstützungsbedarfs und das gezielte Nutzen von Hilfen. Der Decoy PK 2 wäre der Schritt davor: Möglichkeiten abwägen und sich entscheiden - die Entscheidung ist hier schon gefallen. PK 1 wäre das Recherchieren und Ordnen der Angebote, DK 1 das dahinterliegende Planungswissen statt des Handelns. (Notizen S. 04)",
@@ -516,19 +588,23 @@
       "optionen": [
         {
           "text": "Struktur und Offenheit",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Struktur und Offenheit - Struktur gibt Orientierung und Sicherheit, zu viel Offenheit birgt das Risiko der Überforderung. Genau dieses Risiko tritt hier ein. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Selbstbestimmung und Fürsorge",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Selbstbestimmung und Fürsorge betrifft stellvertretende Entscheidungen - hier entscheidet aber niemand für sie. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Pädagogisierung von Freizeit und Zweckfreiheit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Pädagogisierung und Zweckfreiheit betrifft die Funktionalisierung von Freizeit. Der Nachmittag ist gerade nicht funktionalisiert. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Unterstützung und Kontrolle",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Unterstützung und Kontrolle steht im Fazit, nicht in den drei Waagen der Spannungsfeld-Folie - und trifft die Orientierungslosigkeit weniger genau. (Folien 33 und 36, Notizen S. 05)"
         }
       ],
       "erklaerung": "Struktur gibt Orientierung, Sicherheit und verlässliche Rahmenbedingungen, Offenheit lässt Raum für eigene Ideen - mit dem ausdrücklich genannten Risiko der Überforderung durch zu viel Offenheit. Genau das passiert hier. Der Decoy Selbstbestimmung und Fürsorge liegt nahe, weil auch dort Unterstützung fehlt, dieses Spannungsfeld dreht sich aber um stellvertretende Entscheidungen. Unterstützung und Kontrolle stammt aus der Abschlussfolie und beschreibt das Grenzensetzen, nicht die fehlende Rahmung. (Notizen S. 05)",
@@ -544,19 +620,23 @@
       "optionen": [
         {
           "text": "Unterstützung geben, die stärkt, und zugleich Freiräume lassen - auch für Nichtstun, denn Freizeit muss nicht produktiv sein",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Das Fazit formuliert genau diese Balance - Unterstützung, die stärkt, Freiheit, die wachsen lässt. Zusammen mit dem Merksatz, dass Freizeit nicht produktiv sein muss. (Folien 9, 33 und 36, Notizen S. 01 und 05)"
         },
         {
           "text": "Jede Aktivität mit einem klaren Förderziel versehen, damit die Zeit sinnvoll genutzt wird",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das wäre die Pädagogisierung von Freizeit, also die eine Seite des Spannungsfelds - gesucht ist die Balance. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Alle Vorgaben streichen, damit die Schüler:innen möglichst frei entscheiden können",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Alle Vorgaben zu streichen kippt auf die andere Seite und riskiert Überforderung durch zu viel Offenheit. (Folie 33, Notizen S. 05)"
         },
         {
           "text": "Für jede Schülerin und jeden Schüler festlegen, was ihnen im Sinne der Fürsorge guttut",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist die Fürsorge-Seite mit der Gefahr stellvertretender Entscheidungen. (Folie 33, Notizen S. 05)"
         }
       ],
       "erklaerung": "Das Ziel heißt ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit - Freizeit braucht Unterstützung, die stärkt, und Freiheit, die wachsen lässt. Alle drei Decoys benennen je ein Risiko, das die Notizen selbst markieren: jede Aktivität mit einem Förderziel zu versehen ist die Pädagogisierung, also der Verlust von Zweckfreiheit durch Instrumentalisierung; alle Vorgaben zu streichen führt zur Überforderung durch zu viel Offenheit; stellvertretend festzulegen, was einer Schülerin guttut, ist die Gefahr im Spannungsfeld Selbstbestimmung und Fürsorge. Jede Variante klingt für sich vernünftig, nur eine hält die Balance. (Notizen S. 05, mit S. 01)",
@@ -572,19 +652,23 @@
       "optionen": [
         {
           "text": "Dispositionszeit, weil es freie, selbst bestimmbare Zeit ist",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Dispositionszeit ist die freie, selbstbestimmbare Zeit - die Folie nennt als Beispiele ausdrücklich Urlaub und Vereinsarbeit. Achtung: Opaschowskis Zeitmodell fehlt in deinen Notizen komplett, dort steht nur die Quizfrage dazu. (Folie 6)"
         },
         {
           "text": "Obligationszeit, weil ein fester Vereinstermin eine gebundene Verpflichtung ist",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Obligationszeit ist die gebundene Zeit für zweckbestimmte Tätigkeiten - Beispiele der Folie sind Schlafen und Essen. (Folie 6)"
         },
         {
           "text": "Determinationszeit, weil der Verein den Ablauf des Nachmittags vorgibt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Determinationszeit ist fremdbestimmt und abhängig - Beispiele der Folie sind Arbeit und Krankheit. (Folie 6)"
         },
         {
           "text": "Rekreationszeit, weil Sport in erster Linie der Erholung dient",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Rekreation ist eine Zielfunktion aus der Bedürfnis-Tabelle, keine der drei Zeitarten. (Folien 6 und 8, Notizen S. 01)"
         }
       ],
       "erklaerung": "Vereinsarbeit steht auf der Folie ausdrücklich als Beispiel für Dispositionszeit. Die Decoys sind die Nachbarbegriffe: Obligationszeit meint gebundene Zwecktätigkeiten wie Schlafen und Essen, Determinationszeit fremdbestimmte Zeit wie Arbeit oder Krankheit - und Rekreation gehört gar nicht ins Zeitmodell, sondern zu den acht Freizeitbedürfnissen. (Folie 6, Opaschowski 1990)",
@@ -600,19 +684,23 @@
       "optionen": [
         {
           "text": "Dass der Anteil an Selbstbestimmung von der ersten zur dritten Zeitart zunimmt",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Balken trägt links Fremdbestimmung und rechts Selbstbestimmung - von der Determinations- über die Obligations- zur Dispositionszeit nimmt der Anteil an Selbstbestimmung zu. Auch dieses Kontinuum fehlt in deinen Notizen. (Folie 6)"
         },
         {
           "text": "Dass die drei Zeitarten im Tagesverlauf immer in dieser Reihenfolge aufeinanderfolgen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine Reihenfolge im Tagesverlauf behauptet die Folie nicht. (Folie 6)"
         },
         {
           "text": "Den historischen Weg vom traditionellen zum modernen Freizeitverständnis",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der historische Wandel vom traditionellen zum modernen Freizeitverständnis steht auf der Folie davor. (Folien 5 und 6)"
         },
         {
           "text": "Eine Rangfolge, welche Zeitart für die Lebensqualität am wichtigsten ist",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine Rangfolge nach Wichtigkeit gibt der Pfeil nicht an - er beschreibt den Grad der Selbstbestimmung. (Folie 6)"
         }
       ],
       "erklaerung": "Der Balken ist als Kontinuum von Fremdbestimmung zu Selbstbestimmung beschriftet - es geht um den Grad der Verfügung über die eigene Zeit, nicht um Uhrzeiten oder Wichtigkeit. Der Decoy mit dem historischen Wandel ist besonders verlockend, weil es diesen Wandel wirklich gibt, aber auf einer anderen Folie. (Folie 6, Opaschowski 1990; Wandel siehe Folie 5)",
@@ -628,19 +716,23 @@
       "optionen": [
         {
           "text": "Dem traditionellen Verständnis; modern gilt Freizeit als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung, Teilhabe und Entwicklung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Traditionell heißt Freizeit gleich freie Zeit nach der Arbeit, Nicht-Arbeit, Fokus auf Erholung und Ausgleich, klare Trennung, Zeitorientierung. Modern heißt Teil der gesamten Lebenszeit, Raum für Selbstbestimmung, Fokus auf Teilhabe, Entwicklung und Lebensqualität, Übergänge zwischen Lebensbereichen, Bedürfnis- und Handlungsorientierung. Diese Gegenüberstellung fehlt in deinen Notizen. (Folie 5)"
         },
         {
           "text": "Dem modernen Verständnis; traditionell stand dagegen die Bedürfnis- und Handlungsorientierung im Vordergrund",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die beiden Seiten sind vertauscht - die Bedürfnis- und Handlungsorientierung ist das MODERNE Verständnis. (Folie 5)"
         },
         {
           "text": "Dem traditionellen Verständnis; modern geht es vor allem darum, Arbeit und Freizeit noch klarer voneinander zu trennen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der erste Teil stimmt, der zweite nicht: Modern geht es um Übergänge zwischen den Lebensbereichen, nicht um schärfere Trennung. (Folie 5)"
         },
         {
           "text": "Dem modernen Verständnis; traditionell wurde Freizeit als Zeit für Erholung und Ausgleich gar nicht mitgedacht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Erholung und Ausgleich sind gerade der traditionelle Fokus, sie waren also durchaus mitgedacht. (Folie 5)"
         }
       ],
       "erklaerung": "Freizeit als Nicht-Arbeit mit dem Fokus auf Erholung ist genau die traditionelle Lesart; das moderne Verständnis fasst Freizeit als Teil der gesamten Lebenszeit und rückt Selbstbestimmung, Teilhabe und Lebensqualität nach vorn. Zwei Decoys drehen die beiden Spalten einfach um, einer verwechselt die Richtung: modern werden die Übergänge zwischen Lebensbereichen betont, nicht die schärfere Trennung. (Folie 5, Thümmel & Stöppler 2025, S. 6)",
@@ -656,19 +748,23 @@
       "optionen": [
         {
           "text": "Die Teilnahme an Freizeitangeboten ist deutlich gestiegen, und die vollständige Ablehnung von Inklusion ist zurückgegangen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Teilnahme an Freizeitangeboten 52 auf 82 Prozent, bei Menschen mit kognitiven Beeinträchtigungen 19 auf 47 Prozent, vollständige Ablehnung von Inklusion 17 auf 7 Prozent. Diese Zahlen stehen nur auf der Folie, in deinen Notizen fehlen sie. (Folie 15)"
         },
         {
           "text": "Die Teilnahme ist gestiegen, gleichzeitig hat die vollständige Ablehnung von Inklusion zugenommen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Ablehnung ist zurückgegangen, von 17 auf 7 Prozent. (Folie 15)"
         },
         {
           "text": "Menschen mit kognitiven Beeinträchtigungen haben inzwischen zur Teilnahmequote der Gesamtgruppe aufgeschlossen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Mit 47 gegenüber 82 Prozent bleibt eine deutliche Lücke - aufgeschlossen ist die Gruppe nicht. (Folie 15)"
         },
         {
           "text": "Die Werte sind über den ganzen Zeitraum weitgehend unverändert geblieben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Alle drei Werte haben sich klar bewegt; die Folie fasst es als positive Entwicklung zusammen. (Folie 15)"
         }
       ],
       "erklaerung": "Die Zahlen der Folie: Teilnahme an Freizeitangeboten 52 auf 82 Prozent, vollständige Ablehnung von Inklusion 17 auf 7 Prozent. Der schwierigste Decoy ist der dritte - die Teilnahme von Menschen mit kognitiven Beeinträchtigungen wächst zwar stark von 19 auf 47 Prozent, bleibt damit aber weit unter den 82 Prozent der Gesamtgruppe. Positive Entwicklung heißt hier nicht Gleichstand. (Folie 15, Trescher & Weidmann 2025)",
@@ -684,19 +780,23 @@
       "optionen": [
         {
           "text": "Gesellschaftsbezogene Förderung; das Gegenstück wäre die individuumsbezogene Förderung, etwa Unterstützung beim Formulieren eigener Interessen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Kooperationen mit Vereinen und das Kennenlernen lokaler Angebote (Kino, Schwimmbad, Bibliothek, Jugendzentrum) stehen in der gesellschaftsbezogenen Förderung. Das Gegenstück ist die individuumsbezogene Förderung: aktive Beteiligung an der Planung, offene Unterrichtsformen, Unterstützung beim Formulieren eigener Interessen, wohlwollende Zurückhaltung der Lehrkräfte. Beide Folien fehlen in deinen Notizen. (Folien 25 und 27)"
         },
         {
           "text": "Individuumsbezogene Förderung; das Gegenstück wäre die gesellschaftsbezogene Förderung, etwa offene Unterrichtsformen für mehr Wahlmöglichkeiten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die beiden Richtungen sind vertauscht - Kooperationen mit Vereinen wirken nach außen, sind also gesellschaftsbezogen. (Folien 25 und 27)"
         },
         {
           "text": "Gesellschaftsbezogene Förderung; das Gegenstück wäre die Förderung der prozessbezogenen Kompetenzen im Kompetenzstrukturmodell",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die erste Hälfte stimmt, das Gegenstück nicht: Es ist die individuumsbezogene Förderung, nicht das Kompetenzstrukturmodell. (Folien 25 und 27)"
         },
         {
           "text": "Individuumsbezogene Förderung; das Gegenstück wäre der Abbau struktureller Barrieren wie fehlender Barrierefreiheit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Beide Hälften stimmen nicht - der Abbau struktureller Barrieren ist keine der beiden Förderrichtungen. (Folien 16, 25 und 27, Notizen S. 02)"
         }
       ],
       "erklaerung": "Kooperationen mit Vereinen und das Kennenlernen lokaler Angebote stehen auf der Folie zur gesellschaftsbezogenen Förderung; die individuumsbezogene Seite arbeitet dagegen an der Person - eigene Interessen formulieren, Wahlmöglichkeiten schaffen, wohlwollende Zurückhaltung der Lehrkräfte. Zwei Decoys vertauschen das Paar, zwei schieben ein anderes Modell unter (Kompetenzstrukturmodell bzw. Barrieren). (Folien 25 und 27, Schluck/Schuck 2019, S. 644 f.)",
@@ -712,19 +812,23 @@
       "optionen": [
         {
           "text": "Auf Artikel 30 der UN-Behindertenrechtskonvention",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Artikel 30 der UN-Behindertenrechtskonvention - gleichberechtigte Teilhabe am kulturellen Leben, Zugang zu Freizeit-, Sport- und Erholungsangeboten, barrierefreie Angebote. Das ist die rechtliche Grundlage, und sie fehlt in deinen Notizen. (Folie 28)"
         },
         {
           "text": "Auf das Leitthema L1 'Der Mensch im Alltag' im Rahmenlehrplan",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Leitthema L1 ist ein curricularer Beleg, kein Recht - es zeigt, dass Freizeit Bildungsauftrag ist. (Folie 20)"
         },
         {
           "text": "Auf das Kompetenzstrukturmodell Freizeitgestaltung nach Thümmel und Stöppler",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Kompetenzstrukturmodell beschreibt, welche Kompetenzen es braucht, nicht welches Recht besteht. (Folie 23, Notizen S. 04)"
         },
         {
           "text": "Auf die Stigma-Identitäts-These nach Markowetz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Stigma-Identitäts-These begründet die Bedeutung von Freizeit sozialwissenschaftlich, nicht rechtlich. (Folie 12)"
         }
       ],
       "erklaerung": "Artikel 30 der UN-BRK schreibt die gleichberechtigte Teilhabe am kulturellen Leben und den Zugang zu Freizeit-, Sport- und Erholungsangeboten fest - das ist die Rechtsgrundlage. Alle drei Decoys gibt es wirklich, sie begründen aber etwas anderes: L1 den schulischen Bildungsauftrag, das Kompetenzstrukturmodell die Kompetenzsystematik, die Stigma-Identitäts-These die gesellschaftliche Bedeutung von Freizeit. (Folie 28; L1 auf Folie 20, RLP 2011, S. 23)",

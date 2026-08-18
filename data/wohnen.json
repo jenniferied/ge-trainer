@@ -20,19 +20,23 @@
       "optionen": [
         {
           "text": "Normalisierungsprinzip (1950-1971), Selbstbestimmungsbegriff (1980-1994), UN-Behindertenrechtskonvention (2008)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Normalisierungsprinzip (1950-1971), Selbstbestimmungsbegriff (1980-1994), UN-Behindertenrechtskonvention (2008) - so ordnet die Folie den behindertenpolitischen Diskurs (Fornefeld 2020, 173-180). (Folie 7, Notizen S. 08)"
         },
         {
           "text": "UN-BRK (1950), Normalisierung (1980), Selbstbestimmung (2008)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Reihenfolge ist komplett verdreht; die UN-BRK ist der jüngste der drei Meilensteine, nicht der älteste. (Folie 7, Notizen S. 08)"
         },
         {
           "text": "Selbstbestimmung (1950), UN-BRK (1971), Normalisierung (1994)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch hier passen weder Reihenfolge noch Jahreszahlen. Merkhilfe: erst normalisieren, dann selbst bestimmen, dann das internationale Recht. (Folie 7, Notizen S. 08)"
         },
         {
           "text": "Inklusionsgesetz (1960), Wohngeldreform (1990), Pflegeversicherung (2008)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Diese drei Gesetze kommen im Foliensatz gar nicht vor. (Folie 7, Notizen S. 08)"
         }
       ],
       "erklaerung": "Die Reihenfolge: das Normalisierungsprinzip (1950-1971) - das Leben von behinderten Menschen so normal wie möglich gestalten -, der Selbstbestimmungsbegriff (1980-1994) und die UN-Behindertenrechtskonvention (2008)."
@@ -47,19 +51,23 @@
       "optionen": [
         {
           "text": "In Landeskrankenhäusern/Anstalten - mit gleichförmigem Tagesablauf, Schlafsälen ohne Privatsphäre, Isolation und Rückgang erworbener Fähigkeiten",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Bis 1971 in Landeskrankenhäusern und Anstalten - gleichförmiger Tagesablauf, Mindestmaß an Förderung, Schlafsäle ohne Privatsphäre; Folge: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme. (Folie 6, Notizen S. 08)"
         },
         {
           "text": "Überwiegend in eigenen Wohnungen mit ambulanter Unterstützung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ambulantes Wohnen ist eine sehr viel jüngere Entwicklung - die Statistik dazu beginnt erst 2010. (Folien 6 und 11, Notizen S. 08 und 10)"
         },
         {
           "text": "In inklusiven Wohngemeinschaften mit Assistenz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Inklusive Wohngemeinschaften sind das Gegenbild zu der Zeit vor 1971. (Folie 6, Notizen S. 08)"
         },
         {
           "text": "Ausschließlich bei Pflegefamilien mit individueller Förderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Pflegefamilien kommen im Foliensatz nicht vor; die Folie spricht von Anstalten. (Folie 6, Notizen S. 08)"
         }
       ],
       "erklaerung": "Bis 1971 lebten Menschen mit geistiger Beeinträchtigung in Landeskrankenhäusern bzw. Anstalten: gleichförmiger Tagesablauf, nur ein Mindestmaß an Förderung und individueller Ansprache, Schlafsäle ohne Privatsphäre. Folgen: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme. Vor allem Eltern wünschten sich familiennahe und humane Lebensräume."
@@ -74,19 +82,23 @@
       "optionen": [
         {
           "text": "Sozialgesetzbuch, Grundgesetz, UN-Behindertenrechtskonvention",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Grafik verankert das Wohnrecht in Sozialgesetzbuch, Grundgesetz und UN-Behindertenrechtskonvention. (Folie 7, Notizen S. 08)"
         },
         {
           "text": "Straßenverkehrsordnung, Baugesetzbuch, Mietspiegel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Baurecht und Mietspiegel spielen im Foliensatz keine Rolle. (Folie 7, Notizen S. 08)"
         },
         {
           "text": "Schulgesetz, Kitagesetz, Jugendschutzgesetz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Diese Gesetze betreffen Bildung und Jugendhilfe, nicht das Wohnrecht. (Folie 7, Notizen S. 08)"
         },
         {
           "text": "Arbeitsrecht, Steuerrecht, Vereinsrecht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kommt in der Grafik nicht vor. (Folie 7, Notizen S. 08)"
         }
       ],
       "erklaerung": "Das Wohnrecht ist verankert im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention. Wohnen ist ein Menschenrecht - im GG u. a. über die Unversehrtheit der Wohnung, die Freizügigkeit im Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG)."
@@ -101,19 +113,23 @@
       "optionen": [
         {
           "text": "Menschen mit Behinderungen können gleichberechtigt ihren Aufenthaltsort wählen und sind nicht verpflichtet, in besonderen Wohnformen zu leben",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben - und sind nicht verpflichtet, in besonderen Wohnformen zu leben. (Folie 9, Notizen S. 09)"
         },
         {
           "text": "Ein Recht auf kostenloses Wohnen im Heim",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Über Kosten sagt Artikel 19 nichts; er sichert die Wahlfreiheit. (Folie 9, Notizen S. 09)"
         },
         {
           "text": "Die Pflicht der Familien, Angehörige lebenslang aufzunehmen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - Artikel 19 stärkt die eigene Entscheidung, nicht die Pflicht der Familie. (Folie 9, Notizen S. 09)"
         },
         {
           "text": "Ein Verbot ambulanter Wohnformen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Artikel 19 fordert im Gegenteil Zugang zu Unterstützungsdiensten zu Hause, also gerade ambulante Formen. (Folie 9, Notizen S. 09)"
         }
       ],
       "erklaerung": "UN-BRK Art. 19: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben, und sind nicht verpflichtet, in besonderen Wohnformen zu leben. Dazu: gleichberechtigter Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz (zur Verhinderung von Isolation) und gemeindenahe Dienstleistungen, die ihren Bedürfnissen angepasst werden."
@@ -128,19 +144,23 @@
       "optionen": [
         {
           "text": "56 % der Heimbewohner:innen teilen ihren Wohnraum mit 100-500 Bewohnern; organisiertes statt natürliches Wohnen; Primat der Gruppe vor Individualbedürfnissen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: 56 Prozent der Heimbewohner:innen teilen ihren Wohnraum mit 100 bis 500 Bewohnern; organisiertes statt natürliches Wohnen, Primat der Gruppe vor Individualbedürfnissen, dazu das Konfliktpotential, weil der Privatort der Bewohner auf den Arbeitsort der Mitarbeitenden trifft. (Folie 17, Notizen S. 12)"
         },
         {
           "text": "Freie Wahl von Wohnraum, Mitarbeitenden und Tagesablauf",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie sagt ausdrücklich, dass Wohnraum, Mitarbeitende und Tagesablauf NICHT gewählt werden können. (Folie 17, Notizen S. 12)"
         },
         {
           "text": "Maximale Privatsphäre und Einzelapartments für alle",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist das Gegenteil des beschriebenen Wohnens im Heim. Einzelzimmer gibt es im Praxisbeispiel Potsdamer Landstraße, das ist aber ein anderer Fall. (Folien 17 und 18, Notizen S. 12)"
         },
         {
           "text": "Es gibt in Deutschland keine Heime mehr",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Statistik zeigt gut 190.000 Menschen in besonderen Wohnformen im Jahr 2023. (Folien 11 und 17, Notizen S. 10 und 12)"
         }
       ],
       "erklaerung": "Wohnen im Heim: 56 % der Menschen in Heimen teilen ihren Wohnraum mit 100-500 Bewohnern; es ist organisiertes, kein natürliches Wohnen; Wohnraum, Mitarbeiter und Tagesablauf können nicht gewählt werden; es gilt das Primat der Gruppe vor Individualbedürfnissen; Konfliktpotential, da der Privatort der Bewohner auf den Arbeitsort der Mitarbeiter trifft."
@@ -155,19 +175,23 @@
       "optionen": [
         {
           "text": "Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien; die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Beschützende Elternschaft heißt: Viele Erwachsene leben in ihren Herkunftsfamilien, und die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung. (Folie 15, Notizen S. 12)"
         },
         {
           "text": "Eltern ziehen mit ins Wohnheim ein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ein gemeinsamer Umzug ins Heim ist nicht gemeint - es geht um das lange Verbleiben im Elternhaus. (Folie 15, Notizen S. 12)"
         },
         {
           "text": "Ein gerichtlich angeordnetes Besuchsverbot",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Mit Rechtsfragen hat der Begriff nichts zu tun. (Folie 15, Notizen S. 12)"
         },
         {
           "text": "Eine Pflegeform ausschließlich für Kinder unter 6 Jahren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Es geht ausdrücklich um Erwachsene. (Folie 15, Notizen S. 12)"
         }
       ],
       "erklaerung": "Beschützende Elternschaft: Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien - einem wichtigen Wohn- und Lebensraum. Die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung (Beispiel Herr M., der mit 53 Jahren in eine Wohngruppe kommt)."
@@ -182,19 +206,23 @@
       "optionen": [
         {
           "text": "Von der vollstationären Heimwohngruppe über Trainingswohnung und Außenwohngruppe/offene WG zum betreuten Einzelwohnen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Vollstationäre Heimwohngruppe, Trainingswohnung, Außenwohngruppe oder offene Wohngemeinschaft, betreutes Einzelwohnen (Hilkenbach 2012, 12). Wichtig: Der Pfeil darunter ist beidseitig - ein Wechsel zurück ist ausdrücklich möglich. (Folie 21, Notizen S. 13)"
         },
         {
           "text": "Vom betreuten Einzelwohnen zurück in die Komplexeinrichtung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist die Gegenrichtung. Sie ist zwar möglich (der untere Pfeil geht in beide Richtungen), aber nicht die gewünschte Entwicklungsrichtung. (Folie 21, Notizen S. 13)"
         },
         {
           "text": "Alle sollen dauerhaft in der Herkunftsfamilie bleiben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie beschreibt gerade den Weg aus der Herkunftsfamilie heraus. (Folien 15 und 21, Notizen S. 12 und 13)"
         },
         {
           "text": "Es gibt keine gewünschte Richtung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Balken über den vier Stufen heißt wörtlich gewünschte Entwicklungsrichtung. (Folie 21, Notizen S. 13)"
         }
       ],
       "erklaerung": "Die gewünschte Entwicklungsrichtung führt von der vollstationären Heimwohngruppe über die Trainingswohnung und die Außenwohngruppe oder offene Wohngemeinschaft zum betreuten Einzelwohnen - also hin zu mehr Selbstbestimmung und gemeindenahem Wohnen. Die Statistik zeigt passend: Die Zahl der Menschen außerhalb besonderer Wohnformen wächst seit 2010 deutlich."
@@ -209,19 +237,23 @@
       "optionen": [
         {
           "text": "Die größten Freiräume und hohe kulturelle Teilhabe - benötigt werden alltagspraktische Fähigkeiten, damit stundenweise Betreuung möglich ist",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Ambulant unterstütztes Wohnen bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ein hohes Maß an kultureller Teilnahme - vorausgesetzt sind alltagspraktische Fähigkeiten, damit stundenweise Betreuung reicht. (Folie 19, Notizen S. 13)"
         },
         {
           "text": "Rundum-Versorgung ohne eigene Anforderungen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Rundumversorgung kennzeichnet die vollstationäre Form. (Folien 17 und 19, Notizen S. 12 und 13)"
         },
         {
           "text": "Weniger Freiheit als im Heim",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - es sind die größten Freiräume von allen Wohnformen. (Folie 19, Notizen S. 13)"
         },
         {
           "text": "Es ist gesetzlich erst ab 40 Jahren erlaubt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine Altersgrenze nennt die Folie nicht. (Folie 19, Notizen S. 13)"
         }
       ],
       "erklaerung": "Das Leben in Wohngemeinschaften oder in eigener Wohnung bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ermöglicht ein hohes Maß an kultureller Teilnahme. Es werden aber alltagspraktische Fähigkeiten benötigt, damit stundenweise Betreuung möglich ist - genau hier setzt Wohnen als Bildungsaufgabe an."
@@ -236,19 +268,23 @@
       "optionen": [
         {
           "text": "Eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag - hauswirtschaftliche und sozial-emotionale Lerninhalte, z. B. in der Lehrerwohnung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag, die hauswirtschaftliche und sozial-emotionale Lerninhalte verfolgt - Lernort ist die Lehrwohnung. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Ein Fitnessprogramm für zu Hause",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Mit Sport hat das Wohntraining nichts zu tun. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Ein einmaliger Museumsbesuch zum Thema Wohnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Einmalig ist es gerade nicht - mehrtägig ist Teil der Definition. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Ein Online-Kurs über Mietrecht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Realitätsnahes Üben in der Lehrwohnung ist das Gegenteil eines Online-Kurses. (Folie 31, Notizen S. 15)"
         }
       ],
       "erklaerung": "Ein Wohntraining ist eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag, die sowohl die hauswirtschaftlichen Aufgaben als auch die sozial-emotionalen Lerninhalte des Wohnens verfolgt und der Vorbereitung auf ein selbstständiges Wohnen dient. Adäquater Lernort: die Lehrerwohnung (Dworschak). Synonyme: Wohnvorbereitungskurs, Probewohnen, Trainingswohnen."
@@ -263,19 +299,23 @@
       "optionen": [
         {
           "text": "Auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren - u. a. Nahrungszubereitung, Hygiene, Wäschepflege, Gerätebedienung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren - Nahrungszubereitung, Wirtschaftlichkeit, Hygiene, Arbeitssicherheit, Pflege von Möbeln und Wohnräumen, Körperpflege, Wäschepflege, Gerätebedienung. (Folie 28, Notizen S. 14)"
         },
         {
           "text": "Ausschließlich das Kochen für Schulfeste",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Viel zu eng - die Liste umfasst acht Bereiche vom Haushalten bis zur Gerätewartung. (Folie 28, Notizen S. 14)"
         },
         {
           "text": "Die Vorbereitung auf eine Ausbildung in der Gastronomie",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ziel ist das selbstbestimmte Wohnen, nicht ein Berufsfeld. (Folie 28, Notizen S. 14)"
         },
         {
           "text": "Sie kommt im Rahmenlehrplan nicht vor",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Sie steht ausdrücklich im Handlungsfeld Wohnen des Rahmenlehrplans. (Folie 28, Notizen S. 14)"
         }
       ],
       "erklaerung": "Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren: Nahrungszubereitung und Ernährungslehre, Wirtschaftlichkeit eines Haushaltes, Hygiene, Arbeitssicherheit und -organisation, umweltbewusstes Handeln, Pflege und Wartung von Möbeln und Wohnräumen, Körperpflege, Wäschepflege sowie Bedienung und Wartung elektrischer Klein- und Großgeräte."
@@ -288,19 +328,23 @@
       "optionen": [
         {
           "text": "Ausgleich, Ablenkung und Vergnügen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Ausgleich, Ablenkung und Vergnügen sind Funktionen der Freizeit aus einer anderen Vorlesung. Die Wohnen-Mindmap nennt Versorgung, Unterkunft, Verpflegung, Geborgenheit, Eigenständigkeit, Privatheit und Offenheit nach außen. (Folie 5, Notizen S. 07)"
         },
         {
           "text": "Geborgenheit und Privatheit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Geborgenheit und Privatheit stehen beide in der Mindmap. (Folie 5, Notizen S. 07)"
         },
         {
           "text": "Versorgung und Verpflegung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Versorgung und Verpflegung stehen beide in der Mindmap. (Folie 5, Notizen S. 07)"
         },
         {
           "text": "Eigenständigkeit und Offenheit nach außen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eigenständigkeit und Offenheit nach außen stehen beide in der Mindmap. (Folie 5, Notizen S. 07)"
         }
       ],
       "erklaerung": "Die Mindmap zur Bedeutung des Wohnens (vgl. Bundesvereinigung Lebenshilfe) nennt Versorgung, Unterkunft, Verpflegung, Geborgenheit, Eigenständigkeit, Privatheit und Offenheit nach außen - alle drei falschen Antworten stehen also vollständig darin. Der Decoy 'Ausgleich, Ablenkung und Vergnügen' stammt aus dem Nachbarthema Freizeit, dort ist es das Bedürfnis hinter der Zielfunktion Kompensation. (Notizen S. 07)",
@@ -316,19 +360,23 @@
       "optionen": [
         {
           "text": "Die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG) ist genau das Recht, sich den Wohnort frei zu wählen - eines der vier Grundrechte im Schaubild Wohnen ist ein Menschenrecht. (Folie 8, Notizen S. 09)"
         },
         {
           "text": "Die Unversehrtheit der Wohnung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Unversehrtheit der Wohnung schützt die bestehende Wohnung vor Eingriffen, nicht den Umzug. Kleiner Hinweis am Rand: Die Folie schreibt dafür Art. 14, im Grundgesetz ist es Art. 13 GG - Art. 14 GG ist die Eigentumsgarantie. (Folie 8, Notizen S. 09)"
         },
         {
           "text": "Das Recht auf Leben und körperliche Unversehrtheit (Art. 2 Abs. 2 GG)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Art. 2 Abs. 2 GG schützt Leben, körperliche Unversehrtheit und die Freiheit der Person - hier geht es um den Ortswechsel. (Folie 8, Notizen S. 09)"
         },
         {
           "text": "Das Sozialgesetzbuch",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das SGB regelt Leistungen, nicht das Grundrecht auf freie Ortswahl. (Folien 7 und 8, Notizen S. 08 und 09)"
         }
       ],
       "erklaerung": "Den Ortswechsel innerhalb Deutschlands deckt die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG). Der Decoy 'Unversehrtheit der Wohnung' schützt die bestehende Wohnung vor Eingriffen, nicht den Umzug - und das Sozialgesetzbuch ist eine der drei Rechtsquellen des Wohnrechts, aber kein Grundrecht. (Notizen S. 09)",
@@ -344,19 +392,23 @@
       "optionen": [
         {
           "text": "UN-BRK Artikel 19 (selbstbestimmte Wahl der Wohnform)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: UN-BRK Artikel 19 - Menschen mit Behinderungen entscheiden gleichberechtigt, wo und mit wem sie leben, und sind nicht verpflichtet, in besonderen Wohnformen zu leben. Genau dieser Halbsatz trifft den Fall. (Folie 9, Notizen S. 09)"
         },
         {
           "text": "Art. 11 Abs. 1 GG (Freizügigkeit im gesamten Bundesgebiet)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Freizügigkeit betrifft den Ort im Bundesgebiet, nicht die Wahl der Wohnform. (Folie 8, Notizen S. 09)"
         },
         {
           "text": "Art. 2 Abs. 2 GG (Leben, körperliche Unversehrtheit, Freiheit der Person)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Art. 2 Abs. 2 GG ist einschlägig, wenn es um Leben, körperliche Unversehrtheit und Freiheitsentzug geht - hier geht es um die Wohnform. (Folie 8, Notizen S. 09)"
         },
         {
           "text": "Art. 14 Abs. 1 GG (Unversehrtheit der Wohnung, so auf der Folie)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Schutz der Wohnung greift erst, wenn eine Wohnung besteht. Zur Zitierung: Die Folie schreibt Art. 14, im Grundgesetz ist die Unverletzlichkeit der Wohnung Art. 13 GG. (Folie 8, Notizen S. 09)"
         }
       ],
       "erklaerung": "Genau diesen Fall regelt Artikel 19 der UN-BRK: gleichberechtigte Wahl von Aufenthaltsort und Mitbewohnern, keine Verpflichtung, in besonderen Wohnformen zu leben, dazu Zugang zu Unterstützungsdiensten inklusive persönlicher Assistenz. Der Decoy Freizügigkeit (Art. 11 Abs. 1 GG) betrifft die Bewegungsfreiheit im Bundesgebiet und sagt nichts über die Zuweisung in eine bestimmte Wohnform, und die Unversehrtheit der Wohnung schützt die bestehende Wohnung vor Eingriffen. (Notizen S. 09)",
@@ -372,19 +424,23 @@
       "optionen": [
         {
           "text": "Teilstationäre Wohnform",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wohnheim, eigenständige Wohngruppe und Außenwohngruppe stehen im Schaubild in der teilstationären Spalte (Dworschak 2004, 21). Sie liegt zusammen mit der ambulanten unter dem Balken gemeindenahe Wohnformen. (Folie 10, Notizen S. 10)"
         },
         {
           "text": "Vollstationäre Wohnform",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Vollstationär sind Komplexeinrichtung und Dorfgemeinschaft. (Folie 10, Notizen S. 10)"
         },
         {
           "text": "Ambulante Wohnform",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ambulant ist das ambulant betreute Wohnen. (Folie 10, Notizen S. 10)"
         },
         {
           "text": "Leben in der Familie",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Leben in der Familie steht als eigene Säule ganz links, außerhalb der Systematik stationär/ambulant. (Folie 10, Notizen S. 10)"
         }
       ],
       "erklaerung": "Die Außenwohngruppe steht in der Übersicht zusammen mit Wohnheim und eigenständiger Wohngruppe bei den teilstationären Wohnformen (die zugleich zu den gemeindenahen zählen). Der Decoy 'vollstationär' meint Komplexeinrichtung und Dorfgemeinschaft, 'ambulant' das ambulant betreute Wohnen. (Notizen S. 10)",
@@ -400,19 +456,23 @@
       "optionen": [
         {
           "text": "Das Wohnen außerhalb besonderer Wohnformen wächst stark, das Wohnen in besonderen Wohnformen stagniert",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Außerhalb besonderer Wohnformen steigt es von 124.638 (2010) auf 277.516 (2023), also mehr als das Doppelte; in besonderen Wohnformen bleibt es mit rund 190.000 praktisch konstant und geht seit dem Höchststand 2017 sogar leicht zurück. (Folie 11, Notizen S. 10)"
         },
         {
           "text": "Das Wohnen in besonderen Wohnformen wächst stark, das Wohnen außerhalb stagniert",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Richtungen sind vertauscht - das Wachstum liegt eindeutig außerhalb der besonderen Wohnformen. (Folie 11, Notizen S. 10)"
         },
         {
           "text": "Beide Gruppen sind seit 2010 deutlich geschrumpft",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Geschrumpft ist keine der beiden Gruppen deutlich; eine wächst stark. (Folie 11, Notizen S. 10)"
         },
         {
           "text": "Beide Gruppen haben sich seit 2010 etwa verdoppelt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Nur die ambulante Gruppe hat sich mehr als verdoppelt, die stationäre stagniert. (Folie 11, Notizen S. 10)"
         }
       ],
       "erklaerung": "Ambulant wächst stark, stationär stagniert: außerhalb besonderer Wohnformen von rund 125.000 (2010) auf rund 278.000 (2023), in besonderen Wohnformen fast unverändert um 190.000. Der Decoy dreht die Entwicklung genau um - wer nur 'irgendwas ist gestiegen' erinnert, fällt darauf herein. (Notizen S. 10)",
@@ -428,19 +488,23 @@
       "optionen": [
         {
           "text": "Menschen mit seelischer Behinderung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Außerhalb besonderer Wohnformen sind es Ende 2023 zu 70,7 Prozent Menschen mit seelischer Behinderung - gegenüber 23,4 Prozent mit geistiger und 5,9 Prozent mit körperlicher Behinderung. (Folie 12, Notizen S. 11)"
         },
         {
           "text": "Menschen mit geistiger Behinderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Bei Menschen mit geistiger Behinderung ist es umgekehrt: 64 Prozent leben in besonderen Wohnformen, nur 23,4 Prozent außerhalb. Genau diese Umkehrung ist der Kern der Grafik. (Folie 12, Notizen S. 11)"
         },
         {
           "text": "Menschen mit körperlicher Behinderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Menschen mit körperlicher Behinderung machen in beiden Spalten nur rund 6 Prozent aus. (Folie 12, Notizen S. 11)"
         },
         {
           "text": "Alle drei Gruppen sind etwa gleich stark vertreten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Verteilung ist sehr ungleich - 70,7 gegenüber 23,4 gegenüber 5,9 Prozent. (Folie 12, Notizen S. 11)"
         }
       ],
       "erklaerung": "Außerhalb besonderer Wohnformen dominieren Menschen mit seelischer Behinderung mit 70,7 %. Der Decoy 'geistig behindert' gilt für die andere Seite: In besonderen Wohnformen stellen Menschen mit geistiger Behinderung mit 64 % die Mehrheit - die Verteilung dreht sich also je nach Wohnform um. (Notizen S. 11)",
@@ -456,19 +520,23 @@
       "optionen": [
         {
           "text": "Orientierung in der Nachbarschaft",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Orientierung in der Nachbarschaft - einer der sechs Kreise der Mindmap Beispiel: Fähigkeiten Wohnen (Fornefeld 2020, 181). (Folie 27, Notizen S. 14)"
         },
         {
           "text": "Orientierung im eigenen Zuhause",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Orientierung im eigenen Zuhause bleibt innerhalb der Wohnung. (Folie 27, Notizen S. 14)"
         },
         {
           "text": "Initiieren sozialer Kontakte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Soziale Kontakte zu initiieren ist ein eigener Kreis der Mindmap, aber hier geht es um den Weg. (Folie 27, Notizen S. 14)"
         },
         {
           "text": "Vermittlung von Bedürfnissen und Entscheidungen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Bedürfnisse und Entscheidungen zu vermitteln ist ebenfalls ein eigener Kreis. (Folie 27, Notizen S. 14)"
         }
       ],
       "erklaerung": "Wege im Wohnumfeld gehören zur Orientierung in der Nachbarschaft. Der Decoy 'Orientierung im eigenen Zuhause' meint das Zurechtfinden innerhalb der Wohnung selbst - beide Orientierungs-Fähigkeiten stehen in der Mindmap direkt nebeneinander und werden deshalb leicht verwechselt. (Notizen S. 14)",
@@ -484,19 +552,23 @@
       "optionen": [
         {
           "text": "Betreutes Einzelwohnen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Betreutes Einzelwohnen ist eine WOHNFORM aus der Stufenfolge - die anderen drei sind Synonyme für dieselbe schulische Methode. (Folien 21 und 31, Notizen S. 13 und 15)"
         },
         {
           "text": "Probewohnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Probewohnen wird auf der Folie ausdrücklich als Synonym zum Wohntraining genannt. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Trainingswohnen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Trainingswohnen steht ebenfalls in dieser Synonymreihe. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Wohn-Vorbereitungskurs",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Wohnvorbereitungskurs ist das dritte Synonym. (Folie 31, Notizen S. 15)"
         }
       ],
       "erklaerung": "Probewohnen, Trainingswohnen und Wohn-Vorbereitungskurs sind Synonyme für das Wohntraining, also für eine Unterrichtsmethode. Betreutes Einzelwohnen ist dagegen eine echte Wohnform, der Endpunkt der gewünschten Entwicklungsrichtung - der Decoy klingt nach Üben, meint aber tatsächliches Wohnen. Nicht verwechseln: Trainingswohnen ist die Methode, die Trainingswohnung dagegen eine Stufe der Wohnformen zwischen Heimwohngruppe und Außenwohngruppe. (Notizen S. 15, Entwicklungsrichtung S. 13)",
@@ -512,19 +584,23 @@
       "optionen": [
         {
           "text": "Der Mensch im Alltag",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wohnen ist im Handlungsfeld des Leitthemas Der Mensch im Alltag verortet - zusammen mit Selbstversorgung, Freizeit, Zusammenleben und Mediennutzung (SenBildWiss Berlin & LISUM 2011, 23). (Folie 26, Notizen S. 13)"
         },
         {
           "text": "Selbstversorgung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Selbstversorgung steht neben Wohnen im selben Leitthema, ist also gleichrangig, nicht übergeordnet. (Folie 26, Notizen S. 13)"
         },
         {
           "text": "Zusammenleben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Zusammenleben ist ebenfalls ein Nachbar-Handlungsfeld, kein Oberbegriff. (Folie 26, Notizen S. 13)"
         },
         {
           "text": "Hauswirtschaft",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Hauswirtschaft ist das Fach, das die Aufgabe übernimmt - nicht das Leitthema. (Folien 26 und 28, Notizen S. 13 und 14)"
         }
       ],
       "erklaerung": "Im Schaubild steht 'Der Mensch im Alltag' in der Mitte, umgeben von Selbstversorgung, Freizeit, Wohnen, Zusammenleben und Mediennutzung. Die Decoys Selbstversorgung und Zusammenleben stehen also auf derselben Ebene wie Wohnen selbst und sind ihm nicht übergeordnet - und Hauswirtschaft ist der Unterrichtsbereich, der auf ein möglichst selbstbestimmtes Wohnen vorbereitet. (Notizen S. 13, Hauswirtschaft S. 14)",
@@ -540,19 +616,23 @@
       "optionen": [
         {
           "text": "Die Schüler:innen erkunden Wohnformen und erweitern ihre Selbstversorgung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Leitkompetenz 11 lautet wörtlich: Die Schülerinnen und Schüler erkunden Wohnformen und erweitern ihre Selbstversorgung (SenBildWiss & LISUM 2013, 49). Diese Folie zur Abschlussstufe fehlt in deinen Notizen komplett - sie kennen nur den Rahmenlehrplan für die Klassen 1 bis 10. (Folie 29)"
         },
         {
           "text": "Die Schüler:innen ziehen probeweise in eine Lehrwohnung und üben dort mehrere Tage den Wohnalltag",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das beschreibt die Methode Wohntraining, nicht die Leitkompetenz des Rahmenlehrplans. (Folie 31, Notizen S. 15)"
         },
         {
           "text": "Die Schüler:innen benennen die rechtlichen Grundlagen des Wohnens im Grundgesetz und in der UN-BRK",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die rechtlichen Grundlagen sind eine Kompetenzerwartung der Vorlesung, nicht die Leitkompetenz des Rahmenlehrplans. (Folien 2 und 29)"
         },
         {
           "text": "Die Schüler:innen bereiten sich im Fach Hauswirtschaft auf ein möglichst selbstbestimmtes Wohnen vor",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist die Aufgabe der Hauswirtschaft im Rahmenlehrplan der Klassen 1 bis 10. (Folien 28 und 29, Notizen S. 14)"
         }
       ],
       "erklaerung": "Die elfte Leitkompetenz lautet wörtlich, dass die Schülerinnen und Schüler Wohnformen erkunden und ihre Selbstversorgung erweitern. Die Decoys sind alle echte Inhalte des Themas, gehören aber woanders hin: das Probewohnen zur Methode Wohntraining, die Rechtsgrundlagen zu einer anderen Kompetenzerwartung und die Hauswirtschaft zum Handlungsfeld Wohnen in den Klassen 1 bis 10. (Folie 29, SenBildWiss Berlin & LISUM 2013, 49)",
@@ -568,19 +648,23 @@
       "optionen": [
         {
           "text": "Die eigene Zukunft in den Blick zu nehmen: Visionen für das eigene Wohnen entwickeln und Wünsche mit den realen Möglichkeiten abwägen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Neu ist die biografische Perspektive - Visionen im Bereich des Wohnens entwickeln, Wohnbedürfnisse und -wünsche mit den realen Möglichkeiten abwägen und im Rahmen der individuellen Lebensplanung eigene Vorstellungen von Wohnformen darstellen. Auch das steht nur auf der Abschlussstufen-Folie. (Folie 29)"
         },
         {
           "text": "Die Nahrungszubereitung sowie die Pflege und Wartung von Möbeln und Wohnräumen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Nahrungszubereitung und Möbelpflege stehen schon im Handlungsfeld der Klassen 1 bis 10. (Folie 28, Notizen S. 14)"
         },
         {
           "text": "Die Körperpflege und die Wäschepflege als alltägliche Verrichtungen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Körperpflege und Wäschepflege stehen ebenfalls schon dort. (Folie 28, Notizen S. 14)"
         },
         {
           "text": "Die Wirtschaftlichkeit eines Haushalts und die Bedienung elektrischer Geräte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Wirtschaftlichkeit und Gerätebedienung stehen ebenfalls schon dort. (Folie 28, Notizen S. 14)"
         }
       ],
       "erklaerung": "Neu in der Abschlussstufe ist die biografische Perspektive: die eigene Wohnsituation darstellen, Visionen entwickeln, Wohnbedürfnisse und -wünsche mit den realen Möglichkeiten abwägen und im Rahmen der individuellen Lebensplanung eigene Vorstellungen von Wohnformen entwickeln. Die drei Decoys stammen alle aus der Hauswirtschaftsliste des Handlungsfelds für die Klassen 1 bis 10 - praktische Fertigkeiten, die dort schon stehen. (Folie 29 gegenüber Folie 28)",
@@ -596,19 +680,23 @@
       "optionen": [
         {
           "text": "Die Wohnung spiegelt am stärksten die Individualität und Persönlichkeit eines Menschen wider; dort ist man der sozialen Kontrolle ein Stück weit entzogen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Wohnung ist vermutlich der Ort, der am stärksten die Individualität und Persönlichkeit eines Menschen widerspiegelt; dort ist man der sozialen Kontrolle ein Stück weit entzogen (Klauß 2008, 119). Dieses Zitat fehlt in deinen Notizen - dabei ist es die zitierfähigste Definition des ganzen Foliensatzes. (Folie 4)"
         },
         {
           "text": "Die Wohnung sichert Versorgung, Unterkunft und Verpflegung und damit die Grundlagen des Alltags",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Versorgung, Unterkunft und Verpflegung stehen in der Mindmap der Folie danach - Klauß argumentiert über Individualität und Privatheit. (Folien 4 und 5, Notizen S. 07)"
         },
         {
           "text": "Die Wohnung ist über das Grundgesetz besonders geschützt und deshalb rechtlich hervorgehoben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der rechtliche Schutz kommt erst später (Folie 8); Klauß begründet inhaltlich, nicht juristisch. (Folien 4 und 8, Notizen S. 09)"
         },
         {
           "text": "Die Wohnung markiert den Übergang vom Elternhaus in ein eigenständiges Erwachsenenleben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Vom Übergang ins Erwachsenenleben handelt das Thema beschützende Elternschaft, nicht das Klauß-Zitat. (Folien 4 und 15, Notizen S. 12)"
         }
       ],
       "erklaerung": "Klauß argumentiert über Individualität und Privatheit: In den eigenen vier Wänden kann man sein privates Leben führen, sich so verhalten, wie es einem entspricht, und es sich bequem machen. Der erste Decoy ist besonders naheliegend, weil Versorgung, Unterkunft und Verpflegung wirklich zum Thema gehören - sie stehen aber in der Mindmap der Lebenshilfe, nicht in diesem Zitat. (Folie 4, Klauß 2008, 119)",
@@ -624,19 +712,23 @@
       "optionen": [
         {
           "text": "Menschen mit und ohne Unterstützungsbedarf leben und arbeiten dort gemeinsam, über alle Altersgruppen hinweg, mit der Hausgemeinschaft als kleinster Einheit",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: In Münzinghof leben und arbeiten Menschen mit und ohne Unterstützungsbedarf gemeinsam, über alle Altersgruppen hinweg, mit der Hausgemeinschaft als kleinster Einheit eines dörflichen Organismus - erklärter Anspruch ist ein Ort gleichberechtigter Teilhabe. Diese Folie fehlt in deinen Notizen. (Folie 14)"
         },
         {
           "text": "Die Bewohner:innen werden rund um die Uhr betreut und über einen Wohnbeirat beteiligt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: 24-Stunden-Betreuung und Wohnbeirat beschreiben das vollstationäre Beispiel Potsdamer Landstraße. (Folie 18)"
         },
         {
           "text": "Die Bewohner:innen leben in eigenen Wohnungen und erhalten nur stundenweise Unterstützung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eigene Wohnung mit stundenweiser Unterstützung ist das ambulant unterstützte Wohnen. (Folie 19, Notizen S. 13)"
         },
         {
           "text": "Die Bewohner:innen können schrittweise von der Trainingswohnung bis zum betreuten Einzelwohnen weiterziehen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der schrittweise Weg von der Trainingswohnung zum Einzelwohnen ist die Stufenfolge der teilstationären Formen. (Folie 21, Notizen S. 13)"
         }
       ],
       "erklaerung": "Münzinghof beschreibt sich als Dorf, in dem Menschen mit und ohne Unterstützungsbedarf unter einem Dach Gemeinschaft gestalten, für Kinder bis ältere Menschen, mit den Werkstätten als Teil des Dorfalltags. Die Decoys sind je ein Merkmal einer anderen Wohnform: Rund-um-die-Uhr-Betreuung und Wohnbeirat gehören zum vollstationären Beispiel, die stundenweise Unterstützung zum ambulanten Wohnen und die Stufenfolge zum teilstationären Dazwischen. (Folie 14)",
@@ -652,19 +744,23 @@
       "optionen": [
         {
           "text": "Am Konzept Wohnsinn",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wohnsinn - die fünfte Kompetenzerwartung nennt das Konzept ausdrücklich beim Namen, und Folie 32 stellt dazu den Arbeitsauftrag (Probleme und Vorteile, würden Sie mitmachen?). Weder Wohnsinn noch diese Folie kommen in deinen Notizen vor, obwohl die Dozentin es in ihre eigenen Lernziele geschrieben hat. (Folien 2 und 32)"
         },
         {
           "text": "An der Dorfgemeinschaft Münzinghof",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Münzinghof ist das zweite inklusive Wohnkonzept im Foliensatz, in der Kompetenzerwartung steht aber Wohnsinn. (Folien 14 und 32)"
         },
         {
           "text": "Am Wohnprojekt Potsdamer Landstraße",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Potsdamer Landstraße ist ein vollstationäres Beispiel, kein inklusives Wohnkonzept. (Folie 18)"
         },
         {
           "text": "An der Trainingswohnung Emmendingen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Trainingswohnung Emmendingen ist das Video zum Wohntraining. (Folien 30 und 32, Notizen S. 15)"
         }
       ],
       "erklaerung": "Die fünfte Kompetenzerwartung nennt Wohnsinn ausdrücklich beim Namen, und der zugehörige Arbeitsauftrag fragt nach Problemen und Vorteilen des Konzepts. Der schwierigste Decoy ist Münzinghof - das ist ebenfalls ein inklusives Wohnkonzept aus der Vorlesung, nur eben nicht das in der Kompetenzerwartung genannte. Die anderen beiden stehen für eine vollstationäre Wohnform beziehungsweise für die Methode Wohntraining. (Folien 2 und 32)",

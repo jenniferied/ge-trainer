@@ -2,67 +2,114 @@
   "version": 1,
   "medien": [
     {
-      "id": "wohnen-deck",
+      "id": "wohnen-v1-deck",
       "thema": "wohnen",
       "art": "deck",
+      "version": 1,
       "titel": "Wohnraum. Lebensraum. Freiraum.",
       "untertitel": "Didaktik, Methodik und gesellschaftliche Realität im Bereich Wohnen",
+      "anmerkung": "Geprüft 18.08.: inhaltlich vollständig. Ein Punkt zum Wissen — die Folie „Art. 14 GG“ für die Unversehrtheit der Wohnung ist die aufgedruckte Angabe der Dozentin; im Grundgesetz steht das in Art. 13. Das Deck gibt die Folie treu wieder. Die vier GG-Artikel sind zu drei Punkten zusammengezogen (Art. 2 Abs. 1 und Abs. 2 in einem).",
       "seiten": 15,
-      "pfad": "data/medien/deck/wohnen-"
+      "pfad": "data/medien/deck/wohnen-v1-"
     },
     {
-      "id": "wohnen-podcast",
+      "id": "wohnen-v1-podcast",
       "thema": "wohnen",
       "art": "podcast",
+      "version": 1,
       "titel": "Vom Wohnheim zum selbstbestimmten Wohnen im SGE",
       "untertitel": "Zwei Stimmen im Gespräch über Geschichte, Wohnformen und Selbstbestimmung",
+      "anmerkung": "",
       "sekunden": 1353,
-      "datei": "data/medien/wohnen-podcast.m4a"
+      "datei": "data/medien/wohnen-v1-podcast.m4a"
     },
     {
-      "id": "wohnen-video",
+      "id": "wohnen-v1-video",
       "thema": "wohnen",
       "art": "video",
+      "version": 1,
       "titel": "Evolution des Wohnens",
       "untertitel": "Vom Anstaltsschlafsaal 1971 zum eigenen Zuhause",
+      "anmerkung": "",
       "sekunden": 396,
-      "datei": "data/medien/wohnen-video.mp4"
+      "datei": "data/medien/wohnen-v1-video.mp4"
     },
     {
-      "id": "freizeit-podcast",
+      "id": "freizeit-v1-podcast",
       "thema": "freizeit",
       "art": "podcast",
+      "version": 1,
       "titel": "Das Recht auf selbstbestimmtes Nichtstun",
       "untertitel": "Warum Freizeit mehr ist als die Zeit zwischen zwei Terminen",
+      "anmerkung": "",
       "sekunden": 1523,
-      "datei": "data/medien/freizeit-podcast.m4a"
+      "datei": "data/medien/freizeit-v1-podcast.m4a"
     },
     {
-      "id": "freizeit-video",
+      "id": "freizeit-v1-video",
       "thema": "freizeit",
       "art": "video",
+      "version": 1,
       "titel": "Bedeutung von Freizeit",
       "untertitel": "Freizeit als Bildungsaufgabe im Förderschwerpunkt",
+      "anmerkung": "",
       "sekunden": 544,
-      "datei": "data/medien/freizeit-video.mp4"
+      "datei": "data/medien/freizeit-v1-video.mp4"
     },
     {
-      "id": "mobilitaet-deck",
+      "id": "mobilitaet-v1-deck",
       "thema": "mobilitaet",
       "art": "deck",
+      "version": 1,
       "titel": "Der Weg zur Teilhabe",
       "untertitel": "Verkehrs- und Mobilitätserziehung im SGE (Stöppler)",
+      "anmerkung": "Geprüft 18.08.: HIER FEHLT ETWAS. Die zehn Mobilitätskompetenzen nach Stöppler (visuelle und auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition, Interaktion) kommen nicht vor — die stehen auf Folie 17 bis 20. Nicht verwechseln mit den sechs Kernkompetenzen („selbstständig mobil sein“ usw.), die im Deck stehen: das sind zwei verschiedene Listen. Barrieren und Partizipationsfelder sind dagegen vollständig.",
       "seiten": 13,
-      "pfad": "data/medien/deck/mobilitaet-"
+      "pfad": "data/medien/deck/mobilitaet-v1-"
     },
     {
-      "id": "unterrichtsformen-deck",
+      "id": "unterrichtsformen-v1-deck",
       "thema": "unterrichtsformen",
       "art": "deck",
+      "version": 1,
       "titel": "Offener vs. Geschlossener Unterricht",
       "untertitel": "Strukturen für selbstbestimmtes Lernen",
+      "anmerkung": "Geprüft 18.08.: leicht gekürzt. Der „Autonomie-Radar“ macht fünf Achsen aus den sechs Öffnungsdimensionen (Wann und Wo zusammengezogen) und ergänzt eine Achse „Persönlich“, die so auf keiner Folie steht. Bei den Unterrichtsformen sind nur die bekanntesten Unterformen genannt — beim individualisierten Unterricht fehlen Werkstattlernen, Praktikum und Facharbeit, beim kooperativen Erkundungen und Arbeitsgemeinschaften.",
       "seiten": 15,
-      "pfad": "data/medien/deck/unterrichtsformen-"
+      "pfad": "data/medien/deck/unterrichtsformen-v1-"
+    },
+    {
+      "id": "konzeptionen-v1-deck",
+      "thema": "konzeptionen",
+      "art": "deck",
+      "version": 1,
+      "titel": "Architektur des Lernens",
+      "untertitel": "Didaktische Modelle und Konzepte im Förderschwerpunkt Geistige Entwicklung",
+      "anmerkung": "Geprüft 18.08.: kürzt an mehreren Stellen. Von Klafkis acht epochaltypischen Schlüsselproblemen sind nur vier Kästen übrig (Paare zusammengezogen), „menschliche Sexualität und Geschlechterbeziehung“ fehlt ganz. Von den sechs Leitthemen stehen drei da. Bei Pitsch springt die Nummerierung von 1 auf 3, Stufe 2 fehlt. In der Konzeptionen-Tabelle fehlen sieben Vertreter:innen (Höss, Osmers, Moor, Vetter, Bernart, KMK, John). Die fünf Konzeptionen selbst und die vier Entwicklungsbereiche sind vollständig. Deshalb gibt es eine zweite Fassung.",
+      "seiten": 13,
+      "pfad": "data/medien/deck/konzeptionen-v1-"
+    },
+    {
+      "id": "konzeptionen-v1-podcast",
+      "thema": "konzeptionen",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Von der Brauchbarmachung zur echten Selbstbestimmung",
+      "untertitel": "25 Minuten durch den Wandel der didaktischen Konzeptionen",
+      "anmerkung": "",
+      "sekunden": 1526,
+      "datei": "data/medien/konzeptionen-v1-podcast.m4a"
+    },
+    {
+      "id": "konzeptionen-v1-video",
+      "thema": "konzeptionen",
+      "art": "video",
+      "version": 1,
+      "titel": "Schulische Bildung im SgE",
+      "untertitel": "Erklärvideo im Kawaii-Stil, elfeinhalb Minuten",
+      "anmerkung": "",
+      "sekunden": 689,
+      "datei": "data/medien/konzeptionen-v1-video.mp4"
     }
   ]
 }

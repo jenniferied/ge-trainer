@@ -21,19 +21,23 @@
       "optionen": [
         {
           "text": "Abhängigkeit (von Fahrdiensten, Begleitung, Assistenz) versus Forderung nach Selbstbestimmung und Teilhabe",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Menschen im SGE sind von Kita bis Arbeitsleben auf Fahrdienste, Begleitungen und Assistenzen angewiesen - diese Abhängigkeit steht der Forderung nach Selbstbestimmung und Teilhabe gegenüber. Mobilität ist dafür Grundvoraussetzung. (Folie 7, Notizen S. 16)"
         },
         {
           "text": "Geschwindigkeit versus Bequemlichkeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kein Gegensatz, den die Vorlesung aufmacht. (Folie 7, Notizen S. 16)"
         },
         {
           "text": "Auto versus Fahrrad",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Um die Wahl des Verkehrsmittels geht es an dieser Stelle nicht. (Folie 7, Notizen S. 16)"
         },
         {
           "text": "Stadt versus Land ohne weiteren Bezug",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Stadt und Land kommen im Foliensatz als Spannungsfeld nicht vor. (Folie 7, Notizen S. 16)"
         }
       ],
       "erklaerung": "Menschen mit SGE haben ein deutlich geringeres Mobilitätsniveau als andere Bevölkerungsgruppen und sind bereits von Kita über Schule bis zum Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Das erzeugt Abhängigkeit - im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Mobilität ist dafür Grundvoraussetzung.",
@@ -48,19 +52,23 @@
       "optionen": [
         {
           "text": "Fehlende Ortskenntnis",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Fehlende Ortskenntnis ist einer der elf Kreise um das Zentrum Mobilitätsbehinderungen - neben Alter, Blindheit, Körperbehinderung, Lernschwierigkeiten, fehlender Mobilitätsbildung und der Einstellung anderer. (Folie 9, Notizen S. 16)"
         },
         {
           "text": "Zu gutes Gedächtnis",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Gedächtnis kann Mobilität erschweren, wenn es Schwierigkeiten macht - zu gut ist keine Behinderung. (Folie 9, Notizen S. 16)"
         },
         {
           "text": "Übermäßige Verkehrsmittelauswahl",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auswahl ist kein Hindernis. Die Liste nennt Reisebehinderung, nicht Auswahlvielfalt. (Folie 9, Notizen S. 16)"
         },
         {
           "text": "Zu viel Mobilitätsbildung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - FEHLENDE Mobilitätsbildung steht auf der Liste. (Folie 9, Notizen S. 16)"
         }
       ],
       "erklaerung": "Zu den Mobilitätsbehinderungen zählen u. a.: Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung/Verhalten Anderer und fehlende Mobilitätsbildung.",
@@ -75,19 +83,23 @@
       "optionen": [
         {
           "text": "Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung, Sozialerziehung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die vier Felder um den Mittelkasten Mobilitäts- und Verkehrserziehung (Stöppler 2017, 20). Merkhilfe: Es geht nicht nur um Sicherheit, sondern auch um Gesundheit, Umwelt und das soziale Miteinander. (Folie 13, Notizen S. 17)"
         },
         {
           "text": "Fahrradprüfung, Fußgängerprüfung, Busprüfung, Bahnprüfung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Prüfungsformate, keine Teilbereiche der Erziehung. (Folie 13, Notizen S. 17)"
         },
         {
           "text": "Theorie, Praxis, Prüfung, Wiederholung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Phasen, keine Erziehungsbereiche. (Folie 13, Notizen S. 17)"
         },
         {
           "text": "Motorik, Sensorik, Kognition, Emotion",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Entwicklungsbereiche aus einer anderen Vorlesung. (Folie 13, Notizen S. 17)"
         }
       ],
       "erklaerung": "Die Mobilitäts- und Verkehrserziehung umfasst Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung - sie ist also weit mehr als reines Verkehrsregeltraining.",
@@ -102,19 +114,23 @@
       "optionen": [
         {
           "text": "L5 - Der mobile Mensch",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Das Handlungsfeld Verkehr und Verkehrserziehung liegt im Lernfeld L5 Der mobile Mensch - auf der Folie eigens rot umrandet. (Folie 14, Notizen S. 17)"
         },
         {
           "text": "L1 - Der Mensch im Alltag",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: L1 Der Mensch im Alltag umfasst Selbstversorgung, Wohnen, Zusammenleben, Mediennutzung. (Folie 14, Notizen S. 17)"
         },
         {
           "text": "L3 - Der Mensch und die Gesundheit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: L3 Der Mensch und die Gesundheit umfasst Gesundheit, Ernährung, Körper. (Folie 14, Notizen S. 17)"
         },
         {
           "text": "L6 - Der Mensch in Natur und Umwelt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: L6 Der Mensch in Natur und Umwelt umfasst Umweltschutz und Naturerscheinungen. (Folie 14, Notizen S. 17)"
         }
       ],
       "erklaerung": "Das Lernfeld L5 Der mobile Mensch enthält das Handlungsfeld Verkehr und Verkehrserziehung. Zielsetzung: dass alle Schüler:innen, denen es möglich ist, den Schulweg bzw. Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen und situationsentsprechend handeln können - zu Fuß, mit Fahrrad oder Rollstuhl, im Auto und Bus, in öffentlichen Verkehrsmitteln.",
@@ -129,19 +145,23 @@
       "optionen": [
         {
           "text": "Visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, soziale Kompetenzen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Alle fünf stehen in der Liste. Wichtig zum Merken: Es sind insgesamt ZEHN Mobilitätskompetenzen - dazu noch Aufmerksamkeit, Gedächtnis, Kommunikation, Kognition und Interaktion. Die bekannte Beispielaufgabe verlangt nur fünf davon zu nennen. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Bremsen, Lenken, Schalten, Blinken, Hupen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Bedienhandlungen am Fahrzeug, keine Kompetenzen der Person. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Lesen, Schreiben, Rechnen, Zeichnen, Singen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kulturtechniken, keine Mobilitätskompetenzen. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Kraft, Ausdauer, Schnelligkeit, Beweglichkeit, Größe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind sportmotorische Grundeigenschaften. Motorik steht zwar auf der Liste, aber als ein Punkt von zehn. (Folie 17, Notizen S. 18)"
         }
       ],
       "erklaerung": "Mobilitätskompetenzen nach Stöppler: visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition und Interaktion. Fünf davon nennen zu können war eine Original-Beispielaufgabe.",
@@ -156,19 +176,23 @@
       "optionen": [
         {
           "text": "Auditive Wahrnehmung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen, Lokalisieren, auditive Diskriminierung und Entfernungshören - der ZIELE-Kasten zur auditiven Wahrnehmung. (Folie 18, Notizen S. 19)"
         },
         {
           "text": "Visuelle Wahrnehmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Dort geht es um Farbensehen, Blinken, Formen und Piktogramme, Raumbewusstsein und Entfernungswahrnehmung mit den Augen. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Motorik",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Im motorischen Bereich stehen Beweglichkeit, Gleichgewicht, Geschwindigkeiten wechseln, Anhalten am Bordstein. (Folie 19, Notizen S. 19)"
         },
         {
           "text": "Soziale Kompetenz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Sozialkompetenz umfasst Perspektivübernahme, Empathie, Regelverständnis. (Folie 20, Notizen S. 19)"
         }
       ],
       "erklaerung": "Ziele im Bereich auditive Wahrnehmung: Erkennen, Zuordnen, Differenzieren von Verkehrsgeräuschen, Lokalisieren von Verkehrsgeräuschen, auditive Diskriminierung und Entfernungshören. Visuell wären z. B. Farbensehen (Rot-Grün), Verständnis des Blinkens, Symbole und Raumbewusstsein.",
@@ -183,19 +207,23 @@
       "optionen": [
         {
           "text": "Praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen, pädagogisches Puppenspiel",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die vier Methodenfotos im Schaubild - praktische Übungen und Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen, pädagogisches Puppenspiel. Darüber stehen die didaktischen Prinzipien, darunter die Kooperationen. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Frontalunterricht, Diktat, Klassenarbeit, Hausaufgaben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Klassische Unterrichtsformate, aber nicht die vier Methoden dieses Schaubilds. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Simulator, Virtual Reality, App-Training, E-Learning",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Digitale Formate kommen im Schaubild nicht vor. Die App-Übung auf Folie 10 ist etwas anderes. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Belohnungssystem, Strafarbeit, Wettbewerb, Ranking",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Verstärkersysteme sind keine Methoden der Mobilitätsförderung. (Folie 24, Notizen S. 20)"
         }
       ],
       "erklaerung": "Die Methoden: praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und pädagogisches Puppenspiel - dazu Kooperationen (z. B. mit der Polizei). Didaktische Prinzipien dabei: Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität, Kontinuität.",
@@ -210,19 +238,23 @@
       "optionen": [
         {
           "text": "Auf dem Gehweg darf nur mit Schrittgeschwindigkeit gefahren werden, und Radwege dürfen nicht benutzt werden",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Auf dem Gehweg nur Schrittgeschwindigkeit (bei Rollstühlen bis 30 km/h Höchstgeschwindigkeit), und Radwege dürfen mit dem Rollstuhl nicht benutzt werden. (Folie 31, Notizen S. 21)"
         },
         {
           "text": "Rollstühle müssen immer auf dem Radweg fahren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau das Gegenteil - Radwege sind für Rollstühle nicht zugelassen. (Folie 31, Notizen S. 21)"
         },
         {
           "text": "Auf dem Gehweg gilt die Höchstgeschwindigkeit von 30 km/h",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die 30 km/h sind die BAUART-Höchstgeschwindigkeit des Rollstuhls, nicht die erlaubte Geschwindigkeit auf dem Gehweg. Dort gilt Schrittgeschwindigkeit. (Folie 31, Notizen S. 21)"
         },
         {
           "text": "Für Rollstühle gibt es keinerlei Vorschriften",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. (Folie 31, Notizen S. 21)"
         }
       ],
       "erklaerung": "Zu wissen ist: Mit Rollstühlen (Höchstgeschwindigkeit max. 30 km/h) darf auf dem Gehweg nur mit Schrittgeschwindigkeit gefahren werden; Radwege dürfen nicht benutzt werden; für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. Geübt werden u. a. Ausweich-, Dreh- und Wendebewegungen, Bordsteine und das Ein- und Aussteigen.",
@@ -237,19 +269,23 @@
       "optionen": [
         {
           "text": "Zu Fuß (35,7 %)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Zu Fuß mit 35,7 Prozent - der größte Anteil im Kreisdiagramm Art der Verkehrsbeteiligung zum Unfallzeitpunkt (Stöppler 2015, 55). (Folie 25, Notizen S. 20)"
         },
         {
           "text": "Fahrrad (22,8 %)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Rad liegt mit 22,8 Prozent auf Platz drei. (Folie 25, Notizen S. 20)"
         },
         {
           "text": "Beförderung mit Behindertentransportwagen (27,4 %)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Behindertentransportwagen liegt mit 27,4 Prozent auf Platz zwei - dicht dahinter, aber nicht vorn. (Folie 25, Notizen S. 20)"
         },
         {
           "text": "Rollstuhl (1,0 %)",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der eigenmobile Rollstuhl ist mit 1,0 Prozent der kleinste Anteil. (Folie 25, Notizen S. 20)"
         }
       ],
       "erklaerung": "Verkehrsbeteiligung zum Unfallzeitpunkt: zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, öffentliche Verkehrsmittel 6,6 %, Rollstuhl 1,0 %. Das Zufußgehen ist also der unfallträchtigste Bereich - ein Argument für gezielte Fußgängerschulung.",
@@ -264,19 +300,23 @@
       "optionen": [
         {
           "text": "Eiliges zum Bus Laufen, ohne auf den Straßenverkehr zu achten",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten steht in der Gefahren-Spalte der ÖPNV-Folie, neben Anfahren und Abbremsen und dem zu dichten Stehen an der Straße. (Folie 28, Notizen S. 21)"
         },
         {
           "text": "Falsches Linksabbiegen mit dem Fahrrad",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Fehler beim Abbiegen gehören zur Fahrrad-Folie. (Folie 30, Notizen S. 21)"
         },
         {
           "text": "Benutzung des Radwegs mit dem Rollstuhl",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das gehört zum Rollstuhlfahren. (Folie 31, Notizen S. 21)"
         },
         {
           "text": "Missachtung der Handyverbotszone im Klassenraum",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Im Klassenraum spielt der ÖPNV keine Rolle; genannt wird die Handynutzung als Gefahr beim Zu-Fuß-Gehen und beim Radfahren. (Folien 26 und 30, Notizen S. 21)"
         }
       ],
       "erklaerung": "ÖPNV-Gefahren: Anfahren und Abbremsen der Busse/Bahnen (Festhalten üben), eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten, Missachtung des Verkehrs beim Warten bzw. zu dichtes Stehen an der Straße. Lernziele: Orientierung an der Haltestelle, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg.",
@@ -291,19 +331,23 @@
       "optionen": [
         {
           "text": "Einfache Schriftzüge, Bildzeichen, Symbole, Farben und ein individueller Netzplan in verschiedenen Komplexitätsgraden",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Klare Hinweise, einfache Schriftzüge, aktuelle Informationen, Bildzeichen, Symbole, Farben und ein individueller Netzplan in verschiedenen Komplexitätsgraden (vgl. Markowetz 2020, 16). (Folie 34, Notizen S. 22)"
         },
         {
           "text": "Möglichst komplexe Fahrpläne mit vielen Fußnoten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Gegenteil - Fahrpläne sollen in verschiedenen Komplexitätsgraden verfügbar sein, also auch einfach. (Folie 34, Notizen S. 22)"
         },
         {
           "text": "Ausschließlich akustische Durchsagen in schneller Sprache",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ein Kanal allein genügt nicht; die Mehr-Kanal-Regel verlangt mindestens zwei Sinne. (Folien 34 und 35, Notizen S. 22)"
         },
         {
           "text": "Verzicht auf jede Beschilderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - es geht um klare Hinweise, nicht um deren Wegfall. (Folie 34, Notizen S. 22)"
         }
       ],
       "erklaerung": "Rahmenbedingungen: Bewusstsein in der Öffentlichkeit schaffen, Barrieren erkennen und Barrierefreiheit mitdenken, klare Hinweise, einfache Schriftzüge, aktuelle/dynamische Informationen, Bildzeichen, Symbole, Farben, ein individueller Netzplan (verschiedene Komplexitätsgrade) und die allgemeine Erreichbarkeit verschiedener Orte erhöhen.",
@@ -318,19 +362,23 @@
       "optionen": [
         {
           "text": "Dem motorischen Bereich",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: An bestimmten Stellen anhalten (z. B. vor dem Bordstein) und Bewegungs- und Handlungsunterbrechung stehen wörtlich im ZIELE-Kasten zum motorischen Bereich. (Folie 19, Notizen S. 19)"
         },
         {
           "text": "Der visuellen Wahrnehmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die visuelle Wahrnehmung zielt auf Farbensehen, Formen, Raumbewusstsein und Entfernungswahrnehmung. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Der auditiven Wahrnehmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die auditive Wahrnehmung zielt auf Verkehrsgeräusche. (Folie 18, Notizen S. 19)"
         },
         {
           "text": "Der Sozialkompetenz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Sozialkompetenz zielt auf Perspektivübernahme und Regelverständnis. (Folie 20, Notizen S. 19)"
         }
       ],
       "erklaerung": "An bestimmten Stellen anhalten (z. B. vor dem Bordstein) und die Bewegungs- und Handlungsunterbrechung sind Ziele des motorischen Bereichs - genau wie Gleichgewicht halten, Geschwindigkeiten wechseln und Hindernissen ausweichen. Der Decoy visuelle Wahrnehmung liegt nahe, weil man den Bordstein ja sehen muss - das Ziel hier ist aber das Stoppen der Bewegung selbst. (Notizen S. 19)",
@@ -346,19 +394,23 @@
       "optionen": [
         {
           "text": "Wohnen, Arbeiten und Einkaufen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Das Handlungsfeld versteht Mobilität als Überwindung der Distanz zwischen den zunehmend räumlich getrennten Lebensbereichen Wohnen, Arbeiten und Einkaufen. (Folie 14, Notizen S. 17)"
         },
         {
           "text": "Schule, Freizeit und Familie",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Freizeit wird in der Kommentierung der Dozentin ergänzt, im zitierten Text stehen aber Wohnen, Arbeiten und Einkaufen. (Folie 14, Notizen S. 17)"
         },
         {
           "text": "Kita, Schule und Arbeitsleben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kita, Schule und Arbeitsleben ist die Aufzählung zur Abhängigkeit von Fahrdiensten - ein anderer Zusammenhang. (Folien 7 und 14, Notizen S. 16 und 17)"
         },
         {
           "text": "Stadt, Land und Verkehrsraum",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Keine Formulierung aus dem Rahmenlehrplan. (Folie 14, Notizen S. 17)"
         }
       ],
       "erklaerung": "Das Handlungsfeld im Rahmenlehrplan versteht Mobilität als Überwindung der Distanz zwischen den Lebensbereichen Wohnen, Arbeiten und Einkaufen. Der Decoy Kita-Schule-Arbeitsleben stammt aus einer anderen Kernaussage der Vorlesung: Dort geht es um die Abhängigkeit von Fahrdiensten über die Lebensspanne, nicht um die Lebensbereiche des Handlungsfelds. (Notizen S. 17)",
@@ -374,19 +426,23 @@
       "optionen": [
         {
           "text": "Erkennen, Beurteilen sowie Handeln und Kommunizieren",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Erkennen, Beurteilen sowie Handeln und Kommunizieren - die drei Kompetenzen um das Zentrum sicher und umweltbewusst mobil sein (Schmidt & Sturzbecher 2020, 11). (Folie 16, Notizen S. 18)"
         },
         {
           "text": "Sicherheits-, Umwelt- und Sozialerziehung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind drei der vier Teilbereiche schulischer Mobilitäts- und Verkehrserziehung, ein anderes Schaubild. (Folie 13, Notizen S. 17)"
         },
         {
           "text": "Beschreiben, Erläutern und Diskutieren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Klausuroperatoren, keine Kompetenzen des Modells. (Folie 16, Notizen S. 18)"
         },
         {
           "text": "Wahrnehmung, Motorik und Reaktion",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Mobilitätskompetenzen nach Stöppler - wieder ein anderes Modell. Die drei Modelle liegen dicht beieinander, das ist die Stolperstelle. (Folien 16 und 17, Notizen S. 18)"
         }
       ],
       "erklaerung": "Im Kompetenzmodell stehen um den Kreis 'Sicher und umweltbewusst mobil sein' die drei Kompetenzen Erkennen, Beurteilen sowie Handeln und Kommunizieren. Der Decoy Sicherheits-, Umwelt- und Sozialerziehung greift drei der vier Teilbereiche der schulischen Mobilitäts- und Verkehrserziehung auf (der vierte ist die Gesundheitserziehung) - das ist aber das andere Schaubild; Wahrnehmung, Motorik und Reaktion gehören zu den Mobilitätskompetenzen nach Stöppler. (Notizen S. 18)",
@@ -402,19 +458,23 @@
       "optionen": [
         {
           "text": "Verantwortungsbewusst mobil sein",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Verantwortungsbewusst mobil sein - die umsichtige, rücksichtsvolle und kooperative Teilnahme, die dazu befähigt, den Verkehr als soziales System zu erkennen. (Folie 16, Notizen S. 18)"
         },
         {
           "text": "Sicher mobil sein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Sicher mobil sein zielt auf risikobewusste, gefahrenvermeidende Teilnahme und auf die eigene sensomotorische Entwicklung. (Folie 16, Notizen S. 18)"
         },
         {
           "text": "Selbstständig mobil sein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Selbstständig mobil sein meint die eigenständige Teilnahme unter Nutzung verschiedener Mobilitätsformen. (Folie 16, Notizen S. 18)"
         },
         {
           "text": "Nachhaltig mobil sein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Nachhaltig mobil sein zielt auf Umweltbewusstsein und Klimaschutz. (Folie 16, Notizen S. 18)"
         }
       ],
       "erklaerung": "Rücksicht, Kooperation und der Blick auf den Verkehr als soziales System kennzeichnen die Kernkompetenz 'Verantwortungsbewusst mobil sein'. Der Decoy 'Sicher mobil sein' zielt dagegen auf risikobewusstes, gefahrenvermeidendes Verhalten unter Beachtung der eigenen sensomotorischen Entwicklung - also auf den Schutz der eigenen Person, nicht auf das Miteinander. (Notizen S. 18)",
@@ -430,19 +490,23 @@
       "optionen": [
         {
           "text": "Man verlässt sich am Zebrastreifen darauf, dass die Autos schon bremsen, oder bleibt unschlüssig stehen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Interaktion am Zebrastreifen - sie verlassen sich auf das Anhalten des Fahrzeugs oder sind unschlüssig. Steht in der Gefahren-Spalte der Folie zum Zu-Fuß-Gehen. (Folie 26, Notizen S. 21)"
         },
         {
           "text": "Zu geringer Abstand zum Vorausfahrenden",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Falsche Abstände zum Vorausfahrenden gehören zur Fahrrad-Folie. (Folie 30, Notizen S. 21)"
         },
         {
           "text": "Verletzung von Vorfahrt- und Vorrangregelungen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Vorfahrt- und Vorrangregelungen stehen ebenfalls bei den Fahrrad-Gefahren. (Folie 30, Notizen S. 21)"
         },
         {
           "text": "Nicht abgeflachte Bordsteine, die sich kaum bewältigen lassen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Nicht abgeflachte Bordsteine gehören zum Rollstuhlfahren. (Folie 31, Notizen S. 21)"
         }
       ],
       "erklaerung": "Die unklare Interaktion am Zebrastreifen zählt zu den Gefahren beim Zu-Fuß-Gehen - dazu kommen das falsche Einschätzen der Fahrzeuggeschwindigkeit, das Überqueren an unsicheren Stellen, die Ablenkung durch die Ampel und die Benutzung des Smartphones. Die Decoys stammen aus den Nachbarbereichen: zu geringer Abstand und Vorfahrtsverletzungen sind klassische Fahrrad-Gefahren, die nicht abgeflachten Bordsteine eine Schwierigkeit beim Rollstuhlfahren. (Notizen S. 21, Bordsteine S. 22)",
@@ -458,19 +522,23 @@
       "optionen": [
         {
           "text": "Durchführung eines Fahrrad-Turniers und der Fahrrad-Prüfung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Durchführung eines Fahrrad-Turniers und der Fahrrad-Prüfung stehen in der Lernziel-Spalte der Fahrrad-Folie, neben dem verkehrssicheren Fahrrad, dem Helm, Übungen im Schonraum und dem Wissen über Umwelt und Nachhaltigkeit. (Folie 30, Notizen S. 21)"
         },
         {
           "text": "Bezahlen und Lösen der Fahrkarte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Lösen der Fahrkarte gehört zum ÖPNV. (Folie 28, Notizen S. 21)"
         },
         {
           "text": "Identifizieren und Erkennen des Gehwegs",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Den Gehweg zu erkennen gehört zum Zu-Fuß-Gehen. (Folie 26, Notizen S. 21)"
         },
         {
           "text": "Passanten bei Schwierigkeiten um Hilfe bitten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Passanten um Hilfe zu bitten gehört zum Rollstuhlfahren. (Folie 31, Notizen S. 21)"
         }
       ],
       "erklaerung": "Zur Fahrrad-Vorbereitung gehören u. a. das verkehrssichere Fahrrad und der Helm, Übungen im Schonraum, Verkehrszeichen für Radfahrer, das Fahrrad-Turnier und die Fahrrad-Prüfung sowie Wissen über Umwelt und Nachhaltigkeit. Die Decoys sind Lernziele der anderen Bereiche: Fahrkarte lösen (ÖPNV), Gehweg erkennen (zu Fuß gehen), um Hilfe bitten (Rollstuhl fahren). (Notizen S. 21)",
@@ -486,19 +554,23 @@
       "optionen": [
         {
           "text": "Sozialkompetenz",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Handlungsabsichten und -motive erschließen, Folgen vorhersehen, moralisches Urteil - dazu Perspektivübernahme, Empathie, Verantwortlichkeitsattribution und Regelverständnis. Der ZIELE-Kasten zur Sozialkompetenz. (Folie 20, Notizen S. 19)"
         },
         {
           "text": "Auditive Wahrnehmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auditiv geht es um Verkehrsgeräusche. (Folie 18, Notizen S. 19)"
         },
         {
           "text": "Visuelle Wahrnehmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Visuell geht es um Sehen, Formen und Entfernungen. (Folie 17, Notizen S. 18)"
         },
         {
           "text": "Motorischer Bereich",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Motorisch geht es um Bewegung, Gleichgewicht und Anhalten. (Folie 19, Notizen S. 19)"
         }
       ],
       "erklaerung": "Für das soziale Verständnis und Verhalten im Straßenverkehr sind u. a. das Erschließen von Handlungsabsichten und -motiven, das Vorhersehen von Folgen, die emotionale Perspektivenübernahme, die Verantwortlichkeitsattribution, das moralische Urteil und das Regelverständnis bedeutsam - alles Komponenten der Sozialkompetenz. Die visuelle Wahrnehmung als Decoy umfasst dagegen z. B. Farbensehen und Raumbewusstsein. (Notizen S. 19)",
@@ -514,19 +586,23 @@
       "optionen": [
         {
           "text": "Autofahrspiel",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: In der Spalte Motorik und Reaktion ist das Autofahrspiel als einziges mit einem roten Kreuz markiert - Feuer-Wasser-Luft, Gleichgewichtsspiel und Pappdeckel tragen Häkchen. Diese Tabelle stammt aus der H5P-Übung in Moodle; sie steht NUR in deinen Notizen, die Folie zeigt nur den Link dorthin. (Folie 21, Notizen S. 20)"
         },
         {
           "text": "Feuer-Wasser-Luft",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Feuer-Wasser-Luft ist in der Spalte Motorik und Reaktion mit Häkchen markiert. (Notizen S. 20)"
         },
         {
           "text": "Gleichgewichtsspiel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Gleichgewichtsspiel trägt in dieser Spalte ein Häkchen. (Notizen S. 20)"
         },
         {
           "text": "Pappdeckel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Pappdeckel trägt in dieser Spalte ein Häkchen. (Notizen S. 20)"
         }
       ],
       "erklaerung": "Das Autofahrspiel ist in der Tabelle als unpassend markiert. Feuer-Wasser-Luft, das Gleichgewichtsspiel und Pappdeckel passen dagegen, weil sie motorische Ziele wie Gleichgewicht halten, Geschwindigkeiten wechseln und Bewegungsunterbrechung üben. Merkhilfe: Nicht alles, was nach Verkehr klingt, trainiert auch die Kompetenz - entscheidend ist das Ziel der Übung. (Notizen S. 20)",
@@ -542,19 +618,23 @@
       "optionen": [
         {
           "text": "Individualisierung bzw. personenzentrierte Mobilität",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Kopfzeile des Schaubilds nennt Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung bzw. personenzentrierte Mobilität und Kontinuität. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Elementarisierung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Elementarisierung ist ein didaktisches Prinzip aus der Prinzipien-Vorlesung, steht aber nicht in dieser Kopfzeile. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Ganzheitlichkeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ganzheitlichkeit steht ebenfalls nicht in dieser Kopfzeile - Anschaulichkeit dagegen schon. (Folie 24, Notizen S. 20)"
         },
         {
           "text": "Kleine Schritte im Sinnzusammenhang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kleine Schritte im Sinnzusammenhang gehört zur Prinzipien-Vorlesung, nicht in diese Kopfzeile. (Folie 24, Notizen S. 20)"
         }
       ],
       "erklaerung": "Die didaktischen Prinzipien der Mobilitätsförderung sind Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität und Kontinuität. Die Decoys Elementarisierung, Ganzheitlichkeit und kleine Schritte sind echte didaktische Prinzipien aus V4 - sie stehen aber nicht in diesem Schaubild. (Notizen S. 20)",
@@ -570,19 +650,23 @@
       "optionen": [
         {
           "text": "Als fachübergreifendes und fächerverbindendes Thema - eine Aufgabe der gesamten Schule",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Orientierungs- und Handlungsrahmen ist für fachübergreifenden und fächerverbindenden Unterricht gedacht; sein erklärtes Ziel ist es, die Bedeutung des Themas als Aufgabe für die gesamte Schule herauszustellen. (Folie 15, Notizen S. 17)"
         },
         {
           "text": "Als eigenständiges Unterrichtsfach mit fester Stundentafel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ein eigenes Fach mit Stundentafel ist gerade nicht gemeint - es ist ein übergreifendes Thema. (Folie 15, Notizen S. 17)"
         },
         {
           "text": "Ausschließlich als externes Angebot in Kooperation mit der Polizei",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Kooperationen stehen in der Fußzeile des Methoden-Schaubilds, ersetzen aber nicht die schulische Verankerung. (Folien 15 und 24, Notizen S. 17 und 20)"
         },
         {
           "text": "Als freiwillige Arbeitsgemeinschaft am Nachmittag",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine freiwillige AG wäre das Gegenteil einer Aufgabe für die gesamte Schule. (Folie 15, Notizen S. 17)"
         }
       ],
       "erklaerung": "Verkehrserziehung und Mobilitätsbildung sind für fachübergreifenden und fächerverbindenden Unterricht gedacht; die Bedeutung des Themas soll als Aufgabe für die gesamte Schule herausgestellt werden. Angeknüpft wird dabei an den Rahmenlehrplan der Jahrgangsstufen 1-10 in Berlin und Brandenburg. Der Polizei-Decoy greift die Kooperationen aus dem Methoden-Schaubild auf - die ergänzen den Unterricht, ersetzen ihn aber nicht. (Notizen S. 17)",
@@ -598,19 +682,23 @@
       "optionen": [
         {
           "text": "Die Mehr-Kanal-Regel",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Mehr-Kanal-Regel - alle Informationen sollen durch mindestens zwei Sinne erfahrbar sein, das Folienbeispiel ist genau dieses: optische Anzeige plus akustische Durchsage von Haltestellen. Diese Folie mit den drei Regeln fehlt in deinen Notizen komplett. (Folie 35)"
         },
         {
           "text": "Die Räder-Füße-Regel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Räder-Füße-Regel betrifft die Erreichbarkeit von Zielen zu Fuß wie mit dem Rollstuhl, etwa über Rampen und Fahrstühle. (Folie 35)"
         },
         {
           "text": "Die KISS-Regel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: KISS betrifft die Verständlichkeit der Information, nicht die Zahl der Kanäle. (Folie 35)"
         },
         {
           "text": "Keine der drei Regeln - das ist eine Maßnahme der Sicherheitserziehung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Es ist eine der drei Regeln - die Mehr-Kanal-Regel. (Folie 35)"
         }
       ],
       "erklaerung": "Die Mehr-Kanal-Regel verlangt, dass Informationen über mindestens zwei Sinne erfahrbar sind - genau die Kombination aus optischer Anzeige und akustischer Durchsage nennt die Folie als Beispiel. Die Räder-Füße-Regel zielt aufs Hinkommen, die KISS-Regel auf die Verständlichkeit; beide sind hier nicht der Punkt. (Folie 35, Stöppler 2018, 627)",
@@ -626,19 +714,23 @@
       "optionen": [
         {
           "text": "Die KISS-Regel",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: KISS-Regel, Keep it short and simple - alle Informationen sollen so gestaltet werden. Auch diese Regel steht nur auf der Folie, nicht in deinen Notizen. (Folie 35)"
         },
         {
           "text": "Die Mehr-Kanal-Regel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Mehr-Kanal-Regel verlangt mindestens zwei Sinneskanäle, hier geht es aber um die Verständlichkeit des Textes. (Folie 35)"
         },
         {
           "text": "Die Räder-Füße-Regel",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Räder-Füße-Regel betrifft die bauliche Erreichbarkeit. (Folie 35)"
         },
         {
           "text": "Das Prinzip der Elementarisierung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Elementarisierung ist ein didaktisches Prinzip aus einer anderen Vorlesung, keine der drei Barrierefreiheits-Regeln. (Folie 35)"
         }
       ],
       "erklaerung": "KISS steht für keep it short and simple, also für Informationen, die kurz und einfach gestaltet sind. Die Mehr-Kanal-Regel würde einen zweiten Sinneskanal verlangen, nicht kürzere Texte. Der vierte Decoy ist mit Absicht verlockend: Elementarisierung gibt es wirklich, aber als didaktisches Prinzip aus einer anderen Vorlesung, nicht als eine der drei Barrierefreiheits-Regeln. (Folie 35, Stöppler 2018, 627)",
@@ -654,19 +746,23 @@
       "optionen": [
         {
           "text": "Zu Fuß, Rad und öffentlicher Verkehr haben leicht zugelegt, die Mitfahrt im Pkw ist deutlich zurückgegangen, der selbst gefahrene Pkw bleibt das häufigste Verkehrsmittel",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wege 2002 zu 2023 - zu Fuß 24 auf 26 Prozent, Fahrrad 9 auf 11, ÖV 9 auf 11, MIV-Mitfahrt 17 auf 13, MIV-Fahrt 41 auf 40 und damit weiter das häufigste Verkehrsmittel. Diese Zahlenreihen stehen nur auf der Folie, in deinen Notizen fehlen sie. (Folie 6)"
         },
         {
           "text": "Der selbst gefahrene Pkw hat seine führende Stellung an den öffentlichen Verkehr abgegeben",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der ÖV wächst zwar, liegt bei den Wegen aber bei 11 Prozent gegenüber 40 Prozent MIV-Fahrt. (Folie 6)"
         },
         {
           "text": "Die Wege zu Fuß sind stark zurückgegangen, weil deutlich mehr Wege mit dem Auto zurückgelegt werden",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Wege zu Fuß haben leicht zugelegt (24 auf 26 Prozent), und der Anteil der selbst gefahrenen Pkw-Wege ist sogar minimal gesunken. (Folie 6)"
         },
         {
           "text": "Die Anteile haben sich über die vier Erhebungen hinweg praktisch nicht verändert",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Mitfahrt geht von 17 auf 13 Prozent zurück, das ist eine deutliche Verschiebung. Achtung: Nicht mit Folie 5 verwechseln, die zeigt die WEGZWECKE, nicht die Verkehrsmittel. (Folien 5 und 6)"
         }
       ],
       "erklaerung": "Die Zahlen der Modal-Split-Folie: zu Fuß 24 auf 26 Prozent, Fahrrad 9 auf 11, öffentlicher Verkehr 9 auf 11, selbst gefahrener Pkw 41 auf 40, Mitfahrt 17 auf 13 Prozent. Die Bewegung ist also real, aber klein - und die Dominanz des Autos bleibt. Achtung bei der Verwechslungsgefahr: Diese Folie zeigt die Verkehrsmittel, die Folie davor die Wegzwecke. (Folie 6, Follmer 2025, S. 15)",
@@ -682,19 +778,23 @@
       "optionen": [
         {
           "text": "Auf die tatsächliche Möglichkeit, sich in der Umgebung zu bewegen, und auf das Wissen, um sich sicher und eigenständig im Verkehr zu bewegen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Zwei Säulen - links die Möglichkeit, sich in der Umgebung zu bewegen (die tatsächliche Mobilität), rechts das Wissen und die Kenntnisse, um sich sicher zu bewegen (eigenständige Verkehrsteilnahme, also Verkehrserziehung und Mobilitätstraining). Diese Folie fehlt in deinen Notizen. (Folien 11 und 12)"
         },
         {
           "text": "Auf die Sicherheitserziehung und die Umwelterziehung als die beiden wichtigsten Aufgabenbereiche",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Sicherheits- und Umwelterziehung sind zwei der vier Teilbereiche auf einer anderen Folie. (Folie 13, Notizen S. 17)"
         },
         {
           "text": "Auf verlässliche Fahrdienste und auf die Begleitung durch Assistenzkräfte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Fahrdienste und Assistenz sind genau die Abhängigkeit, aus der die Frage herausführen will. (Folien 7 und 11, Notizen S. 16)"
         },
         {
           "text": "Auf die visuelle und die auditive Wahrnehmung als die beiden zentralen Mobilitätskompetenzen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind zwei der zehn Mobilitätskompetenzen, nicht die zwei Bausteine. (Folien 11 und 17, Notizen S. 18)"
         }
       ],
       "erklaerung": "Die beiden Säulen sind das tatsächliche Bewegen-Können auf der einen und Verkehrserziehung und Mobilitätstraining auf der anderen Seite - Können und Wissen also, nicht das eine ohne das andere. Alle drei Decoys stammen aus benachbarten Folien: die vier Aufgabenbereiche der Mobilitäts- und Verkehrserziehung, die Abhängigkeit von Fahrdiensten und die zehn Mobilitätskompetenzen nach Stöppler. (Folien 11 und 12)",
@@ -710,19 +810,23 @@
       "optionen": [
         {
           "text": "Uneingeschränkt mobil zu sein ist Ausdruck einer selbstständigen Lebensführung und eröffnet erst den Zugang zu Feldern wie Arbeit, Bildung, Freizeit, Gesundheit oder sozialen Beziehungen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Uneingeschränkt mobil sein ist ein Grundbedürfnis und Ausdruck einer selbstständigen Lebensführung und gesellschaftlicher Partizipation - dazu das Schaubild mit den zehn Partizipationsfeldern Arbeit, Freizeit, Bildung, Sport, Politik, Gesundheit, Wirtschaft, Kunst, Recht, soziale Beziehungen. Diese Definitionsfolie fehlt in deinen Notizen, sie beginnen erst bei Mobilität im SGE. (Folie 4, Notizen S. 16)"
         },
         {
           "text": "Moderne Gesellschaften legen vor allem Wert auf Schnelligkeit, und wer langsamer unterwegs ist, wird benachteiligt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie spricht von steigender Optionenvielfalt und wachsendem Mobilitätsbedarf, nicht von Benachteiligung durch Langsamkeit. (Folie 4)"
         },
         {
           "text": "Mobilität ist im Rahmenlehrplan als eigenes Unterrichtsfach verankert",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Mobilitätsbildung ist ein übergreifendes Thema, kein eigenes Fach. (Folien 4 und 15, Notizen S. 17)"
         },
         {
           "text": "Ohne systematisches Mobilitätstraining lässt sich Verkehrssicherheit nicht erreichen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Verkehrssicherheit ist ein Ziel unter mehreren; die Begründung für das Grundbedürfnis liegt in der Teilhabe. (Folie 4)"
         }
       ],
       "erklaerung": "Die Folie stellt Mobilität in die Mitte eines Kreises mit zehn Partizipationsfeldern - Arbeit, Freizeit, Bildung, Sport, Politik, Gesundheit, Wirtschaft, Kunst, Recht und soziale Beziehungen. Genau darüber wird sie zum Grundbedürfnis. Der dritte Decoy klingt plausibel, stimmt aber nicht: Im Rahmenlehrplan ist Mobilität ein Lernfeld (L5 Der mobile Mensch), kein Fach. (Folie 4, vgl. Stöppler 2015, 16; 2019, 620)",

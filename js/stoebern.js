@@ -154,15 +154,31 @@ function themaKarte(thema, eigene, hooks) {
     mc.gesamt + " Konzept-Checks · " + fr.gesamt + " offene Aufgaben",
     function () { hooks.thema(thema); }));
 
-  // Zeile 3ff: das Erzeugte, in fester Reihenfolge statt in Manifest-Reihenfolge,
-  // damit die Karten untereinander gleich aussehen.
-  var reihe = ["deck", "podcast", "video"];
-  var sortiert = eigene.slice().sort(function (a, b) {
-    return reihe.indexOf(a.art) - reihe.indexOf(b.art);
-  });
-  sortiert.forEach(function (m) { k.appendChild(medienZeile(m)); });
+  /* Zeile 3ff: das Erzeugte. Feste Reihenfolge deck -> podcast -> video statt
+     Manifest-Reihenfolge, damit die Karten untereinander gleich aussehen.
 
-  if (!sortiert.length) {
+     VERSIONEN (18.08.2026): Eine zweite Fassung ersetzt die erste nicht. Die
+     neueste steht oben und normal gross, aeltere darunter als schmale Zeile.
+     Warum die alte ueberhaupt bleibt: Jennifer will vergleichen koennen, ob
+     ein geschaerfter Prompt etwas gebracht hat - und Rose hat die erste
+     Fassung vielleicht schon halb im Kopf. Etwas wegzunehmen, das sie kennt,
+     ist teurer als eine Zeile mehr. */
+  var reihe = ["deck", "podcast", "video"];
+  var proArt = {};
+  eigene.forEach(function (m) {
+    (proArt[m.art] = proArt[m.art] || []).push(m);
+  });
+  var hatWas = false;
+  reihe.forEach(function (art) {
+    var liste = proArt[art];
+    if (!liste || !liste.length) return;
+    hatWas = true;
+    // Absteigend: die hoechste Version zuerst. version fehlt = 1 (alte Manifeste).
+    liste.sort(function (a, b) { return (b.version || 1) - (a.version || 1); });
+    liste.forEach(function (m, i) { k.appendChild(medienZeile(m, i > 0, liste.length > 1)); });
+  });
+
+  if (!hatWas) {
     k.appendChild(el("div", "stb-leer", "Für dieses Thema gibt es noch kein erzeugtes Material."));
   }
   return k;
@@ -193,20 +209,28 @@ function stbZeile(icon, titel, unter, aufKlick, erzeugt) {
    ausgeht, und taucht auf dem Sperrbildschirm auf; ein Overlay, das beim
    nächsten Antippen irgendwo zugeht, nimmt ihr genau das. Ausserdem stoppt so
    nichts, wenn sie daneben weiterliest. */
-function medienZeile(m) {
-  var box = el("div", "stb-medium");
+function medienZeile(m, istAelter, hatMehrere) {
+  var box = el("div", "stb-medium" + (istAelter ? " aelter" : ""));
   var a = ART_TEXT[m.art] || { icon: "•", wort: m.art };
 
+  /* Der Versions-Zusatz taucht NUR auf, wenn es wirklich mehr als eine Fassung
+     gibt. Ein einsames "Fassung 1" an jedem Medium waere Rauschen - es gibt
+     dann ja nichts, wovon es sich unterscheidet. */
+  var v = m.version || 1;
+  var vText = hatMehrere ? (istAelter ? "ältere Fassung " + v : "Fassung " + v) : "";
+
   if (m.art === "deck") {
-    box.appendChild(stbZeile(a.icon, m.titel,
-      a.wort + " · " + m.seiten + " Seiten · " + m.untertitel,
-      function () { oeffneDeck(m, 1); }, true));
+    var z = stbZeile(a.icon, m.titel,
+      [a.wort, m.seiten + " Seiten", vText, m.untertitel].filter(Boolean).join(" · "),
+      function () { oeffneDeck(m, 1); }, true);
+    box.appendChild(z);
+    anmerkungAnhaengen(box, m);
     return box;
   }
 
   var player = null;
   var zeile = stbZeile(a.icon, m.titel,
-    a.wort + " · " + dauerText(m.sekunden) + " · " + m.untertitel,
+    [a.wort, dauerText(m.sekunden), vText, m.untertitel].filter(Boolean).join(" · "),
     function () {
       if (player) {
         // Zweiter Klick auf eine LAUFENDE Zeile klappt nicht zu - das waere
@@ -229,7 +253,29 @@ function medienZeile(m) {
     }, true);
 
   box.appendChild(zeile);
+  anmerkungAnhaengen(box, m);
   return box;
+}
+
+/* Die geprueften Abweichungen dieser Fassung, direkt unter dem Medium.
+
+   WARUM DAS HIER STEHT UND NICHT IM DECK SELBST. Ein Deck ist ein Bild-Stapel,
+   den wir nicht nachbearbeiten koennen - was Gemini weggekuerzt hat, laesst
+   sich dort nicht nachtragen. Die Anmerkung ist die einzige Stelle, an der
+   Rose die Luecke sieht, BEVOR sie das Material fuer vollstaendig haelt. Genau
+   dafuer wurde sie eingefuehrt (Jennifer, 18.08.2026: "das waere ein grosses
+   Risiko, wenn sie es falsch lernt aufgrund der Materialien").
+
+   Reintext, kein reichFuellen und keine Beleg-Chips: die Anmerkungen nennen
+   Folienbereiche ("Folie 17 bis 20"), und ein Chip mitten in einer Warnung
+   waere ein Absprung weg von der Warnung. Wer nachsehen will, nimmt die
+   Folienzeile ganz oben in derselben Karte. */
+function anmerkungAnhaengen(box, m) {
+  if (!m.anmerkung) return;
+  var w = el("div", "stb-anmerkung");
+  w.appendChild(el("span", "stb-anm-icon", "⚠️"));
+  w.appendChild(el("span", null, m.anmerkung));
+  box.appendChild(w);
 }
 
 function bauePlayer(m) {

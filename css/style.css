@@ -1757,3 +1757,28 @@ p { margin: 0 0 var(--sp-3); }
 .stb-player video { background: #000; }
 .stb-player-fuss { margin-top: 6px; font-size: .74rem; color: var(--ink-soft); line-height: 1.4; }
 .kachel-grid.stb-material { grid-template-columns: repeat(2, 1fr); }
+
+/* Anmerkung an einem erzeugten Medium: was beim Nachzaehlen gegen die Folien
+   aufgefallen ist. Warnfarbe, aber gedaempft — es ist kein Fehler der App und
+   auch kein Grund, das Material wegzulassen; es ist der Satz, der Rose davor
+   bewahrt, eine Luecke fuer Vollstaendigkeit zu halten. Bewusst NICHT
+   einklappbar: eine Warnung, die man erst aufklappen muss, liest niemand. */
+.stb-anmerkung {
+  display: flex; gap: 8px; align-items: flex-start;
+  margin: 2px 2px 8px 2.6rem;
+  padding: 8px 10px;
+  border-left: 3px solid var(--warn-ink);
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--warn-ink) 10%, transparent);
+  font-size: .78rem; line-height: 1.45; color: var(--ink);
+}
+.stb-anm-icon { flex: none; font-size: .85rem; line-height: 1.5; }
+@media (max-width: 460px) { .stb-anmerkung { margin-left: 2px; } }
+
+/* Aeltere Fassungen stehen unter der neuen, kleiner und leiser. Sie
+   verschwinden nicht: Rose hat die erste Fassung vielleicht schon halb im
+   Kopf, und Jennifer will vergleichen koennen, ob ein schaerferer Prompt
+   ueberhaupt etwas gebracht hat. */
+.stb-medium.aelter .stb-zeile { opacity: .62; }
+.stb-medium.aelter .stb-titel b { font-weight: 600; font-size: .92rem; }
+.stb-medium.aelter .stb-anmerkung { opacity: .78; }

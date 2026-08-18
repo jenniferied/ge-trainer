@@ -20,19 +20,23 @@
       "optionen": [
         {
           "text": "Relativ kleine Klassenfrequenzen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Relativ kleine Klassenfrequenzen stehen in der Merkmalsliste, neben Frühförderung, Ganztagsbeschulung und wohnlich gestalteten Klassenzimmern. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Ausschließlich Halbtagsbeschulung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - die Ganztagsbeschulung ist selbst eines der vier Merkmale. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Große, jahrgangsübergreifende Klassen mit über 30 Kindern",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Merkmal heißt kleine Klassenfrequenzen. Über 30 Kinder wäre das Gegenteil. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Verzicht auf Frühförderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen sind der erste Punkt der Liste. (Folie 18, Notizen S. 57)"
         }
       ],
       "erklaerung": "Förderschulen kennzeichnen: Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen."
@@ -47,19 +51,23 @@
       "optionen": [
         {
           "text": "4 Stufen, die jeweils 3 Jahre besucht werden",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Vier Stufen zu je drei Jahren - Vor-/Unter-/Grundstufe, Mittelstufe, Ober-/Hauptstufe, Werk-/Abschlussstufe (vgl. Fornefeld 2004, 106). (Folie 20, Notizen S. 58)"
         },
         {
           "text": "2 Stufen zu je 6 Jahren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Zwei Stufen kommen im Modell nicht vor; es sind vier, und zwar zu je drei Jahren. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "6 Stufen zu je 2 Jahren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Zahlen sind vertauscht - vier Stufen zu drei Jahren, nicht sechs zu zwei. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "3 Stufen zu je 4 Jahren",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch hier sind beide Zahlen vertauscht. Merkhilfe: 4 mal 3 ergibt die 12 Jahre, auf die der Schulbesuch verlängert werden kann. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Es gibt eine Unterteilung in 4 Stufen, die jeweils 3 Jahre besucht werden: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe und Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106)."
@@ -74,19 +82,23 @@
       "optionen": [
         {
           "text": "Die Werk- bzw. Abschlussstufe",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Werk- bzw. Abschlussstufe ist relativ eigenständig und bereitet über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten vor, vor allem auf das Berufsleben. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Die Unterstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Unterstufe ist die erste der vier Stufen, ganz am Anfang der Schulzeit. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Die Mittelstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Mittelstufe liegt in der Mitte des Stufenmodells, ohne diesen besonderen Auftrag. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Die Vorstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Vorstufe gehört mit Unter- und Grundstufe zur ersten Stufe - also zum Schulanfang, nicht zum Übergang. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Die relativ eigenständige Werkstufe hat die besondere Zielsetzung, über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten."
@@ -101,19 +113,23 @@
       "optionen": [
         {
           "text": "Verlängerung von 9 auf 12 Jahre, mit Option auf weitere Verlängerung in begründeten Fällen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Im Werkstufenbereich wird der Schulbesuch von 9 auf 12 Jahre verlängert, in begründeten Fällen auch darüber hinaus. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Verkürzung von 12 auf 9 Jahre",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Richtung stimmt nicht - verlängert, nicht verkürzt. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Es bleibt bei genau 10 Jahren ohne Ausnahme",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Zehn Jahre kommt im Text nicht vor, und gerade die Ausnahme in begründeten Fällen ist ausdrücklich vorgesehen. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Die Dauer ist völlig frei wählbar",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Frei wählbar ist die Dauer nicht - die 12 Jahre sind der Rahmen, alles darüber braucht eine Begründung. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Der Schulbesuch verlängert sich von 9 auf 12 Jahre im Werkstufenbereich - mit der Option auf Verlängerung in begründeten Fällen."
@@ -128,19 +144,23 @@
       "optionen": [
         {
           "text": "Kooperationsklasse",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Kooperationsklasse steht als einzige unter dem Ast Schüler:innen schulrechtlich der Förderschule zugeordnet. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Integrationsklasse",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Integrationsklasse hängt am anderen Ast - dort sind die Schüler:innen der Regelschule zugeordnet. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Integrative Regelklasse",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch die integrative Regelklasse gehört zum Regelschul-Ast. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Einzelintegration",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch die Einzelintegration gehört zum Regelschul-Ast. Nur eine der vier Formen hängt an der Förderschule. (Folie 17, Notizen S. 57)"
         }
       ],
       "erklaerung": "Bei der Kooperationsklasse bleiben die Schüler:innen schulrechtlich der Förderschule zugeordnet. Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur schulrechtlichen Zuordnung an die Regelschule."
@@ -155,19 +175,23 @@
       "optionen": [
         {
           "text": "Integrationsklasse, integrative Regelklasse, Einzelintegration",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Diese drei stehen im Schaubild unter Schüler:innen schulrechtlich der Regelschule zugeordnet. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Kooperationsklasse, Außenklasse, Werkstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Kooperationsklasse gehört zum anderen Ast, und Außenklasse und Werkstufe kommen im Schaubild gar nicht vor - die Werkstufe ist eine Schulstufe, keine Form des gemeinsamen Unterrichts. (Folien 17 und 20, Notizen S. 57 und 58)"
         },
         {
           "text": "Grundstufe, Mittelstufe, Oberstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind drei Stufen des Stufenmodells, nicht Formen des gemeinsamen Unterrichts. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Frühförderung, Ganztag, Hort",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Frühförderung und Ganztag sind Merkmale der Förderschule, kein gemeinsamer Unterricht; der Hort kommt in beiden Quellen nicht vor. (Folien 17 und 18, Notizen S. 57)"
         }
       ],
       "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule."
@@ -180,19 +204,23 @@
       "optionen": [
         {
           "text": "Nach der schulrechtlichen Zuordnung der Schüler:innen (Regelschule oder Förderschule)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Baum teilt sich genau daran - schulrechtlich der Regelschule zugeordnet (drei Formen) oder schulrechtlich der Förderschule zugeordnet (Kooperationsklasse). Für den Operator vergleichen ist diese Zuordnungslogik das Entscheidende; deine Notizen führen die Formen als Aufzählung, die Astung steht klarer auf der Folie. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Nach der Anzahl der Schüler:innen mit Förderbedarf pro Klasse",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Über Anteile oder Zahlen sagt das Schaubild nichts. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Nach dem Gebäude, in dem der Unterricht stattfindet",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Es geht um die rechtliche Zuordnung, nicht um den Ort. Eine Kooperationsklasse kann im Regelschulgebäude sitzen und bleibt trotzdem der Förderschule zugeordnet. (Folie 17, Notizen S. 57)"
         },
         {
           "text": "Nach dem Alter der Schüler:innen beim Einstieg in den gemeinsamen Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Alter spielt im Schaubild keine Rolle. (Folie 17, Notizen S. 57)"
         }
       ],
       "erklaerung": "Das Ordnungsprinzip ist die schulrechtliche Zuordnung: Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur Regelschule, die Kooperationsklasse zur Förderschule. Der Unterrichtsort klingt plausibel, ist aber nicht das Kriterium - es geht um den rechtlichen Status. (Notizen S. 57)",
@@ -208,19 +236,23 @@
       "optionen": [
         {
           "text": "In der Ober- bzw. Hauptstufe",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Vier Stufen zu je drei Jahren - Jahr 1 bis 3 Vor-/Unter-/Grundstufe, 4 bis 6 Mittelstufe, 7 bis 9 Ober-/Hauptstufe, ab 10 Werkstufe. Das 8. Jahr fällt also in die Ober- bzw. Hauptstufe. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "In der Mittelstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Mittelstufe deckt die Jahre 4 bis 6 ab. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "In der Werk- bzw. Abschlussstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Werk- bzw. Abschlussstufe beginnt erst im 10. Jahr - dort liegt auch die Verlängerung auf 12 Jahre. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "In der Vor-, Unter- bzw. Grundstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die erste Stufe umfasst die Jahre 1 bis 3. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Bei 4 Stufen zu je 3 Jahren in der genannten Reihenfolge ergibt sich: Jahre 1-3 Vor-/Unter-/Grundstufe, 4-6 Mittelstufe, 7-9 Ober-/Hauptstufe, 10-12 Werk-/Abschlussstufe - das 8. Jahr liegt also in der Ober- bzw. Hauptstufe. Die Mittelstufe ist der naheliegende Verrechner, sie endet aber schon nach Jahr 6. (Notizen S. 58)",
@@ -236,19 +268,23 @@
       "optionen": [
         {
           "text": "Frühförderung und schulvorbereitende Gruppen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen sind der erste Punkt der Merkmalsliste - im Bayern-Schaubild liegen sie sichtbar unterhalb der Schul-Klammer. (Folien 18 und 20, Notizen S. 57 und 58)"
         },
         {
           "text": "Die Werkstufe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Werkstufe steht am anderen Ende der Schulzeit, am Übergang ins Berufsleben. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Die Ganztagsbeschulung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Ganztagsbeschulung betrifft den Tagesablauf während der Schulzeit, nicht die Zeit davor. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Der Klassenrat",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Klassenrat ist ein Eintrag im exemplarischen Stundenplan, kein vorschulisches Angebot. (Folie 19, Notizen S. 57)"
         }
       ],
       "erklaerung": "Zu den strukturellen Merkmalen gehören Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen - beides greift vor Schulbeginn. Die Werkstufe ist das Gegenstück am anderen Ende: Sie bereitet auf die Zeit nach der Schule vor. (Notizen S. 57)",
@@ -264,19 +300,23 @@
       "optionen": [
         {
           "text": "Die Ganztagsbeschulung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Ein Tag von 8:30 bis 15 Uhr mit gemeinsamen Mahlzeiten ist die Ganztagsbeschulung, direkt am Plan abgelesen. Genau so beschriftet es die Folie - diese sechs Beschriftungen (Unterricht in Blöcken, Ganztagsschule, Visualisierung mit Symbolen, spezifische Lernfelder, kleine Lerngruppen, gemeinsame Mahlzeiten) fehlen in deinen Notizen, dort steht nur der Plan selbst. (Folie 19, Notizen S. 57)"
         },
         {
           "text": "Die relativ kleinen Klassenfrequenzen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die kleinen Klassenfrequenzen sind zwar ein Merkmal, am Stundenplan aber nicht ablesbar - er zeigt Zeiten und Fächer, keine Gruppengrößen. (Folien 18 und 19, Notizen S. 57)"
         },
         {
           "text": "Die Frühförderung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Frühförderung setzt vor der Schulzeit an und taucht im Stundenplan nicht auf. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Die Verlängerung des Schulbesuchs von 9 auf 12 Jahre",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das betrifft die Schuljahre insgesamt, nicht den einzelnen Schultag. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Ein Tagesablauf bis in den Nachmittag mit Mahlzeiten und Pausen zeigt die Ganztagsbeschulung. Die Distraktoren sind alle echte Merkmale von Förderschulen - aber aus einem Stundenplan lassen sich Klassengröße, Frühförderung oder Schulbesuchsdauer nicht ablesen. (Notizen S. 57)",
@@ -292,19 +332,23 @@
       "optionen": [
         {
           "text": "Sie sind Orte zum Lernen und zum Leben",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Formulierung lautet wörtlich: wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Sie dienen dem Unterricht und der Leistungsbewertung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Von Leistungsbewertung ist an dieser Stelle keine Rede - das Wortpaar heißt Lernen und Leben. (Folie 18, Notizen S. 57)"
         },
         {
           "text": "Sie sind zugleich Unterrichts- und Therapieräume",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Therapeutische Angebote gibt es an der Förderschule tatsächlich, sie stehen aber im Bayern-Schaubild und nicht in dieser Formulierung. (Folien 18 und 20, Notizen S. 57 und 58)"
         },
         {
           "text": "Sie werden vormittags von der Schule und nachmittags vom Hort genutzt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Eine Vormittags-/Nachmittagsteilung passt nicht zum Ganztag; gemeint ist, dass derselbe Raum Lern- und Lebensort ist. (Folie 18, Notizen S. 57)"
         }
       ],
       "erklaerung": "Die wohnliche Gestaltung macht Klassenzimmer zu Orten zum Lernen und Leben - das ist die Formulierung aus den Merkmalen der Förderschule. Die Therapie-Option klingt nah dran, ist aber nicht die genannte Doppelfunktion. (Notizen S. 57)",
@@ -320,19 +364,23 @@
       "optionen": [
         {
           "text": "Unter anderem Physiotherapie, Ergotherapie und Logopädie",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Das Schaubild nennt als (integrierte) therapeutische Angebote Physiotherapie, Ergotherapie, Krankenpflege, Logopädie, Psychologischen Dienst und andere Dienste. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Ausschließlich Psychotherapie in externen Praxen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Wort integriert sagt das Gegenteil - die Angebote gehören zur Einrichtung, nicht in externe Praxen. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Reittherapie und Musiktherapie",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Reit- und Musiktherapie kommen weder auf der Folie noch in deinen Notizen vor. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Keine - Therapien finden grundsätzlich außerhalb der Schule statt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die therapeutischen Angebote stehen ausdrücklich als eigene Spalte im Schaubild. (Folie 20, Notizen S. 58)"
         }
       ],
       "erklaerung": "Das Schaubild führt integrierte therapeutische Angebote auf, darunter Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst. Der Trick liegt in der Integration: Die Angebote gehören zur Schule, nicht in externe Praxen. (Notizen S. 58, Bayern-Übersicht - das Schaubild ist sehr klein gedruckt, die Beschriftungen sind sinngemäß und nicht wortgenau.)",
@@ -348,19 +396,23 @@
       "optionen": [
         {
           "text": "Ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt geben kann und inwiefern allgemeine Modelle und Theorien für ihn spezifiziert werden müssen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: So steht es in der Modulbeschreibung - ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt geben kann und inwiefern allgemeine Modelle und Theorien für ihn spezifiziert werden müssen. Diese Rahmenfrage fehlt in deinen Notizen, es gibt sie nur auf der Folie. (Folie 5)"
         },
         {
           "text": "Welche Merkmale Förderschulen aufweisen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist die Leitfrage DIESER Sitzung, nicht die Rahmenfrage der ganzen Vorlesung. Beide stehen im Foliensatz, nur auf verschiedenen Folien. (Folien 5 und 14)"
         },
         {
           "text": "Ob Schüler:innen im SGE besser an der Förderschule oder an der allgemeinen Schule lernen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist das Thema der nächsten Sitzung - und genau das ist von der Klausur ausgenommen. (Folien 11 und 21)"
         },
         {
           "text": "Wie sich Unterricht so individualisieren lässt, dass alle Schüler:innen mitkommen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Klingt nach Didaktik, ist aber keine Formulierung aus der Modulbeschreibung. (Folie 5)"
         }
       ],
       "erklaerung": "Die Rahmenfrage des Moduls dreht sich um das Verhältnis von spezieller und spezifizierter allgemeiner Didaktik - sie spannt sich über alle Sitzungen. Der erste Decoy ist die Leitfrage genau dieser einen Sitzung, der zweite die Ausblick-Frage auf die nächste (und damit das von der Klausur ausgenommene Thema Inklusion im SGE). Beide sind richtig formuliert, nur eben nicht die Rahmenfrage. (Folie 5)",
@@ -376,19 +428,23 @@
       "optionen": [
         {
           "text": "Eine Förderung mit akademischen und kulturellen Lerninhalten planen zu können",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Eine Förderung mit akademischen und kulturellen Lerninhalten planen zu können ist eines der drei Qualifikationsziele - neben didaktische Ansätze kennen und Unterricht strukturieren und planen. Auch diese Folie fehlt in deinen Notizen. (Folie 5)"
         },
         {
           "text": "Sonderpädagogische Gutachten zur Feststellung des Förderbedarfs erstellen zu können",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Gutachten zur Feststellung des Förderbedarfs kommen in der Modulbeschreibung nicht vor. (Folie 5)"
         },
         {
           "text": "Diagnostische Testverfahren eigenständig auswerten zu können",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Diagnostische Testverfahren gehören nicht zu den drei genannten Zielen. (Folie 5)"
         },
         {
           "text": "Beratungsgespräche mit Eltern und außerschulischen Diensten führen zu können",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Beratungsgespräche sind kein Qualifikationsziel dieses Moduls. (Folie 5)"
         }
       ],
       "erklaerung": "Die drei Qualifikationsziele lauten: didaktische Ansätze und methodische Aspekte kennen, eine Förderung mit akademischen und kulturellen Lerninhalten planen und Unterricht strukturieren und planen können. Die Decoys sind lauter Dinge, die zum Beruf gehören, in diesem Modul aber nicht als Ziel stehen - Diagnostik und Beratung sind eigene Felder. (Folie 5)",
@@ -404,19 +460,23 @@
       "optionen": [
         {
           "text": "Auf Fischer 2008",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Fischer 2008, 30 steht im Folientitel beider Merkmalsfolien. Aufpassen: In deinen Notizen fehlt diese Quellenangabe, dort steht nur Fornefeld 2004, 106 - und der belegt allein das Stufenmodell. (Folien 18 und 20, Notizen S. 57 und 58)"
         },
         {
           "text": "Auf Fornefeld 2004",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Fornefeld 2004, 106 ist die Quelle für die vier Stufen zu je drei Jahren, nicht für die Merkmalsliste. Genau diese beiden werden leicht verwechselt. (Folie 20, Notizen S. 58)"
         },
         {
           "text": "Auf die Empfehlungen der KMK von 2021",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die KMK-Empfehlungen 2021 stehen im Literaturverzeichnis und liefern die Entwicklungsbereiche - nicht die Merkmale der Förderschule. (Folie 22)"
         },
         {
           "text": "Auf Stöppler 2017",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Stöppler 2017 steht ebenfalls nur im Literaturverzeichnis dieser Sitzung. (Folie 22)"
         }
       ],
       "erklaerung": "Beide Merkmals-Folien tragen die Quellenangabe Fischer 2008, 30 im Titel. Der stärkste Decoy ist Fornefeld 2004 - der taucht auf derselben Folie wirklich auf, aber nur als Beleg für die vier Stufen der Schule. Eine korrekte Quellenangabe bringt in einer AFB-I-Aufgabe leicht einen zusätzlichen Punkt. (Folien 18 und 20, Fischer 2008, 30)",
@@ -432,19 +492,23 @@
       "optionen": [
         {
           "text": "Der Unterricht ist in Blöcke gegliedert, der Plan ist mit Symbolen visualisiert und enthält spezifische Lernfelder",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Genau diese drei stehen als Beschriftungen am Stundenplan, zusammen mit Ganztagsschule, kleinen Lerngruppen und gemeinsamen Mahlzeiten. In deinen Notizen ist der Plan abgezeichnet, diese Auswertung fehlt dort. (Folie 19, Notizen S. 57)"
         },
         {
           "text": "Der Unterricht folgt dem 45-Minuten-Takt und wechselt stündlich das Fach",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Plan zeigt Blöcke von 90 Minuten, keinen 45-Minuten-Takt - Unterricht in Blöcken ist selbst eine der Beschriftungen. (Folie 19, Notizen S. 57)"
         },
         {
           "text": "Der Nachmittag ist unterrichtsfrei und ausschließlich für Therapien vorgesehen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Nachmittags stehen Sport, Kunst, Musik und Hauswirtschaft im Plan. (Folie 19, Notizen S. 57)"
         },
         {
           "text": "Der Plan entspricht der Stundentafel der Grundschule, nur mit reduzierter Stundenzahl",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Spezifische Lernfelder wie Soziales Lernen, Wochenplan und Klassenrat sind gerade der Unterschied zur Grundschul-Stundentafel. (Folie 19, Notizen S. 57)"
         }
       ],
       "erklaerung": "Die sechs Beschriftungen der Folie lauten: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Die Decoys beschreiben jeweils das Gegenteil eines dieser Merkmale - das lohnt sich zu üben, weil die Blockstruktur und die Symbolvisualisierung leicht als bloße Layoutdetails übersehen werden. (Folie 19 zu Folie 18)",

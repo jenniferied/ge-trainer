@@ -19,19 +19,23 @@
       "optionen": [
         {
           "text": "Organisatorisch, methodisch, inhaltlich, sozial, persönlich",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Organisatorisch, methodisch, inhaltlich, sozial, persönlich - die fünf Kästen neben der Aufzählung wann, wo, mit wem, wie, welcher Zugang, welches Thema. (Folie 4, Notizen S. 23)"
         },
         {
           "text": "Räumlich, zeitlich, finanziell, digital, analog",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Räumlich und zeitlich stecken bei Peschel in der organisatorischen Dimension; die anderen drei kommen gar nicht vor. (Folie 4, Notizen S. 23)"
         },
         {
           "text": "Kognitiv, emotional, motorisch, sozial, sprachlich",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Entwicklungsbereiche aus einer anderen Vorlesung, keine Dimensionen von Offenheit. (Folie 4, Notizen S. 23)"
         },
         {
           "text": "Planung, Durchführung, Kontrolle, Reflexion, Benotung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind Phasen der Unterrichtsplanung. Peschel fragt danach, worüber die Lernenden selbst bestimmen. (Folie 4, Notizen S. 23)"
         }
       ],
       "erklaerung": "Peschel (2002) unterscheidet die organisatorische, methodische, inhaltliche, soziale und persönliche Dimension der Öffnung. Lernende bestimmen dabei selbst, wann, wo, mit wem, wie und woran sie arbeiten.",
@@ -46,19 +50,23 @@
       "optionen": [
         {
           "text": "Der Grad der Mit- bzw. Selbstbestimmung der Schüler:innen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Grad der Mit- bzw. Selbstbestimmung wird zum entscheidenden Kriterium - je freier die Schüler entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener ist der Unterricht (Fischer 2008, 155). (Folie 5, Notizen S. 24)"
         },
         {
           "text": "Die Anzahl der verwendeten Materialien",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Menge des Materials sagt nichts über Offenheit. Auf Folie 28 gilt ein großes Materialangebot sogar als möglicher Ablenkungsfaktor. (Folien 5 und 28, Notizen S. 24 und 29)"
         },
         {
           "text": "Die Größe des Klassenraums",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Räumliche Gegebenheiten sind kein Kriterium. (Folie 5, Notizen S. 24)"
         },
         {
           "text": "Der Verzicht auf jede Lehrperson",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch im offensten Unterricht bleibt die Lehrperson da - Folie 28 hält sogar fest, dass viele Vorgaben durch sie bestehen bleiben. (Folien 5 und 28, Notizen S. 24 und 29)"
         }
       ],
       "erklaerung": "Der Grad der Mit- bzw. Selbstbestimmung wird zum entscheidenden Kriterium: Je freier die Schüler entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden (Fischer 2008, 155).",
@@ -73,19 +81,23 @@
       "optionen": [
         {
           "text": "das Lernen an Stationen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die vier Synonym-Kästen auf der Stationen-Folie heißen genau so - Lernstraße, Übungszirkel, Lernparcours, Lernzirkel. (Folie 15, Notizen S. 25)"
         },
         {
           "text": "die Freiarbeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Freiarbeit hat keine Synonymliste; sie ist der möglichst umfassend selbstbestimmte Lernprozess. (Folie 24, Notizen S. 28)"
         },
         {
           "text": "den Lehrgang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Lehrgang gehört zu den geschlossenen Formen und heißt auch so. (Folie 35, Notizen S. 31)"
         },
         {
           "text": "die Wochenplanarbeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Wochenplanarbeit ist eine eigene Methode mit eigenem Plan, kein Zirkel durch Stationen. (Folie 13, Notizen S. 25)"
         }
       ],
       "erklaerung": "Lernen an Stationen ist auf ein im Lehrplan festgelegtes Thema konzentriert, in Teilthemen gegliedert, und ein Laufzettel dient als Orientierung. Synonyme: Lernstraße, Übungszirkel, Lernparcours, Lernzirkel.",
@@ -100,19 +112,23 @@
       "optionen": [
         {
           "text": "Schüler:innen sind Expert:innen (Chefs) für je ein Angebot: Sie helfen, nehmen Ergebnisse entgegen, korrigieren und verwalten das Material",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Folie beschreibt genau diese Rolle - Ergebnisse entgegennehmen und korrigieren, Expert:in für ein Angebot sein, bei Verzug mahnen, das Material verwalten. Kleine Feinheit: Das Wort Chef:in-System steht nur in deinen Notizen, die Folie benennt die Rolle nicht. (Folie 23, Notizen S. 27)"
         },
         {
           "text": "Es gibt keinerlei Aufgabenstellung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Auch in der Werkstatt gibt es Angebote und Aufgaben - nur nicht für alle dieselben zur selben Zeit. (Folien 19 und 20, Notizen S. 27)"
         },
         {
           "text": "Die Lehrkraft demonstriert jede Aufgabe frontal",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Frontale Demonstration ist das Kennzeichen des Lehrgangs, nicht der Werkstatt. (Folien 23 und 36, Notizen S. 27 und 31)"
         },
         {
           "text": "Alle arbeiten immer gleichzeitig an derselben Aufgabe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Reichen sagt das Gegenteil: In einer Werkstatt wird gearbeitet, aber nicht alle machen das Gleiche. (Folie 19, Notizen S. 27)"
         }
       ],
       "erklaerung": "Das Alleinstellungsmerkmal: Ein:e Schüler:in ist für ein Angebot Expert:in und kann bei Schwierigkeiten helfen, nimmt Ergebnisse entgegen und korrigiert bei Bedarf, mahnt bei obligatorischen Angeboten und beschafft und verwaltet das Material. Lerntheoretisch basiert Werkstattarbeit auf einem konstruktivistischen Verständnis von Lernen.",
@@ -127,19 +143,23 @@
       "optionen": [
         {
           "text": "Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Pfeilkette auf der Kritik-Folie lautet Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit - die volle Freiarbeit steht also am Ende, nicht am Anfang. (Folie 28, Notizen S. 29)"
         },
         {
           "text": "Freiarbeit sofort ab dem ersten Schultag, dann Tagesplan",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau umgekehrt - die Freiarbeit ist der Zielpunkt der Folge, nicht ihr Start. (Folie 28, Notizen S. 29)"
         },
         {
           "text": "Wochenplan, dann Tagesplan, dann Stationenarbeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Wochenplan verlangt mehr Zeitmanagement als der Tagesplan und kommt deshalb später. (Folien 14 und 28, Notizen S. 29)"
         },
         {
           "text": "Die Reihenfolge ist beliebig, es gibt keine Empfehlung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie gibt eine ausdrückliche Reihenfolge an. (Folie 28, Notizen S. 29)"
         }
       ],
       "erklaerung": "Die Abfolge steigert die Anforderungen an Selbststeuerung schrittweise: Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit. Die erhöhte Aufgabenzahl beim Wochenplan stellt höhere Anforderungen an die Zeiteinteilung.",
@@ -154,19 +174,23 @@
       "optionen": [
         {
           "text": "Die Effektivität des kognitiven Lernens wird bezweifelt - mäßige Effektstärke von d = 0.45",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Effektivität des kognitiven Lernens wird bezweifelt, genannt wird eine mäßige Effektstärke von d = 0.45. (Folie 28, Notizen S. 29)"
         },
         {
           "text": "Offener Unterricht ist grundsätzlich verboten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Von einem Verbot ist nirgends die Rede; die Folie listet Kritikpunkte, keine Untersagung. (Folie 28, Notizen S. 29)"
         },
         {
           "text": "Offener Unterricht führt immer zu besseren Noten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das wäre kein Kritikpunkt - und die Folie sagt gerade das Gegenteil über den kognitiven Lernerfolg. (Folie 28, Notizen S. 29)"
         },
         {
           "text": "Es gibt keine Forschung zu offenem Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Effektstärke ist selbst ein Forschungsbefund. (Folie 28, Notizen S. 29)"
         }
       ],
       "erklaerung": "Kritikpunkte: weiterhin viele Vorgaben durch die Lehrperson, methodische Bausteine als maskierte Übungsphasen, Schüler:innen im FSgE werden den Anforderungen nur schwer gerecht, Vermeidung schwieriger Aufgaben und Überschätzung eigener Fähigkeiten bei freier Wahl, mäßige Effektstärke (d = 0.45), offene Materialangebote können ablenken.",
@@ -181,19 +205,23 @@
       "optionen": [
         {
           "text": "Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung, Instruktion",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die vier Felder um den Mittelkasten - Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung, Instruktion (vgl. Fischer 2008, 173). (Folie 30, Notizen S. 29)"
         },
         {
           "text": "Spontanität, Offenheit, Freiheit, Selbstbestimmung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist die Gegenseite. Spontanität steht in der Vergleichstabelle ausdrücklich beim offenen Unterricht. (Folien 30 und 32, Notizen S. 29 und 30)"
         },
         {
           "text": "Projekt, Präsentation, Portfolio, Peer-Feedback",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Projekt und Portfolio gehören zu offenen bzw. kooperativen Formen. (Folien 6 und 30, Notizen S. 24 und 29)"
         },
         {
           "text": "Belohnung, Wiederholung, Prüfung, Benotung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Leistungsbewertung ist keines der vier Momente. (Folie 30, Notizen S. 29)"
         }
       ],
       "erklaerung": "Geschlossene Lehr-Lernformen kennzeichnen Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. In der Gegenüberstellung: frontal, formell, lehrerzentriert, rezeptiv, kleinschrittig - während offener Unterricht differenzierend, informell, schülerzentriert, aktiv und ganzheitlich ist.",
@@ -208,19 +236,23 @@
       "optionen": [
         {
           "text": "Tägliches Üben für 20-30 Minuten ist viel effektiver als geblockte Übungsphasen",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Tägliches Üben für 20 bis 30 Minuten ist viel effektiver als geblockte Übungsphasen - und nur wer täglich übt, erlebt Fortschritte und bleibt motiviert (vgl. Stiehler 2006). (Folie 34, Notizen S. 30)"
         },
         {
           "text": "Einmal pro Monat 5 Stunden am Stück üben ist am effektivsten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau die geblockte Variante, die die Grundregel als weniger effektiv bezeichnet. (Folie 34, Notizen S. 30)"
         },
         {
           "text": "Üben sollte man nur, wenn man Lust dazu hat",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Regeln sagen wörtlich: Üben ist keine Frage des Interesses, sondern eine Notwendigkeit. (Folie 34, Notizen S. 30)"
         },
         {
           "text": "Was geübt wird, muss vorher nicht verstanden sein",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Umgekehrt - was geübt werden soll, muss vorher verstanden werden. (Folie 34, Notizen S. 30)"
         }
       ],
       "erklaerung": "Grundregeln: Üben muss zur Gewohnheit werden; täglich 20-30 Minuten ist effektiver als geblockt; Üben ist keine Frage des Interesses, sondern eine Notwendigkeit; was sitzen soll, muss überlernt werden; was geübt wird, muss vorher verstanden sein; Fehler sofort erkennen und beheben.",
@@ -235,19 +267,23 @@
       "optionen": [
         {
           "text": "Eröffnungs- und Informationsphase, Demonstrationsphase, Übungsphase, Anwendungsphase",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Eröffnungs- und Informationsphase, Demonstrationsphase, Übungsphase, Anwendungsphase - erst wissen worum es geht, dann sehen, dann selbst üben, dann auf Neues übertragen. (Folien 36 und 37, Notizen S. 31)"
         },
         {
           "text": "Übungsphase, Demonstrationsphase, Anwendungsphase, Eröffnungsphase",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Eröffnung kann nicht am Schluss stehen; sie klärt Ziele und Qualitätskriterien. (Folien 36 und 37, Notizen S. 31)"
         },
         {
           "text": "Anwendungsphase, Übungsphase, Demonstrationsphase, Informationsphase",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Genau rückwärts. Die Anwendung unter neuen Bedingungen ist der letzte Schritt. (Folien 36 und 37, Notizen S. 31)"
         },
         {
           "text": "Demonstrationsphase, Eröffnungsphase, Anwendungsphase, Übungsphase",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Demonstration kommt nach der Information, nicht davor. (Folien 36 und 37, Notizen S. 31)"
         }
       ],
       "erklaerung": "Ein Lehrgang läuft ab in: 1. Eröffnungs- und Informationsphase (Ziele, Inhalte, Vorgehen vorstellen), 2. Demonstrationsphase (Lösungshandlung wird vorgemacht), 3. Übungsphase (schrittweises Nachvollziehen und Vertiefen) und 4. Anwendungsphase (Anwendung unter neuen Bedingungen, eigenständige Reflexion).",
@@ -262,19 +298,23 @@
       "optionen": [
         {
           "text": "Spiralcurriculum",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Spiralcurriculum - ein Stoffelement kehrt in ausgefalteten Stufen wieder, zum Beispiel Fertigungstechniken auf zunehmend komplexerem Niveau. (Folie 41, Notizen S. 33)"
         },
         {
           "text": "Additiver Lehrgang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Additiv heißt aneinandergereiht, nicht wiederkehrend - verschiedene Werkzeuge nacheinander. (Folie 42, Notizen S. 33)"
         },
         {
           "text": "Genetische Form",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die genetische Form ist chronologisch-entwickelnd, etwa die Entwicklung des Automobils. (Folie 39, Notizen S. 32)"
         },
         {
           "text": "Konzentrisch-erweiternde Form",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Konzentrisch-erweiternd geht vom Nahen zum Ferneren, nicht vom Einfachen zum Komplexen desselben Elements. (Folie 40, Notizen S. 33)"
         }
       ],
       "erklaerung": "Beim Spiralcurriculum kehrt ein Stoffelement in ausgefalteten Stufen wieder (z. B. Fertigungstechniken auf zunehmend komplexerem Niveau). Additiv = Stoffe geordnet aneinandergereiht; genetisch = chronologisch-entwickelnde Darstellung; konzentrisch-erweiternd = vom Nahen zum Ferneren.",
@@ -289,19 +329,23 @@
       "optionen": [
         {
           "text": "Für Schüler:innen mit autistischem Verhalten",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Strukturierte, lernzielorientierte, programmartige Ansätze werden unter anderem für Schüler:innen mit autistischem Verhalten genannt. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Für niemanden - sie gelten als überholt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie hält ausdrücklich fest, dass sie in der Schule eine relevante Rolle spielen. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Nur für hochbegabte Schüler:innen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Von Hochbegabung ist nirgends die Rede. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Nur für Lehrkräfte in der Ausbildung",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Es geht um Angebote für Schüler:innen, nicht um Lehrkräfteausbildung. (Folie 33, Notizen S. 30)"
         }
       ],
       "erklaerung": "Trainingsprogramme und Übungseinheiten sind Ansätze mit therapeutischer Ausrichtung, geprägt durch starke Strukturierung und Lernzielorientierung - strukturierte, programmartige Ansätze u. a. für Schüler:innen mit autistischem Verhalten. Sie sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen aber in der Schule eine relevante Rolle.",
@@ -316,19 +360,23 @@
       "optionen": [
         {
           "text": "Zum gemeinsamen Unterricht",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Bei Terfloth & Bauersfeld steht der Lehrgang als Variation unter dem gemeinsamen Unterricht, neben Klassenunterricht, Kursarbeit, Präsentation und IT-Arbeit. Aufpassen: Hilbert Meyer macht daraus eine eigene Säule - das ist die Stelle, an der sich die beiden Schaubilder widersprechen. (Folien 6 und 7, Notizen S. 24)"
         },
         {
           "text": "Zum individualisierten Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Unter individualisiertem Unterricht stehen Freiarbeit, Werkstatt-, Stationen-, Planarbeit und Ähnliches. (Folie 6, Notizen S. 24)"
         },
         {
           "text": "Zum kooperativen Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Unter kooperativem Unterricht stehen Projektarbeit, Theaterarbeit, Zukunftswerkstatt, Feste und Feiern, Klassenfahrten. (Folie 6, Notizen S. 24)"
         },
         {
           "text": "Zum offenen Unterricht - das ist die dritte Grundform",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die drei Grundformen heißen individualisiert, kooperativ und gemeinsam - offener Unterricht ist der Oberbegriff der Vorlesung, keine der drei. (Folie 6, Notizen S. 24)"
         }
       ],
       "erklaerung": "Der Lehrgang steht im Schaubild beim gemeinsamen Unterricht, neben Klassenunterricht, Kursarbeit, Präsentation und IT-Arbeit. Der naheliegende Fehlgriff ist der individualisierte Unterricht - dort stehen aber Freiarbeit, Werkstatt-, Stationen- und Planarbeit. Und Vorsicht: 'Offener Unterricht' ist gar keine der drei Grundformen (individualisiert, kooperativ, gemeinsam). (Notizen S. 24) Achtung, bei Meyer sieht die Einteilung anders aus: Dort ist lehrgangsförmiger Unterricht eine eigene Grundform neben individualisierendem und kooperativem Unterricht. Die Frage muss also immer sagen, wessen Einteilung gemeint ist.",
@@ -344,19 +392,23 @@
       "optionen": [
         {
           "text": "Durch Regeln, die Logik der Sache, das Materialangebot und eigene Ziele",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Die rechte Spalte der Freiarbeits-Folie nennt genau diese vier Begrenzungen - vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebots und die Zielsetzungen der Schüler:innen selbst. (Folie 24, Notizen S. 28)"
         },
         {
           "text": "Durch einen Laufzettel, der Pflicht- und freiwillige Stationen vorgibt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Laufzettel gehört zum Lernen an Stationen. (Folie 15, Notizen S. 25)"
         },
         {
           "text": "Durch feste Phasen von der Demonstration bis zur Anwendung, die durchlaufen werden müssen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Diese Phasenfolge ist der Ablauf eines Lehrgangs, also eine geschlossene Form. (Folien 36 und 37, Notizen S. 31)"
         },
         {
           "text": "Gar nicht - Freiarbeit kennt per Definition keine Begrenzungen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie stellt der Wahlfreiheit ausdrücklich eine Spalte mit Begrenzungen gegenüber. (Folie 24, Notizen S. 28)"
         }
       ],
       "erklaerung": "Auch Freiarbeit hat Grenzen, und zwar vier: vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebots und die Zielsetzungen der Schüler:innen selbst. Der Laufzettel mit Pflichtstationen gehört zum Stationenlernen, die feste Phasenfolge zum Lehrgang - beides sind Nachbar-Decoys, keine Freiarbeit. (Notizen S. 28)",
@@ -372,19 +424,23 @@
       "optionen": [
         {
           "text": "Dem offenen Unterricht",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Alle vier stehen in der rechten Spalte der Gegenüberstellung (vgl. Forster 2004b, 81, zitiert nach Fischer 2008, 173). Die Quellenangabe steht übrigens nur auf der Folie, in deinen Notizen fehlt sie. (Folie 32, Notizen S. 30)"
         },
         {
           "text": "Dem geschlossenen Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Links stünde das Gegenteil - lernzielorientiert, Feinstrukturierung, Kleinschrittigkeit, einseitig kognitiv. (Folie 32, Notizen S. 30)"
         },
         {
           "text": "Dem Lehrgang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Lehrgang ist eine geschlossene Form und damit auf der linken Seite zu Hause. (Folien 32 und 35, Notizen S. 30 und 31)"
         },
         {
           "text": "Einem Trainingsprogramm",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Trainingsprogramme sind durch starke Strukturierung und Lernzielorientierung geprägt, also ebenfalls links. (Folien 32 und 33, Notizen S. 30)"
         }
       ],
       "erklaerung": "Alle vier Merkmale stehen in der Gegenüberstellungstabelle auf der offenen Seite. Die geschlossene Seite hält jeweils das Gegenstück bereit: lernzielorientiert, Feinstrukturierung, Kleinschrittigkeit, einseitig kognitiv. Lehrgang und Training sind Vertreter der geschlossenen Seite - wer sie wählt, liegt also gleich doppelt daneben. (Notizen S. 30)",
@@ -400,19 +456,23 @@
       "optionen": [
         {
           "text": "Bereits bei der Planung, etwa bei der Wahl des Lernweges",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Werkstattunterricht bindet Lernende bereits bei der Planung ein (vgl. Wiater 2008) - bei der Auswahl von Lernaspekten, der Formulierung der Lernchancen, der Wahl des Lernweges, der Beschaffung des Materials, dem zeitlichen Ablauf, der Frage wer mit wem arbeitet und der Kontrolle der Ergebnisse. (Folie 20, Notizen S. 27)"
         },
         {
           "text": "Bei der Benotung der Mitschüler:innen durch die Chef:innen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Chef:innen nehmen Ergebnisse entgegen und korrigieren bei Bedarf - benoten tun sie nicht. (Folie 23, Notizen S. 27)"
         },
         {
           "text": "Beim Vormachen der Lösungshandlung wie im Lehrgang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Vormachen der Lösungshandlung ist die Demonstrationsphase des Lehrgangs. (Folie 36, Notizen S. 31)"
         },
         {
           "text": "Erst bei der Selbstkontrolle am Ende der Arbeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Selbstkontrolle gibt es in offenen Formen häufig - das Besondere der Werkstatt liegt aber am anderen Ende, bei der Planung. (Folie 20, Notizen S. 27)"
         }
       ],
       "erklaerung": "Zentrales Merkmal des Werkstattunterrichts ist neben der gestalteten Lernumgebung die Einbindung der Lernenden schon bei der Planung (Wiater 2008): Lernaspekte, Lernchancen, Lernweg, Material, Zeitablauf, Partnerwahl, Kontrolle. Der Fallstrick ist die Benotung: Chef:innen helfen, nehmen Ergebnisse entgegen und korrigieren - Noten vergeben sie nicht. (Notizen S. 27)",
@@ -428,19 +488,23 @@
       "optionen": [
         {
           "text": "Weil die erhöhte Aufgabenzahl höhere Anforderungen an die Zeiteinteilung stellt",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Kasten unter den Beispielplänen sagt es direkt - erhöhte Aufgabenzahl führt zu höheren Anforderungen im Hinblick auf die Zeiteinteilung. Die zugehörige Tabelle auf Folie 14 (flexibles mittelfristiges Zeitmanagement) fehlt in deinen Notizen. (Folien 13 und 14, Notizen S. 25)"
         },
         {
           "text": "Weil die Wochenplanarbeit zu den geschlossenen Unterrichtsformen zählt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Wochenplanarbeit ist eine offene Form; geschlossen wären Lehrgang und Training. (Folien 13 und 30, Notizen S. 25 und 29)"
         },
         {
           "text": "Weil beim Wochenplan keine Selbstkontrolle mehr möglich ist",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Selbstkontrolle ist gerade beim Wochenplan vorgesehen - am fixierten Arbeitsplan und am Arbeitsmittel. (Folie 14)"
         },
         {
           "text": "Weil der Tagesplan bereits volle Wahlfreiheit über Ziele und Inhalte bietet",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Volle Wahlfreiheit über Ziele und Inhalte gibt es erst in der Freiarbeit, nicht im Tagesplan. (Folien 10 und 24, Notizen S. 28)"
         }
       ],
       "erklaerung": "Beim Wochenplan wächst die Aufgabenzahl - und damit die Anforderung, sich die Zeit über mehrere Tage selbst einzuteilen. Deshalb kommt er nach dem Tagesplan. Volle Wahlfreiheit über Ziele, Inhalte, Partner und Zeit bietet erst die Freiarbeit, die darum am Ende der Folge steht - das ist der Decoy. (Begründung Notizen S. 25, die Stufenfolge Einführung - Tagesplan - Stationenarbeit - Wochenplan - Freiarbeit steht auf S. 29)",
@@ -456,19 +520,23 @@
       "optionen": [
         {
           "text": "Genetische Form",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Genetische Form - chronologisch-entwickelnde Darstellung des Stoffes; auf der Folie mit genau diesem Beispiel, der Entwicklung des Automobils. (Folie 39, Notizen S. 32)"
         },
         {
           "text": "Spiralcurriculum",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Beim Spiralcurriculum kehrt ein Stoffelement auf höherem Niveau wieder. (Folie 41, Notizen S. 33)"
         },
         {
           "text": "Additiver Lehrgang",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Additiv wäre ein Aneinanderreihen ohne inneren Entwicklungsgang. (Folie 42, Notizen S. 33)"
         },
         {
           "text": "Konzentrisch-erweiternde Form",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Konzentrisch-erweiternd geht vom Nahen zum Ferneren, nicht von früher nach heute. (Folie 40, Notizen S. 33)"
         }
       ],
       "erklaerung": "Die chronologisch-entwickelnde Darstellung eines Stoffes ist die genetische Form - typisch für geschichtliche Themen. Der Verwechsler ist das Spiralcurriculum: Dort kehrt derselbe Stoff auf zunehmend komplexerem Niveau wieder, es geht aber nicht um eine historische Abfolge. (Notizen S. 32)",
@@ -484,19 +552,23 @@
       "optionen": [
         {
           "text": "Konzentrisch-erweiternde Form",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Konzentrisch-erweiternde Form, vom Nahen zum Ferneren - mit exakt diesem Beispiel auf der Folie: vom einfachen Gerät über das Haus zur Stadt. (Folie 40, Notizen S. 33)"
         },
         {
           "text": "Aufbau vom Elementaren her",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Aufbau vom Elementaren her hieße: Aus dem Elementaren heraus wird das Ganze verdeutlicht, Beispiel Stromkreis. Nah dran, aber die Bewegung geht vom Element zum Ganzen, nicht vom Nahen zum Fernen. (Folie 41, Notizen S. 33)"
         },
         {
           "text": "Logisch-systematische Form",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Logisch-systematisch zerteilt den Stoff in einander bedingende Elemente, Beispiel technisches Zeichnen. (Folie 39, Notizen S. 32)"
         },
         {
           "text": "Ganzheitlicher Ausgangspunkt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Ganzheitlicher Ausgangspunkt heißt: Die Lebenswelt systematisiert sich, Beispiel Werkstatt, Garten, Küche. (Folie 40, Notizen S. 33)"
         }
       ],
       "erklaerung": "Vom Nahen zum Ferneren - das ist die konzentrisch-erweiternde Form. Der engste Verwechsler ist der Aufbau vom Elementaren her: Auch dort taucht Elektrizität als Beispiel auf, aber es wird aus einem Element (dem Stromkreis) das Ganze verdeutlicht, statt räumlich immer weitere Kreise zu ziehen. (Notizen S. 33)",
@@ -512,19 +584,23 @@
       "optionen": [
         {
           "text": "Des handlungsorientierten Unterrichts",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Lehrgänge werden als Teil des handlungsorientierten Unterrichts betrachtet - im Rahmen eines Lehrgangs erwerben die Schülerinnen und Schüler Fertigkeiten, die ihnen die Bewältigung des Alltags ermöglichen (ISB 2019, 35). (Folie 35, Notizen S. 31)"
         },
         {
           "text": "Des offenen Unterrichts",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Lehrgang zählt zu den geschlossenen Formen - genau das macht diese Frage interessant. (Folien 30 und 35, Notizen S. 29 und 31)"
         },
         {
           "text": "Des Gesamtunterrichts",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Gesamtunterricht stammt aus der Konzeptionentabelle einer anderen Vorlesung. (Folie 35, Notizen S. 31)"
         },
         {
           "text": "Der Freiarbeit",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Freiarbeit ist die offenste Form überhaupt. (Folie 24, Notizen S. 28)"
         }
       ],
       "erklaerung": "Im Rahmen eines Lehrgangs erwerben Schüler:innen Fertigkeiten, die ihnen die Bewältigung des Alltags und den Erwerb neuer Kompetenzen ermöglichen - deshalb zählt das ISB Lehrgänge zum handlungsorientierten Unterricht. Der Gesamtunterricht ist ein Decoy aus dem Nachbarthema Konzeptionen: die Methode der frühen didaktischen Konzeptionen. (Notizen S. 31)",
@@ -540,19 +616,23 @@
       "optionen": [
         {
           "text": "Vom Begriff der Bildung und Erziehung",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Trainings- und Übungsansätze sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen in der Schule aber trotzdem eine relevante Rolle. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Von therapeutischen Ansätzen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Umgekehrt - sie sind selbst durch eine therapeutische Ausrichtung geprägt. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Von der Schule insgesamt - dort haben sie keinen Platz",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Folie sagt ausdrücklich, dass sie in der Schule eine relevante Rolle spielen. (Folie 33, Notizen S. 30)"
         },
         {
           "text": "Von den geschlossenen Lehr-Lernformen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Sie gehören durch starke Strukturierung und Lernzielorientierung gerade dazu. (Folien 30 und 33, Notizen S. 29 und 30)"
         }
       ],
       "erklaerung": "Trainings und Übungseinheiten sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen in der Schule aber eine relevante Rolle. Der Decoy 'therapeutische Ansätze' führt in die Irre: Gerade die therapeutische Ausrichtung mit starker Strukturierung und Lernzielorientierung prägt sie - sie beschreibt sie also, statt sie abzugrenzen. (Notizen S. 30)",
@@ -568,19 +648,23 @@
       "optionen": [
         {
           "text": "Weil eine feste Definition der Offenheit selbst widersprechen würde (Knauf 2001)",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Eine eindeutige Definition würde dem Verständnis von Offenheit widersprechen, denn offen für offenen Unterricht steht auch offen für Veränderungen und verschiedene Interpretationen (Knauf 2001, 102). (Folie 5, Notizen S. 23)"
         },
         {
           "text": "Weil die Forschung zum offenen Unterricht noch ganz am Anfang steht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Es fehlt nicht an Forschung - die Folie nennt sogar eine Effektstärke. (Folien 5 und 28, Notizen S. 23 und 29)"
         },
         {
           "text": "Weil sich die Definitionen von Wallrabenstein und Fischer gegenseitig widersprechen",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Wallrabenstein (Sammelbegriff) und Fischer (Grad der Selbstbestimmung) ergänzen sich auf der Folie, sie widersprechen sich nicht. (Folie 5, Notizen S. 23 und 24)"
         },
         {
           "text": "Weil jede Schule selbst festlegen darf, was sie unter offenem Unterricht versteht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Um Zuständigkeit von Schulen geht es nicht, sondern um das Wesen von Offenheit. (Folie 5, Notizen S. 23)"
         }
       ],
       "erklaerung": "Das Argument ist begrifflich, nicht empirisch: Offen für Offenen Unterricht heißt laut Knauf (2001, 102) auch offen für Veränderungen und für verschiedene Interpretationen des Unterrichts - wer Offenheit eindeutig festlegt, hat sie schon wieder geschlossen. Der Decoy mit Wallrabenstein und Fischer zieht nicht - die beiden ergänzen sich: Wallrabenstein liefert den Sammelbegriff für Reformansätze, Fischer das Kriterium des Grades der Mit- bzw. Selbstbestimmung. (Notizen S. 23)",
@@ -596,19 +680,23 @@
       "optionen": [
         {
           "text": "Als eigene Säule lehrgangsförmiger Unterricht, geprägt von hoher Lehrerlenkung und überwiegend als Frontalunterricht",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Bei Meyer ist der lehrgangsförmige Unterricht eine eigene, dritte Säule - mit hohem Ausmaß an Lehrerlenkung, überwiegend als Frontalunterricht, im Kernkasten direkte Instruktion. Dieses Schaubild fehlt in deinen Notizen komplett; du kennst bisher nur die Trias von Folie 6. (Folie 7)"
         },
         {
           "text": "Als Variation des individualisierenden Unterrichts, weil jede:r im eigenen Tempo mitarbeitet",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die individualisierende Säule hat als Kernkasten die Freiarbeit, dazu Werkstattlernen und Stationenlernen. (Folie 7)"
         },
         {
           "text": "Als Variation des kooperativen Unterrichts, weil die Lerngruppe gemeinsam ein Ziel verfolgt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die kooperative Säule hat als Kernkasten die Projektarbeit. (Folie 7)"
         },
         {
           "text": "Gar nicht - bei Meyer kommt der Lehrgang im Schaubild nicht vor",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Er kommt sogar prominent vor - als eine der drei Säulen. (Folie 7)"
         }
       ],
       "erklaerung": "Meyer macht aus dem Lehrgang eine eigene der drei Säulen; ihr Kernkasten heißt direkte Instruktion beziehungsweise Lehrgänge. Genau darin unterscheiden sich die beiden Schaubilder, und genau das ist die Verwechslungsfalle: Für Klausurantworten ist die Trias von Terfloth und Bauersfeld die sichere Referenz, Meyers Trias sollte man kennen, aber nicht mit ihr vermischen. (Folie 7 gegenüber Folie 6)",
@@ -624,19 +712,23 @@
       "optionen": [
         {
           "text": "Er bildet den Rahmen über den drei Säulen, ist also keine eigene Grundform",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Bei Meyer klammert der gemeinsame Unterricht (im undifferenzierten Lernverband, etwa Klassenkonferenz und Morgenkreis) die drei Säulen als oberer Bogen ein. Genau darin unterscheidet er sich von Folie 6, wo gemeinsamer Unterricht eine der drei Grundformen ist. (Folien 6 und 7, Notizen S. 24)"
         },
         {
           "text": "Er ist die dritte Säule neben individualisierendem und kooperativem Unterricht",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die dritte Säule bei Meyer ist der lehrgangsförmige Unterricht. Die Aussage stimmt für Folie 6, nicht für Meyer. (Folien 6 und 7, Notizen S. 24)"
         },
         {
           "text": "Er ist eine Variation innerhalb der Säule des kooperativen Unterrichts",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Unter der kooperativen Säule stehen Projekttag, Zukunftswerkstatt, Erkundungen, Arbeitsgemeinschaften. (Folie 7)"
         },
         {
           "text": "Er meint bei Meyer das Lernen auf den Marktplätzen der Schule",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das Lernen auf den Marktplätzen der Schule ist der UNTERE Bogen des Schaubilds - Feste und Feiern, Projektpräsentationen, Wettbewerbe, Internet. (Folie 7)"
         }
       ],
       "erklaerung": "Bei Meyer läuft der gemeinsame Unterricht als Bogen über alle drei Säulen, mit Beispielen wie Klassenkonferenz und Morgenkreis; die dritte Säule ist stattdessen der lehrgangsförmige Unterricht. Der erste Decoy beschreibt die Einordnung bei Terfloth und Bauersfeld, wo der gemeinsame Unterricht wirklich eine der drei Grundformen ist - das ist der Kern der Verwechslungsgefahr. Der letzte Decoy meint den unteren Bogen desselben Schaubilds, also Feste und Feiern, Projektpräsentationen, Wettbewerbe und Internet. (Folie 7)",
@@ -652,19 +744,23 @@
       "optionen": [
         {
           "text": "Die Schüler:innen erhalten Aufgaben, die sie innerhalb eines Tages selbstständig bearbeiten; die Reihenfolge legen sie selbst fest, unterteilt wird in Pflicht- und Wahlaufgaben",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Aufgaben, die innerhalb eines Tages selbstständig bearbeitet werden, Reihenfolge durch die Schüler:innen selbst festgelegt, Unterteilung in Pflicht- und Wahlaufgaben (Pitsch & Thümmel 2019, 126). Diese Definition steht nur auf der Folie - deine Notizen springen direkt zur Tabelle der Lernmöglichkeiten. (Folie 10, Notizen S. 25)"
         },
         {
           "text": "Die Schüler:innen erhalten für jeden Tag einen festen Ablauf, den sie in der vorgegebenen Reihenfolge abarbeiten",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Fest vorgegebene Reihenfolge wäre das Gegenteil - gerade sie legen die Schüler:innen selbst fest. (Folie 10)"
         },
         {
           "text": "Die Schüler:innen wählen Thema, Ziel und Zeitrahmen ihrer Aufgaben für den Tag vollständig selbst",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Volle Wahlfreiheit über Ziele und Inhalte ist das Kennzeichen der Freiarbeit, nicht des Tagesplans. (Folien 10 und 24, Notizen S. 28)"
         },
         {
           "text": "Die Schüler:innen bearbeiten an mehreren Orten im Raum nacheinander vorbereitete Aufgaben zu einem Thema",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Das beschreibt das Lernen an Stationen. (Folie 15, Notizen S. 25)"
         }
       ],
       "erklaerung": "Entscheidend sind die drei Bausteine: Aufgaben für einen Tag, selbst gewählte Reihenfolge, Pflicht- und Wahlaufgaben. Die Decoys markieren die Nachbarn: eine feste Reihenfolge wäre kein offener Unterricht mehr, die völlig freie Zielwahl wäre schon Freiarbeit, und der letzte Punkt beschreibt das Lernen an Stationen. (Folie 10, Pitsch & Thümmel 2019, 126)",
@@ -680,19 +776,23 @@
       "optionen": [
         {
           "text": "Um eine Kontrollspalte und eine Fertigspalte",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Zwei Kästen mit Pfeil auf das Foto des Tagesplans nennen genau diese Erweiterungen - Kontrollspalte und Fertigspalte. Auch dieses Detail fehlt in deinen Notizen. (Folie 10, Notizen S. 25)"
         },
         {
           "text": "Um eine Pflichtspalte und eine Wahlspalte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Pflicht- und Wahlaufgaben gibt es im Tagesplan tatsächlich, aber als Unterteilung der Aufgaben - nicht als die beiden ergänzten Spalten. (Folie 10)"
         },
         {
           "text": "Um eine Zeitspalte und eine Materialspalte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Zeit und Material sind keine der beiden genannten Spalten. (Folie 10)"
         },
         {
           "text": "Um eine Partnerspalte und eine Sozialformspalte",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Wahl der Sozialform gehört zum Stationenlernen. (Folie 18, Notizen S. 26)"
         }
       ],
       "erklaerung": "Die Folie zeigt zwei Pfeile auf den Tagesplan mit den Beschriftungen plus Kontrollspalte und plus Fertigspalte. Der erste Decoy ist der stärkste, weil Pflicht- und Wahlaufgaben wirklich zur Tagesplanarbeit gehören - sie sind aber die Aufgabenarten, nicht die beiden zusätzlichen Spalten. (Folie 10, Pitsch & Thümmel 2019, 126)",
@@ -708,19 +808,23 @@
       "optionen": [
         {
           "text": "An längeren Zeitabläufen wie Kalender und Wochenstundenplan; beim Tagesplan sind es kürzere Abläufe wie Uhr, Klingelzeichen oder Sanduhr",
-          "korrekt": true
+          "korrekt": true,
+          "erklaerung": "Richtig: Wochenplan heißt Orientierung an längeren Zeitabläufen - Kalender und Wochen-Stundenplan; beim Tagesplan sind es kürzere Abläufe wie Uhr, Klingelzeichen oder Sanduhr. Daraus folgt auch der Unterschied flexibles mittelfristiges gegenüber kurzfristigem Zeitmanagement. Die Wochenplan-Tabelle fehlt in deinen Notizen. (Folien 11 und 14, Notizen S. 25)"
         },
         {
           "text": "An der Uhr und am Klingelzeichen; beim Tagesplan gibt es dagegen gar keine zeitliche Orientierungshilfe",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Uhr und Klingelzeichen gehören zum Tagesplan - und der hat sehr wohl zeitliche Orientierungshilfen, genau diese. (Folien 11 und 14, Notizen S. 25)"
         },
         {
           "text": "An einem Laufzettel, auf dem die Bearbeitungszeiten je Station eingetragen werden",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Laufzettel gehört zum Lernen an Stationen. (Folie 15, Notizen S. 25)"
         },
         {
           "text": "An der Vorgabe der Lehrkraft, die für jede Aufgabe eine feste Bearbeitungszeit festlegt",
-          "korrekt": false
+          "korrekt": false,
+          "erklaerung": "Falsch: Bei beiden Planformen teilen sich die Schüler:innen die Zeit selbst ein; das ist der Kern der Sache. (Folien 11 und 14, Notizen S. 25)"
         }
       ],
       "erklaerung": "Beide Pläne setzen ein lineares Zeitverständnis voraus, arbeiten aber mit verschiedenen Hilfsmitteln: der Tagesplan mit Uhr, Klingelzeichen, Sanduhr oder einem Uhr-Ersatz, der Wochenplan mit Kalender und Wochenstundenplan. Daraus folgt der Unterschied im Zeitmanagement, kurzfristig gegenüber flexibel mittelfristig. Der Laufzettel im dritten Decoy gehört zum Lernen an Stationen. (Folie 14 gegenüber Folie 11, Pitsch & Thümmel 2019, 128 und 130)",
