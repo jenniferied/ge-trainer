@@ -109,16 +109,67 @@ export function blatt(text, marken, klasse) {
   var liste = stellen(t, marken);
   if (!liste.length) { box.textContent = t; return box; }
   var pos = 0;
+  var hatNotiz = false;
   liste.forEach(function (s) {
     if (s.start > pos) box.appendChild(document.createTextNode(t.slice(pos, s.start)));
     var mark = el("mark", "anno anno-" + s.m.t);
     mark.textContent = t.slice(s.start, s.ende);
     mark.appendChild(el("sup", "anno-nr", String(s.nr)));
+    if (s.m.k) { notizAnbinden(box, mark, s); hatNotiz = true; }
     box.appendChild(mark);
     pos = s.ende;
   });
   if (pos < t.length) box.appendChild(document.createTextNode(t.slice(pos)));
+  // Ein Tipp neben die Marken schliesst eine offene Notiz. Der Hoerer sitzt am
+  // Blatt, nicht am document - kein globaler Zustand, nichts aufzuraeumen.
+  if (hatNotiz) box.addEventListener("click", function () { notizZu(box); });
   return box;
+}
+
+function notizZu(box) {
+  var offen = box.querySelector(".anno-pop");
+  if (offen) offen.remove();
+  return offen;
+}
+
+/* Tipp auf eine Marke zeigt ihre Notiz DIREKT an der Stelle (Rose, 18.08.2026:
+   bisher musste sie zu den Saetzen unter dem Blatt scrollen). Als Popover
+   absolut im Blatt positioniert, nie als eingeschobene Zeile: beide Blaetter
+   tragen ihre Lineatur als background-image, und jeder Block im Textfluss
+   wuerde die Folgezeilen von den Linien schieben. Die Randliste unten bleibt
+   unveraendert stehen - sie hat die Beleg-Chips, das Popover ist bewusst
+   Reintext, der schnelle Blick an Ort und Stelle.
+
+   Ein <mark> ist kein Knopf, deshalb tabindex/role/Enter von Hand - dieselbe
+   Begruendung, aus der stbZeile in stoebern.js ein <button> ist. */
+function notizAnbinden(box, mark, s) {
+  mark.classList.add("anno-tipp");
+  mark.setAttribute("tabindex", "0");
+  mark.setAttribute("role", "button");
+  function umschalten() {
+    var alt = notizZu(box);
+    // Dieselbe Marke nochmal angetippt heisst zuklappen, nicht neu oeffnen.
+    if (alt && alt.dataset.nr === String(s.nr)) return;
+    /* pop-<typ>, nicht anno-<typ>: die anno-Klassen tragen am Blatt die
+       Unterstreichungs-Regeln, und ein Popover mit Wellenlinie saehe aus wie
+       ein Stueck markierter Text. */
+    var pop = el("div", "anno-pop pop-" + s.m.t);
+    pop.dataset.nr = String(s.nr);
+    pop.appendChild(el("span", "anno-pop-nr", String(s.nr)));
+    pop.appendChild(document.createTextNode(s.m.k));
+    box.appendChild(pop);
+    /* Erst anhaengen, dann messen: unter der Marke, links buendig mit ihr,
+       und am rechten Blattrand eingefangen statt abgeschnitten. */
+    pop.style.maxWidth = Math.min(300, box.clientWidth - 8) + "px";
+    var links = mark.offsetLeft;
+    if (links + pop.offsetWidth > box.clientWidth) links = box.clientWidth - pop.offsetWidth - 2;
+    pop.style.left = Math.max(0, links) + "px";
+    pop.style.top = (mark.offsetTop + mark.offsetHeight + 4) + "px";
+  }
+  mark.addEventListener("click", function (e) { e.stopPropagation(); umschalten(); });
+  mark.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); umschalten(); }
+  });
 }
 
 /* Die Saetze zu den Marken, unter dem Blatt. Auch die, deren Zitat sich im Text

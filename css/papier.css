@@ -891,6 +891,44 @@
 .frei-blatt-text .anno-circle .anno-nr, .kl-text .anno-circle .anno-nr { color: var(--anno-fehler); }
 .frei-blatt-text .anno-note .anno-nr, .kl-text .anno-note .anno-nr { color: var(--anno-hinweis-ink); }
 
+/* Die Notiz an der Marke (marken.js notizAnbinden, 18.08.2026): ein Popover
+   absolut im Blatt, damit die Lineatur unberuehrt bleibt. Traegt links den
+   Stift seiner Marke, damit Notiz und Marke ohne Lesen zusammenfinden. Auf
+   dem App-Blatt eine Karte, auf dem Klausurbogen Papier mit Caveat - dieselbe
+   Zweiteilung wie bei der Randliste (kl-anno-liste). position: relative macht
+   die beiden Blaetter zum Anker der absoluten Notiz. */
+.frei-blatt-text, .kl-text { position: relative; }
+.anno-tipp { cursor: pointer; }
+.anno-pop {
+  position: absolute; z-index: 6;
+  padding: 7px 10px 7px 9px;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--anno-fehler);
+  box-shadow: var(--shadow);
+  font-family: "Karla", system-ui, sans-serif;
+  font-size: .8rem; line-height: 1.45;
+}
+.anno-pop.pop-underline { border-left-color: var(--anno-gut); }
+.anno-pop.pop-note { border-left-color: var(--anno-hinweis-ink); }
+.anno-pop-nr {
+  font-weight: 700; font-size: .72rem;
+  margin-right: 6px;
+  color: var(--anno-fehler);
+}
+.anno-pop.pop-underline .anno-pop-nr { color: var(--anno-gut); }
+.anno-pop.pop-note .anno-pop-nr { color: var(--anno-hinweis-ink); }
+.kl-text .anno-pop {
+  background: var(--blatt);
+  color: var(--blatt-ink);
+  border-color: var(--blatt-rand);
+  box-shadow: var(--blatt-schatten);
+  font-family: "Caveat", cursive;
+  font-size: 1.05rem; line-height: 1.3;
+}
+
 /* Die Randliste auf dem Klausurbogen. Grundgeruest steht in style.css; hier
    wird sie zur Randnotiz: dieselbe Schrift und derselbe rote Randstrich wie
    .kl-randnotiz darueber, damit auf dem Blatt nicht zwei verschiedene
