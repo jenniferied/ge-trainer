@@ -157,12 +157,12 @@ function themaKarte(thema, eigene, hooks) {
   /* Zeile 3ff: das Erzeugte. Feste Reihenfolge deck -> podcast -> video statt
      Manifest-Reihenfolge, damit die Karten untereinander gleich aussehen.
 
-     VERSIONEN (18.08.2026): Eine zweite Fassung ersetzt die erste nicht. Die
-     neueste steht oben und normal gross, aeltere darunter als schmale Zeile.
-     Warum die alte ueberhaupt bleibt: Jennifer will vergleichen koennen, ob
-     ein geschaerfter Prompt etwas gebracht hat - und Rose hat die erste
-     Fassung vielleicht schon halb im Kopf. Etwas wegzunehmen, das sie kennt,
-     ist teurer als eine Zeile mehr. */
+     VERSIONEN (18.08.2026): Eine zweite Fassung ersetzt die erste nicht, aber
+     sichtbar ist immer nur EINE - die neueste. Aeltere haengen hinter einer
+     Fassungs-Pille (medienBlock), statt als eigene Zeilen die Karte zu
+     verlaengern. Warum die alte ueberhaupt bleibt: Jennifer will vergleichen
+     koennen, ob ein geschaerfter Prompt etwas gebracht hat - und Rose hat die
+     erste Fassung vielleicht schon halb im Kopf. */
   var reihe = ["deck", "podcast", "video"];
   var proArt = {};
   eigene.forEach(function (m) {
@@ -175,7 +175,7 @@ function themaKarte(thema, eigene, hooks) {
     hatWas = true;
     // Absteigend: die hoechste Version zuerst. version fehlt = 1 (alte Manifeste).
     liste.sort(function (a, b) { return (b.version || 1) - (a.version || 1); });
-    liste.forEach(function (m, i) { k.appendChild(medienZeile(m, i > 0, liste.length > 1)); });
+    k.appendChild(medienBlock(liste));
   });
 
   if (!hatWas) {
@@ -201,6 +201,41 @@ function stbZeile(icon, titel, unter, aufKlick, erzeugt) {
   return b;
 }
 
+/* Ein Medium mit allen seinen Fassungen. Sichtbar ist genau EINE - die
+   neueste, bis Rose per Pille umschaltet (Jennifer, 18.08.2026: immer nur die
+   aktuellste zeigen, aeltere UI-maessig verstecken). Die Anmerkung wechselt
+   mit, sie gehoert zur jeweiligen Fassung. Beim Umschalten wird der Block neu
+   gebaut - ein offener Player geht dabei zu, und das ist richtig so: die
+   andere Fassung ist eine andere Datei.
+
+   Die Pillen sagen "Fassung 2", nicht "V2": das V-Badge in der Kartenkopfzeile
+   nummeriert die VORLESUNG, und zwei verschiedene V-Zahlen in einer Karte
+   wuerden gegeneinander lesen. */
+function medienBlock(liste) {
+  var halter = el("div");
+  var idx = 0;
+  function baue() {
+    halter.innerHTML = "";
+    var box = medienZeile(liste[idx], idx > 0);
+    if (liste.length > 1) {
+      var pillen = el("div", "stb-fassung-pillen");
+      liste.forEach(function (m, i) {
+        var p = el("button", "stb-f-pille" + (i === idx ? " aktiv" : ""),
+          "Fassung " + (m.version || 1));
+        if (i !== idx) p.addEventListener("click", function () { idx = i; baue(); });
+        pillen.appendChild(p);
+      });
+      /* Die Pillen stehen im Medium-Kasten zwischen Zeile und Anmerkung, aber
+         nie IN der Zeile: die ist ein <button>, und ein Knopf im Knopf ist
+         invalides HTML, bei dem beide Klicks ineinanderfallen. */
+      box.insertBefore(pillen, box.children[1] || null);
+    }
+    halter.appendChild(box);
+  }
+  baue();
+  return halter;
+}
+
 /* Eine Zeile fuer ein NotebookLM-Erzeugnis. Decks oeffnen den Blatt-Viewer,
    Podcast und Video klappen einen Player unter der Zeile auf.
 
@@ -209,19 +244,13 @@ function stbZeile(icon, titel, unter, aufKlick, erzeugt) {
    ausgeht, und taucht auf dem Sperrbildschirm auf; ein Overlay, das beim
    nächsten Antippen irgendwo zugeht, nimmt ihr genau das. Ausserdem stoppt so
    nichts, wenn sie daneben weiterliest. */
-function medienZeile(m, istAelter, hatMehrere) {
+function medienZeile(m, istAelter) {
   var box = el("div", "stb-medium" + (istAelter ? " aelter" : ""));
   var a = ART_TEXT[m.art] || { icon: "•", wort: m.art };
 
-  /* Der Versions-Zusatz taucht NUR auf, wenn es wirklich mehr als eine Fassung
-     gibt. Ein einsames "Fassung 1" an jedem Medium waere Rauschen - es gibt
-     dann ja nichts, wovon es sich unterscheidet. */
-  var v = m.version || 1;
-  var vText = hatMehrere ? (istAelter ? "ältere Fassung " + v : "Fassung " + v) : "";
-
   if (m.art === "deck") {
     var z = stbZeile(a.icon, m.titel,
-      [a.wort, m.seiten + " Seiten", vText, m.untertitel].filter(Boolean).join(" · "),
+      [a.wort, m.seiten + " Seiten", m.untertitel].filter(Boolean).join(" · "),
       function () { oeffneDeck(m, 1); }, true);
     box.appendChild(z);
     anmerkungAnhaengen(box, m);
@@ -230,7 +259,7 @@ function medienZeile(m, istAelter, hatMehrere) {
 
   var player = null;
   var zeile = stbZeile(a.icon, m.titel,
-    [a.wort, dauerText(m.sekunden), vText, m.untertitel].filter(Boolean).join(" · "),
+    [a.wort, dauerText(m.sekunden), m.untertitel].filter(Boolean).join(" · "),
     function () {
       if (player) {
         // Zweiter Klick auf eine LAUFENDE Zeile klappt nicht zu - das waere

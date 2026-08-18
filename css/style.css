@@ -1793,10 +1793,27 @@ p { margin: 0 0 var(--sp-3); }
 .stb-anm-icon { flex: none; font-size: .85rem; line-height: 1.5; }
 @media (max-width: 460px) { .stb-anmerkung { margin-left: 2px; } }
 
-/* Aeltere Fassungen stehen unter der neuen, kleiner und leiser. Sie
-   verschwinden nicht: Rose hat die erste Fassung vielleicht schon halb im
-   Kopf, und Jennifer will vergleichen koennen, ob ein schaerferer Prompt
-   ueberhaupt etwas gebracht hat. */
+/* Aeltere Fassungen sind seit dem 18.08. hinter der Fassungs-Pille versteckt;
+   ist eine aufgeschaltet, steht sie leicht gedimmt da - das Signal "du
+   schaust gerade auf die alte" ohne ein weiteres Wort. */
 .stb-medium.aelter .stb-zeile { opacity: .62; }
 .stb-medium.aelter .stb-titel b { font-weight: 600; font-size: .92rem; }
 .stb-medium.aelter .stb-anmerkung { opacity: .78; }
+
+/* Fassungs-Pillen: stehen nur da, wenn ein Medium wirklich mehrere Fassungen
+   hat. Die aktive traegt die Themenfarbe, die inaktive ist bewusst leise -
+   sie ist ein Nebenweg, kein Angebot. Eingerueckt auf die Textspalte der
+   Zeile (Icon 2.1rem + Abstand), unter 460px buendig wie die Anmerkung. */
+.stb-fassung-pillen { display: flex; gap: 6px; margin: -2px 2px 8px 3.1rem; }
+.stb-f-pille {
+  font: inherit; font-size: .72rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink-soft); background: none;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 2px 10px; cursor: pointer;
+}
+.stb-f-pille.aktiv {
+  color: var(--tfarbe); border-color: var(--tfarbe);
+  background: color-mix(in srgb, var(--tfarbe) 10%, transparent);
+  cursor: default;
+}
+@media (max-width: 460px) { .stb-fassung-pillen { margin-left: 2px; } }
