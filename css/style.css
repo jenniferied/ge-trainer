@@ -1500,7 +1500,12 @@ p { margin: 0 0 var(--sp-3); }
    sondern die Uebersetzung genau dort, wo der geteilte Baustein sie braucht.
    Faellt weg, sobald das Knopf-System zusammengelegt ist (.btn vs .knopf steht
    als offener Punkt in beiden ROADMAPs). */
-:root[data-theme="hell"] 
+/* Hier stand bis zum 18.08.2026 ein haengender Selektor :root[data-theme="hell"]
+   ohne Regelblock - der Kommentar dazwischen wirkte als Leerraum, und effektiv
+   galt :root[data-theme="hell"] .dlg-overlay. Folge: der Rueckfrage-Dialog war
+   im Nachtmodus (Standard!) komplett ungestylt, kein position:fixed, kein
+   Scrim. Die drei angekuendigten Uebersetzungsregeln, zu denen der Selektor
+   gehoerte, sind laut geteilt.css ohnehin tot. */
 /* ---------- Rueckfrage vor etwas Endgueltigem (ui.js frag()) ----------
    Eigener Kasten statt confirm(): das wird in iframes und In-App-Browsern stumm
    blockiert, der Knopf tut dann nichts. Die Knoepfe darin sind die normalen
@@ -1817,3 +1822,121 @@ p { margin: 0 0 var(--sp-3); }
   cursor: default;
 }
 @media (max-width: 460px) { .stb-fassung-pillen { margin-left: 2px; } }
+
+/* ---------- Abruf-Treppe (app/js/treppe.js, 18.08.2026) ----------
+   Der Lernschritt vor dem freien Schreiben: Kernliste erst aus dem Kopf, dann
+   aufdecken. Eigene, borgfreie Namen (.treppe-*): die Engine ist genau die
+   Sorte Baustein, die spaeter ins geteilte Paket wandern kann, und der
+   Kreaturen-Chat hat gezeigt, was geborgte App-Namen beim Umzug kosten.
+   Farbsprache: nur Tokens, Gruen bleibt Erfolg, Hinweis = .tipp-Gelbton. */
+.treppe-karte h2 { margin-top: 0; }
+.treppe-punkt { border-top: 1px solid var(--line); padding: var(--sp-3) 0; }
+.treppe-punkt:first-of-type { border-top: 0; }
+.treppe-punkt-kopf { display: flex; align-items: flex-start; gap: var(--sp-3); }
+.treppe-nr {
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .8rem; font-weight: 700;
+  background: color-mix(in srgb, var(--tfarbe) 18%, transparent); color: var(--tfarbe);
+}
+.treppe-inhalt { flex: 1; min-width: 0; }
+.treppe-verdeckt { color: var(--ink-soft); font-style: italic; }
+.treppe-verdeckt.mit-hinweis { color: var(--warn-ink); font-style: normal; }
+.treppe-werkzeuge { display: flex; gap: var(--sp-2); flex: 0 0 auto; }
+.klein-knopf { padding: 4px 12px; font-size: .82rem; }
+.treppe-text { margin-bottom: var(--sp-2); }
+.treppe-frage { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.treppe-wert {
+  border: 1.5px solid var(--line); border-radius: 999px; background: var(--card);
+  color: var(--ink); padding: 4px 12px; font-size: .82rem; font-weight: 600; cursor: pointer;
+}
+.treppe-wert.gut:not(:disabled):hover, .treppe-wert.gut.gewaehlt { border-color: var(--ok); color: var(--ok); }
+.treppe-wert.halb:not(:disabled):hover, .treppe-wert.halb.gewaehlt { border-color: var(--warn-ink); color: var(--warn-ink); }
+.treppe-wert.fehlte:not(:disabled):hover, .treppe-wert.fehlte.gewaehlt { border-color: var(--ink-soft); color: var(--ink-soft); }
+.treppe-wert:disabled { cursor: default; }
+.treppe-wert.blass { opacity: .45; }
+/* Gewaehlt bleibt sichtbar, auch deaktiviert: die Zeile ist danach die Quittung. */
+.treppe-wert.gewaehlt { background: color-mix(in srgb, currentColor 12%, transparent); opacity: 1; }
+.treppe-fazit {
+  display: flex; gap: var(--sp-3); align-items: flex-start;
+  background: var(--paper-2); border-radius: var(--radius);
+  padding: var(--sp-3); margin: var(--sp-3) 0;
+}
+.treppe-fazit .titel { font-weight: 700; }
+.treppe-ziehen { display: grid; gap: var(--sp-2); margin-bottom: var(--sp-2); }
+.treppe-kandidat { text-align: left; }
+.treppe-kandidat.gewaehlt { border-color: var(--tfarbe); background: color-mix(in srgb, var(--tfarbe) 10%, transparent); }
+/* Verpasst = gehoerte dazu, war aber nicht gewaehlt: Umrandung statt Fuellung,
+   damit es sich vom getroffenen Gruen unterscheidet. */
+.treppe-kandidat.richtig.verpasst { background: transparent; border-style: dashed; }
+.treppe-zaehler { margin-bottom: var(--sp-2); }
+.lernschritt-merk {
+  font-size: .85rem; color: var(--ink-soft);
+  background: var(--paper-2); border-radius: 999px;
+  padding: 6px 14px; margin-bottom: var(--sp-3); display: inline-block;
+}
+
+/* ---------- Glossar + Fachbegriffe (app/js/glossar.js, 18.08.2026) ---------- */
+.gl-werkzeug { display: flex; flex-direction: column; gap: var(--sp-3); }
+.gl-suche {
+  width: 100%; padding: 10px 14px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--paper-2); color: var(--ink);
+  font: inherit; font-size: 16px; /* nie kleiner - iOS zoomt sonst ins Feld */
+}
+.gl-suche:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
+.gl-schalter { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.gl-schalt {
+  border: 1.5px solid var(--line); border-radius: 999px; background: var(--card);
+  color: var(--ink-soft); padding: 4px 12px; font-size: .82rem; font-weight: 700; cursor: pointer;
+}
+.gl-schalt.an { border-color: var(--tfarbe); color: var(--tfarbe); background: color-mix(in srgb, var(--tfarbe) 10%, transparent); }
+.gl-eintrag { border-top: 1px solid var(--line); }
+.gl-eintrag:first-of-type { border-top: 0; }
+.gl-begriff {
+  width: 100%; text-align: left; background: none; border: 0; color: var(--ink);
+  font: inherit; font-weight: 600; padding: var(--sp-3) 0; cursor: pointer;
+  display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
+}
+.gl-eintrag.offen .gl-begriff { color: var(--tfarbe); }
+.gl-unsicher { font-size: .72rem; font-weight: 500; color: var(--ink-soft); font-style: italic; }
+.gl-detail { padding: 0 0 var(--sp-3); }
+.gl-definition { line-height: 1.55; }
+.gl-ar { font-size: 1.05rem; line-height: 1.9; }
+.gl-maschinell { font-size: .75rem; color: var(--ink-soft); font-style: italic; margin-top: var(--sp-1); }
+.gl-quelle { font-size: .85rem; color: var(--ink-soft); margin-top: var(--sp-2); }
+.gl-rolle { font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: var(--sp-2); }
+.gl-begriff-gross { font-family: "Fraunces", Georgia, serif; font-size: 1.4rem; font-weight: 700; margin-bottom: var(--sp-3); }
+.gl-eingabe {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: var(--paper-2); color: var(--ink);
+  font: inherit; font-size: 16px; margin: var(--sp-3) 0;
+}
+.gl-eingabe:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
+.gl-aufgedeckt { background: var(--paper-2); border-radius: var(--radius); padding: var(--sp-3); margin: var(--sp-3) 0; }
+.gl-aufgedeckt b { display: block; margin-bottom: var(--sp-1); }
+.gl-chips-box { margin-top: var(--sp-3); }
+.gl-chips-titel { font-size: .85rem; color: var(--ink-soft); margin-bottom: var(--sp-2); }
+.gl-chips-reihe { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.gl-chip {
+  border: 1.5px solid color-mix(in srgb, var(--tfarbe) 55%, var(--line)); border-radius: 999px;
+  background: color-mix(in srgb, var(--tfarbe) 8%, transparent); color: var(--ink);
+  padding: 4px 12px; font-size: .85rem; font-weight: 600; cursor: pointer;
+}
+.gl-chip-detail { background: var(--paper-2); border-radius: var(--radius); padding: var(--sp-3); margin-top: var(--sp-2); }
+.gl-chip-detail b { display: block; margin-bottom: var(--sp-1); }
+
+/* ---------- Tagesspiel (app/js/tagesspiel.js, 18.08.2026) ---------- */
+.ts-grid .kachel { min-height: 96px; }
+.ts-gespielt { opacity: .55; }
+.ts-gespielt .kachel-icon { color: var(--ok); }
+.ts-tuer h2 { margin-top: 0; }
+.ts-vorspann { margin-bottom: var(--sp-2); }
+
+/* ---------- Themenwahl im Runden-Baukasten (stats.js zeigeMix) ---------- */
+.themen-wahl-liste { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-1) var(--sp-3); }
+.themen-wahl-zeile { display: flex; align-items: center; gap: var(--sp-2); font-size: .9rem; padding: 3px 0; cursor: pointer; }
+.themen-wahl-zeile input { accent-color: var(--tfarbe); width: 18px; height: 18px; }
+@media (max-width: 420px) { .themen-wahl-liste { grid-template-columns: 1fr; } }
+
+/* Hinweis im Baukasten, wenn Themenwahl + Aufgabentyp keinen Treffer lassen -
+   Warnton statt Rot: es ist eine erklaerte Grenze, kein Alarm. */
+.baukasten-leer { color: var(--warn-ink); margin-top: var(--sp-2); }

@@ -322,6 +322,23 @@ function bauePlayer(m) {
   return w;
 }
 
+/* ---------- Leihgabe ans Tagesspiel (18.08.2026) ----------
+   Das Tagesspiel (tagesspiel.js) zeigt als Schritt 2 genau EINE Themenkarte
+   dieses Raums: Folien, Fragen, Podcast, Video des Tagesthemas. Es leiht sich
+   die Karte hier aus, statt sie nachzubauen - und der Raum selbst bleibt, was
+   er ist: er speichert weiter nichts, die Abfrage danach gehoert dem
+   Tagesspiel. Erst die Karte, die Medienzeilen kommen dazu, sobald die JSON
+   da ist (dieselbe Reihenfolge wie in zeigeStoebern). */
+export function materialKarteFuer(thema, hooks) {
+  var halter = el("div");
+  halter.appendChild(themaKarte(thema, [], hooks));
+  ladeMedien().then(function (liste) {
+    halter.innerHTML = "";
+    halter.appendChild(themaKarte(thema, liste.filter(function (m) { return m.thema === thema.id; }), hooks));
+  });
+  return halter;
+}
+
 /* ---------- Fusszeile: was es gibt und was fehlt ---------- */
 
 function fussKarte(liste) {

@@ -15,6 +15,16 @@ import * as Stoebern from "./stoebern.js";
 // Eigenes Modul, obwohl der Modus nur ein Ablauf ueber vorhandene Bausteine ist
 // (Details im Kopf der Datei): so kostet er main.js drei Zeilen statt zweihundert.
 import * as Klausurfrage from "./klausurfrage.js";
+// Die Abruf-Treppe (18.08.2026): der Lernschritt VOR dem freien Schreiben -
+// erst die Kernliste aus dem Kopf, dann das Blatt. Eigenes Modul nach dem
+// Vorbild klausurfrage.js; schreibt selbst nichts ins Log.
+import * as Treppe from "./treppe.js";
+// Glossar + Fachbegriffe-Runde (18.08.2026): jeder Fachbegriff ein Eintrag in
+// sechs Fassungen, dazu der Anki-artige Abruf mit Tipp-Eingabe.
+import * as Glossar from "./glossar.js";
+// Das Tagesspiel (18.08.2026): ein Thema am Tag, Material aus dem Stoebern-Raum,
+// am Ende die Abfrage ueber Abruf-Treppe und Fachbegriffe.
+import * as Tagesspiel from "./tagesspiel.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
@@ -111,6 +121,11 @@ function zeige(route, arg) {
        davor schreibt bewusst gar nichts ins Log (Begruendung im Kopf der
        Datei), ein Durchlauf ergibt also genau einen Eintrag. */
     case "klausurfrage": return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
+    /* Die drei Neuen vom 18.08.2026. Tagesspiel und Fachbegriffe loggen ueber
+       Spiele.logSpiel (sid "spiel"), das Glossar ist reines Nachschlagen. */
+    case "tagesspiel": return Tagesspiel.zeigeTagesspiel(themen, HOOKS);
+    case "fachbegriffe": return Glossar.zeigeFachbegriffe(themen, HOOKS, function () { zeige("start"); });
+    case "glossar": return Glossar.zeigeGlossar(themen, HOOKS);
     case "start":
     default: return zeigeStart();
   }
@@ -134,7 +149,19 @@ var HOOKS = {
   // startet die Uhr erst, wenn Rose die Aufgabe wirklich anfasst.
   // Kein neuer Parameter an der Hook-Signatur: stats.js ruft weiter mit zwei
   // Argumenten, die Unterscheidung passiert hier im Wrapper.
-  freiKarte: function (thema, f) { return freiKarte(thema, f, { einzeln: true }); }
+  freiKarte: function (thema, f) { return freiKarte(thema, f, { einzeln: true }); },
+  /* Der Between-Step: dieselbe freie Karte, aber mit der Abruf-Treppe davor.
+     stats.js waehlt zwischen freiKarte und lernKarte anhand der Runden-Wahl
+     (wahl.lernschritt) - die Entscheidung gehoert der Runde, nie global. */
+  lernKarte: function (thema, f, art) {
+    return Treppe.lernSchritt(thema, f, {
+      // art "ziehen" = die sanfte Stufe (echte Bausteine aus einer Mischliste
+      // antippen), alles andere = frei abrufen. Kommt aus wahl.lernschritt.
+      modus: art === "ziehen" ? "ziehen" : null,
+      freiKarte: function () { return freiKarte(thema, f, { einzeln: true }); }
+    });
+  },
+  glossar: function () { zeige("glossar"); }
 };
 
 /* ---------- Startseite ----------
@@ -1750,7 +1777,15 @@ function dailyKachel(a) {
    drueben. Begruendung ausfuehrlich in geteilt-tagesstand.js bei offenText(). */
 function tagesAufgaben() {
   var heute = Spiele.heuteGespielt();
+  /* Das Tagesspiel steht vorn: die eine groessere Tagesaufgabe vor den zwei
+     kurzen Spielen. erledigt haengt am ABSCHLUSS-Eintrag (tagesspiel.js
+     heuteErledigt), nicht an heuteGespielt - ein abgebrochenes Tagesspiel soll
+     nicht abgehakt aussehen. */
   var liste = [{
+    key: "ts", icon: "🗓", titel: "Tagesspiel", kurz: "Tagesspiel",
+    klein: "ein Thema · Material, dann Abfrage",
+    erledigt: Tagesspiel.heuteErledigt(), geh: function () { zeige("tagesspiel"); }
+  }, {
     key: "op", icon: "🎯", titel: "Signalwörter", kurz: "Signalwörter",
     klein: "6 Aufgaben · welcher Operator will was",
     erledigt: !!heute.operatoren, geh: function () { zeige("spiel-op"); }
@@ -1863,41 +1898,60 @@ function heuteDranKarte() {
   return karte;
 }
 
-// Uebungsmodi als Icon-Kacheln. Jede Kachel fuehrt zu einem Modus, der es schon
-// gibt - hier wird nichts eingestellt. Was ein Lauf tut, entscheidet die Seite,
-// auf der er gestartet wird (Klausur-Setup), nicht diese Kachel.
+/* Uebungsmodi als Icon-Kacheln, seit dem 18.08.2026 in DREI Gruppen statt
+   einer (Jennifer: "make the landing page clearer", und schon am 13.08.:
+   sieben Kacheln in einer Reihe sind ein Block, keine Reihe - je mehr
+   Kacheln, desto weniger sagt eine einzelne). Die Gruppierung ist die aus der
+   ROADMAP vorgeschlagene Dreiteilung:
+
+     Kurz einsteigen - startet sofort, ist in Minuten durch, kein Setup.
+     Ernst üben      - die Klausurformen; hier wohnen Baukasten und Lernschritt.
+     Nachschauen     - verlangt nichts (Statistik, Glossar, Stöbern).
+
+   Jede Kachel fuehrt weiter zu einem Modus, der es schon gibt - eingestellt
+   wird dort, wo der Lauf startet (Baukasten/Klausur-Setup), nie an der Kachel. */
 function uebenKacheln() {
-  var box = el("div", "abschnitt");
-  // Echtes <h2>, nicht mehr ein <div>: das Gruppenlabel ist eine Ueberschrift
-  // und war bisher keine - ein Screenreader ist ueber die komplette Gliederung
-  // der Startseite hinweggesprungen. Optik unveraendert, sie steht im
-  // geteilten Paket (Block 7b, h2.abschnitt-titel).
-  box.appendChild(el("h2", "abschnitt-titel", "Üben"));
-  var grid = el("div", "kachel-grid");
+  var halter = el("div");
   [
-    // Die zwei kurzen Einstiege stehen vorn (Jennifer, 13.08.): "Neu" ist die
-    // kuerzeste Runde der App, "Klausurfrage" die einzige mit dem
-    // Aufdroesel-Schritt davor. Beide starten sofort, ohne Setup-Seite.
-    ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }],
-    ["🧩", "Klausurfrage", "Aufdröseln, dann schreiben", function () { zeige("klausurfrage"); }],
-    ["📝", "MC", "Alle Themen", function () { zeige("mcquer"); }],
-    ["✍️", "Frei", "Nach Thema", function () { zeige("freiwahl"); }],
-    ["🎲", "Mix", "MC & offen", function () { zeige("mix"); }],
-    ["📄", "Klausur", "Papier & Stift", function () { zeige("klausur"); }],
-    ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
-    // Faellt aus der Reihe und steht deshalb zuletzt: die einzige Kachel, die
-    // keine Runde startet. Folien, Notizen, Podcasts, Fragen - zum Anschauen.
-    ["🗂", "Stöbern", "Folien, Podcasts & Co.", function () { zeige("stoebern"); }]
-  ].forEach(function (k) {
-    var b = el("button", "kachel glimmer");
-    b.appendChild(el("span", "kachel-icon", k[0]));
-    b.appendChild(el("b", null, k[1]));
-    b.appendChild(el("span", "kachel-klein", k[2]));
-    b.addEventListener("click", k[3]);
-    grid.appendChild(b);
+    ["Kurz einsteigen", [
+      ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }],
+      ["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }],
+      ["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]
+    ]],
+    ["Ernst üben", [
+      ["🧩", "Klausurfrage", "Aufdröseln, dann schreiben", function () { zeige("klausurfrage"); }],
+      ["✍️", "Frei", "Offene Aufgaben nach Thema", function () { zeige("freiwahl"); }],
+      ["🎲", "Eigene Runde", "Du stellst ein", function () { zeige("mix"); }],
+      ["📄", "Klausur", "Papier & Stift", function () { zeige("klausur"); }]
+    ]],
+    ["Nachschauen", [
+      ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
+      ["📖", "Glossar", "Alle Fachbegriffe", function () { zeige("glossar"); }],
+      ["🗂", "Stöbern", "Folien, Podcasts & Co.", function () { zeige("stoebern"); }]
+    ]]
+  ].forEach(function (gruppe) {
+    // Die Fachbegriffe- und Glossar-Kacheln haengen an derselben Datei wie der
+    // Begriffe-Blitz an seiner: ohne glossar.json verschwinden sie.
+    var kacheln = gruppe[1].filter(function (k) {
+      if (k[1] === "Fachbegriffe" || k[1] === "Glossar") return Glossar.hatGlossar();
+      return true;
+    });
+    if (!kacheln.length) return;
+    var box = el("div", "abschnitt");
+    box.appendChild(el("h2", "abschnitt-titel", gruppe[0]));
+    var grid = el("div", "kachel-grid");
+    kacheln.forEach(function (k) {
+      var b = el("button", "kachel glimmer");
+      b.appendChild(el("span", "kachel-icon", k[0]));
+      b.appendChild(el("b", null, k[1]));
+      b.appendChild(el("span", "kachel-klein", k[2]));
+      b.addEventListener("click", k[3]);
+      grid.appendChild(b);
+    });
+    box.appendChild(grid);
+    halter.appendChild(box);
   });
-  box.appendChild(grid);
-  return box;
+  return halter;
 }
 
 function zeigeStart() {
@@ -2460,9 +2514,15 @@ function entwurfTextBald(id, text) {
   tippWecker = setTimeout(function () { entwurfSichern(id); }, 700);
 }
 
+/* Frei ueben laeuft seit dem 18.08.2026 Schritt fuer Schritt (Jennifer: "nicht
+   auf 1 seite, weiterklicken") - die Runde selbst wohnt in stats.js
+   (zeigeThemaFrei), hier steht nur noch die eine Vorab-Frage: mit oder ohne
+   Lernschritt. KEIN ganzer Baukasten: fuer alles Weitere gibt es die Eigene
+   Runde; eine zweite Vorschaltseite mit fuenf Schaltern waere eine Huerde vor
+   dem haeufigsten Ernst-Ueben-Einstieg. Wer alle Aufgaben nebeneinander lesen
+   will, hat weiter die Themenansicht. */
 function zeigeFrei(thema) {
   leeren();
-  starteRunde({ art: "thema-frei", titel: thema.titel, modus: "frei", anzahl: (thema.frei || []).length });
   setzeFarbe(app, thema.farbe);
 
   var zurueck = el("button", "zurueck", "← " + thema.titel);
@@ -2471,10 +2531,23 @@ function zeigeFrei(thema) {
 
   var kopf = el("div", "kopf");
   kopf.appendChild(el("h1", null, "Frei üben · " + thema.titel));
-  kopf.appendChild(el("div", "untertitel", "Erst selbst antworten, dann mit der Musterlösung vergleichen."));
+  kopf.appendChild(el("div", "untertitel", "Eine Aufgabe pro Bildschirm. Erst selbst antworten, dann vergleichen."));
   app.appendChild(kopf);
 
-  thema.frei.forEach(function (f) { app.appendChild(freiKarte(thema, f)); });
+  var karte = el("div", "karte glimmer");
+  karte.appendChild(el("h2", null, "Mit Lernschritt davor?"));
+  karte.appendChild(el("p", "karten-hinweis",
+    "Mit Lernschritt rufst du vor jeder Aufgabe erst ihre Bausteine aus dem Kopf ab und schreibst dann – "
+    + "aufgedeckt wird erst nach deinem Versuch. Ohne geht es direkt aufs Blatt, wie in der Klausur."));
+  var reihe = el("div", "knopf-reihe");
+  var mit = el("button", "knopf", "🧠 Mit Lernschritt");
+  mit.addEventListener("click", function () { Stats.zeigeThemaFrei(thema, HOOKS, { lernschritt: "an" }); });
+  reihe.appendChild(mit);
+  var ohne = el("button", "knopf sekundaer", "Direkt schreiben");
+  ohne.addEventListener("click", function () { Stats.zeigeThemaFrei(thema, HOOKS, { lernschritt: "aus" }); });
+  reihe.appendChild(ohne);
+  karte.appendChild(reihe);
+  app.appendChild(karte);
 }
 
 var CHECK_OPTIONEN = [
@@ -3317,6 +3390,15 @@ function freiKarte(thema, f, opts) {
       box.appendChild(t);
     }
 
+    /* Die Fachbegriffe dieser Aufgabe (18.08.2026, Jennifer: "das auch
+       anzeigen bei ki auswertung"): welche Glossar-Begriffe in Stichpunkten
+       oder Musterloesung vorkommen, als antippbare Chips mit Definition.
+       Steht in der Loesungs-Box und nicht in der KI-Blase, damit es auch ohne
+       Netz da ist - die Box oeffnet sich in demselben Moment wie die
+       KI-Pruefung. */
+    var fachbegriffe = Glossar.fachbegriffeZeile(thema, f);
+    if (fachbegriffe) box.appendChild(fachbegriffe);
+
     /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
        mit - dann kann das Gespraech an dem ansetzen, was sie geschrieben hat.
        Der Text wird HIER eingesammelt und nicht erst beim Oeffnen des Sheets:
@@ -3348,7 +3430,7 @@ themeAnwenden();
 // Startseite zeigt den Begriffe-Blitz, und der wuerde sonst beim ersten Aufbau
 // fehlen und erst nach einem Seitenwechsel auftauchen. ladeBegriffe faengt
 // eigene Fehler ab und liefert dann null - der Boot kann daran nicht scheitern.
-Promise.all([ladeThemen(), Spiele.ladeBegriffe()])
+Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
     // Erst JETZT anmelden, nicht frueher: tagesAufgaben() braucht themen (fuer

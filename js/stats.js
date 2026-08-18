@@ -236,7 +236,9 @@ var ART_TEXT = {
 
 var SPIEL_TEXT = {
   "spiel-begriffe": { icon: "🃏", name: "Begriffe-Blitz", badge: "Spiel" },
-  "spiel-operatoren": { icon: "🔎", name: "Operatoren-Training", badge: "Spiel" }
+  "spiel-operatoren": { icon: "🔎", name: "Operatoren-Training", badge: "Spiel" },
+  "spiel-glossar": { icon: "🔤", name: "Fachbegriffe", badge: "Spiel" },
+  "spiel-tagesspiel": { icon: "🗓", name: "Tagesspiel", badge: "Spiel" }
 };
 
 function istSpielAntwort(a) { return a.modus === "spiel" || a.sid === "spiel"; }
@@ -1002,7 +1004,16 @@ function runde(pool, meta, hooks, wahl) {
          eine Einschaetzung von JETZT, nicht die vom letzten Durchgang (siehe
          das frisch-Argument in selbstCheck, main.js). Der Zurueck-Weg oben
          bleibt immer offen - eine Sackgasse ist das hier nie. */
-      var karte = hooks.freiKarte(item.thema, item.f);
+      /* Der Between-Step (Roses Kernwunsch, 18.08.2026): steht die Runde auf
+         "mit Lernschritt", kommt vor dem Schreibfeld die Abruf-Treppe -
+         hooks.lernKarte liefert einen Container, der erst die Treppe zeigt und
+         die freiKarte danach hineinbaut. Das selbsteinschaetzung-Event bubbelt
+         durch den Container, die Sperre unten funktioniert also unveraendert.
+         In der Klausur-Simulation gibt es diesen Weg bewusst nicht - dort wird
+         kalt geschrieben, das ist der Pruefstand. */
+      var karte = ((w.lernschritt === "an" || w.lernschritt === "ziehen") && hooks.lernKarte)
+        ? hooks.lernKarte(item.thema, item.f, w.lernschritt)
+        : hooks.freiKarte(item.thema, item.f);
       app.appendChild(karte);
       var knopf = el("button", "knopf", letzte ? "Runde abschließen" : "Weiter");
       knopf.disabled = true;
@@ -1136,18 +1147,77 @@ export function zeigeMix(themen, hooks, nurWiederholung) {
   zurueck.addEventListener("click", function () { hooks.home(); });
   app.appendChild(zurueck);
   var kopf = el("div", "kopf");
-  kopf.appendChild(el("h1", null, "Gemischte Runde"));
-  kopf.appendChild(el("div", "untertitel", "Quer durch alle Themen, MC und offene Aufgaben gemischt."));
+  kopf.appendChild(el("h1", null, "Eigene Runde"));
+  kopf.appendChild(el("div", "untertitel", "Du stellst ein, die Runde hält sich dran. Eine Aufgabe pro Bildschirm."));
   app.appendChild(kopf);
-  app.appendChild(rundenSetup({
-    wahl: rundenEinstellungen(),
-    zeilen: rundenZeilen("Aufgaben"),
+
+  /* Der Baukasten dieser Runde, seit dem 18.08.2026 mit drei neuen Reihen
+     (Jennifer: "die modi klarer machen und viele optionen anbieten wie beim
+     ST-Trainer"): Aufgabentyp, Lernschritt (die Abruf-Treppe vor jeder freien
+     Aufgabe) und die Themenwahl. Alles gilt fuer DIESE Runde - Typ und
+     Lernschritt werden wie Laenge/Auswahl gemerkt, die Themenwahl nicht (eine
+     abgewaehlte Vorlesung soll nicht still abgewaehlt bleiben). */
+  var wahl = rundenEinstellungen();
+  wahl.themen = {};
+  themen.forEach(function (t) { wahl.themen[t.id] = true; });
+
+  var zeilen = rundenZeilen("Aufgaben");
+  zeilen.splice(1, 0, {
+    schluessel: "typ", label: "Was für Aufgaben",
+    klein: "Gemischt zieht beides. Nur offene ist die Klausurform – dort wirkt auch der Lernschritt.",
+    werte: [{ wert: "mix", text: "Gemischt" }, { wert: "mc", text: "Nur Ankreuzen" }, { wert: "frei", text: "Nur offene" }]
+  });
+  zeilen.push({
+    schluessel: "lernschritt", label: "Lernschritt vor offenen Aufgaben",
+    klein: "Erst die Bausteine der Aufgabe aus dem Kopf abrufen, dann schreiben – aufgedeckt wird erst nach deinem Versuch. Sanfter: die echten Bausteine aus einer Mischliste heraustippen (Wiedererkennen statt Produzieren). In der Klausur-Simulation gibt es beides bewusst nicht.",
+    werte: [{ wert: "an", text: "Abrufen" }, { wert: "ziehen", text: "Sanfter: Antippen" }, { wert: "aus", text: "Direkt schreiben" }]
+  });
+
+  // Anfangs unsichtbar; erscheint nur, wenn der Start mangels Aufgaben nichts
+  // tun kann - sonst saehe der Knopf kaputt aus statt erklaert.
+  var leerHinweis = el("div", "klein baukasten-leer",
+    "Diese Mischung hat gerade keine Aufgaben – wähl mindestens ein Thema, das zum Aufgabentyp passt.");
+  leerHinweis.hidden = true;
+
+  var setup = rundenSetup({
+    wahl: wahl,
+    zeilen: zeilen,
     startText: "Runde starten",
-    aufStart: function (wahl) {
-      rundenEinstellungenMerken(wahl);
-      mixRunde(pool, themen, hooks, "mix", wahl);
+    aufStart: function (w) {
+      rundenEinstellungenMerken({ anzahl: w.anzahl, auswahl: w.auswahl, typ: w.typ, lernschritt: w.lernschritt });
+      var gefiltert = pool.filter(function (i) {
+        if (!w.themen[i.thema.id]) return false;
+        if (w.typ === "mc") return i.typ === "mc";
+        if (w.typ === "frei") return i.typ !== "mc";
+        return true;
+      });
+      if (!gefiltert.length) { leerHinweis.hidden = false; return; }
+      mixRunde(gefiltert, themen, hooks, "mix", w);
     }
-  }));
+  });
+  setup.appendChild(leerHinweis);
+
+  /* Themenwahl als Ankreuz-Liste zwischen den Schaltern und dem Startknopf.
+     Kein segmentWahl: das waere eine Entweder-Oder-Reihe, hier geht es um
+     beliebige Kombinationen. */
+  var block = el("div", "zeile themen-wahl");
+  var label = el("div", "label", "Welche Themen");
+  label.appendChild(el("div", "klein", "Alle an ist die Vorgabe – die Klausur zieht ihre fünf ja auch unangekündigt."));
+  block.appendChild(label);
+  var liste = el("div", "themen-wahl-liste");
+  themen.forEach(function (t) {
+    var z = el("label", "themen-wahl-zeile");
+    var box = document.createElement("input");
+    box.type = "checkbox";
+    box.checked = true;
+    box.addEventListener("change", function () { wahl.themen[t.id] = box.checked; });
+    z.appendChild(box);
+    z.appendChild(el("span", null, t.titel));
+    liste.appendChild(z);
+  });
+  block.appendChild(liste);
+  setup.insertBefore(block, setup.lastElementChild);
+  app.appendChild(setup);
 }
 
 /* Fuenf neue, gemischt - die Kurzrunde von der Startseite (Jennifer, 13.08.).
@@ -1175,6 +1245,27 @@ export function zeigeWiederhol6(themen, hooks) {
   var pool = wiederholPool(themen);
   if (!pool.length) return hooks.home();
   mixRunde(pool, themen, hooks, "wdh6", { anzahl: Math.min(WDH6, pool.length), auswahl: "wacklig" });
+}
+
+/* Frei ueben in EINEM Thema, seit dem 18.08.2026 als Schritt-fuer-Schritt-Runde
+   (Jennifer: "nicht auf 1 seite, weiterklicken") statt aller Karten
+   untereinander - zum Nebeneinander-Lesen gibt es weiter die Themenansicht.
+   lernschritt kommt vom kleinen Vorschalt-Schirm in main.js (zeigeFrei):
+   "an" ist die Vorgabe, die Klausur-Simulation bleibt davon unberuehrt. */
+export function zeigeThemaFrei(thema, hooks, wahl) {
+  var pool = (thema.frei || []).map(function (f) { return { thema: thema, f: f, typ: "frei" }; });
+  if (!pool.length) return hooks.home();
+  var w = wahl || {};
+  runde(pool, {
+    art: "thema-frei",
+    titel: "Frei üben · " + thema.titel,
+    unter: "Erst selbst antworten, dann mit der Musterlösung vergleichen.",
+    farbe: thema.farbe,
+    zurueckText: "← " + thema.titel,
+    zurueck: function () { hooks.thema(thema); },
+    nochmal: function () { zeigeThemaFrei(thema, hooks, wahl); },
+    fertigSatz: "Fertig – die offenen Aufgaben zu " + thema.titel + " sind durch."
+  }, hooks, { anzahl: w.anzahl || pool.length, auswahl: w.auswahl || "wacklig", lernschritt: w.lernschritt });
 }
 
 /* Lief heute schon eine Sechser-Runde? Gleiche Form wie Spiele.heuteGespielt():

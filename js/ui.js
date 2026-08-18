@@ -138,11 +138,19 @@ export var RUNDEN_AUSWAHL = ["neu", "wacklig", "bunt"];
 
 export var RUNDEN_ERKLAER = ["aus", "begruenden", "raten"];
 
+export var RUNDEN_TYPEN = ["mix", "mc", "frei"];
+
 export function rundenEinstellungen() {
   var e = state.rundenEinst || {};
   return {
     anzahl: RUNDEN_LAENGEN.indexOf(e.anzahl) >= 0 ? e.anzahl : 15,
     auswahl: RUNDEN_AUSWAHL.indexOf(e.auswahl) >= 0 ? e.auswahl : "wacklig",
+    // Aufgabentyp und Lernschritt (Abruf-Treppe) kamen am 18.08.2026 dazu.
+    // Der Lernschritt startet AN: das Abrufen vor dem Schreiben ist der
+    // Lern-Kern der Runde (Roses Wunsch), Abschalten bleibt eine Wahl.
+    typ: RUNDEN_TYPEN.indexOf(e.typ) >= 0 ? e.typ : "mix",
+    // "an" = frei abrufen, "ziehen" = sanft (aus Mischliste antippen), "aus".
+    lernschritt: e.lernschritt === "aus" ? "aus" : e.lernschritt === "ziehen" ? "ziehen" : "an",
     // Die Erklaer-Abfrage wird BEWUSST NICHT gemerkt: sie steht bei jeder Runde
     // wieder auf "raten". Im ST-Trainer hat genau diese Merkfunktion einen Tag
     // lang die Voreinstellung ausgehebelt - ein einziger Tipp auf die bequeme

@@ -231,6 +231,94 @@
       "anmerkung": "Geprüft 18.08. am Transkript: ICF- und Klafki-Teil sauber, aber VIER ERFINDUNGEN im klausurrelevanten Kern. (1) Die fünfte Konzeption (Subjekt- und Bedarfsorientiert) ist komplett falsch besetzt: Vertreter ist Fischer, nicht „Terfloth und Schädel“; Ziel ist Persönliche Sinnstiftung, nicht „Selbstbestimmung und gesellschaftliche Teilhabe“; Inhalte sind Allgemeine Bildungsinhalte, Methode Offener Unterricht (Folie 10). (2) Feuser hat drei Ziele — Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit — nicht eines, und seine Methode ist Offener Unterricht, nicht „Projektunterricht“. (3) Das achte Klafki-Schlüsselproblem heißt „die menschliche Sexualität und die Geschlechterbeziehung“ (Folie 13), nicht „Subjektivität und Ich-Du-Beziehung“. (4) Von den vier KMK-Entwicklungsbereichen (Kognition, Kommunikation, Emotionale und soziale Entwicklung, Motorik und Wahrnehmung) stimmt nur „Motorik und Wahrnehmung“. Außerdem: die ICF ist von 2001, nicht 2005.",
       "sekunden": 689,
       "datei": "data/medien/konzeptionen-v1-video.mp4"
+    },
+    {
+      "id": "freizeit-v2-deck",
+      "thema": "freizeit",
+      "art": "deck",
+      "version": 2,
+      "titel": "Freizeit",
+      "untertitel": "Zweite Fassung — jetzt mit Zahlen, Bedürfnissen und Spannungsfeldern",
+      "anmerkung": "Geprüft 18.08.: Deutlich besser als v1 — die Ablauf-Stationen 4/5 stehen richtig, die 8 Freizeitbedürfnisse sind komplett, und alle Zahlen stimmen exakt (Internet 98 %, Fernsehen/Musik je 83 %, Nachdenken 73 %, soziale Medien 72 %, Faulenzen 62 %; Teilhabe 52→82 %, 19→47 %, 17→7 %); auch UN-BRK Art. 30 und die drei Spannungsfelder samt Fazit sind jetzt drin. Neu falsch: Auf S. 15 heißt PK 1 „Wahrnehmen & Erkunden“ und PK 3 „Planen & Umsetzen“ — richtig sind „Informieren & Ordnen“ und „Anwenden & Handeln“ (Folie 24); die Punkte darunter stimmen. Die Teilhaberisiken-Tabelle hat alle 8 Zeilen, aber bei Integration/Inklusion, Partizipation und Enkulturation steht nur „(Platzhalter)“ — richtig wären Diskriminierung/soziale Ausgrenzung, Fremdbestimmung/fehlende Entscheidungsmöglichkeiten und fehlende kulturelle Angebote/Barrierefreiheit (Folie 13). Die „Leitfragen der Vorlesung“ auf S. 3 sind eine Erfindung des Decks — dieser Foliensatz hat keine Leitfrage-Folie, die zitierten Fragen stammen von den Folien 4 und 9. Bei Art. 30 fehlen die fünf Folien-Punkte.",
+      "seiten": 16,
+      "pfad": "data/medien/deck/freizeit-v2-"
+    },
+    {
+      "id": "freizeit-v2-podcast",
+      "thema": "freizeit",
+      "art": "podcast",
+      "version": 2,
+      "titel": "Wem gehört das Recht auf Nichtstun",
+      "untertitel": "Zweite Fassung, 24 Minuten — Prompt mit allen Referenzzahlen",
+      "anmerkung": "Geprüft 18.08. am Transkript: Die v2 behebt alle drei Zahlenfehler der v1 — die 82 % gehören jetzt korrekt zur allgemeinen Teilnahme an Freizeitangeboten (52→82 %), die Zielgruppen-Zahl 19→47 % steht richtig daneben, soziale Medien 72 %, Fernsehen 83 %, Faulenzen 62 %. Alle 15 Werte der Freizeitverhalten-Folie und alle sechs Teilhabe-Zahlen stimmen exakt; Zeitmodell, Schuck-Definition, Wandel des Freizeitbegriffs, alle acht Bedürfnisse und alle acht Teilhaberisiken sind folientreu, erfunden ist nichts. Zwei Einschränkungen: Die 19→47 % werden „Menschen mit dem Schwerpunkt geistige Entwicklung“ zugeschrieben — die Folie sagt „kognitive Beeinträchtigungen“. Und die Folge deckt nur die erste Hälfte des Foliensatzes ab: Nach den Barrieren (Folie 16) ist Schluss — Bildungsauftrag, Wissen/Können/Wollen, Kompetenzstrukturmodell, PK 1–3, UN-BRK Art. 30, Freizeitwoche und die Spannungsfelder fehlen komplett.",
+      "sekunden": 1461,
+      "datei": "data/medien/freizeit-v2-podcast.m4a"
+    },
+    {
+      "id": "mobilitaet-v2-deck",
+      "thema": "mobilitaet",
+      "art": "deck",
+      "version": 2,
+      "titel": "Mobilität und Teilhabe",
+      "untertitel": "Zweite Fassung — mit allen zehn Stöppler-Mobilitätskompetenzen",
+      "anmerkung": "Geprüft 18.08.: Der v1-Mangel ist behoben — alle zehn Mobilitätskompetenzen nach Stöppler (2015, 41-52) stehen einzeln auf S. 10, sauber getrennt von den sechs Kernkompetenzen (S. 9), und die vier fett hervorgehobenen bekommen wie auf den Folien 17–20 eigene ZIELE-Seiten; Kompetenzerwartungen und Leitfrage sind wortgetreu enthalten, erfundene Zahlen oder Namen gibt es keine. Zwei Render-Fehler auf S. 6: die Mindmap zeigt zwölf statt elf Mobilitätsbehinderungen („Fehlende Mobilitätsbildung“ doppelt) und „Gehörloigkeit“ heißt richtig Gehörlosigkeit. Auf S. 13 steht „Hindernissen ausweichen“ doppelt — es sind sieben Motorik-Ziele, nicht acht. Gegenüber v1 fehlen die Unfallstatistik (Folie 25: zu Fuß 35,7 %, BTW 27,4 %, Rad 22,8 %) und die curricularen Inhalte (RLP-Lernfeld L5, Orientierungs- und Handlungsrahmen); weiterhin fehlen die Zahlenreihen zu Wegzwecken und Modal Split 2002–2023 (Original-Beispielaufgabe!) — dafür Folien und Notizen nutzen. „SoSe 2025“ auf dem Titel steht so auf der Originalfolie.",
+      "seiten": 16,
+      "pfad": "data/medien/deck/mobilitaet-v2-"
+    },
+    {
+      "id": "mobilitaet-v1-podcast",
+      "thema": "mobilitaet",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Mobilitätstraining für eine selbstbestimmte Teilhabe",
+      "untertitel": "Detaillierte Analyse, 15 Minuten",
+      "anmerkung": "Geprüft 18.08. am Transkript: Alle nachgezählten Zahlen stimmen — Unfallstatistik komplett richtig (zu Fuß 35,7 %, BTW 27,4 %, Rad 22,8 %), alle 10 Mobilitätskompetenzen nach Stöppler inklusive der vier ZIELE-Blöcke, alle 11 Mobilitätsbehinderungen, alle 10 Partizipationsfelder und die 4 Felder der Verkehrserziehung; erfundene Namen, Fallbeispiele oder Zahlen gibt es keine. Aber: Von den 6 Kernkompetenzen fehlen Nr. 4 und 5 (gesundheitsbewusst und nachhaltig mobil sein) — das Gespräch springt von der dritten zur sechsten. Die Zahlen 2002–2023 zu Wegzwecken und Modal Split kommen nur qualitativ vor (der bekannte Vergleich ist damit nicht lernbar), und die zweite Hälfte des Foliensatzes fehlt: Methoden, ÖPNV/Fahrrad/Rollstuhl, Fußgänger-Diplom und die drei Barrierefreiheits-Regeln. Für Kernkompetenzen, Zahlen und Methoden Folien bzw. Notizen ergänzen.",
+      "sekunden": 936,
+      "datei": "data/medien/mobilitaet-v1-podcast.m4a"
+    },
+    {
+      "id": "unterrichtsformen-v1-podcast",
+      "thema": "unterrichtsformen",
+      "art": "podcast",
+      "version": 1,
+      "titel": "Offener Unterricht für geistige Entwicklung",
+      "untertitel": "25 Minuten über offene und geschlossene Unterrichtsformen",
+      "anmerkung": "Geprüft 18.08. am Transkript: Die großen Listen stimmen — alle 18 Variationen der drei Grundformen nach Terfloth & Bauersfeld (8/5/5), die fünf Peschel-Dimensionen und die Definitionen (Wallrabenstein 1994, Fischer 2008, Knauf 2001) sind vollständig und richtig zugeschrieben. Zwei Fehler zum Mitkorrigieren: Ein Lehrgang hat nicht „zwei klare Phasen“, sondern vier (Eröffnung/Information, Demonstration, Übung, Anwendung — Folien 36/37). Und der Podcast setzt Hilbert Meyers Trias (individualisierend/lehrgangsförmig/kooperativ) mit den drei Grundformen von Folie 6 gleich — das sind zwei verschiedene Systematiken; bei Meyer ist der Lehrgang eine eigene Säule. Es fehlen die Kritikpunkte am offenen Unterricht (Folie 28, inkl. d = 0.45 und der Stufenfolge Tagesplan → Stationenarbeit → Wochenplan → Freiarbeit), sechs der sieben Lehrgangsformen und die Wochenplanarbeit. Erfundene Namen oder Zahlen: keine.",
+      "sekunden": 1526,
+      "datei": "data/medien/unterrichtsformen-v1-podcast.m4a"
+    },
+    {
+      "id": "unterrichtsformen-v1-video",
+      "thema": "unterrichtsformen",
+      "art": "video",
+      "version": 1,
+      "titel": "Offener Unterricht",
+      "untertitel": "Erklärvideo im Kawaii-Stil, siebeneinhalb Minuten",
+      "anmerkung": "Geprüft 18.08. am Transkript: Alle enthaltenen Pflichtlisten stimmen — die drei Grundformen (Terfloth & Bauersfeld 2015, 160) mit allen 18 Variationen, alle fünf Peschel-Dimensionen, alle drei Kompetenzerwartungen wörtlich; erfunden ist nichts. Vorsicht an einer Stelle: Das Video präsentiert Meyers „Ei des Kolumbus“ als „Verbindung dieser Ansätze“ und vermischt damit die Meyer-Systematik (Folie 7) mit der Terfloth/Bauersfeld-Trias (Folie 6) — zwei verschiedene Dreiergruppen; für die Klausur gilt Folie 6. Mit 7:34 endet die Abdeckung nach der Werkstattarbeit: Es fehlen Wochenplan, Stationenlernen, Freiarbeit, Vorteile/Kritik (inkl. d = 0.45) und der komplette Block geschlossener Unterricht samt Lehrgang mit vier Phasen — trotz des Titels. Als Einstieg brauchbar, als Themenüberblick nicht.",
+      "sekunden": 455,
+      "datei": "data/medien/unterrichtsformen-v1-video.mp4"
+    },
+    {
+      "id": "konzeptionen-v2-video",
+      "thema": "konzeptionen",
+      "art": "video",
+      "version": 2,
+      "titel": "Grundlagen der Didaktik",
+      "untertitel": "Zweite Fassung des Erklärvideos — Konzeptionen-Tabelle wörtlich im Prompt",
+      "anmerkung": "Geprüft 18.08. am Transkript: Alle fünf v1-Fehler sind behoben — die fünfte Konzeption stimmt jetzt komplett (Fischer, Persönliche Sinnstiftung, allgemeine Bildungsinhalte, Offener Unterricht), Feuser hat seine drei Ziele mit Offenem Unterricht, das achte Schlüsselproblem heißt richtig „die menschliche Sexualität und die Geschlechterbeziehung“, die vier KMK-Entwicklungsbereiche und die ICF-Datierung 2001 sind korrekt. Schlüsselprobleme 8 von 8, Konzeptionen-Tabelle vollständig mit allen 15 Vertreter:innen und richtigen Ziel-Inhalt-Methode-Zuordnungen; neue Erfindungen: keine. Was das Video weiterhin nicht abdeckt: Kategoriale Didaktik (Folie 12), Feusers Strukturmodelle (Folien 15/16), Pitsch (Folie 17), der Berliner Rahmenlehrplan mit den drei Säulen und sechs Leitthemen (Folien 21/22) — dafür Folien und Notizen nehmen.",
+      "sekunden": 517,
+      "datei": "data/medien/konzeptionen-v2-video.mp4"
+    },
+    {
+      "id": "mobilitaet-v1-video",
+      "thema": "mobilitaet",
+      "art": "video",
+      "version": 1,
+      "titel": "Verkehrserziehung & Mobilität",
+      "untertitel": "Erklärvideo im Kawaii-Stil, knapp acht Minuten",
+      "anmerkung": "Geprüft 18.08. am Transkript: Alle Kernlisten stimmen — die zehn Mobilitätskompetenzen nach Stöppler (10/10), die sechs Kernkompetenzen (sauber von den zehn getrennt) und die vier Felder der schulischen Mobilitäts- und Verkehrserziehung. Ein Fehler: Das Video behauptet, im Rahmenlehrplan gehe es um „viel mehr als nur den Schulweg“ — die Zielsetzung des RLP nennt aber nur Schulweg und Weg zum Praktikum, und genau diese Engführung kritisiert die Dozentin (Folie 14). Außerdem deckt das Video nur die erste Hälfte des Foliensatzes ab: Von den vier ZIELE-Kästen fehlt die Sozialkompetenz (Folie 20), und es fehlen sämtliche Zahlen (Modal Split 2002/2023 auf Folie 6 — eine bekannte Beispielaufgabe! — und die Unfallstatistik 35,7/27,4/22,8 % auf Folie 25), die Methoden (Folien 22–24), die Verkehrsvorbereitung zu Fuß/ÖPNV/Fahrrad/Rollstuhl und die drei Barrierefreiheits-Regeln (Folie 35). Erfundene Beispiele oder Zahlen: keine.",
+      "sekunden": 473,
+      "datei": "data/medien/mobilitaet-v1-video.mp4"
     }
   ]
 }

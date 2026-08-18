@@ -108,10 +108,14 @@ function katInfo(kat) {
    ueberspringt es weiter beim Ableiten der mc/frei-Staende.
    Alteintraege werden NICHT nachtraeglich gefuellt - das aenderte ihre aid
    nicht, ginge also nie hoch, und sie bleiben ehrlich leer. */
-function logSpiel(spiel, qid, richtig, zusatz) {
+/* Seit dem 18.08.2026 exportiert: Tagesspiel (tagesspiel.js) und Fachbegriffe
+   (glossar.js) loggen ueber genau diese Funktion, statt eigenes Logging zu
+   bauen - dann reisen ihre Eintraege huckepack im antwortLog (kein Feld in
+   sync.js noetig) und heuteGespielt() unten zaehlt sie automatisch mit. */
+export function logSpiel(spiel, qid, richtig, zusatz) {
   var e = {
     qid: qid, thema: null, afb: null, richtig: !!richtig, modus: "spiel", spiel: spiel,
-    sid: "spiel", art: spiel === "begriffe" ? "spiel-begriffe" : "spiel-operatoren"
+    sid: "spiel", art: "spiel-" + spiel
   };
   if (zusatz) Object.keys(zusatz).forEach(function (k) { e[k] = zusatz[k]; });
   logAntwort(e);
@@ -138,7 +142,10 @@ function fehlerZaehler(spiel) {
 export function heuteGespielt() {
   var d = new Date(); d.setHours(0, 0, 0, 0);
   var t0 = d.getTime();
-  var s = { operatoren: 0, begriffe: 0 };
+  // glossar = Fachbegriffe-Runde (glossar.js), tagesspiel = der Abschluss des
+  // Tagesspiels (tagesspiel.js). Ein Spielname, der hier fehlt, wird stumm
+  // ignoriert - deshalb stehen sie hier, obwohl ihre Module woanders liegen.
+  var s = { operatoren: 0, begriffe: 0, glossar: 0, tagesspiel: 0 };
   state.antwortLog.forEach(function (a) {
     if (a.modus === "spiel" && a.ts >= t0 && s[a.spiel] !== undefined) s[a.spiel]++;
   });
