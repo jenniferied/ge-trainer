@@ -1743,7 +1743,7 @@ p { margin: 0 0 var(--sp-3); }
   transition: transform .08s ease;
 }
 .stb-zeile:active { transform: scale(.99); }
-.stb-icon { font-size: 1.25rem; line-height: 1; flex: none; width: 1.6rem; text-align: center; }
+.stb-icon { font-size: 1.7rem; line-height: 1; flex: none; width: 2.1rem; text-align: center; }
 .stb-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .stb-titel { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
 .stb-unter { font-size: .8rem; color: var(--ink-soft); line-height: 1.35; }
@@ -1783,7 +1783,7 @@ p { margin: 0 0 var(--sp-3); }
    einklappbar: eine Warnung, die man erst aufklappen muss, liest niemand. */
 .stb-anmerkung {
   display: flex; gap: 8px; align-items: flex-start;
-  margin: 2px 2px 8px 2.6rem;
+  margin: 2px 2px 8px 3.1rem;
   padding: 8px 10px;
   border-left: 3px solid var(--warn-ink);
   border-radius: 0 8px 8px 0;
