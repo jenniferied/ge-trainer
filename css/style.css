@@ -568,6 +568,24 @@ p { margin: 0 0 var(--sp-3); }
 .check-knopf.aktiv-mittel { background: var(--warn-bg); border-color: var(--warn-ink); color: var(--warn-ink); }
 .check-knopf.aktiv-nochmal { background: var(--bad-bg); border-color: var(--bad); color: var(--bad); }
 
+/* Die Abruf-Zeile ueber den Bewertungsknoepfen (main.js selbstCheck): kam die
+   Antwort aus dem Kopf oder mit Vorlage? Bewusst NEUTRALE Sprache, kein
+   ok/warn/bad - "mit Hilfsmitteln" ist kein schlechteres Urteil, nur ein
+   anderer Lernstand. Gewaehlt wird mit --accent gefuellt; gestrichelt bleibt
+   dem KI-Vorschlag (.ki-tipp) vorbehalten. */
+.abruf-zeile { width: 100%; display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; margin-bottom: 2px; }
+.abruf-frage { font-size: .82rem; color: var(--ink-soft); }
+.abruf-knopf {
+  font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer;
+  background: var(--card); color: var(--ink-soft);
+  border: 1.5px solid var(--line); border-radius: 999px;
+  padding: 3px 10px;
+}
+.abruf-knopf.an {
+  background: color-mix(in srgb, var(--accent) 18%, var(--card));
+  border-color: var(--accent); color: var(--ink);
+}
+
 /* Der KI-Vorschlag: markiert, nie ausgewaehlt (main.js selbstCheck.vorschlagen).
    Bewusst eine ANDERE Sprache als aktiv-* - gestrichelt statt gefuellt, mit
    Faehnchen. Wer es anschaut, soll sehen "da tippt jemand drauf", nicht

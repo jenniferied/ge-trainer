@@ -1184,6 +1184,7 @@ function selbstText(s) {
   if (s.gut) t.push(s.gut + "× saß");
   if (s.mittel) t.push(s.mittel + "× halb");
   if (s.nochmal) t.push(s.nochmal + "× kommt wieder");
+  if (s.auswendig) t.push("🧠 " + s.auswendig + "× auswendig");
   if (s.hand) t.push("✍️ " + s.hand + "× mit der Hand");
   return t.length ? t.join(" · ") : null;
 }
@@ -1484,6 +1485,17 @@ function rueckmeldung(a, gefunden) {
     eigen.appendChild(el("span", "runde-rueck-wert status-" + a.selbsteinschaetzung,
       SELBST_WORT_LANG[a.selbsteinschaetzung] || a.selbsteinschaetzung));
     box.appendChild(eigen);
+    leer = false;
+  }
+
+  // Der Abruf-Modus der Antwort. Altbestand hat das Feld nicht - dann steht
+  // hier schlicht nichts, nie eine geratene Zuordnung.
+  if (a.abruf === "auswendig" || a.abruf === "hilfsmittel") {
+    var ab = el("div", "runde-rueck-zeile");
+    ab.appendChild(el("span", "runde-rueck-titel", "Abgerufen"));
+    ab.appendChild(el("span", "runde-rueck-wert",
+      a.abruf === "auswendig" ? "🧠 auswendig" : "📖 mit Hilfsmitteln"));
+    box.appendChild(ab);
     leer = false;
   }
 
@@ -2471,6 +2483,19 @@ var CHECK_OPTIONEN = [
   { wert: "nochmal", text: "Nochmal üben", klasse: "aktiv-nochmal", stk: "sanft" }
 ];
 
+/* Die ZWEITE Dimension der Selbsteinschaetzung (Jennifer, 18.08.2026): WIE kam
+   die Antwort zustande - aus dem Kopf oder mit Folien/Lernmaterial daneben?
+   Die Klausur ist closed book; am Ende muss alles auswendig sitzen, aber in der
+   jetzigen Lernphase braucht Rose die Vorlagen noch. Beides ist in Ordnung -
+   nur muss ablesbar bleiben, was schon OHNE Vorlage sitzt. Deshalb faehrt der
+   Modus als eigenes Feld (abruf) an jedem frei-Log-Eintrag mit, unabhaengig von
+   gut/mittel/nochmal. Bewusst kein Boolean: Altbestand ohne Feld bleibt von
+   "nicht auswendig" unterscheidbar. */
+var ABRUF_OPTIONEN = [
+  { wert: "auswendig", text: "🧠 Auswendig" },
+  { wert: "hilfsmittel", text: "📖 Mit Hilfsmitteln" }
+];
+
 /* Der Selbstcheck steht nur EINMAL je Karte. Er sitzt seit dem 13.08.2026 fest
    ganz unten in der Karte und wandert NICHT mehr in die Musterloesungs- oder
    KI-Box (frueher schob appendChild ihn dorthin). Zwei Gruende:
@@ -2493,6 +2518,33 @@ var CHECK_OPTIONEN = [
    Text entsteht erst dazwischen. */
 function selbstCheck(thema, f, dazu, frisch) {
   var check = el("div", "selbstcheck");
+
+  /* Die Abruf-Zeile steht UEBER der Bewertung, weil sie schon vor dem Urteil
+     feststeht: mit oder ohne Vorlage gearbeitet ist keine Frage des Vergleichs
+     mit der Musterloesung. Vorbelegt mit dem zuletzt gewaehlten Modus
+     (abrufZuletzt, geraetelokal - snapshot() in sync.js waehlt gezielt aus,
+     das Feld faehrt also nie mit hoch): in einer Wochen langen Phase mit
+     Folien daneben soll das ein Blick sein, kein Pflicht-Tap je Karte. */
+  var abrufWahl = state.abrufZuletzt === "auswendig" ? "auswendig" : "hilfsmittel";
+  var abrufZeile = el("div", "abruf-zeile");
+  abrufZeile.appendChild(el("span", "abruf-frage", "Aus dem Kopf oder mit Vorlage?"));
+  var abrufKnoepfe = {};
+  ABRUF_OPTIONEN.forEach(function (opt) {
+    var k = el("button", "abruf-knopf", opt.text);
+    if (opt.wert === abrufWahl) k.classList.add("an");
+    k.addEventListener("click", function () {
+      abrufWahl = opt.wert;
+      state.abrufZuletzt = opt.wert;
+      speichern();
+      ABRUF_OPTIONEN.forEach(function (o) {
+        abrufKnoepfe[o.wert].classList.toggle("an", o.wert === abrufWahl);
+      });
+    });
+    abrufKnoepfe[opt.wert] = k;
+    abrufZeile.appendChild(k);
+  });
+  check.appendChild(abrufZeile);
+
   check.appendChild(el("div", "frage-klein", "Ehrlich verglichen – wie lief es?"));
   var stickerPlatz = null;
   var knoepfe = {};
@@ -2506,7 +2558,8 @@ function selbstCheck(thema, f, dazu, frisch) {
     state.frei[f.id] = opt.wert;
     speichern();
     var eintrag = Object.assign({}, dazu ? dazu() : null,
-      { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert, modus: "frei" });
+      { qid: f.id, thema: thema.id, afb: f.afb || null, selbsteinschaetzung: opt.wert,
+        modus: "frei", abruf: abrufWahl });
     // Stand ein KI-Vorschlag daneben, schreiben wir ihn mit - so bleibt spaeter
     // ablesbar, wo Rose der KI widersprochen hat. Ihr Wert bleibt der Wert.
     if (kiTipp) eintrag.kiVorschlag = kiTipp;
@@ -2708,7 +2761,8 @@ function standFuerKi(thema, f) {
     zeilen.push("DIESE AUFGABE: heute zum ersten Mal.");
   } else {
     var verlauf = dieseAufgabe.slice(-5).map(function (a) {
-      return tageHer(a.ts) + ": " + (SELBST_WORT[a.selbsteinschaetzung] || "ohne Einschaetzung");
+      return tageHer(a.ts) + ": " + (SELBST_WORT[a.selbsteinschaetzung] || "ohne Einschaetzung")
+        + (a.abruf === "auswendig" ? ", auswendig" : a.abruf === "hilfsmittel" ? ", mit Vorlage" : "");
     });
     zeilen.push("DIESE AUFGABE: schon " + dieseAufgabe.length + "x geuebt ("
       + verlauf.join(" | ") + ").");
@@ -2723,14 +2777,18 @@ function standFuerKi(thema, f) {
 
   var imThema = log.filter(function (a) { return a.thema === thema.id; });
   if (imThema.length) {
-    var z = { gut: 0, mittel: 0, nochmal: 0 }, qids = {};
+    var z = { gut: 0, mittel: 0, nochmal: 0 }, qids = {}, auswendigSass = 0;
     imThema.forEach(function (a) {
       qids[a.qid] = true;
       if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
+      // Die Zahl, auf die es vor der closed-book-Klausur ankommt: sass es
+      // OHNE Vorlage? Altbestand ohne abruf-Feld zaehlt hier ehrlich nicht mit.
+      if (a.abruf === "auswendig" && a.selbsteinschaetzung === "gut") auswendigSass++;
     });
     zeilen.push("IM THEMA " + thema.titel + ": " + Object.keys(qids).length
       + " Aufgaben angefasst, ihre eigene Einschaetzung dabei "
-      + z.gut + "x sass, " + z.mittel + "x halb, " + z.nochmal + "x kommt wieder.");
+      + z.gut + "x sass, " + z.mittel + "x halb, " + z.nochmal + "x kommt wieder"
+      + (auswendigSass ? " (" + auswendigSass + "x sass es auswendig, ohne Vorlage)" : "") + ".");
   }
 
   return zeilen.join("\n");

@@ -160,6 +160,9 @@ if (typeof window !== "undefined" && window.addEventListener) {
    MODUS-SPEZIFISCH:
    - richtig (check|spiel), gewaehlt (check: Index in der ORIGINAL-Optionsreihenfolge)
    - selbsteinschaetzung "gut"|"mittel"|"nochmal", ki (frei)
+   - abruf "auswendig"|"hilfsmittel" (frei, seit 18.08.: kam die Antwort aus
+     dem Kopf oder lagen Folien/Lernmaterial daneben? Fehlt bei Altbestand -
+     Leser deuten fehlend als "unbekannt", nie als "auswendig".)
    - punkte (darf null sein), max, bearbeitet, bewertung[], punkteKi, kid (klausur)
    - text, hand, quelle "getippt"|"hand"|"gemischt" (frei + klausur)
    - spiel (spiel)

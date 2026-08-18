@@ -335,7 +335,7 @@ function zaehlungAus(arr) {
    geurteilt hat. Steht in der Verlaufszeile, weil bei offenen Aufgaben genau das
    die Rueckmeldung ist (eine Prozentzahl allein sagt darueber wenig). */
 export function selbstZaehler(arr) {
-  var z = { gut: 0, mittel: 0, nochmal: 0, hand: 0, text: 0 };
+  var z = { gut: 0, mittel: 0, nochmal: 0, hand: 0, text: 0, auswendig: 0 };
   (arr || []).forEach(function (a) {
     if (a.modus !== "frei") {
       // Handschrift gibt es auch in der Klausur-Simulation.
@@ -344,6 +344,9 @@ export function selbstZaehler(arr) {
       return;
     }
     if (z[a.selbsteinschaetzung] !== undefined) z[a.selbsteinschaetzung]++;
+    // Abruf-Modus (seit 18.08.): aus dem Kopf oder mit Vorlage. Altbestand
+    // ohne Feld zaehlt nicht mit - fehlend heisst "unbekannt", nie "auswendig".
+    if (a.abruf === "auswendig") z.auswendig++;
     if (a.hand) z.hand++;
     if (a.text) z.text++;
   });
