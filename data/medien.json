@@ -90,6 +90,17 @@
       "pfad": "data/medien/deck/konzeptionen-v1-"
     },
     {
+      "id": "konzeptionen-v2-deck",
+      "thema": "konzeptionen",
+      "art": "deck",
+      "version": 2,
+      "titel": "Didaktik Geistige Entwicklung",
+      "untertitel": "Zweite Fassung — mit den vollständigen Listen",
+      "anmerkung": "Geprüft 18.08.: deutlich vollständiger als Fassung 1. Jetzt drin — alle acht Schlüsselprobleme nach Klafki (auf zwei Folien „Teil 1/Teil 2“ verteilt statt zusammengezogen), alle sechs Leitthemen L1–L6 mit den sieben Unterrichtsfächern, alle sieben Steuerungsstufen bei Pitsch samt Stufe 2, alle sechs Stufen der Handlungsstruktur, und in der Konzeptionen-Tabelle sämtliche Vertreter:innen. Noch offen: die Folie zu den Entwicklungsbereichen zeigt nur Kognition und Kommunikation, die emotionale/soziale Entwicklung und Motorik/Wahrnehmung fehlen — die stehen vollständig in Fassung 1.",
+      "seiten": 15,
+      "pfad": "data/medien/deck/konzeptionen-v2-"
+    },
+    {
       "id": "konzeptionen-v1-podcast",
       "thema": "konzeptionen",
       "art": "podcast",
