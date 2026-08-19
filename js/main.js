@@ -1644,7 +1644,7 @@ function zeigeRunde(r) {
     var zeile = el("div", "runde-zeile");
     zeile.appendChild(el("span", "runde-zeichen " + z.k, z.z));
     var box = el("div", "runde-text");
-    box.appendChild(el("b", null, gefunden ? gefunden.frage.frage : "Aufgabe aus einer früheren Fassung"));
+    box.appendChild(reichZeile("b", gefunden ? gefunden.frage.frage : "Aufgabe aus einer früheren Fassung", null));
     var meta = [];
     if (gefunden) meta.push(gefunden.thema.titel);
     if (a.afb) meta.push("AFB " + AFB_ROEM[a.afb]);
@@ -2324,7 +2324,7 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
   var uhr = Date.now();
   if (fortschritt) karte.appendChild(el("div", "frage-fortschritt", fortschritt));
   if (f.unterthema) karte.appendChild(el("div", "unterthema-zeile", f.unterthema));
-  karte.appendChild(el("div", "frage-text", f.frage));
+  karte.appendChild(reichZeile("div", f.frage, "frage-text"));
 
   // mischen() gibt eine Kopie zurueck (slice), f.optionen bleibt in der
   // Originalreihenfolge indizierbar - genau die wird geloggt, damit sich spaeter
@@ -2961,7 +2961,7 @@ function freiKarte(thema, f, opts) {
     karte.appendChild(s);
   }
 
-  karte.appendChild(el("div", "frage-text", f.frage));
+  karte.appendChild(reichZeile("div", f.frage, "frage-text"));
 
   /* ---------- Frischer Durchgang heisst leeres Blatt (Jennifer, 15.08.2026:
      "sie sieht bei 6 wiederholen ihre alten antworten ... jedes mal wenn sie

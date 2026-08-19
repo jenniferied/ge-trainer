@@ -18,7 +18,7 @@
      hooks.home()    -> Startseite
      hooks.spiele()  -> Spiele-Hub neu rendern */
 
-import { state, speichern, logAntwort, sekundenSeit, app, el, mischen, leeren } from "./core.js";
+import { state, speichern, logAntwort, sekundenSeit, app, el, mischen, leeren, reichZeile } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
 /* Die Mechanik des Begriffe-Blitz liegt seit dem 12.08.2026 im geteilten
    Baustein — dieselbe Datei treibt drueben den Begriffe-Blitz UND das
@@ -391,7 +391,7 @@ function opRunde(themen, hooks, zurueck) {
       karte.appendChild(el("div", "op-wort", anzeige(item.op.wort)));
       karte.appendChild(el("div", "frage-text", "Welche Anforderungsstufe verlangt dieses Signalwort?"));
     } else {
-      karte.appendChild(el("div", "op-stamm", item.f.frage));
+      karte.appendChild(reichZeile("div", item.f.frage, "op-stamm"));
       karte.appendChild(el("div", "frage-text", "Was verlangt diese Aufgabe von dir?"));
     }
 
@@ -454,7 +454,7 @@ function opRunde(themen, hooks, zurueck) {
       extra.appendChild(el("h3", null, "Kurz nachlesen"));
       gepatzt.forEach(function (item) {
         var z = el("div", "nachlesen-zeile");
-        z.appendChild(el("b", null, item.art === "wort" ? anzeige(item.op.wort) : item.f.frage));
+        z.appendChild(reichZeile("b", item.art === "wort" ? anzeige(item.op.wort) : item.f.frage, null));
         z.appendChild(el("div", null, erklaerungZu(item)));
         extra.appendChild(z);
       });

@@ -519,7 +519,7 @@
       "id": "pr-gen-mc-6",
       "unterthema": "Handlungsorientierung",
       "afb": 2,
-      "frage": "Ein Schüler deckt den Tisch inzwischen allein, verteilt Teller und Besteck aber noch durcheinander. Welches Hilfeniveau passt nach der Tabelle zur Handlungsdurchführung - und mit welchem Ziel?",
+      "frage": "Ein Schüler deckt den Tisch inzwischen allein, verteilt Teller und Besteck aber noch durcheinander. Welches Hilfeniveau passt nach der Tabelle zur Handlungsdurchführung - und mit welchem Ziel? **Gemeint ist die Hilfeniveau-Tabelle mit ihren fünf Stufen.**",
       "optionen": [
         {
           "text": "Beobachtung und evtl. Korrektur, damit die Fertigkeiten durch Übung zur Routine werden",
@@ -647,7 +647,7 @@
       "id": "pr-gen-mc-10",
       "unterthema": "Überblick der Prinzipien",
       "afb": 2,
-      "frage": "Die Vorlesung gleicht die didaktisch-methodischen Prinzipien im SGE mit den Qualitätsmerkmalen des RLP Berlin/Brandenburg ab. Welches Prinzip hat dort KEINE direkte Entsprechung?",
+      "frage": "Die Vorlesung gleicht die didaktisch-methodischen Prinzipien im SGE mit den Qualitätsmerkmalen des RLP Berlin/Brandenburg ab, **also des Rahmenlehrplans der beiden Länder**. Welches Prinzip hat dort KEINE direkte Entsprechung?",
       "optionen": [
         {
           "text": "Elementarisierung",
@@ -1018,7 +1018,7 @@
     {
       "id": "pr-f-4",
       "afb": 3,
-      "frage": "Diskutieren Sie das Spannungsverhältnis von kleinen Schritten und Sinnzusammenhang bei der Strukturierung von Aufgaben.",
+      "frage": "Diskutieren Sie das Spannungsverhältnis von kleinen Schritten und Sinnzusammenhang bei der Strukturierung von Aufgaben. **Gemeint ist das didaktische Prinzip „kleine Schritte und/oder Sinnzusammenhang“; diskutieren heißt hier: beide Seiten abwägen, nicht nur beschreiben.**",
       "stichpunkte": [
         "Kleine Schritte: ermöglichen einen dezidierten Handlungsplan, Erfolgserlebnisse, Passung an Aneignungsmöglichkeiten",
         "Gesamtzusammenhang: nötig, um den Sinn des eigenen Tuns zu erkennen",
@@ -1261,7 +1261,7 @@
     {
       "id": "pr-fol-f-1",
       "afb": 2,
-      "frage": "Erklären Sie, um was es sich bei didaktischen Prinzipien handelt, und erörtern Sie ihre Relevanz für die Unterrichtsplanung. Ordnen Sie die Prinzipien dabei in das Verhältnis zu Methoden, Techniken, Sozialformen und Medien ein.",
+      "frage": "Erklären Sie, um was es sich bei didaktischen Prinzipien handelt, und erörtern Sie ihre Relevanz für die Unterrichtsplanung. Ordnen Sie die Prinzipien dabei in das Verhältnis zu Methoden, Techniken, Sozialformen und Medien ein. **Drei Teilaufgaben: erklären, erörtern (Für und Wider nennen) und einordnen.**",
       "stichpunkte": [
         "Definition: grundlegende Regeln, Grundsätze bzw. Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation (vgl. Weber 2008, 263 ff.)",
         "Sie sind nicht immer wissenschaftlich fundiert, haben aber eine große Relevanz für die Arbeit von Lehrkräften (vgl. Arndt 2020, 340)",

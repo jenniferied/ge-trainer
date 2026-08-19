@@ -108,7 +108,7 @@
       "id": "eb-mc-4",
       "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
       "afb": 1,
-      "frage": "Förderung der emotionalen Stabilität, des Sozialverhaltens und die Befähigung, soziale Beziehungen einzugehen und zu gestalten - welcher Bereich?",
+      "frage": "Förderung der emotionalen Stabilität, des Sozialverhaltens und die Befähigung, soziale Beziehungen einzugehen und zu gestalten - welcher Bereich? **Gemeint ist die KMK-Systematik (2021), nicht die des NRW-Lehrplans.**",
       "optionen": [
         {
           "text": "Emotionale und soziale Entwicklung",
@@ -295,7 +295,7 @@
       "id": "eb-gen-mc-2",
       "unterthema": "Entwicklungsbereiche in den Lehrplänen",
       "afb": 1,
-      "frage": "Bei der Entwicklung welcher vier Felder benötigen Kinder und Jugendliche im SGE laut den Grundsätzen des Berlin-Brandenburger Rahmenlehrplans besondere Unterstützung?",
+      "frage": "Die Grundsätze des Berlin-Brandenburger Rahmenlehrplans nennen vier Felder, bei deren Entwicklung Kinder und Jugendliche im SGE besondere Unterstützung benötigen. Welche vier sind es?",
       "optionen": [
         {
           "text": "Wahrnehmung, Sprache, Denken und Handeln",
@@ -744,7 +744,7 @@
     {
       "id": "eb-f-1",
       "afb": 1,
-      "frage": "Nennen Sie die 4 Entwicklungsbereiche im SGE.",
+      "frage": "Nennen Sie die 4 Entwicklungsbereiche im SGE. **Gemeint ist die Systematik der KMK (2021).**",
       "stichpunkte": [
         "Kognition",
         "Kommunikation",
@@ -967,7 +967,7 @@
     {
       "id": "eb-gen-f-1",
       "afb": 2,
-      "frage": "Erläutern Sie die Grundform der lerngruppenbezogenen Umsetzung individueller Entwicklungsziele und veranschaulichen Sie sie an einem Beispiel aus der Vorlesung.",
+      "frage": "Erläutern Sie die Grundform der lerngruppenbezogenen Umsetzung individueller Entwicklungsziele und veranschaulichen Sie sie an einem Beispiel aus der Vorlesung. **Gemeint ist eine der Grundformen dualen Unterrichts nach Jöhnck/Baumann (2023).**",
       "stichpunkte": [
         "Ausgangspunkt: individuelle Entwicklungsbedarfe einzelner Schüler:innen münden in eine (teil-)gruppenbezogene Entwicklungsförderung",
         "Alle werden im selben Entwicklungsschwerpunkt gefördert - ggf. in sich differenziert und individualisiert",

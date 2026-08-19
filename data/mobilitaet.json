@@ -172,7 +172,7 @@
       "id": "mo-mc-6",
       "unterthema": "Curriculum & Kompetenzen",
       "afb": 2,
-      "frage": "Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen sowie Entfernungshören sind Ziele in welchem Kompetenzbereich?",
+      "frage": "Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen sowie Entfernungshören sind Ziele in welchem Kompetenzbereich? **Gemeint sind die Mobilitätskompetenzen nach Stöppler.**",
       "optionen": [
         {
           "text": "Auditive Wahrnehmung",
@@ -265,7 +265,7 @@
       "id": "mo-mc-9",
       "unterthema": "Verkehrsteilnahme konkret",
       "afb": 1,
-      "frage": "Welche Art der Verkehrsbeteiligung hatte zum Unfallzeitpunkt den größten Anteil?",
+      "frage": "Welche Art der Verkehrsbeteiligung hatte zum Unfallzeitpunkt den größten Anteil? **Gefragt ist, wie die Verunglückten unterwegs waren, als der Unfall passierte.**",
       "optionen": [
         {
           "text": "Zu Fuß (35,7 %)",
@@ -296,7 +296,7 @@
       "id": "mo-mc-10",
       "unterthema": "Verkehrsteilnahme konkret",
       "afb": 2,
-      "frage": "Welche Gefahr gehört zur Vorbereitung auf den ÖPNV?",
+      "frage": "Welche Gefahr gehört zur Vorbereitung auf den ÖPNV? **Gefragt ist eine Gefahr, die im Unterricht zur Nutzung öffentlicher Verkehrsmittel besprochen wird.**",
       "optionen": [
         {
           "text": "Eiliges zum Bus Laufen, ohne auf den Straßenverkehr zu achten",
@@ -903,7 +903,7 @@
     {
       "id": "mo-f-2",
       "afb": 1,
-      "frage": "Fassen Sie die wesentlichen Mobilitätsbehinderungen zusammen, auf die Menschen im Bereich GE im Alltag stoßen können.",
+      "frage": "Fassen Sie die wesentlichen Mobilitätsbehinderungen zusammen, auf die Menschen im Bereich GE im Alltag stoßen können. **Zusammenfassen heißt hier: die Mobilitätsbehinderungen aus der Vorlesung im Überblick wiedergeben, nicht einzelne ausführen.**",
       "stichpunkte": [
         "Sensorisch: Blindheit, Gehörlosigkeit",
         "Körperlich: Körperbehinderung, vorübergehende Unfallfolgen, Alter",
@@ -960,7 +960,7 @@
     {
       "id": "mo-f-3",
       "afb": 2,
-      "frage": "Ordnen Sie verschiedene Unterrichtsmaßnahmen den jeweiligen Mobilitätskompetenzen zu.",
+      "frage": "Ordnen Sie verschiedene Unterrichtsmaßnahmen den jeweiligen Mobilitätskompetenzen zu. **Gemeint sind die Maßnahmen aus der Vorlesung und die Mobilitätskompetenzen nach Stöppler.**",
       "stichpunkte": [
         "Auditive Wahrnehmung: Geräusche-Gruppen, Geräuscheraten, Schiffe im Nebel (Ziele: Verkehrsgeräusche erkennen/zuordnen/differenzieren, lokalisieren, Entfernungshören)",
         "Motorik & Reaktion: Feuer-Wasser-Luft, Gleichgewichtsspiel, Pappdeckel (Ziele: Gleichgewicht, Geschwindigkeiten wechseln, Bewegungs- und Handlungsunterbrechung, an bestimmten Stellen anhalten)",

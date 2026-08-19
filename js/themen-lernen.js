@@ -43,7 +43,7 @@
    ABHAENGIGKEITEN: core.js, ui.js, spiele.js (logSpiel), treppe.js,
    glossar.js, stoebern.js (materialKarteFuer), reife.js. Kein main.js. */
 
-import { app, el, leeren, state, stichpunkteTeilen } from "./core.js";
+import { app, el, leeren, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl } from "./ui.js";
 import { logSpiel } from "./spiele.js";
 import { abrufKarte, distraktorenFuer, saeulenIndizes } from "./treppe.js";
@@ -567,9 +567,9 @@ export function zeigeThemenLernen(themen, hooks) {
       app.appendChild(kopf);
 
       if (mitgenommen) {
-        app.appendChild(el("div", "tl-mitgenommen",
+        app.appendChild(reichZeile("div",
           "Das nehmen wir morgen nochmal mit: " + kurz(mitgenommen)
-          + " – für heute lassen wir es liegen."));
+          + " – für heute lassen wir es liegen.", "tl-mitgenommen"));
         mitgenommen = null;
       }
 
@@ -586,7 +586,7 @@ export function zeigeThemenLernen(themen, hooks) {
         vorspann.textContent = "Die Bausteine dieser Aufgabe – erst abrufen, dann aufdecken:";
         app.appendChild(vorspann);
         var frage = el("div", "karte");
-        frage.appendChild(el("div", "frage-text", s.f.frage));
+        frage.appendChild(reichZeile("div", s.f.frage, "frage-text"));
         app.appendChild(frage);
 
         var opts = {
@@ -674,8 +674,10 @@ export function zeigeThemenLernen(themen, hooks) {
 
   // Fuer den Mitgenommen-Satz: eine Frage kann zwei Zeilen lang sein, im
   // Hinweis reicht der Anfang.
+  // Siehe kurzFrage in treppe.js: erst die Lesehilfe raus, dann schneiden -
+  // sonst steht hier ein halbes **.
   function kurz(text) {
-    var s = String(text).trim();
+    var s = ohneHilfe(text);
     return s.length > 60 ? s.slice(0, 57).trim() + "…" : s;
   }
 

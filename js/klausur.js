@@ -14,7 +14,7 @@
    ueber Handschrift-Bild als Anhang bzw. reine Selbstbewertung weiter. */
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
-  starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, stichpunkteTeilen } from "./core.js";
+  starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, reichZeile, ohneHilfe, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, erklaerAbfrage } from "./ui.js";
 import { syncSession, frageChatSagen } from "./sync.js";
 // Beleg-Chips: aus "Folie 29" im Text wird ein Sprung in den Folien-Viewer.
@@ -685,7 +685,7 @@ function aufgabenbogenBauen() {
     var f = frageVon(a);
     var li = el("li", "aufgabe-zeile");
     li.appendChild(el("span", "a-nr", a.label + ")"));
-    li.appendChild(el("span", "a-text", f ? f.frage : "Diese Aufgabe steht nicht mehr im Fragenbestand."));
+    li.appendChild(reichZeile("span", f ? ohneHilfe(f.frage) : "Diese Aufgabe steht nicht mehr im Fragenbestand.", "a-text"));
     li.appendChild(el("span", "fuehrung"));
     li.appendChild(el("span", "punkte", a.max + " P."));
     ol.appendChild(li);
@@ -715,7 +715,7 @@ function schreibBlattBauen(a, blattId, istLetztes) {
   meta.appendChild(document.createTextNode(" · " + (t ? t.titel : a.thema) + " · "));
   meta.appendChild(el("b", "punkte", a.max + " P."));
   druck.appendChild(meta);
-  if (blatt.teil === 1) druck.appendChild(el("p", "aufgabentext", f ? f.frage : "Diese Aufgabe steht nicht mehr im Fragenbestand - überspring sie einfach."));
+  if (blatt.teil === 1) druck.appendChild(reichZeile("p", f ? ohneHilfe(f.frage) : "Diese Aufgabe steht nicht mehr im Fragenbestand - überspring sie einfach.", "aufgabentext"));
   b.appendChild(druck);
 
   var ta = document.createElement("textarea");
@@ -939,7 +939,7 @@ export function stiftFlaeche(beiFertig, opts) {
   if (o.frage) {
     var kopf = el("div", "kl-stift-kopf");
     kopf.appendChild(el("span", "nr", o.nr || "Aufgabe"));
-    kopf.appendChild(el("p", "aufgabentext", o.frage));
+    kopf.appendChild(reichZeile("p", ohneHilfe(o.frage), "aufgabentext"));
     blatt.appendChild(kopf);
   }
 
@@ -1438,7 +1438,7 @@ function korrekturBlatt(a) {
   meta.appendChild(document.createTextNode(" · " + (t ? t.titel : a.thema) + " · "));
   meta.appendChild(el("b", "punkte", a.max + " P."));
   druck.appendChild(meta);
-  if (f) druck.appendChild(el("p", "aufgabentext", f.frage));
+  if (f) druck.appendChild(reichZeile("p", ohneHilfe(f.frage), "aufgabentext"));
   b.appendChild(druck);
 
   /* Ihr Text - und darauf der Rotstift der KI, wenn eine Korrektur gelaufen ist.
@@ -2037,7 +2037,7 @@ function starteMcQuer(pool, wahl) {
 
     var karte = el("div", "karte");
     karte.appendChild(el("div", "frage-fortschritt", "Alle Themen · Frage " + (index + 1) + " von " + gezogen.length));
-    karte.appendChild(el("div", "frage-text", f.frage));
+    karte.appendChild(reichZeile("div", ohneHilfe(f.frage), "frage-text"));
 
     var optionen = mischen(f.optionen);
     var beantwortet = false;

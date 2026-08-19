@@ -325,7 +325,7 @@
       "id": "uf-mc-11",
       "unterthema": "Geschlossener Unterricht & Lehrgang",
       "afb": 1,
-      "frage": "Für welche Schüler:innen sind strukturierte, lernzielorientierte, programmartige Ansätze laut Vorlesung unter anderem besonders relevant?",
+      "frage": "Die Vorlesung spricht von strukturierten, lernzielorientierten, programmartigen Ansätzen. Für welche Schüler:innen sind sie unter anderem besonders relevant?",
       "optionen": [
         {
           "text": "Für Schüler:innen mit autistischem Verhalten",
@@ -484,7 +484,7 @@
       "id": "uf-gen-mc-5",
       "unterthema": "Methoden offenen Unterrichts",
       "afb": 2,
-      "frage": "Warum steht die Wochenplanarbeit in der Einführungsfolge erst nach der Tagesplanarbeit?",
+      "frage": "Warum steht die Wochenplanarbeit in der Einführungsfolge erst nach der Tagesplanarbeit? **Die Einführungsfolge ist die Reihenfolge, in der die Vorlesung diese Methoden nacheinander einführt.**",
       "optionen": [
         {
           "text": "Weil die erhöhte Aufgabenzahl höhere Anforderungen an die Zeiteinteilung stellt",
@@ -580,7 +580,7 @@
       "id": "uf-gen-mc-8",
       "unterthema": "Geschlossener Unterricht & Lehrgang",
       "afb": 1,
-      "frage": "Als Teil welchen Unterrichts werden Lehrgänge laut ISB (2019) betrachtet - obwohl sie zu den geschlossenen Formen zählen?",
+      "frage": "Lehrgänge zählen zu den geschlossenen Formen. Trotzdem werden sie laut ISB (2019) als Teil einer anderen Unterrichtsform betrachtet - als Teil welcher?",
       "optionen": [
         {
           "text": "Des handlungsorientierten Unterrichts",
@@ -963,7 +963,7 @@
     {
       "id": "uf-f-3",
       "afb": 3,
-      "frage": "Bewerten Sie die Potentiale offener und geschlossener Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung.",
+      "frage": "Bewerten Sie die Potentiale offener und geschlossener Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung. **Bewerten heißt hier: abwägen und am Ende ein eigenes begründetes Urteil formulieren.**",
       "stichpunkte": [
         "Potentiale offen: Entscheidungsprozesse und Wahlmöglichkeiten, Transfer des Auswahlverhaltens, alle Entwicklungsbereiche ansprechbar, Selbstkontrolle, Zeitplanung, Selbstvertrauen und Selbstwert, innere Differenzierung",
         "Grenzen offen: viele Vorgaben bleiben, maskierte Übungsphasen, Schüler:innen im FSgE werden Anforderungen schwer gerecht, Vermeidung schwieriger Aufgaben, Überschätzung, mäßige Effektstärke d = 0.45, Ablenkung durch Materialangebote",

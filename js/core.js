@@ -557,6 +557,38 @@ export function reichZeile(tag, text, klasse) {
   return reichFuellen(el(tag, klasse), text);
 }
 
+/* Der Fragetext OHNE seine Lesehilfen (19.08.2026).
+
+   Seit heute tragen 30 Fragestaemme einen fett ausgezeichneten Halbsatz, der
+   sagt, WAS verlangt ist ("**Gemeint ist die KMK-Systematik (2021)**") - Roses
+   Rueckmeldung war, dass sie oft nicht erkennt, wonach gefragt wird. In der
+   Klausur-Simulation darf dieser Halbsatz NICHT stehen: das Blatt ist bewusst
+   kalt, und am 10.09. steht dort auch nichts. Wer mit Stuetze uebt und ohne
+   Stuetze geprueft wird, uebt das Falsche.
+
+   Die Auszeichnung traegt deshalb zwei Bedeutungen zugleich: sichtbar "das ist
+   Hilfe", maschinell "das faellt im Ernstfall weg". Das spart ein zweites Feld
+   im Korpus, das in 484 Fragen gepflegt und von drei Skripten mitgeprueft
+   werden muesste - und es kann nicht auseinanderlaufen, weil es dieselbe
+   Zeichenkette ist.
+
+   Die zwei Aufraeumschritte danach sind nicht kosmetisch: zwei Ergaenzungen
+   stehen MITTEN im Satz ("... RLP Berlin/Brandenburg ab, **also des
+   Rahmenlehrplans der beiden Laender**."). Ohne sie bliebe dort "ab,." stehen.
+
+   Zweiter Nutzen: kurz()/kurzFrage() schneiden Fragestaemme auf 57 Zeichen.
+   Bei eb-f-1 (44 Zeichen Stamm) schnitt der Schnitt mitten in die Auszeichnung
+   und liess ein offenes ** stehen, das reichFuellen dann woertlich ausgab.
+   Wer vor dem Kuerzen hier durchgeht, hat das Problem nicht. */
+export function ohneHilfe(text) {
+  return String(text === undefined || text === null ? "" : text)
+    .replace(/\s*\*\*[^*]+\*\*/g, "")
+    .replace(/\s*([,;:])\s*([.!?])/g, "$2")
+    .replace(/\s+([.,;:!?])/g, "$1")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export function mischen(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {

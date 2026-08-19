@@ -37,7 +37,7 @@
    Modus vorher schon auf die falsche Seite der Frage zu stellen waere unfair
    gegen die Antwort, die dort noch aussteht. */
 
-import { app, el, leeren, state, starteRunde, beendeRunde } from "./core.js";
+import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile } from "./core.js";
 import { stickerEl, setzeFarbe } from "./ui.js";
 import { afbAnalyse, afbOption, afbKurz, starteOperatoren, starteBegriffe } from "./spiele.js";
 
@@ -172,7 +172,7 @@ export function zeigeKlausurfrage(themen, hooks) {
     var analyse = afbAnalyse(f.frage, f.afb);
 
     var karte = el("div", "karte");
-    karte.appendChild(el("div", "op-stamm", f.frage));
+    karte.appendChild(reichZeile("div", f.frage, "op-stamm"));
     karte.appendChild(el("div", "frage-text", "Was verlangt diese Aufgabe von dir?"));
 
     var beantwortet = false;

@@ -42,7 +42,7 @@
        an ihren EIGENEN Grenzen geschnitten, statt als eine lange Liste zu
        erschlagen; themen-lernen.js schneidet damit die Level-1-Portion. */
 
-import { el, stichpunkteTeilen } from "./core.js";
+import { el, ohneHilfe, stichpunkteTeilen } from "./core.js";
 import { stickerEl } from "./ui.js";
 import { belegZeile } from "./beleg.js";
 
@@ -180,8 +180,11 @@ function saeulenAnsicht(saeulen) {
    Gleiche Machart wie kurz() im Themen-Lernen (60 Zeichen, dann Auslassung);
    bewusst KOPIERT statt importiert - themen-lernen.js importiert dieses Modul,
    der Rueckweg waere ein Zyklus. */
+// ohneHilfe zuerst: der 57-Zeichen-Schnitt trifft sonst mitten in eine
+// Lesehilfe und laesst ein offenes ** stehen, das reichFuellen woertlich
+// ausgibt (eb-f-1 hat nur 44 Zeichen Stamm - genau dieser Fall).
 function kurzFrage(text) {
-  var s = String(text || "").trim();
+  var s = ohneHilfe(text);
   return s.length > 60 ? s.slice(0, 57).trim() + "…" : s;
 }
 

@@ -2162,3 +2162,33 @@ p { margin: 0 0 var(--sp-3); }
    also genau in der Säulen-Ansicht weg, sonst bleibt jene Regel unangetastet. */
 .treppe-saeule .treppe-punkt-kopf:has(.treppe-label) .treppe-werkzeuge { margin-left: 0; }
 @media (max-width: 520px) { .treppe-saeulen { grid-template-columns: 1fr; } }
+
+/* ---------- Fettdruck IM Fragetext (19.08.2026) ----------
+   Seit heute laeuft auch f.frage durch core.js reichZeile(), damit **fett** im
+   Korpus zu einem echten <b>-Knoten wird (Begruendung bei reichFuellen: geparst
+   statt gerendert, es gibt keinen innerHTML-Pfad).
+
+   Nur: .frage-text ist selbst schon font-weight: 700. Ein <b> darin waere
+   unsichtbar - die Auszeichnung muss hier also ueber die FARBE laufen, nicht
+   ueber das Gewicht. Genommen wird der Projekt-Akzent, kein neuer Farbwert;
+   der Anteil --ink zieht ihn im hellen Modus dunkler und im dunklen heller,
+   sonst saesse er hell auf 4,4:1 (unter der 4.5:1-Schwelle fuer diese
+   Schriftgroesse). Gemessen auf --card: hell 5,3:1, dunkel 6,5:1.
+
+   BEWUSST NICHT dabei sind die drei Papier-Kontexte der Klausur-Simulation
+   (.kl-druck .aufgabentext, .stiftblatt .kl-stift-kopf .aufgabentext und
+   .aufgabe-zeile .a-text, alle in papier.css): die setzen Fraunces 500 bzw.
+   Karla normal, dort ist ein <b> von allein zu sehen - und der Akzent stuende
+   im Nachtmodus als helles Blau auf dem hellen Blatt (1,9:1). Papier bleibt
+   Papier. Ebenso draussen: .tl-mitgenommen (normales Gewicht, und der Akzent
+   wuerde mit dem Warnton der Box streiten). */
+.frage-text b,
+.op-stamm b,
+.runde-text b b,
+.nachlesen-zeile b b {
+  color: color-mix(in srgb, var(--accent) 85%, var(--ink));
+}
+/* .nachlesen-zeile b traegt display: block (Zeile 803) - das erwischt den
+   verschachtelten Knoten mit und wuerfe die Auszeichnung auf eine eigene
+   Zeile. Hier zurueck auf inline, ohne die Regel oben anzufassen. */
+.nachlesen-zeile b b { display: inline; margin-bottom: 0; }
