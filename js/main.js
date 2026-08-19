@@ -1835,18 +1835,26 @@ function tagesAufgaben() {
      beim letzten Mal danebenlag. Ist da nichts, faellt die Zeile weg — und damit
      auch der Posten in der Zahl, denn nichts zu wiederholen ist nichts Offenes.
 
-     ZWEI EINSTIEGE, ZWEI VERSCHIEDENE DINGE (Jennifer, 13.08.2026):
+     HIER STEHT NUR NOCH DIE SECHSERRUNDE (Jennifer, 19.08.2026: "ganzer stapel
+     soll aus der taeglichen sektion raus in die allgemeine sektion. sie soll ja
+     die uebung davor taeglich machen und den ganzen stapel nach belieben").
 
        🔂 Sechs zum Wiederholen — feste Runde, heute abhakbar. DAS ist die
-          Tagesaufgabe. Vorher stand hier "erledigt: false" hart im Code: die
-          Zeile blieb den ganzen Tag offen, egal wie viel Rose wiederholt hat,
-          und verschwand erst, wenn der Stapel leer war. Leer wird er aber nur,
-          wenn alles sitzt - eine Aufgabe, die man nicht erfuellen kann.
-       🔁 Ganzer Stapel — laeuft, bis nichts mehr da ist. Kein Tagespensum,
-          sondern das Angebot fuer einen langen Nachmittag.
-
-     Der ganze Stapel steht nur dann als zweite Zeile da, wenn er groesser ist
-     als die Sechserrunde. Sonst waeren es zwei Zeilen fuer dieselbe Handlung. */
+          Tagesaufgabe. Bis zum 13.08. stand hier "erledigt: false" hart im
+          Code: die Zeile blieb den ganzen Tag offen, egal wie viel Rose
+          wiederholt hat, und verschwand erst, wenn der Stapel leer war. Leer
+          wird er aber nur, wenn alles sitzt - eine Aufgabe, die man nicht
+          erfuellen kann.
+       🔁 Ganzer Stapel — laeuft, bis nichts mehr da ist, und ist damit kein
+          Tagespensum, sondern ein Angebot. Genau deshalb steht er seit dem
+          19.08. NICHT mehr hier, sondern als Kachel unter "Kurz einsteigen"
+          (uebenKacheln). Was in dieser Liste steht, wird abgehakt und faellt
+          in die Offen-Zahl des ST-Trainers; ein Angebot ohne Ende gehoert da
+          nicht hin. Mitgestorben ist die alte Bedingung "nur zeigen, wenn der
+          Stapel groesser ist als die Sechserrunde" - sie verhinderte zwei
+          Zeilen fuer dieselbe Handlung IN DERSELBEN Liste. In zwei
+          verschiedenen Sektionen gibt es dieses Problem nicht mehr, drueben
+          reicht "ueberhaupt etwas im Stapel". */
   var w = Stats.wiederholPool(themen).length;
   /* DIE ZEILE BLEIBT STEHEN, AUCH WENN DER STAPEL LEER IST (Jennifer,
      15.08.2026: "wdh ist jetzt weg, sollte als erledigt da stehen bleiben").
@@ -1871,16 +1879,6 @@ function tagesAufgaben() {
       // Leerer Stapel: nur Anzeige, kein Sprung ins Nichts (daily-Kachel oben).
       geh: w ? function () { zeige("wdh6"); } : null
     });
-    if (w > Stats.WDH6) {
-      liste.push({
-        key: "wdh", icon: "🔁", titel: "Ganzer Stapel: " + w + (w === 1 ? " Frage" : " Fragen"),
-        kurz: "Ganzer Stapel", klein: "alles, was zuletzt danebenlag · ohne festes Ende",
-        // Kein Tagespensum: der Stapel ist ein Angebot, keine Aufgabe. Damit er
-        // die Offen-Zahl nicht dauerhaft hochhaelt, gilt er als erledigt, sobald
-        // die Sechserrunde heute gelaufen ist.
-        erledigt: Stats.wiederhol6Heute(), geh: function () { zeige("wiederholen"); }
-      });
-    }
   }
   return liste;
 }
@@ -1924,7 +1922,14 @@ function heuteDranKarte() {
   liste.forEach(function (a) { reihe.appendChild(dailyKachel(a)); });
   karte.appendChild(reihe);
 
-  if (!liste.some(function (a) { return a.key === "wdh"; })) {
+  /* Der Trostsatz haengt am STAPEL, nicht mehr an einer Kachel (19.08.2026).
+     Bis dahin stand hier "wenn keine Kachel mit key 'wdh' dabei ist" - seit die
+     Stapel-Kachel in die allgemeine Sektion umgezogen ist, waere das immer wahr
+     und der Satz stuende jeden Tag da. Nebenbei war die alte Bedingung auch
+     vorher schon zu grosszuegig: bei ein bis sechs wackligen Aufgaben fehlte
+     die Zeile ebenfalls, und "Nichts liegt gerade quer" war dann schlicht
+     falsch. Jetzt sagt sie genau das, was sie behauptet: der Stapel ist leer. */
+  if (!Stats.wiederholPool(themen).length) {
     karte.appendChild(el("div", "heute-leer", state.antwortLog.length
       ? "Nichts liegt gerade quer – alles, was du beantwortet hast, saß beim letzten Mal."
       : "Eine kurze Runde reicht zum Anfangen. Der Rest kommt von allein."));
@@ -1946,12 +1951,30 @@ function heuteDranKarte() {
    wird dort, wo der Lauf startet (Baukasten/Klausur-Setup), nie an der Kachel. */
 function uebenKacheln() {
   var halter = el("div");
+  /* Der ganze Stapel, seit dem 19.08.2026 hier statt in der Tagesliste
+     (Begruendung bei tagesAufgaben). Er steht neben "Neu", weil beide dasselbe
+     Versprechen dieser Gruppe halten: kein Baukasten, keine Vorschaltseite, ein
+     Tipp und es laeuft (zeigeMix mit nurWiederholung springt direkt in die
+     Runde, siehe stats.js). Dass er kein festes Ende hat, steht auf der Kachel.
+
+     Kein Eintrag, wenn der Stapel leer ist - dann fuehrt der Tipp nur zurueck
+     auf die Startseite (zeigeMix: `if (!pool.length) return hooks.home()`), und
+     eine Kachel, bei der nichts passiert, ist schlechter als keine Kachel.
+     Dasselbe Vorgehen wie bei Fachbegriffe/Glossar ohne glossar.json weiter
+     unten. Der leere Zustand wird oben in "Heute dran" ohnehin ausgesprochen. */
+  var wdhPool = Stats.wiederholPool(themen).length;
+  var kurz = [
+    ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }]
+  ];
+  if (wdhPool) {
+    kurz.push(["🔁", "Ganzer Stapel",
+      wdhPool + (wdhPool === 1 ? " Frage" : " Fragen") + " · ohne festes Ende",
+      function () { zeige("wiederholen"); }]);
+  }
+  kurz.push(["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }]);
+  kurz.push(["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]);
   [
-    ["Kurz einsteigen", [
-      ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }],
-      ["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }],
-      ["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]
-    ]],
+    ["Kurz einsteigen", kurz],
     ["Ernst üben", [
       ["🧩", "Klausurfrage", "Aufdröseln, dann schreiben", function () { zeige("klausurfrage"); }],
       ["✍️", "Frei", "Offene Aufgaben nach Thema", function () { zeige("freiwahl"); }],
