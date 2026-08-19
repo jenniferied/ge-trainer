@@ -2116,3 +2116,49 @@ p { margin: 0 0 var(--sp-3); }
 /* Hinweis im Baukasten, wenn Themenwahl + Aufgabentyp keinen Treffer lassen -
    Warnton statt Rot: es ist eine erklaerte Grenze, kein Alarm. */
 .baukasten-leer { color: var(--warn-ink); margin-top: var(--sp-2); }
+
+/* Begründung je Kandidat im Zieh-Modus der Abruf-Treppe (19.08.2026) —
+   dieselben Kästen wie bei den MC-Optionen, nur in einem anderen Container.
+   .treppe-ziehen ist ein Grid MIT gap: der Kasten wird dort zur eigenen
+   Grid-Zelle, und der negative Rand von .warum (-6px, der ihn an seinen Knopf
+   heranzieht) würde die Zeile darüber überlappen statt sie zu berühren.
+   Gleiche Lösung wie schon bei .runde-optionen .warum: kein negativer Rand,
+   der Einzug links trägt die Zuordnung. */
+.treppe-ziehen .warum { margin: 0 0 var(--sp-1) var(--sp-3); font-size: .84rem; }
+
+/* ---------- Formzeile und Synonyme der Tipp-Richtung (glossar.js) ----------
+   Die Formzeile sagt Rose, WAS gesucht ist ("3 Wörter, beginnt mit L"), ohne
+   es zu verraten - leise unter der Rolle, damit sie den Aufgabentext nicht
+   ueberstimmt. */
+.gl-formzeile { font-size: .8rem; color: var(--ink-soft); margin: 0 0 var(--sp-2); }
+.gl-auch { font-size: .85rem; color: var(--ink-soft); margin-top: var(--sp-1); }
+
+/* ---------- Säulen der Abruf-Treppe (treppe.js, 19.08.2026) ----------
+   Für die Spalten-Modelle im Korpus: Folie 24 im Thema Freizeit ist eine
+   Drei-Spalten-Tabelle (PK 1 / PK 2 / PK 3), und als flache Zwölferliste
+   abgefragt verliert sie genau die Struktur, die sie merkbar macht. Machart
+   wie .themen-wahl-liste: ein auto-fit-Grid, das auf schmalen Schirmen von
+   allein einspaltig wird — Rose lernt am Handy.
+   Die Spalte ist breiter als die 160px des Vorbilds (240px): in einer
+   Treppen-Zeile stehen zwei Knöpfe, nicht ein Häkchen. Und weil auch 240px für
+   Text UND Knöpfe nebeneinander zu wenig sind, rutschen die Werkzeuge in der
+   Säulen-Ansicht unter ihren Baustein — dieselbe Lösung wie im Felder-Modus,
+   nur an einem anderen Container. */
+.treppe-saeulen {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0 var(--sp-3); align-items: start;
+}
+.treppe-saeule { min-width: 0; }
+.treppe-saeule-kopf {
+  font-weight: 700; font-size: .85rem; color: var(--tfarbe);
+  border-bottom: 2px solid var(--tfarbe);
+  padding-bottom: 4px; margin-bottom: var(--sp-2);
+}
+.treppe-saeule .treppe-punkt-kopf { flex-wrap: wrap; }
+.treppe-saeule .treppe-werkzeuge { flex: 1 1 100%; margin-top: var(--sp-2); }
+/* Im Felder-Modus (R2, themen-lernen.js) zieht die :has()-Regel weiter oben die
+   Werkzeuge um die Nummernspalte ein — in einer 240px-Säule ist dafür kein
+   Platz, dort würden die beiden Knöpfe rechts hinauslaufen. Der Einzug fällt
+   also genau in der Säulen-Ansicht weg, sonst bleibt jene Regel unangetastet. */
+.treppe-saeule .treppe-punkt-kopf:has(.treppe-label) .treppe-werkzeuge { margin-left: 0; }
+@media (max-width: 520px) { .treppe-saeulen { grid-template-columns: 1fr; } }

@@ -37,7 +37,10 @@
      - f.hinweise (Liste von Listen, parallel zu stichpunkte): inhaltliche
        Hinweis-Versionen mit zweitem Anlauf; opts.hinweisIndex rotiert, welche
        Version zuerst kommt. hinweisText bleibt der Fallback.
-     - f.waehle: n aus m Kern-Bausteinen, zufaellig gezogen, in beiden Modi. */
+     - f.waehle: n aus m Kern-Bausteinen, zufaellig gezogen, in beiden Modi.
+     - saeulenIndizes(f) + opts.teil: Spalten-Modelle (PK 1 / PK 2 / PK 3) werden
+       an ihren EIGENEN Grenzen geschnitten, statt als eine lange Liste zu
+       erschlagen; themen-lernen.js schneidet damit die Level-1-Portion. */
 
 import { el, stichpunkteTeilen } from "./core.js";
 import { stickerEl } from "./ui.js";
@@ -94,6 +97,125 @@ function labelChip(punkt, i) {
   return "Baustein " + (i + 1);
 }
 
+/* ---------- Saeulen: die Spalten-Modelle im Korpus ----------
+   Folie 24 im Thema Freizeit ist eine Drei-Spalten-Tabelle (PK 1 informieren
+   und ordnen / PK 2 bewerten und entscheiden / PK 3 anwenden und handeln), und
+   solche Modelle stehen mehrfach im Korpus. Als eine lange Liste abgefragt
+   fallen sie aus Level 1 heraus; an ihren eigenen Spaltengrenzen geschnitten
+   passen sie hinein. saeulenIndizes liefert genau diese Grenzen - gelesen von
+   themen-lernen.js (lvl1Teil) und weiter unten fuer die Darstellung.
+
+   labelBasis entscheidet, ob die Zahl am Ende eines Labels ZAEHLT oder
+   BENENNT. "Kritik 1/2/3" sind drei nummerierte Punkte EINER Saeule, "PK 1/2/3"
+   sind drei eigene Saeulen des Modells - Jennifers ausdruecklicher Wunsch
+   ("erstmal PK 1, dann PK 2 + 3 dahinter als separate Aufgaben"). Unterschieden
+   wird am Wort VOR der Ziffer: ein ausgeschriebenes Wort ("Kritik") zaehlt,
+   eine Abkuerzung in Versalien ("PK", "DK") benennt. Hinter einem klein
+   geschriebenen Wort wird gar nicht abgetrennt - sonst faenden "Beispiel zu 3"
+   und "Beispiel zu 4" in einer Saeule zusammen, die es nicht gibt. */
+function labelBasis(label) {
+  var w = label.split(/\s+/);
+  if (w.length < 2) return label;
+  if (!/^\d+[.,]?$/.test(w[w.length - 1])) return label;
+  var rumpf = w[w.length - 2];
+  if (!/^[A-ZÄÖÜ]/.test(rumpf) || !/[a-zäöüß]/.test(rumpf)) return label;
+  return w.slice(0, -1).join(" ");
+}
+
+/* Die Saeulen einer Aufgabe MIT ihrer Beschriftung. saeulenIndizes gibt davon
+   nur die Indizes weiter - das ist der Vertrag mit themen-lernen.js -, die
+   Darstellung weiter unten braucht auch die Labels. Gezaehlt wird die
+   KERNLISTE aus stichpunkteTeilen, nicht die Rohliste. */
+function saeulenBauen(f) {
+  var kern = stichpunkteTeilen(f).kern;
+  var gruppen = [], pos = {}, echte = 0;
+  kern.forEach(function (punkt, i) {
+    // labelChip faellt ohne brauchbares Praefix auf "Baustein N" zurueck - das
+    // ist kein Label, sondern seine Abwesenheit.
+    var label = labelChip(punkt, i);
+    var ohne = label === "Baustein " + (i + 1);
+    if (!ohne) echte++;
+    // Ein unbeschrifteter Punkt bildet IMMER seine eigene Gruppe. Fielen alle
+    // unter ein gemeinsames "Baustein", waere bei uf-fol-f-1 die erste Saeule
+    // [0, 4, 8] - Rose bekaeme Baustein 1, 5 und 9 als "ersten Teil".
+    var basis = ohne ? null : labelBasis(label);
+    var schluessel = ohne ? "#roh" + i : "#" + basis;
+    if (pos[schluessel] === undefined) {
+      pos[schluessel] = gruppen.length;
+      gruppen.push({ label: basis, idx: [i] });
+    } else {
+      gruppen[pos[schluessel]].idx.push(i);
+    }
+  });
+  // Ohne ein einziges Label gibt es kein Geruest, an dem man schneiden koennte -
+  // dann ist die ganze Aufgabe eine Saeule.
+  if (!echte) return [{ label: null, idx: kern.map(function (_, i) { return i; }) }];
+  return gruppen;
+}
+
+export function saeulenIndizes(f) {
+  return saeulenBauen(f).map(function (s) { return s.idx; });
+}
+
+/* Wann die Aufdeck-Ansicht wirklich als Spalten gezeichnet wird. Bewusst
+   STRENGER als saeulenIndizes: 64 der 69 freien Aufgaben zerfallen in mehr als
+   eine Saeule, aber die meisten sind nur eine Liste verschiedener Labels und
+   kein Spalten-Modell - als Gitter gezeichnet waeren sie bloss unruhiger.
+   Verlangt wird eine PARALLELE Struktur: jeder Punkt beschriftet, und
+   mindestens zwei Labels teilen sich einen Stamm ("Kritik 1/2/3", "PK 1/2/3",
+   "Potentiale/Grenzen" doppelt). Nachgemessen ueber den Korpus trifft das genau
+   fuenf Aufgaben - darunter fr-f-2, die Folie-24-Aufgabe, um die Jennifer
+   gebeten hat. Fuer den Vertrag mit themen-lernen.js gilt diese Huerde NICHT. */
+function saeulenAnsicht(saeulen) {
+  if (saeulen.length < 2) return false;
+  if (saeulen.some(function (s) { return !s.label; })) return false;
+  if (saeulen.some(function (s) { return s.idx.length > 1; })) return true;
+  var staemme = saeulen.map(function (s) {
+    return s.label.split(/\s+/).filter(function (w) { return !/^\d+[.,]?$/.test(w); }).join(" ");
+  });
+  return staemme.some(function (st, i) { return staemme.indexOf(st) !== i; });
+}
+
+/* Kurzfassung eines Aufgaben-Fragetextes fuer die Begruendung im Zieh-Modus.
+   Gleiche Machart wie kurz() im Themen-Lernen (60 Zeichen, dann Auslassung);
+   bewusst KOPIERT statt importiert - themen-lernen.js importiert dieses Modul,
+   der Rueckweg waere ein Zyklus. */
+function kurzFrage(text) {
+  var s = String(text || "").trim();
+  return s.length > 60 ? s.slice(0, 57).trim() + "…" : s;
+}
+
+/* Wort-Jaccard fuer den Dublettenfilter der Distraktoren (siehe
+   distraktorenFuer). Machart wie das Sicherheitsnetz in spiele.js bgRunde:
+   erst normalisieren, dann wegfiltern, was in der Runde nicht eindeutig
+   waere. Nur der Vergleich selbst ist hier ein anderer - Wortmengen statt
+   Gleichheit, weil die Beinahe-Dubletten im Korpus nie woertlich gleich sind. */
+function wortMenge(text) {
+  var m = {};
+  String(text).toLowerCase().replace(/[^a-zäöüß0-9]+/g, " ").split(" ")
+    .forEach(function (w) { if (w) m[w] = true; });
+  return m;
+}
+
+function jaccard(a, b) {
+  var schnitt = 0, gesamt = 0;
+  Object.keys(a).forEach(function (w) { gesamt++; if (b[w]) schnitt++; });
+  Object.keys(b).forEach(function (w) { if (!a[w]) gesamt++; });
+  return gesamt ? schnitt / gesamt : 0;
+}
+
+/* Ab hier gilt ein Kandidat als Beinahe-Dublette eines eigenen Bausteins.
+   Nachgemessen ueber alle 9370 aufgabenfremden Baustein-Paare des Korpus:
+   oberhalb von 0,5 liegen genau 11 Paare, darunter geht es bei 0,44 weiter -
+   in dieser Luecke sitzt die Schwelle. Die 11 sind echte Zwillinge
+   ("PK 2 bewerten und entscheiden: Freizeitmoeglichkeiten reflektieren" gegen
+   "PK 2 bewerten und entscheiden: die Moeglichkeiten reflektieren", Jaccard
+   0,58; uf-gen-f-1 gegen uf-fol-f-1 sogar 0,93). Genau die duerfen NICHT als
+   Distraktor auftauchen, denn der Kasten darunter behauptete dann, der
+   Baustein gehoere woanders hin - eine Falschaussage gegenueber Rose, und die
+   waere schlimmer als gar keine Begruendung. */
+var DUBLETTE_AB = 0.5;
+
 /* Selbsteinschaetzung je Punkt. Dieselbe Dreiteilung wie der Selbstcheck der
    freien Aufgaben (gut/mittel/nochmal), nur mit Worten, die zu einem einzelnen
    Listenpunkt passen. Keine Panik-Sprache: "fehlte" ist eine Auskunft. */
@@ -112,6 +234,10 @@ var ABRUF_WERTE = [
                     oder "ziehen" (sanfter: die echten Punkte aus einer
                     Mischliste heraustippen; braucht opts.distraktoren)
      distraktoren - fremde Stichpunkte desselben Themas fuer "ziehen"
+     teil         - null (alles) oder ein Array von Kern-Indizes in
+                    aufsteigender Reihenfolge: genau diese Bausteine sind heute
+                    dran. Kommt von themen-lernen.js und ist an Saeulengrenzen
+                    geschnitten (saeulenIndizes).
      felder       - true: Label-Chips, Tipp-Felder und Sammel-Notizfeld im
                     Aufdecken-Modus (in "ziehen" ohne Wirkung - Wiedererkennen
                     braucht keine Felder)
@@ -136,11 +262,26 @@ export function abrufKarte(f, opts) {
     return el("div");
   }
 
+  o.gesamtKern = kern.length;
+  // Welche Kern-Indizes heute wirklich gezeigt werden - die Vorgabe ist alles.
+  var auswahl = kern.map(function (_, i) { return i; });
+
+  /* o.teil (themen-lernen.js, Level 1): genau diese Bausteine sind heute dran,
+     geschnitten an Saeulengrenzen. DETERMINISTISCH, kein Mischen - eine
+     Wiederholung in derselben Sitzung soll dieselbe Portion zeigen, sonst
+     waere der zweite Anlauf eine andere Aufgabe. Liegt zugleich f.waehle an,
+     hat o.teil Vorrang: eine schon ausgesuchte Teilmenge nochmals zufaellig
+     auszuduennen hiesse zweimal schneiden. */
+  var teilAktiv = false;
+  if (o.teil && o.teil.length) {
+    var teilIdx = o.teil.filter(function (k) { return k >= 0 && k < kern.length; });
+    if (teilIdx.length) { auswahl = teilIdx; teilAktiv = true; }
+  }
+
   // f.waehle: die Aufgabe verlangt nur n aus m Bausteinen. Dann fragt auch die
   // Treppe nur n zufaellig gezogene ab - alles andere waere strenger als die
   // Klausur selbst. Die Kopfzeile sagt das ehrlich dazu.
-  o.gesamtKern = kern.length;
-  if (f && f.waehle && kern.length > f.waehle) {
+  if (!teilAktiv && f && f.waehle && kern.length > f.waehle) {
     // Fisher-Yates wie in ziehenKarte: sort mit Zufalls-Comparator mischt je
     // nach Engine sichtbar ungleichmaessig.
     var idx = kern.map(function (_, i) { return i; });
@@ -151,10 +292,25 @@ export function abrufKarte(f, opts) {
     // Nach dem Ziehen wieder aufsteigend: abgefragt wird eine Teilmenge, aber
     // in der Reihenfolge, in der die Liste in der Aufgabe steht.
     idx = idx.slice(0, f.waehle).sort(function (a, b) { return a - b; });
-    kern = idx.map(function (k) { return kern[k]; });
-    stichIndex = idx.map(function (k) { return stichIndex[k]; });
+    auswahl = idx;
   }
+
+  kern = auswahl.map(function (k) { return kern[k]; });
+  stichIndex = auswahl.map(function (k) { return stichIndex[k]; });
   o.stichIndex = stichIndex;
+  o.auswahl = auswahl;
+  o.teilAktiv = teilAktiv;
+
+  /* Entspricht die heutige Portion genau EINER benannten Saeule, wird sie beim
+     Namen genannt ("Heute nur PK 1.") - das ist ehrlicher und leichter zu
+     merken als "der erste Teil". */
+  o.teilName = null;
+  if (teilAktiv) {
+    saeulenBauen(f).forEach(function (sa) {
+      if (sa.label && sa.idx.length === auswahl.length
+        && sa.idx.every(function (k, n) { return k === auswahl[n]; })) o.teilName = sa.label;
+    });
+  }
 
   if (o.modus === "ziehen" && (o.distraktoren || []).length) {
     return ziehenKarte(f, kern, o);
@@ -168,10 +324,19 @@ function aufdeckenKarte(f, kern, o) {
   var karte = el("div", "karte treppe-karte");
   karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
   // Bei f.waehle sagt die Kopfzeile ehrlich, dass nur eine Teilmenge dran ist -
-  // und dass die Auswahl keine Wertung traegt.
-  var kopfSatz = kern.length < o.gesamtKern
-    ? kern.length + " von " + o.gesamtKern + " Bausteinen – welche du nimmst, ist egal. "
-    : "Diese Aufgabe hat " + kern.length + " Bausteine. ";
+  // und dass die Auswahl keine Wertung traegt. Bei o.teil ist die Auswahl
+  // dagegen genau NICHT egal (sie folgt den Saeulen), also steht dort ein
+  // anderer Satz: was heute nicht drankommt, ist nicht weg, sondern spaeter.
+  var kopfSatz;
+  if (o.teilAktiv && kern.length < o.gesamtKern) {
+    kopfSatz = "Heute nur " + (o.teilName ? "›" + o.teilName + "‹" : "der erste Teil")
+      + " – " + kern.length + " von " + o.gesamtKern
+      + " Bausteinen. Der Rest kommt in einer späteren Runde. ";
+  } else if (kern.length < o.gesamtKern) {
+    kopfSatz = kern.length + " von " + o.gesamtKern + " Bausteinen – welche du nimmst, ist egal. ";
+  } else {
+    kopfSatz = "Diese Aufgabe hat " + kern.length + " Bausteine. ";
+  }
   karte.appendChild(el("p", "karten-hinweis",
     kopfSatz + "Geh sie im Kopf durch – laut sagen hilft. "
     + "Dann deck einzeln auf und sag ehrlich, was schon da war."));
@@ -185,6 +350,35 @@ function aufdeckenKarte(f, kern, o) {
     notizen.rows = 3;
     notizen.placeholder = "Sammelort – schreib rein, wie es dir kommt.";
     karte.appendChild(notizen);
+  }
+
+  /* Saeulen-Darstellung: traegt die Aufgabe ein echtes Spalten-Modell und ist
+     heute mehr als eine Saeule dran, stehen die Bausteine unter ihrem
+     Saeulen-Kopf statt in einer flachen Liste. Geaendert wird NUR der
+     Container - Hinweis, Aufdecken und Selbsteinschaetzung je Punkt bleiben
+     Zeile fuer Zeile dieselben. Im Zieh-Modus gibt es das bewusst nicht: dort
+     steht die Liste mit fremden Bausteinen gemischt, und eine Spalte waere
+     dort eine Verraeterin. */
+  var alleSaeulen = saeulenBauen(f);
+  var saeuleVon = {};
+  alleSaeulen.forEach(function (sa, si) {
+    sa.idx.forEach(function (k) { saeuleVon[k] = si; });
+  });
+  var reihenfolge = [];
+  o.auswahl.forEach(function (k) {
+    if (reihenfolge.indexOf(saeuleVon[k]) < 0) reihenfolge.push(saeuleVon[k]);
+  });
+  var spalten = null;
+  if (reihenfolge.length > 1 && saeulenAnsicht(alleSaeulen)) {
+    spalten = {};
+    var gitter = el("div", "treppe-saeulen");
+    reihenfolge.forEach(function (si) {
+      var spalte = el("div", "treppe-saeule");
+      spalte.appendChild(el("div", "treppe-saeule-kopf", alleSaeulen[si].label));
+      spalten[si] = spalte;
+      gitter.appendChild(spalte);
+    });
+    karte.appendChild(gitter);
   }
 
   var offen = kern.length;
@@ -278,7 +472,9 @@ function aufdeckenKarte(f, kern, o) {
     kopf.appendChild(werkzeuge);
 
     zeile.appendChild(kopf);
-    karte.appendChild(zeile);
+    // Einziger Unterschied der Saeulen-Ansicht: die Zeile haengt in ihrer
+    // Spalte statt direkt in der Karte.
+    (spalten ? spalten[saeuleVon[o.auswahl[i]]] : karte).appendChild(zeile);
   });
 
   function fertigZeigen() {
@@ -323,17 +519,37 @@ function ziehenKarte(f, kern, o) {
   var karte = el("div", "karte treppe-karte");
   karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
   // Bei f.waehle stehen entsprechend weniger echte Punkte in der Mischliste -
-  // die Kopfzeile sagt ehrlich, dass es eine Teilmenge ist.
-  var zusatzSatz = kern.length < o.gesamtKern
-    ? " Abgefragt werden " + kern.length + " von " + o.gesamtKern
-      + " Bausteinen – welche du nimmst, ist egal."
-    : "";
+  // die Kopfzeile sagt ehrlich, dass es eine Teilmenge ist. Der Zieh-Modus ist
+  // der Weg der ersten beiden Reife-Stufen (reife.js modusFuer) und damit
+  // genau der, auf dem Rose die Level-1-Portion trifft - der o.teil-Satz steht
+  // deshalb hier genauso wie beim Aufdecken.
+  var zusatzSatz = "";
+  if (o.teilAktiv && kern.length < o.gesamtKern) {
+    zusatzSatz = " Heute nur " + (o.teilName ? "›" + o.teilName + "‹" : "der erste Teil")
+      + " – " + kern.length + " von " + o.gesamtKern
+      + " Bausteinen. Der Rest kommt in einer späteren Runde.";
+  } else if (kern.length < o.gesamtKern) {
+    zusatzSatz = " Abgefragt werden " + kern.length + " von " + o.gesamtKern
+      + " Bausteinen – welche du nimmst, ist egal.";
+  }
+  // Eine Portion von genau einem Baustein gibt es seit o.teil - "Welche 1
+  // Bausteine" waere schief, also dieselbe Frage im Singular.
+  var frageSatz = kern.length === 1
+    ? "Welcher Baustein gehört zu DIESER Aufgabe? Tipp ihn an – "
+    : "Welche " + kern.length + " Bausteine gehören zu DIESER Aufgabe? Tipp sie an – ";
   karte.appendChild(el("p", "karten-hinweis",
-    "Welche " + kern.length + " Bausteine gehören zu DIESER Aufgabe? Tipp sie an – "
-    + "die anderen stammen aus Nachbar-Aufgaben desselben Themas." + zusatzSatz));
+    frageSatz + "die anderen stammen aus Nachbar-Aufgaben desselben Themas." + zusatzSatz));
 
+  // distraktorenFuer liefert seit dem 19.08. Objekte mit Herkunft; blanke
+  // Strings bleiben erlaubt, damit ein Aufrufer mit eigener Liste nicht bricht.
+  // Die Kandidaten sind eigene Huellen - der Knopf haengt an ihnen, nicht an
+  // dem, was der Aufrufer hereingereicht hat.
   var kandidaten = kern.map(function (p) { return { text: p, echt: true }; })
-    .concat((o.distraktoren || []).map(function (p) { return { text: p, echt: false }; }));
+    .concat((o.distraktoren || []).map(function (d) {
+      return typeof d === "string"
+        ? { text: d, echt: false, herkunft: "" }
+        : { text: d.text, echt: false, herkunft: d.frage };
+    }));
   // Fisher-Yates statt sort(random): sort mit Zufalls-Comparator mischt je nach
   // Engine sichtbar ungleichmaessig.
   for (var i = kandidaten.length - 1; i > 0; i--) {
@@ -368,10 +584,36 @@ function ziehenKarte(f, kern, o) {
     kandidaten.forEach(function (k) {
       k.knopf.disabled = true;
       var gew = gewaehlt.indexOf(k) >= 0;
-      if (k.echt && gew) { k.knopf.classList.add("richtig"); richtige++; }
-      else if (k.echt) k.knopf.classList.add("richtig", "verpasst");
-      else if (gew) k.knopf.classList.add("falsch");
-      else k.knopf.classList.add("blass");
+      /* Bis zum 19.08. stand hier nur die Faerbung - Rose sah, dass ihr Griff
+         rot wurde, nie WARUM. Genau das war ihre Rueckmeldung ("immer noch
+         frustrierend"). Jetzt haengt unter jedem Knopf derselbe Kasten wie im
+         MC-Pfad (beleg.js optionenAufloesen), damit sich die zwei Raeume der
+         App gleich anfuehlen.
+         Bewusst NICHT beschriftet wird der stehengelassene Distraktor: den hat
+         Rose richtig liegen gelassen, und vier zusaetzliche Zeilen waeren aus
+         der Aufloesung eine Textwand gemacht. */
+      var text = "", klasse = "gut";
+      if (k.echt && gew) {
+        k.knopf.classList.add("richtig"); richtige++;
+        text = "Richtig: der gehört zu dieser Aufgabe.";
+      } else if (k.echt) {
+        k.knopf.classList.add("richtig", "verpasst");
+        text = "Der hätte dazugehört.";
+      } else if (gew) {
+        k.knopf.classList.add("falsch");
+        klasse = "schade";
+        // Ohne Herkunft (Aufrufer mit eigener String-Liste) bleibt die
+        // allgemeine Auskunft - lieber unspezifisch als erfunden.
+        text = k.herkunft
+          ? "Falsch: der gehört zu ›" + kurzFrage(k.herkunft) + "‹."
+          : "Falsch: der gehört zu einer anderen Aufgabe dieses Themas.";
+      } else {
+        k.knopf.classList.add("blass");
+      }
+      // belegZeile statt el(): sonst verlieren die Fundstellen in einer
+      // Nachbar-Frage ihre antippbaren Chips.
+      if (text) k.knopf.insertAdjacentElement("afterend",
+        belegZeile("div", text, o.themaId, "warum " + klasse));
     });
     pruefen.remove();
     zaehler.remove();
@@ -399,13 +641,36 @@ function ziehenKarte(f, kern, o) {
   return karte;
 }
 
-/* ---------- Distraktoren: fremde Kern-Stichpunkte desselben Themas ---------- */
+/* ---------- Distraktoren: fremde Kern-Stichpunkte desselben Themas ----------
 
+   Gibt seit dem 19.08. OBJEKTE zurueck ({ text, frage, frageId }) statt nackter
+   Strings: die besitzende Aufgabe war in der Schleife immer schon da und wurde
+   nur weggeworfen - ohne sie kann die Aufloesung nicht sagen, WOHIN ein
+   danebengegriffener Baustein gehoert. Gelesen wird das Objekt ausschliesslich
+   hier in treppe.js (ziehenKarte); Aufrufer reichen die Liste nur durch.
+
+   Der Filter kann weniger als n Kandidaten liefern - drei ehrliche Distraktoren
+   sind besser als vier mit einer Falschaussage. Nachgemessen ueber den ganzen
+   Korpus bleiben im schlechtesten Fall 30 Kandidaten uebrig, die Runde laeuft
+   also nie leer. */
 export function distraktorenFuer(thema, f, n) {
+  /* Gemessen wird gegen die VOLLE Kernliste der aktuellen Aufgabe, nicht gegen
+     die Teilmenge, die diese Runde abfragt. Zwei Gruende: die Auswahl
+     (f.waehle bzw. o.teil) faellt erst in abrufKarte, also nach diesem Aufruf -
+     und eine Beinahe-Dublette eines heute NICHT abgefragten Bausteins waere
+     genauso eine Luege ("gehoert zu einer anderen Aufgabe"), weil der Text ja
+     trotzdem auch dieser Aufgabe gehoert. Die volle Liste ist die strengere
+     und damit die ehrliche Messlatte. */
+  var eigene = stichpunkteTeilen(f).kern.map(wortMenge);
   var out = [];
   ((thema && thema.frei) || []).forEach(function (andere) {
     if (andere.id === f.id) return;
-    stichpunkteTeilen(andere).kern.forEach(function (p) { out.push(p); });
+    stichpunkteTeilen(andere).kern.forEach(function (p) {
+      var menge = wortMenge(p);
+      var dublette = eigene.some(function (e) { return jaccard(menge, e) >= DUBLETTE_AB; });
+      if (dublette) return;
+      out.push({ text: p, frage: andere.frage || "", frageId: andere.id || "" });
+    });
   });
   for (var i = out.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
@@ -436,6 +701,9 @@ export function lernSchritt(thema, f, opts) {
     // sie nicht, dann bleibt alles wie vorher.
     felder: o.felder,
     hinweisIndex: o.hinweisIndex,
+    // Auch der Between-Step darf eine Portion bekommen - er reicht sie nur
+    // durch, entscheiden tut das der Aufrufer.
+    teil: o.teil,
     weiterText: "Jetzt schreiben",
     onFertig: function (erg) {
       halter.innerHTML = "";

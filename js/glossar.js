@@ -11,7 +11,10 @@
      2. Die FACHBEGRIFFE-RUNDE (zeigeFachbegriffe): aktiver Abruf wie bei Anki,
         zwei Richtungen. Definition -> Begriff wird GETIPPT (das ist die
         klausurkritische Richtung, das Wort muss aufs Papier) und tolerant
-        geprueft - lokal, ohne KI-Aufruf. Begriff -> Definition wird seit dem
+        geprueft - lokal, ohne KI-Aufruf. Seit dem 19.08. sagt die Aufgabe
+        auch, WAS gesucht ist: geformte Luecke im Text plus Formzeile
+        (ohneBegriff/formAngabe), und wer danebenliegt, bekommt die volle
+        Aufloesung statt nur des Wortes. Begriff -> Definition wird seit dem
         19.08. ebenfalls getippt und per KI abgeglichen (begriffErklaerKarte,
         Llm.begriffAbgleich) - mit gestuften Hinweisen statt sofortiger
         Aufloesung; faellt die KI aus, bleibt der alte Weg (aufdecken, ehrlich
@@ -128,38 +131,118 @@ function editAbstand(a, b) {
   return v[b.length];
 }
 
-function kandidatenVon(begriff) {
+/* auch ist optional und steht heute in KEINEM Glossar-Eintrag: das Feld
+   "auch": ["Synonym", …] ist vorbereitet, aber noch nicht befuellt. Fehlt es,
+   bleibt alles wie vorher - deshalb ueberall (auch || []). */
+function kandidatenVon(begriff, auch) {
   var out = [begriff];
   var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(begriff);
   if (m) { out.push(m[1]); out.push(m[2]); }
+  (auch || []).forEach(function (s) { out.push(s); });
   return out.map(normal).filter(function (k) { return k.length; });
 }
 
-/* Die Tipp-Richtung darf die Antwort nicht mitliefern: die meisten
-   Definitionen nennen den Begriff woertlich, oft als erstes Wort ("Kognition
-   ist der Entwicklungsbereich des Denkens…"). Vor dem Anzeigen werden deshalb
-   alle rohen Kandidaten (voller Begriff, Teil vor der Klammer, Klammerinhalt)
-   durch eine Luecke ersetzt, Gross/klein egal; angeklebte Wortreste
-   ("…orientierte") verschwinden mit. Nur fuers Anzeigen - geprueft wird
-   weiter gegen den echten Begriff. */
-function ohneBegriff(text, begriff) {
+/* ---------- Die Luecke, die Rose sagt, WAS gesucht ist ----------
+   Roses Beschwerde vom 19.08.: "manchmal wird gar nicht gesagt, welcher
+   Fachbegriff gesucht wird … stattdessen gibt es nur einen Paragraphen."
+   Zwei Ursachen, beide hier behoben:
+
+   1. Die Schwelle lag bei 4 Zeichen, also blieb "ICF" ungemaskert stehen -
+      die Antwort stand mitten im Aufgabentext. Jetzt ab 3 Zeichen, aber kurze
+      Abkuerzungen nur in Grossschreibung: ein "gi" auf drei Buchstaben trifft
+      sonst mitten in harmlosen Woertern.
+   2. Die Luecke war ein nacktes "____" ohne jede Formangabe. Jetzt bleibt je
+      Wort der Anfangsbuchstabe stehen und der Rest wird Strich fuer Strich zur
+      Laenge des Wortes ("Lernen an Stationen" -> "L_____ a_ S________").
+
+   Geformt wird aus dem GEFUNDENEN Text, nicht aus dem Kandidaten: dann stimmt
+   die Strichzahl auch dort, wo der Begriff angeklebt vorkommt
+   ("Kognitionsentwicklung" -> "K____________________"), und es bleibt kein
+   halbes Wort stehen. Nur fuers Anzeigen - geprueft wird weiter gegen den
+   echten Begriff (trifftBegriff bleibt Zeichen fuer Zeichen dieselbe). */
+
+function lueckenForm(text) {
+  return String(text).replace(/[0-9A-Za-zÄÖÜäöüß]+/g, function (w) {
+    return w.charAt(0) + new Array(w.length).join("_");
+  });
+}
+
+function maskiere(text, kandidat) {
+  var k = String(kandidat).trim();
+  if (k.length < 3) return text;
+  // Zwischen den Wortteilen darf stehen, was will: der Begriff heisst
+  // "Peschel 2002", im Satz steht "Peschel (2002)", und "Individualisierung /
+  // Differenzierung" kommt auch ohne Leerzeichen um den Schraegstrich vor.
+  // Eine buchstabengenaue Suche hat genau diese acht Stellen verfehlt und die
+  // Antwort stehen lassen. Die Teile bestehen nur aus Buchstaben und Ziffern,
+  // deshalb ist hier nichts zu escapen.
+  // Der Bindestrich fehlt in der Umgebungsklasse mit Absicht: sonst risse
+  // "ICF" in "ICF-Modell" das ganze "Modell" mit in die Luecke.
+  var wort = "[0-9A-Za-zÄÖÜäöüß]*";
+  var teile = k.split(/[^0-9A-Za-zÄÖÜäöüß]+/).filter(Boolean);
+  if (!teile.length) return text;
+  var kurzAbk = k.length <= 4 && k === k.toUpperCase();
+  var re = new RegExp(wort + teile.join("[^0-9A-Za-zÄÖÜäöüß]*") + wort, kurzAbk ? "g" : "gi");
+  return text.replace(re, function (treffer) { return lueckenForm(treffer); });
+}
+
+function ohneBegriff(text, begriff, auch) {
   var roh = [begriff];
   var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(begriff);
   if (m) { roh.push(m[1]); roh.push(m[2]); }
+  (auch || []).forEach(function (s) { roh.push(s); });
   var out = String(text);
-  roh.forEach(function (k) {
-    k = k.trim();
-    if (k.length < 4) return;
-    var re = new RegExp(k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
-    out = out.replace(re, "____");
-  });
-  return out.replace(/_{4}[A-Za-z0-9ÄÖÜäöüß-]*/g, "____");
+  // Der laengste Kandidat zuerst: sonst frisst der kurze (die Abkuerzung) ein
+  // Stueck aus der Mitte des langen und die Luecke zerfaellt.
+  roh.map(function (k) { return String(k).trim(); })
+    .filter(function (k) { return k.length >= 3; })
+    .sort(function (a, b) { return b.length - a.length; })
+    .forEach(function (k) { out = maskiere(out, k); });
+  return out;
 }
 
-export function trifftBegriff(eingabe, begriff) {
+/* Die Formzeile unter der Rolle. 18 der 131 Eintraege nennen ihren Begriff im
+   deutschen Definitionstext gar nicht (der englische Langname der ICF steht
+   nirgends im deutschen Absatz) - dort gibt es also auch nach dem Maskieren
+   keine Luecke, an der Rose sehen koennte, was gesucht ist. Diese Zeile ist
+   der Anker fuer genau diese Faelle und schadet bei den uebrigen nicht.
+   Sie beschreibt nur die FORM: Wortzahl, Laenge, Anfangsbuchstabe.
+   Klammerzusaetze werden getrennt behandelt - "(ICF)" ist eine Abkuerzung und
+   wird mitgezaehlt, "(KMK 2021)" ist eine Quellenangabe und faellt weg. */
+function formAngabe(begriff) {
+  var b = String(begriff).trim();
+  var abk = null;
+  var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(b);
+  if (m && m[1].trim()) {
+    var inhalt = m[2].trim();
+    if (/^[A-ZÄÖÜ][A-ZÄÖÜ0-9-]{1,7}$/.test(inhalt)) abk = inhalt;
+    b = m[1].trim();
+  }
+  // Der Schraegstrich zaehlt wie ein Leerzeichen: "Defizitär/Reduktionistisch"
+  // sind zwei Woerter, auch wenn keins dazwischen steht.
+  var woerter = b.split(/[\s\/]+/).filter(function (w) { return /[0-9A-Za-zÄÖÜäöüß]/.test(w); });
+  if (!woerter.length) return "";
+  var erster = (b.match(/[A-Za-zÄÖÜäöüß]/) || [""])[0].toUpperCase();
+  var teile = [];
+  if (woerter.length === 1 && b === b.toUpperCase() && /[A-ZÄÖÜ]/.test(b)) {
+    teile.push("Abkürzung, " + buchstabenZahl(b) + " Buchstaben");
+  } else if (woerter.length === 1) {
+    teile.push("Ein Wort mit " + buchstabenZahl(b) + " Buchstaben, beginnt mit " + erster);
+  } else {
+    teile.push(woerter.length + " Wörter, beginnt mit " + erster);
+  }
+  if (abk) teile.push("dazu die Abkürzung mit " + buchstabenZahl(abk) + " Buchstaben");
+  return teile.join(" · ");
+}
+
+function buchstabenZahl(s) {
+  return String(s).replace(/[^0-9A-Za-zÄÖÜäöüß]/g, "").length;
+}
+
+export function trifftBegriff(eingabe, begriff, auch) {
   var e = normal(eingabe);
   if (!e) return false;
-  return kandidatenVon(begriff).some(function (k) {
+  return kandidatenVon(begriff, auch).some(function (k) {
     if (k === e) return true;
     var toleranz = k.length > 10 ? 2 : k.length > 5 ? 1 : 0;
     return editAbstand(e, k) <= toleranz;
@@ -219,6 +302,17 @@ function quelleEl(e, thema) {
   if (!teile.length) return null;
   var z = belegZeile("div", teile.join(" · "), idVon(thema), "gl-quelle");
   return z;
+}
+
+/* Die Synonyme aus dem optionalen Feld "auch". Sie stehen nur in der
+   Aufloesung der Tipp-Richtung: dort ist der Begriff die ANTWORT, und Rose
+   soll sehen, dass ihr Wort auch gezaehlt haette. In der erklaeren-Richtung
+   ist der Begriff die Frage - eine Synonymzeile waere dort nur Rauschen.
+   Das Feld existiert in den Daten noch nicht; fehlt es, kommt hier null. */
+function auchZeile(e) {
+  var syn = (e.auch || []).filter(Boolean);
+  if (!syn.length) return null;
+  return el("div", "gl-auch", "Auch richtig: " + syn.join(" · "));
 }
 
 /* ---------- Chips fuer die Loesungs-Box einer freien Aufgabe ----------
@@ -381,6 +475,8 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
       var auf = el("div", "gl-aufgedeckt");
       auf.appendChild(el("b", null, e.begriff));
       auf.appendChild(belegZeile("div", (e.fassungen || {}).de || "", idVon(thema)));
+      var syn = auchZeile(e);
+      if (syn) auf.appendChild(syn);
       var q = quelleEl(e, thema);
       if (q) auf.appendChild(q);
       karte.appendChild(auf);
@@ -390,7 +486,9 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
 
   if (richtung === "tippen") {
     karte.appendChild(el("div", "gl-rolle", "Wie heißt der Fachbegriff?"));
-    karte.appendChild(belegZeile("div", ohneBegriff((e.fassungen || {}).de || "", e.begriff), null, "gl-definition"));
+    var form = formAngabe(e.begriff);
+    if (form) karte.appendChild(el("div", "gl-formzeile", form));
+    karte.appendChild(belegZeile("div", ohneBegriff((e.fassungen || {}).de || "", e.begriff, e.auch), null, "gl-definition"));
 
     var eingabe = document.createElement("input");
     eingabe.type = "text";
@@ -403,7 +501,7 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
     var pruefen = el("button", "knopf", "Prüfen");
     function pruefe() {
       if (fertig) return;
-      var getroffen = trifftBegriff(eingabe.value, e.begriff);
+      var getroffen = trifftBegriff(eingabe.value, e.begriff, e.auch);
       eingabe.disabled = true;
       pruefen.remove();
       if (getroffen) {
@@ -428,7 +526,11 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
         var doch = el("button", "knopf sekundaer", "Das meinte ich");
         doch.addEventListener("click", function () { reihe.remove(); abschliessen(true, false); });
         var ok = el("button", "knopf", "Stimmt, fehlte");
-        ok.addEventListener("click", function () { reihe.remove(); abschliessen(false, false); });
+        // Hier lief bis zum 19.08. abschliessen(false, false) - Rose sah nach
+        // einem Fehlversuch nur das Wort, nie die volle Definition und nie die
+        // Fundstelle (fuenfmal hintereinander bei gl-ko-1). Genau der Weg, auf
+        // dem es NICHT sass, braucht die Aufloesung am dringendsten.
+        ok.addEventListener("click", function () { reihe.remove(); abschliessen(false, true); });
         reihe.appendChild(doch);
         reihe.appendChild(ok);
         karte.appendChild(reihe);

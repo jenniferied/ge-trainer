@@ -12,7 +12,8 @@
         gleichmaessig geuebt - die Klausur zieht ihre fuenf Themen ja auch
         unangekuendigt. Jede Kachel traegt ihr Level (wie oft war das Thema
         schon durch), und je hoeher das Level, desto mehr macht die Pruefung
-        auf: erst AFB I/II und die Kernbegriffe, dann die Randbegriffe, dann
+        auf: erst AFB I/II, die Kernbegriffe und von jeder Aufgabe nur die
+        ersten Saeulen, dann die ganze Aufgabe und die Randbegriffe, dann
         auch AFB III.
      2. Material - die Themenkarte aus dem Stoebern-Raum (Leihgabe, siehe
         stoebern.js materialKarteFuer). Der Raum selbst speichert weiter
@@ -45,7 +46,7 @@
 import { app, el, leeren, state, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl } from "./ui.js";
 import { logSpiel } from "./spiele.js";
-import { abrufKarte, distraktorenFuer } from "./treppe.js";
+import { abrufKarte, distraktorenFuer, saeulenIndizes } from "./treppe.js";
 import { begriffeFuerTagesspiel, begriffErklaerKarte, begriffKarte, eintraegeZu, hatGlossar } from "./glossar.js";
 import { materialKarteFuer } from "./stoebern.js";
 import { faellig, modusFuer, reifeStand, STUFEN_MAX } from "./reife.js";
@@ -53,7 +54,15 @@ import { faellig, modusFuer, reifeStand, STUFEN_MAX } from "./reife.js";
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
    Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
 var NEU_AUFGABEN = 6;
-var NEU_BEGRIFFE = 8;
+/* NEU_BEGRIFFE deckt bewusst den GANZEN Rang-1-Pool eines Themas ab. Der
+   groesste ist entwicklungsbereiche mit 15 Kernbegriffen, die anderen liegen
+   zwischen 8 und 14 (konzeptionen 14, wohnen 14, freizeit 12, mobilitaet 12,
+   prinzipien 12, unterrichtsformen 10, grundlagen 8). Bei 8 blieben in
+   entwicklungsbereiche sieben Begriffe je Sitzung liegen - und weil glossar.js
+   Ungesehenes nur GEWICHTET zieht statt es hart vorzuziehen, waren es nicht
+   verlaesslich dieselben sieben: manche Begriffe sah Rose nie. Ab Level 2 kommen
+   die Randbegriffe dazu, dann ist 15 wieder eine Auswahl. */
+var NEU_BEGRIFFE = 15;
 
 /* Deckel fuer die ganze Sitzung. Unten wird kommentarlos abgeschnitten: eine
    Liste, die sagt "und 60 weitere", ist eine Drohung, keine Information. */
@@ -64,15 +73,44 @@ var SITZUNG_MAX = 40;
    haengt, hat sie heute nicht, und das ist eine Auskunft, kein Urteil. */
 var REQUEUE_MAX = 12;
 
-/* Wie viele Bausteine eine Aufgabe auf Level 1 hoechstens haben darf.
-   Der afb-Wert allein reicht als Einstiegs-Sieb NICHT: elf Aufgaben im Korpus
+/* Wie viele Bausteine auf Level 1 hoechstens auf einmal abgefragt werden.
+   Der afb-Wert allein reicht als Einstiegs-Mass NICHT: elf Aufgaben im Korpus
    tragen afb 2 und haben trotzdem 7 bis 12 Kern-Bausteine (eb-fol-f-1 hat
    zwoelf). Genau so eine Aufgabe hat Rose am 18.08. als allererste Karte
    bekommen - 0 Prozent, und der Abend war gelaufen. Der Operator sagt eben nur,
-   WIE gedacht werden soll, nicht wie viel auf einmal abzurufen ist. Ab Level 2
-   sind die grossen Aufgaben dabei; bis dahin kennt Rose ihre Bausteine schon
-   einzeln aus den kleineren Aufgaben und aus den Fachbegriffen. */
+   WIE gedacht werden soll, nicht wie viel auf einmal abzurufen ist.
+
+   BIS ZUM 19.08.2026 WAR DAS EIN AUSSCHLUSS, JETZT IST ES EINE PORTION.
+   Der Ausschluss traf ausgerechnet die Folien-Aufgaben, in denen die Modelle und
+   die Grundprinzipien stehen: elf der zwoelf "-fol-"-Aufgaben fehlten auf
+   Level 1, sieben davon allein wegen ihrer Groesse. Jennifer dazu: beim ersten
+   Ueben soll schon etwas mehr Neues rankommen, dafuer nicht die ganze Aufgabe.
+   Also kommt die Aufgabe jetzt dran, aber nur ihr Anfang (siehe lvl1Teil). */
 var LVL1_BAUSTEINE = 6;
+
+/* EINMALIGES NACHHOLEN (19.08.2026, Jennifer: "ausnahmsweise"). Diese Themen
+   zeigen in der naechsten Sitzung ALLES, was fuer ihr Level offen ist, statt der
+   ueblichen Auswahl von NEU_AUFGABEN/NEU_BEGRIFFE - und ohne den Endlos-Stapel
+   aus fremden Themen, sonst waere die Runde ein Berg.
+   Anlass: Mit dem Wegfall des Groessen-Gates sind in beiden Themen Aufgaben
+   dazugekommen, die Rose noch nie gesehen hat (in freizeit und prinzipien je
+   drei bis vier). Die soll sie am Stueck bekommen, nicht ueber Wochen verteilt.
+   Ungesehenes steht dabei immer vorn. GESEHENES faellt nicht weg, es steht
+   dahinter - wer nach den neuen aufhoert, hat trotzdem genau das Neue gehabt.
+   Das ist bewusst ein Schalter und kein Dauerzustand: Liste leeren, fertig. */
+var NACHHOLEN = ["freizeit", "prinzipien"];
+
+/* AUSNAHME VON DER ROTATIONS-SPERRE (19.08.2026, Jennifer): "prinzipien" bleibt
+   waehlbar, auch wenn es in der laufenden Runde schon dran war - die
+   Grundprinzipien sitzen noch nicht. Aufgehoben wird ausschliesslich die
+   ANZEIGE-Sperre: kein Log-Eintrag wird angefasst, Level und Reife laufen
+   unveraendert weiter, angefangene Stapel bleiben stehen. Zum Zuruecknehmen
+   reicht es, die Liste hier zu leeren.
+   Die Nachhol-Themen stehen automatisch mit drin - ein Thema nachholen zu
+   lassen, das die Rotation gerade sperrt, waere sonst ein stiller Widerspruch. */
+var FREIGEGEBEN = ["prinzipien"].concat(NACHHOLEN.filter(function (id) {
+  return id !== "prinzipien";
+}));
 
 /* Ab Level 3 macht die Pruefung auch die AFB-III-Aufgaben auf. Level 1 und 2
    bleiben bei AFB I/II - erst die Basis, dann das Diskutieren. */
@@ -109,6 +147,11 @@ export function gespielteRunde(themen) {
     n++;
     if (n >= themen.length) { runde = {}; n = 0; }
   });
+  // Freigegebene Themen fallen erst HIER heraus, nach der Rotations-Rechnung:
+  // sie zaehlen weiter als gespielt (Runde und Level bleiben, wie sie sind),
+  // nur die Kachel bleibt anklickbar. Die Ueberschrift "noch X von 8 in dieser
+  // Runde" zaehlt dieselbe Liste und stimmt dadurch von allein mit.
+  FREIGEGEBEN.forEach(function (id) { delete runde[id]; });
   return runde;
 }
 
@@ -176,6 +219,42 @@ function schrittKopf(s) {
   return reihe;
 }
 
+/* Die Level-1-Portion einer Aufgabe: welche Kern-Bausteine heute drankommen.
+   Geschnitten wird an SAEULENGRENZEN (treppe.js saeulenIndizes), nicht bei einer
+   festen Zahl - "PK 1" halb abzufragen waere schlimmer, als PK 2 und PK 3 auf
+   die spaeteren Level zu vertagen. Von vorn werden ganze Saeulen genommen,
+   solange sie zusammen unter LVL1_BAUSTEINE bleiben; die erste kommt immer mit,
+   auch wenn sie allein schon groesser ist. Nur wenn die Aufgabe ueberhaupt keine
+   Saeulen kennt (keine Label, also kein Geruest, an dem man schneiden koennte),
+   wird doch bei LVL1_BAUSTEINE abgeschnitten.
+   Rueckgabe null heisst "alles" - der uebliche Fall bei Aufgaben, die ohnehin
+   unter die Grenze passen. Die Indizes zaehlen die Kernliste (stichpunkteTeilen),
+   aufsteigend, so wie treppe.js sie in o.teil erwartet. */
+/* NICHT "nur die erste Saeule" - das war der erste Entwurf und er ist an den
+   Daten gescheitert (nachgerechnet am 19.08.2026 ueber alle 69 freien Aufgaben).
+   In diesem Korpus IST eine Saeule bereits ein einziger Stichpunkt: Folie 24
+   steckt in fr-f-2 als vier Bausteine "PK 1 ...", "PK 2 ...", "PK 3 ...",
+   "Einbettung ...", und ko-f-1 traegt fuenf Konzeptionen als fuenf Bausteine.
+   "Erste Saeule" haette also bei 41 von 46 Level-1-Aufgaben genau EINEN
+   Baustein abgefragt - bei ko-f-1 waere das eine Konzeption von fuenf gewesen.
+   Wer "erstmal nur PK 1" wirklich will, muss die Aufgabe im Korpus teilen
+   (PK 1 als eigene Aufgabe, PK 2 und PK 3 dahinter); das ist Inhaltsarbeit,
+   keine Code-Frage. Hier wird deshalb am Budget geschnitten - aber an
+   Saeulengrenzen, damit nie ein Baustein mitten aus einem Modell faellt. */
+function lvl1Teil(f) {
+  var saeulen = saeulenIndizes(f);
+  var teil = [];
+  for (var i = 0; i < saeulen.length; i++) {
+    // Abbrechen statt ueberspringen: eine spaetere, kleinere Saeule vorzuziehen
+    // wuerde die Reihenfolge der Aufgabe zerreissen.
+    if (teil.length && teil.length + saeulen[i].length > LVL1_BAUSTEINE) break;
+    teil = teil.concat(saeulen[i]);
+  }
+  if (saeulen.length === 1 && teil.length > LVL1_BAUSTEINE) teil = teil.slice(0, LVL1_BAUSTEINE);
+  if (teil.length >= stichpunkteTeilen(f).kern.length) return null;
+  return teil.sort(function (a, b) { return a - b; });
+}
+
 function schrittFuer(art, obj, thema, stand) {
   // Aufgaben und Begriffe tragen beide ihre id im selben Feld - der
   // Item-Schluessel der Reife ist genau diese id (siehe reife.js).
@@ -186,6 +265,17 @@ function schrittFuer(art, obj, thema, stand) {
     art: art, id: id, thema: thema, stufe: stufe, modus: modusFuer(stufe),
     f: art === "abruf" ? obj : null,
     e: art === "begriff" ? obj : null,
+    /* Welche Kern-Bausteine dieser Schritt abfragt; null heisst alle.
+       Die Portion haengt an der REIFE, nicht am Level - und zwar an derselben
+       Schwelle wie modusFuer() direkt darueber: unter R2 wird wiedererkannt und
+       portioniert, ab R2 frei abgerufen und ganz. Waere sie ans Level gebunden,
+       entstuende die Falle, gegen die LVL1_BAUSTEINE ueberhaupt geschrieben
+       wurde: eine Aufgabe mit 6 von 12 Bausteinen geuebt, Reife steigt, und drei
+       Tage spaeter steht sie ueber den Endlos-Stapel mit allen zwoelf im freien
+       Abruf da. So bleibt die Portion, bis das Item sie wirklich traegt.
+       Es haengt am Schritt-Objekt, damit eine Wiederholung in derselben Sitzung
+       dieselbe Portion bekommt und nicht ploetzlich die ganze Aufgabe. */
+    teil: art === "abruf" && stufe < 2 ? lvl1Teil(obj) : null,
     runde: 0                      // wie oft dieser Schritt heute schon dran war
   };
 }
@@ -309,37 +399,52 @@ export function zeigeThemenLernen(themen, hooks) {
     var schritte = [];
 
     var maxAfb = lvl >= 3 ? 3 : 2;
-    // Auf Level 1 zusaetzlich der Groessen-Riegel (siehe LVL1_BAUSTEINE). Faellt
-    // ein Thema dadurch unter die Zahl neuer Aufgaben, ist das in Ordnung: die
-    // Sitzung fuellt sich mit Fachbegriffen und dem Endlos-Stapel.
-    var maxBausteine = lvl >= 2 ? Infinity : LVL1_BAUSTEINE;
+    // Der AFB-Wert ist das einzige Sieb. Die Groesse siebt seit dem 19.08. nicht
+    // mehr aus, sie portioniert nur noch (lvl1Teil) - sonst fehlten auf Level 1
+    // ausgerechnet die Aufgaben, in denen die Modelle und die Grundprinzipien
+    // stehen.
+    var nachholen = NACHHOLEN.indexOf(thema.id) >= 0;
     var aufgaben = (thema.frei || [])
       .filter(function (f) {
-        if (!(f.stichpunkte || []).length || (f.afb || 2) > maxAfb) return false;
-        return stichpunkteTeilen(f).kern.length <= maxBausteine;
+        return (f.stichpunkte || []).length && (f.afb || 2) <= maxAfb;
       })
       .map(function (f) {
         var st = stand.get(f.id);
-        return { f: f, stufe: st ? st.stufe : 0, zufall: Math.random() };
+        // "neu" ist NICHT dasselbe wie Stufe 0: eine Aufgabe, an der Rose einmal
+        // danebenlag, steht auch auf 0, war aber schon da. Noch nie gesehen
+        // heisst: gar kein Stand. Das gehoert nach vorn - sonst versteckt sich
+        // genau das Neue hinter etwas, das sie schon kennt.
+        return { f: f, neu: st ? 1 : 0, stufe: st ? st.stufe : 0, zufall: Math.random() };
       })
-      .sort(function (a, b) { return a.stufe - b.stufe || a.zufall - b.zufall; })
-      .slice(0, NEU_AUFGABEN);
+      .sort(function (a, b) {
+        return a.neu - b.neu || a.stufe - b.stufe || a.zufall - b.zufall;
+      });
+    // Beim Nachholen faellt der Deckel weg: alles, was fuer dieses Level offen
+    // ist, kommt in einer Sitzung. SITZUNG_MAX schneidet weiterhin bei 40 ab.
+    if (!nachholen) aufgaben = aufgaben.slice(0, NEU_AUFGABEN);
     aufgaben.forEach(function (x) {
       benutzt[x.f.id] = true;
+      // Die Portion setzt schrittFuer selbst, an der Reife des Items - hier ist
+      // nichts mehr zu tun. Der Reife-Schluessel bleibt die Item-Id, reife.js
+      // merkt von der Portion nichts, und Roses Stand laeuft ohne Bruch weiter.
       schritte.push(schrittFuer("abruf", x.f, thema, stand));
     });
 
     // Level 1 uebt nur die Kernbegriffe (rang 1, rund zwei Drittel des
     // Glossars), ab Level 2 kommen die Randbegriffe dazu.
     if (hatGlossar()) {
-      begriffeFuerTagesspiel(thema.id, NEU_BEGRIFFE, lvl >= 2 ? 2 : 1).forEach(function (e) {
+      begriffeFuerTagesspiel(thema.id, nachholen ? 999 : NEU_BEGRIFFE, lvl >= 2 ? 2 : 1).forEach(function (e) {
         benutzt[e.id] = true;
         schritte.push(schrittFuer("begriff", e, thema, stand));
       });
     }
 
     var stapel = [];
-    themen.forEach(function (t) {
+    // Beim Nachholen bleibt der Endlos-Stapel aus fremden Themen weg. Sonst
+    // stuenden hinter den 19 Karten des Themas noch die faelligen Wiederholungen
+    // aller anderen - und die Sitzung, die das Neue endlich zeigen soll, saehe
+    // aus wie ein Berg. Faellig bleibt faellig, es kommt morgen wieder.
+    if (!nachholen) themen.forEach(function (t) {
       (t.frei || []).forEach(function (f) {
         if (benutzt[f.id] || !(f.stichpunkte || []).length) return;
         var st = stand.get(f.id);
@@ -486,6 +591,10 @@ export function zeigeThemenLernen(themen, hooks) {
 
         var opts = {
           thema: s.thema,
+          // Die Portion dieses Schritts (null = alles). treppe.js nimmt sie
+          // deterministisch, haelt die Kopfzeile aber an der vollen Kernzahl -
+          // Rose sieht also, dass sie einen Ausschnitt uebt.
+          teil: s.teil,
           // Bei jeder Wiederholung eine andere Hinweis-Version (treppe.js
           // dreht ueber f.hinweise) - derselbe Hinweis zweimal hilft nicht.
           hinweisIndex: s.runde,
