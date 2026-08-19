@@ -518,7 +518,7 @@ function sitztGesamt(liste) {
    dann seinen Funken ein und die Blase steht trotzdem. */
 function kiStand() {
   var tz = Stats.tagesziel(themen || [], tageBisKlausur());
-  return mkStand(tz, Mk.stufeJetzt(Mk.herzenStand(tz).herzen));
+  return mkStand(tz, Mk.stufeJetzt(Mk.standJetzt(tz).herzen));
 }
 function kiAvatarHtml() {
   try {
@@ -531,7 +531,9 @@ function kiSprecher() {
 }
 
 function mkStand(tz, stufe) {
-  var hs = Mk.herzenStand(tz);
+  // standJetzt statt herzenStand: dieselbe Sperrklinke wie in der Blase,
+  // sonst nennt der Chat eine andere Herzenzahl als das Bild daneben.
+  var hs = Mk.standJetzt(tz);
   // themen ist der Modul-State dieser Datei und beim Oeffnen des Chats immer
   // geladen (die Startseite entsteht erst danach). Trotzdem defensiv: ein leeres
   // Array laeuft durch alle Stats-Funktionen sauber durch und ergibt Nullen, ein

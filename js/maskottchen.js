@@ -124,7 +124,7 @@ var STUFEN = [
   { ab: 26, art: "blob", sub: 1, satz: "Zwei Augen! Die waren gestern noch nicht da." },
   { ab: 30, art: "blob", sub: 2, satz: "Da wachsen Ohren. Ich glaub, ich werd was Bestimmtes." },
   { ab: 34, art: "jung", sub: 0, satz: "Jetzt sieht man's. Ich bin ein Hund." },
-  { ab: 38, art: "jung", sub: 1, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
+  { ab: 38, art: "halbwuechsig", sub: 0, satz: "Ich wachse noch. Aber ich weiß schon, wie du lernst." },
   { ab: 42, art: "erwachsen", sub: 0, satz: "Ausgewachsen. Ab jetzt sammeln wir zusammen." },
 ];
 /* Die Stufe, bei der aus dem Ei ein Tier wird. Als Konstante, weil drei Stellen
@@ -149,7 +149,7 @@ export var TIER_STUFE = (function () {
 /* Die Tierart dieses Trainers. Drueben im ST-Trainer ist es die Katze. */
 export var TIERART = "Hund";
 
-/* Die Art der Stufe: ei | blob | jung | erwachsen. */
+/* Die Art der Stufe: ei | blob | jung | halbwuechsig | erwachsen. */
 export function stufeArt(stufe) {
   var s = STUFEN[Math.min(Math.max(stufe | 0, 0), STUFEN.length - 1)];
   return s ? s.art : "ei";
@@ -244,6 +244,49 @@ export function stufeJetzt(herzen) {
   // einen Request ausloest — steigen kann die Stufe ohnehin nur achtmal.
   if (stufe > (state.mk.stufeMax || 0)) { state.mk.stufeMax = stufe; speichern(); syncBald(500); }
   return stufe;
+}
+
+/* ---------- Die zweite Sperrklinke: auch die ZAHL faellt nicht ----------
+   stufeMax rettet das BILD, aber nicht die Zahl daneben. Gleiche Ursache:
+   herzenStand() rechnet die ganze Historie mit dem HEUTIGEN Tagesziel, und das
+   steigt zur Klausur hin (ziel = bedarf * DURCHGAENGE / restTage, geklemmt auf
+   15-60). Roses 8 Uebungstage am 19.08.2026, durchgerechnet:
+
+     Ziel 15 -> 24 ♥ · 6 ★      Ziel 35 -> 19 ♥ · 2 ★
+     Ziel 30 -> 21 ♥ · 3 ★      Ziel 40 -> 19 ♥ · 0 ★
+                                Ziel 60 -> 13 ♥ · 0 ★
+
+   Zwei Dinge machen das hier schlimmer als drueben im ST-Trainer:
+
+   1. SIE STEHT KURZ VOR DEM SCHLUEPFEN. Bei Ziel 30 hat sie 21 Herzen, Stufe 3
+      beginnt bei 22. Ein Schritt des Tagesziels auf 35 macht daraus 19 — aus
+      "noch 1 ♥" wird "noch 3 ♥", und sie entfernt sich von dem Moment, auf den
+      die ganze Leiter hinauslaeuft. mk.geschluepft ist noch nicht gesetzt.
+   2. DIE STERNE VERSCHWINDEN GANZ. blaseText schreibt sie nur, wenn es welche
+      gibt (sterne ? " · N ★" : "") — bei 0 schrumpft die Zahl nicht, der halbe
+      Satz ist weg. Das ist Loeschung, nicht Rueckgang.
+
+   Also dieselbe Antwort wie bei der Stufe: einmal erreicht, bleibt erreicht.
+   Zwei Felder, weil Herzen und Sterne unabhaengig voneinander kippen.
+
+   Preis, offen: steigt das Tagesziel, steht die Zahl kurz still, waehrend Rose
+   weiteruebt — die neuen Herzen fuellen erst den Rueckstand auf. Besser als
+   eine Zahl, die rueckwaerts laeuft.
+
+   tage wird NICHT gesperrt: die Zahl der Uebungstage kann nicht sinken.
+   herzenStand() bleibt unangetastet, damit die Testseite (aktOverride) sauber
+   bleibt — nur die App geht ueber standJetzt().
+   Gleiche Loesung im ST-Trainer — beide Kopien zusammen halten. */
+export function standJetzt(tz) {
+  var roh = herzenStand(tz);
+  state.mk = state.mk || {};
+  var herzen = Math.max(roh.herzen, state.mk.herzenMax || 0);
+  var sterne = Math.max(roh.sterne, state.mk.sterneMax || 0);
+  // Nur bei echtem Zuwachs schreiben, sonst loest jede Neuzeichnung einen Sync aus.
+  if (herzen > (state.mk.herzenMax || 0) || sterne > (state.mk.sterneMax || 0)) {
+    state.mk.herzenMax = herzen; state.mk.sterneMax = sterne; speichern(); syncBald(500);
+  }
+  return { herzen: herzen, sterne: sterne, tage: roh.tage };
 }
 
 /* ---------- Das Ei, Blockgrafik ----------
@@ -414,6 +457,22 @@ var VOLL_TIER = "█▟▙▐▌▝▘▄▀";
      - ES GIBT EINE HELLE SCHNAUZE. Augen und Maul direkt auf der Fellflaeche
        lesen sich als Loecher im Tier statt als Gesicht. */
 var KOERPER = {
+  /* Der Zwischenschritt fuer Stufe 7 (19.08.2026). Bis dahin zeichnete sie
+     denselben Hund wie Stufe 6 — figurEbenen() liest aus `sub` nur die
+     Schlappohren und die Blob-Ahnung, "jung sub 0" und "jung sub 1" waren
+     Pixel fuer Pixel gleich. Vier Herzen lang passierte am Bild also nichts.
+
+     Elf breit wie das Jungtier, sechs Zeilen hoch wie das erwachsene: erst
+     wird es laenger, dann breiter. Ein 13 Zellen breiter Zwischenschritt
+     saehe dem erwachsenen Tier bis auf eine Zeile und die zwei Brustmarken
+     gleich und verriete den Reveal eine Stufe zu frueh. Gleiche Figur und
+     gleiche Begruendung im ST-Trainer — beide Kopien zusammen halten. */
+  halbwuechsig: {
+    zeilen: ["  ▄▄▄▄▄▄▄  ", " ▟███████▙ ", " ▐███████▌ ",
+             " ▐███████▌ ", " ▐███████▌ ", " ▝▀▀▀▀▀▀▀▘ "],
+    augen: [[2, 2], [2, 7]], augenBreit: 2,
+    schnauze: [[4, 4], [4, 5], [4, 6]], maul: [[4, 5]], brust: [],
+  },
   blob: {
     zeilen: ["  ▄▄▄▄▄  ", " ▟█████▙ ", " ▐█████▌ ", " ▐█████▌ ", " ▝▀▀▀▀▀▘ "],
     augen: [[2, 2], [2, 6]], augenBreit: 1, schnauze: [], maul: [[3, 4]], brust: [],
@@ -436,6 +495,12 @@ var KOERPER = {
 var SEITEN = {
   blob: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "▀"], [1, 8, "▄"], [2, 8, "█"], [3, 8, "▀"]],
   jung: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "▀"], [1, 10, "▄"], [2, 10, "█"], [3, 10, "▀"]],
+  /* JEDE art braucht hier eine Zeile. figurEbenen() greift ungeschuetzt zu
+     (SEITEN[st.art].forEach) — ein fehlender Schluessel ist kein stiller
+     Fehler, sondern ein TypeError beim Zeichnen. Ein Block laenger als bei
+     jung, der Koerper hat eine Zeile mehr. */
+  halbwuechsig: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "█"], [4, 0, "▀"],
+                 [1, 10, "▄"], [2, 10, "█"], [3, 10, "█"], [4, 10, "▀"]],
   erwachsen: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "█"], [4, 0, "▀"],
               [1, 12, "▄"], [2, 12, "█"], [3, 12, "█"], [4, 12, "▀"]],
 };
@@ -791,10 +856,10 @@ function schluepfFertig(neu, feiern) {
 /* Die Stufe, die JETZT gilt — inklusive Sperrklinke. Eigene Funktion, weil
    knoten() und standKnoten() sie beide brauchen und zwei Rechnungen zwei
    Wahrheiten waeren. */
-function aktuelleStufe(tz) { return stufeJetzt(herzenStand(tz).herzen); }
+function aktuelleStufe(tz) { return stufeJetzt(standJetzt(tz).herzen); }
 
 function standKnoten(tz, neu, chatAuf) {
-  var st = herzenStand(tz);
+  var st = standJetzt(tz);
   // stufeJetzt() zieht die Sperrklinke nach; blaseText() bekommt sie herein und
   // rechnet nicht selbst. Sonst haette die Blase eine andere Stufe als das Bild.
   var t = blaseText({ herzen: st.herzen, sterne: st.sterne, tage: st.tage,

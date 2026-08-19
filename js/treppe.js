@@ -97,6 +97,77 @@ function labelChip(punkt, i) {
   return "Baustein " + (i + 1);
 }
 
+/* ---------- Darf dieses Label ueberhaupt gezeigt werden? (19.08.2026) ----------
+
+   labelChip war als Geruest gedacht, "das den Inhalt trotzdem nicht verschenkt".
+   Genau das tut es aber, sobald der Stichpunkt mit dem gesuchten Begriff
+   beginnt: aus "Determinationszeit: fremdbestimmt, festgelegt …" wird ein
+   Eingabefeld mit der Aufschrift "Determinationszeit". Jennifer dazu:
+   "vollkommen bescheuert, weil in den Eingabefeldern schon die Antworten
+   stehen." Bei Aufzaehlungsaufgaben - also genau denen, die AFB I ausmachen -
+   ist der Praefix DIE Antwort, nicht ihr Geruest.
+
+   Die Regel dagegen ist einfach und braucht kein neues Feld:
+   EIN GERUEST DARF NUR WIEDERHOLEN, WAS ROSE OHNEHIN SCHON SIEHT.
+
+     1. Ein Label mit laufender Nummer am Ende ("PK 1", "Kritik 2",
+        "Spannungsfeld 3") ist strukturell: es zaehlt Plaetze, es nennt keinen
+        Inhalt. Das darf stehen bleiben - es war der eigentliche Zweck.
+     2. Jedes andere Label ist ein Inhaltswort. Es darf nur stehen, wenn es im
+        FRAGETEXT vorkommt - dann hat Rose es sowieso vor Augen und der Chip
+        ordnet bloss zu ("Erlaeutern Sie Wissen, Koennen und Wollen" -> die drei
+        Chips helfen). Steht es dort nicht, ist es die Antwort und faellt auf
+        das neutrale "Baustein N" zurueck.
+
+   Gemessen wird auf normalisiertem Text (klein, Umlaute aufgeloest, nur
+   Buchstaben und Ziffern), damit Beugung und Zeichensetzung nicht dazwischen-
+   funken. Die GRUPPIERUNG in saeulenBauen benutzt weiter das rohe Label - was
+   zusammengehoert, aendert sich nicht, nur was angezeigt wird. */
+function normalWort(s) {
+  return String(s || "").toLowerCase()
+    .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+/* Gerueste der ARGUMENTATION, nicht des Fachs. Diese Woerter sagen, welche
+   ROLLE ein Baustein im Antworttext spielt ("hier kommt das Dagegen"), und
+   nennen keinen Inhalt - die duerfen stehen bleiben, sie sind der eigentliche
+   Sinn der Chips. Zusammengestellt am 19.08.2026 aus den 187 Labels, die im
+   Korpus tatsaechlich vorkommen; die Trennung ist ein Urteil und keine Formel,
+   deshalb steht sie hier ausgeschrieben statt in einer Heuristik versteckt.
+   Wer ein Wort vermisst, traegt es ein - wer eines fuer verraeterisch haelt,
+   streicht es. Beides ist eine Zeile und sichtbar. */
+var STRUKTURWORT = [
+  "dafuer", "dagegen", "fuer", "gegen", "fuerdiethese", "gegendiethese",
+  "pro", "contra", "these", "antithese", "synthese",
+  "fazit", "bewertung", "bewertungamende", "kritik", "urteil",
+  "definition", "kernsatz", "kern", "kernderkonzeption", "ausgangspunkt",
+  "ausgangslage", "einordnung", "einbettung", "ablauf", "beispiel",
+  "alternativesbeispiel", "weitere", "weiteres", "merkhilfe", "pointe",
+  "gemeinsamkeit", "gemeinsamerkern", "unterschied", "differenzierung",
+  "grenzen", "potentiale", "chancen", "risiken",
+  "konsequenz", "folge", "folgen", "folgerung", "anschluss", "uebertrag",
+  "ziele", "inhalte", "methoden", "praktisch", "zusammenfassung",
+  "gewuenschteentwicklungsrichtung",
+  "kennzeichen", "merkmale", "verbindung", "stellungnahme",
+  "moeglichestellungnahme", "begruendung", "ergebnis", "vergleich",
+  "abgrenzung", "einwand", "erwiderung", "beschreibung"
+];
+
+function chipText(label, i, f) {
+  var neutral = "Baustein " + (i + 1);
+  if (!label || label === neutral) return neutral;
+  // Strukturell durch Nummer: "PK 1", "Kritik 2". Zaehlt Plaetze, nennt nichts.
+  if (/\s\d+[.,]?$/.test(label)) return label;
+  var norm = normalWort(label);
+  // Strukturell durch Wortwahl: eine Rolle im Text, kein Fachinhalt.
+  if (STRUKTURWORT.indexOf(norm) >= 0) return label;
+  // Alles andere ist ein Fachbegriff und darf nur stehen, wenn Rose ihn in der
+  // Frage ohnehin liest. Sonst waere der Chip die Antwort.
+  var frage = normalWort(f && f.frage);
+  return frage && norm && frage.indexOf(norm) >= 0 ? label : neutral;
+}
+
 /* ---------- Saeulen: die Spalten-Modelle im Korpus ----------
    Folie 24 im Thema Freizeit ist eine Drei-Spalten-Tabelle (PK 1 informieren
    und ordnen / PK 2 bewerten und entscheiden / PK 3 anwenden und handeln), und
@@ -377,7 +448,10 @@ function aufdeckenKarte(f, kern, o) {
     var gitter = el("div", "treppe-saeulen");
     reihenfolge.forEach(function (si) {
       var spalte = el("div", "treppe-saeule");
-      spalte.appendChild(el("div", "treppe-saeule-kopf", alleSaeulen[si].label));
+      // Auch die Saeulen-Ueberschrift ist ein Geruest und verraet sonst die
+      // Antwort - dieselbe Regel, dieselbe Funktion.
+      spalte.appendChild(el("div", "treppe-saeule-kopf",
+        chipText(alleSaeulen[si].label, alleSaeulen[si].idx[0], f)));
       spalten[si] = spalte;
       gitter.appendChild(spalte);
     });
@@ -397,7 +471,9 @@ function aufdeckenKarte(f, kern, o) {
     if (o.felder) {
       // Der Chip ist bewusst IMMER sichtbar: ein leichtes inhaltliches
       // Geruest gegen den 0%-Schock, kein aufgedeckter Inhalt.
-      chip = el("span", "treppe-label", labelChip(punkt, i));
+      // chipText statt labelChip: ein Geruest darf nur wiederholen, was im
+      // Fragetext ohnehin steht - sonst stuende hier die Antwort.
+      chip = el("span", "treppe-label", chipText(labelChip(punkt, i), i, f));
       inhalt.appendChild(chip);
       // Ohne Text: der Platz gehoert hier dem Hinweis, wenn er geholt wird -
       // die Rolle des Platzhalters uebernimmt der Chip.

@@ -607,7 +607,14 @@ export function signatur(d) {
   // ausdruecklich genau einmal vorkommen soll (Jennifer, 12.08.).
   var mk = ((daten.mk && daten.mk.ei) || "") + ":" + ((daten.mk && daten.mk.ts) || 0) +
     ":" + ((daten.mk && daten.mk.stufeMax) || 0) +
-    ":" + ((daten.mk && daten.mk.geschluepft) || 0);
+    ":" + ((daten.mk && daten.mk.geschluepft) || 0) +
+    // herzenMax/sterneMax aus demselben Grund wie stufeMax: sie bewegen sich
+    // beim Zeichnen der Blase, ohne dass zwingend eine neue Antwort dazukommt
+    // (das Tagesziel kann sich auch ueber Nacht verschoben haben). Auf 0
+    // normiert, damit eine Server-Zeile aus der Zeit davor nicht dauerhaft als
+    // verschieden gilt und jeden Start einen Push ausloest.
+    ":" + ((daten.mk && daten.mk.herzenMax) || 0) +
+    ":" + ((daten.mk && daten.mk.sterneMax) || 0);
   // Der Chatverlauf MUSS hier stehen, sonst ist die ganze Uebung umsonst:
   // signatur() entscheidet, OB gepusht wird. Stuende mkChat nur im Snapshot,
   // aendert eine neue Nachricht die Signatur nicht, es geht nie etwas hoch,
@@ -801,6 +808,12 @@ export function mergeIn(st, remote) {
   // niedrigerer, aber neuerer Stufe die hoehere ueberschreiben — also genau der
   // Rueckfall, den stufeMax verhindern soll. Darum bedingungslos das Maximum.
   st.mk.stufeMax = Math.max(st.mk.stufeMax || 0, rMk.stufeMax || 0);
+  // herzenMax und sterneMax sind Zaehlwerke nach derselben Regel: bedingungslos
+  // das Maximum, NIE nach Zeitstempel. Zwei Geraete rechnen am selben Tag
+  // verschiedene Herzenzahlen aus (tzPlan ist geraetelokal) — nach ts-Regel
+  // wuerde das zuletzt geoeffnete den hoeheren Stand des anderen ueberschreiben.
+  st.mk.herzenMax = Math.max(st.mk.herzenMax || 0, rMk.herzenMax || 0);
+  st.mk.sterneMax = Math.max(st.mk.sterneMax || 0, rMk.sterneMax || 0);
   // geschluepft ist ein Ereignis-Protokoll, kein Messwert: "hat Rose die
   // Animation gesehen" laesst sich aus der Historie nicht ausrechnen (anders als
   // "ist Stufe 3 erreicht"). Die Regel ist ein ODER — hat es IRGENDEIN Geraet
