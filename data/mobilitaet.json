@@ -865,7 +865,40 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe der Dozentin! Insgesamt sind es zehn - präge dir mindestens sieben ein, dann hast du Puffer. Nachschlagen kannst du die vollständige Liste auf Folie 17; in deinen eigenen Notizen steht sie auf Notizen S. 18.",
       "quelle": "folie-mobilitaet-17",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 5,
+      "hinweise": [
+        [
+          "Der Sinneskanal für Ampelfarben und Verkehrszeichen",
+          "Was die Augen im Straßenverkehr leisten müssen",
+          "Sehen: Symbole, Farben, Entfernungen"
+        ],
+        [
+          "Der Sinneskanal fürs Hören von Verkehr",
+          "Geräusche erkennen und orten - welcher Bereich?",
+          "Was die Ohren im Verkehr leisten"
+        ],
+        [
+          "Körperbeherrschung: Gleichgewicht und Bewegung",
+          "Der Bereich rund um Bewegungsabläufe",
+          "Was der Körper können muss: Balance, Tempo"
+        ],
+        [
+          "Schnell und passend antworten, wenn etwas passiert",
+          "Blitzschnelles Umschalten in Gefahrenmomenten",
+          "Prompt stoppen oder ausweichen können"
+        ],
+        [
+          "Bei der Sache bleiben, Ablenkung ausblenden",
+          "Konzentration aufs Verkehrsgeschehen",
+          "Den Fokus halten können"
+        ],
+        [
+          "Es sind insgesamt zehn - fünf weitere gibt es noch",
+          "Denk an Denken, Sprechen und Miteinander",
+          "Die restlichen fünf der Zehnerliste"
+        ]
+      ]
     },
     {
       "id": "mo-f-2",
@@ -895,7 +928,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe. Trick zum Merken: in vier Gruppen denken (Sinne, Körper, Kognition/Psyche, Umfeld) statt elf Einzelbegriffe. Die Kreis-Mindmap mit allen elf Faktoren steht auf Folie 9, das Spannungsfeld Abhängigkeit gegen Selbstbestimmung auf Folie 7; in deinen Notizen liegt beides zusammen auf Notizen S. 16.",
       "quelle": "folie-mobilitaet-9",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Wenn ein Sinn ausfällt",
+          "Einschränkungen von Sehen oder Hören",
+          "Die Sinnesorgane als Hürde"
+        ],
+        [
+          "Der Bewegungsapparat, auch zeitweise oder altersbedingt",
+          "Wenn der Körper nicht mitmacht",
+          "Physische Einschränkungen, dauerhaft oder vorübergehend"
+        ],
+        [
+          "Hürden im Denken, Erleben und Sich-Auskennen",
+          "Innere Barrieren: Lernen, Psyche, Orientierung",
+          "Wenn Wissen oder Seele die Wege erschweren"
+        ],
+        [
+          "Barrieren, die von außen kommen",
+          "Was Gesellschaft und fehlende Bildung beitragen",
+          "Hürden, die nicht in der Person liegen"
+        ],
+        [
+          "Was folgt daraus für die Eigenständigkeit?",
+          "Das Ergebnis: auf andere angewiesen sein",
+          "Wohin führt all das im Alltag?"
+        ]
+      ]
     },
     {
       "id": "mo-f-3",
@@ -925,7 +985,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe (AFB II). Der Punkt kommt aus der Begründung: Maßnahme nennen UND sagen, welches Ziel der Kompetenz sie fördert. Zum Nachschlagen: Die Zuordnungstabelle selbst gibt es nur bei dir auf Notizen S. 20, denn im Foliensatz lief sie als interaktive Moodle-Übung (Folie 21) und ist dort nicht abgedruckt. Die Ziele je Bereich sind dagegen belegt: Folie 17 für die visuelle Wahrnehmung, Folie 18 für die auditive, Folie 19 für die Motorik und Folie 20 für die Sozialkompetenz. Zwei Zeilen deiner Tabelle (Wer fehlt? und Laufen-Stoppen) haben kein lesbares Häkchen - dort ist die Zuordnung nicht gesichert, nenn lieber die eindeutigen Beispiele.",
       "quelle": "notizen-s20",
-      "quelleSicherheit": "unsicher"
+      "quelleSicherheit": "unsicher",
+      "hinweise": [
+        [
+          "Spiele rund ums Hören und Orten",
+          "Übungen für die Ohren - drei Beispiele",
+          "Welche Spiele schulen das Gehör?"
+        ],
+        [
+          "Bewegungsspiele mit Stoppen und Balance",
+          "Übungen für Körper und schnelles Umschalten",
+          "Spiele, bei denen man abrupt anhalten muss"
+        ],
+        [
+          "Spiele über Gefühle und Absichten anderer",
+          "Übungen fürs Miteinander und Sich-Hineinversetzen",
+          "Wie trainiert man Empathie spielerisch?"
+        ],
+        [
+          "Spiele rund ums genaue Hinsehen",
+          "Übungen für die Augen: Farben, Zeichen, Tempo",
+          "Was schult den Blick?"
+        ],
+        [
+          "Nennen reicht nicht - was gehört noch dazu?",
+          "Der Unterschied zwischen Aufzählen und Verknüpfen",
+          "Woran hängt die Qualität der Zuordnung?"
+        ]
+      ]
     },
     {
       "id": "mo-f-4",
@@ -957,7 +1044,44 @@
       "musterVariantenGeprueft": false,
       "tipp": "Das ist eine Original-Beispielaufgabe der Dozentin. Die Zahlen musst du nicht auf die Kommastelle können. Merk dir die Richtungen: zu Fuß, Rad und ÖV leicht rauf, Mitfahren deutlich runter, Autofahren fast gleich. Und vergiss die Deutung am Ende nicht, denn Vergleichen ist AFB II - reines Aufzählen von Zahlen reicht nicht. Nachschlagen kannst du die Ringgrafik auf Folie 6; die Zahlen auf Folie 5 daneben gehören zu den Wegzwecken und sind nicht gemeint. In deinen Notizen fehlt diese Grafik ganz.",
       "quelleSicherheit": "geprueft",
-      "quelle": "folie-mobilitaet-6"
+      "quelle": "folie-mobilitaet-6",
+      "hinweise": [
+        [
+          "Wie heißt die Statistik, und was misst sie?",
+          "Erst die Quelle: welche Erhebung, welche Einheit?",
+          "Der Fachname der Verkehrsmittel-Verteilung"
+        ],
+        [
+          "Die fünf Zahlenpaare beider Jahre",
+          "Fuß, Rad, Bus/Bahn, Auto - die Prozentwerte",
+          "Die Zahlenreihe: wer hat wie viel?"
+        ],
+        [
+          "Was blieb über zwanzig Jahre gleich?",
+          "Der stabile Spitzenreiter unter den Verkehrsmitteln",
+          "Erst das Verbindende beider Jahre"
+        ],
+        [
+          "Wer wächst leicht, wer schrumpft deutlich?",
+          "Die Verschiebungen: drei rauf, eine runter",
+          "Was hat sich zwischen den Jahren bewegt?"
+        ],
+        [
+          "Andere Messgröße, anderes Bild - welche?",
+          "Nicht Wege zählen, sondern Strecken",
+          "Was ändert sich bei langen Distanzen?"
+        ],
+        [
+          "Was bedeuten die Trends für Eigenständigkeit?",
+          "Der Bogen zum Förderschwerpunkt: angewiesen sein oder lernen können",
+          "Warum betrifft das gerade Teilhabe?"
+        ],
+        [
+          "Die Dreier-Struktur solcher Aufgaben",
+          "In welcher Reihenfolge baut man den Vergleich auf?",
+          "Das Gerüst: gleich, anders, und dann?"
+        ]
+      ]
     },
     {
       "id": "mo-f-5",
@@ -988,7 +1112,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Entspricht der Original-AFB-III-Aufgabe. Stark wird die Antwort durch die doppelte Konsequenz: pädagogisch (Erziehung) UND strukturell (Barrierefreiheit). Die Ausgangslage steht auf Folie 7, die strukturellen Rahmenbedingungen auf Folie 34; in deinen Notizen findest du beides auf Notizen S. 16 und Notizen S. 22.",
       "quelle": "folie-mobilitaet-7",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Wo stehen die Personen heute - und wodurch?",
+          "Der Ist-Zustand: worauf sind viele angewiesen?",
+          "Startpunkt der Diskussion: die aktuelle Lage"
+        ],
+        [
+          "Was zieht das im Leben nach sich?",
+          "Betroffene Lebensbereiche und der Kernbegriff Teilhabe",
+          "Welche Türen bleiben dadurch zu?"
+        ],
+        [
+          "Auch die andere Seite würdigen",
+          "Was leisten die Angebote trotzdem?",
+          "Der faire Blick auf die Unterstützung"
+        ],
+        [
+          "Was folgt für die Schule daraus?",
+          "Der Bildungsauftrag: wer ist zuständig, wie wird geübt?",
+          "Die schulische Antwort auf das Problem"
+        ],
+        [
+          "Was muss sich außerhalb der Schule ändern?",
+          "Die Umwelt-Seite: Zugänglichkeit und Bewusstsein",
+          "Nicht nur Menschen stärken - auch Bedingungen"
+        ],
+        [
+          "Der Schlussgedanke: ist das unveränderlich?",
+          "Die hoffnungsvolle Pointe zum Abschluss",
+          "Worauf läuft die Diskussion hinaus?"
+        ]
+      ]
     },
     {
       "id": "mo-gen-f-1",
@@ -1020,7 +1176,39 @@
       "tipp": "Die vier Teilbereiche sind das Gerüst - der Erläuterungs-Punkt kommt daraus, dass du zu jedem Bereich ein konkretes Beispiel aus dem Unterricht nennst. Das Schaubild mit den vier Feldern steht auf Folie 13 und bei dir auf Notizen S. 17. Die Beispiele holst du dir von den übrigen Folien, etwa von Folie 30, wo Wissen über Umwelt und Nachhaltigkeit ausdrücklich als Lernziel beim Fahrradfahren steht - genau dieses Zusammensuchen ist die Transferleistung, die AFB II verlangt.",
       "quelle": "folie-mobilitaet-13",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die vier Erziehungs-Felder im Überblick",
+          "Sicherheit ist nur eines von vieren - welche noch?",
+          "Das Quartett rund um den Mittelkasten"
+        ],
+        [
+          "Der Bereich rund um Gefahren im Verkehr",
+          "Schutz vor Unfällen: zwei Beispiele nennen",
+          "Was übt man an Straße und Haltestelle?"
+        ],
+        [
+          "Der Bereich, in dem Bewegung selbst zählt",
+          "Aktiv unterwegs statt passiv transportiert",
+          "Körperliche Fitness als Erziehungsziel"
+        ],
+        [
+          "Der Bereich rund um Nachhaltigkeit",
+          "Welches Verkehrsmittel schont die Natur?",
+          "Ökologie als Teil der Mobilitätsbildung"
+        ],
+        [
+          "Verkehr als Begegnung mit anderen Menschen",
+          "Der Bereich für Rücksicht und Empathie",
+          "Miteinander unterwegs: welche Kompetenz?"
+        ],
+        [
+          "Die Pointe: Regeln allein greifen zu kurz",
+          "Warum das Ganze mehr ist als Regelkunde",
+          "Der Schluss: wessen Aufgabe ist das alles?"
+        ]
+      ]
     },
     {
       "id": "mo-gen-f-2",
@@ -1052,7 +1240,39 @@
       "tipp": "Entwickeln heißt: einen begründeten Aufbau zeigen. Die Dreier-Treppe Spiel - Schonraum - Ernstsituation gibt dir die Struktur fast geschenkt; hänge an jede Stufe ein Lernziel und eine Gefahr. Lernziele und Gefahren zum ÖPNV stehen auf Folie 28, die vier Methoden mit den didaktischen Prinzipien auf Folie 24; bei dir sind das Notizen S. 21 und Notizen S. 20.",
       "quelle": "folie-mobilitaet-28",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Stufenfolge der Methoden als Gerüst",
+          "Vom Geschützten zum Echten - welche Reihung?",
+          "Welches Schaubild liefert den Aufbau?"
+        ],
+        [
+          "Die Stationen einer Fahrt als Ziele",
+          "Vom Warten bis zum Aussteigen - was gehört dazu?",
+          "Was muss man rund ums Busfahren können?"
+        ],
+        [
+          "Typische Risiken rund um den Bus",
+          "Wo passiert beim Busfahren am ehesten etwas?",
+          "Drei Gefahrenmomente benennen"
+        ],
+        [
+          "Die konkreten vier Schritte deiner Planung",
+          "Vom Rollenspiel drinnen bis zur echten Fahrt",
+          "Wie sieht die Abfolge praktisch aus?"
+        ],
+        [
+          "Die fünf Leitideen der Planung",
+          "Womit begründest du deine Stufung?",
+          "Die Prinzipien-Liste als Begründung"
+        ],
+        [
+          "Das offizielle Ziel aus dem Lehrplan",
+          "Worauf läuft die ganze Sequenz hinaus?",
+          "Der Anker im Rahmenlehrplan"
+        ]
+      ]
     },
     {
       "id": "mo-gen-f-3",
@@ -1084,7 +1304,39 @@
       "tipp": "Diskutieren heißt: beide Seiten ernst nehmen und dann Stellung beziehen. Die Unfallstatistik ist ein starkes Argument, wenn du sie sauber liest: Sie sagt, in welcher Rolle die Verunglückten unterwegs waren, nicht wie riskant eine Rolle für sich genommen ist. Genau diese Vorsicht im Umgang mit Zahlen bringt in AFB III Punkte. Zum Nachschlagen: Die vier Methoden samt Prinzip Sicherheit stehen auf Folie 24, die Unfallstatistik auf Folie 25 und die Fahrradübungen im Schonraum auf Folie 30. In deinen Notizen liegen Methoden und Statistik zusammen auf Notizen S. 20.",
       "quelle": "folie-mobilitaet-24",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was spricht für die geschützte Variante?",
+          "Das erste didaktische Prinzip als Argument",
+          "Wo lässt sich gefahrlos üben?"
+        ],
+        [
+          "Die Statistik: wo passieren die meisten Unfälle?",
+          "Das Zahlenargument gegen die These",
+          "Welche Beteiligungsart führt die Unfallliste an?"
+        ],
+        [
+          "Echte Situationen sind selbst eine Methode",
+          "Was verlangen Lebensnähe und Lehrplan?",
+          "Das methodische Gegenargument"
+        ],
+        [
+          "Was passiert langfristig ohne echten Ernstfall?",
+          "Der Zielkonflikt: Eigenständigkeit bleibt aus",
+          "Welcher Grundwert wird sonst verfehlt?"
+        ],
+        [
+          "Der Mittelweg: beides in einer Abfolge",
+          "Wie versöhnt man beide Seiten?",
+          "Zwischenstation statt Endstation"
+        ],
+        [
+          "Zum Schluss selbst Stellung beziehen",
+          "Dein eigenes Urteil, kurz begründet",
+          "Was gehört ans Ende jeder Diskussion?"
+        ]
+      ]
     },
     {
       "id": "mo-fol-f-1",
@@ -1116,7 +1368,39 @@
       "tipp": "Diese Folie fehlt in deinen Vorlesungsnotizen komplett, die drei Regeln sind also neu - dafür sind sie schnell zu merken, weil jeder Name schon sagt, worum es geht. Nachschlagen kannst du sie auf Folie 35. Wenn du in der Klausur nach Beispielen gefragt wirst, reicht je eines; die Folie selbst nennt Rampen und Fahrstühle sowie Anzeige plus Durchsage.",
       "quelle": "folie-mobilitaet-35",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Regel über zwei Fortbewegungsarten",
+          "Erreichbarkeit für Gehende und Rollende",
+          "Welche Regel betrifft das Ankommen?"
+        ],
+        [
+          "Die Regel über doppelte Sinneswege",
+          "Sehen und Hören zugleich bedienen",
+          "Infos auf mehreren Wegen anbieten"
+        ],
+        [
+          "Die Regel mit dem englischen Merkspruch",
+          "Kurz und einfach - wie heißt das Prinzip?",
+          "Die Abkürzungs-Regel für verständliche Infos"
+        ],
+        [
+          "Wie lassen sich die drei sortieren?",
+          "Ankommen versus Verstehen - wer gehört wohin?",
+          "Die Regeln nach Zweck gruppieren"
+        ],
+        [
+          "Warum zählen gerade die Info-Regeln hier besonders?",
+          "Bauliches allein reicht nicht - wieso?",
+          "Der Bogen zur eigenen Zielgruppe"
+        ],
+        [
+          "Das Online-Werkzeug mit den Ampelfarben",
+          "Eine Karten-Plattform als möglicher Zusatz",
+          "Wie macht man Zugänglichkeit sichtbar?"
+        ]
+      ]
     },
     {
       "id": "mo-fol-f-2",
@@ -1151,7 +1435,54 @@
       "tipp": "Diese kritische Rückfrage steht so auf Folie 14, direkt unter dem Rahmenlehrplan-Text, und ist damit fast eine Einladung zu einer AFB-III-Aufgabe. Die Struktur zuerst die Zielsetzung wiedergeben, dann dafür, dann dagegen, dann bewerten trägt hier gut. Für die Gegenargumente helfen dir Folie 4 (Mobilität als Grundbedürfnis, steigende Optionenvielfalt) und Folie 11 (Bausteine selbstbestimmter Mobilität). In deinen Notizen steht der Rahmenlehrplan-Text auf Notizen S. 17, die kritische Rückfrage der Dozentin dort aber nicht. Stark wird deine Antwort, wenn du am Ende nicht nur widersprichst, sondern sagst, wofür das Ziel trotzdem taugt.",
       "quelle": "folie-mobilitaet-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erst die Zielformulierung sauber wiedergeben",
+          "Was genau steht im Lehrplan?",
+          "Der Ausgangspunkt: das offizielle Ziel"
+        ],
+        [
+          "Warum eignen sich gerade diese Wege zum Üben?",
+          "Das Argument der Wiederholung und Übertragbarkeit",
+          "Was macht feste Strecken didaktisch wertvoll?"
+        ],
+        [
+          "Das Machbarkeits-Argument",
+          "Woran lässt sich der Erfolg messen?",
+          "Realismus als Stärke des Ziels"
+        ],
+        [
+          "Was umfasst Mobilität laut Definition alles?",
+          "Der Abgleich mit dem breiten Mobilitätsbegriff",
+          "Welche Lebensbereiche bleiben außen vor?"
+        ],
+        [
+          "Teilhabe heißt auswählen können - reichen zwei Strecken?",
+          "Das Argument der Wahlfreiheit",
+          "Spontan entscheiden können - geht das damit?"
+        ],
+        [
+          "Wen klammert die Formulierung von Anfang an aus?",
+          "Der Einschub im Zieltext und seine Folge",
+          "Das Exklusions-Argument"
+        ],
+        [
+          "Der Bezug zu den zwei Grundbausteinen",
+          "Können und Wissen - beide reichen weiter",
+          "Welche Bausteine tragen eigenständige Wege?"
+        ],
+        [
+          "Die drei Regeln als Grenze schulischer Möglichkeiten",
+          "Woran stößt Schule von außen an Grenzen?",
+          "Der Umwelt-Faktor draußen im Alltag"
+        ],
+        [
+          "Das abgestufte Urteil: nötig, aber nicht genug",
+          "Wie fällt die Gesamtbewertung aus?",
+          "Mindestziel oder Maßstab - deine Einordnung"
+        ]
+      ]
     }
   ]
 }

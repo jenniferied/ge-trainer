@@ -1924,12 +1924,164 @@ p { margin: 0 0 var(--sp-3); }
 .gl-chip-detail { background: var(--paper-2); border-radius: var(--radius); padding: var(--sp-3); margin-top: var(--sp-2); }
 .gl-chip-detail b { display: block; margin-bottom: var(--sp-1); }
 
-/* ---------- Tagesspiel (app/js/tagesspiel.js, 18.08.2026) ---------- */
-.ts-grid .kachel { min-height: 96px; }
-.ts-gespielt { opacity: .55; }
-.ts-gespielt .kachel-icon { color: var(--ok); }
-.ts-tuer h2 { margin-top: 0; }
-.ts-vorspann { margin-bottom: var(--sp-2); }
+/* ---------- Themen-Lernen (app/js/themen-lernen.js, 19.08.2026) ----------
+   Hiess bis zum 19.08. Tagesspiel, die Klassen entsprechend .ts-* - der neue
+   Praefix ist .tl-*. Nichts hier ist eine Mahnung: die Zaehl-Blase zaehlt nur,
+   die Reife-Punkte berichten nur, und der Regenbogen ist ein Geschenk. */
+/* min-width: 0 gegen den Grid-Standard min-width:auto - ohne das kann ein
+   langes Wort wie "Entwicklungsbereiche" seine Spalte nicht schrumpfen, und
+   die Kachelreihe schob die ganze Seite ueber den Bildschirmrand hinaus
+   (auf einem 390er Handy um 78 px). */
+/* hyphens gehoert zu overflow-wrap dazu (Muster wie .raster-name): index.html
+   traegt lang="de", also trennt der Browser sofort sauber. Ohne das brach er
+   bei 99 px Kachelbreite mitten im Wort ("Didaktisch e Konzeption en"). */
+.tl-grid .kachel { min-height: 108px; min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
+.tl-gespielt { opacity: .55; }
+.tl-gespielt .kachel-icon { color: var(--ok); }
+.tl-tuer h2 { margin-top: 0; }
+.tl-vorspann { margin-bottom: var(--sp-2); }
+/* Das Level der Themenkachel - klein und in Themenfarbe, es ist eine Auskunft
+   ueber den Umfang der Pruefung, keine Wertung. */
+.tl-level {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--tfarbe); margin-top: 2px;
+}
+
+/* Die Zaehl-Blase: wie viele Themen heute durch sind. Ab dem ersten gruen. */
+.tl-blase, .d-blase {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  border-radius: 999px; padding: 4px 12px;
+  border: 1.5px solid var(--ok);
+  background: color-mix(in srgb, var(--ok) 14%, transparent);
+  color: var(--ok); font-weight: 700; line-height: 1.2;
+}
+.tl-blase-zahl { font-size: 1.15rem; }
+.tl-blase-text { font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
+/* Auf der Tageskachel steht die Blase an der Stelle des Hakens: nur die Zahl,
+   ohne Wort - der Kachelname sagt schon, worum es geht. */
+.d-blase { padding: 2px 10px; font-size: .95rem; gap: 2px; }
+
+/* Drei Themen an einem Tag: Regenbogen-Schimmer und ein Stern. Die Animation
+   ist bewusst langsam und schwach - ein Schimmern, kein Blinken. Wer weniger
+   Bewegung will, bekommt denselben Verlauf ohne Lauf (unten). */
+.tl-regenbogen {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(90deg, #f0a4c8, #f5c877, #a8e0b0, #8fc7f0, #c3a8ee, #f0a4c8) border-box;
+  background-size: auto, 300% 100%;
+  animation: tl-schimmer 9s linear infinite;
+}
+.tl-stern { font-style: normal; }
+.tl-stern-satz { font-weight: 700; }
+@keyframes tl-schimmer {
+  from { background-position: 0 0, 0% 50%; }
+  to   { background-position: 0 0, 300% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .tl-regenbogen { animation: none; } }
+
+/* Kopfzeile jeder Pruefungs-Karte: woher sie kommt und wie fest sie sitzt. */
+.tl-chips {
+  display: flex; align-items: center; gap: var(--sp-3);
+  flex-wrap: wrap; margin-bottom: var(--sp-2);
+}
+.tl-thema-chip {
+  border: 1.5px solid color-mix(in srgb, var(--tfarbe) 55%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tfarbe) 12%, transparent);
+  color: var(--ink);
+  padding: 3px 12px; font-size: .8rem; font-weight: 700;
+}
+/* Die Reife-Leiter: fuenf Punkte, gefuellt = erreichte Stufe. Der leere Punkt
+   bleibt sichtbar (Rahmen statt Fuellung), damit die Leiter ihre Laenge
+   behaelt und nicht wie ein Fortschrittsbalken wirkt, der stehengeblieben ist. */
+.tl-reife { display: flex; gap: 5px; align-items: center; }
+.tl-punkt {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--ink-soft); opacity: .55;
+}
+.tl-punkt.voll { background: var(--ok); border-color: var(--ok); opacity: 1; }
+
+/* Was heute nicht mehr drankommt - Warnton statt Rot, es ist eine Auskunft. */
+.tl-mitgenommen {
+  color: var(--warn-ink); font-size: .9rem;
+  background: var(--paper-2); border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3); margin-bottom: var(--sp-3);
+}
+
+/* Kopfzeile der Pruefung: Abbrechen links, der druckfreie Ausstieg rechts.
+   Er ist bewusst kein .knopf - er soll leise danebenstehen und nicht mit dem
+   Weiter-Knopf der Karte konkurrieren. */
+.tl-kopf-reihe { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.tl-genug { font-size: .95rem; padding-right: 0; color: var(--ink-soft); }
+
+/* ---------- Felder-Modus der Abruf-Treppe (treppe.js opts.felder) ----------
+   Das leichte Geruest gegen den 0%-Schock: Chip, Tipp-Feld, Sammelort. Alles
+   sitzungslokal - nichts davon wird gespeichert, geloggt oder gesynct. */
+.treppe-label {
+  display: inline-block; margin-bottom: 4px; max-width: 100%;
+  border-radius: 999px; padding: 2px 10px;
+  background: color-mix(in srgb, var(--tfarbe) 14%, transparent);
+  color: var(--tfarbe); font-size: .74rem; font-weight: 700;
+  letter-spacing: .02em; overflow-wrap: anywhere;
+}
+/* Nur im Felder-Modus: Chip, Notizfeld und die zwei Knoepfe passen auf einem
+   Handy nicht in EINE Zeile - der Chip wurde abgeschnitten und ins Feld passte
+   ein halbes Wort. Also bekommt der Inhalt die ganze Zeile und die Knoepfe
+   rutschen darunter, eingerueckt hinter die Nummer. Ohne Chip (der normale
+   Aufdecken-Modus) bleibt alles wie vorher - deshalb :has() und keine
+   Media-Query: es haengt am Modus, nicht an der Breite. */
+.treppe-punkt-kopf:has(.treppe-label) { flex-wrap: wrap; }
+.treppe-punkt-kopf:has(.treppe-label) .treppe-inhalt { flex: 1 1 calc(100% - 24px - var(--sp-3)); }
+.treppe-punkt-kopf:has(.treppe-label) .treppe-werkzeuge {
+  margin-left: calc(24px + var(--sp-3)); margin-top: var(--sp-2);
+}
+.treppe-eingabe, .treppe-notizen {
+  width: 100%; padding: 8px 12px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: var(--paper-2); color: var(--ink);
+  font: inherit; font-size: 16px; /* nie kleiner - iOS zoomt sonst ins Feld */
+}
+.treppe-eingabe { margin-top: 4px; }
+.treppe-notizen { margin-bottom: var(--sp-3); resize: vertical; }
+.treppe-eingabe:focus, .treppe-notizen:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
+/* Roses eigener Wortlaut neben der Loesung. Bewertet wird er nicht - deshalb
+   keine Ampelfarbe, nur ein ruhiger Kasten. */
+.treppe-eigene {
+  background: var(--paper-2); border-radius: var(--radius);
+  padding: 6px 12px; margin-bottom: var(--sp-2); font-size: .92rem;
+}
+
+/* ---------- Begriff erklaeren mit KI-Abgleich (glossar.js) ---------- */
+.gl-erklaer-eingabe {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius);
+  border: 1.5px solid var(--line); background: var(--paper-2); color: var(--ink);
+  font: inherit; font-size: 16px; margin-bottom: var(--sp-3); resize: vertical;
+}
+.gl-erklaer-eingabe:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
+.gl-erklaer-hinweise:empty { display: none; }
+/* Gestufter Hinweis: Warnton wie .tipp, nie Rot. Ein Hinweis ist Hilfe. */
+.gl-erklaer-hinweis {
+  background: color-mix(in srgb, var(--warn-ink) 10%, var(--paper-2));
+  border-left: 3px solid var(--warn-ink);
+  border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-3); margin-bottom: var(--sp-3);
+}
+.gl-erklaer-hinweis-titel { font-weight: 700; margin-bottom: var(--sp-1); }
+
+/* ---------- KI-Urteil: getroffen / fehlt (main.js kiUrteilZeigen) ----------
+   Zwei Listen statt eines abgehakten Stichpunkt-Rasters. Das Plus vor dem
+   Fehlenden ist Absicht: kein Kreuz, es ist ja nichts falsch - es ist nur noch
+   nicht da. */
+.ki-listen-titel {
+  font-size: .82rem; font-weight: 700; letter-spacing: .03em;
+  text-transform: uppercase; color: var(--ink-soft);
+  margin: var(--sp-2) 0 var(--sp-1);
+}
+/* Roses eigener Wortlaut als Beleg - kursiv, damit sichtbar bleibt, dass das
+   aus IHREM Text stammt. Eigener Name: .beleg gehoert den Fundstellen-Chips. */
+.ki-treffer .zitat { font-style: italic; }
+.ki-treffer .treffer-offen .zeichen { color: var(--warn-ink); }
+.ki-rahmen { font-size: .8rem; color: var(--ink-soft); margin-top: var(--sp-2); }
 
 /* ---------- Themenwahl im Runden-Baukasten (stats.js zeigeMix) ---------- */
 .themen-wahl-liste { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-1) var(--sp-3); }

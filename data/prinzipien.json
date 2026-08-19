@@ -866,7 +866,40 @@
       "musterVariantenGeprueft": false,
       "tipp": "Es gibt insgesamt 11 in der Vorlesung - fünf sicher parat zu haben reicht für eine typische AFB-I-Aufgabe. Die vollständige Liste steht auf Folie 5, in deinen eigenen Aufzeichnungen auf Notizen S. 34. Die letzten vier - Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen - stehen auf der Folie kursiv und bekommen im ganzen Foliensatz keinen eigenen Inhaltsblock: nennen ja, erläutern kann niemand von dir verlangen.",
       "quelle": "folie-prinzipien-5",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 5,
+      "hinweise": [
+        [
+          "Alltag als Unterrichtsstoff - was nach der Schule gebraucht wird",
+          "Bildungsgut fuers Leben danach (Pitsch)",
+          "Merkbild: der Tafelspruch ueber Lernen fuers Leben"
+        ],
+        [
+          "Auf die Verschiedenheit der Gruppe eingehen",
+          "Innen wie aussen, in Menge wie Schwierigkeit anpassbar",
+          "Jedes Kind auf seinem eigenen Niveau abholen"
+        ],
+        [
+          "Kopf, Herz und Hand zusammen",
+          "Moeglichst viele Sinneskanaele einbeziehen",
+          "Merkbild: die Fahrrad-Stunde stand fuer dieses Prinzip"
+        ],
+        [
+          "Das Spannungspaar der Aufgabenstruktur: zerlegen, aber Sinn behalten",
+          "Merkbild: die Waage zwischen Teilschritt und grossem Ganzen",
+          "Klein portionieren und trotzdem das Ziel zeigen"
+        ],
+        [
+          "Konfuzius: lass mich selbst tun",
+          "Schueleraktiv, mit vereinbartem Produkt als Leitplanke",
+          "Merkbild: der Koffer mit Auto und Fernbedienung"
+        ],
+        [
+          "Die Elferliste geht weiter - sechs stehen noch aus",
+          "Rest der Tabelle, vier davon kursiv gedruckt",
+          "Zusatz: zwei erklaerte plus die vier nur genannten"
+        ]
+      ]
     },
     {
       "id": "pr-f-2",
@@ -897,7 +930,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Die Definition mit eigenen Worten plus ein konkretes Beispiel - das deckt Benennung, Beschreibung und Erläuterung ab. Nachschlagen kannst du es auf Folie 19 (Definition nach Jank und Meyer), Folie 20 (Merkmale), Folie 22 (die vier Bestandteile des Handelns) und Folie 23 (das Koffer-Beispiel); in deinen Aufzeichnungen auf Notizen S. 37, 38 und 39.",
       "quelle": "folie-prinzipien-19",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Das woertliche Zitat der beiden Didaktiker von 2014",
+          "Definition: Balance zwischen Denken und Tun",
+          "Was vereinbaren Lehrkraft und Klasse - und was leitet es?"
+        ],
+        [
+          "Vier Kennzeichen nach denselben Autoren",
+          "Woran erkennt man diesen Unterricht? Vier Merkposten",
+          "Ausgangspunkt Interessen - und drei weitere Merkmale"
+        ],
+        [
+          "Grundannahme ueber ALLE Schueler:innen (Pitsch)",
+          "Wem wird Kompetenz zugetraut - und wie abgestuft?",
+          "Niemand faellt raus, nur die Stufe unterscheidet sich"
+        ],
+        [
+          "Vier Phasen des Handelns, der Reihe nach",
+          "Vom Wahrnehmen bis zum Ziel-Ergebnis-Vergleich",
+          "Die Viererkette: orientieren, planen, tun, pruefen"
+        ],
+        [
+          "Das Vorlesungsbeispiel mit dem geheimnisvollen Gepaeckstueck",
+          "Die Gruppe entdeckt selbst: zwei Geraete muessen an",
+          "Spielzeug faehrt erst, wenn beides eingeschaltet ist"
+        ],
+        [
+          "Das Haushaltsgeraete-Beispiel als Alternative",
+          "Alltagsgeraet, in Einzelschritte zerlegt",
+          "Zweites Beispiel: es geht um Waesche"
+        ]
+      ]
     },
     {
       "id": "pr-f-3",
@@ -926,7 +991,29 @@
       "musterVariantenGeprueft": false,
       "tipp": "Die Beispiele stammen direkt von Folie 7 - wer je Ebene ein Beispiel nennt, holt hier die vollen Punkte. Dieselbe Tabelle hast du dir auf Notizen S. 35 abgeschrieben.",
       "quelle": "folie-prinzipien-7",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Erste Ebene: der eigene Koerper und seine Sinne",
+          "Fuehlen und Spueren, gefuehrte Hand am Geraet",
+          "Noch vor dem Hantieren: rein sinnlich erfahren"
+        ],
+        [
+          "Zweite Ebene: selbst hantieren und schauen, was passiert",
+          "Merkbild: etwas loest sich im Wasserglas auf",
+          "Gegenstaende anfassen, Effekte selbst entdecken"
+        ],
+        [
+          "Dritte Ebene: Bild statt eigenem Tun",
+          "Fotos, Modelle, gespielte Szenen reichen jetzt",
+          "Merkbild: die symbolhafte Geraete-Anleitung"
+        ],
+        [
+          "Letzte Ebene: nur Worte und Gedanken",
+          "Unsichtbares sprachlich fassen - Merkbild Kochvorgaenge",
+          "Ganz ohne Anschauung, rein gedanklich"
+        ]
+      ]
     },
     {
       "id": "pr-f-4",
@@ -955,7 +1042,29 @@
       "musterVariantenGeprueft": false,
       "tipp": "Klassische Diskutieren-Struktur: beide Pole, Gefahr benennen, Balance als Fazit. Das Waage-Schaubild mit beiden Polen steht auf Folie 28, das Bildbeispiel mit den Arbeitskisten auf Folie 29; in deinen Aufzeichnungen auf Notizen S. 40.",
       "quelle": "folie-prinzipien-28",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Pro-Seite der Zerlegung: Plan, Erfolg, Passung",
+          "Warum kleinschrittig? Drei Gewinne nennen",
+          "Was bietet die untere Waagschale?"
+        ],
+        [
+          "Die Gegenseite der Waage: wozu das Ganze?",
+          "Ohne das grosse Bild fehlt dem Tun etwas",
+          "Warum muss der Zweck erkennbar bleiben?"
+        ],
+        [
+          "Risiko und Nutzen als Paar denken",
+          "Was droht bei zu starrer Lenkung - was wird sichtbar?",
+          "Kehrseite und Gewinn der Zergliederung"
+        ],
+        [
+          "Dein Fazit: verbinden statt waehlen",
+          "Wie loest sich das Spannungspaar auf?",
+          "Schlussgedanke: Einbettung statt Entweder-oder"
+        ]
+      ]
     },
     {
       "id": "pr-gen-f-1",
@@ -987,7 +1096,39 @@
       "tipp": "Der Dreischritt Sachanalyse → Erfahrungsmöglichkeiten → elementarisierte Aussage ist das Gerüst - wenn du den am Kettcar-Beispiel erzählen kannst, sitzt die Aufgabe. Der Suchprozess mit seinen fünf Feldern steht auf Folie 15, das Energie-Beispiel auf Folie 16, die Doppelrolle als fachdidaktisches Prinzip und als Planungsvorgehen auf Folie 18; in deinen Aufzeichnungen auf Notizen S. 36 und 37. Eine Stelle zum Aufpassen: In deinen Notizen steht über dem Schaubild sechs Felder, aufgezählt hast du fünf - und die Folie zeigt fünf. Fünf ist richtig.",
       "quelle": "folie-prinzipien-16",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Kernfrage: was ist das Wesentliche im Bildungsprozess?",
+          "Inhalt und Kind zusammendenken",
+          "Der Suchprozess startet mit einer Kernfrage"
+        ],
+        [
+          "Zwei Funktionen zugleich - je nach Autorenpaar",
+          "Sowohl Grundsatz als auch Planungsschritt",
+          "Zwei Quellen, zwei Sichtweisen darauf"
+        ],
+        [
+          "Das Wabenschaubild: FUENF Felder (deine Notizen sagen sechs)",
+          "Alle Felder beginnen mit demselben Wort",
+          "Fuenf Blickwinkel, vom Kulturellen bis zum Methodischen"
+        ],
+        [
+          "Startpunkt Fachwissenschaft: was gilt fuer Energie?",
+          "Vom Erhaltungssatz zu Tretfahrzeug und Lampe",
+          "Der erste Kasten im Kreislauf: die reine Sachebene"
+        ],
+        [
+          "Wie klingt der Physik-Satz kindgerecht uebersetzt?",
+          "Schneller mit Kraft, langsamer ohne - beim Treten spuerbar",
+          "Die vereinfachte Formulierung mit koerperlich erfahrbarer Muehe"
+        ],
+        [
+          "Der letzte Kasten: drei Arten des Weglassens",
+          "Kuerzen auf drei Ebenen",
+          "Was folgt im Kreislauf nach der vereinfachten Aussage?"
+        ]
+      ]
     },
     {
       "id": "pr-gen-f-2",
@@ -1019,7 +1160,39 @@
       "tipp": "Merk dir die Logik statt der Wortlaute: von ganz viel Hilfe (stellvertretend) zu ganz wenig (begleiten). Wenn du die Richtung hast, kannst du die fünf Stufen daraus rekonstruieren. Die Tabelle aus Ausgangslage, Hilfeniveau und Ziel steht auf Folie 26, das ausgearbeitete Beispiel dazu mit Pia, Ali und Mark auf Folie 27; in deinen Aufzeichnungen auf Notizen S. 40.",
       "quelle": "folie-prinzipien-26",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Niveau bei null eigener Regung - wer macht alles?",
+          "Komplette Uebernahme; Ziel: ein erster eigener Impuls",
+          "Ganz unten: alles wird fuer die Person getan"
+        ],
+        [
+          "Erste Ansaetze sind da - was tut die Lehrkraft dann?",
+          "Teils uebernehmen, teils zeigen und erklaeren",
+          "Zweites Niveau: Hand in Hand arbeiten"
+        ],
+        [
+          "Es klappt schon, aber noch nicht richtig - was nun?",
+          "Zuschauen, bei Fehlern eingreifen; Ziel: es wird selbstverstaendlich",
+          "Drittes Niveau: ueben, bis es sitzt"
+        ],
+        [
+          "Tun ohne das Warum - welche Hilfe passt?",
+          "Erklaeren und auffordern, damit es allein weitergeht",
+          "Viertes Niveau: das Wozu nachliefern"
+        ],
+        [
+          "Alles gelingt allein - was bleibt der Lehrkraft?",
+          "Oberste Stufe: nur noch den Rahmen sichern",
+          "Dabei bleiben und die Voraussetzungen erhalten"
+        ],
+        [
+          "Das Muster hinter der Tabelle: Hilfe schrumpft mit",
+          "Wovon haengt die Wahl der Stufe ab?",
+          "Roter Faden: je mehr selbst geht, desto weniger Unterstuetzung"
+        ]
+      ]
     },
     {
       "id": "pr-gen-f-3",
@@ -1051,7 +1224,39 @@
       "tipp": "Genau diese Aufgabenform nennt die Vorlesung als Ziel: Lehr-Lernsequenzen nach ihren didaktischen Prinzipien analysieren. Geh den Ablauf Schritt für Schritt durch und frage bei jedem Schritt, welches Prinzip hier arbeitet - die Begründung liefert das Material dann fast von selbst. Der Ablauf steht wörtlich auf Folie 31, das Prinzip Ganzheitlichkeit selbst auf Folie 30; in deinen Aufzeichnungen auf Notizen S. 41. Gut zu wissen: Die Vorlesung führt diese Stunde ausdrücklich nur als Beispiel für Ganzheitlichkeit. Dass sich darin auch Differenzierung, Handlungsorientierung und die Aneignungsebenen zeigen, ist deine eigene Analyse - genau die ist hier verlangt, also begründe sie am Material, statt sie als Aussage der Folie auszugeben.",
       "quelle": "folie-prinzipien-31",
       "quelleSicherheit": "unsicher",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die fuenf nummerierten Stationen der Stunde nacherzaehlen",
+          "Vom Raten unterm Tuch bis zur Folgestunde",
+          "Erst tasten, dann hantieren, dann Symbol, dann Ausblick"
+        ],
+        [
+          "Welches Prinzip illustriert die Stunde laut Vorlesung?",
+          "Viele Sinneskanaele: hoeren, sehen, fuehlen",
+          "Kopf, Herz und Hand in einer Stunde"
+        ],
+        [
+          "Wohin wandert der Zugang im Stundenverlauf?",
+          "Vom Koerperlichen zum Foto mit Schriftwort",
+          "Stufenweg: erst spueren, spaeter Symbol"
+        ],
+        [
+          "Welche Hilfsmittel eroeffnen parallele Zugaenge?",
+          "Sprechgeraet, grosse Taste, gefuehrte Bewegung",
+          "Vier Bildantworten zur Auswahl - wozu?"
+        ],
+        [
+          "Wo entdecken die Kinder Wirkung durch eigenes Tun?",
+          "Kurbeln - und etwas beginnt zu leuchten",
+          "Effekt selbst ausloesen statt vorgefuehrt bekommen"
+        ],
+        [
+          "Dein eigenes Urteil: wie greifen die Prinzipien ineinander?",
+          "Schlussgedanke: alles in einer Handlung vereint",
+          "Wertung mit Begruendung, kein blosses Aufzaehlen"
+        ]
+      ]
     },
     {
       "id": "pr-fol-f-1",
@@ -1087,7 +1292,59 @@
       "tipp": "Diese Definition ist die größte Neuigkeit aus den Folien zu diesem Thema und sie beantwortet eine Kompetenzerwartung fast wörtlich. Wenn du in der Klausur nur einen Satz behalten willst, dann diesen: Prinzipien sind Orientierungen für Planung, Durchführung und Evaluation. Die Rangfolge bis hinunter zu den Medien ist der Zusatz, mit dem aus einer Definition eine Erklärung wird. Alles davon steht auf Folie 3, der Rahmenlehrplan-Abgleich für den Relevanz-Teil auf Folie 33. In deinen Aufzeichnungen fehlt dieser Teil - Folie 3 hast du nicht mitgeschrieben, hier lohnt der Blick auf die Folie selbst.",
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Grundsatz-Definition nach Weber - wofuer geben sie Halt?",
+          "Drei Unterrichtsphasen stecken schon in der Definition",
+          "Was sind Prinzipien laut der Basisfolie? (Fehlt in deinen Notizen)"
+        ],
+        [
+          "Wissenschaftlichkeit contra Praxisbedeutung (Arndt)",
+          "Der Satz mit dem Obwohl",
+          "Eine Einschraenkung - und trotzdem Gewicht im Schulalltag"
+        ],
+        [
+          "Warum gibt es keine verbindliche Einheitsliste?",
+          "Jede Fachrichtung gewichtet anders",
+          "Verschiedene Autor:innen, verschiedene Schwerpunkte"
+        ],
+        [
+          "Die Zweiteilung: nur ein Fach oder alle?",
+          "Welches Begriffspaar beschreibt die Reichweite?",
+          "Gilt es im einzelnen Fach oder ueberall?"
+        ],
+        [
+          "Das Stufendiagramm: fuenf Ebenen von grob nach fein",
+          "Was steht ganz oben, was ganz unten?",
+          "Vom Grundsatz ueber Methode und Technik bis zum Material"
+        ],
+        [
+          "Erster Nutzen: Halt, wo es keine Patentloesung gibt",
+          "Hilfe beim Entscheiden, kein Kochbuch",
+          "Orientierung im offenen Einzelfall"
+        ],
+        [
+          "Zweiter Nutzen: Entscheidungen erklaerbar machen",
+          "Wem gegenueber wird die Planung transparent?",
+          "Begruendbarkeit fuer Team und Elternhaus"
+        ],
+        [
+          "Dritter Nutzen: wirkt auch nach Stundenende",
+          "Welche drei Phasen deckt der Massstab ab?",
+          "Vor, waehrend und nach dem Unterricht"
+        ],
+        [
+          "Vierter Nutzen: Verankerung im Lehrplan",
+          "Wo kehren sie als Qualitaetsmerkmale wieder?",
+          "Auch das Curriculum greift vier davon auf"
+        ],
+        [
+          "Zum Schluss die Grenze: was koennen Prinzipien NICHT leisten?",
+          "Gefahr bei starrer Anwendung - dein Einwand",
+          "Kein Ersatz fuer den genauen Blick aufs einzelne Kind"
+        ]
+      ]
     }
   ]
 }

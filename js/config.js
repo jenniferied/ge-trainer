@@ -58,6 +58,15 @@ export const CONFIG = {
   // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.chat, 200).
   chatTagKey: "ge-chat-tag",
   chatTagesLimit: 120,
+
+  // ---- Begriffs-Abgleich (Glossar und Fachbegriffe-Runde) ----
+  // Vierter Topf, gleicher Gedanke wie bei den beiden davor: eigener Key und
+  // eigenes Limit, damit Begriffe-Ueben das Korrektur-Budget (ge-llm-tag) nicht
+  // isst. Das Limit ist bewusst hoch: eine Glossar-Runde macht je Begriff einen
+  // kurzen, billigen Call (schnelles Modell, kein Bild, keine Folien).
+  // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.begriff, 150).
+  begriffTagKey: "ge-begriff-tag",
+  begriffTagesLimit: 150,
 };
 
 if (typeof window !== "undefined") window.GE_CONFIG = CONFIG;

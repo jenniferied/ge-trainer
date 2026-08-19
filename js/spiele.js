@@ -108,7 +108,8 @@ function katInfo(kat) {
    ueberspringt es weiter beim Ableiten der mc/frei-Staende.
    Alteintraege werden NICHT nachtraeglich gefuellt - das aenderte ihre aid
    nicht, ginge also nie hoch, und sie bleiben ehrlich leer. */
-/* Seit dem 18.08.2026 exportiert: Tagesspiel (tagesspiel.js) und Fachbegriffe
+/* Seit dem 18.08.2026 exportiert: Themen-Lernen (themen-lernen.js, hiess bis
+   zum 19.08. Tagesspiel und lag in tagesspiel.js) und Fachbegriffe
    (glossar.js) loggen ueber genau diese Funktion, statt eigenes Logging zu
    bauen - dann reisen ihre Eintraege huckepack im antwortLog (kein Feld in
    sync.js noetig) und heuteGespielt() unten zaehlt sie automatisch mit. */
@@ -142,10 +143,12 @@ function fehlerZaehler(spiel) {
 export function heuteGespielt() {
   var d = new Date(); d.setHours(0, 0, 0, 0);
   var t0 = d.getTime();
-  // glossar = Fachbegriffe-Runde (glossar.js), tagesspiel = der Abschluss des
-  // Tagesspiels (tagesspiel.js). Ein Spielname, der hier fehlt, wird stumm
-  // ignoriert - deshalb stehen sie hier, obwohl ihre Module woanders liegen.
-  var s = { operatoren: 0, begriffe: 0, glossar: 0, tagesspiel: 0 };
+  /* glossar = Fachbegriffe-Runde (glossar.js), themenlernen = das
+     Themen-Lernen (themen-lernen.js). Ein Spielname, der hier fehlt, wird
+     stumm ignoriert - deshalb stehen sie hier, obwohl ihre Module woanders
+     liegen. "tagesspiel" bleibt daneben stehen: so hiess das Themen-Lernen
+     bis zum 19.08.2026, und Roses Lernstand traegt die alten Eintraege noch. */
+  var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0 };
   state.antwortLog.forEach(function (a) {
     if (a.modus === "spiel" && a.ts >= t0 && s[a.spiel] !== undefined) s[a.spiel]++;
   });

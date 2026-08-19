@@ -11,8 +11,11 @@
      2. Die FACHBEGRIFFE-RUNDE (zeigeFachbegriffe): aktiver Abruf wie bei Anki,
         zwei Richtungen. Definition -> Begriff wird GETIPPT (das ist die
         klausurkritische Richtung, das Wort muss aufs Papier) und tolerant
-        geprueft - lokal, ohne KI-Aufruf. Begriff -> Definition waere am Handy
-        Tipp-Qual, dort gilt: laut erklaeren, aufdecken, ehrlich einschaetzen.
+        geprueft - lokal, ohne KI-Aufruf. Begriff -> Definition wird seit dem
+        19.08. ebenfalls getippt und per KI abgeglichen (begriffErklaerKarte,
+        Llm.begriffAbgleich) - mit gestuften Hinweisen statt sofortiger
+        Aufloesung; faellt die KI aus, bleibt der alte Weg (aufdecken, ehrlich
+        einschaetzen) still bestehen.
 
    DATEN: app/data/glossar.json, Quelle fragen/begriffe/glossar.json (kopiert
    und geprueft von scripts/sync-fragen.py). Fehlt die Datei, verschwinden
@@ -29,6 +32,7 @@ import { app, el, leeren, state } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl } from "./ui.js";
 import { belegZeile } from "./beleg.js";
 import { logSpiel } from "./spiele.js";
+import * as Llm from "./llm.js";
 
 var GLOSSAR = null;
 
@@ -75,7 +79,12 @@ function gewichtVon(stand, id) {
   return st.zuletztRichtig ? 1 : 3;
 }
 
-function ziehen(eintraege, n) {
+// maxRang ist optional (rueckwaertskompatibel): 1 zieht nur Kernbegriffe,
+// 2 alles. Eintraege ohne "rang" im Glossar zaehlen als Kern (rang 1).
+function ziehen(eintraege, n, maxRang) {
+  if (maxRang) {
+    eintraege = eintraege.filter(function (e) { return (e.rang || 1) <= maxRang; });
+  }
   var stand = glossarStand();
   return eintraege
     .map(function (e) { return { e: e, s: gewichtVon(stand, e.id) * (0.4 + Math.random()) }; })
@@ -85,8 +94,9 @@ function ziehen(eintraege, n) {
 }
 
 // Fuer das Tagesspiel: n Begriffe des Tagesthemas, gewichtet wie oben.
-export function begriffeFuerTagesspiel(themaId, n) {
-  return ziehen(eintraegeZu(themaId), n);
+// maxRang optional wie bei ziehen.
+export function begriffeFuerTagesspiel(themaId, n, maxRang) {
+  return ziehen(eintraegeZu(themaId), n, maxRang);
 }
 
 /* ---------- Tolerante Tipp-Pruefung ----------
@@ -460,6 +470,190 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
   return karte;
 }
 
+/* ---------- Begriff erklaeren, jetzt mit echtem Tippen ----------
+   Loest die alte erklaeren-Richtung in der Runde ab: statt "laut erklaeren und
+   ehrlich einschaetzen" tippt Rose ihre Erklaerung, und die KI gleicht sie
+   gegen die Glossar-Definition ab (Llm.begriffAbgleich). Die Idee dahinter:
+   nicht sofort aufloesen, sondern in Stufen helfen -
+     Stufe 1: nur der fehlende Kern aus der KI-Antwort, nochmal versuchen.
+     Stufe 2: die halbe Definition, nochmal versuchen.
+     Stufe 3: die volle Aufloesung mit Fundstellen + ehrliche Selbsteinschaetzung.
+   "Das meinte ich" gibt es an jeder Stufe - der Abgleich ist ein Werkzeug,
+   Roses Urteil zaehlt (dasselbe Prinzip wie beim Tippen des Begriffs).
+   Faellt die KI aus (null), geht es STILL in den alten Selbsteinschaetzungs-
+   Weg ueber - kein Fehlertext, die KI ist in dieser App nie Voraussetzung. */
+
+// Schneidet die Definition ungefaehr in der Mitte, bevorzugt an einem
+// Satzende - eine halbe Definition als Anlauf, nicht die ganze Antwort.
+function halbeDefinition(text) {
+  text = String(text);
+  var mitte = Math.floor(text.length / 2);
+  var beste = -1;
+  var re = /[.!?](?=\s)/g, m;
+  while ((m = re.exec(text)) !== null) {
+    var pos = m.index + 1;
+    if (beste < 0 || Math.abs(pos - mitte) < Math.abs(beste - mitte)) beste = pos;
+  }
+  if (beste > 0) return text.slice(0, beste).trim();
+  // Ein-Satz-Definition: am Wortende nahe der Mitte schneiden.
+  var schnitt = text.indexOf(" ", mitte);
+  if (schnitt < 0) return text;
+  return text.slice(0, schnitt).trim() + " …";
+}
+
+export function begriffErklaerKarte(e, thema, onErgebnis) {
+  var karte = el("div", "karte gl-karte gl-erklaer");
+  if (thema && thema.farbe) setzeFarbe(karte, thema.farbe);
+  var fertig = false;
+  var stufe = 0; // wie viele Anlaeufe schon einen Hinweis ausgeloest haben
+
+  function abschliessen(richtig) {
+    if (fertig) return;
+    fertig = true;
+    onErgebnis(!!richtig);
+  }
+
+  karte.appendChild(el("div", "gl-rolle", "Was bedeutet das? Erklär es in deinen Worten."));
+  karte.appendChild(el("div", "gl-begriff-gross", e.begriff));
+
+  var eingabe = document.createElement("textarea");
+  eingabe.className = "gl-erklaer-eingabe";
+  eingabe.rows = 4;
+  eingabe.placeholder = "Deine Erklärung, in ganzen Sätzen …";
+  karte.appendChild(eingabe);
+
+  // Hinweise und Nachfragen landen hier, damit jede Stufe die vorige ersetzt
+  // statt die Karte vollzustapeln.
+  var hinweisBox = el("div", "gl-erklaer-hinweise");
+  karte.appendChild(hinweisBox);
+
+  var pruefen = el("button", "knopf", "Prüfen");
+  karte.appendChild(pruefen);
+
+  function warten(an) {
+    eingabe.disabled = an;
+    pruefen.disabled = an;
+    pruefen.textContent = an ? "Wird gelesen …" : (stufe ? "Nochmal prüfen" : "Prüfen");
+  }
+
+  // Die volle Aufloesung: Begriff + Definition + Fundstellen-Chips, dasselbe
+  // Muster wie das Aufdecken in begriffKarte.
+  function aufdecken() {
+    var auf = el("div", "gl-aufgedeckt");
+    auf.appendChild(el("b", null, e.begriff));
+    auf.appendChild(belegZeile("div", (e.fassungen || {}).de || "", idVon(thema)));
+    var q = quelleEl(e, thema);
+    if (q) auf.appendChild(q);
+    karte.appendChild(auf);
+  }
+
+  function eingabeZu() {
+    eingabe.disabled = true;
+    pruefen.remove();
+    hinweisBox.innerHTML = "";
+  }
+
+  function selbstFrage(text, werte) {
+    var frage = el("div", "treppe-frage");
+    frage.appendChild(el("span", "muted", text));
+    werte.forEach(function (w) {
+      var b = el("button", "treppe-wert " + w.k, w.t);
+      b.addEventListener("click", function () {
+        frage.querySelectorAll("button").forEach(function (x) { x.disabled = true; });
+        b.classList.add("gewaehlt");
+        abschliessen(w.r);
+      });
+      frage.appendChild(b);
+    });
+    karte.appendChild(frage);
+  }
+
+  // Stiller Fallback ohne KI: aufdecken und ehrlich einschaetzen - genau der
+  // Weg, den die erklaeren-Richtung vorher immer gegangen ist.
+  function fallbackSelbst() {
+    eingabeZu();
+    aufdecken();
+    selbstFrage("Und, war deine Erklärung nah dran?", [
+      { t: "Saß", r: true, k: "gut" },
+      { t: "Halb", r: false, k: "halb" },
+      { t: "Fehlte", r: false, k: "fehlte" }
+    ]);
+  }
+
+  function erfolg(res) {
+    eingabeZu();
+    var fast = res.urteil === "fast";
+    var erk = el("div", "erklaerung gut");
+    var stk = stickerEl(fast ? "part" : "good");
+    if (stk) erk.appendChild(stk);
+    var text = el("div", "text");
+    text.appendChild(el("div", "titel", fast ? "Fast – das zählt." : "Sitzt: " + e.begriff));
+    if (res.satz) text.appendChild(belegZeile("div", res.satz, idVon(thema), "muted"));
+    erk.appendChild(text);
+    karte.appendChild(erk);
+    abschliessen(true);
+  }
+
+  function zeigeHinweis(titel, inhalt) {
+    hinweisBox.innerHTML = "";
+    var box = el("div", "gl-erklaer-hinweis");
+    box.appendChild(el("div", "gl-erklaer-hinweis-titel", titel));
+    box.appendChild(belegZeile("div", inhalt, idVon(thema)));
+    var reihe = el("div", "knopf-reihe");
+    var doch = el("button", "knopf sekundaer", "Das meinte ich");
+    doch.addEventListener("click", function () {
+      eingabeZu();
+      abschliessen(true);
+    });
+    reihe.appendChild(doch);
+    box.appendChild(reihe);
+    hinweisBox.appendChild(box);
+    warten(false);
+    eingabe.focus();
+  }
+
+  // Stufe 3: die volle Aufloesung - und die ehrliche Frage, ob es ohne die
+  // Hinweise gekommen waere. "Ja" zaehlt als richtig, Roses Urteil gilt.
+  function letzteStufe() {
+    eingabeZu();
+    aufdecken();
+    selbstFrage("Hätt ichs gewusst?", [
+      { t: "Ja, hätt ich", r: true, k: "gut" },
+      { t: "Noch nicht", r: false, k: "fehlte" }
+    ]);
+  }
+
+  function pruefe() {
+    if (fertig) return;
+    var text = eingabe.value.trim();
+    if (!text) { eingabe.focus(); return; }
+    warten(true);
+    Llm.begriffAbgleich(e, text).then(function (res) {
+      if (fertig) return;
+      if (!res) { fallbackSelbst(); return; }
+      if (res.urteil === "sitzt" || res.urteil === "fast") { erfolg(res); return; }
+      stufe++;
+      if (stufe === 1) {
+        // Der fehlt-Kern aus der KI-Antwort; wenn sie keinen nennt, tut es
+        // die erste Definitionshaelfte als Richtungsweiser.
+        var kern = res.fehlt || halbeDefinition((e.fassungen || {}).de || "");
+        zeigeHinweis("Da fehlt noch ein Stück – schau in diese Richtung:", kern);
+      } else if (stufe === 2) {
+        zeigeHinweis("Hier ist die halbe Definition – magst du nochmal?", halbeDefinition((e.fassungen || {}).de || ""));
+      } else {
+        letzteStufe();
+      }
+    }, function () {
+      // begriffAbgleich liefert bei Fehlern null statt zu werfen - das hier
+      // ist der doppelte Boden, gleiche Antwort: still in den alten Weg.
+      if (!fertig) fallbackSelbst();
+    });
+  }
+
+  pruefen.addEventListener("click", pruefe);
+  return karte;
+}
+
 /* ---------- Die Fachbegriffe-Runde ---------- */
 
 var GL_RUNDE = 6;
@@ -490,9 +684,10 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
 
     var e = gezogen[index];
     var thema = titelVon[e.thema];
-    var karte = begriffKarte(e, thema, richtungFuer(index), function (richtig) {
+    var richtung = richtungFuer(index);
+    function nachErgebnis(richtig) {
       if (richtig) richtige++;
-      logSpiel("glossar", e.id, richtig, { thema: e.thema, richtung: richtungFuer(index) });
+      logSpiel("glossar", e.id, richtig, { thema: e.thema, richtung: richtung });
       var weiter = el("button", "knopf", index + 1 >= gezogen.length ? "Runde abschließen" : "Weiter");
       weiter.addEventListener("click", function () {
         index++;
@@ -500,7 +695,12 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
       });
       karte.appendChild(weiter);
       weiter.focus();
-    });
+    }
+    // Die erklaeren-Richtung laeuft seit dem KI-Abgleich ueber die eigene
+    // Karte (tippen + gestufte Hinweise); geloggt wird unveraendert hier.
+    var karte = richtung === "erklaeren"
+      ? begriffErklaerKarte(e, thema, nachErgebnis)
+      : begriffKarte(e, thema, richtung, nachErgebnis);
     app.appendChild(karte);
   }
 

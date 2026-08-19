@@ -238,7 +238,20 @@ var SPIEL_TEXT = {
   "spiel-begriffe": { icon: "🃏", name: "Begriffe-Blitz", badge: "Spiel" },
   "spiel-operatoren": { icon: "🔎", name: "Operatoren-Training", badge: "Spiel" },
   "spiel-glossar": { icon: "🔤", name: "Fachbegriffe", badge: "Spiel" },
-  "spiel-tagesspiel": { icon: "🗓", name: "Tagesspiel", badge: "Spiel" }
+  /* Roses Bestand vom 18.08. Der SCHLUESSEL muss bleiben (er steht so in ihrem
+     Lernstand), der NAME nicht: "Tagesspiel" gibt es in der App nicht mehr, und
+     ein Verlauf, der einen Screen nennt, den man nirgends findet, schickt sie
+     suchen. Also derselbe Name und dasselbe Zeichen wie unten - getrennt bleiben
+     die Zeilen ueber den Schluessel, nicht ueber die Beschriftung. */
+  "spiel-tagesspiel": { icon: "📚", name: "Themen-Lernen", badge: "Lernen" },
+  /* Themen-Lernen heisst im Log seit dem 19.08.2026 spiel "themenlernen"; die
+     Zeilen aus Roses Bestand tragen weiter "tagesspiel" (Zeile darueber) und
+     bleiben deshalb stehen. Ohne diesen Eintrag fiel eine Themen-Lernen-Runde
+     auf "spiel-begriffe" zurueck und landete mit einem echten Begriffe-Blitz
+     desselben Tages in EINER Zeile - der Gruppenschluessel unten ist Tag + art.
+     Kein badge "Spiel": Themen-Lernen ist ausdruecklich kein Spiel
+     (themen-lernen.js, Kopfkommentar). */
+  "spiel-themenlernen": { icon: "📚", name: "Themen-Lernen", badge: "Lernen" }
 };
 
 function istSpielAntwort(a) { return a.modus === "spiel" || a.sid === "spiel"; }

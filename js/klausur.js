@@ -291,6 +291,11 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
         punkte: null,         // null = noch nicht bewertet (zaehlt NICHT als 0)
         punkteKi: null,
         kiNotiz: null,
+        // Die zwei Konzeptlisten der KI-Korrektur (getroffen / fehlt), seit dem
+        // 19.08.2026 an der Stelle des frueheren punkteVorschlag. Wie kiNotiz am
+        // BOGEN, damit sie einen Neustart ueberleben.
+        kiGetroffen: null,
+        kiFehlt: null,
         // Die markierten Stellen der KI, Kurzform aus marken.js. Wie kiNotiz am
         // BOGEN und nicht im Lernstand: der Bogen ueberlebt einen Neustart, und
         // beim Abschliessen wandern beide an die aid der Antwort (logAufgaben).
@@ -1549,7 +1554,19 @@ function korrekturBlatt(a) {
           }
           return kiFn(a.thema, {
             id: a.qid, frage: f.frage, afb: a.afb, punkte: a.max,
-            stichpunkte: g.kern, muster: f.muster || "", tipp: tipp
+            stichpunkte: g.kern, muster: f.muster || "", tipp: tipp,
+            /* waehle: die Aufgabe verlangt n Nennungen aus einem Vorrat - dann
+               ist die Liste kein Soll, und die Function baut daraus den
+               Vorrats-Satz. Ohne das Feld hakt die KI die ganze Liste ab und
+               fuehrt die nicht gewaehlten Eintraege unter "fehlt".
+
+               Auch bei waehle == kern.length mitschicken: der Vorrat ist dann
+               groesser als die Kernliste aussieht, weil die "Weitere:"-Zeile in
+               den Zusatz gewandert ist (fr-f-1, gr-f-1, mo-f-1, pr-f-1 nennen
+               dort weitere gueltige Antworten). Nur ein waehle groesser als die
+               Liste waere ein Datenfehler - das faellt weg. */
+            waehle: typeof f.waehle === "number" && f.waehle > 0 && f.waehle <= g.kern.length
+              ? f.waehle : undefined
           }, text);
         })
         .catch(function () { return null; })
@@ -1564,6 +1581,29 @@ function korrekturBlatt(a) {
     });
     b.appendChild(kiKnopf);
   }
+
+  /* Was die KI in IHREM Text gefunden hat und was noch Punkte braechte - zwei
+     Listen statt Haken neben unseren Stichpunkten (Begruendung bei
+     kiUebernehmen). Klassen und Zeichen sind dieselben wie im freien Ueben,
+     damit die beiden Ansichten gleich gelesen werden. */
+  [
+    { eintraege: a.kiGetroffen, titel: "Das hattest du drin", cls: "treffer-ja", zeichen: "✓", dazuCls: "dazu zitat" },
+    { eintraege: a.kiFehlt, titel: "Das würde noch Punkte bringen", cls: "treffer-offen", zeichen: "+", dazuCls: "dazu" }
+  ].forEach(function (liste) {
+    if (!Array.isArray(liste.eintraege) || !liste.eintraege.length) return;
+    b.appendChild(el("div", "ki-listen-titel", liste.titel));
+    var ul = el("ul", "ki-treffer");
+    liste.eintraege.forEach(function (v) {
+      if (!v || !v.konzept) return;
+      var li = el("li", liste.cls);
+      li.appendChild(el("span", "zeichen", liste.zeichen));
+      // Modelltext, also ueber belegZeile (Fundstellen als Chips, kein innerHTML).
+      li.appendChild(Beleg.belegZeile("span", v.konzept, a.thema, "was"));
+      if (v.dazu) li.appendChild(Beleg.belegZeile("div", v.dazu, a.thema, liste.dazuCls));
+      ul.appendChild(li);
+    });
+    b.appendChild(ul);
+  });
 
   if (a.kiNotiz) {
     /* KI-Text mit Chips, aber ohne innerHTML - belegZeile baut Knoten.
@@ -1594,20 +1634,42 @@ function korrekturBlatt(a) {
    Seitdem schreibt hier nichts mehr nach a.bewertung oder a.punkte. Der
    Vorschlag liegt in a.kiTipp (ein Wert je Stichpunkt) und wird von
    bewertungsBlock nur als Markierung gezeigt. Defensiv gelesen, damit ein
-   abweichendes Feld nicht den ganzen Pfad kippt. */
-var GETROFFEN = { ja: 1, teilweise: 0.5, nein: 0 };
+   abweichendes Feld nicht den ganzen Pfad kippt.
+
+   ZWEITER UMBAU (19.08.2026): die Korrektur liefert kein punkteVorschlag mehr,
+   also entsteht auch kein neues a.kiTipp - das Feld hier las seither ins Leere,
+   und die KI-Markierung am Bewertungsknopf verschwand stumm. Was jetzt ankommt,
+   sind zwei Konzeptlisten: getroffen (mit Roses eigenem Beleg aus ihrem Text)
+   und fehlt (mit Hinweis). Die liegen ab hier in a.kiGetroffen / a.kiFehlt und
+   werden unter dem Blatt als Listen gezeigt, genau wie im freien Ueben
+   (main.js kiUrteilZeigen).
+
+   BEWUSST NICHT zurueckgerechnet auf die Stichpunkte: ein Kreuz neben einem
+   Stichpunkt liest sich als "das haettest du schreiben MUESSEN", und die
+   Stichpunkte sind nur EIN moeglicher Erwartungshorizont. a.kiTipp bleibt
+   trotzdem lesbar - Boegen aus der Zeit davor tragen es noch. */
+
+function kiListe(roh, zweitesFeld) {
+  return (Array.isArray(roh) ? roh : [])
+    .filter(function (v) { return v && typeof v.konzept === "string" && v.konzept.trim(); })
+    .map(function (v) {
+      return {
+        konzept: v.konzept.trim(),
+        dazu: typeof v[zweitesFeld] === "string" ? v[zweitesFeld].trim() : ""
+      };
+    });
+}
 
 function kiUebernehmen(a, erg) {
   var gesamt = typeof erg.punkteGesamt === "number" ? erg.punkteGesamt
     : typeof erg.punkte === "number" ? erg.punkte : null;
   if (gesamt !== null) a.punkteKi = halbe(Math.max(0, Math.min(a.max, gesamt)));
 
-  var vorschlag = erg.punkteVorschlag;
-  if (Array.isArray(vorschlag) && a.bewertung && vorschlag.length === a.bewertung.length) {
-    a.kiTipp = vorschlag.map(function (v) {
-      return v && GETROFFEN[v.getroffen] !== undefined ? GETROFFEN[v.getroffen] : null;
-    });
-  }
+  var getroffen = kiListe(erg.getroffen, "beleg");
+  var fehlt = kiListe(erg.fehlt, "hinweis");
+  // Nur ueberschreiben, wenn die neue Korrektur wirklich etwas mitbringt -
+  // dieselbe Linie wie bei kiNotiz und kiMarken weiter unten.
+  if (getroffen.length || fehlt.length) { a.kiGetroffen = getroffen; a.kiFehlt = fehlt; }
 
   var notizen = [];
   if (Array.isArray(erg.randkommentare)) notizen = notizen.concat(erg.randkommentare);

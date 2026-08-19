@@ -28,7 +28,16 @@
    einzige Zeile in sync.js (Hausmuster: Log = Wahrheit, Stand = abgeleitet).
 
    ABHAENGIGKEITEN: core.js, ui.js, beleg.js - wie jedes Modul. Kein Import von
-   main.js (Zyklus), die freiKarte kommt als Callback herein. */
+   main.js (Zyklus), die freiKarte kommt als Callback herein.
+
+   ERWEITERT AM 19.08.2026 (Reife-Ausbau, alles rueckwaertskompatibel):
+     - opts.felder: Label-Chips als leichtes Geruest, Tipp-Felder je Baustein
+       und ein freies Sammel-Notizfeld (alles sitzungslokal, nichts wird
+       gespeichert, geloggt oder gesynct).
+     - f.hinweise (Liste von Listen, parallel zu stichpunkte): inhaltliche
+       Hinweis-Versionen mit zweitem Anlauf; opts.hinweisIndex rotiert, welche
+       Version zuerst kommt. hinweisText bleibt der Fallback.
+     - f.waehle: n aus m Kern-Bausteinen, zufaellig gezogen, in beiden Modi. */
 
 import { el, stichpunkteTeilen } from "./core.js";
 import { stickerEl } from "./ui.js";
@@ -46,6 +55,43 @@ function hinweisText(punkt) {
   var woerter = String(punkt).split(/\s+/);
   if (woerter.length <= 7) return woerter.slice(0, 3).join(" ") + " …";
   return woerter.slice(0, 6).join(" ") + " …";
+}
+
+/* Traegt die Aufgabe redaktionelle Hinweise (f.hinweise, Liste von Listen
+   parallel zur VOLLEN stichpunkte-Liste), sind das inhaltliche Anlaeufe statt
+   des Satzanfangs - und dann gibt es einen ZWEITEN Anlauf, bevor der Knopf
+   dichtmacht. Der Rotations-Index (opts.hinweisIndex, spaeter von reife.js je
+   Lerntag gedreht) entscheidet, welche Version zuerst kommt, damit nicht jede
+   Sitzung denselben Hinweis zeigt. Ohne eigene Hinweise bleibt hinweisText
+   der Fallback - dann gibt es wie bisher nur einen Klick. */
+function hinweiseFuer(f, stichIdx, punkt, rotation) {
+  var liste = f && f.hinweise && f.hinweise[stichIdx];
+  if (liste && liste.length) {
+    var start = (rotation || 0) % liste.length;
+    return {
+      erste: liste[start],
+      zweite: liste.length > 1 ? liste[(start + 1) % liste.length] : null
+    };
+  }
+  return { erste: hinweisText(punkt), zweite: null };
+}
+
+/* Label-Chip fuer den Felder-Modus: ein leichtes inhaltliches Geruest gegen
+   den 0%-Schock ("mir faellt GAR nichts ein"), das den Inhalt trotzdem nicht
+   verschenkt. Genommen wird das Praefix vor dem ersten ":", wenn es kurz ist;
+   kleingeschriebene Schlusswoerter fallen weg, weil das Anweisungs-Verben sind
+   ("Fazit formulieren" -> "Fazit") - deutsche Substantive und Ziffern
+   ("Spannungsfeld 2") sind davon nicht betroffen. Ohne brauchbares Praefix
+   bleibt der neutrale "Baustein N". */
+function labelChip(punkt, i) {
+  var s = String(punkt);
+  var doppel = s.indexOf(":");
+  if (doppel > 0) {
+    var woerter = s.slice(0, doppel).trim().split(/\s+/);
+    while (woerter.length > 1 && /^[a-zäöüß]/.test(woerter[woerter.length - 1])) woerter.pop();
+    if (woerter.length && woerter.length <= 3 && woerter[0]) return woerter.join(" ");
+  }
+  return "Baustein " + (i + 1);
 }
 
 /* Selbsteinschaetzung je Punkt. Dieselbe Dreiteilung wie der Selbstcheck der
@@ -66,6 +112,10 @@ var ABRUF_WERTE = [
                     oder "ziehen" (sanfter: die echten Punkte aus einer
                     Mischliste heraustippen; braucht opts.distraktoren)
      distraktoren - fremde Stichpunkte desselben Themas fuer "ziehen"
+     felder       - true: Label-Chips, Tipp-Felder und Sammel-Notizfeld im
+                    Aufdecken-Modus (in "ziehen" ohne Wirkung - Wiedererkennen
+                    braucht keine Felder)
+     hinweisIndex - Rotations-Index fuer die Hinweis-Versionen (f.hinweise)
      onFertig     - bekommt { gesamt, hatte, halb, fehlte, quote }
 
    Gibt die Karte als DOM-Knoten zurueck; der Aufrufer haengt sie ein. */
@@ -74,13 +124,38 @@ export function abrufKarte(f, opts) {
   // belegZeile erwartet die Themen-ID (SATZ[thema] in beleg.js), Aufrufer
   // reichen bequem das ganze Themen-Objekt herein - hier wird normalisiert.
   o.themaId = o.thema && o.thema.id ? o.thema.id : o.thema;
-  var kern = stichpunkteTeilen(f).kern;
+  var teilung = stichpunkteTeilen(f);
+  var kern = teilung.kern;
+  // f.hinweise laeuft parallel zur VOLLEN stichpunkte-Liste, kern ist
+  // gefiltert - kernIndex schlaegt die Bruecke zurueck zur Datenposition.
+  var stichIndex = teilung.kernIndex;
   if (!kern.length) {
     // Ohne Kernliste gibt es nichts abzurufen - dann faellt der Schritt weg,
     // statt eine leere Uebung zu behaupten.
     if (o.onFertig) o.onFertig(null);
     return el("div");
   }
+
+  // f.waehle: die Aufgabe verlangt nur n aus m Bausteinen. Dann fragt auch die
+  // Treppe nur n zufaellig gezogene ab - alles andere waere strenger als die
+  // Klausur selbst. Die Kopfzeile sagt das ehrlich dazu.
+  o.gesamtKern = kern.length;
+  if (f && f.waehle && kern.length > f.waehle) {
+    // Fisher-Yates wie in ziehenKarte: sort mit Zufalls-Comparator mischt je
+    // nach Engine sichtbar ungleichmaessig.
+    var idx = kern.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    // Nach dem Ziehen wieder aufsteigend: abgefragt wird eine Teilmenge, aber
+    // in der Reihenfolge, in der die Liste in der Aufgabe steht.
+    idx = idx.slice(0, f.waehle).sort(function (a, b) { return a - b; });
+    kern = idx.map(function (k) { return kern[k]; });
+    stichIndex = idx.map(function (k) { return stichIndex[k]; });
+  }
+  o.stichIndex = stichIndex;
+
   if (o.modus === "ziehen" && (o.distraktoren || []).length) {
     return ziehenKarte(f, kern, o);
   }
@@ -92,9 +167,25 @@ export function abrufKarte(f, opts) {
 function aufdeckenKarte(f, kern, o) {
   var karte = el("div", "karte treppe-karte");
   karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
+  // Bei f.waehle sagt die Kopfzeile ehrlich, dass nur eine Teilmenge dran ist -
+  // und dass die Auswahl keine Wertung traegt.
+  var kopfSatz = kern.length < o.gesamtKern
+    ? kern.length + " von " + o.gesamtKern + " Bausteinen – welche du nimmst, ist egal. "
+    : "Diese Aufgabe hat " + kern.length + " Bausteine. ";
   karte.appendChild(el("p", "karten-hinweis",
-    "Diese Aufgabe hat " + kern.length + " Bausteine. Geh sie im Kopf durch – laut sagen hilft. "
+    kopfSatz + "Geh sie im Kopf durch – laut sagen hilft. "
     + "Dann deck einzeln auf und sag ehrlich, was schon da war."));
+
+  if (o.felder) {
+    // Sammelort VOR den Zeilen: erst alles rauslassen, in beliebiger
+    // Reihenfolge, dann zuordnen - naeher an dem, wie Abruf wirklich ablaeuft.
+    // Bewusst sitzungslokal: kein Speichern, kein Log, kein Sync - das Feld
+    // ist Schmierzettel, nicht Leistung.
+    var notizen = el("textarea", "treppe-notizen");
+    notizen.rows = 3;
+    notizen.placeholder = "Sammelort – schreib rein, wie es dir kommt.";
+    karte.appendChild(notizen);
+  }
 
   var offen = kern.length;
   var stand = { hatte: 0, halb: 0, fehlte: 0 };
@@ -105,23 +196,61 @@ function aufdeckenKarte(f, kern, o) {
     kopf.appendChild(el("span", "treppe-nr", String(i + 1)));
 
     var inhalt = el("div", "treppe-inhalt");
-    var verdeckt = el("span", "treppe-verdeckt", "Baustein " + (i + 1));
-    inhalt.appendChild(verdeckt);
+    var chip = null, eingabe = null, verdeckt;
+    if (o.felder) {
+      // Der Chip ist bewusst IMMER sichtbar: ein leichtes inhaltliches
+      // Geruest gegen den 0%-Schock, kein aufgedeckter Inhalt.
+      chip = el("span", "treppe-label", labelChip(punkt, i));
+      inhalt.appendChild(chip);
+      // Ohne Text: der Platz gehoert hier dem Hinweis, wenn er geholt wird -
+      // die Rolle des Platzhalters uebernimmt der Chip.
+      verdeckt = el("span", "treppe-verdeckt");
+      inhalt.appendChild(verdeckt);
+      eingabe = el("input", "treppe-eingabe");
+      eingabe.type = "text";
+      eingabe.placeholder = "…hier notieren, wenn du magst";
+      inhalt.appendChild(eingabe);
+    } else {
+      verdeckt = el("span", "treppe-verdeckt", "Baustein " + (i + 1));
+      inhalt.appendChild(verdeckt);
+    }
     kopf.appendChild(inhalt);
 
     var werkzeuge = el("div", "treppe-werkzeuge");
+    var hv = hinweiseFuer(f, o.stichIndex[i], punkt, o.hinweisIndex);
+    var hinweisStufe = 0;
     var hinweis = el("button", "knopf sekundaer klein-knopf", "💡 Hinweis");
     hinweis.addEventListener("click", function () {
-      verdeckt.textContent = hinweisText(punkt);
+      hinweisStufe++;
       verdeckt.classList.add("mit-hinweis");
-      hinweis.disabled = true;
+      if (hinweisStufe === 1) {
+        verdeckt.textContent = hv.erste;
+        // Gibt es eine zweite Version, bleibt der Knopf offen: zwei
+        // inhaltliche Anlaeufe statt eines Satzanfangs.
+        if (hv.zweite) { hinweis.textContent = "💡 Noch ein Hinweis"; return; }
+        hinweis.disabled = true;
+      } else {
+        verdeckt.textContent = hv.erste + " · " + hv.zweite;
+        hinweis.disabled = true;
+      }
     });
     werkzeuge.appendChild(hinweis);
 
     var auf = el("button", "knopf klein-knopf", "Aufdecken");
     auf.addEventListener("click", function () {
       werkzeuge.remove();
+      var eigenerText = eingabe ? eingabe.value.trim() : "";
       inhalt.innerHTML = "";
+      if (chip) inhalt.appendChild(chip);
+      if (eigenerText) {
+        // Gegenueberstellung: Roses eigener Wortlaut bleibt neben der Loesung
+        // stehen. Bewertet wird er nicht - das Urteil hatte/halb/fehlte
+        // faellt sie gleich selbst.
+        var eigene = el("div", "treppe-eigene");
+        eigene.appendChild(el("span", "muted", "Deine Notiz: "));
+        eigene.appendChild(el("span", null, eigenerText));
+        inhalt.appendChild(eigene);
+      }
       // belegZeile macht aus "Folie 29" / "Notizen S. 44" antippbare Chips -
       // dieselbe Wiedergabe wie in Stichpunkten und Tipps.
       inhalt.appendChild(belegZeile("div", punkt, o.themaId, "treppe-text"));
@@ -193,9 +322,15 @@ function fazitSatz(quote, stand) {
 function ziehenKarte(f, kern, o) {
   var karte = el("div", "karte treppe-karte");
   karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
+  // Bei f.waehle stehen entsprechend weniger echte Punkte in der Mischliste -
+  // die Kopfzeile sagt ehrlich, dass es eine Teilmenge ist.
+  var zusatzSatz = kern.length < o.gesamtKern
+    ? " Abgefragt werden " + kern.length + " von " + o.gesamtKern
+      + " Bausteinen – welche du nimmst, ist egal."
+    : "";
   karte.appendChild(el("p", "karten-hinweis",
     "Welche " + kern.length + " Bausteine gehören zu DIESER Aufgabe? Tipp sie an – "
-    + "die anderen stammen aus Nachbar-Aufgaben desselben Themas."));
+    + "die anderen stammen aus Nachbar-Aufgaben desselben Themas." + zusatzSatz));
 
   var kandidaten = kern.map(function (p) { return { text: p, echt: true }; })
     .concat((o.distraktoren || []).map(function (p) { return { text: p, echt: false }; }));
@@ -297,6 +432,10 @@ export function lernSchritt(thema, f, opts) {
     thema: thema,
     modus: o.modus,
     distraktoren: o.modus === "ziehen" ? distraktorenFuer(thema, f, 3) : null,
+    // Neue Reife-Optionen einfach durchreichen - bestehende Aufrufer setzen
+    // sie nicht, dann bleibt alles wie vorher.
+    felder: o.felder,
+    hinweisIndex: o.hinweisIndex,
     weiterText: "Jetzt schreiben",
     onFertig: function (erg) {
       halter.innerHTML = "";

@@ -768,7 +768,29 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe der Dozentin - die vier Begriffe müssen sitzen. Eselsbrücke: KoKo-EMo (Kognition, Kommunikation, Emotional-sozial, Motorik-Wahrnehmung). Die vier blauen Kästen stehen auf Folie 10, in deinen Notizen auf Notizen S. 44.",
       "quelle": "folie-entwicklungsbereiche-10",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Denken, Merken, Problemloesen - dieser Bereich",
+          "Der Kopf-Bereich: Analogien erkennen, kreativ werden",
+          "Wo das handlungsplanende Denken hingehoert"
+        ],
+        [
+          "Sprache, Wortschatz, Verstaendigung",
+          "Der Bereich mit vier Formen, von basal bis schriftlich",
+          "Sprechen und verstanden werden"
+        ],
+        [
+          "Gefuehle, Miteinander, Arbeitsbereitschaft - ein Doppelname",
+          "Der Bereich fuer Stabilitaet und Beziehungen",
+          "Innenleben plus Sozialverhalten, zusammen benannt"
+        ],
+        [
+          "Koerper und Sinne, bei der KMK gebuendelt",
+          "Bewegung plus Sinneseindruecke - ein Paar",
+          "Grob, fein, Mund und Gesicht - und dazu die Sinne"
+        ]
+      ]
     },
     {
       "id": "eb-f-2",
@@ -798,7 +820,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe. Möglichst anschaulich heißt laut Dozentin: Benennung, Beschreibung und Erläuterung anhand eines Beispiels. Die Definition steht wörtlich auf Folie 19, das Beispiel Der Weg der Milch auf Folie 23 und die Einordnung als wertvolle konzeptionelle Ressource und Desiderat auf Folie 31 - in deinen Notizen auf Notizen S. 47.",
       "quelle": "folie-entwicklungsbereiche-19",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Die Fachdefinition: zwei Lernstraenge, drei Verben der Verbindung",
+          "Was sagen Joehnck/Baumann 2023 woertlich dazu?",
+          "Wie Fachliches und Entwicklung im Unterricht zusammenfinden - die Definition"
+        ],
+        [
+          "Wovon geht die Planung aus? Zweifacher Blick auf die Lernenden",
+          "Startpunkt: was die Schueler:innen mitbringen, doppelt gedacht",
+          "Der Ausgangspunkt liegt bei den Kindern, auf zwei Ebenen"
+        ],
+        [
+          "Das Sachunterrichts-Beispiel mit dem Kooperationsziel",
+          "Milch-Thema: welches Entwicklungsziel lief mit?",
+          "Haeussler-Beispiel: soziales Ziel im Sachunterricht"
+        ],
+        [
+          "Ein zweites eigenes Beispiel aus einem anderen Fach",
+          "Noch ein Fall: Hilfsmittel oder Organisation im Unterricht",
+          "Kunst oder Deutsch - was liefe da mit?"
+        ],
+        [
+          "Wie steht die Forschung dazu? Lob plus Luecke",
+          "Kritische Einordnung: wertvoll, aber empirisch noch duenn",
+          "Was fehlt dem Konzept noch, gerade im SGE?"
+        ]
+      ]
     },
     {
       "id": "eb-f-3",
@@ -829,7 +878,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe. Merkformel für die Diskussion: beide Seiten würdigen, dann mit dem dualen Unterricht als Synthese abschließen. Die disziplingeschichtliche Linie mit den Gefahren der Überbetonung und der geforderten Balance steht auf Folie 15 (bei dir Notizen S. 46), der duale Unterricht als Synthese auf Folie 19. Das Feuser-Zitat stammt aus der Vorlesung zu den didaktischen Konzeptionen und steht bei dir auf Notizen S. 53.",
       "quelle": "folie-entwicklungsbereiche-15",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Erstes Dafuer: Selbststaendigkeit braucht Grundlagen - plus Blick zurueck",
+          "Pro-Argument: wofuer sind die Bereiche die Basis? Dazu die Geschichte",
+          "Historisch war eine Seite lange vorn - welche?"
+        ],
+        [
+          "Zweites Dafuer: was passiert ohne die Basis?",
+          "Ohne bestimmte Voraussetzungen bleibt der Zugang zum Fach versperrt",
+          "Denk an Aufmerksamkeit als Tuer zum Fachlernen"
+        ],
+        [
+          "Erstes Gegenargument: ein Name und ein Bildungsrecht",
+          "Wer sagt: alle Inhalte gehoeren allen Kindern?",
+          "Kontra mit einem klassischen Autor"
+        ],
+        [
+          "Zweites Kontra: die neuere Wende als bewusste Antwort",
+          "Was verkuerzt reine Foerderung ohne Inhalte?",
+          "Warum kam die Fachwende ueberhaupt?"
+        ],
+        [
+          "Die Aufloesung: kein Entweder-oder, sondern welches Konzept?",
+          "Zusammenfuehrung: welches Unterrichtsmodell verbindet beides?",
+          "Statt Rangfolge: das Balance-Konzept benennen"
+        ],
+        [
+          "Zum Schluss: welches Risiko droht auf beiden Seiten?",
+          "Joehnck 2024: was kann bei beiden Polen kippen?",
+          "Abschlussgedanke: zu viel des Guten, beidseitig"
+        ]
+      ]
     },
     {
       "id": "eb-f-4",
@@ -858,7 +939,30 @@
       "musterVariantenGeprueft": false,
       "tipp": "Zwei Bereiche in der Tiefe können reicht meist - aber alle vier Überschriften musst du nennen können. Alle vier Spalten mit ihren Stichpunkten stehen auf Folie 10, bei dir auf Notizen S. 44.",
       "quelle": "folie-entwicklungsbereiche-10",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 2,
+      "hinweise": [
+        [
+          "Denk-Spalte: fuenf Punkte, vom Merken bis zur Kreativitaet",
+          "Gedaechtnis, Planung, Probleme, Ideen - eine Spalte",
+          "Was foerdert die KMK beim Denken?"
+        ],
+        [
+          "Sprach-Spalte: vier Foerderpunkte plus vier Formen",
+          "Vom Sprechen bis zum sprachlichen Selbstbild",
+          "Welche Kommunikationsformen zaehlt die KMK auf?"
+        ],
+        [
+          "Innenleben und Miteinander: was gehoert alles dazu?",
+          "Auch das Lernen-Wollen steht in dieser Spalte",
+          "Vier Punkte rund um Gefuehle und Beziehungen"
+        ],
+        [
+          "Koerper-Spalte: die laengste Liste der Tabelle",
+          "Von grob bis fein, vom Koerpererleben bis zum Gesicht",
+          "Auch Mund und Gesicht bewegen sich hier"
+        ]
+      ]
     },
     {
       "id": "eb-gen-f-1",
@@ -889,7 +993,34 @@
       "tipp": "Verwechslungsgefahr mit der solitären individuellen Entwicklungsförderung: Dort verfolgt EIN Kind allein sein Ziel, hier zieht die ganze (Teil-)Gruppe im selben Entwicklungsschwerpunkt mit. Die Grundform mit beiden Beispielen steht auf Folie 23, das T-Diagramm zur angemessenen Lautstärke auf Folie 24 - in deinen Notizen beides auf Notizen S. 49.",
       "quelle": "folie-entwicklungsbereiche-23",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Woher kommt das Ziel, wohin wandert es?",
+          "Vom Einzelbedarf zur Gruppe - der Weg",
+          "Startlogik: eine Person braucht es, alle machen mit"
+        ],
+        [
+          "Wer wird gefoerdert - und worin gemeinsam?",
+          "Ein Schwerpunkt fuer die ganze Gruppe, innen abgestuft",
+          "Gleiche Richtung fuer alle, trotzdem individuell moeglich"
+        ],
+        [
+          "Wie stehen Fachziel und Entwicklungsziel hier zueinander?",
+          "Das Merkmal: zwei Zielarten, wenig Ueberlappung",
+          "Joehnck 2024: was unterscheidet diese Form von der Deckungsgleichheit?"
+        ],
+        [
+          "Sachunterrichts-Beispiel mit sozialem Ziel und Diagramm",
+          "Milch und Miteinander: welches Werkzeug half?",
+          "Haeussler: Gruppenarbeit mit Lautstaerke-Hilfe"
+        ],
+        [
+          "Deutsch-Beispiel: Ordnung am Platz, Fachthema Grammatik",
+          "Albers u. a.: was lief neben den Wortarten?",
+          "Zweites Beispiel: Organisation ueben, waehrend Sprache dran ist"
+        ]
+      ]
     },
     {
       "id": "eb-gen-f-2",
@@ -921,7 +1052,39 @@
       "tipp": "Fürs Vergleichen lohnt eine Zweispalten-Skizze im Kopf: KMK vier, NRW fünf - und die beiden Stellschrauben sind die Trennung von Motorik/Wahrnehmung und die Umbenennung in Sozialisation. Die KMK-Vierteilung steht auf Folie 10, das NRW-Schaubild mit den fünf Bereichen auf Folie 12 - in deinen Notizen auf Notizen S. 44 und 45.",
       "quelle": "folie-entwicklungsbereiche-12",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie viele Bereiche bei der KMK - und welche?",
+          "Die Bundes-Systematik: Anzahl und Namen",
+          "Vier Kaesten - aus welcher Quelle?"
+        ],
+        [
+          "Und das Land: eine Zahl mehr",
+          "Die NRW-Liste: alle Namen aufzaehlen",
+          "Wie zaehlt der NRW-Lehrplan?"
+        ],
+        [
+          "Erster Unterschied: ein Doppelpack wird aufgeteilt",
+          "Was ist bei der KMK ein Bereich, in NRW zwei?",
+          "Koerper und Sinne: zusammen oder getrennt?"
+        ],
+        [
+          "Zweiter Unterschied: der Gefuehls-Bereich traegt einen anderen Namen",
+          "Wie heisst emotional-sozial in NRW?",
+          "Anderes Etikett, aehnlicher Inhalt - welcher Bereich?"
+        ],
+        [
+          "Was taucht in beiden Listen gleich auf?",
+          "Zwei Bereiche teilen sich beide Systematiken",
+          "Die Schnittmenge benennen"
+        ],
+        [
+          "NRW-Extra: was haengt unter jedem Bereich?",
+          "Feingliederung mit Nummern - denk an die Sinne",
+          "Wie tief gliedert NRW weiter?"
+        ]
+      ]
     },
     {
       "id": "eb-gen-f-3",
@@ -952,7 +1115,34 @@
       "tipp": "Erörtern heißt: erst beide Seiten mit Argumenten würdigen, dann eine begründete Stellungnahme abgeben. Ohne die Stellungnahme bleibt die Antwort auf AFB II stehen. Ein Satz zum dualen Unterricht am Schluss zeigt, dass du die Verbindung zwischen beiden Wegen mitdenkst. Beide Wege stehen auf einer einzigen Folie: Folie 17 zählt erst die Förderorte außerhalb des Unterrichts auf und stellt dann den regulären (Fach-)Unterricht rot umrandet daneben - in deinen Notizen auf Notizen S. 46.",
       "quelle": "folie-entwicklungsbereiche-17",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was spricht fuer eigene Foerderzeiten? Plus die Orte-Beispiele",
+          "Markowetz-Position und die Orte ausserhalb der Stunde",
+          "Gezielter Fokus: wo ueberall findet Foerderung statt?"
+        ],
+        [
+          "Was traegt Schule sonst noch, ganz ohne Unterricht?",
+          "Drei menschliche Faktoren ausserhalb des Klassenraums",
+          "Denk an Bindungen, Familien, Mitschueler:innen"
+        ],
+        [
+          "Das Hauptargument fuer die Stunde selbst: Zeit und Zentrum",
+          "Wo verbringt Schule die meiste Zeit?",
+          "Warum hat der Fachunterricht Prioritaet?"
+        ],
+        [
+          "Welches Konzept verbindet beide Positionen?",
+          "Der Brueckenschlag: Fach plus Foerderung, systematisch verbunden",
+          "Das Verschraenkungs-Modell einbauen"
+        ],
+        [
+          "Deine Position: wo liegt der Schwerpunkt, was ergaenzt?",
+          "Abwaegen und begruenden: beides ja, aber gewichtet",
+          "Fazit mit Begruendung ueber Zeit und Auftrag"
+        ]
+      ]
     },
     {
       "id": "eb-fol-f-1",
@@ -990,7 +1180,69 @@
       "tipp": "Du musst nicht alle Einzelkompetenzen der Tabelle auswendig können - zwei bis drei pro Spalte reichen völlig, und die lassen sich am Beispiel gut herleiten, wenn du dir das Händewaschen einmal Schritt für Schritt vorstellst. Nicht irritieren lassen: Diese NRW-Tabelle hat fünf Spalten, die KMK-Systematik der Vorlesung vier Bereiche - gemeint ist dasselbe Feld, nur anders gebündelt. Stark wird die Antwort durch die Folgerung am Schluss: von der pauschalen Beschreibung zur präzisen. Nachlesen kannst du die Tabelle auf Folie 14 - in deinen Notizen fehlt diese Folie ganz, hier führt der Weg also wirklich über die Folie.",
       "quelle": "folie-entwicklungsbereiche-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Kernsatz der Folie: woraus bestehen Alltagskompetenzen?",
+          "QUA-LiS-These: Lebenspraxis und Bereiche haengen zusammen",
+          "Was steckt in jeder lebenspraktischen Kompetenz drin?"
+        ],
+        [
+          "Achtung Systematik: mit welchen fuenf Spalten arbeitet die Tabelle?",
+          "Die Folie rechnet nicht nach KMK - sondern?",
+          "Einordnung: zwei Zaehlweisen, gleiches Feld"
+        ],
+        [
+          "Was gehoert alles zur Handlung selbst? Orte und Schritte",
+          "Duschen, Wanne, Becken - den Umfang beschreiben",
+          "Die Handlung ausbuchstabieren: womit, wo, was danach"
+        ],
+        [
+          "Erste Spalte: was machen die Haende?",
+          "Greifen und Hantieren - welcher Bereich?",
+          "Die Bewegungsanteile der Handlung nennen"
+        ],
+        [
+          "Sinnes-Spalte: auch die Nase arbeitet mit",
+          "Sinne im Einsatz: riechen, steuern, zielen",
+          "Welcher Bereich lenkt Hand und Blick?"
+        ],
+        [
+          "Denk-Anteile: dranbleiben, Abfolgen, Nachmachen",
+          "Was leistet der Kopf beim Waschen?",
+          "Dranbleiben und Schritte ordnen - welcher Bereich?"
+        ],
+        [
+          "Die Ich-Spalte: eigener Koerper, eigene Wege",
+          "Wo endet mein Koerper? Welcher Bereich fragt das?",
+          "Selbstwahrnehmung und das Bewerten des eigenen Tuns"
+        ],
+        [
+          "Austausch-Anteile: Beruehrung, kurze Saetze, Miteinander",
+          "Wie reagiert das Kind auf Ansprache und Zuwendung?",
+          "Die fuenfte Spalte: Kontakt waehrend der Pflege"
+        ],
+        [
+          "Erster Schluss: kein Entweder-oder zwischen Alltag und Entwicklung",
+          "Wer praktisch unterrichtet, tut automatisch noch etwas - was?",
+          "Die beiden Ausrichtungen sind keine Gegensaetze"
+        ],
+        [
+          "Zweiter Schluss: die Handlung fuer die Planung zerlegen",
+          "Wie wird sichtbar, wo Unterstuetzung ansetzt?",
+          "Vom groben Urteil zum praezisen Foerderpunkt"
+        ],
+        [
+          "Dritter Schluss: was wird aus dem alten Streit?",
+          "Die historische Frontstellung entspannt sich - warum?",
+          "Der Bezug zur gesuchten Balance"
+        ],
+        [
+          "Zum Schluss: die Bruecke zu welchem Konzept?",
+          "Welches Unterrichtsmodell schliesst hier an?",
+          "Der Uebergang zum Verschraenkungs-Konzept"
+        ]
+      ]
     },
     {
       "id": "eb-fol-f-2",
@@ -1027,7 +1279,64 @@
       "tipp": "Diese beiden Grundformen stehen in deinen Notizen nur als Listenpunkte, ohne Erklärung und ohne Beispiel - hier lohnt sich der Blick auf die Folien also besonders. Merkhilfe: Bei der dritten Grundform fällt beides zusammen, bei der vierten wird abwechselnd gewichtet. Dass die Dozentin ihr eigenes Scheren-Beispiel relativiert, kannst du in einer Antwort ruhig erwähnen; das zeigt genaues Hinsehen. Nachlesen kannst du die beiden Grundformen auf Folien 25 und 27, die zugehörigen Beispiele auf Folien 26 und 28; die Liste aller fünf Grundformen steht auf Folie 20 (bei dir Notizen S. 48).",
       "quelle": "folie-entwicklungsbereiche-25",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Einstieg: wie viele Grundformen insgesamt, welche Nummern hier?",
+          "Verorten: Position drei und vier von fuenf",
+          "Die Autoren und die Gesamtzahl nennen"
+        ],
+        [
+          "Form drei: wie nah liegen die beiden Zielarten?",
+          "Wenn Fachthema und Entwicklungsziel fast dasselbe sind",
+          "Das Prinzip der dritten Form beschreiben"
+        ],
+        [
+          "Ethik-Beispiel: Konfliktthema trifft welchen Bereich?",
+          "Streit klaeren als Fach UND Entwicklung",
+          "Cool bleiben - wo deckt sich das?"
+        ],
+        [
+          "Sachunterrichts-Beispiel: Sinnesthema trifft welchen Bereich?",
+          "Fuenf Sinne als Fachinhalt und Foerderung zugleich",
+          "Das zweite Deckungs-Beispiel, aus dem Sachunterricht"
+        ],
+        [
+          "Drittes Beispiel: eine Denkoperation im Geschichtsunterricht",
+          "Frueher und heute vergleichen - welche Reihe?",
+          "Ortsansichten im Wandel: welches Beispiel?"
+        ],
+        [
+          "Form vier: die Gewichte duerfen sich verschieben",
+          "Mal mehr Fach, mal mehr Entwicklung - zeitweise",
+          "Das Prinzip der vierten Form: ungleiche Anteile erlaubt"
+        ],
+        [
+          "Warum ueberhaupt entlasten? Zwei Ueberlastungs-Gefahren",
+          "Was droht, wenn immer alles gleichzeitig laufen soll?",
+          "Die Begruendung: zu viel auf einmal schadet beiden Seiten"
+        ],
+        [
+          "Deutsch-Beispiel mit Waage: welche zwei Kompetenzen?",
+          "Erzaehlen versus Kooperieren - wie dargestellt?",
+          "Die Gewichtungs-Varianten von 2026 nennen"
+        ],
+        [
+          "Kunst-Beispiel mit Einschraenkung: passt nur halb",
+          "Das Schneide-Beispiel und sein Aber",
+          "Welches Werkzeug-Training nennt die Folie - mit Vorbehalt?"
+        ],
+        [
+          "Wozu so viele Formen? Denk an die Lerngruppen",
+          "Vielfalt der Formen spiegelt Vielfalt von was?",
+          "Die Begruendung fuer die Offenheit des Konzepts"
+        ],
+        [
+          "Abschlussnotiz: jede Form hat zwei Seiten",
+          "Neben Staerken auch typische Fallen erwaehnen",
+          "Was gilt fuer alle Grundformen gleichermassen?"
+        ]
+      ]
     }
   ]
 }

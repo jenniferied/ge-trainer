@@ -22,9 +22,11 @@ import * as Treppe from "./treppe.js";
 // Glossar + Fachbegriffe-Runde (18.08.2026): jeder Fachbegriff ein Eintrag in
 // sechs Fassungen, dazu der Anki-artige Abruf mit Tipp-Eingabe.
 import * as Glossar from "./glossar.js";
-// Das Tagesspiel (18.08.2026): ein Thema am Tag, Material aus dem Stoebern-Raum,
-// am Ende die Abfrage ueber Abruf-Treppe und Fachbegriffe.
-import * as Tagesspiel from "./tagesspiel.js";
+/* Themen-Lernen (18.08.2026 als "Tagesspiel", am 19.08. umgetauft und
+   ausgebaut): ein Thema aussuchen, sich das Material zu eigen machen, dann
+   weglegen und sich selbst pruefen - erst das Neue des Themas, danach der
+   Stapel aus allen frueher begonnenen Themen (reife.js). */
+import * as ThemenLernen from "./themen-lernen.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
@@ -121,9 +123,11 @@ function zeige(route, arg) {
        davor schreibt bewusst gar nichts ins Log (Begruendung im Kopf der
        Datei), ein Durchlauf ergibt also genau einen Eintrag. */
     case "klausurfrage": return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
-    /* Die drei Neuen vom 18.08.2026. Tagesspiel und Fachbegriffe loggen ueber
-       Spiele.logSpiel (sid "spiel"), das Glossar ist reines Nachschlagen. */
-    case "tagesspiel": return Tagesspiel.zeigeTagesspiel(themen, HOOKS);
+    /* Die drei Neuen vom 18.08.2026. Themen-Lernen und Fachbegriffe loggen
+       ueber Spiele.logSpiel (sid "spiel"), das Glossar ist reines Nachschlagen.
+       Der Router-Fall heisst seit dem 19.08. "themenlernen"; ein Legacy-Name
+       braucht es nicht, die Route wird nur aus dieser Datei heraus gerufen. */
+    case "themenlernen": return ThemenLernen.zeigeThemenLernen(themen, HOOKS);
     case "fachbegriffe": return Glossar.zeigeFachbegriffe(themen, HOOKS, function () { zeige("start"); });
     case "glossar": return Glossar.zeigeGlossar(themen, HOOKS);
     case "start":
@@ -1229,6 +1233,21 @@ function selbstText(s) {
    ausdruecklich, was passiert (der Lernstand wird ohne die Runde neu gerechnet,
    auf allen Geraeten) - dieselbe Auskunft wie drueben, und zwar deshalb, weil
    sie stimmt: die Grabsteine wirken beim naechsten Sync auf jedem Geraet. */
+/* Welcher Schirm hinter einer Spiel-Zeile steckt (fuer den 🔁-Knopf). Ohne
+   diese Tabelle landete JEDE Zeile ausser dem Operatoren-Training beim
+   Begriffe-Blitz - eine Themen-Lernen-Zeile startete also ein anderes Spiel,
+   als sie zeigt. Die arten sind dieselben Schluessel wie in stats.js
+   SPIEL_TEXT; "tagesspiel" ist Roses Bestand vom 18.08. und fuehrt an
+   denselben Ort wie "themenlernen". Fehlt ein Eintrag, bleibt der alte
+   Rueckfall stehen. */
+var SPIEL_ROUTE = {
+  "spiel-operatoren": "spiel-op",
+  "spiel-begriffe": "spiel-bg",
+  "spiel-glossar": "fachbegriffe",
+  "spiel-themenlernen": "themenlernen",
+  "spiel-tagesspiel": "themenlernen"
+};
+
 function zuletztAktionen(r, aufNeu) {
   var box = el("div", "zuletzt-aktionen");
 
@@ -1248,12 +1267,12 @@ function zuletztAktionen(r, aufNeu) {
     var nochmal = el("button", "zuletzt-knopf", "🔁");
     nochmal.setAttribute("aria-label", "Diese Runde nochmal");
     nochmal.title = art === "klausur" ? "Einen neuen Bogen schreiben"
-      : art === "spiel" ? "Das Spiel nochmal"
+      : art === "spiel" ? (SPIEL_ROUTE[r.art] ? "Nochmal dorthin" : "Das Spiel nochmal")
         : "Dieselben Aufgaben nochmal – die alte Zeile bleibt stehen";
     nochmal.addEventListener("click", function (ev) {
       ev.stopPropagation();
       if (art === "klausur") return zeige("klausur");
-      if (art === "spiel") return zeige(r.art === "spiel-operatoren" ? "spiel-op" : "spiel-bg");
+      if (art === "spiel") return zeige(SPIEL_ROUTE[r.art] || "spiel-bg");
       var p = Stats.rundePool(r, themen);
       // Fehlt eine Aufgabe (aeltere Korpus-Fassung), wird das gesagt statt
       // stillschweigend eine kuerzere Runde unter demselben Titel zu starten.
@@ -1738,7 +1757,9 @@ function dailyKachel(a) {
   // Ohne diese Zeile ginge die Zahl verloren.
   // Bei der reinen Anzeige waere "heute schon geuebt" gelogen - dort ist einfach
   // nichts offen. Der Zustand steht ohnehin schon in a.klein.
-  var stand = !tippbar ? "nichts offen" : a.erledigt ? "heute schon geübt" : "heute noch offen";
+  var stand = !tippbar ? "nichts offen"
+    : a.blase ? a.blase + (a.blase === 1 ? " Thema" : " Themen") + " heute durch"
+    : a.erledigt ? "heute schon geübt" : "heute noch offen";
   k.title = a.titel + " · " + a.klein + " · " + stand;
   k.setAttribute("aria-label", a.titel + " — " + stand);
 
@@ -1748,7 +1769,14 @@ function dailyKachel(a) {
   k.appendChild(el("b", null, a.kurz));
 
   var licht;
-  if (a.erledigt) {
+  /* Zaehl-Blase statt Haken, wenn die Kachel eine Zahl mitbringt (Themen-
+     Lernen): der Haken sagt nur "durch", die Blase sagt, WIE OFT heute. Ab
+     drei bekommt sie den Regenbogen-Schimmer aus style.css. Rein
+     psychologisch - kein Soll, kein Mahntext, sie zaehlt einfach weiter. */
+  if (a.blase) {
+    licht = el("span", "d-blase" + (a.blase >= 3 ? " tl-regenbogen" : ""), String(a.blase));
+    if (a.blase >= 3) licht.appendChild(el("i", "tl-stern", "⭐"));
+  } else if (a.erledigt) {
     licht = el("span", "d-haken", "✓");
   } else {
     licht = el("span", "d-licht offen puls dringend");
@@ -1777,14 +1805,20 @@ function dailyKachel(a) {
    drueben. Begruendung ausfuehrlich in geteilt-tagesstand.js bei offenText(). */
 function tagesAufgaben() {
   var heute = Spiele.heuteGespielt();
-  /* Das Tagesspiel steht vorn: die eine groessere Tagesaufgabe vor den zwei
-     kurzen Spielen. erledigt haengt am ABSCHLUSS-Eintrag (tagesspiel.js
-     heuteErledigt), nicht an heuteGespielt - ein abgebrochenes Tagesspiel soll
-     nicht abgehakt aussehen. */
+  /* Themen-Lernen steht vorn: die eine groessere Lernrunde vor den zwei kurzen
+     Spielen. erledigt haengt am ABSCHLUSS-Eintrag (themen-lernen.js
+     heuteErledigt, alt- UND neu-tolerant), nicht an heuteGespielt - eine
+     abgebrochene Runde soll nicht abgehakt aussehen.
+
+     blase: wie viele Themen HEUTE durch sind. Sie steht auch dann noch da,
+     wenn die Kachel laengst abgehakt ist - das zweite und dritte Thema an
+     einem Tag ist niemandes Pflicht, aber es soll zu sehen sein. */
+  var tlHeute = ThemenLernen.heuteThemen();
   var liste = [{
-    key: "ts", icon: "🗓", titel: "Tagesspiel", kurz: "Tagesspiel",
-    klein: "ein Thema · Material, dann Abfrage",
-    erledigt: Tagesspiel.heuteErledigt(), geh: function () { zeige("tagesspiel"); }
+    key: "tl", icon: "📚", titel: "Themen-Lernen", kurz: "Themen-Lernen",
+    klein: "ein Thema · erarbeiten, dann prüfen",
+    blase: tlHeute,
+    erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
   }, {
     key: "op", icon: "🎯", titel: "Signalwörter", kurz: "Signalwörter",
     klein: "6 Aufgaben · welcher Operator will was",
@@ -3089,6 +3123,11 @@ function freiKarte(thema, f, opts) {
   // Nimmt beides: Stift-Canvas und abfotografiertes Papier (foto.js). Ein Foto
   // von echtem Papier ist "hand" im wortwoertlichsten Sinn, der Vermerk unten
   // stimmt also fuer beide Wege.
+  /* Kuerzestes Transkript, das noch als gelesene Handschrift durchgeht. Kein
+     Urteil ist besser als ein Urteil ueber einen Fetzen - dieselbe Begruendung
+     wie bei MIN_TEXT weiter unten, nur eine Stufe frueher in der Kette. */
+  var TRANSKRIPT_MIN = 15;
+
   function handschrift(bilder) {
     handBenutzt = true;   // der Vermerk ueberlebt spaeter auch ohne das Bild
     var ent = entwurf(f.id);
@@ -3109,11 +3148,18 @@ function freiKarte(thema, f, opts) {
         /* Ein einzelnes Zeichen ist kein Transkript, sondern ein Lesefehler -
            genau die "\", ":" und ".", die am 15.08. in Roses Antworten
            standen. Es als ihren Text zu uebernehmen waere schlimmer als
-           ehrlich zu sagen, dass es nicht ging. */
+           ehrlich zu sagen, dass es nicht ging.
+
+           SEIT 19.08. LIEGT DIE SCHWELLE BEI 15 ZEICHEN (Jennifer): auch ein
+           Fetzen wie "die Prinzipien" ist kein Transkript einer halben Seite
+           Handschrift, sondern ein missglueckter Lesevorgang. Er wird nicht
+           uebernommen, nicht korrigiert und nicht geloggt - stattdessen die
+           Frage, ob das Foto nochmal kommt. Ein Urteil ueber einen Fetzen
+           waere ein Urteil ueber eine Antwort, die nie angekommen ist. */
         var roh = text ? String(text).trim() : "";
-        if (roh.length < 2) {
+        if (roh.length < TRANSKRIPT_MIN) {
           handLaeuft = false;
-          return void sagen("Die Handschrift konnte gerade nicht gelesen werden – dein Bild bleibt hier liegen. Du kannst sie auch abtippen.");
+          return void sagen("Da ist nichts angekommen – dein Bild bleibt hier liegen. Magst du das Foto nochmal machen? Abtippen geht natürlich auch.");
         }
         sagen("");
         Klausur.transkriptPruefen(roh, {
@@ -3248,7 +3294,15 @@ function freiKarte(thema, f, opts) {
         return Llm.korrigiere(thema.id, {
           id: f.id, frage: f.frage, afb: f.afb || null,
           punkte: t.kern.length || 1,
-          stichpunkte: t.kern, muster: f.muster || "", tipp: tipp
+          stichpunkte: t.kern, muster: f.muster || "", tipp: tipp,
+          /* waehle: n Nennungen aus einem Vorrat - die Function baut daraus den
+             Vorrats-Satz, sonst hakt die KI die ganze Liste ab und listet die
+             nicht gewaehlten Eintraege als "fehlt". Auch dann mitschicken, wenn
+             waehle genauso gross ist wie die Kernliste: der Vorrat ist in vier
+             der sechs Faelle groesser, als die Kernliste aussieht, weil die
+             "Weitere:"-Zeile in den Zusatz gewandert ist. */
+          waehle: typeof f.waehle === "number" && f.waehle > 0 && f.waehle <= t.kern.length
+            ? f.waehle : undefined
         }, antwort, standFuerKi(thema, f));
       })
       .catch(function () { return null; })
@@ -3281,19 +3335,51 @@ function freiKarte(thema, f, opts) {
       if (rand) teile.push(rand);
     }
 
-    var vorschlag = Array.isArray(erg.punkteVorschlag) ? erg.punkteVorschlag : [];
-    if (vorschlag.length) {
-      var ul = el("ul", "ki-treffer");
-      vorschlag.forEach(function (v) {
+    /* ZWEI LISTEN STATT EINES RASTERS (19.08.2026). Bis dahin stand hier die
+       Stichpunktliste der App, Zeile fuer Zeile abgehakt - und ein Kreuz neben
+       einem Stichpunkt liest sich als "das haettest du schreiben MUESSEN",
+       obwohl die Stichpunkte nur EIN moeglicher Erwartungshorizont sind. Die
+       Function liefert jetzt, was Rose wirklich hatte (getroffen, mit ihrem
+       eigenen Beleg aus dem Text) und was noch Punkte braechte (fehlt, mit
+       Hinweis) - beides aus IHRER Antwort heraus gedacht, nicht aus unserer
+       Liste. Das alte punkteVorschlag-Feld wird nicht mehr geschrieben; die
+       Leser im Verlauf bleiben trotzdem tolerant (trefferReihe). */
+    var getroffen = Array.isArray(erg.getroffen) ? erg.getroffen : [];
+    var fehlt = Array.isArray(erg.fehlt) ? erg.fehlt : [];
+    if (getroffen.length) {
+      var ulG = el("ul", "ki-treffer");
+      getroffen.forEach(function (v) {
         if (!v) return;
-        var art = trefferWert(v) || "nein";
-        var li = el("li", "treffer-" + art);
-        li.appendChild(el("span", "zeichen", GETROFFEN_ZEICHEN[art] || "–"));
-        li.appendChild(Beleg.belegZeile("span", v.stichpunkt || "", thema.id, "was"));
-        if (v.kommentar) li.appendChild(Beleg.belegZeile("div", v.kommentar, thema.id, "dazu"));
-        ul.appendChild(li);
+        var li = el("li", "treffer-ja");
+        li.appendChild(el("span", "zeichen", "✓"));
+        li.appendChild(Beleg.belegZeile("span", v.konzept || "", thema.id, "was"));
+        // Der Beleg ist Roses eigener Wortlaut - kursiv, damit sichtbar ist,
+        // dass das aus IHREM Text stammt und nicht aus unserer Liste.
+        if (v.beleg) li.appendChild(Beleg.belegZeile("div", v.beleg, thema.id, "dazu zitat"));
+        ulG.appendChild(li);
       });
-      teile.push(ul);
+      teile.push(el("div", "ki-listen-titel", "Das hast du getroffen"));
+      teile.push(ulG);
+    }
+    if (fehlt.length) {
+      var ulF = el("ul", "ki-treffer");
+      fehlt.forEach(function (v) {
+        if (!v) return;
+        // NICHT treffer-nein: das faerbt rot, und hier ist nichts falsch -
+        // es ist nur noch nicht da. Eigene, ruhigere Klasse.
+        var li = el("li", "treffer-offen");
+        li.appendChild(el("span", "zeichen", "+"));
+        li.appendChild(Beleg.belegZeile("span", v.konzept || "", thema.id, "was"));
+        if (v.hinweis) li.appendChild(Beleg.belegZeile("div", v.hinweis, thema.id, "dazu"));
+        ulF.appendChild(li);
+      });
+      teile.push(el("div", "ki-listen-titel", "Das würde noch Punkte bringen"));
+      teile.push(ulF);
+    }
+    if (getroffen.length || fehlt.length) {
+      teile.push(el("div", "ki-rahmen",
+        "Die Stichpunkte unten sind EIN möglicher Erwartungshorizont, nicht die einzige richtige Antwort – "
+        + "und die Punkte sind ein Vorschlag, keine Note."));
     }
 
     var saetze = [];
@@ -3321,8 +3407,13 @@ function freiKarte(thema, f, opts) {
        der beim naechsten Mal traegt. Geschrieben wird erst beim Selbstcheck
        (siehe kiUrteilMerken), angezeigt erst im Verlauf (zeigeRunde). Waehrend
        Rose uebt, taucht davon nichts wieder auf: die Aufgabe ist beim naechsten
-       Mal ein leeres Blatt, und der Chat filtert art "feedback" heraus. */
-    check.kiUrteilMerken(vorschlag, saetze.join(" "), kiMarken);
+       Mal ein leeres Blatt, und der Chat filtert art "feedback" heraus.
+
+       Der erste Parameter ist seit dem 19.08. leer: die Function liefert kein
+       punkteVorschlag mehr, also entsteht auch kein kiTreffer-Zeichen je
+       Stichpunkt. Alte Log-Eintraege behalten ihres und bleiben lesbar
+       (trefferReihe), neue tragen das Feld schlicht nicht. */
+    check.kiUrteilMerken([], saetze.join(" "), kiMarken);
 
     /* live: true - in dieser Blase steht, was das Modell gerade zu Roses
        Antwort gesagt hat, also Pixelschrift (geteilt.css .chat-msg.ki-live).

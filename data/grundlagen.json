@@ -546,7 +546,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "AFB I heißt: sauber benennen reicht. Vier Punkte aufzählen, in ganzen Sätzen, Fachbegriffe nutzen. Die vier Merkmale stehen auf Folie 18, und im Folientitel steht die Quellenangabe Fischer 2008, 30 - die mitzuschreiben kostet nichts und bringt in einer AFB-I-Aufgabe leicht einen zusätzlichen Punkt. In deinen Notizen findest du die Liste auf Notizen S. 57, dort allerdings ohne die Quelle.",
       "quelle": "folie-grundlagen-18",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 4,
+      "hinweise": [
+        [
+          "Was passiert schon vor dem Schuleintritt?",
+          "Denk an die Zeit vor der Einschulung.",
+          "Unterstuetzung setzt hier frueher an als anderswo."
+        ],
+        [
+          "Wie lang ist der Schultag hier?",
+          "Denk an den Rahmen von morgens bis nachmittags.",
+          "Nicht nur vormittags - der Tag dauert laenger."
+        ],
+        [
+          "Denk an die Atmosphaere der Raeume, fast wie zuhause.",
+          "Der Raum ist mehr als ein Unterrichtsort.",
+          "Die Raeume erfuellen im Alltag eine Doppelrolle."
+        ],
+        [
+          "Wie viele Kinder sitzen in einer Gruppe?",
+          "Denk an die Gruppengroesse im Vergleich zur Regelschule.",
+          "Hier geht es um eine Zahl pro Klasse."
+        ],
+        [
+          "Zusatz: Besonderheiten rund um Aufbau und Dauer der Schulzeit.",
+          "Bonus: Denk an Abschnitte, letzten Abschnitt, Extra-Jahre."
+        ]
+      ]
     },
     {
       "id": "gr-f-2",
@@ -574,7 +601,24 @@
       "musterVariantenGeprueft": false,
       "tipp": "Bei AFB II nicht nur aufzählen, sondern erklären, was die Stufen bedeuten - besonders die Sonderrolle der Werkstufe. Das ganze Stufenmodell steht auf Folie 20, mit Fischer 2008, 30 im Folientitel und Fornefeld 2004, 106 als Beleg für die vier Stufen; in deinen Notizen liegt es auf Notizen S. 58.",
       "quelle": "folie-grundlagen-20",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Zwei Zahlen: wie viele Abschnitte, wie lange jeder?",
+          "Merkhilfe: das Produkt beider Zahlen ergibt zwoelf.",
+          "Denk an die Namen der vier Abschnitte, von Anfang bis Ende."
+        ],
+        [
+          "Der letzte Abschnitt hat ein eigenes Ziel: was kommt danach?",
+          "Denk an den Uebergang ins Leben nach der Schule.",
+          "Diese Stufe blickt schon Richtung Arbeitswelt."
+        ],
+        [
+          "Die Schulzeit kann wachsen - von wo nach wo?",
+          "Zwei Jahreszahlen: uebliche Dauer und moegliche Dauer.",
+          "Denk auch an die Ausnahme fuer besondere Faelle."
+        ]
+      ]
     },
     {
       "id": "gr-f-3",
@@ -605,7 +649,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark.",
       "quelle": "dozentin-beispiel",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Wie ist die Antwort aufgebaut? Denk ans Zahlenschema.",
+          "Erst beide Seiten, dann dein Urteil.",
+          "Die Dozentin wuenscht sich ein festes Antwortgeruest."
+        ],
+        [
+          "Was spricht fuer die spezialisierte Schulform? Denk an ihre Merkmale.",
+          "Die vier Strukturmerkmale liefern hier die Argumente.",
+          "Kleine Gruppen, viel Zeit, passende Raeume - welche Seite ist das?"
+        ],
+        [
+          "Was spricht fuer gemeinsames Lernen mit allen? Denk an Menschenrechte.",
+          "Hier zaehlen Kontakt, Rechte und Miteinander.",
+          "Eine UN-Konvention liefert ein starkes Argument."
+        ],
+        [
+          "Welche Gefahr birgt die getrennte Beschulung?",
+          "Wer fehlt im Alltag dieser Schulform?",
+          "Denk an Abgrenzung statt Miteinander."
+        ],
+        [
+          "Woran stoesst gemeinsamer Unterricht praktisch an Grenzen?",
+          "Denk an Anforderungsniveau und Ausstattung.",
+          "Zwei Huerden: der Unterricht selbst und das, was fehlt."
+        ],
+        [
+          "Wie endet die Antwort? Nicht unentschieden bleiben.",
+          "Am Schluss zaehlt deine klare Haltung.",
+          "Der letzte Schritt: selbst Farbe bekennen."
+        ]
+      ]
     },
     {
       "id": "gr-gen-f-1",
@@ -635,7 +711,29 @@
       "tipp": "Vergleichen ist ein AFB-II-Operator: Erst das Vergleichskriterium nennen, dann die Formen daran sortieren - das bringt Struktur in die Antwort. Das Baumdiagramm mit den beiden Ästen steht auf Folie 17, in deinen Notizen auf Notizen S. 57.",
       "quelle": "folie-grundlagen-17",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Womit beginnt ein guter Vergleich? Mit dem Massstab.",
+          "Es geht um Recht, nicht um Raeume.",
+          "Erst sagen, woran verglichen wird."
+        ],
+        [
+          "Drei Formen haengen am selben Ast - welche?",
+          "Der groessere Zweig des Baumdiagramms, drei Eintraege.",
+          "Welche Formen gehoeren rechtlich zur allgemeinen Schule?"
+        ],
+        [
+          "Nur eine Form steht auf der anderen Seite.",
+          "Der Einzelgaenger im Baumdiagramm - wie heisst er?",
+          "Eine einzige Form gehoert rechtlich zur anderen Schulart."
+        ],
+        [
+          "Was verbindet trotzdem alle vier?",
+          "Der Unterschied ist nur juristisch - was bleibt gleich?",
+          "Zum Vergleich gehoert auch das Verbindende."
+        ]
+      ]
     },
     {
       "id": "gr-gen-f-2",
@@ -669,7 +767,49 @@
       "tipp": "Bei Erläutern-Aufgaben mit Material immer die Brücke schlagen: erst das Detail aus dem Material, dann das Merkmal, das es belegt. Die Dozentin hat den Stundenplan auf Folie 19 selbst beschriftet, und zwar mit sechs Ablesungen: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Genau diese sechs sind deine sicherste Punktequelle, und die Musterlösung geht sie der Reihe nach durch - wer sie in dieser Sechser-Ordnung lernt, verliert beim Schreiben keine. Merkhilfe: zwei Merkmale stecken im Zeitraster (Blöcke, Ganztag), zwei in den Feldinhalten (Symbole, Lernfelder), zwei im Schulalltag, den der Plan mit abbildet (eine Lerngruppe, gemeinsame Mahlzeiten). Die allgemeine Merkmalsliste nach Fischer 2008 steht auf Folie 18; von dort stammt das wohnlich gestaltete Klassenzimmer, das am Stundenplan nicht ablesbar ist - nenne es nur als ausdrücklichen Zusatz, sonst antwortest du an der Aufgabenstellung vorbei. In deinen Notizen ist der Stundenplan auf Notizen S. 57, die sechs Beschriftungen dort aber nicht.",
       "quelle": "folie-grundlagen-19",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie lang sind die Einheiten? Kein Dreiviertelstunden-Takt.",
+          "Denk ans Zeitraster: doppelt so lange Abschnitte.",
+          "Die Uhrzeiten im Plan verraten die Einheitenlaenge."
+        ],
+        [
+          "Wann beginnt und endet der Tag laut Plan?",
+          "Der Zeitrahmen selbst ist schon ein Merkmal.",
+          "Morgens bis in den Nachmittag - was heisst das?"
+        ],
+        [
+          "Wie bleibt der Plan lesbar, auch ohne Lesen?",
+          "Neben jedem Wort steht noch etwas Bildhaftes.",
+          "Denk an Unterstuetzung durch Piktogramme."
+        ],
+        [
+          "Welche Faecher gibt es hier, die anderswo fehlen?",
+          "Neben den klassischen Faechern stehen besondere Inhalte.",
+          "Denk an Alltagskompetenzen und Miteinander im Plan."
+        ],
+        [
+          "Fuer wie viele Gruppen gilt dieser eine Plan?",
+          "Die Klasse bleibt zusammen - was sagt das ueber die Groesse?",
+          "Denk an Formate, die nur mit wenigen funktionieren."
+        ],
+        [
+          "Zweimal taeglich wird zusammen gegessen - wo im Plan?",
+          "Essen hat eigene Zeitfenster - was bedeutet das?",
+          "Denk an feste Pausenrituale mit Verpflegung."
+        ],
+        [
+          "Zusatz: Ein Merkmal sieht man am Plan gerade nicht.",
+          "Bonus: Welches Merkmal betrifft den Raum, nicht die Zeit?",
+          "Ein Merkmal fehlt im Raster - ehrlich benennen."
+        ],
+        [
+          "Denk an den Operator: Behauptung plus Beleg am Detail.",
+          "Jedes Merkmal braucht seine Stelle im Plan.",
+          "Nicht nur aufzaehlen - zeigen, woran man es sieht."
+        ]
+      ]
     },
     {
       "id": "gr-gen-f-3",
@@ -699,7 +839,29 @@
       "tipp": "AFB III heißt Position beziehen: Argumente in beide Richtungen sammeln und am Ende klar bewerten. Dein Fakten-Fundament steht auf Folie 18 - dort heißt es wörtlich wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben - und auf Folie 20 für den bis zu zwölf Jahre langen Schulbesuch; die sechs Beschriftungen auf Folie 19 liefern weitere Belege. In deinen Notizen sind das Notizen S. 57 und 58. Die Abwägung selbst steht auf keiner Folie, die führst du wirklich selbst - genau dafür gibt es bei AFB III die Punkte.",
       "quelle": "folie-grundlagen-18",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erst beschreiben: Woran zeigt sich die Doppelrolle konkret?",
+          "Sammle die Indizien: Raeume, Zeit, Essen, Dauer.",
+          "Was macht diese Schule zu mehr als Unterricht?"
+        ],
+        [
+          "Warum ist das sinnvoll? Denk an Alltag als Lernfeld.",
+          "Echte Situationen, Sicherheit, Struktur - welche Seite ist das?",
+          "Was gewinnt jemand, der hier viel Zeit verbringt?"
+        ],
+        [
+          "Wo liegt die Kehrseite? Denk an die Welt draussen.",
+          "Was fehlt, wenn alles drinnen stattfindet?",
+          "Denk an das Risiko eines geschuetzten Raums."
+        ],
+        [
+          "Zum Schluss das bekannte Antwortgeruest mit eigenem Urteil.",
+          "Beide Seiten waegen, dann klar Position beziehen.",
+          "Wie schliesst eine Eroerterung? Mit deiner Haltung."
+        ]
+      ]
     },
     {
       "id": "gr-fol-f-1",
@@ -734,7 +896,54 @@
       "tipp": "Diese Rahmenfrage steht in deinen Notizen nicht, sie ist aber die Klammer über die ganze Vorlesungsreihe - und sie taucht in anderer Formulierung als eines der vier Spannungsfelder der Disziplin wieder auf. Wenn du eine Erörterungsaufgabe bekommst und gerade keinen Einstieg findest: Diese Frage lässt sich fast auf jedes der acht Themen anwenden. Nachschlagen kannst du sie auf Folie 5, zusammen mit den drei Qualifikationszielen. Das Material für die Pro-Seite liefern Folie 18 (Merkmale), Folie 20 (Stufen und Werkstufe) und Folie 19 (Blöcke, spezifische Lernfelder), für die Gegenseite Folie 17: drei der vier Formen des gemeinsamen Unterrichts gehören schulrechtlich zur Regelschule. In deinen Notizen fehlt Folie 5 ganz, Merkmale und Beschulungsformen stehen dort aber auf Notizen S. 57 und 58.",
       "quelle": "folie-grundlagen-5",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Womit startet die Antwort? Mit der Frage des Moduls.",
+          "Eigenes Fach oder Anpassung des Allgemeinen - die Grundfrage.",
+          "Denk an die zwei Pole der Modulfrage."
+        ],
+        [
+          "Erstes Pro-Argument: die vier besonderen Strukturmerkmale.",
+          "Was ist an dieser Schulform organisatorisch eigen?",
+          "Denk an die Merkmalsliste mit Quellenangabe."
+        ],
+        [
+          "Zweites Pro: Aufbau und Laenge der Schulzeit sind anders.",
+          "Denk an Abschnitte, besonderes Ende, Extra-Jahre.",
+          "Vier mal drei - und die Zeit kann wachsen."
+        ],
+        [
+          "Drittes Pro: Inhalte und Tagesablauf, die es sonst nicht gibt.",
+          "Denk an besondere Faecher und Essenszeiten.",
+          "Der Schultag selbst sieht hier anders aus."
+        ],
+        [
+          "Erstes Contra: Wo lernen diese Schueler:innen ueberall?",
+          "Denk ans Baumdiagramm - die Mehrheit haengt woanders.",
+          "Drei zu eins - was heisst das fuer einen Sonderweg?"
+        ],
+        [
+          "Zweites Contra: Wer muss im gemeinsamen Unterricht kooperieren?",
+          "Ein voellig eigenes System wuerde Bruecken kappen.",
+          "Denk an Anschlussfaehigkeit zwischen den Schularten."
+        ],
+        [
+          "Drittes Contra: Welche Inhalte nennt die Modulbeschreibung selbst?",
+          "Die Bildungsinhalte sind dieselben - nur der Zugang unterscheidet sich.",
+          "Denk an die Ziele des Moduls: gleicher Stoff, anderer Weg."
+        ],
+        [
+          "Wie loest die Vorlesung selbst den Widerspruch auf?",
+          "Anpassen statt neu erfinden - die Mitte zwischen beiden Polen.",
+          "Denk an das Schluesselwort aus der Modulfrage."
+        ],
+        [
+          "Zum Schluss: Was folgt daraus fuer den Unterrichtsalltag?",
+          "Beides koennen: das Allgemeine kennen, fuers Kind zuschneiden.",
+          "Dein Fazit in einem Satz - welche Formel traegt es?"
+        ]
+      ]
     }
   ]
 }

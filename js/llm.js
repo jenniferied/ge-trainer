@@ -6,10 +6,10 @@
 // Alles laeuft ueber die Supabase Edge Function llm-ge (Proxy vor der
 // Anthropic API) — der Key liegt NUR dort als Secret.
 //
-// DREI GETRENNTE TAGES-TOEPFE, und das ist Absicht: ge-llm-tag (Klausur-Arbeit),
-// ge-mk-tag (Geplauder mit der Kreatur), ge-chat-tag (Nachfragen zum Stoff).
-// Keiner darf einem anderen das Budget wegnehmen. Serverseitig steht dasselbe
-// noch einmal in llm-ge (TOPF).
+// VIER GETRENNTE TAGES-TOEPFE, und das ist Absicht: ge-llm-tag (Klausur-Arbeit),
+// ge-mk-tag (Geplauder mit der Kreatur), ge-chat-tag (Nachfragen zum Stoff),
+// ge-begriff-tag (Begriffs-Abgleich im Glossar). Keiner darf einem anderen das
+// Budget wegnehmen. Serverseitig steht dasselbe noch einmal in llm-ge (TOPF).
 //
 // EISERNE REGEL: Das LLM ist nie Voraussetzung. Jeder Fehler (Function nicht
 // deployed, Limit erreicht, offline, Timeout, kaputtes JSON) faellt lautlos auf
@@ -63,17 +63,33 @@
 //               Textsuche im gerenderten Absatz, siehe stelleFinden()).
 //             typ = "underline" | "circle" | "note"
 //         randkommentare: [ "..." ],          // 0-3, ohne feste Textstelle
-//         punkteVorschlag: [ { stichpunkt, getroffen, punkte, maxPunkte, kommentar } ],
-//             getroffen = "ja" | "teilweise" | "nein"
-//             ein Eintrag je Stichpunkt der Aufgabe, gleiche Reihenfolge
-//         punkteGesamt: number,               // Summe, VORSCHLAG
+//         getroffen: [ { konzept, beleg } ],  // was die Antwort trifft, beleg =
+//             kurzes woertliches Zitat aus ROSES Text (reihenfolgeunabhaengig,
+//             haengt seit 19.08.2026 an Konzepten, nicht an Stichpunkt-Zeilen)
+//         fehlt: [ { konzept, hinweis } ],    // was noch Punkte braechte,
+//             hinweis = kurzer inhaltlicher Anstoss
+//         punkteGesamt: number,               // VORSCHLAG
 //         punkteMax: number,
 //         gesamtkommentar: "..."              // warm, gern witzig, 2-3 Saetze
 //       }
 //       Rose hat beim Punktestand das letzte Wort — punkteGesamt ist nur ein
 //       Vorschlag, den der Klausurmodus editierbar anzeigt.
+//       Die alte Server-Form (punkteVorschlag je Stichpunkt) wird weiter
+//       verstanden und in getroffen/fehlt uebersetzt — siehe saubereKorrektur.
 //       Die Sticker-Auswahl macht der CLIENT (ui.js, Kategorien good/part/
 //       sanft, nie haemisch) — das gehoert nicht ins Modell.
+//
+//   begriffAbgleich(eintrag, antwortText) -> Promise<Urteil | null>
+//       Die Begriff-Erklaer-Karte im Glossar: Rose tippt in eigenen Worten, was
+//       ein Fachbegriff bedeutet, der Server vergleicht sinngemaess mit der
+//       Glossar-Definition (eintrag.fassungen.de). Eigener Tages-Topf
+//       (ge-begriff-tag), NICHT ge-llm-tag: Begriffe ueben darf der
+//       Klausur-Korrektur das Budget nicht wegnehmen.
+//       Urteil = { urteil: "sitzt"|"fast"|"ansatz"|"neu",
+//                  fehlt: string|null,   // der EINE wichtigste fehlende Kern
+//                  satz: string }        // ein freundlicher Satz dazu
+//       null bei jedem Fehler — glossar.js faellt dann auf die
+//       Selbsteinschaetzung zurueck.
 //
 //   stelleFinden(text, textstelle) -> { start, ende } | null
 //       Findet ein LLM-Zitat robust im Antworttext (Whitespace- und
@@ -301,6 +317,78 @@ export async function frageChat(nutzlast, aufTeil) {
   }
 }
 
+// ---- Vierter Topf: der Begriffs-Abgleich im Glossar ----
+// Gleiche Begruendung wie bei den beiden Toepfen davor: Begriffe ueben ist eine
+// eigene Taetigkeit, und eine Glossar-Runde macht schnell zwanzig kurze Calls.
+// Die duerfen der Klausur-Korrektur (ge-llm-tag) das Budget nicht wegnehmen —
+// eigener Key, eigenes Limit, laeuft deshalb nicht durch ruf().
+const BG_LIMIT = () => cfg().begriffTagesLimit || 150;
+const BG_KEY = () => cfg().begriffTagKey || "ge-begriff-tag";
+
+function bgBudget() {
+  const heute = new Date().toDateString();
+  let d;
+  try { d = JSON.parse(localStorage.getItem(BG_KEY()) || "{}"); } catch { d = {}; }
+  if (d.tag !== heute) d = { tag: heute, n: 0 };
+  return d;
+}
+function bgVerbrauch() {
+  const d = bgBudget();
+  d.n++;
+  try { localStorage.setItem(BG_KEY(), JSON.stringify(d)); } catch { /* privater Modus */ }
+}
+const bgTagFrei = () => bgBudget().n < BG_LIMIT();
+
+const BG_URTEILE = ["sitzt", "fast", "ansatz", "neu"];
+
+/* Roses Erklaerung eines Fachbegriffs sinngemaess mit der Glossar-Definition
+   abgleichen (Function-Zweig art "begriff"). Verglichen wird immer gegen die
+   deutsche Klausursprache-Fassung (eintrag.fassungen.de) — das ist die Fassung,
+   an der die Klausur misst; welche Fassung Rose ANZEIGT, ist Sache von
+   glossar.js. Rueckgabe { urteil, fehlt, satz } oder null; null heisst wie
+   ueberall in dieser Datei "mach ohne KI weiter" — glossar.js zeigt dann die
+   Selbsteinschaetzung, nie einen Fehler. */
+export async function begriffAbgleich(eintrag, antwortText) {
+  const e = eintrag || {};
+  const begriff = typeof e.begriff === "string" ? e.begriff.trim() : "";
+  const definition = e.fassungen && typeof e.fassungen.de === "string" ? e.fassungen.de.trim() : "";
+  const antwort = typeof antwortText === "string" ? antwortText.trim() : "";
+  if (!begriff || !definition || !antwort) return null;
+  if (!aktiv() || !bgTagFrei()) return null;
+  const steuerung = new AbortController();
+  const wecker = setTimeout(() => steuerung.abort(), 20000);
+  try {
+    const r = await fetch(url(), {
+      method: "POST",
+      headers: kopf(),
+      signal: steuerung.signal,
+      body: JSON.stringify({
+        art: "begriff",
+        begriff: begriff.slice(0, 300),
+        definition: definition.slice(0, 2000),
+        antwort: antwort.slice(0, 2000),
+      }),
+    });
+    // Erst zaehlen, wenn wirklich ein Status zurueckkam — dieselbe Reihenfolge
+    // und dieselbe Begruendung wie bei maskottchen(): ein Zaehler vor dem fetch
+    // liefe auch bei toter Function hoch, und die App behauptete irgendwann
+    // "genug fuer heute", was nicht stimmt.
+    bgVerbrauch();
+    if (!r.ok) return null;
+    const d = await r.json();
+    if (!d || BG_URTEILE.indexOf(d.urteil) < 0 || typeof d.satz !== "string" || !d.satz.trim()) return null;
+    return {
+      urteil: d.urteil,
+      fehlt: typeof d.fehlt === "string" && d.fehlt.trim() ? d.fehlt.trim() : null,
+      satz: d.satz.trim(),
+    };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(wecker);
+  }
+}
+
 function kopf() {
   const k = cfg().supabaseAnonKey || "";
   return { "Content-Type": "application/json", apikey: k, Authorization: "Bearer " + k };
@@ -398,15 +486,26 @@ export async function transkribiere(quelle, aufgabe, opts) {
 
 // ---- Einsatzort 2: Korrektur ----
 const ERLAUBTE_TYPEN = ["underline", "circle", "note"];
-const ERLAUBT_GETROFFEN = ["ja", "teilweise", "nein"];
 
 const zahl = (w, ersatz = 0) => (typeof w === "number" && isFinite(w) ? w : ersatz);
 
 // Alles, was das Modell schickt, wird hier auf die dokumentierte Form gebracht.
 // Der Klausurmodus soll sich auf die Felder verlassen koennen, ohne selbst zu
 // pruefen — und ein halb kaputtes JSON darf das Rendering nicht sprengen.
+//
+// ZWEI Server-Formen werden akzeptiert, mit Absicht: App (GitHub Pages) und
+// Edge Function deployen nicht atomar, und ein alter Client kann noch aus dem
+// Cache kommen bzw. eine alte Function noch laufen. Die neue Form (seit
+// 19.08.2026) schickt getroffen/fehlt — Konzepte, unabhaengig von der
+// Stichpunkt-Reihenfolge. Die alte schickte punkteVorschlag, eine Zeile je
+// Stichpunkt; sie wird hier uebersetzt: ja/teilweise -> getroffen (das
+// Konzept traegt), nein -> fehlt. Der fruehere Laengen-Zwang (punkteVorschlag
+// auf die Stichpunkt-Anzahl zurechtbiegen) entfaellt ersatzlos — getroffen und
+// fehlt haengen an Konzepten, nicht mehr an Zeilen, eine Sollzahl gibt es nicht.
 function saubereKorrektur(d, aufgabe) {
-  if (!d || !Array.isArray(d.punkteVorschlag) || typeof d.gesamtkommentar !== "string") return null;
+  if (!d || typeof d.gesamtkommentar !== "string") return null;
+  const alteForm = Array.isArray(d.punkteVorschlag);
+  if (!alteForm && !(Array.isArray(d.getroffen) && Array.isArray(d.fehlt))) return null;
 
   const annotationen = (Array.isArray(d.annotationen) ? d.annotationen : [])
     .filter((a) => a && typeof a.textstelle === "string" && a.textstelle.trim())
@@ -422,39 +521,35 @@ function saubereKorrektur(d, aufgabe) {
     .slice(0, 3)
     .map((s) => s.trim());
 
-  let punkteVorschlag = d.punkteVorschlag
-    .filter((p) => p && typeof p === "object")
-    .map((p) => ({
-      stichpunkt: typeof p.stichpunkt === "string" ? p.stichpunkt : "",
-      getroffen: ERLAUBT_GETROFFEN.includes(p.getroffen) ? p.getroffen : "teilweise",
-      punkte: Math.max(0, zahl(p.punkte)),
-      maxPunkte: Math.max(0, zahl(p.maxPunkte)),
-      kommentar: typeof p.kommentar === "string" ? p.kommentar.trim() : "",
-    }));
-
-  // Ein Eintrag je Stichpunkt, gleiche Reihenfolge - das sagt der Header-Vertrag
-  // zu, aber ein JSON-Schema kann keine Array-Laenge erzwingen. Passt die Laenge
-  // nicht, wuerde der Klausurmodus den ganzen Vorschlag verwerfen und der
-  // Punktestand spaeter kommentarlos wieder verschwinden. Darum hier auf die
-  // Sollzahl bringen: ueberzaehlige weg, fehlende neutral auffuellen.
-  const stichpunkte = Array.isArray(aufgabe && aufgabe.stichpunkte) ? aufgabe.stichpunkte : [];
-  if (stichpunkte.length && punkteVorschlag.length !== stichpunkte.length) {
-    punkteVorschlag = stichpunkte.map((sp, i) => punkteVorschlag[i] || ({
-      stichpunkt: typeof sp === "string" ? sp : "",
-      getroffen: "teilweise",
-      punkte: 0,
-      maxPunkte: 0,
-      kommentar: "",
-    }));
+  const kurz = (w) => (typeof w === "string" ? w.trim() : "");
+  let getroffen, fehlt;
+  if (alteForm) {
+    const zeilen = d.punkteVorschlag.filter((p) => p && typeof p === "object");
+    getroffen = zeilen
+      .filter((p) => p.getroffen === "ja" || p.getroffen === "teilweise")
+      .map((p) => ({ konzept: kurz(p.stichpunkt), beleg: kurz(p.kommentar) }));
+    fehlt = zeilen
+      .filter((p) => p.getroffen === "nein")
+      .map((p) => ({ konzept: kurz(p.stichpunkt), hinweis: kurz(p.kommentar) }));
+  } else {
+    getroffen = d.getroffen
+      .filter((p) => p && typeof p === "object")
+      .map((p) => ({ konzept: kurz(p.konzept), beleg: kurz(p.beleg) }));
+    fehlt = d.fehlt
+      .filter((p) => p && typeof p === "object")
+      .map((p) => ({ konzept: kurz(p.konzept), hinweis: kurz(p.hinweis) }));
   }
+  // Ohne Konzept-Namen ist ein Eintrag nicht anzeigbar — raus damit.
+  getroffen = getroffen.filter((p) => p.konzept);
+  fehlt = fehlt.filter((p) => p.konzept);
 
-  // Maximum der Aufgabe gewinnt vor dem, was das Modell rechnet.
-  const punkteMax = zahl(aufgabe && aufgabe.punkte, 0) || zahl(d.punkteMax, 0)
-    || punkteVorschlag.reduce((s, p) => s + p.maxPunkte, 0);
-  const summe = punkteVorschlag.reduce((s, p) => s + p.punkte, 0);
-  const punkteGesamt = Math.min(punkteMax || summe, Math.round(summe * 2) / 2);
+  // Maximum der Aufgabe gewinnt vor dem, was das Modell rechnet; der Vorschlag
+  // wird auf halbe Punkte gerundet und am Maximum gedeckelt.
+  const punkteMax = zahl(aufgabe && aufgabe.punkte, 0) || zahl(d.punkteMax, 0);
+  const roh = Math.max(0, Math.round(zahl(d.punkteGesamt) * 2) / 2);
+  const punkteGesamt = punkteMax ? Math.min(punkteMax, roh) : roh;
 
-  return { annotationen, randkommentare, punkteVorschlag, punkteGesamt, punkteMax, gesamtkommentar: d.gesamtkommentar.trim() };
+  return { annotationen, randkommentare, getroffen, fehlt, punkteGesamt, punkteMax, gesamtkommentar: d.gesamtkommentar.trim() };
 }
 
 /* stand (seit 14.08.2026, optional): was Rose zu DIESER Aufgabe schon geuebt hat
@@ -481,6 +576,11 @@ export async function korrigiere(thema, aufgabe, antwort, stand) {
       stichpunkte: Array.isArray(aufgabe.stichpunkte) ? aufgabe.stichpunkte : [],
       muster: aufgabe.muster || "",
       tipp: aufgabe.tipp || "",
+      // waehle (optional): die Aufgabe verlangt n Nennungen aus einem Vorrat.
+      // Die Function baut daraus den Vorrats-Satz im Aufgabenblock — gezaehlt
+      // wird dann "n gueltige Nennungen", keine festen Zeilen. undefined
+      // faellt bei JSON.stringify einfach weg.
+      waehle: typeof aufgabe.waehle === "number" && aufgabe.waehle > 0 ? aufgabe.waehle : undefined,
     },
     antwort: text,
     stand: typeof stand === "string" && stand.trim() ? stand.trim().slice(0, 2000) : "",
@@ -550,4 +650,4 @@ export function stelleFinden(text, textstelle) {
 // Aufrufer.
 
 // Globale Schnittstelle fuer klausur.js und den Uebungsmodus.
-window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei, frageChat, chatTagFrei };
+window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei, frageChat, chatTagFrei, begriffAbgleich };

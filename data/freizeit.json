@@ -867,7 +867,40 @@
       "musterVariantenGeprueft": false,
       "tipp": "Acht gibt es insgesamt - die Fachbegriffe plus je zwei, drei Stichworte zur Bedeutung reichen für volle AFB-I-Punkte. Nachschlagen kannst du die vollständige Tabelle mit allen acht Zielfunktionen auf Folie 8; in deinen Notizen steht sie auf Notizen S. 01.",
       "quelle": "folie-freizeit-8",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 5,
+      "hinweise": [
+        [
+          "Die Funktion fuers Auftanken: Körper und Ruhe im Mittelpunkt",
+          "Was Pausen und Schlaf erfüllen - Fachwort mit Re-",
+          "Denk ans Ausruhen und ein gutes Körpergefühl"
+        ],
+        [
+          "Der Gegenpol zum Alltag: etwas ganz anderes tun, Spaß haben",
+          "Die Funktion, die Belastung ausbalanciert - denk an Zerstreuung",
+          "Fachwort mit K: Alltagsstress durch Abwechslung auffangen"
+        ],
+        [
+          "Die Lern-Funktion der Freizeit",
+          "Neues entdecken und dazulernen - welches Fachwort passt?",
+          "Bildung auch außerhalb der Schule, ein Leben lang"
+        ],
+        [
+          "Die stille Funktion: zu sich selbst finden",
+          "Nach innen schauen - wie heißt das Fachwort?",
+          "Besinnung und Nachdenken über die eigene Person"
+        ],
+        [
+          "Die soziale Funktion: mit anderen im Austausch sein",
+          "Reden, Kontakte, Beisammensein - welches Fachwort?",
+          "Es geht ums Miteinander-Sprechen und um Beziehungen"
+        ],
+        [
+          "Drei weitere Funktionen: Dazugehören, Mitbestimmen, Kultur",
+          "Der Rest der Achterliste - Gemeinschaft, Beteiligung, Kreatives",
+          "Denk an die übrigen drei Zielfunktionen"
+        ]
+      ]
     },
     {
       "id": "fr-f-2",
@@ -896,7 +929,29 @@
       "musterVariantenGeprueft": false,
       "tipp": "In deinen Notizen steht ausdrücklich: Wichtig!! Frage zwei: prozessbezogene Kompetenzen. Diese drei PKs solltest du sicher können. Die Tabelle mit allen drei PKs steht auf Folie 24, das Gesamtmodell mit DK 1 und DK 2 daneben auf Folie 23; in deinen Notizen liegt beides zusammen auf Notizen S. 04.",
       "quelle": "folie-freizeit-24",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Erster Schritt: Material sammeln und sortieren",
+          "Was passiert vor jeder Entscheidung? Suchen und Überblick schaffen",
+          "Der Recherche-Schritt des Modells"
+        ],
+        [
+          "Zweiter Schritt: abwägen und eine Wahl treffen",
+          "Hier werden Optionen verglichen und Einigungen nötig",
+          "Vom Überblick zur Auswahl - was gehört dazu?"
+        ],
+        [
+          "Dritter Schritt: vom Plan ins Tun kommen",
+          "Umsetzung: organisieren, Hilfen einbeziehen, durch Wiederholen sicherer werden",
+          "Was passiert nach der Entscheidung?"
+        ],
+        [
+          "Wie hängen die Prozesse mit dem Rest des Modells zusammen?",
+          "Denk an die zwei DK-Bereiche und das Fundament darunter",
+          "Der Rahmen: Wissensbereiche plus Entwicklungsbasis, mit Quelle"
+        ]
+      ]
     },
     {
       "id": "fr-f-3",
@@ -927,7 +982,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Der Niehoff-Satz ist das Herzstück - wer den sinngemäß bringt, zeigt genau das geforderte Fachverständnis. Die Fünfer-Kette mit dem Zielstern steht auf Folie 21, die Komponenten Wissen, Können und Wollen auf Folie 22; in deinen Notizen findest du beides auf Notizen S. 03.",
       "quelle": "folie-freizeit-21",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Womit startet die Argumentation? Die Lebensrealität vieler Betroffener",
+          "Denk an das Angewiesensein auf andere im Alltag",
+          "Der Ist-Zustand: wenig eigener Spielraum"
+        ],
+        [
+          "Was folgt daraus fürs Lernen? Hahn beschreibt die Hürde",
+          "Wenn andere entscheiden - was wird dann schwer?",
+          "Die Kehrseite ständiger Entscheidungen durch Dritte"
+        ],
+        [
+          "Wann muss Förderung ansetzen? Früh!",
+          "Die Schlussfolgerung mit Blick auf die Schulphase",
+          "Kulig und Theunissen ziehen hier die Folgerung"
+        ],
+        [
+          "Drei Teilschritte: spüren, wählen, einstehen",
+          "Was gehört konkret zum eigenständigen Handeln?",
+          "Eigene Wünsche, eigene Wahl, eigenes Einstehen - als Lernziele"
+        ],
+        [
+          "Das berühmte Zitat: Hilfe nicht abschaffen, sondern selbst steuern",
+          "Niehoffs Definition - worum geht es wirklich bei Unterstützung?",
+          "Der Merksatz gegen das Missverständnis vom Alleine-Schaffen"
+        ],
+        [
+          "Wohin führt alles? Eigenes Leben nach eigenen Maßstäben",
+          "Das Fernziel plus die drei W-Komponenten",
+          "Denk an die Trias aus Kopf, Hand und Motivation"
+        ]
+      ]
     },
     {
       "id": "fr-f-4",
@@ -957,7 +1044,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Genau dieses Beurteilen plus Handlungsoptionen ableiten steht als AFB-III-Ziel der Vorlesung. Ein Spannungsfeld tief ist besser als drei oberflächlich. Die drei Waagen mit allen Gegensatzpaaren stehen auf Folie 33, der Balance-Satz Unterstützung, die stärkt - Freiheit, die wachsen lässt auf Folie 36; in deinen Notizen liegt beides auf Notizen S. 05.",
       "quelle": "folie-freizeit-33",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Erst die Auswahl zeigen: drei Waagen stehen bereit",
+          "Welche drei Gegensatzpaare nennt die Folie?",
+          "Der Überblick über alle Balance-Paare"
+        ],
+        [
+          "Was passiert, wenn Freizeit zum Förderprogramm wird?",
+          "Die Gefahr der Verzweckung beschreiben",
+          "Wenn alles einen Lernzweck bekommt - was geht verloren?"
+        ],
+        [
+          "Die andere Seite: Was fehlt ganz ohne Anregung?",
+          "Warum völliger Rückzug der Schule auch schadet",
+          "Denk an die drei W, die erst erworben werden müssen"
+        ],
+        [
+          "Konkrete Wege zur Balance: anbieten statt vorschreiben",
+          "Was kann Pädagogik praktisch tun? Mehrere Ideen",
+          "Wahlfreiheit, Freiräume, Unterstützung - wie umsetzen?"
+        ],
+        [
+          "Der Schlussgedanke: das Gleichgewicht benennen",
+          "Womit rundest du ab? Die Mitte zwischen den Polen",
+          "Kein Entweder-oder, sondern ein Sowohl-als-auch"
+        ]
+      ]
     },
     {
       "id": "fr-f-5",
@@ -989,7 +1103,44 @@
       "musterVariantenGeprueft": false,
       "tipp": "Achte auf das Wörtchen und in der Aufgabe - es verbindet zwei verschiedene Dinge: Teilhaberisiken sind etwas anderes als Barrieren, und eine vollständige Antwort bringt beides. Die Teilhaberisiken hat die Vorlesung als eigene Tabelle auf Folie 13 (acht Freizeitbedürfnisse, je eine typische Benachteiligung) - in deinen Notizen fehlt diese Tabelle, deshalb lohnt sich der Blick auf die Folie hier besonders. Die acht Bedürfnisnamen kennst du schon von den Zielfunktionen von Freizeit; du hängst nur je eine typische Benachteiligung dran, dann hast du diesen Teil. Bei den Barrieren ist die Dreiteilung strukturell - sozial - Ressourcen das Gerüst; eine Beispielzahl aus dem Sport macht die Antwort anschaulich. War auch Quiz-Frage in der Vorlesung. Die Barrieren-Kästen stehen auf Folie 16, die Sport-Zahlen auf Folie 17, beides auch bei dir auf Notizen S. 02.",
       "quelle": "folie-freizeit-16",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Das Grundprinzip der Tabelle: jede Funktion hat eine Schattenseite",
+          "Schucks Systematik: Bedürfnis und passendes Risiko als Paar",
+          "Wie sind die Risiken geordnet? Entlang der Zielfunktionen"
+        ],
+        [
+          "Risiken der ersten vier Funktionen: Ausruhen bis Besinnung",
+          "Was steht Erholung, Ausgleich, Lernen und Innenschau entgegen?",
+          "Denk an Taktung von außen, Wege, Zugänge, Bevormundung"
+        ],
+        [
+          "Risiken der zweiten Vierergruppe: vom Austausch bis zur Kultur",
+          "Was erschwert Kontakt, Dazugehören, Mitbestimmen und Kulturleben?",
+          "Denk an Ausgrenzung, fehlende Wahl, fehlende Angebote"
+        ],
+        [
+          "Die Kategorie rund um Wege, Gebäude und Systeme",
+          "Barrieren, die in der Umwelt gebaut sind",
+          "Was macht Orte schwer erreichbar oder unzugänglich?"
+        ],
+        [
+          "Die Kategorie in den Köpfen der Menschen",
+          "Haltungen und Berührungsängste als Hindernis",
+          "Barrieren, die aus Blickwinkeln und Unsicherheit entstehen"
+        ],
+        [
+          "Woran fehlt es personell und praktisch?",
+          "Die dritte Spalte: knappe Mittel und Bedenken",
+          "Denk an fehlende Hände und an Absicherungsfragen"
+        ],
+        [
+          "Die vier Sport-Zahlen: Verein, Inaktive, inklusive Vereine, Flächen",
+          "Welche Prozentwerte belegen die Lücke beim Sport?",
+          "Denk an die Statistik: überall sehr kleine Anteile"
+        ]
+      ]
     },
     {
       "id": "fr-gen-f-1",
@@ -1020,7 +1171,34 @@
       "tipp": "In deinen Notizen steht neben dieser Quizfrage Wichtig!! - die drei PKs sind gesetzt. Anwenden ist ein AFB-II-Operator, Aufzählen reicht also nicht: Du musst die drei Kompetenzen am Beispiel durchspielen, erst recherchieren, dann entscheiden, dann umsetzen. Schreib in ganzen Sätzen und benutze die Fachbegriffe PK 1 bis PK 3, das verlangen die Klausurhinweise ausdrücklich. Zum Nachschlagen: Die drei PKs stehen auf Folie 24, das Gesamtmodell mit DK 1, DK 2 und den Entwicklungsbereichen auf Folie 23; bei dir ist beides auf Notizen S. 04.",
       "quelle": "folie-freizeit-24",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Schritt eins am Beispiel: Was gibt es in der Umgebung?",
+          "Erst sammeln: Orte, Zeiten und Preise herausfinden",
+          "Der Suchschritt, übertragen auf den Ausflug"
+        ],
+        [
+          "Schritt zwei am Beispiel: gemeinsam abwägen und wählen",
+          "Wie kommt die Gruppe zu einer Entscheidung?",
+          "Plus und Minus durchgehen, sich einigen"
+        ],
+        [
+          "Schritt drei am Beispiel: den Tag wirklich durchführen",
+          "Organisation konkret: Weg, Geld, Ausrüstung, Hilfe",
+          "Vom Beschluss zum echten Nachmittag"
+        ],
+        [
+          "Verbindung zum Gesamtmodell nicht weglassen",
+          "Die zwei Wissensbereiche und die vier Grundlagenbereiche nennen",
+          "Wie stützen DK und Entwicklungsbasis das Beispiel?"
+        ],
+        [
+          "Wer hat das Modell entwickelt, und woran angelehnt?",
+          "Die Autorinnen samt Jahr gehören dazu",
+          "Kurz die Herkunft des Modells angeben"
+        ]
+      ]
     },
     {
       "id": "fr-gen-f-2",
@@ -1052,7 +1230,39 @@
       "tipp": "Entwickeln ist ein AFB-III-Operator, das heißt: nicht nur beschreiben, was du machst, sondern jede Entscheidung fachlich begründen. Wer Wissen, Können und Wollen plus die drei PKs als Gliederung nutzt und am Ende die Balance der Spannungsfelder reflektiert, hat das Gerüst der ganzen Vorlesung im Text. Zum Nachschlagen: Wissen, Können und Wollen stehen auf Folie 22, die drei PKs auf Folie 24, konkrete Fördermaßnahmen auf Folie 25 und die Spannungsfelder auf Folie 33. In deinen Notizen sind das Notizen S. 03 und 05; die Fördermaßnahmen fehlen dort.",
       "quelle": "folie-freizeit-22",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erst das Ziel: Wozu das Ganze, und warum in der Schule?",
+          "Die Zielformel nach Kulig und Theunissen plus Schulbegründung",
+          "Womit beginnt jede Planung? Mit dem Wozu"
+        ],
+        [
+          "Die drei W abdecken - jede mit Beispielen",
+          "Kopf, Hände, Motivation: alle drei bedienen",
+          "Kenntnisse, Fertigkeiten, Lust - alles im Vorhaben verankern"
+        ],
+        [
+          "Die drei Prozessschritte als Bauplan des Vorhabens",
+          "PK-Dreischritt plus die zwei Wissensbereiche nutzen",
+          "Das Strukturmodell liefert den Ablauf"
+        ],
+        [
+          "Welche Hindernisse könnten das Vorhaben bremsen? Drei Kategorien",
+          "Umwelt, Haltungen, knappe Mittel - vorab bedenken",
+          "Die Barrieren-Dreiteilung ins Konzept einbauen"
+        ],
+        [
+          "Die Grundhaltung: helfen, ohne zu übernehmen",
+          "Niehoffs Merksatz als Begründung der eigenen Rolle",
+          "Wie viel Steuerung ist erlaubt? Das Zitat hilft"
+        ],
+        [
+          "Zum Schluss die drei Waagen reflektieren",
+          "Balance-Paare ansprechen - und Muße erlauben",
+          "Wo könnte das Vorhaben kippen? Gegensatzpaare prüfen"
+        ]
+      ]
     },
     {
       "id": "fr-gen-f-3",
@@ -1084,7 +1294,39 @@
       "tipp": "Diskutieren ist ein AFB-III-Operator. Das Muster zwei Punkte dafür, zwei dagegen, dann eine begründete Bewertung trägt hier gut. Wichtig ist, dass du am Ende wirklich Position beziehst und nicht in der Aufzählung stecken bleibst - und wenn du der These widersprichst, ist es stark, ihren berechtigten Kern trotzdem anzuerkennen. Zum Nachschlagen: Die Diskussionsfrage, ob Freizeit und Schule ein Widerspruch sind, steht so auf Folie 34, die Spannungsfelder auf Folie 33 und der Fazit-Satz, dass Freizeit kein Nebenbereich ist, auf Folie 36. Dass Freizeit ein Bildungsauftrag ist, belegt der Rahmenlehrplan auf Folie 20 - dein stärkstes Argument gegen die These. Spannungsfelder und Fazit findest du bei dir auf Notizen S. 05; der Rahmenlehrplan und die Reflexionsfragen fehlen dort.",
       "quelle": "folie-freizeit-36",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erstes Pro: Was macht Freizeit im Kern aus?",
+          "Das Argument gegen Verzweckung durch Pädagogik",
+          "Freiraum-Argument: Förderlogik nimmt etwas weg"
+        ],
+        [
+          "Zweites Pro: Wer darf über gut und schlecht urteilen?",
+          "Denk an Sofa, Fernseher und die Frage nach Maßstäben",
+          "Freizeit ist Geschmackssache - der Merksatz von Folie 9"
+        ],
+        [
+          "Erstes Contra: Selbstbestimmung fällt nicht vom Himmel",
+          "Die drei W müssen irgendwo gelernt werden - wo?",
+          "Das Erwerbs-Argument mit Quellenbeleg"
+        ],
+        [
+          "Zweites Contra: Ohne Hilfe entscheidet faktisch die Umwelt",
+          "Das Barrieren-Argument: Die freie Wahl ist real begrenzt",
+          "Was bleibt von Privatsache, wenn Zugänge fehlen?"
+        ],
+        [
+          "Der Modell-Beleg: Freizeit ist offiziell als Kompetenzbereich gefasst",
+          "Warum zählt das Strukturmodell als Argument für die Schule?",
+          "Denk an DK, PK und den Auftrag dahinter"
+        ],
+        [
+          "Das eigene Urteil: Stellenwert von Freizeit plus Lösungsrichtung",
+          "Wie fällt die Abwägung aus? Denk an die Balance",
+          "Schluss: weder raushalten noch verplanen"
+        ]
+      ]
     },
     {
       "id": "fr-fol-f-1",
@@ -1117,7 +1359,44 @@
       "tipp": "Die Dozentin hat dieses Modell im Quiz am Ende der Vorlesung abgefragt ('Nennen Sie ein Beispiel für Dispositionszeit') - ein gutes Zeichen dafür, dass sie es für merkenswert hält. Wenn du die drei Begriffe mit je einem Beispiel sicher hast, hast du den Kern. Der Satz über das Kontinuum Fremdbestimmung zu Selbstbestimmung ist der Teil, der aus einer Aufzählung eine Erläuterung macht. Zum Nachschlagen: Die Tabelle mit den drei Zeitarten steht auf Folie 6, das moderne Freizeitverständnis daneben auf Folie 5. In deinen Notizen steht auf Notizen S. 05 nur die Quizfrage, das Modell selbst fehlt dort.",
       "quelle": "folie-freizeit-6",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erste Zeitart: von außen festgelegt - mit Beispielen",
+          "Die Spalte ohne eigenen Spielraum",
+          "Denk an Pflichten, die niemand wählt"
+        ],
+        [
+          "Zweite Zeitart: nötig für Grundbedürfnisse",
+          "Die Spalte der Muss-Tätigkeiten des Körpers",
+          "Was der Alltag zwingend verlangt - mit Beispielen"
+        ],
+        [
+          "Dritte Zeitart: Hier entscheidest du selbst - mit Beispielen",
+          "Die Spalte mit dem größten Spielraum",
+          "Denk an frei wählbare Tätigkeiten"
+        ],
+        [
+          "Wie sind die drei angeordnet? Als Verlauf zwischen zwei Polen",
+          "Die Achse von außen- zu eigengesteuert",
+          "Das Ordnungsprinzip hinter den drei Spalten"
+        ],
+        [
+          "Was folgt für den Freizeitbegriff? Mehr als übrige Stunden",
+          "Die Pointe: Freizeit neu gedacht als Gestaltungsraum",
+          "Warum ist Feierabend allein noch keine Definition?"
+        ],
+        [
+          "Brücke zur Nachbarfolie: das heutige Verständnis",
+          "Wie passt das Modell zum modernen Begriff?",
+          "Verbindung zu Lebenszeit und Eigenregie ziehen"
+        ],
+        [
+          "Übertrag auf den Förderschwerpunkt: Wo schrumpft der Spielraum?",
+          "Was bedeuten feste Abläufe und Abholzeiten fürs Modell?",
+          "Der Praxisbezug: Warum setzt Freizeitbildung genau hier an?"
+        ]
+      ]
     },
     {
       "id": "fr-fol-f-2",
@@ -1152,7 +1431,54 @@
       "tipp": "Zwei benannte Konzepte mit Quelle sind in einer Klausur bares Geld wert, weil du damit vom allgemeinen 'man könnte' zu einem konkreten Vorschlag kommst. Wenn du die fünf Schritte des Freizeitführers nicht vollständig zusammenbekommst: Die Reihenfolge planen, recherchieren, aufbereiten, gestalten, weitergeben lässt sich gut logisch herleiten. Zum Nachschlagen: Die Freizeitwoche steht auf Folie 31, der Freizeitführer mit seinen fünf Schritten auf Folie 32. Beide Folien fehlen in deinen Notizen, das hier ist also neuer Stoff.",
       "quelle": "folie-freizeit-31",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Woche, Merkmal eins: Breite des Angebots für alle",
+          "Was zeichnet das Programm aus? Vielfalt",
+          "Für jede Person soll etwas dabei sein"
+        ],
+        [
+          "Woche, Merkmal zwei: Wer wählt aus? Die Lernenden selbst",
+          "Das eigene Wochenpaket schnüren",
+          "Hier steckt die echte Wahlfreiheit der Woche"
+        ],
+        [
+          "Woche, Merkmal drei: Gruppen mischen sich",
+          "Wie läuft die Durchführung organisatorisch? Über Klassengrenzen hinweg",
+          "Denk an neue Zusammensetzungen nach der Planung"
+        ],
+        [
+          "Woche, Merkmal vier: Was kommt danach? Gespräch und Rückblick",
+          "Der reflektierende Abschluss gehört dazu",
+          "Nicht einfach aufhören - auswerten"
+        ],
+        [
+          "Woche, das Ziel: sich selbst besser kennenlernen",
+          "Was nimmt man mit? Wissen über eigene Vorlieben",
+          "Die Erkenntnis für die nächste Runde nutzen"
+        ],
+        [
+          "Führer: die fünf Etappen vom Themenfund bis zur Veröffentlichung",
+          "Der komplette Ablauf des Produkts - fünf Stationen",
+          "Von der Idee bis zum fertigen Ergebnis: alle Schritte"
+        ],
+        [
+          "Was verbindet beide Konzepte? Selber tun statt zuhören",
+          "Der rote Faden: eigene Entscheidung und eigenes Erleben",
+          "Beide setzen auf Erfahrung, nicht auf Vortrag"
+        ],
+        [
+          "Brücke zu den drei W: Beide bauen sie auf",
+          "Welche Trias fördern beide Konzepte?",
+          "Denk an Kenntnis, Fähigkeit und Motivation"
+        ],
+        [
+          "Besonderheit des Führers: Das Ergebnis bleibt nicht intern",
+          "Wer profitiert noch vom fertigen Produkt?",
+          "Die Außenwirkung des zweiten Konzepts"
+        ]
+      ]
     }
   ]
 }

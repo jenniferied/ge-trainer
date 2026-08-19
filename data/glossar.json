@@ -8,6 +8,7 @@
    "begriff": "International Classification of Functioning, Disability and Health (ICF)",
    "quelle": "folie-konzeptionen-04, folie-konzeptionen-07",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -27,6 +28,7 @@
    "begriff": "ICF-CY",
    "quelle": "folie-konzeptionen-04",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -46,6 +48,7 @@
    "begriff": "Biopsychosoziales ICF-Modell",
    "quelle": "folie-konzeptionen-04, folie-konzeptionen-07",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -65,6 +68,7 @@
    "begriff": "Defizitär/Reduktionistisch",
    "quelle": "folie-konzeptionen-09",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -84,6 +88,7 @@
    "begriff": "Defizitorientiert",
    "quelle": "folie-konzeptionen-09",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -103,6 +108,7 @@
    "begriff": "Kompetenz-/ Entwicklungsorientiert",
    "quelle": "folie-konzeptionen-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -122,6 +128,7 @@
    "begriff": "Subjekt- und Bedarfsorientiert",
    "quelle": "folie-konzeptionen-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -141,6 +148,7 @@
    "begriff": "Entwicklungslogische Didaktik nach Feuser (1999)",
    "quelle": "folie-konzeptionen-10, folie-konzeptionen-14",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -160,6 +168,7 @@
    "begriff": "Kategoriale Didaktik nach Klafki",
    "quelle": "folie-konzeptionen-12",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -179,6 +188,7 @@
    "begriff": "Bildungstheoretischer Enzyklopädismus",
    "quelle": "folie-konzeptionen-12",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -198,6 +208,7 @@
    "begriff": "Bildungstheoretischer Formalismus",
    "quelle": "folie-konzeptionen-12",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -217,6 +228,7 @@
    "begriff": "Epochaltypische Schlüsselprobleme",
    "quelle": "folie-konzeptionen-13",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -236,6 +248,7 @@
    "begriff": "Sachstrukturanalyse",
    "quelle": "folie-konzeptionen-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -255,6 +268,7 @@
    "begriff": "Tätigkeitsstrukturanalyse",
    "quelle": "folie-konzeptionen-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -274,6 +288,7 @@
    "begriff": "Handlungsstrukturanalyse",
    "quelle": "folie-konzeptionen-15, folie-konzeptionen-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -293,6 +308,7 @@
    "begriff": "Pitsch vierdimensionale Didaktik",
    "quelle": "folie-konzeptionen-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -312,6 +328,7 @@
    "begriff": "Entwicklungsbereiche",
    "quelle": "folie-konzeptionen-20",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -331,6 +348,7 @@
    "begriff": "Leitthemen",
    "quelle": "folie-konzeptionen-21, folie-konzeptionen-22",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -350,6 +368,7 @@
    "begriff": "Entwicklungsbereiche im SGE (KMK 2021)",
    "quelle": "folie-entwicklungsbereiche-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -369,6 +388,7 @@
    "begriff": "Kognition",
    "quelle": "folie-entwicklungsbereiche-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -388,6 +408,7 @@
    "begriff": "Kommunikation",
    "quelle": "folie-entwicklungsbereiche-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -407,6 +428,7 @@
    "begriff": "Emotionale und soziale Entwicklung",
    "quelle": "folie-entwicklungsbereiche-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -426,6 +448,7 @@
    "begriff": "Motorik und Wahrnehmung",
    "quelle": "folie-entwicklungsbereiche-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -445,6 +468,7 @@
    "begriff": "Entwicklungsschwerpunkt",
    "quelle": "folie-entwicklungsbereiche-12",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -464,6 +488,7 @@
    "begriff": "lebenspraktische / lebensweltbezogene Kompetenzen",
    "quelle": "folie-entwicklungsbereiche-14",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -483,6 +508,7 @@
    "begriff": "Entwicklungsförderung",
    "quelle": "folie-entwicklungsbereiche-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -502,6 +528,7 @@
    "begriff": "Duale Unterrichtsplanung",
    "quelle": "folie-entwicklungsbereiche-18",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -521,6 +548,7 @@
    "begriff": "Dualer Unterricht (Jöhnck/Baumann 2023)",
    "quelle": "folie-entwicklungsbereiche-19",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -540,6 +568,7 @@
    "begriff": "Fünf Grundformen dualen Unterrichts (Jöhnck/Baumann 2023; Jöhnck 2024)",
    "quelle": "folie-entwicklungsbereiche-20",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -559,6 +588,7 @@
    "begriff": "Solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht",
    "quelle": "folie-entwicklungsbereiche-21",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -578,6 +608,7 @@
    "begriff": "Lerngruppenbezogene Umsetzung individueller Entwicklungsziele",
    "quelle": "folie-entwicklungsbereiche-23",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -597,6 +628,7 @@
    "begriff": "(nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen",
    "quelle": "folie-entwicklungsbereiche-25",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -616,6 +648,7 @@
    "begriff": "intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt",
    "quelle": "folie-entwicklungsbereiche-27",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -635,6 +668,7 @@
    "begriff": "parallele Verwirklichung mehrerer (verwandter) Entwicklungsschwerpunkte",
    "quelle": "folie-entwicklungsbereiche-20",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -654,6 +688,7 @@
    "begriff": "Babylonische Begriffsverwirrung",
    "quelle": "folie-entwicklungsbereiche-16",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -673,6 +708,7 @@
    "begriff": "Didaktische Prinzipien",
    "quelle": "folie-prinzipien-03",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -692,6 +728,7 @@
    "begriff": "Lebenspraxis und Lebensnähe",
    "quelle": "folie-prinzipien-06",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -711,6 +748,7 @@
    "begriff": "Aneignungsebenen",
    "quelle": "folie-prinzipien-07",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -730,6 +768,7 @@
    "begriff": "Äußere Differenzierung",
    "quelle": "folie-prinzipien-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -749,6 +788,7 @@
    "begriff": "Innere Differenzierung",
    "quelle": "folie-prinzipien-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -768,6 +808,7 @@
    "begriff": "Individualisierung / Differenzierung",
    "quelle": "folie-prinzipien-11",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -787,6 +828,7 @@
    "begriff": "quantitative und qualitative Differenzierung",
    "quelle": "folie-prinzipien-13",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -806,6 +848,7 @@
    "begriff": "Elementarisierung",
    "quelle": "folie-prinzipien-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -825,6 +868,7 @@
    "begriff": "Didaktische Reduktion",
    "quelle": "folie-prinzipien-16",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -844,6 +888,7 @@
    "begriff": "Handlungsorientierung",
    "quelle": "folie-prinzipien-19",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -863,6 +908,7 @@
    "begriff": "Bestandteile des Handelns",
    "quelle": "folie-prinzipien-22",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -882,6 +928,7 @@
    "begriff": "Kleine Schritte und / oder Sinnzusammenhang",
    "quelle": "folie-prinzipien-28",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -901,6 +948,7 @@
    "begriff": "Ganzheitlichkeit",
    "quelle": "folie-prinzipien-30",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -920,6 +968,7 @@
    "begriff": "Modell der ganzheitlichen Entwicklung (Fröhlich / Haupt)",
    "quelle": "folie-prinzipien-30",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -939,6 +988,7 @@
    "begriff": "Vielkanallernen",
    "quelle": "folie-prinzipien-30",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -958,6 +1008,7 @@
    "begriff": "Strukturierung",
    "quelle": "folie-prinzipien-32",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -977,6 +1028,7 @@
    "begriff": "Offener Unterricht",
    "quelle": "folie-unterrichtsformen-05",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -996,6 +1048,7 @@
    "begriff": "Dimensionen offenen Unterrichts (Peschel 2002)",
    "quelle": "folie-unterrichtsformen-04",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1015,6 +1068,7 @@
    "begriff": "Grundformen des Unterrichts (Terfloth & Bauersfeld 2015)",
    "quelle": "folie-unterrichtsformen-06",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1034,6 +1088,7 @@
    "begriff": "Tagesplanarbeit",
    "quelle": "folie-unterrichtsformen-10",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1053,6 +1108,7 @@
    "begriff": "Wochenplanarbeit",
    "quelle": "folie-unterrichtsformen-14",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1072,6 +1128,7 @@
    "begriff": "Lernen an Stationen",
    "quelle": "folie-unterrichtsformen-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1091,6 +1148,7 @@
    "begriff": "Werkstattarbeit",
    "quelle": "folie-unterrichtsformen-20",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1110,6 +1168,7 @@
    "begriff": "Freiarbeit",
    "quelle": "folie-unterrichtsformen-24",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1129,6 +1188,7 @@
    "begriff": "Geschlossener Unterricht",
    "quelle": "folie-unterrichtsformen-30",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1148,6 +1208,7 @@
    "begriff": "Elementarisierung",
    "quelle": "folie-unterrichtsformen-30",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1167,6 +1228,7 @@
    "begriff": "Lehrgang",
    "quelle": "folie-unterrichtsformen-35",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1186,6 +1248,7 @@
    "begriff": "Training(sprogramme) und Übung(seinheiten)",
    "quelle": "folie-unterrichtsformen-33",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1205,6 +1268,7 @@
    "begriff": "Spiralcurriculum",
    "quelle": "folie-unterrichtsformen-41",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1224,6 +1288,7 @@
    "begriff": "Mobilität",
    "quelle": "folie-mobilitaet-04",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1243,6 +1308,7 @@
    "begriff": "Mobilitätsbehinderungen",
    "quelle": "folie-mobilitaet-09",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1262,6 +1328,7 @@
    "begriff": "Selbstbestimmung",
    "quelle": "folie-mobilitaet-07",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1281,6 +1348,7 @@
    "begriff": "Schulische Mobilitäts- und Verkehrserziehung",
    "quelle": "folie-mobilitaet-13",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1300,6 +1368,7 @@
    "begriff": "L5 Der mobile Mensch",
    "quelle": "folie-mobilitaet-14",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1319,6 +1388,7 @@
    "begriff": "Orientierungs- und Handlungsrahmen",
    "quelle": "folie-mobilitaet-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1338,6 +1408,7 @@
    "begriff": "Kompetenzmodell für die Mobilitätsentwicklung & Verkehrserziehung",
    "quelle": "folie-mobilitaet-16",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1357,6 +1428,7 @@
    "begriff": "Kernkompetenzen",
    "quelle": "folie-mobilitaet-16",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1376,6 +1448,7 @@
    "begriff": "Mobilitätskompetenzen",
    "quelle": "folie-mobilitaet-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1395,6 +1468,7 @@
    "begriff": "Methoden der Mobilitätsförderung",
    "quelle": "folie-mobilitaet-24",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1414,6 +1488,7 @@
    "begriff": "Didaktische Prinzipien",
    "quelle": "folie-mobilitaet-24",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1433,6 +1508,7 @@
    "begriff": "Übungen in Schonräumen",
    "quelle": "folie-mobilitaet-24",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1452,6 +1528,7 @@
    "begriff": "Fußgänger-Diplom",
    "quelle": "folie-mobilitaet-27",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1471,6 +1548,7 @@
    "begriff": "Modal Split",
    "quelle": "folie-mobilitaet-06",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1490,6 +1568,7 @@
    "begriff": "Motorisierter Individualverkehr (MIV)",
    "quelle": "folie-mobilitaet-06",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1509,6 +1588,7 @@
    "begriff": "Räder-Füße-Regel",
    "quelle": "folie-mobilitaet-35",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1528,6 +1608,7 @@
    "begriff": "Mehr-Kanal-Regel",
    "quelle": "folie-mobilitaet-35",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1547,6 +1628,7 @@
    "begriff": "KISS-Regel",
    "quelle": "folie-mobilitaet-35",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1566,6 +1648,7 @@
    "begriff": "Normalisierungsprinzip",
    "quelle": "folie-wohnen-07",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1585,6 +1668,7 @@
    "begriff": "Selbstbestimmungsbegriff",
    "quelle": "folie-wohnen-07",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1604,6 +1688,7 @@
    "begriff": "UN-Behindertenrechtskonvention",
    "quelle": "folie-wohnen-09",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1623,6 +1708,7 @@
    "begriff": "Wohnen ist ein Menschenrecht",
    "quelle": "folie-wohnen-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1642,6 +1728,7 @@
    "begriff": "Beschützende Elternschaft",
    "quelle": "folie-wohnen-15",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1661,6 +1748,7 @@
    "begriff": "Vollstationäre Wohnformen",
    "quelle": "folie-wohnen-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1680,6 +1768,7 @@
    "begriff": "Teilstationäre Wohnformen",
    "quelle": "folie-wohnen-21",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1699,6 +1788,7 @@
    "begriff": "Ambulant unterstütztes Wohnen",
    "quelle": "folie-wohnen-19",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1718,6 +1808,7 @@
    "begriff": "Gemeindenahe Wohnformen",
    "quelle": "folie-wohnen-10",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1737,6 +1828,7 @@
    "begriff": "Besondere Wohnformen",
    "quelle": "folie-wohnen-11",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1756,6 +1848,7 @@
    "begriff": "Hauswirtschaft",
    "quelle": "folie-wohnen-28",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1775,6 +1868,7 @@
    "begriff": "Wohntraining",
    "quelle": "folie-wohnen-31",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1794,6 +1888,7 @@
    "begriff": "Lehrwohnung",
    "quelle": "folie-wohnen-31",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1813,6 +1908,7 @@
    "begriff": "Der Mensch im Alltag",
    "quelle": "folie-wohnen-26",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1832,6 +1928,7 @@
    "begriff": "11. Leitkompetenz",
    "quelle": "folie-wohnen-29",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1851,6 +1948,7 @@
    "begriff": "Wohnsinn",
    "quelle": "folie-wohnen-32",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1870,6 +1968,7 @@
    "begriff": "Inklusive Dorfgemeinschaft (Münzinghof)",
    "quelle": "folie-wohnen-14",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -1889,6 +1988,7 @@
    "begriff": "Determinationszeit",
    "quelle": "folie-freizeit-06",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1908,6 +2008,7 @@
    "begriff": "Obligationszeit",
    "quelle": "folie-freizeit-06",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1927,6 +2028,7 @@
    "begriff": "Dispositionszeit",
    "quelle": "folie-freizeit-06",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1946,6 +2048,7 @@
    "begriff": "Rekreation",
    "quelle": "folie-freizeit-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1965,6 +2068,7 @@
    "begriff": "Kompensation",
    "quelle": "folie-freizeit-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -1984,6 +2088,7 @@
    "begriff": "Edukation",
    "quelle": "folie-freizeit-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2003,6 +2108,7 @@
    "begriff": "Kontemplation",
    "quelle": "folie-freizeit-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2022,6 +2128,7 @@
    "begriff": "Enkulturation",
    "quelle": "folie-freizeit-08",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2041,6 +2148,7 @@
    "begriff": "Stigma-Identitäts-These",
    "quelle": "folie-freizeit-12",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2060,6 +2168,7 @@
    "begriff": "Teilhaberisiken",
    "quelle": "folie-freizeit-13",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2079,6 +2188,7 @@
    "begriff": "Freizeit als Bildungsauftrag",
    "quelle": "folie-freizeit-20",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2098,6 +2208,7 @@
    "begriff": "Selbstbestimmung",
    "quelle": "folie-freizeit-21",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2117,6 +2228,7 @@
    "begriff": "Kompetenzstrukturmodell Freizeitgestaltung",
    "quelle": "folie-freizeit-23",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2136,6 +2248,7 @@
    "begriff": "Prozessbezogene Kompetenzen",
    "quelle": "folie-freizeit-24",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2155,6 +2268,7 @@
    "begriff": "UN-Behindertenrechtskonvention (Artikel 30)",
    "quelle": "folie-freizeit-28",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2174,6 +2288,7 @@
    "begriff": "Freizeitwoche",
    "quelle": "folie-freizeit-31",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2193,6 +2308,7 @@
    "begriff": "Erstellung eines Freizeitführers",
    "quelle": "folie-freizeit-32",
    "quelleSicherheit": "geprueft",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2212,6 +2328,7 @@
    "begriff": "Pädagogisierung von Freizeit",
    "quelle": "folie-freizeit-33",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2231,6 +2348,7 @@
    "begriff": "Gemeinsamer Unterricht",
    "quelle": "folie-grundlagen-17",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2250,6 +2368,7 @@
    "begriff": "Integrationsklasse",
    "quelle": "folie-grundlagen-17",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2269,6 +2388,7 @@
    "begriff": "Integrative Regelklasse",
    "quelle": "folie-grundlagen-17",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2288,6 +2408,7 @@
    "begriff": "Einzelintegration",
    "quelle": "folie-grundlagen-17",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2307,6 +2428,7 @@
    "begriff": "Kooperationsklasse",
    "quelle": "folie-grundlagen-17",
    "quelleSicherheit": "unsicher",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2326,6 +2448,7 @@
    "begriff": "Strukturelle Merkmale und Besonderheiten von Förderschulen (Fischer 2008, 30)",
    "quelle": "folie-grundlagen-18",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2345,6 +2468,7 @@
    "begriff": "Frühförderung",
    "quelle": "folie-grundlagen-18",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2364,6 +2488,7 @@
    "begriff": "Ganztagsbeschulung",
    "quelle": "folie-grundlagen-18",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2383,6 +2508,7 @@
    "begriff": "Klassenfrequenz",
    "quelle": "folie-grundlagen-18",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2402,6 +2528,7 @@
    "begriff": "Unterteilung in 4 Stufen (vgl. Fornefeld 2004, 106)",
    "quelle": "folie-grundlagen-20",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2421,6 +2548,7 @@
    "begriff": "Werkstufe",
    "quelle": "folie-grundlagen-20",
    "quelleSicherheit": "geprueft",
+   "rang": 1,
    "maschinell": [
     "en",
     "ar"
@@ -2440,6 +2568,7 @@
    "begriff": "Spezifische Lernfelder",
    "quelle": "folie-grundlagen-19",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2459,6 +2588,7 @@
    "begriff": "Unterricht in Blöcken",
    "quelle": "folie-grundlagen-19",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"
@@ -2478,6 +2608,7 @@
    "begriff": "Mobile sonderpädagogische Dienste",
    "quelle": "folie-grundlagen-20",
    "quelleSicherheit": "unsicher",
+   "rang": 2,
    "maschinell": [
     "en",
     "ar"

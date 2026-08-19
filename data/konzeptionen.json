@@ -769,7 +769,35 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe der Dozentin. Drei reichen - aber lerne am besten alle fünf aus der Tabelle von Stöppler & Wachsmuth (2015, 39), dann kannst du wählen. Nachschlagen kannst du sie auf den Folien 9 und 10, in deinen Notizen auf Notizen S. 52.",
       "quelle": "dozentin-beispiel",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "waehle": 3,
+      "hinweise": [
+        [
+          "Erste Tabellenzeile: das Ziel dreht sich um Nuetzlichkeit fuer die Gesellschaft",
+          "Ganz frueh: Menschen sollten fuer andere verwendbar gemacht werden",
+          "Zwei Vertreter mit S und F, das Ziel klingt nach Verwertbarkeit"
+        ],
+        [
+          "Zweite Zeile: drei Selbst-Woerter als Ziele, ein viertes fehlt bewusst",
+          "Blick noch auf Schwaechen; allein handeln ja, selbst entscheiden nein",
+          "Der Komponisten-Name gehoert hierher; die Ziele beginnen alle gleich"
+        ],
+        [
+          "Mittlere Zeile, drei Vertreter, ein einziges Ziel-Wort",
+          "Der Blick wandert zu den Faehigkeiten; Ziel: ein eigenstaendiges Leben",
+          "Speck und zwei Kollegen; das Ziel ist ein griechisches Fremdwort"
+        ],
+        [
+          "Vierte Zeile: das Zieltrio stammt aus Klafkis Paedagogik",
+          "Der Mann mit dem Bildungsrecht-Leitsatz; drei Ziele im Paket",
+          "Zwei Bestimmungs-Ziele plus ein soziales drittes"
+        ],
+        [
+          "Letzte Zeile, ein einzelner Vertreter, das Ziel fragt nach eigenem Sinn",
+          "Die juengste Konzeption: Was bedeutet der Inhalt fuer mich selbst?",
+          "Der Vertreter-Name klingt nach einem Beruf am Wasser"
+        ]
+      ]
     },
     {
       "id": "ko-f-2",
@@ -799,7 +827,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe. Der rote Faden ist wichtiger als jede Jahreszahl: Ziele, Inhalte und Methoden je Konzeption einmal durchlaufen. Die ganze Tabelle steht auf den Folien 9 und 10, in deinen Notizen auf Notizen S. 52.",
       "quelle": "dozentin-beispiel",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Die Grundrichtung zuerst: wovon weg, wohin? Zwei Orientierungen",
+          "Wohin wandert der Blick auf die Person insgesamt?",
+          "Von Schwaechen zu Moeglichkeiten - benenne die Gesamtbewegung"
+        ],
+        [
+          "Die Ziel-Spalte der Tabelle: alle fuenf Stationen der Reihe nach",
+          "Von Nuetzlichkeit bis zum eigenen Sinn - die ganze Kette",
+          "Fuenf Ziele hintereinander, chronologisch geordnet"
+        ],
+        [
+          "Die Inhalts-Spalte: von eng und praktisch zu breit fuer alle",
+          "Was wird unterrichtet? Vom Ueben einzelner Funktionen zur Bildung fuer alle",
+          "Zweiter Tabellenaspekt: Was aendert sich am Stoff selbst?"
+        ],
+        [
+          "Die Methoden-Spalte: drei Stationen",
+          "Wie wird unterrichtet? Ein Dreischritt bis zur groessten Offenheit",
+          "Unterrichtsformen im Wandel - am Ende steht die freieste Form"
+        ],
+        [
+          "Die Ebene dahinter: Wie wird der Mensch gesehen? Plus Feusers Leitsatz",
+          "Vom Versorgt-Werden zum eigenen Anspruch auf Bildung",
+          "Menschenbild-Frage: erst Objekt, dann was? Ein Zitat passt dazu"
+        ]
+      ]
     },
     {
       "id": "ko-f-3",
@@ -830,7 +885,39 @@
       "musterVariantenGeprueft": false,
       "tipp": "Original-Beispielaufgabe. Punkteschema der Dozentin für Diskutieren-Aufgaben (aus einer echten Klausur): zwei Argumente dafür, zwei dagegen, dann eine eigene Bewertung - das sind die fünf Punkte. Erst kurz benennen, worum es geht, dann die zwei mal zwei Argumente, am Schluss dein Urteil. Den Kern der Konzeption findest du auf Folie 9 (erste Tabellenzeile), das ICF-Gegenargument auf Folie 7; in deinen Notizen ist beides auf Notizen S. 51 und 52. Die UN-BRK kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen und Freizeit, als Argument ist sie trotzdem stark.",
       "quelle": "dozentin-beispiel",
-      "quelleSicherheit": "unsicher"
+      "quelleSicherheit": "unsicher",
+      "hinweise": [
+        [
+          "Erst die Position selbst umreissen: Ziel, Inhalte, Menschenbild",
+          "Startpunkt jeder Diskussion: Was besagt die Konzeption ueberhaupt?",
+          "Drei Bausteine der alten Sicht, inklusive des Bildes vom Menschen"
+        ],
+        [
+          "Erster Einwand: eine internationale Konvention widerspricht",
+          "Was sagt das heutige Recht auf Teilhabe dazu?",
+          "Konfrontiere die Konzeption mit der Behindertenrechtskonvention"
+        ],
+        [
+          "Zweiter Einwand: das WHO-Modell sieht Behinderung anders",
+          "Wo entsteht Behinderung laut dem biopsychosozialen Modell?",
+          "Die Klassifikation der WHO als Gegenargument"
+        ],
+        [
+          "Dritter Einwand: Was macht die Konzeption aus dem Bildungsbegriff?",
+          "Feusers Leitsatz als Kontrast heranziehen",
+          "Einzelne Fertigkeiten ueben - ist das schon Bildung?"
+        ],
+        [
+          "Nicht alles verwerfen: Was bleibt am gezielten Ueben sinnvoll?",
+          "Die Gegenstimme wuerdigen: wo strukturiertes Ueben heute noch passt",
+          "Abwaegen statt nur kritisieren: unter welcher Bedingung geht Funktionstraining?"
+        ],
+        [
+          "Zum Schluss: eigenes Urteil mit zeitlicher Einordnung",
+          "Rundes Ende: Gesamturteil plus Blick auf die Epoche",
+          "Wie schliesst eine Eroerterung? Position beziehen"
+        ]
+      ]
     },
     {
       "id": "ko-f-4",
@@ -860,7 +947,34 @@
       "musterVariantenGeprueft": false,
       "tipp": "Das Wort dynamische Interaktion sollte fallen - das ist der Kern des biopsychosozialen Modells. Das Schaubild mit allen Bestandteilen steht auf Folie 4, die Bedeutung für die Schule auf Folie 7; in deinen Notizen findest du beides auf Notizen S. 51.",
       "quelle": "folie-konzeptionen-4",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "hinweise": [
+        [
+          "Abkuerzung aufloesen, Herausgeberin, Jahr - und die Kinder-Version",
+          "Wofuer stehen die Buchstaben? Dazu die Variante fuer junge Menschen",
+          "Voller Name, Urheber-Organisation, zwei Jahreszahlen"
+        ],
+        [
+          "Alle Kaesten des Schaubilds: oben einer, Mitte drei, unten zwei",
+          "Sechs Bausteine: Ausgangsproblem, mittlere Dreierreihe, zwei Kontextarten",
+          "Das komplette Schaubild aufzaehlen, von oben nach unten"
+        ],
+        [
+          "Der Definitionssatz: Wie entsteht Behinderung in diesem Modell?",
+          "Kein fester Zustand - was wirkt hier mit was zusammen?",
+          "Das Modell traegt drei Sichtweisen im Namen"
+        ],
+        [
+          "Zwei Wirkungsfelder: Gesetzbuecher und Schule",
+          "Wo schlaegt die Sichtweise durch? Recht und Foerderpraxis",
+          "Warum ist das nicht nur Medizin-Theorie? Zwei Bereiche nennen"
+        ],
+        [
+          "Konkret im Alltag: Hindernisse aufspueren, dann drei Stellschrauben",
+          "Was tut die Schule damit? Erfassen, dann drei Unterstuetzungswege",
+          "Vom Modell zur Praxis: Womit wird Teilhabe konkret ermoeglicht?"
+        ]
+      ]
     },
     {
       "id": "ko-gen-f-1",
@@ -892,7 +1006,39 @@
       "tipp": "Die Tabelle von Stöppler und Wachsmuth (2015, 39) ist hier dein bester Freund: Lerne sie einmal zeilenweise (Konzeption, Vertreter, Ziel, Inhalt, Methode), dann kannst du jede Zuordnungsrichtung bedienen. Sie steht auf den Folien 9 und 10, in deinen Notizen zu einer Tabelle zusammengezogen auf Notizen S. 52.",
       "quelle": "folie-konzeptionen-9",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der aelteste Name der Liste: erste Tabellenzeile, fruehe Methode",
+          "S wie Start: Wo beginnt die Tabelle, wie wurde da unterrichtet?",
+          "Dieser Vertreter wollte Nuetzlichkeit; Methode wie in der Zeile darunter"
+        ],
+        [
+          "Zweite Zeile; die Methode bleibt dieselbe wie davor",
+          "Der Komponisten-Name; die Konzeption schaut noch auf Schwaechen",
+          "Selbst-Ziele ohne echtes Entscheiden; die Methode wechselt noch nicht"
+        ],
+        [
+          "Mittlere Zeile; jetzt wechselt die Methode zum ersten Mal",
+          "Der Blick auf Faehigkeiten; der Unterricht setzt aufs Tun",
+          "Die Autonomie-Zeile; Methode Nummer zwei von dreien"
+        ],
+        [
+          "Der mit dem Bildungsrecht fuer jedes Kind; Methode maximal frei",
+          "Sein Zieltrio kommt aus Klafkis Tradition; zweite Methodenwende",
+          "Vierte Zeile; ab hier oeffnet sich der Unterricht"
+        ],
+        [
+          "Letzte Zeile; Methode wie beim Vorgaenger",
+          "Die Sinn-Frage im Zentrum; unterrichtet wird wie bei Feuser",
+          "Die juengste Konzeption, gleiche Offenheit wie die Zeile davor"
+        ],
+        [
+          "Eselsbruecke: Wie viele Methodenstationen gibt es insgesamt?",
+          "Zusatz: die Methodenfolge als kurze Dreier-Kette merken",
+          "Merkbild: fuenf Zeilen, aber nur drei Unterrichtsformen"
+        ]
+      ]
     },
     {
       "id": "ko-gen-f-2",
@@ -922,7 +1068,29 @@
       "tipp": "Die Doppelsinn-Formel lohnt sich fast wörtlich zu lernen - und die beiden Ismen jeweils sicher einer Seite zuordnen: Enzyklopädismus = Objektseite, Formalismus = Subjektseite. Das Schaubild mit den drei Kästen steht auf Folie 12 (Fischer 2008, 44), in deinen Notizen auf Notizen S. 52.",
       "quelle": "folie-konzeptionen-12",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Kernsatz mit zwei Richtungen: Welt zum Menschen, Mensch zur Welt",
+          "Die Formel aus dem mittleren Kasten - beide Bewegungen nennen",
+          "Zweifaches Erschliessen: Wer oeffnet sich hier wem?"
+        ],
+        [
+          "Erste Seite: das Kulturerbe; ihre Uebertreibung traegt einen Lexikon-Namen",
+          "Was liegt ausserhalb der Person - und wie heisst die Einseitigkeit dazu?",
+          "Die Stoff-Seite samt ihrem Ismus"
+        ],
+        [
+          "Zweite Seite: die eigenen Kraefte; auch hier droht ein Ismus",
+          "Was in der Person steckt - und die zugehoerige Einseitigkeit",
+          "Die Persoenlichkeits-Seite samt Fachwort fuer ihre Uebertreibung"
+        ],
+        [
+          "Der Schlussgedanke: Was leistet die Verbindung beider Seiten?",
+          "Warum braucht es beide Haelften zugleich?",
+          "Fazit: keine Seite darf allein regieren"
+        ]
+      ]
     },
     {
       "id": "ko-gen-f-3",
@@ -953,7 +1121,34 @@
       "tipp": "Ein Zitat diskutieren heißt: erst einordnen (wessen These, welche Konzeption), dann am Wandel spiegeln, dann bewerten. Die Konzeptionstabelle liefert dir die Kontrastfolie fast von selbst. Das Zitat steht wörtlich auf Folie 14, die Kontrastfolie liefern die Folien 9 und 10; in deinen Notizen ist das Zitat auf Notizen S. 53 und die Tabelle auf Notizen S. 52.",
       "quelle": "folie-konzeptionen-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zuerst verorten: Zu welcher Konzeption gehoert der Satz, mit allem Zubehoer?",
+          "Die Heimat der These: Tabellenzeile plus Ziele und Methode",
+          "Wo steht der Autor im Wandel? Seine Konzeption komplett nennen"
+        ],
+        [
+          "Das Gegenbild: Was sprachen die beiden fruehen Zeilen den Kindern zu?",
+          "Der historische Kontrast - zwei aeltere Konzeptionen dagegenhalten",
+          "Womit bricht der Satz? Blick zurueck auf den Tabellen-Anfang"
+        ],
+        [
+          "Pro-Seite: Wie wird der Zugang praktisch gesichert? Drei Analysen",
+          "Warum traegt die These? Das didaktische Werkzeug dahinter",
+          "Zustimmung begruenden: das Recht haengt nicht am Kind"
+        ],
+        [
+          "Contra-Seite: Was verlangt der Anspruch von den Lehrenden?",
+          "Wo wird es anspruchsvoll? Der Aufwand hinter dem grossen Versprechen",
+          "Einwand: der hohe Anspruch fordert Unterrichtskunst und Vereinfachung"
+        ],
+        [
+          "Am Ende gehoert dein eigenes Urteil hin, mit Begruendung",
+          "Der Abschluss einer Eroerterung: selbst Stellung nehmen",
+          "Letzter Baustein: Wie stehst du dazu?"
+        ]
+      ]
     },
     {
       "id": "ko-fol-f-1",
@@ -988,7 +1183,54 @@
       "tipp": "Folie 3 fehlt in deinen Notizen komplett, sie ist also neu - dafür ist sie ein Geschenk für AFB-III-Aufgaben, weil die vier Felder dir eine fertige Gliederung liefern. Merken kannst du sie über die vier Fragen: Was ist Behinderung? Wozu ist der Förderschwerpunkt da? Braucht er eine eigene Didaktik? Und was soll gelernt werden?",
       "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erstes Feld: zwei Brillen auf Behinderung",
+          "Der Streit der Perspektiven: Koerper oder Gesellschaft?",
+          "Feld eins liegt bei der Frage, was Behinderung ueberhaupt ist"
+        ],
+        [
+          "Zweites Feld: die Geschichte des Foerderschwerpunkts, zwei Pole",
+          "Beschuetzen oder etwas zutrauen? Das historische Spannungsfeld",
+          "Feld zwei: Schonraum gegen den Anspruch auf Lernen"
+        ],
+        [
+          "Drittes Feld: gemeinsamer Unterricht - eigenes Fachwissen oder Anschluss ans Allgemeine?",
+          "Die Inklusionsfrage: Sonderweg oder allgemeine Lehre?",
+          "Feld drei fragt nach dem Ort der Disziplin zwischen speziell und allgemein"
+        ],
+        [
+          "Viertes Feld: Alltagskoennen gegen Fachinhalte",
+          "Was zaehlt als Lernen - das praktische Leben oder die Faecher?",
+          "Feld vier: die Frage nach dem richtigen Stoff"
+        ],
+        [
+          "Vertiefung eins: das WHO-Modell zeigt, dass beide Brillen noetig bleiben",
+          "Warum bleibt Feld eins offen? Jede Sichtweise allein uebersieht etwas",
+          "Das biopsychosoziale Modell verbindet die Pole, statt einen zu streichen"
+        ],
+        [
+          "Vertiefung zwei: die Konzeptions-Geschichte als Pendel zwischen den Polen",
+          "Der Wandel der Didaktik belegt: die Gewichtung schwankt seit jeher",
+          "Warum bleibt Feld vier offen? Beide Seiten haben Rueckhalt in der Geschichte"
+        ],
+        [
+          "Ausweich-Option: Feld drei vertiefen - zwei Loesungswege, beide mit Preis",
+          "Alternative Vertiefung: eigenes Modell oder angepasstes allgemeines, je mit Nachteil",
+          "Wer Feld drei waehlt: zwei Antworten, keine ist gratis"
+        ],
+        [
+          "Der Kerngedanke: Warum heisst es Feld und nicht Problem?",
+          "Beide Seiten wollen etwas Berechtigtes - was folgt daraus fuers Aufloesen?",
+          "Begruendung: jede klare Entscheidung wuerde etwas Wichtiges opfern"
+        ],
+        [
+          "Der Schluss: Was heisst das fuer den Umgang im Schulalltag?",
+          "Praxis-Folgerung: kein Grundsatzbeschluss, sondern Abwaegen pro Kind",
+          "Am Ende liegt die Antwort beim einzelnen Kind, immer wieder neu"
+        ]
+      ]
     }
   ]
 }
