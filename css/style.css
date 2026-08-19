@@ -1303,11 +1303,35 @@ p { margin: 0 0 var(--sp-3); }
   box-shadow: var(--shadow);
   padding: var(--sp-3) var(--sp-2);
   transition: transform .08s ease;
+  /* Nur als Bezugsrahmen fuer .kachel-blase unten - die Kachel selbst
+     verschiebt sich dadurch nicht. */
+  position: relative;
 }
 .kachel:active { transform: scale(.96); }
 .kachel-icon { font-size: 1.55rem; line-height: 1.1; }
 .kachel b { font-size: .92rem; }
 .kachel-klein { font-size: .72rem; color: var(--ink-soft); line-height: 1.2; }
+
+/* Die Zahl in der Ecke einer Uebungs-Kachel (19.08.2026, Jennifer: "sollte die
+   zahl oben rechts angezeigt werden? wv auf dem stapel insgesamt ist"). Heute
+   traegt sie nur der Wackel-Stapel.
+
+   BEWUSST NEUTRAL GEFAERBT, nicht gruen wie die Zaehl-Blase der Tageskacheln
+   (.d-blase): die zaehlt Geschafftes, hier steht eine Menge, die BEREIT liegt.
+   Gruen ist in dieser App fuer Erfolg reserviert (Begruendung in :root). Rot
+   waere erst recht falsch - der Stapel waechst, je mehr Neues Rose anfasst, und
+   ein Alarmton liesse Fleiss wie Rueckstand aussehen. Also dieselbe Sprache wie
+   die kleine Zeile darunter: ink-soft auf der Karte, ein duenner Rand.
+   Kontrast gerechnet, nicht geschaetzt: --ink-soft auf --paper-2 ergibt 6,1:1
+   im Dunkeln und 5,1:1 auf dem hellen Papier - beides ueber 4,5, und das gilt
+   hier auch fuer die ~11-px-Zahl. */
+.kachel-blase {
+  position: absolute; top: 6px; right: 7px;
+  min-width: 19px; padding: 0 6px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: var(--paper-2); color: var(--ink-soft);
+  font-size: .72rem; font-weight: 700; line-height: 1.6;
+}
 
 /* ---------- Querlink zum ST-Trainer (Jennifer 12.08.) ----------
    Terracotta ist die Identitaetsfarbe des ST-Trainers, so zeigen die beiden Apps

@@ -1967,9 +1967,17 @@ function uebenKacheln() {
     ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }]
   ];
   if (wdhPool) {
-    kurz.push(["🔁", "Ganzer Stapel",
-      wdhPool + (wdhPool === 1 ? " Frage" : " Fragen") + " · ohne festes Ende",
-      function () { zeige("wiederholen"); }]);
+    /* Die Zahl steht als Blase in der Ecke, nicht mehr in der kleinen Zeile
+       (Jennifer, 19.08.2026). Damit sagt die Kachel drei Dinge auf drei Ebenen,
+       ohne sich zu wiederholen: der Name, worum es geht, die Blase, wie viel
+       bereitliegt, die Zeile, was drin ist. "Ohne festes Ende" ist in den Titel
+       gerutscht - auf einem Drittel von 390 px ist Platz die knappste Ressource,
+       und der Unterschied zur festen Sechserrunde steht schon im Wort "Ganzer". */
+    kurz.push(["🔁", "Ganzer Stapel", "Was zuletzt danebenlag",
+      function () { zeige("wiederholen"); },
+      String(wdhPool),
+      "Ganzer Stapel: " + wdhPool + (wdhPool === 1 ? " Frage" : " Fragen")
+        + ", alles was zuletzt danebenlag · ohne festes Ende"]);
   }
   kurz.push(["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }]);
   kurz.push(["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]);
@@ -2002,6 +2010,17 @@ function uebenKacheln() {
       b.appendChild(el("span", "kachel-icon", k[0]));
       b.appendChild(el("b", null, k[1]));
       b.appendChild(el("span", "kachel-klein", k[2]));
+      /* k[4] Zahl in der Ecke, k[5] der ausgeschriebene Name dazu - beides
+         optional, alle anderen Kacheln haben nur vier Felder. Die Blase ist
+         aria-hidden und der Knopf traegt stattdessen ein aria-label: eine
+         vorgelesene Kachel soll "Ganzer Stapel: 9 Fragen, alles was zuletzt
+         danebenlag" sagen und nicht "Ganzer Stapel 9 Was zuletzt danebenlag". */
+      if (k[4]) {
+        var blase = el("span", "kachel-blase", k[4]);
+        blase.setAttribute("aria-hidden", "true");
+        b.appendChild(blase);
+        if (k[5]) { b.title = k[5]; b.setAttribute("aria-label", k[5]); }
+      }
       b.addEventListener("click", k[3]);
       grid.appendChild(b);
     });
