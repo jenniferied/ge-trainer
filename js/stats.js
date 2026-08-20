@@ -537,6 +537,36 @@ export function letzteRunden(themen, max) {
    Grenzen ziehen nur mit, damit sie den neuen Wert nicht wieder abschneiden. */
 var TZ_MIN = 15, TZ_MAX = 60;
 
+/* ---------- Fokus-Woche GE (Jennifer, 20.08.2026) ----------
+   BEFRISTET BIS ZUM 26.08.2026 - danach ersatzlos loeschen, samt der beiden
+   Zeilen unten in planRechnen. Jennifer woertlich: "die kommende Woche ist GE
+   der Fokus. Fuege 50% zu der dynamischen Tageskala hinzu und ziehe 50% bei ST
+   ab, fuer 1 Woche." Das Gegenstueck steht in st-trainer/app/js/core.js
+   (FOKUS_ST, Faktor 0,5) - wer hier dreht, muss dort mitziehen, sonst wandert
+   das Pensum nur einseitig.
+
+   WARUM DER FAKTOR AUCH AN DIE OBERGRENZE MUSS: dieselbe Falle wie am 12.08.
+   (siehe Kommentar ueber TZ_MIN/TZ_MAX). Der Deckel war damals wirkungslos,
+   weil bedarf/restTage weit darunter lag; sobald der Faktor den Rohwert aber
+   ueber 60 hebt, schneidet TZ_MAX ihn wieder ab und die Erhoehung verpufft
+   still. Gemessen am 20.08.: Rose hat 72 von 259 Items gesehen, der Rohwert
+   liegt bei rund 35 - der Deckel bindet heute nicht, koennte es an einem
+   spaeteren Tag der Woche aber. Darum zieht die Grenze mit.
+
+   Als Dauerzustand taugt das nicht: das Pensum ist eine Aussage darueber, was
+   bis zum 10.09. noch zu tun ist, keine Motivations-Schraube. Gleiche
+   Begruendung wie beim Einmal-Schalter NACHHOLEN in themen-lernen.js. */
+var FOKUS_VON = "2026-08-20", FOKUS_BIS = "2026-08-26", FOKUS_FAKTOR = 1.5;
+
+function isoTag(ts) {
+  var d = new Date(ts), m = d.getMonth() + 1, t = d.getDate();
+  return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (t < 10 ? "0" : "") + t;
+}
+function fokusFaktor(ts) {
+  var tag = isoTag(ts);
+  return tag >= FOKUS_VON && tag <= FOKUS_BIS ? FOKUS_FAKTOR : 1;
+}
+
 /* Wie oft der Stoff bis zur Klausur durchlaufen soll. 1 hiesse: einmal alles
    ansehen und fertig - das ist die Rechnung, die das Ziel bisher zu niedrig
    gemacht hat, denn einmal gesehen ist nicht gelernt. 1,7 heisst grob: einmal
@@ -565,14 +595,15 @@ function planRechnen(themen, tage, heute) {
     });
   });
   var restTage = Math.max(1, tage == null ? 21 : tage);
-  var ziel = Math.max(TZ_MIN, Math.min(TZ_MAX, r5(bedarf * DURCHGAENGE / restTage)));
+  var fokus = fokusFaktor(heute);
+  var ziel = Math.max(TZ_MIN, Math.min(r5(TZ_MAX * fokus), r5(bedarf * DURCHGAENGE * fokus / restTage)));
   // Vortag festigen statt pauken; am Klausurtag selbst steht das Pensum nur
   // noch der Vollstaendigkeit halber im Plan - die Startseite zeigt es nicht
   // mehr an, sonst waere der Balken am Klausurmorgen eine Forderung.
   if (tage === 1) ziel = Math.min(ziel, 20);
   if (tage === 0) ziel = TZ_MIN;
   return {
-    v: 1, tag: heute, ziel: ziel,
+    v: 2, tag: heute, ziel: ziel,
     minimum: r5(ziel * 0.4), stretch: r5(ziel * 1.4), restBedarf: bedarf
   };
 }
@@ -580,7 +611,7 @@ function planRechnen(themen, tage, heute) {
 export function tagesziel(themen, tage) {
   var heute = tagVon(Date.now());
   var plan = state.tzPlan;
-  if (!plan || plan.tag !== heute || plan.v !== 1) {
+  if (!plan || plan.tag !== heute || plan.v !== 2) {
     plan = planRechnen(themen, tage, heute);
     state.tzPlan = plan;
     speichern();
