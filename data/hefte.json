@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "hefte": [
+    {
+      "id": "lehrgaenge",
+      "thema": "unterrichtsformen",
+      "titel": "Lehrgänge verstehen",
+      "untertitel": "Die Folien 32 bis 42 mit Erklärung in einfacher Sprache",
+      "hinweis": "Originalfolien mit eigener Erklärung",
+      "seiten": 22,
+      "pfad": "data/hefte/lehrgaenge-"
+    }
+  ]
+}

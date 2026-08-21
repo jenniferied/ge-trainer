@@ -38,7 +38,7 @@
 
 import { app, el, leeren, mcStand, freiStand } from "./core.js";
 import { themeKnopf, setzeFarbe } from "./ui.js";
-import { TOTAL, NOTIZEN_TOTAL, satzInfo, oeffneFolie, oeffneNotiz, oeffneDeck } from "./beleg.js";
+import { TOTAL, NOTIZEN_TOTAL, satzInfo, oeffneFolie, oeffneNotiz, oeffneDeck, oeffneHeft } from "./beleg.js";
 
 // Einmal geladen, dann gehalten: der Raum wird beim Zurueckkommen neu gerendert,
 // die Datei aendert sich dabei nicht. null = noch nicht versucht.
@@ -53,6 +53,24 @@ function ladeMedien() {
     .then(function (r) { return r.ok ? r.json() : { medien: [] }; })
     .catch(function () { return { medien: [] }; })
     .then(function (d) { medien = d && d.medien ? d.medien : []; return medien; });
+}
+
+/* Die Erklaer-Hefte (21.08.2026). Eigene Datei statt medien.json: die wird von
+   baue-medien.py erzeugt und ein Handeintrag waere beim naechsten Lauf weg -
+   und inhaltlich ist ein Heft kein NotebookLM-Erzeugnis, sondern Originalfolie
+   plus Erklaerung. Faellt die Datei aus, verschwindet nur die Zeile. */
+var hefte = null;
+
+function ladeHefte() {
+  if (hefte) return Promise.resolve(hefte);
+  return fetch("data/hefte.json")
+    .then(function (r) { return r.ok ? r.json() : { hefte: [] }; })
+    .catch(function () { return { hefte: [] }; })
+    .then(function (d) { hefte = d && d.hefte ? d.hefte : []; return hefte; });
+}
+
+function hefteZu(themaId) {
+  return (hefte || []).filter(function (h) { return h.thema === themaId; });
 }
 
 var ART_TEXT = {
@@ -95,7 +113,8 @@ export function zeigeStoebern(themen, hooks) {
   // Medienzeilen kommen dazu, sobald die kleine JSON durch ist. Auf einem
   // langsamen Handy ist das der Unterschied zwischen "laedt" und "leer".
   themen.forEach(function (t) { themenBox.appendChild(themaKarte(t, [], hooks)); });
-  ladeMedien().then(function (liste) {
+  Promise.all([ladeMedien(), ladeHefte()]).then(function (beides) {
+    var liste = beides[0];
     themenBox.innerHTML = "";
     themen.forEach(function (t) {
       themenBox.appendChild(themaKarte(t, liste.filter(function (m) { return m.thema === t.id; }), hooks));
@@ -148,6 +167,19 @@ function themaKarte(thema, eigene, hooks) {
       function () { oeffneFolie(satz.erste); }));
   }
 
+  /* Zeile 1b: das Erklaer-Heft zu diesem Thema, falls es eines gibt. Steht
+     unter der Folienzeile und ueber den Fragen, weil es aus genau diesen Folien
+     gebaut ist - aber mit eigener Marke, weil auf denselben Blaettern eine
+     fremde Erklaerung mitlaeuft. Das Wort ist bewusst NICHT "erzeugt": das
+     gehoert den NotebookLM-Sachen und meint KI-Paraphrase der Vorlesung.
+     Setzt hatWas nicht - der Satz "noch kein erzeugtes Material" unten meint
+     die NotebookLM-Erzeugnisse und bleibt davon unberuehrt wahr. */
+  hefteZu(thema.id).forEach(function (h) {
+    k.appendChild(stbZeile("📘", h.titel,
+      [h.seiten + " Seiten", h.untertitel].filter(Boolean).join(" · "),
+      function () { oeffneHeft(h, 1); }, h.hinweis || "mit Erklärung"));
+  });
+
   // Zeile 2: die Fragen, die es zu dem Thema schon gibt.
   var mc = mcStand(thema), fr = freiStand(thema);
   k.appendChild(stbZeile("🗂", "Alle Fragen ansehen",
@@ -187,13 +219,17 @@ function themaKarte(thema, eigene, hooks) {
 /* Eine anklickbare Zeile in einer Themenkarte. Ein <button>, kein div mit
    Klick-Hoerer: sonst ist die Zeile per Tastatur nicht erreichbar und ein
    Screenreader liest sie als Text vor. */
-function stbZeile(icon, titel, unter, aufKlick, erzeugt) {
-  var b = el("button", "stb-zeile" + (erzeugt ? " erzeugt" : ""));
+function stbZeile(icon, titel, unter, aufKlick, marke) {
+  // marke: true -> "erzeugt" (die NotebookLM-Zeilen, unveraendert), ein String
+  // -> genau dieses Wort. Ein Heft ist keine KI-Paraphrase und darf deshalb
+  // nicht "erzeugt" heissen, braucht aber trotzdem eine sichtbare Marke.
+  var wort = marke === true ? "erzeugt" : (marke || "");
+  var b = el("button", "stb-zeile" + (marke === true ? " erzeugt" : ""));
   b.appendChild(el("span", "stb-icon", icon));
   var txt = el("span", "stb-text");
   var kopf = el("span", "stb-titel");
   kopf.appendChild(el("b", null, titel));
-  if (erzeugt) kopf.appendChild(el("span", "stb-marke", "erzeugt"));
+  if (wort) kopf.appendChild(el("span", "stb-marke", wort));
   txt.appendChild(kopf);
   txt.appendChild(el("span", "stb-unter", unter));
   b.appendChild(txt);
@@ -332,9 +368,9 @@ function bauePlayer(m) {
 export function materialKarteFuer(thema, hooks) {
   var halter = el("div");
   halter.appendChild(themaKarte(thema, [], hooks));
-  ladeMedien().then(function (liste) {
+  Promise.all([ladeMedien(), ladeHefte()]).then(function (beides) {
     halter.innerHTML = "";
-    halter.appendChild(themaKarte(thema, liste.filter(function (m) { return m.thema === thema.id; }), hooks));
+    halter.appendChild(themaKarte(thema, beides[0].filter(function (m) { return m.thema === thema.id; }), hooks));
   });
   return halter;
 }

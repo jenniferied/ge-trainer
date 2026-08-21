@@ -626,6 +626,33 @@ export function oeffneDeck(deck, seite) {
   }, seite);
 }
 
+/* Vierte Art, seit dem 21.08.2026: die Erklaer-Hefte aus data/hefte.json,
+   gebaut von scripts/baue-lehrgang-heft.py. Sie haengen sich weder an ART.folie
+   (dort steckt die durchlaufende 262er-Nummerierung samt BASIS-Rechnung) noch
+   an oeffneDeck - und der Unterschied zum Deck ist ausdruecklich nicht nur
+   technisch:
+
+   Ein Deck ist Gemini-Paraphrase, deshalb steht dort in JEDER Blattbeschriftung
+   "Erzeugt". Ein Heft zeigt die Originalfolie und daneben eine Erklaerung -
+   also Vorlesungsinhalt PLUS fremde Deutung auf demselben Blatt. "Erzeugt"
+   waere hier falsch (es ist keine KI-Paraphrase der Vorlesung), "Original"
+   waere es auch. Die Beschriftung sagt deshalb beides: was das Blatt zeigt und
+   dass etwas dazugekommen ist. Im Heft selbst tragen alle eigenen Stellen einen
+   gestrichelten Rahmen; das hier ist dieselbe Vorsicht in der Viewer-Leiste,
+   weil man beim Blaettern sonst vergisst, was man vor sich hat. */
+export function oeffneHeft(heft, seite) {
+  oeffneBlatt({
+    total: () => heft.seiten,
+    url: (s) => heft.pfad + String(s).padStart(2, "0") + ".jpg",
+    alt: "Seite aus dem Erklaerheft " + heft.titel,
+    vor: "Vorige Seite",
+    zurueck: "Naechste Seite",
+    einzeln: "Seite einzeln öffnen ↗",
+    blatt: (s, total) => `${heft.titel} · Seite ${s} von ${total} · mit ‹ › blätterst du weiter`,
+    titel: (s) => `${heft.hinweis || "Mit eigener Erklärung"} · Seite ${s}`,
+  }, seite);
+}
+
 // Ein delegierter Klick-Handler fuer alle Beleg-Chips, egal wo sie stehen.
 document.addEventListener("click", (e) => {
   const chip = e.target.closest(".beleg.folie, .beleg.notiz");
