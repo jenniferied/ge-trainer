@@ -820,12 +820,18 @@ var WTAG_VON_JS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 function kurzDatum(d) { return d.getDate() + "." + (d.getMonth() + 1) + "."; }
 
 /* Die Tagesleiter an EINER Stelle: Kalenderzelle und Punkte-Plot muessen
-   denselben Tag in derselben Farbe zeigen, sonst waeren es zwei Skalen. */
-function tagesStufe(n, tz) {
+   denselben Tag in derselben Farbe zeigen, sonst waeren es zwei Skalen.
+   Mit ts wird der Tag an den Schwellen SEINES Tages gemessen (Jennifer,
+   21.08.: "true to what was true on the day") — tzHist-Eintrag, sonst
+   Rekonstruktion ueber den Fokus-Faktor. Vorher bewertete das heutige Ziel
+   die ganze Historie, und die 1,5-fache Fokus-Woche wertete rueckwirkend
+   Roses echte gruene Tage ab. */
+function tagesStufe(n, tz, ts) {
+  var z = ts != null ? Stats.schwellenFuerTag(ts, tz) : tz;
   if (!n) return 0;               // Ruhetag
-  if (n < tz.minimum) return 1;   // orange
-  if (n < tz.ziel) return 2;      // gelb
-  if (n < tz.stretch) return 3;   // gruen
+  if (n < z.minimum) return 1;    // orange
+  if (n < z.ziel) return 2;       // gelb
+  if (n < z.stretch) return 3;    // gruen
   return 4;                       // Regenbogen
 }
 var STUFEN_FARBE = ["var(--line)", "var(--zone-o)", "var(--zone-y)", "var(--zone-g)", "url(#ge-regenbogen)"];
@@ -853,7 +859,7 @@ function wegKarte(tz) {
   var raster = el("div", "hm-raster");
   WOCHENTAGE.forEach(function (w) { raster.appendChild(el("span", "hm-wtag", w)); });
 
-  var stufe = function (n) { return tagesStufe(n, tz); };
+  var stufe = function (n, ts) { return tagesStufe(n, tz, ts); };
 
   for (var d = new Date(start); d.getTime() <= ende.getTime(); d.setDate(d.getDate() + 1)) {
     var ts = d.getTime();
@@ -869,7 +875,7 @@ function wegKarte(tz) {
       zelle = el("span", "hm-zelle hm-fut", datum);
       titel = wtag + " " + datum;
     } else {
-      var s = stufe(e.n);
+      var s = stufe(e.n, ts);
       zelle = el("span", "hm-zelle hm-s" + s);
       if (e.n) {
         zelle.textContent = String(e.n);
@@ -978,7 +984,19 @@ function frequenzKarte(tz, themen) {
   var H1 = 116;
   // Die Achse muss die ECHTEN Tageswerte fassen, nicht nur die geglaetteten:
   // ein starker Tag wuerde sonst oben aus dem Bild ragen.
-  var maxY = Math.max.apply(null, [tz.stretch + 5].concat(g3, g7, tage.map(function (t) { return t.n; })));
+  // Zielband tageweise statt als ein Balken (Jennifer 21.08.: "the green zone
+  // needs to move with what was true on that day"): Segmente gleicher Schwellen
+  // zusammenfassen — auch rechts von heute, dort enden am 26.08. sichtbar die
+  // Fokus-Wochen-Schwellen. Der Fokus-Faktor ist datumsgebunden, die Zukunft
+  // also genauso rekonstruierbar wie die Vergangenheit.
+  var segmente = [];
+  for (var sd = new Date(tage[0].ts); sd.getTime() <= ende.getTime(); sd.setDate(sd.getDate() + 1)) {
+    var sz = Stats.schwellenFuerTag(sd.getTime(), tz);
+    var seg = segmente[segmente.length - 1];
+    if (seg && seg.ziel === sz.ziel && seg.minimum === sz.minimum && seg.stretch === sz.stretch) seg.bis = sd.getTime();
+    else segmente.push({ von: sd.getTime(), bis: sd.getTime(), ziel: sz.ziel, minimum: sz.minimum, stretch: sz.stretch });
+  }
+  var maxY = Math.max.apply(null, segmente.map(function (s) { return s.stretch + 5; }).concat(g3, g7, tage.map(function (t) { return t.n; })));
   var py = function (v) { return H1 - 20 - (v / maxY) * (H1 - 30); };
   var pfad = function (reihe) {
     return tage.map(function (t, i) { return px(t.ts).toFixed(1) + "," + py(reihe[i]).toFixed(1); }).join(" ");
@@ -987,23 +1005,30 @@ function frequenzKarte(tz, themen) {
   // weitermachst". Eine steigende Extrapolation wuerde "du musst immer mehr
   // schaffen" erzaehlen; die Botschaft ist aber Konstanz.
   var nJetzt = g7[g7.length - 1];
-  // Zielband = Tagespensum bis Streckziel, dieselben drei Zahlen wie im Balken
-  // der Countdown-Karte, damit der Plot keine vierte Wahrheit aufmacht.
-  var bandOben = py(Math.min(maxY, tz.stretch)), bandUnten = py(tz.ziel);
   // Zukunfts-Schleier rechts von heute: erklaert die leere Flaeche, ohne dort
   // etwas zu behaupten.
   var zukunftFeld = '<rect x="' + hx + '" y="6" width="' + Math.max(0, W - 8 - Number(hx)).toFixed(1) +
     '" height="' + (H1 - 18 - 6) + '" fill="var(--ink-soft)" opacity=".05"/>';
 
-  var raster = zukunftFeld +
-    '<rect x="26" y="' + bandOben.toFixed(1) + '" width="' + (W - 34) + '" height="' +
-      (bandUnten - bandOben).toFixed(1) + '" fill="var(--zone-g)" opacity=".18"/>' +
-    '<line x1="26" y1="' + bandOben.toFixed(1) + '" x2="' + (W - 8) + '" y2="' + bandOben.toFixed(1) +
-      '" stroke="var(--zone-g)" stroke-width="1" opacity=".4"/>' +
-    '<line x1="26" y1="' + py(tz.ziel).toFixed(1) + '" x2="' + (W - 8) + '" y2="' + py(tz.ziel).toFixed(1) +
-      '" stroke="var(--zone-g)" stroke-width="1.2" opacity=".7"/>' +
-    '<line x1="26" y1="' + py(tz.minimum).toFixed(1) + '" x2="' + (W - 8) + '" y2="' + py(tz.minimum).toFixed(1) +
-      '" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 4"/>' +
+  // Zielband = Tagespensum bis Streckziel, dieselben drei Zahlen wie im Balken
+  // der Countdown-Karte — aber je Segment mit den Schwellen, die an diesen
+  // Tagen galten (s. o.). Die Achsen-Zahlen links bleiben die HEUTIGEN Werte:
+  // sie beschriften die Bar von heute, die Stufen erklaeren sich raeumlich selbst.
+  var bandTeile = segmente.map(function (seg) {
+    var x1 = Math.max(xStart, px(seg.von));
+    var x2 = seg.bis >= ende.getTime() ? xEnd : px(seg.bis + 86400000);
+    var oben = py(Math.min(maxY, seg.stretch)), unten = py(seg.ziel);
+    return '<rect x="' + x1.toFixed(1) + '" y="' + oben.toFixed(1) + '" width="' + Math.max(0, x2 - x1).toFixed(1) +
+      '" height="' + (unten - oben).toFixed(1) + '" fill="var(--zone-g)" opacity=".18"/>' +
+      '<line x1="' + x1.toFixed(1) + '" y1="' + oben.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + oben.toFixed(1) +
+        '" stroke="var(--zone-g)" stroke-width="1" opacity=".4"/>' +
+      '<line x1="' + x1.toFixed(1) + '" y1="' + unten.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + unten.toFixed(1) +
+        '" stroke="var(--zone-g)" stroke-width="1.2" opacity=".7"/>' +
+      '<line x1="' + x1.toFixed(1) + '" y1="' + py(seg.minimum).toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + py(seg.minimum).toFixed(1) +
+        '" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 4"/>';
+  }).join("");
+
+  var raster = zukunftFeld + bandTeile +
     '<text x="22" y="' + (py(tz.ziel) + 3).toFixed(1) + '" text-anchor="end" class="fq-tick" font-weight="700">' + tz.ziel + '</text>' +
     '<text x="22" y="' + (py(tz.minimum) + 3).toFixed(1) + '" text-anchor="end" class="fq-tick">' + tz.minimum + '</text>';
 
@@ -1013,7 +1038,7 @@ function frequenzKarte(tz, themen) {
   var TAG_FARBE = ["", "var(--tag-1)", "var(--tag-2)", "var(--tag-3)", "var(--tag-4)"];
   var echteTage = tage.filter(function (t) { return t.n > 0; });
   var punkte = echteTage.map(function (t) {
-    var s = tagesStufe(t.n, tz);
+    var s = tagesStufe(t.n, tz, t.ts);
     var dt = new Date(t.ts);
     var r = 2.9;
     /* Die GE-Leiter hat nur VIER Stufen: der ST-Trainer trennt "genau das
@@ -1041,7 +1066,7 @@ function frequenzKarte(tz, themen) {
 
   // Dieselben Stops wie drueben und wie --tag-regenbogen in geteilt.css, damit
   // Plot-Punkt, Legende und der ST-Trainer denselben Regenbogen zeigen.
-  var rbDef = echteTage.some(function (t) { return tagesStufe(t.n, tz) === 4; })
+  var rbDef = echteTage.some(function (t) { return tagesStufe(t.n, tz, t.ts) === 4; })
     ? '<defs><linearGradient id="tagRegenbogen" x1="0" y1="0" x2="1" y2="1">' +
       '<stop offset="0%" stop-color="#ff78be"/><stop offset="20%" stop-color="#ffa55a"/>' +
       '<stop offset="38%" stop-color="#faeb78"/><stop offset="56%" stop-color="#96ffbe"/>' +

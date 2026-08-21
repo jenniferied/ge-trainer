@@ -574,7 +574,11 @@ export function snapshot(st) {
     // und nicht roh durchgereicht, damit auf dem Server nie mehr steht als der
     // Deckel erlaubt - auch dann nicht, wenn der lokale Stand aus einem alten
     // Backup importiert wurde.
-    frageChat: fqSchnitt(s.frageChat || []) };
+    frageChat: fqSchnitt(s.frageChat || []),
+    // tzHist: das Tagesplan-Archiv (stats.js schwellenFuerTag). Anders als
+    // state.tzPlan (geraetelokal) synct es mit, damit beide Geraete die
+    // Historie mit DENSELBEN Tagesschwellen bewerten.
+    tzHist: s.tzHist || {} };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -647,7 +651,18 @@ export function signatur(d) {
      aeltere, ungedeckelte Zeile von dort gilt sonst fuer immer als verschieden
      und erzeugt bei jedem Sync einen Push ins Leere. */
   var fq = fqSchnitt(daten.frageChat || []).map(function (m) { return m.id; }).join(",");
-  return [aids, mc, frei, tot, mk, chat, sit, fq].join("|");
+  /* Das Tagesplan-Archiv MUSS hier stehen, sonst wird der Eintrag des Tages nie
+     gepusht: er entsteht beim Einfrieren des Plans, also OHNE neue Antwort, und
+     kann darum nicht huckepack reisen. Werte gehoeren mit in den Fingerabdruck
+     (nicht nur die Tage): zwei Geraete koennen denselben Tag mit verschiedenen
+     Plaenen anlegen, und erst der Merge (fruehester ts gewinnt) gleicht sie an —
+     dieser Abgleich muss den Verlierer einmal zum Pushen bewegen. Leeres Objekt
+     ergibt "", damit alte Server-Zeilen ohne tzHist nicht ewig als verschieden gelten. */
+  var hist = Object.keys(daten.tzHist || {}).sort().map(function (t) {
+    var h = daten.tzHist[t];
+    return t + ":" + (h.ziel || 0) + ":" + (h.minimum || 0) + ":" + (h.stretch || 0) + ":" + (h.ts || 0);
+  }).join(",");
+  return [aids, mc, frei, tot, mk, chat, sit, fq, hist].join("|");
 }
 
 /* ---------- Merge ----------
@@ -821,6 +836,26 @@ export function mergeIn(st, remote) {
   // damit der Wert stabil bleibt und nicht bei jedem Merge hin und her springt.
   var gs = [st.mk.geschluepft, rMk.geschluepft].filter(Boolean);
   if (gs.length) st.mk.geschluepft = Math.min.apply(null, gs);
+
+  // Tagesplan-Archiv: Vereinigung ueber die Tage; legen beide Geraete denselben
+  // Tag an, gewinnt der FRUEHESTE Eintrag — das ist der Plan, den Rose an dem
+  // Tag zuerst gezeigt bekam. Die Kaskade dahinter (ziel, minimum, stretch) ist
+  // nur ein deterministischer Gleichstands-Brecher, damit zwei Geraete in jeder
+  // Merge-Reihenfolge auf demselben Eintrag landen statt sich ewig gegenseitig
+  // zu pushen. Eintraege werden nie geaendert oder geloescht, nur angelegt.
+  st.tzHist = st.tzHist || {};
+  var rHist = r.tzHist || {};
+  var histRang = function (h) { return [h.ts || 0, h.ziel || 0, h.minimum || 0, h.stretch || 0]; };
+  Object.keys(rHist).forEach(function (tag) {
+    var l = st.tzHist[tag];
+    if (!l) { st.tzHist[tag] = rHist[tag]; return; }
+    var a = histRang(rHist[tag]), b = histRang(l);
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] === b[i]) continue;
+      if (a[i] < b[i]) st.tzHist[tag] = rHist[tag];
+      break;
+    }
+  });
 
   // Chatverlauf: Vereinigung beider Seiten, ueber die Id dedupliziert, nach
   // Zeit sortiert. Drei Eigenschaften, an denen es haengt:

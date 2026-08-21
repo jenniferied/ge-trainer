@@ -538,8 +538,11 @@ export function letzteRunden(themen, max) {
 var TZ_MIN = 15, TZ_MAX = 60;
 
 /* ---------- Fokus-Woche GE (Jennifer, 20.08.2026) ----------
-   BEFRISTET BIS ZUM 26.08.2026 - danach ersatzlos loeschen, samt der beiden
-   Zeilen unten in planRechnen. Jennifer woertlich: "die kommende Woche ist GE
+   BEFRISTET BIS ZUM 26.08.2026 - der Faktor schaltet sich ueber das Datum
+   selbst ab. ACHTUNG, seit dem 21.08. NICHT mehr loeschen: schwellenFuerTag()
+   rekonstruiert daraus, welche Schwellen am 20.-26.08. galten (tzHist gibt es
+   erst seit dem 21.08., der 20.08. haengt fuer immer an diesen Konstanten).
+   Jennifer woertlich: "die kommende Woche ist GE
    der Fokus. Fuege 50% zu der dynamischen Tageskala hinzu und ziehe 50% bei ST
    ab, fuer 1 Woche." Das Gegenstueck steht in st-trainer/app/js/core.js
    (FOKUS_ST, Faktor 0,5) - wer hier dreht, muss dort mitziehen, sonst wandert
@@ -565,6 +568,28 @@ function isoTag(ts) {
 function fokusFaktor(ts) {
   var tag = isoTag(ts);
   return tag >= FOKUS_VON && tag <= FOKUS_BIS ? FOKUS_FAKTOR : 1;
+}
+
+/* ---------- Die Schwellen eines KALENDERTAGS (Jennifer, 21.08.2026) ----------
+   Kalender, Punkte-Plot, Zielband und Herzen bewerteten die ganze Historie mit
+   dem HEUTIGEN Plan — die Fokus-Woche (Faktor 1,5) hat damit rueckwirkend Roses
+   echte gruene Tage abgewertet. Jennifers Ansage: "always true to what was true
+   on the day." Zwei Stufen (Spiegel von schwellenFuerTag im ST-Trainer):
+   1. tzHist (gesynct, ein Eintrag pro Tag, geschrieben beim Einfrieren des
+      Plans) — ab dem 21.08. die aufgezeichnete Wahrheit; damit schreibt auch
+      eine kuenftige Aenderung an DURCHGAENGE oder Band die Vergangenheit nie
+      mehr um (die Erhoehung vom 12.08. hat genau das getan).
+   2. Rekonstruktion fuer Tage davor: heutiger Plan, vom heutigen Fokus-Faktor
+      befreit und mit dem Faktor DES TAGES neu skaliert. Der Faktor ist
+      datumsgebunden, also auch fuer kuenftige Tage bekannt (Zielband rechts
+      von heute). */
+export function schwellenFuerTag(ts, tz) {
+  var hist = (state.tzHist || {})[isoTag(ts)];
+  if (hist && hist.ziel) return hist;
+  var fTag = fokusFaktor(ts), fHeute = fokusFaktor(Date.now());
+  if (fTag === fHeute) return tz;
+  var ziel = Math.max(TZ_MIN, Math.min(r5(TZ_MAX * fTag), r5(tz.ziel / fHeute * fTag)));
+  return { ziel: ziel, minimum: r5(ziel * 0.4), stretch: r5(ziel * 1.4) };
 }
 
 /* Wie oft der Stoff bis zur Klausur durchlaufen soll. 1 hiesse: einmal alles
@@ -614,6 +639,17 @@ export function tagesziel(themen, tage) {
   if (!plan || plan.tag !== heute || plan.v !== 2) {
     plan = planRechnen(themen, tage, heute);
     state.tzPlan = plan;
+    speichern();
+  }
+  // Tagesplan-Archiv (gesynct): der erste eingefrorene Plan des Tages bleibt
+  // die Wahrheit dieses Tages — schwellenFuerTag() liest ihn, statt die
+  // Historie mit dem jeweils heutigen Ziel umzurechnen. Bewusst AUSSERHALB des
+  // if: auf einem Geraet, dessen Plan schon vor diesem Update eingefroren war,
+  // wuerde der Eintrag sonst erst morgen entstehen. Nie ueberschreiben.
+  state.tzHist = state.tzHist || {};
+  var tagKey = isoTag(heute);
+  if (!state.tzHist[tagKey]) {
+    state.tzHist[tagKey] = { ziel: plan.ziel, minimum: plan.minimum, stretch: plan.stretch, ts: Date.now() };
     speichern();
   }
   return {

@@ -32,17 +32,19 @@ var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: re
    damit laesst sich ein statischer Abzug von Roses Historie einspeisen, ohne
    ihre echten Daten anzufassen. Die App ruft die Funktion immer ohne auf. */
 export function herzenStand(tz, aktOverride) {
-  var min = tz && tz.minimum ? tz.minimum : 8;
-  var ziel = tz && tz.ziel ? tz.ziel : 20;
-  var stretch = tz && tz.stretch ? tz.stretch : 30;
   var akt = aktOverride || Stats.aktivitaetProTag();
   var herzen = 0, sterne = 0, tage = 0;
+  // Jeder Tag wird an den Schwellen SEINES Tages gemessen (Stats.schwellenFuerTag:
+  // tzHist-Eintrag, sonst Rekonstruktion ueber den Fokus-Faktor). Bis zum 21.08.
+  // rechnete hier das heutige Tagesziel die ganze Historie um — die 1,5-fache
+  // Fokus-Woche entwertete so rueckwirkend Roses alte Streckziel-Tage.
   Object.keys(akt).forEach(function (k) {
     var n = akt[k].n || 0;
     if (!n) return;
+    var z = tz ? Stats.schwellenFuerTag(+k, tz) : { minimum: 8, ziel: 20, stretch: 30 };
     tage++;
-    herzen += 1 + (n >= min ? 1 : 0) + (n >= ziel ? 1 : 0);
-    if (n >= stretch) sterne++;
+    herzen += 1 + (n >= z.minimum ? 1 : 0) + (n >= z.ziel ? 1 : 0);
+    if (n >= z.stretch) sterne++;
   });
   return { herzen: herzen, sterne: sterne, tage: tage };
 }
