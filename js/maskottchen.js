@@ -1116,8 +1116,16 @@ function schluepfFertig(neu, feiern) {
    nichts kauft, verliert nichts. */
 
 var offenerShop = null;
+/* Der Escape-Horcher haengt an document und ueberlebt das Overlay, wenn ihn
+   niemand abmeldet. Er liegt deshalb HIER und nicht nur als lokale Funktion in
+   shopOeffnen(): shopSchliessen() ist exportiert und kann von aussen gerufen
+   werden, und dann waere der Horcher ein Zombie, der beim naechsten Escape ein
+   Sheet schliessen will, das es nicht mehr gibt. Ein Horcher je Oeffnen, und
+   der Weg zum Sterben ist fuer alle Schliesswege derselbe. */
+var shopTaste = null;
 
 export function shopSchliessen() {
+  if (shopTaste) { document.removeEventListener("keydown", shopTaste); shopTaste = null; }
   if (offenerShop && offenerShop.parentNode) offenerShop.parentNode.removeChild(offenerShop);
   offenerShop = null;
   // Idempotent und nur das eigene Overlay — ein haengengebliebenes aus einem
@@ -1144,15 +1152,14 @@ export function shopOeffnen(tz, neu) {
   blatt.setAttribute("tabindex", "-1");
   ov.appendChild(blatt);
 
-  function schliesse() {
-    document.removeEventListener("keydown", aufTaste);
-    shopSchliessen();
-  }
-  function aufTaste(e) {
+  // Abmelden erledigt shopSchliessen() fuer JEDEN Weg (Knopf, Klick daneben,
+  // Escape, Aufruf von aussen) — hier wird nur angemeldet.
+  function schliesse() { shopSchliessen(); }
+  shopTaste = function (e) {
     if (e.key === "Escape") { e.preventDefault(); schliesse(); }
-  }
+  };
   ov.addEventListener("click", function (e) { if (e.target === ov) schliesse(); });
-  document.addEventListener("keydown", aufTaste);
+  document.addEventListener("keydown", shopTaste);
 
   /* Das Sheet zeichnet sich nach jedem Kauf selbst neu — und danach die Karte
      darunter, weil dort das Pet sitzt. Reihenfolge ist Absicht: erst das

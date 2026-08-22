@@ -64,6 +64,35 @@ var NEU_AUFGABEN = 6;
    die Randbegriffe dazu, dann ist 15 wieder eine Auswahl. */
 var NEU_BEGRIFFE = 15;
 
+/* ---------- Ankreuzfragen: der Wiedererkennen-Schritt (22.08.2026) ----------
+
+   Bis dahin kannte diese Datei ueberhaupt keine MC-Fragen - ".mc" kam hier
+   null Mal vor. Damit lagen 760 fertig geschriebene Options-Begruendungen
+   (optionen[].erklaerung, seit dem 18.08. alle belegt) in einer Oberflaeche,
+   die Rose kaum betritt.
+
+   Sie sind der natuerliche EINSTIEGS-Schritt: wiedererkennen, bevor frei
+   abgerufen wird - genau die Reihenfolge, die reife.js mit R0/R1 -> R2 ohnehin
+   beschreibt. Deshalb stehen sie VORN in der Schrittliste.
+
+   GERENDERT WIRD ueber hooks.mcKarte, also ueber genau dieselbe Karte wie im
+   Uebungsmodus. Zwei Gruende, und der zweite ist der wichtigere:
+
+     1. Die Optionen werden in der App gemischt, und die Reihenfolge im JSON ist
+        die EINZIGE Verbindung zwischen Text und Begruendung. Ein zweiter
+        Renderpfad verrutscht das lautlos - und beide Texte klingen plausibel,
+        das faellt beim Lesen NICHT auf.
+     2. Damit gibt es KEIN neues qid-Praefix. Eine Ankreuzfrage wird geloggt wie
+        eine Ankreuzfrage (modus "check", die blanke Frage-Id), egal ueber
+        welchen Einstieg. Ein neues Praefix, das ein Leser nicht kennt - oder
+        eines, das wie der Abschluss-Eintrag aussieht -, verschoebe Rotation und
+        Level STUMM. Die Praefix-Welt bleibt also genau die von gestern:
+        tl-/ts- fuer den Abschluss, tlab-/tsab- fuer den Aufgaben-Abruf.
+
+   DECKEL: hoechstens NEU_MC je Sitzung, auch beim Nachholen. Die Sitzung soll
+   nicht doppelt so lang werden - SITZUNG_MAX ist eine Notbremse, kein Konzept. */
+var NEU_MC = 4;
+
 /* Deckel fuer die ganze Sitzung. Unten wird kommentarlos abgeschnitten: eine
    Liste, die sagt "und 60 weitere", ist eine Drohung, keine Information. */
 var SITZUNG_MAX = 40;
@@ -168,11 +197,19 @@ function pauseLesen(themen) {
   var thema = null;
   themen.forEach(function (t) { if (t.id === p.thema) thema = t; });
   if (!thema) { pauseLoeschen(); return null; }
-  var tage = lerntage();
-  var i = tage.indexOf(p.tag);
-  // Kein Lerntag mit diesem Stempel: der Eintrag ist aelter als das Log reicht.
-  var abstand = i < 0 ? 99 : (tage.length - 1) - i;
-  if (abstand > PAUSE_LERNTAGE) { pauseLoeschen(); return null; }
+  /* HEUTE ist immer gueltig, ohne Umweg ueber lerntage(). Der Stempel ist
+     heuteTag(), lerntage() kennt aber nur Tage MIT Log-Eintrag - und pausieren
+     kann Rose, ohne heute schon etwas beantwortet zu haben (der Knopf fragt nur,
+     ob sie ueberhaupt unterwegs war). Dann waere indexOf -1, der Abstand 99, und
+     die frisch abgelegte Runde waere im selben Moment wieder weg. */
+  var heute = heuteTag();
+  if (p.tag !== heute) {
+    var tage = lerntage();
+    var i = tage.indexOf(p.tag);
+    // Kein Lerntag mit diesem Stempel: der Eintrag ist aelter, als das Log reicht.
+    var abstand = i < 0 ? 99 : (tage.length - 1) - i;
+    if (abstand > PAUSE_LERNTAGE) { pauseLoeschen(); return null; }
+  }
   return { p: p, thema: thema };
 }
 
@@ -293,7 +330,9 @@ function schrittKopf(s) {
   var chip = el("span", "tl-thema-chip", s.thema.titel);
   setzeFarbe(chip, s.thema.farbe);
   reihe.appendChild(chip);
-  reihe.appendChild(reifeLeiste(s.stufe));
+  // Ankreuzfragen tragen keine Reife (siehe schrittFuer) - eine Leiste, die
+  // immer auf null steht, waere eine Falschauskunft.
+  if (s.art !== "mc") reihe.appendChild(reifeLeiste(s.stufe));
   return reihe;
 }
 
@@ -341,28 +380,50 @@ export function lvl1Teil(f, stufe) {
   if (budget === null) return null;                 // ab R3 immer die ganze Aufgabe
   var kernZahl = stichpunkteTeilen(f).kern.length;
 
-  var ab = abschnitteFuer(f);
+  /* DIE PORTION MUSS DIESELBE QUELLE LESEN WIE DER RENDERER, sonst misst sie
+     etwas anderes, als Rose sieht. abrufKarte betritt den Abschnitts-Pfad NUR
+     ausserhalb des Zieh-Modus (dort waere eine Abschnitts-Ueberschrift eine
+     Verraeterin, genau wie die Saeulen-Ansicht). Bei R0/R1 gibt modusFuer
+     "ziehen" zurueck - dort gilt also weiter der Saeulen-Weg, und gezaehlt
+     werden die Knoepfe der Mischliste, nicht Abschnitts-Zeilen. Sonst liesse
+     eine Rolle mit fuenf Vorratspunkten als "eine Zeile" durch und Rose bekaeme
+     acht Knoepfe, wo vier vereinbart waren. */
+  var ab = stufe <= 1 ? null : abschnitteFuer(f);
   if (ab) {
     var teilA = [], zeilen = 0;
     for (var a = 0; a < ab.liste.length; a++) {
       var z = abschnittZeilen(ab.liste[a]);
       // Abbrechen statt ueberspringen: einen spaeteren, kleineren Abschnitt
-      // vorzuziehen wuerde die Reihenfolge der Aufgabe zerreissen. Der erste
-      // kommt immer mit, auch wenn er allein schon ueber dem Budget liegt -
-      // ein halber Abschnitt waere schlimmer als ein zu grosser.
+      // vorzuziehen wuerde die Reihenfolge der Aufgabe zerreissen.
       if (teilA.length && zeilen + z > budget) break;
       zeilen += z;
       teilA = teilA.concat(ab.liste[a].idx);
     }
-    /* Bei der Rollen-Schablone teilen sich alle Abschnitte denselben Vorrat -
-       der erste bringt schon alle Kern-Indizes mit, und dann ist die Portion
-       die ganze Aufgabe. Genau richtig: portioniert werden dort die ROLLEN,
-       und drei bis vier davon liegen ohnehin unter dem Budget. */
+
     var eindeutig = [];
     var da = Object.create(null);
     teilA.forEach(function (k) { if (!da[k]) { da[k] = true; eindeutig.push(k); } });
+    eindeutig.sort(function (x, y) { return x - y; });
+
+    /* DER ERSTE ABSCHNITT KANN ALLEIN SCHON ZU GROSS SEIN, und das ist kein
+       Randfall: 33 Aufgaben im Korpus bestehen aus EINEM Listen-Abschnitt mit
+       fuenf bis acht Stichpunkten (eb-afb1-4 hat acht). Nur ganze Abschnitte zu
+       nehmen hiesse dort, die Portion ganz fallenzulassen - und damit stuenden
+       bei R2 wieder acht Eingabefelder auf dem Schirm, also genau Roses
+       Beschwerde vom 19.08. Also wird dann doch innerhalb geschnitten, so wie es
+       der Saeulen-Weg unten bei einer einzigen Saeule auch tut. Ein halber
+       Abschnitt ist schlechter als ein ganzer, aber besser als acht Felder.
+
+       NICHT beim geteilten Vorrat: dort traegt jeder Abschnitt dieselbe volle
+       Kernliste, und ein Schnitt darin naehme den Rollen ihren Vorrat weg,
+       statt Felder zu sparen. Drei bis vier Rollen liegen ohnehin unter dem
+       Budget - dort ist die Zeile die Portion, und sie stimmt schon. */
+    if (!ab.vorratGeteilt && ab.liste.length === 1 && eindeutig.length > budget) {
+      eindeutig = eindeutig.slice(0, budget);
+    }
+
     if (eindeutig.length >= kernZahl) return null;
-    return eindeutig.sort(function (x, y) { return x - y; });
+    return eindeutig;
   }
 
   var saeulen = saeulenIndizes(f);
@@ -376,16 +437,46 @@ export function lvl1Teil(f, stufe) {
   return teil.sort(function (a, b) { return a - b; });
 }
 
+/* Welche Ankreuzfragen eines Themas heute drankommen. "Sitzt" heisst: zweimal
+   getroffen und beim letzten Mal richtig - dann faellt der Wiedererkennen-
+   Schritt weg, so wie er ab R2 auch bei den Aufgaben wegfaellt. Ungesehenes
+   steht vorn, danach das, was zuletzt danebenging.
+   Gelesen wird state.mc, derselbe Stand wie im Uebungsmodus: eine Frage, die
+   Rose auf der Themenseite schon sicher hat, soll hier nicht nochmal kommen. */
+function mcFuerThema(thema, n) {
+  var kandidaten = [];
+  (thema.mc || []).forEach(function (f) {
+    if (!f || !f.id || !(f.optionen || []).length) return;
+    var st = state.mc[f.id];
+    if (st && st.zuletztRichtig && (st.richtig || 0) >= 2) return;    // sitzt
+    kandidaten.push({
+      f: f,
+      neu: st ? 1 : 0,
+      saldo: st ? (st.richtig || 0) - (st.falsch || 0) : 0,
+      zufall: Math.random()
+    });
+  });
+  kandidaten.sort(function (a, b) {
+    return a.neu - b.neu || a.saldo - b.saldo || a.zufall - b.zufall;
+  });
+  return kandidaten.slice(0, n).map(function (x) { return x.f; });
+}
+
 function schrittFuer(art, obj, thema, stand) {
   // Aufgaben und Begriffe tragen beide ihre id im selben Feld - der
   // Item-Schluessel der Reife ist genau diese id (siehe reife.js).
   var id = obj.id;
-  var st = stand.get(id);
+  /* Ankreuzfragen haben KEINE Reife: reife.js liest nur die Praefixe tlab-/tsab-
+     (Aufgaben) und spiel "glossar" (Begriffe), und eine MC-Antwort wird als
+     modus "check" geloggt. stand.get(id) gaebe hier also immer undefined - der
+     Schritt traegt deshalb ausdruecklich Stufe 0 und keine Reife-Leiste. */
+  var st = art === "mc" ? null : stand.get(id);
   var stufe = st ? st.stufe : 0;
   return {
     art: art, id: id, thema: thema, stufe: stufe, modus: modusFuer(stufe),
     f: art === "abruf" ? obj : null,
     e: art === "begriff" ? obj : null,
+    m: art === "mc" ? obj : null,
     /* Welche Kern-Bausteine dieser Schritt abfragt; null heisst alle.
        Die Portion haengt an der REIFE, nicht am Level. Waere sie ans Level
        gebunden, entstuende die Falle, gegen die die Portionierung ueberhaupt
@@ -494,7 +585,15 @@ export function zeigeThemenLernen(themen, hooks) {
       if (za) return 0;                          // untereinander egal
       return (antworten[a.id] || 0) - (antworten[b.id] || 0);
     });
-    var duennstes = sortiert.filter(function (t) { return !gesperrt[t.id]; })[0];
+    /* Die Zeile nur, wenn es ueberhaupt ein Gefaelle gibt. Auf einem frischen
+       Geraet stehen alle acht auf null - dann waere "am wenigsten geuebt" auf
+       der ersten Kachel eine erfundene Auskunft, und die Reihenfolge ist
+       ohnehin die des Manifests (sort ist stabil). */
+    var offeneT = sortiert.filter(function (t) { return !gesperrt[t.id]; });
+    var hoechste = 0;
+    offeneT.forEach(function (t) { hoechste = Math.max(hoechste, antworten[t.id] || 0); });
+    var duennstes = hoechste > 0 && offeneT.length > 1
+      && (antworten[offeneT[0].id] || 0) < hoechste ? offeneT[0] : null;
     sortiert.forEach(function (t) {
       var zu = !!gesperrt[t.id];
       var lvl = levelVon(t);
@@ -580,6 +679,16 @@ export function zeigeThemenLernen(themen, hooks) {
     // ausgerechnet die Aufgaben, in denen die Modelle und die Grundprinzipien
     // stehen.
     var nachholen = NACHHOLEN.indexOf(thema.id) >= 0;
+
+    /* WIEDERERKENNEN VOR FREIEM ABRUF: die Ankreuzfragen stehen ganz vorn.
+       Ihr Deckel bleibt auch beim Nachholen stehen - dort faellt der Deckel fuer
+       Aufgaben und Begriffe weg, damit Rose das Neue am Stueck bekommt, aber
+       eine doppelt so lange Sitzung war nie der Zweck. */
+    mcFuerThema(thema, NEU_MC).forEach(function (f) {
+      benutzt[f.id] = true;
+      schritte.push(schrittFuer("mc", f, thema, stand));
+    });
+
     var aufgaben = (thema.frei || [])
       .filter(function (f) {
         return (f.stichpunkte || []).length && (f.afb || 2) <= maxAfb;
@@ -659,6 +768,10 @@ export function zeigeThemenLernen(themen, hooks) {
         (t.frei || []).forEach(function (f) {
           if (!treffer && f.id === eintrag.id) treffer = schrittFuer("abruf", f, t, stand);
         });
+      } else if (eintrag.art === "mc") {
+        (t.mc || []).forEach(function (f) {
+          if (!treffer && f.id === eintrag.id) treffer = schrittFuer("mc", f, t, stand);
+        });
       } else if (hatGlossar()) {
         eintraegeZu(t.id).forEach(function (e) {
           if (!treffer && e.id === eintrag.id) treffer = schrittFuer("begriff", e, t, stand);
@@ -682,6 +795,12 @@ export function zeigeThemenLernen(themen, hooks) {
       pauseLoeschen();
       schritte = schritteBauen(thema, stand);
     }
+    /* Loest sich beim Fortsetzen kein einziger Schritt mehr auf (der Korpus darf
+       sich zwischen zwei Sitzungen aendern), ist das KEIN abgeschlossenes Thema:
+       fazit() schreibt den tl-Eintrag und drehte Rotation und Level weiter, ohne
+       dass etwas dran war. Dann wird die Pause still verworfen und Rose steht
+       wieder auf der Themenwahl. */
+    if (!schritte.length && fortsetzen) { pauseLoeschen(); return start(); }
     if (!schritte.length) return fazit(thema, 0, 0);
     var index = 0;
     /* GEZAEHLT WIRD JE SACHE, NICHT JE SCHIRM (19.08.2026). Vorher liefen zwei
@@ -724,12 +843,18 @@ export function zeigeThemenLernen(themen, hooks) {
     var zusatz = 0;
 
     // Eine Sache, ueber alle ihre Anlaeufe hinweg wiedererkennbar.
-    function sid(s) { return s.art === "abruf" ? "f:" + s.f.id : "b:" + s.e.id; }
+    function sid(s) {
+      if (s.art === "abruf") return "f:" + s.f.id;
+      if (s.art === "mc") return "m:" + s.m.id;
+      return "b:" + s.e.id;
+    }
 
     function nochmal(s) {
       s.runde++;
       if (s.runde > REQUEUE_MAX || zusatz >= geplant) {
-        mitgenommen = s.art === "abruf" ? s.f.frage : s.e.begriff;
+        mitgenommen = s.art === "abruf" ? s.f.frage
+          : s.art === "mc" ? s.m.frage
+            : s.e.begriff;
         mitgenommenZahl++;
         return;
       }
@@ -740,6 +865,13 @@ export function zeigeThemenLernen(themen, hooks) {
       // der Zaehler (s.runde) und der Hinweis-Index am Item haengen.
       schritte.push(s);
     }
+
+    /* Beim Fortsetzen wird das Angebot SOFORT auf den neuen Stand geschrieben,
+       nicht erst beim naechsten Pause-Klick. Sonst bliebe nach einem
+       "Abbrechen" mitten in der fortgesetzten Runde der alte Eintrag mit
+       gestrigem Stempel liegen - er verfiele dann frueher, als Rose erwartet,
+       und truege Schritte, die sie eben schon gemacht hat. */
+    if (fortsetzen) pauseSpeichern();
 
     function schritt() {
       var s = schritte[index];
@@ -761,7 +893,14 @@ export function zeigeThemenLernen(themen, hooks) {
          auch nichts zu pausieren - dieselbe Logik wie bei genug direkt darunter. */
       var pause = el("button", "zurueck tl-pause", "⏸ Pause – morgen weiter");
       pause.addEventListener("click", function () {
-        if (!Object.keys(versucht).length) return start();
+        /* Ein leerer Rest heisst: kein Angebot. Gefragt wird aber nach index,
+           NICHT nur nach versucht - versucht wird erst gesetzt, wenn Rose auf
+           Weiter tippt, und wer die erste Karte beantwortet und dann pausiert,
+           haette sonst nichts abzulegen gehabt. Ab dem zweiten Schirm ist sie
+           unterwegs, und das reicht. Wer auf Schirm eins pausiert, ohne
+           irgendwo gewesen zu sein, bekommt Abbrechen - dieselbe Logik wie bei
+           genug direkt darunter. */
+        if (!index && !Object.keys(versucht).length) return start();
         pauseSpeichern();
         start();
       });
@@ -822,7 +961,11 @@ export function zeigeThemenLernen(themen, hooks) {
            Steht im Stamm kein bekanntes Signalwort, bleibt der alte Satz - dann
            wird nichts behauptet, was da nicht ist. */
         var vorspann = el("div", "karten-hinweis tl-vorspann");
-        var opSatz = abschnitteFuer(s.f) ? "" : operatorSatz(s.f);
+        /* Gefragt wird, ob der Renderer die Abschnitte WIRKLICH zeichnet - nicht,
+           ob die Aufgabe welche haette. Im Zieh-Modus (R0/R1, also genau die
+           Einstiegsstufe) laesst treppe.js sie bewusst weg, es gibt dort also
+           keine auftrag-Ueberschrift, die den Satz ersetzen koennte. */
+        var opSatz = (s.modus !== "ziehen" && abschnitteFuer(s.f)) ? "" : operatorSatz(s.f);
         vorspann.textContent = opSatz
           ? opSatz + " Erst abrufen, dann aufdecken."
           : "Erst abrufen, dann aufdecken:";
@@ -870,6 +1013,27 @@ export function zeigeThemenLernen(themen, hooks) {
           opts.felder = true;
         }
         app.appendChild(abrufKarte(s.f, opts));
+      } else if (s.art === "mc") {
+        /* Der Wiedererkennen-Schritt. hooks.mcKarte ist GENAU dieselbe Karte
+           wie im Uebungsmodus - inklusive aller vier Options-Begruendungen aus
+           Beleg.optionenAufloesen, der Erklaer-Abfrage und des Logs (modus
+           "check", blanke Frage-Id). Hier wird deshalb NICHT nochmal geloggt:
+           zwei Eintraege fuer eine Antwort waeren zwei Antworten in jeder
+           Statistik, die den Lernstand liest.
+           Der Weiter-Knopf sitzt in der Karte und heisst neutral "Weiter" -
+           dieselbe Begruendung wie beim Abruf: ob noch ein Schritt kommt, steht
+           erst fest, wenn nochmal(s) durch ist. */
+        var vor = el("div", "karten-hinweis tl-vorspann");
+        // Kein Versprechen ueber die Reihenfolge: eine misslungene Ankreuzfrage
+        // wandert ans ENDE der Schrittliste und steht dann hinter allem anderen.
+        vor.textContent = "Wiedererkennen: welche Antwort trägt?";
+        app.appendChild(vor);
+        app.appendChild(hooks.mcKarte(s.thema, s.m, null, "Weiter", function (richtig) {
+          versucht[sid(s)] = true;
+          sass[sid(s)] = !!richtig;
+          if (!richtig) nochmal(s);
+          weiter();
+        }));
       } else {
         // Begriffe zaehlen auf denselben Lernstand ein wie die
         // Fachbegriffe-Runde - deshalb spiel "glossar", nicht "themenlernen".

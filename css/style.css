@@ -1288,6 +1288,19 @@ p { margin: 0 0 var(--sp-3); }
    `.heute-karte h2 { margin-bottom: var(--sp-3) }` ist ebenfalls weg: die
    geteilte h2 bringt genau diesen Abstand schon mit. */
 .heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
+/* Die angefangene Themen-Lernen-Runde unter den Tageskacheln. Ruhig, keine
+   Warnfarbe - es ist ein Angebot und keine Schuld. Der Knopf ist ein Textlink
+   und kein .knopf: er soll neben dem Satz stehen, nicht neben den Kacheln
+   konkurrieren. */
+.heute-liegt {
+  font-size: .86rem; margin-top: var(--sp-3);
+  padding: 8px 12px; border-radius: var(--radius); background: var(--glow);
+}
+.heute-liegt .text-knopf {
+  font: inherit; font-weight: 700; cursor: pointer;
+  background: none; border: 0; padding: 0;
+  color: var(--accent); text-decoration: underline;
+}
 
 /* ---------- Uebungsmodi als Icon-Kacheln ---------- */
 .abschnitt { margin-bottom: var(--sp-4); }

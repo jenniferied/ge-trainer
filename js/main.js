@@ -2002,6 +2002,24 @@ function heuteDranKarte() {
   liste.forEach(function (a) { reihe.appendChild(dailyKachel(a)); });
   karte.appendChild(reihe);
 
+  /* Eine angefangene Themen-Lernen-Runde findet sich hier wieder. Sie steht als
+     eigene Zeile und nicht nur im klein-Text der Kachel: der geteilte Baustein
+     (geteilt-tages-hub.js, gehoert einer anderen Session) zeichnet klein
+     ausschliesslich in den title-Tooltip, und ein Tooltip ist auf 360 px
+     unsichtbar. Rose, 19.08.: "man kann es aber […] doch noch fortfuehren (es
+     liegt halt nur woanders)" - das Woanders muss auf sich zeigen, sonst hilft
+     es nicht. Ruhiger Ton, kein Mahnwort: es ist ein Angebot. */
+  var tlLiegt = ThemenLernen.offeneRunde(themen);
+  if (tlLiegt) {
+    var z = el("div", "heute-liegt");
+    z.appendChild(el("span", null, "📚 " + tlLiegt.titel + " liegt angefangen da – "
+      + tlLiegt.offen + (tlLiegt.offen === 1 ? " Schritt" : " Schritte") + " offen. "));
+    var hin = el("button", "text-knopf", "Weitermachen");
+    hin.addEventListener("click", function () { zeige("themenlernen"); });
+    z.appendChild(hin);
+    karte.appendChild(z);
+  }
+
   /* Der Trostsatz haengt am STAPEL, nicht mehr an einer Kachel (19.08.2026).
      Bis dahin stand hier "wenn keine Kachel mit key 'wdh' dabei ist" - seit die
      Stapel-Kachel in die allgemeine Sektion umgezogen ist, waere das immer wahr

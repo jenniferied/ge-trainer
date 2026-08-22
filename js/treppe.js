@@ -641,14 +641,44 @@ export function abrufKarte(f, opts) {
     if (teilAktiv) {
       /* o.teil kommt aus lvl1Teil und ist an ABSCHNITTSGRENZEN geschnitten -
          ein Abschnitt ist die kleinste Portion. Gezeigt wird deshalb, was
-         VOLLSTAENDIG in der Portion liegt; ein halb getroffener Abschnitt
-         faellt heraus, statt halbiert zu werden. */
+         VOLLSTAENDIG in der Portion liegt.
+
+         MIT EINER AUSNAHME, und die ist kein Randfall: 33 Aufgaben im Korpus
+         bestehen aus einem EINZIGEN Listen-Abschnitt mit fuenf bis acht
+         Stichpunkten (eb-afb1-4 hat acht). Dort schneidet lvl1Teil INNERHALB
+         des Abschnitts, weil die Alternative acht Eingabefelder auf einem
+         Handy waeren - also genau Roses Beschwerde vom 19.08. Ein so
+         beschnittener Abschnitt wird hier zurechtgestutzt statt fallengelassen;
+         chips wandern index-parallel mit, sonst stuende die Beschriftung des
+         dritten Slots am zweiten. Beteiligt sich der Abschnitt an einer
+         parallelZu-Paarung, wird NICHT geschnitten - dort haengt die Zuordnung
+         an der Slot-Position, und ein Schnitt auf einer Seite verschoebe sie. */
       var drin = {};
       auswahl.forEach(function (k) { drin[k] = true; });
-      gezeigteAb = ab.liste.filter(function (a) {
-        return a.idx.every(function (k) { return drin[k]; });
+      var gepaart = {};
+      ab.liste.forEach(function (a, i) {
+        if (a.parallelZu === null) return;
+        gepaart[i] = true; gepaart[a.parallelZu] = true;
       });
-      // Passt kein einziger ganz hinein, ist die Portion zu klein fuer diese
+      gezeigteAb = [];
+      ab.liste.forEach(function (a, i) {
+        var behalten = a.idx.map(function (_, n) { return n; })
+          .filter(function (n) { return drin[a.idx[n]]; });
+        if (!behalten.length) return;
+        if (behalten.length === a.idx.length) return void gezeigteAb.push(a);
+        // Teiltreffer: nur beschneiden, wo es sicher ist.
+        if (gepaart[i] || a.form === "rolle") return;
+        gezeigteAb.push({
+          quelle: a.quelle, pos: a.pos, operator: a.operator, rolle: a.rolle,
+          auftrag: a.auftrag, form: a.form,
+          idx: behalten.map(function (n) { return a.idx[n]; }),
+          chips: a.chips ? behalten.map(function (n) { return a.chips[n]; }) : null,
+          waehle: null,                       // hier ist schon geschnitten
+          satzanfang: a.satzanfang,
+          parallelRoh: a.parallelRoh, parallelZu: null
+        });
+      });
+      // Passt kein einziger hinein, ist die Portion zu klein fuer diese
       // Aufgabe. Dann lieber der erste Abschnitt ganz als gar keiner.
       if (!gezeigteAb.length) gezeigteAb = [ab.liste[0]];
     }
@@ -756,6 +786,19 @@ var KI_STUFE = {
   leer: { text: "Hier stand noch nichts", klasse: "muted" }
 };
 
+/* BEIM GETEILTEN VORRAT HEISST "passt-nicht" ETWAS ANDERES. Dort gibt es keine
+   Slots, zwischen denen etwas verrutschen koennte: Roses drei Rollen sind EIN
+   Text, und die Erwartungsliste ist ein Vorrat, den er abdecken soll. Ein Punkt,
+   den sie nicht getroffen hat, ist also nicht falsch einsortiert, sondern noch
+   offen - und "gehoert eher woanders hin" waere an dieser Stelle ein Vorwurf,
+   den die Karte gar nicht erheben kann.
+   Nachgemessen am 22.08. an pr-f-2: Rose schreibt drei sinnvolle Rollen-Saetze
+   und bekam viermal "gehoert eher woanders hin". Das ist genau die Sorte
+   Rueckmeldung, die einen Trainer verleidet. */
+var KI_STUFE_VORRAT = {
+  "passt-nicht": { text: "Das steht noch aus", klasse: "muted" }
+};
+
 function abschnitteKarte(f, o, ab, gezeigt) {
   var karte = el("div", "karte treppe-karte");
   karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
@@ -835,7 +878,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     + "Dann deck einzeln auf und sag ehrlich, was schon da war."));
 
   /* ---- Sammelnotiz, KI-Kopf und Zaehlung ---- */
-  var notizen = null, kiKopf = null, kiZahl = null;
+  var notizen = null, kiKopf = null, kiZahl = null, frostZeile = null;
   if (o.felder) {
     notizen = wachsFeld("treppe-notizen", "Sammelort – schreib rein, wie es dir kommt.");
     notizen.rows = 3;
@@ -844,6 +887,10 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     // ausdruecklich: "bei ihren Notizen oben UND in der Zeile".
     kiKopf = el("div", "treppe-ki-kopf");
     kiZahl = el("div", "treppe-ki-zahl");
+    // Eigene Zeile fuer den Einfrier-Satz - siehe kiStarten(): kiAufraeumen()
+    // leert kiKopf, dieser Satz muss aber auch ohne KI stehen bleiben.
+    frostZeile = el("div", "muted treppe-ki-start");
+    karte.appendChild(frostZeile);
     karte.appendChild(kiKopf);
     karte.appendChild(kiZahl);
   }
@@ -865,7 +912,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     if (kiStatus !== "da") return;   // still nichts: die feste Notiz steht ohnehin da
     var u = kiUrteile[rohVon(s.kern)];
     if (!u) return;                  // fehlender i ist kein Fehlerfall
-    var st = KI_STUFE[u.stufe] || KI_STUFE.halb;
+    var st = (ab.vorratGeteilt && KI_STUFE_VORRAT[u.stufe]) || KI_STUFE[u.stufe] || KI_STUFE.halb;
     var text = st.text + (u.tipp ? " – " + u.tipp : "");
     // belegZeile statt textContent: "Folie 12" im Tipp soll antippbar sein.
     // Kein innerHTML - das ist der einzige Weg, auf dem Modelltext hier laeuft.
@@ -911,8 +958,13 @@ function abschnitteKarte(f, o, ab, gezeigt) {
        Vergleichen noch lesen kann. */
     alleFelder.forEach(feldEinfrieren);
     feldEinfrieren(notizen);
-    if (kiKopf) kiKopf.appendChild(el("div", "muted treppe-ki-start",
-      "Ab jetzt wird verglichen – deine Notizen bleiben stehen, wie sie sind."));
+    /* Der Satz gehoert NICHT in kiKopf: den raeumt kiAufraeumen() leer, wenn die
+       KI ausfaellt - und dann staenden die Felder eingefroren da, ohne dass
+       irgendwo erklaert waere, warum Rose nicht mehr tippen kann. Das Einfrieren
+       ist eine Entscheidung der Oberflaeche, nicht der KI, also bleibt der Satz
+       auch ohne sie stehen. */
+    if (frostZeile) frostZeile.textContent =
+      "Ab jetzt wird verglichen – deine Notizen bleiben stehen, wie sie sind.";
 
     /* eingaben ist PORTIONSPARALLEL zu opts.teil (Vertrag 2). Gebaut wird je
        KERN-Punkt, nicht je Zeile: eine Rolle deckt mehrere Vorratspunkte ab,
@@ -972,7 +1024,13 @@ function abschnitteKarte(f, o, ab, gezeigt) {
 
     Llm.bausteinUrteile(o.themaId, f, eingaben, {
       notiz: notizen ? notizen.value : "",
-      teil: teil,
+      /* teil NUR, wenn wirklich gekuerzt wird. Steht die ganze Aufgabe auf dem
+         Schirm, ist teil identisch mit der vollen Kernliste - llm.js kaeme auf
+         dasselbe Ergebnis, wuerde dem Prompt aber "portion: true" melden und das
+         Modell darauf einstimmen, dass Felder fehlen, die gar nicht fehlen.
+         eingaben passt in beiden Faellen: ohne teil misst llm.js gegen die volle
+         Kernliste, und genau die ist es dann. */
+      teil: o.teilAktiv ? teil : null,
       // 429 und "kein Netz" fuehren beide zum selben stillen Rueckfall - die
       // Unterscheidung nimmt llm.js uns ab, gebraucht wird sie hier (noch) nicht.
       onAusfall: function () { }
@@ -1005,7 +1063,13 @@ function abschnitteKarte(f, o, ab, gezeigt) {
       nr++;
       var zeile = el("div", "treppe-punkt" + (z.form === "rolle" ? " treppe-rolle" : ""));
       var kopf = el("div", "treppe-punkt-kopf");
-      kopf.appendChild(el("span", "treppe-nr", String(nr)));
+      /* Eine Rollen-Zeile bekommt KEINE Nummer. Vertrag 1 ist da woertlich:
+         "keine Nummer, kein Wort Baustein" - und der eingefaerbte Kreis mit der
+         fetten Ziffer ist genau die Nummer, gegen die Rose sich gewehrt hat.
+         Ein ruhiger Punkt haelt die Einrueckung, ohne zu zaehlen. */
+      kopf.appendChild(z.form === "rolle"
+        ? el("span", "treppe-nr treppe-nr-rolle", "•")
+        : el("span", "treppe-nr", String(nr)));
       var inhalt = el("div", "treppe-inhalt");
 
       var verdeckt = el("span", "treppe-verdeckt");
@@ -1016,7 +1080,10 @@ function abschnitteKarte(f, o, ab, gezeigt) {
            wenn er die Antwort verriete. Im Rollen-Zweig gibt es weder das eine
            noch das andere - dort steht der auftrag darueber. */
         if (z.form !== "rolle") {
-          var chipT = z.chip || chipText(labelChip(punktVon(z.kern[0]), z.kern[0]), z.kern[0], f);
+          /* Der neutrale Rueckfall traegt die ANZEIGE-Nummer, nicht den
+             Kern-Index: links daneben steht die laufende Zeilennummer, und zwei
+             verschiedene Zahlen fuer dieselbe Zeile sind eine Zumutung. */
+          var chipT = z.chip || chipText(labelChip(punktVon(z.kern[0]), nr - 1), nr - 1, f);
           inhalt.appendChild(el("span", "treppe-label", chipT));
         }
         inhalt.appendChild(verdeckt);
@@ -1055,6 +1122,11 @@ function abschnitteKarte(f, o, ab, gezeigt) {
       kopf.appendChild(inhalt);
 
       var werkzeuge = el("div", "treppe-werkzeuge");
+      /* KEIN Hinweis-Knopf bei geteiltem Vorrat: dort traegt jede Rolle
+         dieselbe volle Kernliste, z.kern[0] ist also in JEDER Zeile derselbe
+         Punkt - alle drei Knoepfe zeigten denselben Hinweis, und der gehoert
+         inhaltlich zu keiner der drei Rollen. Das Geruest ist dort der
+         Satzanfang im Feld, nicht der Hinweis. */
       var hv = hinweiseFuer(f, rohVon(z.kern[0]), punktVon(z.kern[0]), o.hinweisIndex);
       var hinweisStufe = 0;
       var hinweis = el("button", "knopf sekundaer klein-knopf", "💡 Hinweis");
@@ -1070,7 +1142,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
           hinweis.disabled = true;
         }
       });
-      werkzeuge.appendChild(hinweis);
+      if (!ab.vorratGeteilt) werkzeuge.appendChild(hinweis);
 
       var auf = el("button", "knopf klein-knopf", "Aufdecken");
       auf.addEventListener("click", function () {
@@ -1078,6 +1150,23 @@ function abschnitteKarte(f, o, ab, gezeigt) {
         // Ein Aufruf je Aufgabe, nicht je Baustein - nur wenn das Modell alle
         // Felder zusammen sieht, erkennt es richtigen Inhalt im falschen Slot.
         kiStarten();
+        /* BEIM GETEILTEN VORRAT DECKT EIN KLICK ALLE ROLLEN AUF. Sonst zeigte
+           der erste Klick die vollstaendige Erwartungsliste, waehrend Rollen 2
+           und 3 noch abgefragt werden - der Abruf, um den es hier geht, waere
+           fuer sie schon verraten. Und es ist ohnehin ehrlicher so: bei der
+           Rollen-Schablone ist die ganze Karte EIN Text in drei Rollen, das
+           Schreiben endet mit demselben Klick (kiStarten friert alle Felder
+           ein), also endet auch das Abrufen dort. */
+        if (ab.vorratGeteilt) {
+          zeilenAlle.forEach(function (andere) {
+            if (andere !== z && andere.aufdecken) andere.aufdecken();
+          });
+        }
+        z.aufdecken();
+      });
+      z.aufdecken = function () {
+        if (z.aufgedeckt) return;
+        z.aufgedeckt = true;
         werkzeuge.remove();
         var eigenerText = z.feld ? z.feld.value.trim() : "";
         var partnerText = z.partnerFeld ? z.partnerFeld.value.trim() : "";
@@ -1172,7 +1261,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
         });
         vorschlagMarkieren(z);
         inhalt.appendChild(frage);
-      });
+      };
       werkzeuge.appendChild(auf);
       kopf.appendChild(werkzeuge);
       zeile.appendChild(kopf);
@@ -1200,7 +1289,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     text.appendChild(el("div", "titel",
       stand.hatte + " von " + zeilenAlle.length + fazitWort + " kamen aus dem Kopf"
       + (stand.halb ? ", " + stand.halb + " halb" : "") + "."));
-    text.appendChild(el("div", "muted", fazitSatz(quote, stand)));
+    text.appendChild(el("div", "muted", fazitSatz(quote, stand, nurRollen ? "Rollen" : "Bausteine")));
     fazit.appendChild(text);
     karte.appendChild(fazit);
 
@@ -1208,10 +1297,13 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     weiter.addEventListener("click", function () {
       /* Unveraendert im Vertrag mit themen-lernen.js: gesamt/hatte/halb/fehlte/
          quote. Dort rechnet ok = erg.quote >= 0.5 und die Reife weiter - was
-         hier gezaehlt wird, hat sich geaendert, WIE es zurueckkommt nicht. */
+         hier gezaehlt wird, hat sich geaendert, WIE es zurueckkommt nicht.
+         wort kommt additiv dazu, damit die Merk-Zeile im Between-Step (unten,
+         lernSchritt) nicht als einzige noch von Bausteinen redet. Wer das Feld
+         nicht kennt, verhaelt sich wie vorher. */
       if (o.onFertig) o.onFertig({
         gesamt: zeilenAlle.length, hatte: stand.hatte, halb: stand.halb,
-        fehlte: stand.fehlte, quote: quote
+        fehlte: stand.fehlte, quote: quote, wort: nurRollen ? "Rollen" : "Bausteinen"
       });
     });
     karte.appendChild(weiter);
@@ -1414,11 +1506,13 @@ function aufdeckenKarte(f, kern, o) {
   return karte;
 }
 
-function fazitSatz(quote, stand) {
+// wort: "Bausteine" oder "Rollen" - im Rollen-Zweig heissen die Zeilen anders,
+// und der Trostsatz darf nicht als einziger noch von Bausteinen reden.
+function fazitSatz(quote, stand, wort) {
   if (quote >= 0.999) return "Alles da. Jetzt in ganze Sätze bringen.";
   if (quote >= 0.6) return "Gute Basis. Die aufgedeckten Punkte hast du eben noch mal gelesen - nimm sie gleich mit.";
   if (stand.fehlte >= stand.hatte) return "Genau dafür ist dieser Schritt da: jetzt kennst du die Lücken, bevor sie Punkte kosten.";
-  return "Die fehlenden Bausteine stehen jetzt frisch da - schreib sie gleich mit ein.";
+  return "Die fehlenden " + (wort || "Bausteine") + " stehen jetzt frisch da - schreib sie gleich mit ein.";
 }
 
 /* ---------- Stufe 3: die echten Punkte aus einer Mischliste tippen ----------
@@ -1622,7 +1716,7 @@ export function lernSchritt(thema, f, opts) {
         // Kompakte Erinnerung statt der ganzen Treppe: was der Abruf ergab,
         // steht beim Schreiben noch sichtbar da - aber klein.
         var merk = el("div", "lernschritt-merk",
-          "🧠 Abruf: " + erg.hatte + " von " + erg.gesamt + " Bausteinen"
+          "🧠 Abruf: " + erg.hatte + " von " + erg.gesamt + " " + (erg.wort || "Bausteinen")
           + (erg.halb ? " (+" + erg.halb + " halb)" : "") + " kamen aus dem Kopf.");
         halter.appendChild(merk);
       }
