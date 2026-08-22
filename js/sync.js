@@ -615,7 +615,15 @@ export function snapshot(st) {
     // tzHist: das Tagesplan-Archiv (stats.js schwellenFuerTag). Anders als
     // state.tzPlan (geraetelokal) synct es mit, damit beide Geraete die
     // Historie mit DENSELBEN Tagesschwellen bewerten.
-    tzHist: s.tzHist || {} };
+    tzHist: s.tzHist || {},
+    // tlPause: die pausierte Themen-Lernen-Runde (22.08.2026, Prompt H) -
+    // Jennifer: "falls der laptop stirbt soll sie einfach das handy aufmachen
+    // koennen." Reine Ids plus Zaehler, klein und geraeteunabhaengig lesbar
+    // (themen-lernen.js pauseSpeichern). Auf null normiert, damit eine alte
+    // Server-Zeile ohne das Feld nicht dauerhaft als verschieden gilt. Ein
+    // Grabstein { ts, rest: [] } faehrt als Objekt mit - das Loeschen ist ein
+    // Ereignis und muss das andere Geraet erreichen (Merge-Regel in mergeIn).
+    tlPause: s.tlPause || null };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -719,7 +727,17 @@ export function signatur(d) {
     var h = daten.tzHist[t];
     return t + ":" + (h.ziel || 0) + ":" + (h.minimum || 0) + ":" + (h.stretch || 0) + ":" + (h.ts || 0);
   }).join(",");
-  return [aids, mc, frei, tot, mk, chat, sit, fq, hist].join("|");
+  /* Die Themen-Lernen-Pause MUSS hier stehen - vierter Anlauf derselben Falle
+     (mk.ts, stufeMax, geschluepft standen alle erst nur im Snapshot und gingen
+     nie hoch): Pausieren ist ein KNOPFDRUCK ohne neue Antwort und kann nicht
+     huckepack reisen. ts plus rest-Laenge reicht: ein Schritt weiter im Stapel
+     aendert beide, ein Loeschen schreibt einen Grabstein mit neuem ts. "-" fuer
+     "keine Pause", damit eine alte Server-Zeile ohne das Feld dieselbe Signatur
+     traegt wie ein Geraet ohne Pause. */
+  var tlp = daten.tlPause && typeof daten.tlPause === "object"
+    ? (daten.tlPause.ts || 0) + ":" + ((daten.tlPause.rest || []).length)
+    : "-";
+  return [aids, mc, frei, tot, mk, chat, sit, fq, hist, tlp].join("|");
 }
 
 /* ---------- Merge ----------
@@ -973,6 +991,33 @@ export function mergeIn(st, remote) {
       break;
     }
   });
+
+  /* Themen-Lernen-Pause (22.08.2026, Prompt H): JUENGSTER STEMPEL GEWINNT, wie
+     bei mk.ei - das Kriterium ist der Zeitpunkt der letzten Handlung, und ein
+     Einzelwert laesst sich nicht vereinigen, man muss sich entscheiden.
+
+     Das Loeschen gewinnt dabei ueber denselben Weg: pauseLoeschen()
+     (themen-lernen.js) schreibt statt null einen Grabstein { ts, rest: [] },
+     und jeder Leser behandelt "kein rest" wie "keine Pause". Ohne den
+     Grabstein taeuchte eine auf Geraet B fertig gemachte Runde auf Geraet A
+     wieder auf, und Rose machte sie ein zweites Mal - der Fehler faellt nur
+     auf, wenn zwei Geraete wirklich benutzt werden, also bei Rose und nicht
+     beim Testen. Deshalb hier KEIN Sonderfall fuer leere rest-Listen: hoeheres
+     ts gewinnt, egal ob Pause oder Grabstein.
+
+     Altbestand ohne ts zaehlt als 0 und verliert gegen jede neuere Handlung;
+     bei Gleichstand bleibt der lokale Wert stehen. Ein Remote ohne das Feld
+     (jede Zeile von vor dem 22.08.) loescht nichts - dieselbe Eigenschaft wie
+     bei mkChat und den Kaeufen. */
+  var rPause = r.tlPause;
+  if (rPause && typeof rPause === "object") {
+    var lPause = st.tlPause;
+    var lTs = (lPause && typeof lPause === "object" && lPause.ts) || 0;
+    if ((rPause.ts || 0) > lTs) st.tlPause = rPause;
+    // Altbestand-Bruecke: lokal liegt gar nichts, remote eine echte Pause ohne
+    // ts (D's Bauform vor dem Umzug) - die darf nicht an 0 > 0 scheitern.
+    else if (!lPause && (rPause.rest || []).length) st.tlPause = rPause;
+  }
 
   // Chatverlauf: Vereinigung beider Seiten, ueber die Id dedupliziert, nach
   // Zeit sortiert. Drei Eigenschaften, an denen es haengt:

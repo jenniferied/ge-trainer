@@ -161,21 +161,34 @@ var MAX_LEVEL = 3;
    Level drehen weiter. Die Pause schreibt KEINEN Abschluss-Eintrag: eine halbe
    Runde soll kein Level heben.
 
-   GERAETELOKAL, mit derselben Begruendung wie merkeOffeneKarte (core.js):
-   "ich war gerade hier" gilt dem Geraet, auf dem sie war. snapshot() in sync.js
-   waehlt gezielt aus, das Feld faehrt also nie mit - und genau deshalb ist
-   diese Bauform gewaehlt und nicht aus Bequemlichkeit: sie kommt ohne eine
-   einzige Zeile in sync.js aus.
+   SEIT DEM 22.08.2026 GERAETEUEBERGREIFEND (Prompt H). Die Pause war zuerst
+   geraetelokal - aber nur, weil sync.js in jener Welle einer anderen Session
+   gehoerte, ein Terminplan-Grund und kein Produkt-Grund. Jennifer: "falls der
+   laptop stirbt soll sie einfach das handy aufmachen koennen." Jetzt faehrt
+   state.tlPause durch snapshot(), signatur() UND mergeIn() (sync.js); die
+   Merge-Regel ist "juengster Stempel gewinnt", darum traegt jede Pause ein ts.
+
+   EIN LOESCHEN IST EIN EREIGNIS MIT ZEITSTEMPEL, KEIN LEERES FELD:
+   pauseLoeschen() schreibt einen Grabstein { ts, rest: [] }. Behandelte der
+   Merge null als "nichts dabei, behalte das Lokale", tauchte eine auf Geraet B
+   fertig gemachte Runde auf Geraet A wieder auf, und Rose machte sie ein
+   zweites Mal. Jeder Leser behandelt "kein rest" wie "keine Pause"
+   (pauseLesen prueft rest.length) - so ist die Regel ueberall dieselbe:
+   hoeheres ts gewinnt, ohne Sonderfall.
 
    GESPEICHERT WERDEN IDS, KEINE AUFGABEN-OBJEKTE. Beim Fortsetzen werden die
    Schritte aus den geladenen Themen neu gebaut; ein Schritt, dessen Id es nicht
    mehr gibt, faellt still weg. Ein Korpus-Umbau kann die Pause damit nie
-   kaputtmachen. */
+   kaputtmachen - und eine Pause von einem ANDEREN Geraet mit fremden Ids
+   genauso wenig (alles weg -> "keine Pause", siehe fortsetzen-Pfad). Klein
+   bleibt der Snapshot damit auch: reine Ids, nie Objekte. */
 var PAUSE_LERNTAGE = 2;
 
 function pauseLoeschen() {
-  if (!state.tlPause) return;
-  state.tlPause = null;
+  // "Kein rest" ist schon der geloeschte Zustand - ein Grabstein muss seinen
+  // Stempel dann nicht erneuern (er hat beim Loeschen gewonnen und bleibt).
+  if (!state.tlPause || !(state.tlPause.rest || []).length) return;
+  state.tlPause = { ts: Date.now(), rest: [] };
   speichern();
 }
 
@@ -1088,7 +1101,13 @@ export function zeigeThemenLernen(themen, hooks) {
         sass: sass,
         wiederholungen: wiederholungen,
         mitgenommenZahl: mitgenommenZahl,
-        tag: heuteTag()
+        tag: heuteTag(),
+        /* ts ist der Merge-Stempel (sync.js mergeIn: juengster gewinnt) und
+           etwas anderes als tag: tag ist ein LERNTAG und traegt die
+           Verfalls-Logik oben, ts ordnet zwei Pausen desselben Tages ueber
+           Geraete hinweg. Eine alte Pause ohne ts zaehlt beim Merge als 0 und
+           verliert gegen jede neuere - das ist richtig so. */
+        ts: Date.now()
       };
       speichern();
     }
