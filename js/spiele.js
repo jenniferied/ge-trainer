@@ -618,7 +618,11 @@ function bgRunde(kat, hooks, zurueck) {
   var info = katInfo(kat);
   var farbe = themenFarbe(info.oberthema);
   if (farbe) setzeFarbe(app, farbe);
-  spielKopf(info.label, function () { bgHome(hooks); });
+  /* Derselbe raus-Vorrang wie in opRunde (Zeile 357): der Rueckweg, den
+     bgRunde in Parameter 3 bekommt, wurde hier weggeworfen - wer von der
+     Tageskachel kam, landete beim Zuruecktippen in bgHome und von dort in
+     "Kurze Runden", einer Seite ohne Eingang von der Startseite. */
+  spielKopf(info.label, zurueck || function () { bgHome(hooks); });
 
   var hinweis = el("div", "untertitel", drehen
     ? "Umgekehrte Richtung: links die Beschreibung, rechts der Begriff."
