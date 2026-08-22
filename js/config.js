@@ -82,6 +82,15 @@ export const CONFIG = {
   // Serverseitig steht das Gegenstueck in llm-ge/index.ts (TOPF.begriff, 150).
   begriffTagKey: "ge-begriff-tag",
   begriffTagesLimit: 150,
+
+  // ---- Urteil je Baustein (Themen-Lernen, Treppe) ----
+  // Fuenfter Topf, gleicher Gedanke: an der Treppe zu ueben ist eine eigene
+  // Taetigkeit und darf der Klausur-Korrektur (ge-llm-tag) das Budget nicht
+  // wegnehmen. Serverseitig steht das Gegenstueck in llm-ge/index.ts
+  // (TOPF.bausteine). Werte identisch zu den ||-Defaults in llm.js
+  // (BS_LIMIT/BS_KEY) - die zwei Zeilen hier machen sie nur sichtbar.
+  bausteinTagKey: "ge-baustein-tag",
+  bausteinTagesLimit: 150,
 };
 
 if (typeof window !== "undefined") window.GE_CONFIG = CONFIG;

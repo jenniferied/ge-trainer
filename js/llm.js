@@ -493,11 +493,9 @@ export async function begriffAbgleich(eintrag, antwortText) {
 // eine eigene Taetigkeit und darf der Klausur-Korrektur (ge-llm-tag) das Budget
 // nicht wegnehmen. Eigener Key, eigenes Limit, laeuft deshalb nicht durch ruf().
 //
-// DIE ZWEI ZEILEN IN config.js FEHLEN NOCH (bausteinTagKey, bausteinTagesLimit).
-// Der ||-Default hier traegt bis dahin - dieselbe Bauart wie BG_LIMIT darueber.
-// config.js gehoert in dieser Welle niemandem; eine fremde Datei anzufassen
-// waere teurer als ein Default. Die Zeile dazu steht in
-// werkstatt/ultracode/offen-C.md.
+// Die zwei Zeilen stehen seit dem 22.08.2026 in config.js (bausteinTagKey,
+// bausteinTagesLimit); die ||-Defaults hier bleiben als doppelter Boden -
+// dieselbe Bauart wie BG_LIMIT darueber.
 const BS_LIMIT = () => cfg().bausteinTagesLimit || 150;
 const BS_KEY = () => cfg().bausteinTagKey || "ge-baustein-tag";
 

@@ -1752,8 +1752,8 @@ p { margin: 0 0 var(--sp-3); }
    leer ist). Sie bleibt sichtbar und abgehakt stehen, ist aber kein Knopf -
    also auch keine Hand und kein Druck-Effekt. Die Regel steht hier und NICHT in
    geteilt.css: den Zustand gibt es nur im GE-Trainer. */
-.daily-kachel.nur-anzeige { cursor: default; }
-.daily-kachel.nur-anzeige:active { transform: none; }
+/* .daily-kachel.nur-anzeige liegt seit dem 22.08.2026 im geteilten Paket
+   (geteilt.css, Block 6) - der Tages-Hub-Baustein setzt die Klasse. */
 
 /* ---------- Stöbern-Raum (16.08.2026) ----------
    Der Raum, in dem nichts abgefragt wird: Folien, Notizen, Podcasts, Videos,
@@ -1974,8 +1974,12 @@ p { margin: 0 0 var(--sp-3); }
   color: var(--tfarbe); margin-top: 2px;
 }
 
-/* Die Zaehl-Blase: wie viele Themen heute durch sind. Ab dem ersten gruen. */
-.tl-blase, .d-blase {
+/* Die Zaehl-Blase: wie viele Themen heute durch sind. Ab dem ersten gruen.
+   Seit dem 22.08.2026 liegen .d-blase, .tl-regenbogen (samt Keyframes und
+   Reduced-Motion-Guard) und .tl-stern im geteilten Paket (geteilt.css,
+   Block 6, byteweise identische Werte) - der Tages-Hub-Baustein baut sie.
+   Hier steht nur noch die GE-eigene Themenkachel-Variante .tl-blase. */
+.tl-blase {
   display: inline-flex; align-items: baseline; gap: 6px;
   border-radius: 999px; padding: 4px 12px;
   border: 1.5px solid var(--ok);
@@ -1984,28 +1988,7 @@ p { margin: 0 0 var(--sp-3); }
 }
 .tl-blase-zahl { font-size: 1.15rem; }
 .tl-blase-text { font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
-/* Auf der Tageskachel steht die Blase an der Stelle des Hakens: nur die Zahl,
-   ohne Wort - der Kachelname sagt schon, worum es geht. */
-.d-blase { padding: 2px 10px; font-size: .95rem; gap: 2px; }
-
-/* Drei Themen an einem Tag: Regenbogen-Schimmer und ein Stern. Die Animation
-   ist bewusst langsam und schwach - ein Schimmern, kein Blinken. Wer weniger
-   Bewegung will, bekommt denselben Verlauf ohne Lauf (unten). */
-.tl-regenbogen {
-  border: 2px solid transparent;
-  background:
-    linear-gradient(var(--card), var(--card)) padding-box,
-    linear-gradient(90deg, #f0a4c8, #f5c877, #a8e0b0, #8fc7f0, #c3a8ee, #f0a4c8) border-box;
-  background-size: auto, 300% 100%;
-  animation: tl-schimmer 9s linear infinite;
-}
-.tl-stern { font-style: normal; }
 .tl-stern-satz { font-weight: 700; }
-@keyframes tl-schimmer {
-  from { background-position: 0 0, 0% 50%; }
-  to   { background-position: 0 0, 300% 50%; }
-}
-@media (prefers-reduced-motion: reduce) { .tl-regenbogen { animation: none; } }
 
 /* Kopfzeile jeder Pruefungs-Karte: woher sie kommt und wie fest sie sitzt. */
 .tl-chips {
