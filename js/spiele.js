@@ -1,31 +1,46 @@
-/* GE-Trainer spiele.js - zwei kurze Spielmodi, Ports vom ST-Trainer:
+/* GE-Trainer spiele.js - die kurzen Spielrunden, Ports vom ST-Trainer:
 
-   1. Operatoren-Spiel: AFB-Signalwoerter den Anforderungsbereichen zuordnen
+   1. Signalwoerter: AFB-Signalwoerter den Anforderungsbereichen zuordnen
       (beschreiben/benennen -> I, analysieren/erlaeutern/anwenden -> II,
       bewerten/eroertern/entwickeln/diskutieren -> III, Folie 5 der Klausurinfo)
-      und - in denselben Runden - an echten frei-Aufgaben aus app/data erkennen,
-      was eine Aufgabe verlangt.
-   2. Begriffe-Blitz: 5er-Runden Zuordnung aus data/begriffe.json, abwechselnd
-      in beide Abrufrichtungen.
+      und - in denselben Runden - an echten frei-Aufgaben aus app/data in BEIDE
+      Richtungen: "welche Stufe verlangt das?" und "welches Wort steuert das?".
+   2. Zuordnen: Signalwort links, Auftrag rechts - dieselbe Paar-Mechanik wie
+      der Begriffe-Blitz, wie drueben im ST-Trainer (opZuordnen).
+   3. Begriffe-Blitz: ZWEI 5er-Runden Zuordnung aus data/begriffe.json
+      hintereinander, mit Halbzeit-Ausstieg; die Richtung kippt je Runde.
+   4. Modell-Steckbrief: ein Modell in Sekunden einordnen - wer, was ist der
+      Kern, woraus besteht es. Daten: der modelle-Block in begriffe.json.
+
+   Die Seite "Kurze Runden" (zeigeSpiele) ist am 22.08.2026 gefallen - Rose
+   landete darauf, ohne sie je geoeffnet zu haben (Zwischenseite ohne Eingang
+   von der Startseite). Die Kategorienliste bgHome() bleibt und ist jetzt von
+   vorn erreichbar: als Kachel "Begriffe nach Thema" unter "Kurz einsteigen"
+   und als Kopfknopf in jeder Begriffe-Runde.
 
    Antworten landen als normale antwortLog-Eintraege (modus "spiel", Feld
    "spiel" mit dem Spielnamen). Damit zaehlen sie fuer Aktivitaet und spaeter
    fuer den Sync, verfaelschen aber nicht das Thema-x-AFB-Raster der Statistik
    (das filtert auf modus check/frei).
 
-   Importiert core.js und ui.js; wird von main.js ueber den Router-Fall "spiele"
-   gerufen. Alles aus main.js kommt als hooks-Objekt:
-     hooks.home()    -> Startseite
-     hooks.spiele()  -> Spiele-Hub neu rendern */
+   Importiert core.js und ui.js; die Einstiege ruft main.js ueber die
+   Router-Faelle spiel-op/spiel-opz/spiel-bg/bg-kategorien/modelle. Alles aus
+   main.js kommt als hooks-Objekt:
+     hooks.home()    -> Startseite */
 
 import { state, speichern, logAntwort, sekundenSeit, app, el, mischen, leeren, reichZeile } from "./core.js";
-import { themeKnopf, setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
+import { setzeFarbe, stickerEl, quoteStufe, quotePille } from "./ui.js";
 /* Die Mechanik des Begriffe-Blitz liegt seit dem 12.08.2026 im geteilten
    Baustein — dieselbe Datei treibt drueben den Begriffe-Blitz UND das
    Zuordnen-Spiel des ST-Trainers. Quelle: rose/geteilte-styles/spiel-zuordnen.js,
    nie die Kopie hier bearbeiten. Was die Engine bewusst NICHT tut: loggen und
    feiern. Beides steht weiter hier, weil beide Apps es verschieden machen. */
 import { SICHER_AB, paarGewicht, baueZuordnen } from "./geteilt-zuordnen.js";
+/* Der Runden-Kopf kommt seit dem 22.08. aus dem geteilten Tages-Hub-Baustein:
+   kopfEl() verdrahtet den Zurueck-Knopf in DERSELBEN Funktion und wirft ohne
+   Funktion - wer eine Runde baut, kann den Rueckweg nicht mehr weglassen
+   (Vertrag von Prompt B, Kopf von geteilt-tages-hub.js). */
+import { kopfEl } from "./geteilt-tages-hub.js";
 
 /* ---------- AFB-Grundwissen (Klausurinfo, Folie 5) ---------- */
 
@@ -60,28 +75,59 @@ var AFB_WOERTER = {
 var SCHREIBWEISE = { erlaeutern: "erläutern", eroertern: "erörtern" };
 function anzeige(wort) { return SCHREIBWEISE[wort] || wort; }
 
-var OP_RUNDE = 6;
+/* Verdoppelt am 22.08.2026 (Rose: "Die totale Anzahl der Wiederholungen in
+   den Spielen sollte gedoppelt werden in GE"). Traegt: 6 Signalwoerter aus der
+   Zehnerliste plus 6 Aufgaben-Karten aus 143 nutzbaren (aufgabenPool,
+   nachgemessen am 22.08. nach Prompt A). Nach Karte 6 steht der
+   Halbzeit-Ausstieg. */
+var OP_RUNDE = 12;
+/* Beim Begriffe-Blitz verdoppelt nicht die Konstante, sondern die ZWEITE
+   Runde (bgRunde, opts.teil2): 14 der 15 Kategorien hatten nur 4-8 Paare,
+   Math.min(BG_RUNDE, alle.length) haette eine groessere Zahl still gekappt. */
 var BG_RUNDE = 5;
+// Zuordnen zieht wie drueben (st opZuordnen) hart 5 aus der Zehnerliste.
+var OPZ_RUNDE = 5;
+// Modell-Steckbrief: 4 Modelle je Runde, je drei Fragen = 12 Antworten.
+var MD_RUNDE = 4;
 // Richtungswechsel nur, wenn alle gezogenen Antworten kurz genug fuer eine
 // Tipp-Karte sind (im ST-Trainer 60 Zeichen; hier etwas grosszuegiger, weil
 // die GE-Antworten Aufzaehlungen sind und sonst nie umgedreht wuerde).
 var BG_UMDREH_MAX = 120;
 
-/* ---------- Daten: Begriffspaare (optional) ---------- */
+/* ---------- Daten: Begriffspaare und Modelle (optional) ---------- */
 
 var BEGRIFFE = null;
+var MODELLE = [];
+
+/* sync-fragen.py kopiert begriffe.json byteweise und prueft den modelle-Block
+   NICHT (die harte Pruefung dort ist als offene Zeile fuer den Korpus-Prompt
+   notiert). Deshalb liest die App defensiv: ein Eintrag ohne Pflichtfeld
+   faellt still weg - genauso, wie die Kachel verschwindet, wenn die ganze
+   Datei fehlt. */
+var MODELL_FELDER = ["id", "thema", "modell", "wer", "kern", "klausur"];
+function modelleAusDaten(d) {
+  if (!d || !Array.isArray(d.modelle)) return [];
+  return d.modelle.filter(function (m) {
+    return m && MODELL_FELDER.every(function (f) { return m[f] != null && String(m[f]).length; })
+      && Array.isArray(m.teile) && m.teile.length;
+  });
+}
 
 export function ladeBegriffe() {
   return fetch("data/begriffe.json")
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (d) {
       if (d && Array.isArray(d.paare) && d.paare.length) BEGRIFFE = d;
+      MODELLE = modelleAusDaten(BEGRIFFE);
       return BEGRIFFE;
     })
     .catch(function () { return null; });   // fehlt die Datei, verschwindet nur die Kachel
 }
 
 export function hatBegriffe() { return !!BEGRIFFE; }
+// Unter vier Modellen gibt es keine zwei sauberen Distraktoren - dann bleibt
+// die Kachel weg, wie beim Begriffe-Blitz ohne begriffe.json.
+export function hatModelle() { return MODELLE.length >= 4; }
 
 function paareVon(kat) {
   return BEGRIFFE.paare.filter(function (p) { return p.kategorie === kat; });
@@ -138,8 +184,8 @@ function fehlerZaehler(spiel) {
   return f;
 }
 
-// Was ist heute schon gelaufen? Treibt sowohl die offen/erledigt-Kacheln im Hub
-// als auch die Tagesliste auf der Startseite (main.js) - eine Zaehlweise fuer beides.
+// Was ist heute schon gelaufen? Treibt die Tagesliste auf der Startseite
+// (main.js) - eine Zaehlweise fuer alles.
 export function heuteGespielt() {
   var d = new Date(); d.setHours(0, 0, 0, 0);
   var t0 = d.getTime();
@@ -147,104 +193,75 @@ export function heuteGespielt() {
      Themen-Lernen (themen-lernen.js). Ein Spielname, der hier fehlt, wird
      stumm ignoriert - deshalb stehen sie hier, obwohl ihre Module woanders
      liegen. "tagesspiel" bleibt daneben stehen: so hiess das Themen-Lernen
-     bis zum 19.08.2026, und Roses Lernstand traegt die alten Eintraege noch. */
-  var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0 };
+     bis zum 19.08.2026, und Roses Lernstand traegt die alten Eintraege noch.
+     opzuordnen (Zuordnen-Tageskachel) und modelle (Modell-Steckbrief) sind
+     die zwei Neuen vom 22.08. */
+  var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0, opzuordnen: 0, modelle: 0 };
   state.antwortLog.forEach(function (a) {
     if (a.modus === "spiel" && a.ts >= t0 && s[a.spiel] !== undefined) s[a.spiel]++;
   });
   return s;
 }
 
-/* ---------- Hub ---------- */
+/* ---------- Einstiege ----------
+   Die Seite "Kurze Runden" ist weg; jede Runde wird direkt gestartet und
+   bekommt ihren Rueckweg vom Aufrufer mit. */
 
-export function zeigeSpiele(themen, hooks) {
-  setzeThemenFarben(themen);
-  leeren();
-  app.style.removeProperty("--tfarbe-basis");
-
-  var zurueck = el("button", "zurueck", "← Startseite");
-  zurueck.addEventListener("click", function () { hooks.home(); });
-  app.appendChild(zurueck);
-
-  var kopf = el("div", "kopf");
-  var zeile = el("div", "kopf-zeile");
-  var titelBox = el("div");
-  titelBox.appendChild(el("h1", null, "Kurze Runden"));
-  titelBox.appendChild(el("div", "untertitel", "Zwei Minuten reichen. Farbig heißt: heute noch offen."));
-  zeile.appendChild(titelBox);
-  zeile.appendChild(themeKnopf());
-  kopf.appendChild(zeile);
-  app.appendChild(kopf);
-
-  var heute = heuteGespielt();
-  var grid = el("div", "spiel-grid");
-  grid.appendChild(spielKachel("🎯", "Signalwörter", "Welche AFB-Stufe verlangt das?", heute.operatoren,
-    function () { opRunde(themen, hooks); }));
-  if (BEGRIFFE) {
-    grid.appendChild(spielKachel("🃏", "Begriffe-Blitz", "Paare zuordnen, beide Richtungen", heute.begriffe,
-      function () { bgHome(hooks); }));
-  }
-  app.appendChild(grid);
-
-  var info = el("div", "karte");
-  info.appendChild(el("h2", null, "Warum das hilft"));
-  info.appendChild(el("p", null, "Die Dozentin sagt: an den Operatoren orientieren. Wer sieht, ob aufgezählt oder abgewogen werden soll, schreibt nicht zu viel und nicht zu wenig."));
-  if (!BEGRIFFE) info.appendChild(el("p", null, "Der Begriffe-Blitz taucht auf, sobald die Begriffsdatei geladen werden kann."));
-  app.appendChild(info);
+/* Der EINE verbliebene Fallback, und er ist ein Adapter, kein Bequemlichkeits-
+   Default: klausurfrage.js (Aufwaerm-Block, gehoert einer anderen Session)
+   ruft starteOperatoren/starteBegriffe ohne dritten Parameter und haengt
+   seinen Rueckweg an hooks.spiele - dort zeigt er auf den eigenen Startschirm,
+   und genau dort kam Rose her. Die Runden selbst (spielKopf via kopfEl)
+   verlangen ab hier immer eine echte Funktion und werfen sonst. */
+function rueckwegAus(hooks, zurueck) {
+  if (typeof zurueck === "function") return zurueck;
+  if (hooks && typeof hooks.spiele === "function") return function () { hooks.spiele(); };
+  return function () { hooks.home(); };
 }
-
-/* Direkte Einstiege fuer die Tagesliste der Startseite - dieselben Runden wie
-   im Hub, nur ohne Umweg. Der Zurueck-Knopf fuehrt in den Hub, damit man von
-   dort weiterspielen kann. */
 
 export function starteOperatoren(themen, hooks, zurueck) {
   setzeThemenFarben(themen);
-  opRunde(themen, hooks, zurueck);
+  opRunde(themen, hooks, rueckwegAus(hooks, zurueck));
 }
 
 /* Von der Startseite aus wird SOFORT gespielt, nicht erst ausgewaehlt: dort
    steht woertlich "Ein Tipp startet direkt", und die Kategorienliste war
    genau der Zwischenschirm, den das Versprechen ausschliesst. Gespielt wird
    die wackligste Kategorie - dieselbe Wahl, die der grosse Knopf in der Liste
-   trifft. Ueber den Spiele-Hub bleibt die Liste erreichbar. */
+   trifft. Ohne expliziten Rueckweg (Aufwaermen aus klausurfrage.js) oeffnet
+   sich wie bisher zuerst die Liste. */
 export function starteBegriffe(themen, hooks, zurueck) {
   setzeThemenFarben(themen);
-  if (!zurueck) return bgHome(hooks);
+  var raus = rueckwegAus(hooks, zurueck);
+  if (!zurueck) return bgHome(hooks, raus);
   var kats = bgKategorien();
-  if (!kats.length) return zurueck();
-  bgRunde(kats[0].k.id, hooks, zurueck);
+  if (!kats.length) return raus();
+  bgRunde(kats[0].k.id, hooks, raus, { tagesKachel: true });
 }
 
-function spielKachel(icon, name, unter, heute, oeffne) {
-  var k = el("div", "spiel-karte " + (heute ? "erledigt" : "offen"));
-  k.setAttribute("role", "button");
-  k.setAttribute("tabindex", "0");
-  k.setAttribute("aria-label", name + (heute ? " – heute schon geübt" : " – heute noch offen"));
-  if (heute) {
-    var haken = el("span", "spiel-haken", "✓");
-    haken.title = "heute schon geübt";
-    k.appendChild(haken);
-  }
-  k.appendChild(el("span", "spiel-icon", icon));
-  k.appendChild(el("b", null, name));
-  k.appendChild(el("span", "klein", unter));
-  k.addEventListener("click", oeffne);
-  k.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); oeffne(); }
-  });
-  return k;
+export function starteOpZuordnen(themen, hooks, zurueck) {
+  setzeThemenFarben(themen);
+  opzRunde(rueckwegAus(hooks, zurueck));
 }
 
+export function starteModelle(themen, hooks, zurueck) {
+  setzeThemenFarben(themen);
+  mdRunde(rueckwegAus(hooks, zurueck));
+}
+
+/* Die Kategorienliste als bewusster Eingang von der Startseite (Kachel
+   "Begriffe nach Thema" unter "Kurz einsteigen"). Sie ist genau das, was Rose
+   am ST-Trainer lobt: "spezifisch zu jedem Thema und Unterthema zuordnen". */
+export function zeigeBegriffKategorien(themen, hooks, zurueck) {
+  setzeThemenFarben(themen);
+  bgHome(hooks, rueckwegAus(hooks, zurueck));
+}
+
+/* Kopf einer Spielrunde - seit dem 22.08. der geteilte Baustein: kopfEl()
+   verdrahtet den Zurueck-Knopf in derselben Funktion und wirft ohne Funktion.
+   extra ist genau der Platz fuer spickKnopf() und katKnopf(). */
 function spielKopf(titel, zurueckFn, extraKnopf) {
-  var zurueck = el("button", "zurueck", "← Zurück");
-  zurueck.addEventListener("click", zurueckFn);
-  app.appendChild(zurueck);
-  var kopf = el("div", "kopf");
-  var zeile = el("div", "kopf-zeile");
-  zeile.appendChild(el("h1", null, titel));
-  if (extraKnopf) zeile.appendChild(extraKnopf);
-  kopf.appendChild(zeile);
-  app.appendChild(kopf);
+  app.appendChild(kopfEl({ titel: titel, zurueck: zurueckFn, extra: extraKnopf || null }));
 }
 
 // Fazit-Banner: Sticker passend zum Stand, nie haemisch, plus Nochmal/Fertig.
@@ -275,6 +292,27 @@ function fazit(ziel, ok, n, nochmal, fertig, extra) {
 
   // Kein Konfetti fuer eine fehlerfreie Spielrunde (Jennifer, 12.08.) - gefeiert
   // wird nur das Streckziel und eine bestandene Klausur.
+}
+
+/* Der Halbzeit-Ausstieg, gleiche Form in allen verdoppelten Runden (Rose:
+   "Pausieren ... es ist teilweise sehr viel und sehr lange" - Verdoppeln und
+   "sehr lange" ziehen gegeneinander, das hier ist die Aufloesung). Es ist ein
+   AUSSTIEG, kein Abbruch: alles bis hier ist geloggt, die Tageskachel gilt
+   als geuebt, nichts wird verworfen und nichts aufgehoben. */
+function halbzeitZeile(ziel, satz, weiter, raus) {
+  var karte = el("div", "karte");
+  karte.appendChild(el("h2", null, "Halbzeit"));
+  karte.appendChild(el("p", null, satz));
+  var reihe = el("div", "knopf-reihe");
+  var k1 = el("button", "knopf", "Weiter");
+  k1.addEventListener("click", weiter);
+  reihe.appendChild(k1);
+  var k2 = el("button", "knopf sekundaer", "Für heute reicht es");
+  k2.addEventListener("click", raus);
+  reihe.appendChild(k2);
+  karte.appendChild(reihe);
+  ziel.appendChild(karte);
+  return karte;
 }
 
 /* ---------- Spickzettel-Sheet (AFB-Operatoren nachschlagen) ---------- */
@@ -316,6 +354,17 @@ function spickKnopf() {
   return k;
 }
 
+/* Der bewusste Griff zur Kategorienliste mitten in einer Begriffe-Runde -
+   gleiche Machart wie der Spickzettel-Knopf. Er oeffnet bgHome mit DEMSELBEN
+   Rueckweg wie die Runde: die Liste ist ein Angebot, nie ein Rueckfall. */
+function katKnopf(hooks, zurueck) {
+  var k = el("button", "kopf-knopf", "🗂");
+  k.title = "Kategorie wechseln";
+  k.setAttribute("aria-label", "Kategorie wechseln");
+  k.addEventListener("click", function () { bgHome(hooks, zurueck); });
+  return k;
+}
+
 /* ---------- Spiel 1: Signalwoerter ---------- */
 
 // Echte frei-Aufgaben aus dem geladenen Korpus als Uebungsmaterial
@@ -348,13 +397,10 @@ function signalwortIn(text) {
   return treffer;
 }
 
-/* zurueck() ist der Weg hinaus: von der Spieleseite zurueck in den Hub, von
-   der Startseite direkt dorthin zurueck. Ohne den Parameter landete Rose nach
-   JEDEM Spiel im Hub "Kurze Runden" - einer Seite, die sie nie geoeffnet
-   hatte, wenn sie von der Tageskachel kam (Jennifer, 13.08.2026: "es gibt eine
-   redundante Page bei den Games, wo sie drauf zurueckgeworfen wird"). */
+/* zurueck ist Pflicht: der Rueckweg kommt vom Aufrufer (Router, Tageskachel
+   oder der Adapter in starteOperatoren) und spielKopf wirft ohne ihn. */
 function opRunde(themen, hooks, zurueck) {
-  var raus = zurueck || function () { hooks.spiele(); };
+  var raus = zurueck;
   var fehler = fehlerZaehler("operatoren");
   var gew = function (item) { return 1 + Math.min(3, fehler[item.id] || 0); };
 
@@ -362,20 +408,50 @@ function opRunde(themen, hooks, zurueck) {
     return { art: "wort", id: "op-" + o.wort, op: o, afb: o.afb };
   });
   var aufgaben = aufgabenPool(themen);
+  /* Die zweite Fragerichtung (22.08.): dieselben Aufgaben, gefragt wird aber
+     nach dem WORT, nicht nach der Stufe - so wechselt die Richtung je Uebung
+     wie drueben. Eigenes qid-Praefix opw-, sonst mischte fehlerZaehler()
+     zwei verschiedene Fragen auf einer Id und der Fehlerspeicher zeigte auf
+     die falsche Karte. */
+  var wortfragen = aufgaben.map(function (a) {
+    return { art: "wortwahl", id: "opw-" + a.f.id, thema: a.thema, f: a.f, afb: a.afb, op: a.op };
+  });
 
   var haelfte = Math.ceil(OP_RUNDE / 2);
   var teilA = zieh(woerter, Math.min(haelfte, woerter.length), gew);
-  var teilB = zieh(aufgaben, Math.min(OP_RUNDE - teilA.length, aufgaben.length), gew);
+  var restPlatz = OP_RUNDE - teilA.length;
+  var teilB = zieh(aufgaben, Math.min(Math.ceil(restPlatz / 2), aufgaben.length), gew);
+  // Dieselbe Aufgabe nicht zweimal in einer Runde - einmal je Richtung waere
+  // die Antwort der zweiten Karte schon gesehen.
+  var teilC = zieh(wortfragen.filter(function (w) {
+    return !teilB.some(function (b) { return b.f.id === w.f.id; });
+  }), Math.min(restPlatz - teilB.length, wortfragen.length), gew);
   // Zu wenig echte Aufgaben? Dann mit weiteren Signalwoertern auffuellen.
-  if (teilA.length + teilB.length < OP_RUNDE) {
+  if (teilA.length + teilB.length + teilC.length < OP_RUNDE) {
     var rest = woerter.filter(function (w) { return teilA.indexOf(w) < 0; });
-    teilA = teilA.concat(zieh(rest, OP_RUNDE - teilA.length - teilB.length, gew));
+    teilA = teilA.concat(zieh(rest, OP_RUNDE - teilA.length - teilB.length - teilC.length, gew));
   }
-  var runde = mischen(teilA.concat(teilB));
+  var runde = mischen(teilA.concat(teilB).concat(teilC));
   if (!runde.length) return raus();
 
   var index = 0, richtige = 0;
   var gepatzt = [];
+
+  function optionenFuer(item) {
+    if (item.art === "wortwahl") {
+      /* Distraktoren aus ANDEREN AFB-Stufen, je eine pro fremder Stufe -
+         sonst ist die Frage geraten statt gelesen. */
+      var falsche = [1, 2, 3].filter(function (a) { return a !== item.afb; }).map(function (a) {
+        var kandidaten = OPERATOREN.filter(function (o) { return o.afb === a; });
+        return kandidaten[Math.floor(Math.random() * kandidaten.length)];
+      });
+      return mischen([{ text: anzeige(item.op.wort), korrekt: true }].concat(
+        falsche.map(function (o) { return { text: anzeige(o.wort), korrekt: false }; })));
+    }
+    return [1, 2, 3].map(function (afb) {
+      return { text: AFB_OPTION[afb], korrekt: afb === item.afb };
+    });
+  }
 
   function schritt() {
     leeren();
@@ -390,6 +466,9 @@ function opRunde(themen, hooks, zurueck) {
     if (item.art === "wort") {
       karte.appendChild(el("div", "op-wort", anzeige(item.op.wort)));
       karte.appendChild(el("div", "frage-text", "Welche Anforderungsstufe verlangt dieses Signalwort?"));
+    } else if (item.art === "wortwahl") {
+      karte.appendChild(reichZeile("div", item.f.frage, "op-stamm"));
+      karte.appendChild(el("div", "frage-text", "Welches Signalwort steuert diese Aufgabe?"));
     } else {
       karte.appendChild(reichZeile("div", item.f.frage, "op-stamm"));
       karte.appendChild(el("div", "frage-text", "Was verlangt diese Aufgabe von dir?"));
@@ -397,24 +476,24 @@ function opRunde(themen, hooks, zurueck) {
 
     var beantwortet = false;
     var knoepfe = [];
-    [1, 2, 3].forEach(function (afb) {
-      var knopf = el("button", "option", AFB_OPTION[afb]);
-      knoepfe.push({ knopf: knopf, afb: afb });
+    optionenFuer(item).forEach(function (opt) {
+      var knopf = el("button", "option", opt.text);
+      knoepfe.push({ knopf: knopf, korrekt: opt.korrekt });
       knopf.addEventListener("click", function () {
         if (beantwortet) return;
         beantwortet = true;
-        var richtig = afb === item.afb;
+        var richtig = opt.korrekt;
         if (richtig) richtige++; else gepatzt.push(item);
         // Bei einer echten Aufgabe kennen wir Thema und AFB - beides steht hier
         // im selben Aufruf bereit. Ein reines Signalwort gehoert zu keinem
         // Thema, da bleibt es ehrlich null.
         var dazu = { zeit: sekundenSeit(uhr) };
-        if (item.art === "aufgabe") { dazu.afb = item.afb; dazu.thema = item.thema.id; }
+        if (item.art !== "wort") { dazu.afb = item.afb; dazu.thema = item.thema.id; }
         logSpiel("operatoren", item.id, richtig, dazu);
 
         knoepfe.forEach(function (k) {
           k.knopf.disabled = true;
-          if (k.afb === item.afb) k.knopf.classList.add("richtig");
+          if (k.korrekt) k.knopf.classList.add("richtig");
           else if (k.knopf === knopf) k.knopf.classList.add("falsch");
           else k.knopf.classList.add("blass");
         });
@@ -431,7 +510,9 @@ function opRunde(themen, hooks, zurueck) {
         var weiter = el("button", "knopf", index + 1 < runde.length ? "Weiter" : "Runde abschließen");
         weiter.addEventListener("click", function () {
           index++;
-          if (index < runde.length) schritt(); else ende();
+          if (index >= runde.length) return ende();
+          if (index === Math.ceil(runde.length / 2)) return halbzeit();
+          schritt();
         });
         karte.appendChild(weiter);
         weiter.focus();
@@ -440,6 +521,16 @@ function opRunde(themen, hooks, zurueck) {
     });
 
     app.appendChild(karte);
+  }
+
+  function halbzeit() {
+    leeren();
+    app.style.removeProperty("--tfarbe-basis");
+    spielKopf("🎯 Signalwörter", raus, spickKnopf());
+    halbzeitZeile(app,
+      richtige + " von " + index + " bis hierhin. Noch " + (runde.length - index)
+      + " Aufgaben – oder für heute gut so.",
+      schritt, raus);
   }
 
   function ende() {
@@ -497,16 +588,94 @@ export function afbAnalyse(frage, afb) {
 export function afbOption(afb) { return AFB_OPTION[afb] || ""; }
 export function afbKurz(afb) { return AFB_KURZ[afb] ? AFB_KURZ[afb] + " (" + AFB_WOERTER[afb] + ")" : ""; }
 
+/* "X heisst: ..." ist dieselbe Satzform, mit der das Themen-Lernen den
+   Operator erklaert (treppe.js operatorSatz) - eine Form, zwei Orte, damit
+   Rose den Satz wiedererkennt. Importieren geht nicht: treppe.js importiert
+   afbAnalyse aus dieser Datei, der Rueckweg waere ein Zyklus. */
+function heisst(op) {
+  var wort = anzeige(op.wort);
+  return wort.charAt(0).toUpperCase() + wort.slice(1) + " heißt: " + op.tipp;
+}
+
 function erklaerungZu(item) {
   if (item.art === "wort") {
-    return anzeige(item.op.wort) + " gehört zu " + AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + item.op.tipp;
+    return anzeige(item.op.wort) + " gehört zu " + AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + heisst(item.op);
   }
   var satz = "Das Signalwort ist " + anzeige(item.op.wort) + " – damit steht die Aufgabe auf " +
-    AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + item.op.tipp;
+    AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + heisst(item.op);
   return satz + " Thema: " + item.thema.titel + ".";
 }
 
-/* ---------- Spiel 2: Begriffe-Blitz ---------- */
+/* ---------- Spiel 2: Zuordnen (Signalwort <-> Auftrag) ----------
+   Wie drueben (st-trainer opZuordnen): links das Signalwort, rechts, was es
+   verlangt. Quelle ist dieselbe OPERATOREN-Liste, o.wort gegen o.tipp.
+   Bewusst NICHT gedreht - die Tipps sind zu lang fuer die linke Spalte.
+
+   Gezogen werden 5 von 10 ueber dasselbe zieh() mit paarGewicht() wie beim
+   Begriffe-Blitz: dann variiert die Runde, das Wacklige kommt oefter, und die
+   Rundengroesse entspricht der drueben. Alle zehn zu nehmen hiesse, dreimal
+   dieselbe Tafel zu zeigen und paarGewicht() nichts zu gewichten zu geben. */
+
+// Sicher = zweimal beim ersten Anlauf getroffen, gleiche Zaehlweise wie beim
+// Begriffe-Blitz - nur ueber den eigenen Spielnamen.
+function opzStand() {
+  var s = Object.create(null);
+  state.antwortLog.forEach(function (a) {
+    if (a.modus !== "spiel" || a.spiel !== "opzuordnen") return;
+    var e = s[a.qid] || (s[a.qid] = { ok: 0, n: 0 });
+    e.n++;
+    if (a.richtig) e.ok++;
+  });
+  return s;
+}
+
+function opzRunde(raus) {
+  var stand = opzStand();
+  var paare = zieh(OPERATOREN, Math.min(OPZ_RUNDE, OPERATOREN.length), function (o) {
+    return paarGewicht(stand["opz-" + o.wort]);
+  }).map(function (o) {
+    return { id: "opz-" + o.wort, wort: anzeige(o.wort), tipp: o.tipp, afb: o.afb };
+  });
+
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  spielKopf("↔️ Zuordnen", raus, spickKnopf());
+
+  var hinweis = el("div", "untertitel", "Links das Signalwort antippen, rechts, was es verlangt.");
+  hinweis.style.marginBottom = "12px";
+  app.appendChild(hinweis);
+
+  var fazitPlatz = el("div");
+  app.appendChild(baueZuordnen({
+    paare: paare,
+    linksText: function (p) { return p.wort; },
+    rechtsText: function (p) { return p.tipp; },
+    onTreffer: function (id, voll) { logSpiel("opzuordnen", id, voll, {}); },
+    onFertig: function (erg) {
+      var daneben = paare.filter(function (p) { return erg.fehler.indexOf(p.id) >= 0; });
+      var extra = null;
+      if (daneben.length) {
+        extra = el("div", "nachlesen");
+        extra.appendChild(el("h3", null, "Kurz nachlesen"));
+        daneben.forEach(function (p) {
+          var z = el("div", "nachlesen-zeile");
+          z.appendChild(el("b", null, p.wort + " · " + AFB_KURZ[p.afb]));
+          z.appendChild(el("div", null, p.tipp));
+          extra.appendChild(z);
+        });
+      }
+      var karte = el("div", "karte");
+      fazit(karte, erg.ok, paare.length,
+        function () { opzRunde(raus); },
+        raus, extra);
+      fazitPlatz.appendChild(karte);
+      karte.scrollIntoView({ block: "nearest" });
+    }
+  }));
+  app.appendChild(fazitPlatz);
+}
+
+/* ---------- Spiel 3: Begriffe-Blitz ---------- */
 
 // Sicher = zweimal beim ERSTEN Anlauf getroffen (dieselbe Zaehlweise wie im ST).
 function begriffStand() {
@@ -540,8 +709,12 @@ function bgKategorien() {
   return kats;
 }
 
+/* zurueck ist Pflicht - die Liste kennt ihren Herkunftsort nicht selbst.
+   Runden, die aus der Liste starten, kehren in die Liste zurueck (mit
+   demselben Weiter-Rueckweg); das ist der Weg "Kategorie waehlen -> Runde ->
+   Zurueck -> Kategorienliste -> Zurueck -> Herkunft". */
 function bgHome(hooks, zurueck) {
-  var raus = zurueck || function () { hooks.spiele(); };
+  var raus = zurueck;
   if (!BEGRIFFE) return raus();
   leeren();
   app.style.removeProperty("--tfarbe-basis");
@@ -550,13 +723,16 @@ function bgHome(hooks, zurueck) {
   var kats = bgKategorien();
   if (!kats.length) return raus();
 
+  var zurListe = function () { bgHome(hooks, raus); };
+
   var info = el("div", "karte");
-  info.appendChild(el("p", null, "Fünf Paare pro Runde. Sicher heißt: zweimal beim ersten Anlauf getroffen. Oben stehen die wackligsten Kategorien."));
+  info.appendChild(el("p", null, "Zwei Runden hintereinander, bis zu fünf Paare je Runde – die zweite in der Gegenrichtung. Sicher heißt: zweimal beim ersten Anlauf getroffen. Oben stehen die wackligsten Kategorien."));
   app.appendChild(info);
 
   var schwach = el("button", "knopf", "⚡ Wackligste Kategorie starten");
   schwach.style.width = "100%";
-  schwach.addEventListener("click", function () { bgRunde(kats[0].k.id, hooks, zurueck); });
+  // Wie die Tageskachel: Runde 2 nimmt die naechstwackligste Kategorie.
+  schwach.addEventListener("click", function () { bgRunde(kats[0].k.id, hooks, zurListe, { tagesKachel: true }); });
   app.appendChild(schwach);
 
   kats.forEach(function (x) {
@@ -575,22 +751,39 @@ function bgHome(hooks, zurueck) {
     voll.style.width = anteil + "%";
     balken.appendChild(voll);
     karte.appendChild(balken);
-    karte.addEventListener("click", function () { bgRunde(x.k.id, hooks, zurueck); });
+    // Gewaehlte Kategorie: Runde 2 bleibt in ihr (Gegenrichtung).
+    karte.addEventListener("click", function () { bgRunde(x.k.id, hooks, zurListe); });
     app.appendChild(karte);
   });
 }
 
-// Themenfarben liegen im Manifest, nicht in begriffe.json - zeigeSpiele()
-// merkt sie sich hier, damit die Kategorien farblich zum Thema passen.
+// Themenfarben liegen im Manifest, nicht in begriffe.json - die Einstiege
+// merken sie sich hier, damit die Kategorien farblich zum Thema passen.
 var THEMEN_FARBEN = {};
 function setzeThemenFarben(themen) {
   themen.forEach(function (t) { THEMEN_FARBEN[t.id] = t.farbe; });
 }
 function themenFarbe(id) { return id ? THEMEN_FARBEN[id] : null; }
 
-function bgRunde(kat, hooks, zurueck) {
+/* Eine Begriffe-Runde. zurueck ist Pflicht und wird NICHT mehr durch ein
+   ||-Ersatzziel ersetzt - ohne Funktion wirft spielKopf (Bs Garantie).
+
+   opts steuert die Verdopplung vom 22.08. ("Die totale Anzahl der
+   Wiederholungen in den Spielen sollte gedoppelt werden"):
+     opts.tagesKachel  Runde kam von der Tageskachel/dem Wacklig-Knopf - Runde 2
+                       nimmt dann die NAECHSTwackligste Kategorie, eine
+                       Tagesrunde deckt zwei Kategorien ab. Hat Rose die
+                       Kategorie selbst gewaehlt, bleibt Runde 2 in ihr: die
+                       Richtung kippt ohnehin je Runde (state.bgRichtung),
+                       dieselben Paare kommen also in der Gegenrichtung.
+     opts.teil2        das IST schon Runde 2 - danach kommt das Fazit.
+     opts.vorherOk/N   Zaehler aus Runde 1, damit das Fazit die ganze
+                       Doppelrunde nennt und nicht nur die Haelfte. */
+function bgRunde(kat, hooks, zurueck, opts) {
+  var o = opts || {};
+  var raus = zurueck;
   var alle = paareVon(kat);
-  if (!alle.length) return bgHome(hooks, zurueck);
+  if (!alle.length) return bgHome(hooks, raus);
   var stand = begriffStand();
   // Gewicht (nie geuebt zuerst, unsicher am haeufigsten) kommt aus dem
   // geteilten Baustein — drueben zieht der Begriffe-Blitz mit denselben Zahlen.
@@ -618,15 +811,13 @@ function bgRunde(kat, hooks, zurueck) {
   var info = katInfo(kat);
   var farbe = themenFarbe(info.oberthema);
   if (farbe) setzeFarbe(app, farbe);
-  /* Derselbe raus-Vorrang wie in opRunde (Zeile 357): der Rueckweg, den
-     bgRunde in Parameter 3 bekommt, wurde hier weggeworfen - wer von der
-     Tageskachel kam, landete beim Zuruecktippen in bgHome und von dort in
-     "Kurze Runden", einer Seite ohne Eingang von der Startseite. */
-  spielKopf(info.label, zurueck || function () { bgHome(hooks); });
+  spielKopf(info.label, raus, katKnopf(hooks, raus));
 
-  var hinweis = el("div", "untertitel", drehen
+  var richtungText = drehen
     ? "Umgekehrte Richtung: links die Beschreibung, rechts der Begriff."
-    : "Links den Begriff antippen, rechts das Passende dazu.");
+    : "Links den Begriff antippen, rechts das Passende dazu.";
+  if (o.teil2) richtungText = "Runde 2 von 2 · " + richtungText;
+  var hinweis = el("div", "untertitel", richtungText);
   hinweis.style.marginBottom = "12px";
   app.appendChild(hinweis);
 
@@ -662,15 +853,181 @@ function bgRunde(kat, hooks, zurueck) {
         extra.appendChild(z);
       });
     }
-    var karte = el("div", "karte");
-    /* Nach der Runde zurueck in die Kategorienliste - ausser Rose kam von der
-       Startseite, dann fuehrt "Fertig" dorthin zurueck. Sie ist sonst auf einer
-       Seite gelandet, die sie nie geoeffnet hatte. */
-    fazit(karte, ok, paare.length,
-      function () { bgRunde(kat, hooks, zurueck); },
-      zurueck || function () { bgHome(hooks); },
+    if (!o.teil2) {
+      /* Halbzeit zwischen den zwei Runden. Der Ausstieg ist ein Ausstieg,
+         kein Abbruch: alles Beantwortete ist geloggt, die Tageskachel gilt
+         als geuebt. */
+      if (extra) fazitPlatz.appendChild(extra);
+      var karte = halbzeitZeile(fazitPlatz,
+        ok + " von " + paare.length + " – gleich Runde 2, "
+        + (o.tagesKachel ? "dann mit der nächsten Kategorie." : "dieselben Paare in der Gegenrichtung."),
+        function () {
+          var kat2 = kat;
+          if (o.tagesKachel) {
+            var andere = bgKategorien().filter(function (x) { return x.k.id !== kat; });
+            if (andere.length) kat2 = andere[0].k.id;
+          }
+          bgRunde(kat2, hooks, raus, { teil2: true, tagesKachel: o.tagesKachel, vorherOk: ok, vorherN: paare.length });
+        }, raus);
+      karte.scrollIntoView({ block: "nearest" });
+      return;
+    }
+    var fkarte = el("div", "karte");
+    /* Fazit ueber die ganze Doppelrunde. "Fertig fuer jetzt" fuehrt dorthin
+       zurueck, wo Rose herkam - Startseite oder Kategorienliste, je nach
+       Einstieg; der Rueckweg kam als Parameter mit. */
+    fazit(fkarte, ok + (o.vorherOk || 0), paare.length + (o.vorherN || 0),
+      function () { bgRunde(kat, hooks, raus, { tagesKachel: o.tagesKachel }); },
+      raus,
       extra);
-    fazitPlatz.appendChild(karte);
-    karte.scrollIntoView({ block: "nearest" });
+    fazitPlatz.appendChild(fkarte);
+    fkarte.scrollIntoView({ block: "nearest" });
   }
+}
+
+/* ---------- Spiel 4: Modell-Steckbrief ----------
+   Rose: "Modelle nicht ausschreiben, sondern nur wissen: dieses Modell ist
+   'das und das', damit sie es schnell in der Klausur anwenden kann."
+
+   Eine Karte je Modell, drei kurze Fragen hintereinander im Format der
+   Signalwoerter-Runde: Wer steht dahinter? Was ist der Kern in einem Satz?
+   Woraus besteht es? Die Distraktoren kommen aus ANDEREN echten Modellen -
+   dann uebt das Spiel die Abgrenzung, die in der Klausur Punkte kostet,
+   statt Plausibilitaet. Daten: der modelle-Block in begriffe.json (defensiv
+   gelesen, siehe modelleAusDaten oben). */
+
+var MD_FRAGEN = [
+  { key: "wer", frage: "Wer steht hinter diesem Modell?", praefix: "mdw-" },
+  { key: "kern", frage: "Was ist der Kern in einem Satz?", praefix: "mdk-" },
+  { key: "teile", frage: "Woraus besteht es?", praefix: "mdt-" }
+];
+
+function mdWert(m, key) { return key === "teile" ? m.teile.join(" · ") : m[key]; }
+
+function mdRunde(raus) {
+  var fehler = fehlerZaehler("modelle");
+  var gew = function (m) {
+    return 1 + Math.min(3, (fehler["mdw-" + m.id] || 0) + (fehler["mdk-" + m.id] || 0) + (fehler["mdt-" + m.id] || 0));
+  };
+  var modelle = zieh(MODELLE, Math.min(MD_RUNDE, MODELLE.length), gew);
+  var mIndex = 0, fIndex = 0, richtige = 0, beantwortet = 0;
+  var gesamt = modelle.length * MD_FRAGEN.length;
+  var gepatzt = [];
+
+  function distraktoren(m, key) {
+    var eigene = mdWert(m, key);
+    var gesehenWerte = {};
+    gesehenWerte[eigene] = true;
+    var kandidaten = MODELLE.filter(function (x) {
+      if (x.id === m.id) return false;
+      var w = mdWert(x, key);
+      // Gleicher Urheber (zwei Opaschowski-Modelle) taugt bei "wer" nicht
+      // als Distraktor - die Option waere doppelt richtig.
+      if (key === "wer" && x.wer === m.wer) return false;
+      if (gesehenWerte[w]) return false;
+      gesehenWerte[w] = true;
+      return true;
+    });
+    return zieh(kandidaten, 2).map(function (x) {
+      return { text: mdWert(x, key), korrekt: false, von: x.modell };
+    });
+  }
+
+  function aufloesung(m, key, gewaehlt, richtig) {
+    var satz = richtig ? "" : "Deine Wahl gehört zu: " + gewaehlt.von + ". ";
+    if (key === "wer") return satz + m.modell + " – " + m.wer + ". " + m.kern;
+    if (key === "kern") return satz + "In der Klausur: " + m.klausur;
+    return satz + m.modell + " besteht aus: " + m.teile.join(", ") + ".";
+  }
+
+  function schritt() {
+    leeren();
+    app.style.removeProperty("--tfarbe-basis");
+    spielKopf("🪪 Modell-Steckbrief", raus);
+
+    var m = modelle[mIndex];
+    var fr = MD_FRAGEN[fIndex];
+    var farbe = themenFarbe(m.thema);
+    if (farbe) setzeFarbe(app, farbe);
+    var uhr = Date.now();
+    var karte = el("div", "karte");
+    karte.appendChild(el("div", "frage-fortschritt",
+      "Modell " + (mIndex + 1) + " von " + modelle.length + " · Frage " + (fIndex + 1) + " von " + MD_FRAGEN.length));
+    karte.appendChild(el("div", "op-wort", m.modell));
+    karte.appendChild(el("div", "frage-text", fr.frage));
+
+    var optionen = mischen([{ text: mdWert(m, fr.key), korrekt: true, von: m.modell }]
+      .concat(distraktoren(m, fr.key)));
+    var fertig = false;
+    var knoepfe = [];
+    optionen.forEach(function (opt) {
+      var knopf = el("button", "option", opt.text);
+      knoepfe.push({ knopf: knopf, korrekt: opt.korrekt });
+      knopf.addEventListener("click", function () {
+        if (fertig) return;
+        fertig = true;
+        beantwortet++;
+        var richtig = opt.korrekt;
+        if (richtig) richtige++;
+        else if (gepatzt.indexOf(m) < 0) gepatzt.push(m);
+        logSpiel("modelle", fr.praefix + m.id, richtig, { thema: m.thema, zeit: sekundenSeit(uhr) });
+
+        knoepfe.forEach(function (k) {
+          k.knopf.disabled = true;
+          if (k.korrekt) k.knopf.classList.add("richtig");
+          else if (k.knopf === knopf) k.knopf.classList.add("falsch");
+          else k.knopf.classList.add("blass");
+        });
+
+        var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
+        var stk = stickerEl(richtig ? "good" : "sanft");
+        if (stk) erk.appendChild(stk);
+        var text = el("div", "text");
+        text.appendChild(el("div", "titel", richtig ? "Sitzt!" : "Knapp daneben – schau mal:"));
+        text.appendChild(el("div", null, aufloesung(m, fr.key, opt, richtig)));
+        erk.appendChild(text);
+        karte.appendChild(erk);
+
+        var letzter = mIndex + 1 >= modelle.length && fIndex + 1 >= MD_FRAGEN.length;
+        var weiter = el("button", "knopf", letzter ? "Runde abschließen" : "Weiter");
+        weiter.addEventListener("click", function () {
+          fIndex++;
+          if (fIndex >= MD_FRAGEN.length) { fIndex = 0; mIndex++; }
+          if (mIndex >= modelle.length) return ende();
+          schritt();
+        });
+        karte.appendChild(weiter);
+        weiter.focus();
+      });
+      karte.appendChild(knopf);
+    });
+
+    app.appendChild(karte);
+  }
+
+  function ende() {
+    leeren();
+    app.style.removeProperty("--tfarbe-basis");
+    spielKopf("🪪 Modell-Steckbrief", raus);
+    var karte = el("div", "karte");
+    var extra = null;
+    if (gepatzt.length) {
+      extra = el("div", "nachlesen");
+      extra.appendChild(el("h3", null, "Kurz nachlesen"));
+      gepatzt.forEach(function (m) {
+        var z = el("div", "nachlesen-zeile");
+        z.appendChild(el("b", null, m.modell));
+        z.appendChild(el("div", null, m.wer + " – " + m.kern));
+        z.appendChild(el("div", "op-tipp", "Besteht aus: " + m.teile.join(", ") + ". " + m.klausur));
+        extra.appendChild(z);
+      });
+    }
+    fazit(karte, richtige, gesamt,
+      function () { mdRunde(raus); },
+      raus, extra);
+    app.appendChild(karte);
+  }
+
+  if (!modelle.length) return raus();
+  schritt();
 }

@@ -1429,9 +1429,13 @@ var MIX_TEXT = {
           Startseite traegt Signalwoerter und Begriffe-Blitz schon als
           Tageskacheln, direkt ueber den Uebungs-Kacheln.
 
-       Der Knopf zeigt auf die Spieleseite, weil runde() genau EINEN Extra-Knopf
-       kann und dort beide Spiele nebeneinanderstehen. */
-    extraText: "🎯 Kurz aufwärmen"
+       Der Knopf zeigte bis zum 22.08.2026 auf die Hub-Seite "Kurze Runden",
+       weil runde() genau EINEN Extra-Knopf kann und dort beide Spiele
+       nebeneinanderstanden. Die Seite ist gefallen (Zwischenseite ohne
+       Eingang von der Startseite); der eine Knopf springt jetzt direkt in
+       eine Signalwoerter-Runde (hooks.spielOp), und die Beschriftung sagt
+       konkret, was passiert. */
+    extraText: "🎯 Signalwörter, kurz"
   }
 };
 
@@ -1451,7 +1455,7 @@ function mixRunde(pool, themen, hooks, art, wahl) {
     // Nur die Neu-Runde traegt einen Extra-Knopf (siehe MIX_TEXT). Fehlt
     // extraText, laesst fertig() den Platz weg - kein leerer Knopf.
     extraText: t.extraText || null,
-    extra: t.extraText ? function () { hooks.spiele(); } : null
+    extra: t.extraText ? function () { hooks.spielOp(); } : null
   }, hooks, wahl);
 }
 

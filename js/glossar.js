@@ -758,10 +758,18 @@ export function begriffErklaerKarte(e, thema, onErgebnis) {
 
 /* ---------- Die Fachbegriffe-Runde ---------- */
 
-var GL_RUNDE = 6;
+/* Verdoppelt am 22.08.2026 (Rose: "Die totale Anzahl der Wiederholungen in
+   den Spielen sollte gedoppelt werden in GE"). 131 Glossar-Eintraege tragen
+   das locker. Zwoelf Karten sind aber sechs Erklaer-Karten mit KI-Abgleich
+   hintereinander (richtungFuer unten) - deshalb steht nach Karte 6 der
+   Halbzeit-Ausstieg: Ausstieg, kein Abbruch, alles bis dahin ist geloggt. */
+var GL_RUNDE = 12;
 
 export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
-  var zurueck = zurueckFn || function () { hooks.spiele(); };
+  // main.js gibt immer einen Rueckweg mit; der Fallback ist der doppelte
+  // Boden fuer kuenftige Aufrufer und fuehrt seit dem 22.08. auf die
+  // Startseite (die Seite "Kurze Runden" gibt es nicht mehr).
+  var zurueck = zurueckFn || function () { hooks.home(); };
   if (!GLOSSAR) return zurueck();
 
   var titelVon = {};
@@ -793,7 +801,9 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
       var weiter = el("button", "knopf", index + 1 >= gezogen.length ? "Runde abschließen" : "Weiter");
       weiter.addEventListener("click", function () {
         index++;
-        if (index < gezogen.length) schritt(); else fazit();
+        if (index >= gezogen.length) return fazit();
+        if (index === Math.ceil(gezogen.length / 2)) return halbzeit();
+        schritt();
       });
       karte.appendChild(weiter);
       weiter.focus();
@@ -803,6 +813,33 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
     var karte = richtung === "erklaeren"
       ? begriffErklaerKarte(e, thema, nachErgebnis)
       : begriffKarte(e, thema, richtung, nachErgebnis);
+    app.appendChild(karte);
+  }
+
+  /* Der Halbzeit-Ausstieg (Rose: "Pausieren ... es ist teilweise sehr viel
+     und sehr lange"). Ein Ausstieg, kein Abbruch: die beantworteten Begriffe
+     sind geloggt und zaehlen, nichts wird verworfen und nichts aufgehoben. */
+  function halbzeit() {
+    leeren();
+    app.style.removeProperty("--tfarbe-basis");
+    var z = el("button", "zurueck", "← Zurück");
+    z.addEventListener("click", zurueck);
+    app.appendChild(z);
+    var kopf = el("div", "kopf");
+    kopf.appendChild(el("h1", null, "🔤 Fachbegriffe"));
+    app.appendChild(kopf);
+    var karte = el("div", "karte");
+    karte.appendChild(el("h2", null, "Halbzeit"));
+    karte.appendChild(el("p", null, richtige + " von " + index + " bis hierhin. Noch "
+      + (gezogen.length - index) + " Begriffe – oder für heute gut so."));
+    var reihe = el("div", "knopf-reihe");
+    var k1 = el("button", "knopf", "Weiter");
+    k1.addEventListener("click", schritt);
+    reihe.appendChild(k1);
+    var k2 = el("button", "knopf sekundaer", "Für heute reicht es");
+    k2.addEventListener("click", zurueck);
+    reihe.appendChild(k2);
+    karte.appendChild(reihe);
     app.appendChild(karte);
   }
 

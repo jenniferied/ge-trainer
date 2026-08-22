@@ -67,6 +67,12 @@ import * as Muster from "./muster.js";
 // Geteilt mit dem ST-Trainer. Quelle: rose/geteilte-styles/tagesstand.js -
 // diese Datei ist eine verteilte Kopie und wird NIE hier bearbeitet.
 import { tagesPilleKlasse, tagesText, tagesWorte, zeigAnstupser, losText, losWorte, offenText } from "./geteilt-tagesstand.js";
+/* Die "Heute dran"-Karte kommt seit dem 22.08.2026 aus dem geteilten
+   Tages-Hub-Baustein (Quelle: rose/geteilte-styles/tages-hub.js, verteilte
+   Kopie, NIE hier bearbeiten). baueHub baut die Karte ohne Handler, binde
+   verdrahtet Klick und Enter/Space, offeneNamen ist die Ableitung hinter
+   offeneDailies() - dieselbe Datei treibt drueben die ST-Startseite. */
+import { baueHub, binde as bindeHub, offeneNamen } from "./geteilt-tages-hub.js";
 
 var themen = [];
 
@@ -105,7 +111,10 @@ function zeige(route, arg) {
     // im Gegensatz zu "wiederholen", das den ganzen Stapel nimmt.
     case "wdh6": return Stats.zeigeWiederhol6(themen, HOOKS);
     case "stats": return Stats.zeigeStats(themen, HOOKS);
-    case "spiele": return Spiele.zeigeSpiele(themen, HOOKS);
+    /* case "spiele" ist am 22.08.2026 gefallen: die Seite "Kurze Runden" war
+       eine Zwischenseite ohne Eingang von der Startseite, auf der Rose nur
+       per Rueckfall landete. Die Kategorienliste des Begriffe-Blitz bleibt
+       ueber "bg-kategorien" erreichbar (Kachel unter "Kurz einsteigen"). */
     /* Der einzige Fall hier, der Rose nichts abverlangt: Material anschauen,
        Podcast hoeren, blaettern. beendeRunde() oben ist trotzdem richtig -
        wer mitten in einer Runde ins Stoebern geht, hat die Runde verlassen. */
@@ -117,6 +126,12 @@ function zeige(route, arg) {
        beim alten Verhalten, dort ist der Hub ja der Herkunftsort. */
     case "spiel-op": return Spiele.starteOperatoren(themen, HOOKS, function () { zeige("start"); });
     case "spiel-bg": return Spiele.starteBegriffe(themen, HOOKS, function () { zeige("start"); });
+    // Zuordnen (Signalwort <-> Auftrag), Tageskachel Nummer drei der Spiele.
+    case "spiel-opz": return Spiele.starteOpZuordnen(themen, HOOKS, function () { zeige("start"); });
+    // Die Kategorienliste des Begriffe-Blitz als bewusster Eingang von vorn.
+    case "bg-kategorien": return Spiele.zeigeBegriffKategorien(themen, HOOKS, function () { zeige("start"); });
+    // Modell-Steckbrief: ein Modell einordnen - wer, Kern, Bestandteile.
+    case "modelle": return Spiele.starteModelle(themen, HOOKS, function () { zeige("start"); });
     /* Fuenf neue: wie "wiederholen" ohne Baukasten, der Modus IST die
        Einstellung, es gibt keine Vorschaltseite. Wie bei "mix" und
        "wiederholen" schreibt runde() (stats.js) die Sitzung. */
@@ -146,7 +161,11 @@ function zeige(route, arg) {
 var HOOKS = {
   home: function () { zeige("start"); },
   stats: function () { zeige("stats"); },
-  spiele: function () { zeige("spiele"); },
+  /* HOOKS.spiele ist mit der Seite "Kurze Runden" gefallen (22.08.2026).
+     spielOp ist der eine bewusst gebaute Ersatz: der Knopf "Signalwörter,
+     kurz" nach der Neu-Runde (stats.js) springt direkt in eine Runde statt
+     auf eine Seite; der Rueckweg der Route fuehrt auf die Startseite. */
+  spielOp: function () { zeige("spiel-op"); },
   // Der Weg aus dem Stoebern-Raum in die Fragen eines Themas - dieselbe
   // Themenansicht, die auch die Startseite oeffnet, kein zweiter Bau.
   thema: function (t) { zeige("thema", t); },
@@ -1806,68 +1825,15 @@ function zeigeRunde(r) {
     (hatHand ? " ✍️ heißt: du hast mit dem Stift geschrieben. Gespeichert ist die Umschrift – dein Blatt selbst bleibt auf dem Gerät, auf dem du es geschrieben hast." : "")));
 }
 
-/* Eine Kachel der Tagesliste — seit dem 12.08. abends eine Kachel und keine
-   Zeile mehr (Jennifer, nach dem Vergleich beider Startseiten: "machen sie die
-   gleiche Form wie bei ST-Trainer"). Das Bauteil liegt im geteilten Style-Paket,
-   Block 6, und ist in beiden Apps dasselbe.
-
-   Das Statuslicht statt der Pille: mehrere rote Pillen nebeneinander waeren eine
-   Wand aus Alarm - dieselbe Ueberlegung, aus der die acht Themenkarten nicht
-   pulsieren. Der Punkt traegt dieselbe Farbe und denselben Takt, und "offen"
-   steht weiterhin vollstaendig im aria-label und im title.
-   Erledigt ist ein Haken und kein gruener Punkt: die zwei Zustaende sollen sich
-   nicht nur in der Farbe unterscheiden. */
-function dailyKachel(a) {
-  /* Ohne geh ist die Kachel nur Anzeige - der Fall "Sechs wiederholen, aber der
-     Stapel ist leer" (tagesAufgaben). Dann traegt sie auch keine Knopf-Rolle:
-     ein Knopf, bei dem nichts passiert, ist schlechter als kein Knopf. */
-  var tippbar = typeof a.geh === "function";
-  var k = el("div", "daily-kachel " + (a.erledigt ? "fertig" : "offen") + (tippbar ? "" : " nur-anzeige"));
-  if (tippbar) {
-    k.setAttribute("role", "button");
-    k.setAttribute("tabindex", "0");
-  }
-  // titel statt kurz: der Wiederholen-Eintrag traegt seine Anzahl im Titel
-  // ("8 Fragen zum Wiederholen"), und auf der Kachel steht nur das kurze Wort.
-  // Ohne diese Zeile ginge die Zahl verloren.
-  // Bei der reinen Anzeige waere "heute schon geuebt" gelogen - dort ist einfach
-  // nichts offen. Der Zustand steht ohnehin schon in a.klein.
-  var stand = !tippbar ? "nichts offen"
-    : a.blase ? a.blase + (a.blase === 1 ? " Thema" : " Themen") + " heute durch"
-    : a.erledigt ? "heute schon geübt" : "heute noch offen";
-  k.title = a.titel + " · " + a.klein + " · " + stand;
-  k.setAttribute("aria-label", a.titel + " — " + stand);
-
-  var ikon = el("span", "d-icon", a.icon);
-  ikon.setAttribute("aria-hidden", "true");
-  k.appendChild(ikon);
-  k.appendChild(el("b", null, a.kurz));
-
-  var licht;
-  /* Zaehl-Blase statt Haken, wenn die Kachel eine Zahl mitbringt (Themen-
-     Lernen): der Haken sagt nur "durch", die Blase sagt, WIE OFT heute. Ab
-     drei bekommt sie den Regenbogen-Schimmer aus style.css. Rein
-     psychologisch - kein Soll, kein Mahntext, sie zaehlt einfach weiter. */
-  if (a.blase) {
-    licht = el("span", "d-blase" + (a.blase >= 3 ? " tl-regenbogen" : ""), String(a.blase));
-    if (a.blase >= 3) licht.appendChild(el("i", "tl-stern", "⭐"));
-  } else if (a.erledigt) {
-    licht = el("span", "d-haken", "✓");
-  } else {
-    licht = el("span", "d-licht offen puls dringend");
-  }
-  licht.setAttribute("aria-hidden", "true");
-  k.appendChild(licht);
-
-  if (tippbar) {
-    var geh = function () { a.geh(); };
-    k.addEventListener("click", geh);
-    k.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); geh(); }
-    });
-  }
-  return k;
-}
+/* Die Kachel der Tagesliste baut seit dem 22.08.2026 der geteilte Baustein
+   (geteilt-tages-hub.js, baueKachel innerhalb baueHub): gleiche Klassen,
+   gleiche Rollen, gleiche Blase-und-Haken-Logik wie vorher hier - nur einmal
+   gepflegt fuer beide Apps. Zwei bewusste Unterschiede zum alten dailyKachel:
+   der title beginnt mit klein statt mit dem langen titel (die Kuerzung war die
+   Bedingung, dass drueben kein Tooltip-Zeichen kippt; auf 360 px ist ein title
+   ohnehin unsichtbar), und frisch Erledigtes leuchtet jetzt auch in GE einmal
+   auf (frisch-erledigt, kein Konfetti im Sinne des Beschlusses vom 12.08. -
+   quittiert wird eine Handlung, gefeiert wird nichts). */
 
 /* DIE Tagesliste dieser App — eine Quelle fuer beides: die Zeilen unter
    "Heute dran" und die Zahl, die im Querlink des ST-Trainers steht.
@@ -1904,13 +1870,21 @@ function tagesAufgaben() {
     erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
   }, {
     key: "op", icon: "🎯", titel: "Signalwörter", kurz: "Signalwörter",
-    klein: "6 Aufgaben · welcher Operator will was",
+    klein: "12 Aufgaben · beide Fragerichtungen",
     erledigt: !!heute.operatoren, geh: function () { zeige("spiel-op"); }
+  }, {
+    /* Die Zuordnen-Kachel, die GE fehlte (Rose, 19.08.: "Es soll Signalwörter
+       geben und Begriffe zugeordnet sein, genauso wie bei Schultheorie, und
+       es soll klar anklickbar sein und zu den Tagsspielen zählen"). Fuenfter
+       Eintrag = die Fuenf-Spalten-Reihe ist genau voll (geteilt.css). */
+    key: "opz", icon: "↔️", titel: "Zuordnen", kurz: "Zuordnen",
+    klein: "5 Paare · Signalwort und Auftrag",
+    erledigt: !!heute.opzuordnen, geh: function () { zeige("spiel-opz"); }
   }];
   if (Spiele.hatBegriffe()) {
     liste.push({
       key: "bg", icon: "🃏", titel: "Begriffe-Blitz", kurz: "Begriffe-Blitz",
-      klein: "5 Paare zuordnen · ~2 Minuten",
+      klein: "2 Runden · 5 Paare je Runde",
       erledigt: !!heute.begriffe, geh: function () { zeige("spiel-bg"); }
     });
   }
@@ -1975,35 +1949,33 @@ function tagesAufgaben() {
    im Titel traegt ("8 Fragen zum Wiederholen") — im Tooltip drueben neben einer
    anderen Zahl waere das nur verwirrend. */
 function offeneDailies() {
-  return tagesAufgaben().filter(function (a) { return !a.erledigt; })
-                        .map(function (a) { return a.kurz; });
+  // Die Ableitung liegt im geteilten Baustein (offeneNamen): kurz statt titel,
+  // leere Liste = "heute alles erledigt". Name und Ergebnisform dieser Funktion
+  // bleiben stabil - snapshot() (sync.js) und der Querlink drueben haengen dran.
+  return offeneNamen(tagesAufgaben());
 }
 
 function heuteDranKarte() {
-  var karte = el("div", "karte heute-karte glimmer");
-  karte.appendChild(el("h2", null, "Heute dran"));
-  /* Die Legende zum roten Punkt. Sie stand bisher nur im ST-Trainer, obwohl
-     beide Apps seit dem 12.08. abends denselben roten Punkt zeigen - ein
-     Signal ohne Legende ist eine halbe Auskunft. Der Wortlaut sagt genau das,
-     was dailyKachel() baut und nicht mehr - und das ist NICHT "heute noch nicht
-     dran gewesen", so wie es der ST-Trainer formuliert: die Wiederholen-Kachel
-     steht in tagesAufgaben() fest auf erledigt:false und pulst deshalb auch dann
-     weiter, wenn Rose die Runde heute schon gespielt hat und dabei wieder etwas
-     danebenlag. "Hier ist heute noch etwas offen" ist fuer alle drei Kacheln
-     wahr, der ST-Satz waere es fuer eine davon nicht. Kein Urteil, eine Auskunft
-     ueber den Tag.
-     "Meist zwei Minuten" statt einer festen Zahl, weil die Wiederholen-Kachel
-     laenger dauern kann als die zwei Spiele.
-     Klasse .karten-hinweis aus dem geteilten Paket (Block 7b) statt eines
-     Inline-style, damit die Zeile in beiden Apps gleich aussieht. */
-  karte.appendChild(el("p", "karten-hinweis",
-    "Kurze Runden für zwischendurch, meist zwei Minuten. Ein Tipp startet direkt. "
-    + "Der rote Punkt heißt: hier ist heute noch etwas offen. Alles zählt fürs Tagesziel."));
-
+  /* Die Karte baut der geteilte Baustein; die zwei Pflicht-opts sind bewusst
+     GE-eigen und werden nicht wegvereinheitlicht:
+     - karteKlasse: das hiesige Karten-Vokabular.
+     - hinweis: die Legende zum roten Punkt. Sie sagt NICHT "heute noch nicht
+       dran gewesen" wie der ST-Satz - die Wiederholen-Kachel pulst auch dann
+       weiter, wenn Rose heute schon gespielt hat und wieder etwas danebenlag.
+       "Hier ist heute noch etwas offen" ist fuer alle Kacheln wahr. "Meist
+       zwei Minuten", weil die Wiederholen-Kachel laenger dauern kann.
+     Der Satz "Alles zählt fürs Tagesziel" bleibt woertlich stehen: die Frage
+     "Spiel-Anteil deckeln?" ist am 19.08. entschieden (kein Deckel, Begruendung
+     im Archiv) - der Satz ist die sichtbare Seite dieser Entscheidung. */
   var liste = tagesAufgaben();
-  var reihe = el("div", "dailies-reihe");
-  liste.forEach(function (a) { reihe.appendChild(dailyKachel(a)); });
-  karte.appendChild(reihe);
+  var karte = baueHub(liste, {
+    karteKlasse: "karte heute-karte glimmer",
+    titel: "Heute dran",
+    hinweis: "Kurze Runden für zwischendurch, meist zwei Minuten. Ein Tipp startet direkt. "
+      + "Der rote Punkt heißt: hier ist heute noch etwas offen. Alles zählt fürs Tagesziel."
+  });
+  // Klick und Enter/Space je Kachel - baueHub haengt bewusst keine Handler an.
+  bindeHub(karte, liste);
 
   /* Eine angefangene Themen-Lernen-Runde findet sich hier wieder. Sie steht als
      eigene Zeile und nicht nur im klein-Text der Kachel: der geteilte Baustein
@@ -2082,6 +2054,21 @@ function uebenKacheln() {
   }
   kurz.push(["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }]);
   kurz.push(["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]);
+  /* Die Kategorienliste des Begriffe-Blitz, seit dem 22.08. von vorn
+     erreichbar (vorher nur als Rueckfall-Ziel der abgeschafften Seite "Kurze
+     Runden"). Genau das lobt Rose am ST-Trainer: "spezifisch zu jedem Thema
+     und Unterthema zuordnen". Die Tageskachel oben startet direkt die
+     wackligste Kategorie - hier waehlt sie selbst. */
+  if (Spiele.hatBegriffe()) {
+    kurz.push(["🃏", "Begriffe nach Thema", "Kategorie selbst wählen", function () { zeige("bg-kategorien"); }]);
+  }
+  /* Der Modell-Steckbrief (neu 22.08.): ein Modell in Sekunden einordnen -
+     wer, Kern, Bestandteile. Bewusst HIER und nicht in der Tagesliste: die
+     Fuenf-Spalten-Reihe oben ist mit fuenf Eintraegen genau voll, ein
+     sechster machte eine zweite Reihe mit einer einzelnen Kachel auf. */
+  if (Spiele.hatModelle()) {
+    kurz.push(["🪪", "Modell-Steckbrief", "Wer, Kern, Bestandteile", function () { zeige("modelle"); }]);
+  }
   [
     ["Kurz einsteigen", kurz],
     ["Ernst üben", [

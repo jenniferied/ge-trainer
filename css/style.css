@@ -715,22 +715,12 @@ p { margin: 0 0 var(--sp-3); }
 }
 .fussnote-karte p { margin-bottom: var(--sp-2); }
 
-/* ---------- Spiele: Hub ---------- */
-.spiel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-bottom: var(--sp-4); }
-.spiel-karte {
-  position: relative; cursor: pointer; text-align: center;
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: var(--sp-4) var(--sp-3);
-  transition: transform .08s ease;
-}
-.spiel-karte:active { transform: scale(.97); }
-.spiel-karte.offen { border-color: var(--accent); }
-.spiel-karte.erledigt { opacity: .8; }
-.spiel-karte .spiel-icon { display: block; font-size: 1.8rem; line-height: 1.1; }
-.spiel-karte b { display: block; margin-top: 4px; }
-.spiel-karte .klein { display: block; font-size: .78rem; color: var(--ink-soft); }
-.spiel-haken { position: absolute; top: 6px; right: 10px; color: var(--ok); font-weight: 700; }
+/* Der Spiele-Hub ("Kurze Runden") ist am 22.08.2026 gefallen - .spiel-grid,
+   .spiel-karte, .spiel-icon und .spiel-haken sind mit ihm gegangen. Die
+   Runden-Koepfe kommen seither aus dem geteilten Paket (.topbar/.back,
+   geteilt.css Block 9); der Zurueck-Knopf behaelt dabei die Themenfarbe,
+   gleiche eine Zeile wie bei .zurueck oben. */
+.back { --zurueck-farbe: var(--tfarbe); }
 
 /* ---------- Spiele: Signalwoerter ---------- */
 .op-wort {
@@ -838,7 +828,7 @@ p { margin: 0 0 var(--sp-3); }
 
 @media (prefers-reduced-motion: reduce) {
   .bg-card.shake { animation: none; }
-  .uebe-chip:active, .spiel-karte:active, .frei-stift:active { transform: none; }
+  .uebe-chip:active, .frei-stift:active { transform: none; }
 }
 
 @media (min-width: 600px) {
@@ -1283,8 +1273,8 @@ p { margin: 0 0 var(--sp-3); }
    der Tagesliste. Seit dem Kachel-Umbau baut heuteDranKarte() dailyKachel() aus
    dem geteilten Paket, kein JS erzeugte diese Klassen mehr - toter Code, der
    beim naechsten Angleichen nur Suchzeit gekostet haette. (Gegengeprueft ueber
-   den ganzen app/js-Baum. Aufgepasst: .spiel-grid und .spiel-karte sehen
-   aehnlich verwaist aus, sind hier aber weiter in Gebrauch - spiele.js.)
+   den ganzen app/js-Baum. .spiel-grid und .spiel-karte sind seit dem
+   22.08.2026 ebenfalls weg - der Spiele-Hub, der sie baute, ist gefallen.)
    `.heute-karte h2 { margin-bottom: var(--sp-3) }` ist ebenfalls weg: die
    geteilte h2 bringt genau diesen Abstand schon mit. */
 .heute-leer { font-size: .84rem; color: var(--ink-soft); margin-top: var(--sp-2); }
