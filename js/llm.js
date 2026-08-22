@@ -1,15 +1,17 @@
 // ============ LLM-Anbindung (Port vom ST-Trainer) ============
-// Vier Einsatzorte: (1) Handschrift-Canvas in Text umwandeln, (2) eine fertige
+// Sechs Einsatzorte: (1) Handschrift-Canvas in Text umwandeln, (2) eine fertige
 // Antwort gegen Stichpunkte/Muster/Folien korrigieren — beides im Klausurmodus;
 // (3) der Kreaturen-Chat auf der Startseite, (4) seit 13.08. das Gespraech an
-// der einzelnen Aufgabe ("Über diese Frage sprechen").
+// der einzelnen Aufgabe ("Über diese Frage sprechen"), (5) der Begriffs-Abgleich
+// im Glossar, (6) seit 22.08. das Urteil je Baustein an der Abruf-Treppe.
 // Alles laeuft ueber die Supabase Edge Function llm-ge (Proxy vor der
 // Anthropic API) — der Key liegt NUR dort als Secret.
 //
-// VIER GETRENNTE TAGES-TOEPFE, und das ist Absicht: ge-llm-tag (Klausur-Arbeit),
+// FUENF GETRENNTE TAGES-TOEPFE, und das ist Absicht: ge-llm-tag (Klausur-Arbeit),
 // ge-mk-tag (Geplauder mit der Kreatur), ge-chat-tag (Nachfragen zum Stoff),
-// ge-begriff-tag (Begriffs-Abgleich im Glossar). Keiner darf einem anderen das
-// Budget wegnehmen. Serverseitig steht dasselbe noch einmal in llm-ge (TOPF).
+// ge-begriff-tag (Begriffs-Abgleich im Glossar), ge-baustein-tag (das Urteil je
+// Baustein an der Treppe). Keiner darf einem anderen das Budget wegnehmen.
+// Serverseitig steht dasselbe noch einmal in llm-ge (TOPF).
 //
 // EISERNE REGEL: Das LLM ist nie Voraussetzung. Jeder Fehler (Function nicht
 // deployed, Limit erreicht, offline, Timeout, kaputtes JSON) faellt lautlos auf
@@ -110,9 +112,91 @@
 //   chatTagFrei() -> boolean
 //       Vor dem Senden fragen, damit der Aufrufer den Budget-Satz sagen kann
 //       statt des allgemeinen Fallbacks.
+//
+//   bausteinUrteile(thema, aufgabe, eingaben, opts) -> Promise<Urteilspaket|null>
+//       EIN Urteil je aufgedecktem Baustein der Treppe (Function-Zweig
+//       art "bausteine", seit 22.08.2026). EIN Aufruf je AUFGABE, nicht je
+//       Baustein - nur wenn das Modell alle Felder zusammen sieht, erkennt es
+//       richtigen Inhalt im FALSCHEN Slot. Eigener Tages-Topf
+//       (ge-baustein-tag), NICHT ge-llm-tag.
+//
+//       thema     Themen-Id wie bei korrigiere() ("freizeit", ...). Waehlt
+//                 serverseitig den Folienblock.
+//       aufgabe   das ROHE Aufgaben-Objekt aus dem Korpus:
+//                 { id, frage, afb, stichpunkte, waehle?, abschnitte? }.
+//                 NICHT vorverarbeitet - diese Datei teilt selbst in Kern und
+//                 Zusatz (stichpunkteTeilen aus core.js).
+//       eingaben  Roses Text je GEZEIGTEM Baustein, "" wo nichts steht.
+//                 Parallel zu dem, was gezeigt wurde: mit opts.teil parallel zu
+//                 teil, ohne teil parallel zur vollen KERNLISTE. Nie zur rohen.
+//                 Passt die Laenge nicht, gibt es null statt verrutschter
+//                 Urteile - siehe unten.
+//       opts      { notiz, teil, onAusfall }
+//                 notiz      das freie Sammel-Notizfeld ueber der Treppe.
+//                 teil       die KERN-Indizes dieser Portion, oder null fuer
+//                            alle. Dasselbe opts.teil wie in treppe.js.
+//                            PFLICHT, sobald die Oberflaeche kuerzt - auch wenn
+//                            treppe.js ueber f.waehle zufaellig auswaehlt
+//                            (o.auswahl), nicht nur bei Level-1-Portionen.
+//                 onAusfall  optional, onAusfall("limit"|"netz"). "limit" heisst
+//                            Tagesbudget voll oder 429 vom Server, "netz" alles
+//                            andere. Fehlt der Callback, verhaelt sich alles wie
+//                            ohne ihn.
+//
+//       Urteilspaket = {
+//         gesamt:   "...",                  // 1-2 Saetze zum Muster, nie leer
+//         urteile:  [ { i, stufe, vorschlag, tipp, dublette } ],
+//         zaehlung: { n, soll } | null
+//       }
+//
+//       i IST DER ROHE INDEX in aufgabe.stichpunkte - auf der Leitung UND hier
+//       im Rueckgabewert. NICHT auf die Kernliste zurueckrechnen. Grund:
+//       treppe.js merkt sich je Zeile o.stichIndex, und das IST bereits der rohe
+//       Index (treppe.js: stichIndex = auswahl.map(k => kernIndex[k])). Die
+//       Oberflaeche hat roh also schon in der Hand. Eine Rueckrechnung waere
+//       eine zweite Basis, und zwei Basen nebeneinander sind genau die
+//       Index-Asymmetrie, vor der Vertrag 1 als Falle 1 warnt.
+//       Umgerechnet wird deshalb NUR HINEIN (Kern -> roh), an genau einer
+//       Stelle, und nur fuer zwei Dinge: fuer opts.teil und fuer die Zuordnung,
+//       an welchem Slot eingaben[k] haengt. aufgabe.abschnitte[].idx ist schon
+//       roh und wandert unveraendert durch.
+//
+//       stufe      "passt" | "halb" | "passt-nicht" | "leer"
+//       vorschlag  "hatte" | "halb" | "fehlte" (die ABRUF_WERTE aus treppe.js).
+//                  VORSCHLAG, kein Klick: die KI kreuzt nie selbst an.
+//       tipp       hoechstens ein Satz, bei "passt" in aller Regel leer. Die
+//                  Zeile nur rendern, wenn Text da ist.
+//       dublette   true beim zweiten Feld mit derselben Nennung (fehlend=false).
+//       zaehlung   DIE ZAHL ENTSTEHT HIER IM CODE, nicht im Modell - das Schema
+//                  hat bewusst kein Zahlenfeld. Der Renderer zeigt erg.zaehlung
+//                  und rechnet nichts, sonst rechnen C und D dasselbe zweimal.
+//                  null, AUSSER die Aufgabe ist afb:1 oder traegt ein waehle.
+//                  n    = Urteile mit stufe "passt" und nicht dublette
+//                         (halb zaehlt nicht - eine halbe Nennung ist keine).
+//                  soll = opts.teil.length, sonst min(waehle||kern, kern).
+//                         Die PORTION, nicht die ganze Aufgabe: zeigt die
+//                         Oberflaeche 4 von 5 Feldern, waere "n von 5" falsch.
+//                  KEINE PUNKTZAHL. "Ein Baustein = ein Punkt" gilt nicht
+//                  (main.js schickt kern.length, klausur.js a.max aus
+//                  PUNKTE_AFB). Nicht in Punkte umrechnen.
+//
+//       null bei jedem Fehler, wie ueberall hier. Das KI-Urteil ist nie
+//       Voraussetzung: die Oberflaeche zeigt dann nur die feste Notiz.
+//
+//   bausteinTagFrei() -> boolean
+//       Wie mkTagFrei()/chatTagFrei(): VOR dem Senden fragen. Nur so kann die
+//       Oberflaeche den Ladezustand gar nicht erst zeigen, statt ihn nach dem
+//       null wieder wegzunehmen - und den Budget-Satz sagen statt des
+//       allgemeinen Fallbacks. Zwei verschiedene Lagen, zwei verschiedene Saetze.
 // ---------------------------------------------------------------------------
 
 import { CONFIG } from "./config.js";
+// stichpunkteTeilen liefert kern/zusatz/kernIndex. Der Name wird von
+// scripts/pruefe-imports.mjs gegen die Exporte von core.js aufgeloest (laeuft in
+// deploy.sh) - ein Tippfehler waere sonst einfach undefined, und der TypeError
+// kaeme erst, wenn Rose die Stelle antippt. core.js importiert nichts, ein
+// Zyklus entsteht also nicht.
+import { stichpunkteTeilen } from "./core.js";
 
 // window.GE_CONFIG ist nur der Notnagel (config.js spiegelt sich dorthin) —
 // falls diese Datei mal ohne Modul-Kette geladen wird.
@@ -389,6 +473,296 @@ export async function begriffAbgleich(eintrag, antwortText) {
   }
 }
 
+// ---- Fuenfter Topf: das Urteil je Baustein (Themen-Lernen, Treppe) ----
+// Gleiche Begruendung wie bei den drei Toepfen davor: an der Treppe zu ueben ist
+// eine eigene Taetigkeit und darf der Klausur-Korrektur (ge-llm-tag) das Budget
+// nicht wegnehmen. Eigener Key, eigenes Limit, laeuft deshalb nicht durch ruf().
+//
+// DIE ZWEI ZEILEN IN config.js FEHLEN NOCH (bausteinTagKey, bausteinTagesLimit).
+// Der ||-Default hier traegt bis dahin - dieselbe Bauart wie BG_LIMIT darueber.
+// config.js gehoert in dieser Welle niemandem; eine fremde Datei anzufassen
+// waere teurer als ein Default. Die Zeile dazu steht in
+// werkstatt/ultracode/offen-C.md.
+const BS_LIMIT = () => cfg().bausteinTagesLimit || 150;
+const BS_KEY = () => cfg().bausteinTagKey || "ge-baustein-tag";
+
+function bsBudget() {
+  const heute = new Date().toDateString();
+  let d;
+  try { d = JSON.parse(localStorage.getItem(BS_KEY()) || "{}"); } catch { d = {}; }
+  if (d.tag !== heute) d = { tag: heute, n: 0 };
+  return d;
+}
+function bsVerbrauch() {
+  const d = bsBudget();
+  d.n++;
+  try { localStorage.setItem(BS_KEY(), JSON.stringify(d)); } catch { /* privater Modus */ }
+}
+export const bausteinTagFrei = () => bsBudget().n < BS_LIMIT();
+
+const BS_STUFEN = ["passt", "halb", "passt-nicht", "leer"];
+const BS_VORSCHLAEGE = ["hatte", "halb", "fehlte"];
+// stufe -> Selbsteinschaetzung, falls das Modell einen unbekannten Wert schickt.
+// "leer" ist IMMER "fehlte" - das steht so im Vertrag und wird hier erzwungen,
+// nicht nur im Prompt gewuenscht.
+const BS_ERSATZ = { passt: "hatte", halb: "halb", "passt-nicht": "fehlte", leer: "fehlte" };
+
+/* Servertext hereinlassen, aber nichts glauben - dasselbe Prinzip wie in
+   saubereKorrektur() weiter unten. Zwei Toleranzen sind Absicht:
+
+   - Ein FEHLENDER i ist kein Abbruch. Der Baustein bekommt dann einfach keine
+     KI-Zeile, und die Oberflaeche zeigt dort die feste Notiz - die zeigt sie
+     ohnehin immer.
+   - Ein i, der GAR NICHT MITGESCHICKT wurde, fliegt still raus. Weil i roh
+     bleibt und roh bei der Oberflaeche ankommt, zeigte ein erfundener oder
+     verrutschter Index dort auf nichts. Dieselbe Regel wie serverseitig fuer
+     abschnitte[].idx ausserhalb des Bereichs. */
+function saubereUrteile(d, erlaubteI, sollOderNull) {
+  if (!d || typeof d.gesamt !== "string" || !d.gesamt.trim()) return null;
+  if (!Array.isArray(d.urteile)) return null;
+  const erlaubt = new Set(erlaubteI);
+  const gesehen = new Set();
+  const urteile = [];
+  for (const u of d.urteile) {
+    if (!u || typeof u !== "object") continue;
+    if (typeof u.i !== "number" || !isFinite(u.i)) continue;
+    const i = Math.floor(u.i);
+    if (!erlaubt.has(i) || gesehen.has(i)) continue;
+    if (BS_STUFEN.indexOf(u.stufe) < 0) continue;
+    gesehen.add(i);
+    const vorschlag = u.stufe === "leer"
+      ? "fehlte"
+      : (BS_VORSCHLAEGE.indexOf(u.vorschlag) >= 0 ? u.vorschlag : BS_ERSATZ[u.stufe]);
+    urteile.push({
+      i,
+      stufe: u.stufe,
+      vorschlag,
+      tipp: typeof u.tipp === "string" ? u.tipp.trim() : "",
+      dublette: u.dublette === true,
+    });
+  }
+  if (!urteile.length) return null;
+  urteile.sort((a, b) => a.i - b.i);
+
+  /* DIE ZAEHLUNG. Hier und nur hier - der Renderer rechnet nichts.
+     "halb" zaehlt NICHT mit: eine halbe Nennung ist keine Nennung. Eine Dublette
+     zaehlt einmal; deduplizieren kann der Code nicht selbst, weil
+     "Handlungsorientierung" und "handlungsorientiertes Arbeiten" dieselbe
+     Nennung sind - deshalb das Boolean vom Modell.
+     Gedeckelt an soll, damit nie "6 von 5" dasteht. */
+  let zaehlung = null;
+  if (typeof sollOderNull === "number" && sollOderNull > 0) {
+    const n = urteile.filter((u) => u.stufe === "passt" && !u.dublette).length;
+    zaehlung = { n: Math.min(n, sollOderNull), soll: sollOderNull };
+  }
+  return { gesamt: d.gesamt.trim(), urteile, zaehlung };
+}
+
+/* Ein Urteil je aufgedecktem Baustein. Vertrag im Dateikopf.
+
+   NICHT durch ruf() gelegt, und beides ist hart:
+   - ruf() zaehlt ge-llm-tag, also das Korrektur-Budget.
+   - ruf() ruft tagVerbrauch() VOR dem await. Ist die Function tot oder im
+     BOOT_ERROR, laeuft der Zaehler trotzdem hoch, und nach 200 Fehlversuchen
+     behauptet die App, das Tagesbudget sei aufgebraucht. maskottchen(),
+     frageChat() und begriffAbgleich() zaehlen ausdruecklich NACH dem Status.
+     Dieser Zweig macht es genauso. */
+export async function bausteinUrteile(thema, aufgabe, eingaben, opts) {
+  const o = opts || {};
+  const melde = (grund) => {
+    if (typeof o.onAusfall !== "function") return;
+    // Ein werfender Callback der Oberflaeche darf hier nichts kaputtmachen.
+    try { o.onAusfall(grund); } catch { /* die Oberflaeche ist nicht mein Problem */ }
+  };
+  if (!aufgabe || !Array.isArray(eingaben)) return null;
+
+  const teilung = stichpunkteTeilen(aufgabe);
+  const kern = teilung.kern || [];
+  const kernIndex = Array.isArray(teilung.kernIndex) ? teilung.kernIndex : [];
+  if (!kern.length) return null;
+
+  // Welche KERN-Positionen wurden gezeigt? Ohne opts.teil sind es alle.
+  const teilRoh = Array.isArray(o.teil) ? o.teil : null;
+  const teil = teilRoh && teilRoh.length
+    ? teilRoh.filter((k) => typeof k === "number" && k >= 0 && k < kern.length)
+    : null;
+  const slots = teil && teil.length ? teil : kern.map((_, i) => i);
+
+  /* eingaben ist PORTIONSPARALLEL: eingaben[k] gehoert zu teil[k], und ohne teil
+     zu kern[k]. Passt die Laenge nicht, gibt es null statt Urteilen auf den
+     ersten n Bausteinen. Ein Verrutschen um n Zeilen waere still - eine fehlende
+     KI-Zeile faengt die Oberflaeche ohnehin ab, ein falsch beschriftetes Urteil
+     nicht. Das trifft heute auch treppe.js, wenn es ueber f.waehle zufaellig
+     auswaehlt (ko-f-1: 3 aus 5, eb-f-4: 2 aus 4) - dann MUSS o.auswahl als
+     opts.teil mitkommen. */
+  if (eingaben.length !== slots.length) return null;
+
+  // Kern -> roh, die einzige Umrechnung dieser Datei fuer diesen Zweig. Fehlt
+  // kernIndex oder passt seine Laenge nicht, sind die Indizes schon roh.
+  const passtIndex = kernIndex.length === kern.length;
+  const rohVon = (k) => (passtIndex ? kernIndex[k] : k);
+
+  const roh = slots.map(rohVon);
+  const eingabeVon = new Map();
+  roh.forEach((r, n) => eingabeVon.set(r, typeof eingaben[n] === "string" ? eingaben[n] : ""));
+  const erwartetVon = new Map();
+  slots.forEach((k, n) => erwartetVon.set(roh[n], String(kern[k])));
+  const gezeigt = new Set(roh);
+
+  /* Der Zusatz-Vorrat, WOERTLICH als ein String. Nicht mit einer Regex in eine
+     Liste zerlegen: bei fr-f-1 stehen die Kommata innerhalb der Klammern, ein
+     split(",") liefert dort lautlos Unsinn. Das Modell liest Prosa.
+     Ohne diesen Text rechnet der Zaehler gegen ein zu kleines m: bei pr-f-1
+     sind Kern (5) und Zusatz (6) zusammen die elf didaktischen Prinzipien.
+     Schreibt Rose drei davon aus der Zusatz-Zeile, meldete der Zaehler sonst
+     2 von 5 - und das ist die Sorte Falschmeldung, die einen Trainer verleidet. */
+  const vorratText = (teilung.zusatz || []).map(String).join(" ").slice(0, 1200);
+
+  const zahl = (w) => (typeof w === "number" && isFinite(w) && w > 0 ? Math.floor(w) : 0);
+  const aufgabenWaehle = zahl(aufgabe.waehle);
+
+  // Abschnitte bauen. Fehlt das Feld im Korpus, ist die ganze Aufgabe EIN
+  // Abschnitt (so sieht Vertrag 2 es vor) - dann ohne operator/auftrag, damit
+  // der Server keine leere Ueberschrift druckt.
+  const gruppen = Array.isArray(aufgabe.abschnitte) && aufgabe.abschnitte.length
+    ? aufgabe.abschnitte
+    : null;
+  const abschnitte = [];
+  if (gruppen) {
+    for (const g of gruppen) {
+      if (!g || typeof g !== "object") continue;
+      // idx ist SCHON roh (Vertrag 1) und wandert unveraendert durch. Wer es
+      // zusaetzlich durch kernIndex schiebt, verschiebt zweimal - und zwar
+      // genau auf eb-fol-f-2, also dort, wo der Testfall hinsieht.
+      const idx = (Array.isArray(g.idx) ? g.idx : [])
+        .filter((r) => typeof r === "number" && gezeigt.has(Math.floor(r)))
+        .map((r) => Math.floor(r));
+      if (!idx.length) continue;
+      const a = {
+        form: g.form === "rolle" ? "rolle" : "liste",
+        items: idx.map((r) => ({ i: r, erwartet: erwartetVon.get(r) || "", eingabe: eingabeVon.get(r) || "" })),
+      };
+      if (typeof g.operator === "string" && g.operator) a.operator = g.operator;
+      if (typeof g.rolle === "string" && g.rolle) a.rolle = g.rolle;
+      if (typeof g.auftrag === "string" && g.auftrag) a.auftrag = g.auftrag;
+      if (zahl(g.waehle)) a.waehle = zahl(g.waehle);
+      abschnitte.push(a);
+    }
+    /* Ein abschnittseigenes waehle gewinnt (Vertrag 1: "das speziellere"); sonst
+       erbt der EINZIGE uebriggebliebene Abschnitt das waehle der Aufgabe.
+
+       Gezaehlt werden die Abschnitte, die die gezeigt-Filterung UEBERLEBT haben,
+       nicht die im Korpus. Das ist der ganze Punkt: Vertrag 1 schreibt fuer die
+       reine "Weitere:"-Zeile einen eigenen Abschnitt mit zusatz: true vor, und
+       der faellt hier IMMER raus, weil stichpunkteTeilen() ihn nie in den Kern
+       nimmt. An gruppen.length gemessen haette damit jede AFB-I-Aufgabe mit
+       Vorrats-Zeile (pr-f-1, fr-f-1, mo-f-1, gr-f-1) ihr waehle verloren, sobald
+       Prompt A ihr das abschnitte-Feld gibt — und mit dem waehle den Vorrat.
+       Genau die Falschmeldung, die weiter unten als Falle 6 beschrieben ist. */
+    if (abschnitte.length === 1 && !abschnitte[0].waehle && aufgabenWaehle) {
+      abschnitte[0].waehle = aufgabenWaehle;
+    }
+  }
+  /* Was kein Abschnitt beansprucht hat, faellt NICHT unter den Tisch. Vertrag 1
+     verlangt eine Partition und sync-fragen.py prueft sie - aber ein halb
+     migrierter Korpus wuerde den Slot sonst still aus der Nutzlast werfen, das
+     Modell saehe ihn nie, und an dem Baustein bliebe die KI-Zeile ohne Grund
+     leer. Lieber ein Abschnitt ohne Ueberschrift als ein verschwundenes Feld. */
+  if (abschnitte.length) {
+    const drin = new Set();
+    for (const a of abschnitte) for (const it of a.items) drin.add(it.i);
+    const rest = roh.filter((r) => !drin.has(r));
+    if (rest.length) {
+      abschnitte.push({
+        form: "liste",
+        items: rest.map((r) => ({ i: r, erwartet: erwartetVon.get(r) || "", eingabe: eingabeVon.get(r) || "" })),
+      });
+    }
+  }
+  if (!abschnitte.length) {
+    const a = {
+      form: "liste",
+      items: roh.map((r) => ({ i: r, erwartet: erwartetVon.get(r) || "", eingabe: eingabeVon.get(r) || "" })),
+    };
+    // waehle und vorratText fahren AUCH beim Portionieren mit. Sie sind das, was
+    // das Modell die Liste als Vorrat statt als Checkliste lesen laesst; sie
+    // wegzulassen, weil soll jetzt woanders herkommt, holt genau die
+    // Falschmeldung oben zurueck. Das eine ist Prompt-Kontext, das andere die
+    // Zahl im Code.
+    if (aufgabenWaehle) a.waehle = aufgabenWaehle;
+    abschnitte.push(a);
+  }
+
+  /* Der Vorrat haengt am VORRAT, nicht am waehle-Feld eines bestimmten Wegs.
+     Jeder Abschnitt, der eine Anzahl verlangt, bekommt die Zusatz-Zeile woertlich
+     dazu — egal ob sein waehle aus dem Abschnitt, aus der Aufgabe oder aus dem
+     Fallback kam. Vorher haing das an einer einzigen if-Bedingung im
+     Gruppen-Pfad und fiel dort still weg. */
+  if (vorratText) for (const a of abschnitte) if (a.waehle) a.vorratText = vorratText;
+
+  /* Der SCHALTER und die ZAHL sind zwei verschiedene Dinge. Ob es ueberhaupt
+     eine zaehlung gibt, entscheidet allein die Aufgabe (afb 1 oder ein waehle);
+     opts.teil ERZEUGT keine Zaehlung, es verkleinert nur ihr soll. Eine
+     portionierte AFB-II-Aufgabe ohne waehle bekommt weiterhin null. */
+  const zaehlbar = aufgabe.afb === 1 || aufgabenWaehle > 0;
+  const soll = zaehlbar
+    ? (teil && teil.length ? teil.length : Math.min(aufgabenWaehle || kern.length, kern.length))
+    : null;
+
+  if (!aktiv()) return null;
+  if (!bausteinTagFrei()) { melde("limit"); return null; }
+
+  const steuerung = new AbortController();
+  /* 45 s, so in der Naht-Tabelle von Vertrag 2 festgelegt - die Oberflaeche baut
+     ihren Ladezustand darauf (sie wartet etwas laenger, 46-50 s, sonst flackert
+     er gegen sein eigenes Ergebnis). Korrektur steht auf 60 s, Begriff auf 20 s;
+     Opus mit adaptivem Denken ueber zwoelf Bausteine liegt dazwischen. */
+  const wecker = setTimeout(() => steuerung.abort(), 45000);
+  try {
+    const r = await fetch(url(), {
+      method: "POST",
+      headers: kopf(),
+      signal: steuerung.signal,
+      body: JSON.stringify({
+        art: "bausteine",
+        thema: typeof thema === "string" ? thema : "",
+        id: aufgabe.id,
+        frage: typeof aufgabe.frage === "string" ? aufgabe.frage : "",
+        afb: aufgabe.afb,
+        notiz: typeof o.notiz === "string" ? o.notiz.trim().slice(0, 2000) : "",
+        // Sagt dem Prompt, dass heute absichtlich nicht alle Felder dastehen -
+        // sonst meldet das Modell eine fehlende Nennung fuer ein Feld, das gar
+        // nicht gezeigt wurde. Die Zahl selbst rechnet weiter dieser Code.
+        portion: !!(teil && teil.length),
+        abschnitte,
+      }),
+    });
+    // Erst zaehlen, wenn wirklich ein Status zurueckkam (siehe Kommentar oben).
+    bsVerbrauch();
+    if (!r.ok) {
+      /* 429 unterscheidbar machen. if (!r.ok) return null wirft den Status weg,
+         und die Oberflaeche kann "Limit erreicht" nicht von "kein Netz" trennen -
+         obwohl Vertrag 2 fuer die beiden unterschiedliches Verhalten verlangt.
+         Ein Callback statt eines Modul-Flags, weil ein letzterFehler-Zustand in
+         ein Rennen gegen den korrigiere()-Aufruf liefe, der zur selben Karte
+         parallel unterwegs ist: wer nach dem await liest, laese vielleicht den
+         Ausfall des anderen Aufrufs. Der Callback gehoert zum Aufruf. */
+      melde(r.status === 429 ? "limit" : "netz");
+      return null;
+    }
+    const d = await r.json();
+    if (!d || d.fehler) { melde("netz"); return null; }
+    const erg = saubereUrteile(d, roh, soll);
+    if (!erg) melde("netz");
+    return erg;
+  } catch {
+    melde("netz");
+    return null;
+  } finally {
+    clearTimeout(wecker);
+  }
+}
+
 function kopf() {
   const k = cfg().supabaseAnonKey || "";
   return { "Content-Type": "application/json", apikey: k, Authorization: "Bearer " + k };
@@ -552,6 +926,34 @@ function saubereKorrektur(d, aufgabe) {
   return { annotationen, randkommentare, getroffen, fehlt, punkteGesamt, punkteMax, gesamtkommentar: d.gesamtkommentar.trim() };
 }
 
+/* abschnitte[].idx indiziert die ROHE Stichpunktliste (Vertrag 1: weil hinweise
+   es auch tut). korrigiere() schickt aber nur den Kern. Diese Funktion legt die
+   idx auf die Kernliste um und wirft alles weg, was dort nicht vorkommt (eine
+   reine Zusatz-Gruppe zum Beispiel). Fehlt kernIndex, wird angenommen, die
+   Indizes seien schon Kern-Indizes. undefined faellt bei JSON.stringify weg. */
+function abschnitteAufKern(abschnitte, kernIndex) {
+  if (!Array.isArray(abschnitte) || !abschnitte.length) return undefined;
+  const aufKern = new Map();
+  if (Array.isArray(kernIndex)) kernIndex.forEach((rohI, k) => aufKern.set(rohI, k));
+  const raus = [];
+  for (const a of abschnitte) {
+    if (!a || typeof a !== "object") continue;
+    const idx = (Array.isArray(a.idx) ? a.idx : [])
+      .filter((r) => typeof r === "number" && isFinite(r))
+      .map((r) => (aufKern.size ? (aufKern.has(Math.floor(r)) ? aufKern.get(Math.floor(r)) : -1) : Math.floor(r)))
+      .filter((k) => k >= 0);
+    if (!idx.length) continue;
+    const g = { idx };
+    if (typeof a.operator === "string" && a.operator) g.operator = a.operator;
+    if (typeof a.rolle === "string" && a.rolle) g.rolle = a.rolle;
+    if (typeof a.auftrag === "string" && a.auftrag) g.auftrag = a.auftrag;
+    if (a.form === "rolle") g.form = "rolle";
+    if (a.zusatz === true) g.zusatz = true;
+    raus.push(g);
+  }
+  return raus.length ? raus : undefined;
+}
+
 /* stand (seit 14.08.2026, optional): was Rose zu DIESER Aufgabe schon geuebt hat
    und wo sie im Thema steht. Ein fertig formatierter Textblock, gebaut in
    main.js (standFuerKi) - diese Datei entscheidet ueber die Leitung, nicht
@@ -581,6 +983,22 @@ export async function korrigiere(thema, aufgabe, antwort, stand) {
       // wird dann "n gueltige Nennungen", keine festen Zeilen. undefined
       // faellt bei JSON.stringify einfach weg.
       waehle: typeof aufgabe.waehle === "number" && aufgabe.waehle > 0 ? aufgabe.waehle : undefined,
+      /* abschnitte (optional, seit 22.08.2026): der Erwartungshorizont erscheint
+         serverseitig dann GRUPPIERT statt als flache Liste. Additiv - fehlt das
+         Feld, verhaelt sich alles wie vorher.
+
+         HIER wird umgerechnet, und zwar GENAU ANDERSHERUM als bei
+         bausteinUrteile(): korrigiere() schickt seit jeher eine KERN-Nutzlast
+         (stichpunkte: t.kern), also wandern die rohen idx auf Kern; der
+         Baustein-Zweig schickt eine rohe, also wandern dort die Kern-Positionen
+         auf roh. Beides ist richtig, und in beiden Faellen rechnet llm.js -
+         nicht die Oberflaeche und nicht der Server.
+
+         Damit das hier greift, muss der Aufrufer aufgabe.abschnitte UND
+         aufgabe.kernIndex mitgeben (main.js, zwei Zeilen: abschnitte:
+         f.abschnitte, kernIndex: t.kernIndex). Die Datei gehoert einer anderen
+         Session; ohne die zwei Zeilen faellt das Feld hier einfach weg. */
+      abschnitte: abschnitteAufKern(aufgabe.abschnitte, aufgabe.kernIndex),
     },
     antwort: text,
     stand: typeof stand === "string" && stand.trim() ? stand.trim().slice(0, 2000) : "",
@@ -650,4 +1068,4 @@ export function stelleFinden(text, textstelle) {
 // Aufrufer.
 
 // Globale Schnittstelle fuer klausur.js und den Uebungsmodus.
-window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei, frageChat, chatTagFrei, begriffAbgleich };
+window.GE_LLM = { aktiv, transkribiere, korrigiere, stelleFinden, maskottchen, mkTagFrei, frageChat, chatTagFrei, begriffAbgleich, bausteinUrteile, bausteinTagFrei };

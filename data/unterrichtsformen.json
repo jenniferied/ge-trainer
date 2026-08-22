@@ -836,6 +836,7 @@
   "frei": [
     {
       "id": "uf-f-1",
+      "unterthema": "Offener Unterricht & Dimensionen",
       "afb": 1,
       "frage": "Nennen Sie die fünf Dimensionen der Öffnung von Unterricht nach Peschel (2002).",
       "stichpunkte": [
@@ -844,7 +845,7 @@
         "Inhaltlich",
         "Sozial",
         "Persönlich",
-        "Dahinter: Lernende bestimmen selbst, wann, wo, mit wem, wie, mit welchem Zugang und an welchem Thema sie arbeiten"
+        "Dahinter: wann, wo, mit wem, wie, welcher Zugang, welches Thema"
       ],
       "muster": "Peschel (2002) unterscheidet fünf Dimensionen der Öffnung von Unterricht: die organisatorische, die methodische, die inhaltliche, die soziale und die persönliche Dimension. Je nach Dimension bestimmen die Lernenden selbst, wann, wo, mit wem, wie und an welchem Thema sie arbeiten.",
       "musterVarianten": {
@@ -864,41 +865,72 @@
       "tipp": "Merkhilfe: O-M-I-S-P. Wenn du dazu je ein Selbstbestimmungs-Beispiel nennen kannst (wann = organisatorisch, wie = methodisch, woran = inhaltlich, mit wem = sozial), bist du auch für AFB II gerüstet. Nachschlagen kannst du das auf Folie 4, wo die fünf Kästen genau in dieser Reihenfolge stehen, und noch einmal auf Folie 26, wo sie als Video-Aufgabe wiederkommen; in deinen eigenen Aufzeichnungen auf Notizen S. 23.",
       "quelle": "folie-unterrichtsformen-4",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die fünf Dimensionen der Öffnung nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "chips": [
+            "Dimension 1",
+            "Dimension 2",
+            "Dimension 3",
+            "Dimension 4",
+            "Dimension 5"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Worüber die Lernenden dabei selbst entscheiden",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
-          "Rahmenfragen: wann und wo gearbeitet wird",
-          "Die Dimension zu Zeit und Raum",
-          "Denk an den aeusseren Ablaufrahmen"
+          "Rahmen aus Zeit und Raum: wann und wo gearbeitet wird",
+          "Die Dimension, die den aeusseren Ablauf betrifft",
+          "Denk an Stundenplan und Arbeitsplatz"
         ],
         [
-          "Auf welche Art gelernt wird",
-          "Die Dimension zum eigenen Lernweg",
-          "Wie komme ich zum Ziel?"
+          "Der eigene Weg zum Ziel steht hier zur Wahl",
+          "Auf welche Art gelernt wird, nicht was",
+          "Denk an Zugang und Vorgehen"
         ],
         [
-          "Worum es im Stoff geht",
-          "Die Dimension zur Themen- und Zugangswahl",
+          "Worum es im Stoff ueberhaupt geht",
+          "Die Dimension der Themenwahl",
           "Was gelernt wird, nicht wie"
         ],
         [
-          "Mit wem gelernt wird",
+          "Mit wem gearbeitet wird",
           "Die Dimension des Miteinanders",
-          "Denk an Partnerwahl und Gruppe"
+          "Denk an Partnerwahl und Gruppengroesse"
         ],
         [
-          "Die fuenfte, aufs Individuum bezogene Dimension",
+          "Die fuenfte Dimension setzt beim einzelnen Menschen an",
           "Nicht Struktur, sondern die eigene Person",
-          "Der Kasten, der beim Ich ansetzt"
+          "Der Kasten, der beim Ich beginnt"
         ],
         [
-          "Der gemeinsame Kern hinter allen fuenf Kaesten",
-          "Was steckt hinter den Dimensionen? Denk an Fragewoerter",
-          "Zusatz: Worueber entscheiden die Lernenden insgesamt?"
+          "Zusatz: sechs Fragewoerter von Folie 4, vom Zeitpunkt bis zum Gegenstand",
+          "Worueber entscheiden die Lernenden hinter all diesen Kaesten?",
+          "Die Fragen, die zusammen die fuenf Kaesten fuellen"
         ]
       ]
     },
     {
       "id": "uf-f-2",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
       "afb": 2,
       "frage": "Erläutern Sie den Ablauf eines Lehrgangs anhand der vier Phasen mit einem Beispiel.",
       "stichpunkte": [
@@ -962,6 +994,7 @@
     },
     {
       "id": "uf-f-3",
+      "unterthema": "Kritik & Vorteile",
       "afb": 3,
       "frage": "Bewerten Sie die Potentiale offener und geschlossener Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung. **Bewerten heißt hier: abwägen und am Ende ein eigenes begründetes Urteil formulieren.**",
       "stichpunkte": [
@@ -1019,6 +1052,7 @@
     },
     {
       "id": "uf-f-4",
+      "unterthema": "Methoden offenen Unterrichts",
       "afb": 2,
       "frage": "Erläutern Sie die Aufgabenverteilung zwischen Lehrperson und Schüler:innen beim Stationenlernen.",
       "stichpunkte": [
@@ -1064,6 +1098,7 @@
     },
     {
       "id": "uf-gen-f-1",
+      "unterthema": "Offener Unterricht & Dimensionen",
       "afb": 2,
       "frage": "Ordnen Sie die Methoden Freiarbeit, Stationenarbeit, Projektarbeit, Theaterarbeit, Lehrgang und Klassenunterricht den drei Grundformen nach Terfloth und Bauersfeld zu und nennen Sie zu jeder Grundform eine weitere Variation.",
       "stichpunkte": [
@@ -1110,6 +1145,7 @@
     },
     {
       "id": "uf-gen-f-2",
+      "unterthema": "Methoden offenen Unterrichts",
       "afb": 3,
       "frage": "Entwickeln Sie in Grundzügen ein Stationenlernen zu einem lebensnahen Thema Ihrer Wahl. Begründen Sie Ihre Planungsentscheidungen anhand der Aufgabenverteilung zwischen Lehrperson und Schüler:innen (Fischer 2008).",
       "stichpunkte": [
@@ -1174,6 +1210,7 @@
     },
     {
       "id": "uf-gen-f-3",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
       "afb": 3,
       "frage": "Diskutieren Sie die These: 'Trainingsprogramme sind keine Bildung - also gehören sie nicht in die Schule.'",
       "stichpunkte": [
@@ -1232,20 +1269,21 @@
     },
     {
       "id": "uf-fol-f-1",
+      "unterthema": "Grundformen nach Meyer",
       "afb": 2,
       "frage": "Die Vorlesung zeigt zwei Schaubilder zu den grundlegenden Unterrichtsformen: eines nach Terfloth und Bauersfeld, eines nach Hilbert Meyer. Stellen Sie beide gegenüber und erläutern Sie, worin sie sich unterscheiden.",
       "stichpunkte": [
-        "Terfloth & Bauersfeld (2015, 160) unterscheiden drei Grundformen: individualisierter Unterricht, kooperativer Unterricht und gemeinsamer Unterricht - jeweils mit Variationen",
-        "Variationen individualisierter Unterricht: Freiarbeit, Werkstattarbeit, Stationenarbeit, Planarbeit, Hausarbeit, Computerarbeit, außerschulische Arbeit, Lehr- und Lernfahrten",
-        "Variationen kooperativer Unterricht: Projektarbeit, Theaterarbeit, Zukunftswerkstatt, Feste und Feiern, Klassenfahrten",
-        "Variationen gemeinsamer Unterricht: Klassenunterricht, Kursarbeit, Präsentation, Lehrgang, IT-Arbeit",
-        "Meyer setzt ebenfalls drei Säulen an, aber andere: individualisierender Unterricht (Kern: Freiarbeit), lehrgangsförmiger Unterricht (Kern: direkte Instruktion beziehungsweise Lehrgänge) und kooperativer Unterricht (Kern: Projektarbeit)",
-        "Kurzcharakteristik bei Meyer: individualisierend mit hohen Anteilen selbstorganisierten Lernens, überwiegend Einzel- und Partnerarbeit; lehrgangsförmig mit hohem Ausmaß an Lehrerlenkung, überwiegend Frontalunterricht; kooperativ mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit",
-        "Erster Unterschied: Der Lehrgang ist bei Terfloth & Bauersfeld eine Variation des gemeinsamen Unterrichts, bei Meyer dagegen eine eigene Säule",
-        "Zweiter Unterschied: Gemeinsamer Unterricht ist bei Terfloth & Bauersfeld eine der drei Grundformen, bei Meyer dagegen der Rahmen über allen drei Säulen (Beispiele Klassenkonferenz, Morgenkreis)",
-        "Bei Meyer kommt ein Rahmenelement hinzu, das bei Terfloth & Bauersfeld fehlt: das Lernen auf den Marktplätzen der Schule (Feste und Feiern, Projektpräsentationen, Wettbewerbe, Internet)",
-        "Einordnung: Für Klausurantworten ist Folie 6 die sichere Referenz, weil die Kompetenzerwartung von den drei grundlegenden Unterrichtsformen spricht; Meyers Schaubild sollte man kennen, aber nicht mit dem ersten vermischen",
-        "Gemeinsamkeit beider Modelle: Individualisierung und Kooperation gelten in beiden als eigenständige Grundformen, und beide ordnen konkrete Methoden einer übergeordneten Form zu statt sie nur aufzuzählen"
+        "Grundform 1 (T & B 2015, 160): individualisierter Unterricht - Freiarbeit, Werkstattarbeit, Stationenarbeit, Planarbeit, Hausarbeit, Computerarbeit, außerschulische Arbeit, Lehr- und Lernfahrten",
+        "Grundform 2: kooperativer Unterricht - Projektarbeit, Theaterarbeit, Zukunftswerkstatt, Feste und Feiern, Klassenfahrten",
+        "Grundform 3: gemeinsamer Unterricht - Klassenunterricht, Kursarbeit, Präsentation, Lehrgang, IT-Arbeit",
+        "Säule 1 bei Meyer: individualisierender Unterricht, Kern Freiarbeit; hohe Anteile selbstorganisierten Lernens, überwiegend Einzel- und Partnerarbeit",
+        "Säule 2 bei Meyer: lehrgangsförmiger Unterricht, Kern direkte Instruktion bzw. Lehrgänge; hohes Ausmaß an Lehrerlenkung, überwiegend Frontalunterricht",
+        "Säule 3 bei Meyer: kooperativer Unterricht, Kern Projektarbeit; gemeinsame Zielabsprachen, hohe Anteile von Gruppen- bzw. Teamarbeit",
+        "Unterschied 1: Der Lehrgang ist bei Terfloth & Bauersfeld eine Variation des gemeinsamen Unterrichts, bei Meyer dagegen eine eigene Säule",
+        "Unterschied 2: Gemeinsamer Unterricht ist bei Terfloth & Bauersfeld eine der drei Grundformen, bei Meyer dagegen der Rahmen über allen drei Säulen (Klassenkonferenz, Morgenkreis)",
+        "Unterschied 3: Nur bei Meyer kommt das Lernen auf den Marktplätzen der Schule hinzu (Feste und Feiern, Projektpräsentationen, Wettbewerbe, Internet)",
+        "Einordnung: Folie 6 ist die sichere Klausur-Referenz, weil die Kompetenzerwartung von den drei grundlegenden Unterrichtsformen spricht; Meyer kennen, aber nicht vermischen",
+        "Gemeinsamkeit: Beide sehen Individualisierung und Kooperation als eigenständige Grundformen und ordnen Methoden einer übergeordneten Form zu, statt sie nur aufzuzählen"
       ],
       "muster": "Die Vorlesung stellt zwei Schaubilder nebeneinander, die beide drei grundlegende Unterrichtsformen unterscheiden, dies aber unterschiedlich zuschneiden. Terfloth und Bauersfeld nennen den individualisierten, den kooperativen und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem Freiarbeit, Werkstattarbeit, Stationenarbeit und Planarbeit, zum kooperativen Unterricht Projektarbeit, Theaterarbeit, Zukunftswerkstatt sowie Feste und Feiern, und zum gemeinsamen Unterricht Klassenunterricht, Kursarbeit, Präsentation, Lehrgang und IT-Arbeit. Hilbert Meyer setzt in seinem Schaubild ebenfalls drei Säulen an, ersetzt aber eine davon. Bei ihm stehen der individualisierende Unterricht mit der Freiarbeit im Kern, der lehrgangsförmige Unterricht mit der direkten Instruktion im Kern und der kooperative Unterricht mit der Projektarbeit im Kern. Er charakterisiert sie zusätzlich über die Anteile: der individualisierende Unterricht mit hohen Anteilen selbstorganisierten Lernens und überwiegend Einzel- und Partnerarbeit, der lehrgangsförmige mit einem hohen Ausmaß an Lehrerlenkung und überwiegend Frontalunterricht, der kooperative mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit. Daraus ergeben sich zwei wesentliche Unterschiede. Erstens ist der Lehrgang bei Terfloth und Bauersfeld nur eine Variation innerhalb des gemeinsamen Unterrichts, während er bei Meyer zu einer eigenen Säule aufgewertet wird. Zweitens ist der gemeinsame Unterricht bei Terfloth und Bauersfeld selbst eine der drei Grundformen, bei Meyer dagegen der Rahmen, der sich als Bogen über alle drei Säulen legt und Formen wie Klassenkonferenz und Morgenkreis umfasst. Hinzu kommt bei Meyer ein Element, das im ersten Schaubild fehlt: das Lernen auf den Marktplätzen der Schule mit Festen und Feiern, Projektpräsentationen, Wettbewerben und Internet. Für die Klausur ist die Trias von Terfloth und Bauersfeld die sichere Bezugsgröße, denn die Kompetenzerwartung spricht von den drei grundlegenden Unterrichtsformen. Meyers Schaubild lohnt sich trotzdem, weil es sichtbar macht, dass die Zuordnung des Lehrgangs eine Entscheidung und keine Selbstverständlichkeit ist.",
       "musterVarianten": {
@@ -1266,61 +1304,989 @@
       "quelle": "folie-unterrichtsformen-7",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "vergleichen",
+          "rolle": "positionA",
+          "auftrag": "Welche drei Grundformen Terfloth und Bauersfeld nennen, mit ihren Variationen",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "rolle",
+          "satzanfang": "Terfloth und Bauersfeld unterscheiden …"
+        },
+        {
+          "operator": "vergleichen",
+          "rolle": "positionB",
+          "auftrag": "Welche drei Säulen Hilbert Meyer dagegen ansetzt und wie er sie charakterisiert",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "rolle",
+          "satzanfang": "Hilbert Meyer setzt dagegen …"
+        },
+        {
+          "operator": "vergleichen",
+          "rolle": "unterschied",
+          "auftrag": "Die drei Unterschiede zwischen den beiden Schaubildern benennen",
+          "idx": [
+            6,
+            7,
+            8
+          ],
+          "form": "rolle",
+          "satzanfang": "Die beiden Schaubilder unterscheiden sich darin, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "belegen",
+          "auftrag": "Welches der beiden Schaubilder in der Klausur die sichere Referenz ist",
+          "idx": [
+            9
+          ],
+          "form": "rolle",
+          "satzanfang": "Für die Klausur heißt das, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "entfalten",
+          "auftrag": "Was beide Modelle trotz der Unterschiede teilen",
+          "idx": [
+            10
+          ],
+          "form": "rolle",
+          "satzanfang": "Gemeinsam ist beiden Modellen, dass …"
+        }
+      ],
       "hinweise": [
         [
-          "Erstes Schaubild: Wer nennt welche drei Formen?",
-          "Die Dreiergruppe von Folie 6, mit Quelle",
-          "Modell eins: drei Grundformen benennen"
+          "Erste Grundform des ersten Schaubilds: jede:r arbeitet fuer sich",
+          "Acht Variationen haengen hier dran, dazu Autorenpaar und Seitenzahl",
+          "Die laengste Methodenliste - von frei bis unterwegs"
         ],
         [
-          "Acht Methoden der Einzelform aufzaehlen",
-          "Was faellt alles unter die erste Grundform?",
-          "Die lange Liste: von frei bis unterwegs"
+          "Zweite Grundform: hier wird miteinander erarbeitet",
+          "Denk an Buehne, Zukunft, Feiern und gemeinsame Fahrten",
+          "Fuenf Variationen, alle mit mehreren Beteiligten"
         ],
         [
-          "Fuenf Methoden der Miteinander-Form",
-          "Was gehoert zur zweiten Grundform?",
-          "Denk an Buehne, Zukunft und Feiern"
+          "Dritte Grundform: alle zugleich am selben Gegenstand",
+          "Hier steckt der Lehrgang noch als Unterpunkt drin",
+          "Fuenf Variationen, darunter Kurse und Vortragen vor der Klasse"
         ],
         [
-          "Fuenf Methoden der Alle-zugleich-Form",
-          "Was steht unter der dritten Grundform?",
-          "Hier taucht der Lehrgang als Unterpunkt auf"
+          "Erste Saeule des zweiten Schaubilds: Wer steuert hier am meisten selbst?",
+          "Welche Methode steht bei Meyer im Zentrum dieser Saeule?",
+          "Denk an allein oder zu zweit statt an eine grosse Runde"
         ],
         [
-          "Zweites Schaubild: gleiche Anzahl, andere Aufteilung",
-          "Meyers Saeulen mit ihren jeweiligen Kernen",
-          "Modell zwei: Was traegt hier das Dach?"
+          "Zweite Saeule: die Form, die im ersten Schaubild keine eigene ist",
+          "Wer lenkt hier stark, und wie sitzt die Klasse dabei?",
+          "Wie hoch ist hier der Anteil, den die Lehrperson steuert?"
         ],
         [
-          "Zu jeder Saeule Lenkung und Sozialform beschreiben",
-          "Wie charakterisiert Meyer die drei knapp?",
-          "Merkmale je Saeule: Selbstorganisation, Lenkung, Gruppe"
+          "Dritte Saeule: Welche Methode traegt hier den Kern?",
+          "Worueber einigt man sich hier vorher miteinander?",
+          "Nicht allein und nicht von vorn gelenkt - wie dann?"
         ],
         [
-          "Erster Unterschied: Wo steht der Lehrgang jeweils?",
-          "Eine Methode wandert vom Unterpunkt zur eigenen Saeule",
-          "Unterordnung versus Eigenstaendigkeit einer Form"
+          "Erster Unterschied: Wo sitzt der Lehrgang jeweils?",
+          "Eine Methode wandert vom Unterpunkt zur eigenstaendigen Form",
+          "Untergeordnet im einen Bild, tragend im anderen"
         ],
         [
-          "Zweiter Unterschied: Grundform oder Dach?",
-          "Wo sitzt das Gemeinsame in beiden Bildern?",
-          "Bei einem Modell liegt es ueber allem"
+          "Zweiter Unterschied: einmal Grundform, einmal Dach",
+          "Wo sitzt das Gemeinsame in den beiden Bildern?",
+          "Denk an den Bogen oben, mit Konferenz und Kreis am Morgen"
         ],
         [
-          "Meyers Extra-Element am unteren Rand",
-          "Was zeigt nur das zweite Schaubild?",
-          "Denk an Feste, Wettbewerbe und Praesentationen"
+          "Dritter Unterschied: ein Element steht nur im zweiten Schaubild",
+          "Der untere Bogen - denk an Oeffentlichkeit und Schulleben",
+          "Vier Beispiele: vom Fest bis zum Netz"
         ],
         [
-          "Welches Schaubild ist die sichere Referenz? Warum?",
-          "Ein Hinweis zur Klausurtauglichkeit beider Modelle",
-          "Nicht vermischen: eines passt zur Kompetenzerwartung"
+          "Welches der beiden Bilder ist fuer die Klausur die sichere Bank?",
+          "Ein Blick auf die Kompetenzerwartung entscheidet die Frage",
+          "Das zweite Bild kennen, aber getrennt halten"
         ],
         [
-          "Zum Schluss: Was teilen beide Modelle?",
-          "Die Uebereinstimmung trotz aller Unterschiede",
-          "Beide gruppieren Methoden, statt sie nur zu listen"
+          "Zum Schluss: Was haben beide Modelle trotz allem gemeinsam?",
+          "Zwei der drei Formen tauchen in beiden Bildern auf",
+          "Beide sortieren Methoden unter Oberbegriffe, statt bloss aufzulisten"
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-1",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "afb": 1,
+      "frage": "Ein Lehrgang läuft in vier Phasen ab. Nennen Sie der Reihe nach, was die Lernenden am Ende jeder einzelnen Phase erreicht haben sollen.",
+      "stichpunkte": [
+        "1. Phase: informiert, motiviert und lernbereit; Erkenntnisse notiert",
+        "2. Phase: haben die Handlung beobachtet und Rückfragen gestellt",
+        "3. Phase: machen nach und üben ein; die Lehrkraft hilft und erklärt",
+        "4. Phase: eigenständiger Transfer auf Neues, Ziel flexible Anwendung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Für jede der vier Phasen das angestrebte Ergebnis, in ihrer Reihenfolge",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Ein Lehrgang läuft in vier Phasen ab, und zu jeder Phase gehört ein angestrebtes Ergebnis. Nach der Eröffnungs- und Informationsphase sind die Lernenden über die Zielstellung des Lehrgangs und der Aufgabe informiert, sie kennen das Verfahren sowie die Qualitätskriterien zur sachgerechten Aufgabenlösung, sie sind motiviert und lernbereit und dokumentieren zentrale Erkenntnisse. Nach der Demonstrationsphase haben sie die praktischen Handlungen beobachtet, die ihnen vorgemacht wurden, und ihre Rückfragen gestellt. Nach der Übungsphase haben sie die praktische Handlung nachgemacht und eingeübt; die Lehrkraft hat dabei geholfen, beobachtet und bei Bedarf wiederholende Erläuterungen gegeben. Am Ende der Anwendungsphase steht die eigenständige Anwendung und Reflexion der erlernten Kenntnisse, Fertigkeiten und Ausführungsqualität beim Transfer auf neue Werkstoffe oder Fertigungsaufgaben, mit dem Ziel, das Gelernte flexibel anwenden zu können.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Ein Lehrgang hat vier Phasen. Zu jeder Phase gehört ein Ziel. Das Ziel sagt: Was soll am Ende erreicht sein?\n\n1. Eröffnungs- und Informationsphase. Am Ende wissen die Lernenden, worum es geht. Sie kennen das Vorgehen. Sie wissen auch, wann die Arbeit gut gemacht ist. Sie sind bereit anzufangen. Wichtiges schreiben sie auf.\n\n2. Demonstrationsphase. Demonstration heißt: etwas vormachen. Am Ende haben die Lernenden zugeschaut. Sie haben Fragen gestellt.\n\n3. Übungsphase. Am Ende haben die Lernenden es selbst nachgemacht und geübt. Die Lehrperson hat geholfen, zugesehen und noch einmal erklärt.\n\n4. Anwendungsphase. Am Ende können die Lernenden es auch bei einer neuen Aufgabe. Sie denken selbst darüber nach, wie gut es war. Das Ziel ist: Sie können es flexibel anwenden."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die vier Namen der Phasen und ihre Reihenfolge übst du schon in anderen Aufgaben - neu ist hier die dritte Spalte der Tabelle: was am Ende jeder Phase erreicht sein soll. Die Tabelle läuft über Folie 36 und Folie 37, in deinen Notizen über Notizen S. 31 und Notizen S. 32. Merkhilfe: informiert sein, zugesehen haben, nachgemacht haben, übertragen können. Wer den Sinn einer Phase hat, kann ihr Ergebnis meist selbst formulieren.",
+      "quelle": "folie-unterrichtsformen-36",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was steht am Ende dieser Phase im Kopf - und im Heft?",
+          "Zweierlei zugleich: Wissen ueber das Vorgehen und Lust darauf.",
+          "Auch die Massstaebe fuer gute Arbeit sind jetzt geklaert."
+        ],
+        [
+          "Am Ende hat die Gruppe vor allem zugeschaut.",
+          "Wer zusieht, darf auch nachfragen - genau das zaehlt hier.",
+          "Noch hat niemand selbst Hand angelegt."
+        ],
+        [
+          "Nachgemacht und wiederholt - und jemand steht daneben.",
+          "Wer hilft dabei, schaut zu und erklaert notfalls noch einmal?",
+          "Zwei Seiten zugleich: das eigene Tun und die Begleitung."
+        ],
+        [
+          "Das Gelernte laeuft jetzt bei etwas Neuem, ohne Anleitung.",
+          "Am Ende soll es sich biegen lassen, nicht nur einmal klappen.",
+          "Der letzte Schritt zielt auf Beweglichkeit im Koennen."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-2",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "afb": 1,
+      "frage": "Lehrgänge lassen sich danach unterscheiden, nach welcher Logik der Stoff aufgebaut ist. Nennen Sie fünf dieser Formen und beschreiben Sie jede in einem kurzen Satz.",
+      "stichpunkte": [
+        "Logisch-systematisch, Zerlegen in einander bedingende Elemente",
+        "Genetisch, chronologisch-entwickelnde Darstellung des Stoffes",
+        "Konzentrisch-erweiternd, vom Nahen zum Ferneren",
+        "Spiralcurriculum, ein Stoffelement kehrt in Stufen wieder",
+        "Additiver Lehrgang, Stoffe geordnet aneinandergereiht",
+        "Weitere: ganzheitlicher Ausgangspunkt, Aufbau vom Elementaren her"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Formen, jede mit einem kurzen Satz zur Aufbaulogik",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Die beiden übrigen Formen, falls sie dir noch einfallen",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Vorlesung unterscheidet sieben Formen von Lehrgängen danach, wie der Stoff aufgebaut wird. Die logisch-systematische Form zerteilt den Stoff im Sinne der Elementarisierung in Elemente, die einander bedingen; bei der Einführung in das technische Zeichnen werden zum Beispiel erst die Linienarten besprochen und dann die Symbole. Die genetische Form stellt den Stoff chronologisch-entwickelnd dar, etwa die Entwicklung des Automobils oder die Einführung des Geldes. Die konzentrisch-erweiternde Form geht vom Nahen zum Ferneren, also von der Stromversorgung eines einzelnen Geräts über das Haus bis zur Stadt. Beim ganzheitlichen Ausgangspunkt systematisiert sich die Lebenswelt selbst: Werkstatt, Garten oder Küche werden als Lebenswelt wahrgenommen und die fachlichen Aspekte daraus herausgestellt. Der Aufbau vom Elementaren her verdeutlicht das Ganze aus einem elementaren Baustein heraus, etwa die Elektrizität vom Stromkreis aus. Im Spiralcurriculum kehrt ein Stoffelement in ausgefalteten Stufen wieder, zum Beispiel Fertigungstechniken auf zunehmend komplexerem Niveau. Der additive Lehrgang schließlich reiht Stoffe in geordneter Form aneinander, etwa verschiedene Handwerkzeuge nacheinander.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Ein Lehrgang kann auf verschiedene Arten aufgebaut sein. Es gibt sieben Formen.\n\nLogisch-systematisch: Der Stoff wird in kleine Teile zerlegt. Ein Teil braucht den Teil davor. Beispiel: erst die Linien, dann die Zeichen beim technischen Zeichnen.\n\nGenetisch: Der Stoff wird nach der Zeit geordnet. Beispiel: die Geschichte des Autos.\n\nKonzentrisch-erweiternd: Man beginnt beim Nahen und geht zum Fernen. Beispiel: erst der Strom im Gerät, dann im Haus, dann in der Stadt.\n\nGanzheitlicher Ausgangspunkt: Man beginnt bei einem Ort aus dem Leben. Beispiel: die Küche oder der Garten.\n\nAufbau vom Elementaren her: Man beginnt beim kleinsten Baustein. Beispiel: der Stromkreis.\n\nSpiralcurriculum: Ein Thema kommt später noch einmal, aber schwerer.\n\nAdditiver Lehrgang: Additiv heißt: aneinandergereiht. Ein Thema kommt nach dem anderen. Beispiel: ein Werkzeug nach dem anderen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Tabelle mit den Formen läuft über Folie 39, Folie 40, Folie 41 und Folie 42, in deinen Notizen über Notizen S. 32 und Notizen S. 33. Fünf zu nennen reicht hier. Die Piktogramme sind die schnellste Merkhilfe: Treppe, verzweigtes Netz, konzentrische Kreise, Kreis mit Pfeilen, geschachtelte Quadrate, Spirale, Kette. Folie 38 sortiert Lehrgänge außerdem nach ihrer Ausrichtung - handwerklich-motorisch, kulturtechnisch, mathematisch; das ist eine zweite Einteilung und gehört nicht in dieselbe Liste.",
+      "quelle": "folie-unterrichtsformen-39",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ein Schritt setzt den vorigen voraus, wie Stufen einer Treppe.",
+          "Erst die Linienarten, dann die Symbole - so das Beispiel der Folie.",
+          "Die Form, bei der nichts uebersprungen werden kann."
+        ],
+        [
+          "Nach der Zeit geordnet, wie die Geschichte des Autos.",
+          "Es geht darum, wie etwas entstanden und gewachsen ist.",
+          "Der Name erinnert an Herkunft und Entstehung."
+        ],
+        [
+          "Kreise, die groesser werden: erst das Geraet, dann das Haus.",
+          "Vom eigenen Umfeld immer weiter nach aussen.",
+          "Das Piktogramm zeigt Ringe um einen Mittelpunkt."
+        ],
+        [
+          "Dasselbe Thema kommt spaeter noch einmal, aber schwerer.",
+          "Denk an eine Wendeltreppe: gleiche Richtung, hoehere Ebene.",
+          "Die Form, die Wiederholung mit Steigerung verbindet."
+        ],
+        [
+          "Ein Thema nach dem anderen, wie Perlen auf einer Schnur.",
+          "Die Teile bauen nicht aufeinander auf, sie reihen sich nur.",
+          "Denk an das Pluszeichen: immer noch eines dazu."
+        ],
+        [
+          "Zwei fehlen noch: eine startet mitten in der Lebenswelt.",
+          "Die andere beginnt beim kleinsten Baustein, etwa dem Stromkreis.",
+          "Kueche und Garten stehen fuer die eine, ein Bauteil fuer die andere."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-3",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Die Vorlesung begründet die Werkstattarbeit lerntheoretisch. Benennen Sie, auf welches Lernverständnis sie sich dabei stützt und wie die Lernenden zu ihren Kenntnissen kommen, und nennen Sie die drei Tätigkeiten, die dabei genannt werden.",
+      "stichpunkte": [
+        "Konstruktivistisches Verständnis von Lernen",
+        "Selbstständiger Kenntniserwerb durch eigene Forschungstätigkeit",
+        "Experimentieren, also die Frage Wenn A, dann B - stimmt das?",
+        "Freies Explorieren, also die Frage Was passiert, wenn?",
+        "Problemlösen, also die Frage Wie löse ich das Problem?"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst das Lernverständnis und der Weg zu den Kenntnissen",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die drei Tätigkeiten, mit denen geforscht wird",
+          "idx": [
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Werkstattarbeit stützt sich auf ein konstruktivistisches Verständnis von Lernen: Wissen wird den Schülerinnen und Schülern nicht übergeben, sondern von ihnen selbst aufgebaut. Daraus folgt die Möglichkeit eines selbstständigen Kenntniserwerbs durch die Forschungstätigkeit der Lernenden. Diese Forschungstätigkeit zeigt sich in drei Formen. Beim Experimentieren stellen die Lernenden eine Vermutung auf und prüfen sie: Wenn A, dann B, weil - stimmt das? Beim freien Explorieren probieren sie offen aus, ohne schon zu wissen, was herauskommt: Was passiert, wenn A, dann B? Beim Problemlösen gehen sie von einer Schwierigkeit aus und suchen einen Weg: Wie löse ich das Problem? Genau dafür braucht die Werkstatt ihre offenen Materialangebote.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Werkstattarbeit hat eine Begründung aus der Lerntheorie. Sie heißt Konstruktivismus. Das bedeutet: Wissen wird nicht einfach weitergegeben. Jedes Kind baut sein Wissen selbst auf. Deshalb dürfen die Kinder in der Werkstatt selbst forschen. Sie lernen Neues ohne Vortrag.\n\nDie Vorlesung nennt drei Arten von Forschen.\n\nExperimentieren: Das Kind hat eine Vermutung. Es prüft: Stimmt das?\n\nFreies Explorieren: Explorieren heißt: erkunden. Das Kind probiert einfach aus. Es fragt: Was passiert dann?\n\nProblemlösen: Es gibt eine Schwierigkeit. Das Kind sucht einen Weg. Es fragt: Wie löse ich das?"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 22, in deinen Notizen Notizen S. 27. Die drei Tätigkeiten stehen dort in Sprechblasen - das ist die schnellste Merkhilfe: eine Vermutung prüfen, offen ausprobieren, eine Schwierigkeit lösen. Der Kern ist das Wort konstruktivistisch: Wissen wird nicht übergeben, sondern selbst aufgebaut, und genau deshalb darf in der Werkstatt geforscht statt zugehört werden. Wer das hat, kann in AFB-II-Aufgaben begründen, warum die Werkstatt so und nicht anders eingerichtet ist.",
+      "quelle": "folie-unterrichtsformen-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wissen wird nicht ueberreicht, sondern von jedem selbst gebaut.",
+          "Eine Lerntheorie, deren Name ans Bauen erinnert.",
+          "Der Gegenentwurf zum Eintrichtern."
+        ],
+        [
+          "Die Kinder gehen vor wie kleine Forscherinnen und Forscher.",
+          "Sie erarbeiten sich den Stoff ohne Vortrag, aus eigenem Antrieb.",
+          "Kenntnisse entstehen hier durch Suchen, nicht durch Zuhoeren."
+        ],
+        [
+          "Eine Vermutung aufstellen und pruefen, ob sie haelt.",
+          "Die Taetigkeit mit einer Hypothese im Kopf.",
+          "In der Sprechblase steht ein Weil und ein Zweifel."
+        ],
+        [
+          "Offen ausprobieren, ohne vorher zu wissen, was herauskommt.",
+          "Erkunden ohne festes Ziel, einfach schauen, was geschieht.",
+          "Anders als bei der ersten Taetigkeit fehlt hier die Vermutung, die geprueft wird."
+        ],
+        [
+          "Es gibt eine Huerde, und ein Weg drumherum wird gesucht.",
+          "Die dritte Taetigkeit setzt bei einer Schwierigkeit an.",
+          "Hier steht am Anfang nicht die Neugier, sondern ein Hindernis."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-4",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Werkstattunterricht verschiebt Planungsentscheidungen zu den Lernenden. Nennen Sie fünf Entscheidungen, an denen sie nach Wiater beteiligt sind.",
+      "stichpunkte": [
+        "Auswahl der Lernaspekte innerhalb des Unterrichtsthemas",
+        "Formulierung der Lernchancen",
+        "Wahl des Lernweges",
+        "Beschaffung und Auswahl des Lernmaterials",
+        "Festlegung des zeitlichen Ablaufs und der Rhythmisierung",
+        "Weitere: wer mit wem zusammenarbeitet, Kontrolle der Ergebnisse"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Entscheidungen, an denen die Lernenden mitplanen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Die übrigen beiden Stellen der Aufzählung",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Der Werkstattunterricht bindet die Lernenden bereits bei der Planung ein. Sie wählen mit, welche Lernaspekte innerhalb des Unterrichtsthemas bearbeitet werden, und sie formulieren die Lernchancen mit, also das, was sich dabei lernen lässt. Sie entscheiden über den Lernweg, sie beschaffen und wählen das Lernmaterial mit aus, und sie legen den zeitlichen Ablauf und die Rhythmisierung des Unterrichts mit fest. Außerdem entscheiden sie mit, wer mit wem zusammenarbeitet, und sie sind an der Kontrolle der Lernergebnisse beteiligt. Das ist genau die Stelle, die in anderen Unterrichtsformen allein der Lehrperson gehört.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Im Werkstattunterricht planen die Kinder mit. Das ist ein wichtiges Merkmal. Sie entscheiden an mehreren Stellen mit.\n\nSie wählen mit, welcher Teil vom Thema bearbeitet wird.\n\nSie sagen mit, was man dabei lernen kann. Das heißt Lernchancen.\n\nSie wählen den Lernweg. Lernweg heißt: der Weg zum Ziel.\n\nSie suchen das Material mit aus und holen es.\n\nSie legen mit fest, wann was gemacht wird.\n\nSie entscheiden mit, wer mit wem arbeitet.\n\nSie prüfen die Ergebnisse mit.\n\nIn anderen Unterrichtsformen macht das alles die Lehrperson allein."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 20, in deinen Notizen Notizen S. 27. Der rechte Kasten der Folie zählt sieben Stellen auf, an denen Lernende mitplanen (vgl. Wiater 2008); fünf davon reichen für diese Aufgabe. Auf der Folie beginnt links außerdem eine zweite Aufzählung mit der gestalteten Lernumgebung - deren weitere Punkte sind im Original von einem Foto verdeckt und deshalb nicht zitierbar. Merkhilfe für die sieben: was, wozu, wie, womit, wann, mit wem, und wer prüft.",
+      "quelle": "folie-unterrichtsformen-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Welche Seite eines Themas ueberhaupt bearbeitet wird.",
+          "Das Thema steht schon fest, aber nicht jeder Teil davon.",
+          "Der erste Punkt betrifft den Zuschnitt des Stoffes."
+        ],
+        [
+          "Wozu soll das gut sein? Auch das wird mit den Kindern geklaert.",
+          "Es geht um das, was sich bei der Arbeit gewinnen laesst.",
+          "Der Begriff klingt nach Moeglichkeit, nicht nach Vorschrift."
+        ],
+        [
+          "Nicht nur das Ziel, auch der Weg dorthin ist waehlbar.",
+          "Zwei Kinder duerfen bei derselben Sache unterschiedlich vorgehen.",
+          "Es geht um die Route, nicht um das Material."
+        ],
+        [
+          "Womit gearbeitet wird - und wer es herbeischafft.",
+          "Denk an die offenen Regale: wer fuellt sie eigentlich?",
+          "Hier geht es um die Dinge, die auf dem Tisch landen."
+        ],
+        [
+          "Wann was drankommt und in welchem Takt der Tag laeuft.",
+          "Die Uhr und der Wechsel von Anspannung und Ruhe.",
+          "Zwei Aspekte derselben Sache: Reihenfolge und Rhythmus."
+        ],
+        [
+          "Zwei fehlen: die Sozialform und der Blick auf das Resultat.",
+          "Auch die Partnerwahl und das Pruefen am Schluss liegen mit bei ihnen.",
+          "Denk an Tischnachbarn und an den letzten Schritt jeder Arbeit."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-5",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt Grundregeln für das Üben zusammen. Nennen Sie fünf davon.",
+      "stichpunkte": [
+        "Üben muss zur Gewohnheit werden",
+        "Täglich 20-30 Minuten wirken besser als geblockte Phasen",
+        "Was dauerhaft sitzen soll, muss überlernt werden",
+        "Verstanden werden muss der Stoff vor dem Üben",
+        "Fehler beim Üben sofort erkennen und beheben",
+        "Weitere: Fortschritt motiviert, Notwendigkeit, Ordnung, Vielfalt"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Regeln, jede in einem kurzen Satz",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Was die Aufzählung außerdem noch nennt",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Vorlesung stellt Grundregeln für das Üben zusammen und lässt die Aufzählung am Ende offen. Üben muss zur Gewohnheit werden. Tägliches Üben für zwanzig bis dreißig Minuten ist viel effektiver als geblockte Übungsphasen. Nur wer täglich übt, erlebt auch, dass er Fortschritte macht, und wird dadurch motiviert. Üben ist keine Frage des Interesses, sondern eine Notwendigkeit. Was auf Dauer sitzen soll, muss überlernt werden. Was geübt werden soll, muss vorher verstanden werden. Je besser ein Stoff geordnet und gegliedert ist, desto leichter kann man ihn lernen und behalten. Je vielfältiger die Aufgaben bearbeitet werden, desto sicherer ist man in ihnen. Und Fehler beim Üben muss man sofort erkennen und beheben.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt Regeln für gutes Üben. Die Liste hört offen auf.\n\nÜben soll eine Gewohnheit werden.\n\nJeden Tag 20 bis 30 Minuten üben ist besser. Alles an einem Tag üben bringt weniger.\n\nWer jeden Tag übt, merkt seine Fortschritte. Das macht Mut.\n\nÜben ist keine Frage von Lust. Üben ist nötig.\n\nWas lange bleiben soll, muss man überlernen. Überlernen heißt: weiterüben, obwohl es schon klappt.\n\nMan muss den Stoff erst verstehen. Danach übt man ihn.\n\nEin gut geordneter Stoff ist leichter zu lernen.\n\nViele verschiedene Aufgaben machen sicher.\n\nFehler soll man sofort merken und verbessern."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Regeln stehen auf Folie 34, in deinen Notizen auf Notizen S. 30 - beide tragen dieselben neun Regeln, und die Aufzählung endet offen mit drei Punkten. Fünf zu nennen reicht für diese Aufgabe. Die Folie nennt als Quelle: vgl. Stiehler 2006, zitiert nach Fischer 2008, 188. Merkhilfe entlang der Fragen: wie oft, wie lange, warum überhaupt, wie tief, in welcher Reihenfolge, und was mit Fehlern geschieht. Nebenbei beschreiben diese Regeln ziemlich genau das, was du hier gerade tust.",
+      "quelle": "folie-unterrichtsformen-34",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "waehle": 5,
+      "hinweise": [
+        [
+          "Es soll so selbstverstaendlich werden wie Zaehneputzen.",
+          "Nicht Ausnahme, sondern fester Teil des Alltags.",
+          "Die erste Regel zielt darauf, dass es ohne Ueberwindung geschieht."
+        ],
+        [
+          "Lieber jeden Tag ein bisschen als alles an einem Nachmittag.",
+          "Verteilen schlaegt Sammeln.",
+          "Die Regel nennt eine kurze Spanne pro Tag und eine klare Richtung."
+        ],
+        [
+          "Aufhoeren, sobald es klappt, reicht nicht.",
+          "Weiter ueben, obwohl es schon sitzt - damit es in einem Jahr noch da ist.",
+          "Es geht um die Tiefe, nicht um die Haeufigkeit."
+        ],
+        [
+          "Erst der Sinn, dann die Wiederholung.",
+          "Wer nur nachplappert, uebt das Falsche ein.",
+          "Diese Regel legt eine Reihenfolge fest."
+        ],
+        [
+          "Was sich einschleift, geht spaeter schwer wieder weg.",
+          "Nicht bis morgen warten, sondern gleich richtigstellen.",
+          "Die Regel richtet sich gegen das Einueben von Falschem."
+        ],
+        [
+          "Vier fehlen noch: eine belohnt das Dranbleiben mit sichtbarem Erfolg.",
+          "Eine sagt, es gehe nicht um Lust, sondern um Muessen.",
+          "Zwei drehen sich um Gliederung des Stoffes und Abwechslung der Aufgaben."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-6",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Beschreiben Sie das Lernen an Stationen: Benennen Sie die drei Merkmale, die diese Methode kennzeichnen, und nennen Sie die vier Phasen, in denen sie abläuft.",
+      "stichpunkte": [
+        "Auf ein im Lehrplan festgelegtes Thema konzentriert",
+        "In Teilthemen gegliedert",
+        "Ein Laufzettel dient als Orientierung",
+        "1. Anfangsgespräch",
+        "2. Rundgang",
+        "3. Eigentliche Arbeit an den Stationen",
+        "4. Schlussgespräch im Plenum"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die drei Merkmale, die diese Methode kennzeichnen",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die vier Phasen des Ablaufs in der richtigen Reihenfolge",
+          "idx": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Lernen an Stationen ist auf ein im Lehrplan festgelegtes Thema konzentriert, dieses Thema wird in Teilthemen gegliedert, und ein Laufzettel dient den Schülerinnen und Schülern als Orientierung. Der Ablauf gliedert sich in vier Phasen. Am Anfang steht das Anfangsgespräch, in dem die Lernziele gemeinsam geklärt werden. Es folgt der Rundgang, bei dem die Gruppe die einzelnen Stationen einmal in Augenschein nimmt. Danach kommt die eigentliche Arbeit an den Stationen, die sich rings um das gemeinsame Thema im Raum verteilen. Den Abschluss bildet das Schlussgespräch im Plenum. Die Methode trägt auch die Namen Lernstraße, Übungszirkel, Lernparcours und Lernzirkel.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Beim Lernen an Stationen gibt es ein Thema. Das Thema steht im Lehrplan. Es wird in kleine Teilthemen zerlegt. Jedes Teilthema ist eine Station. Jedes Kind hat einen Laufzettel. Der Laufzettel zeigt, was schon geschafft ist.\n\nDer Ablauf hat vier Teile.\n\n1. Anfangsgespräch: Alle sitzen zusammen. Die Ziele werden besprochen.\n\n2. Rundgang: Die Gruppe schaut sich alle Stationen einmal an.\n\n3. Arbeit an den Stationen: Jetzt wird gearbeitet. Die Stationen liegen rund um das Thema im Raum verteilt.\n\n4. Schlussgespräch: Am Ende kommen wieder alle zusammen. Das heißt Plenum.\n\nDie Methode hat auch andere Namen. Zum Beispiel Lernstraße oder Lernzirkel."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die drei Merkmale stehen auf Folie 15, die Phasenkette auf Folie 16, in deinen Notizen auf Notizen S. 25 und Notizen S. 26. Merkhilfe für den Ablauf: reden, gucken, arbeiten, wieder reden. Wie lange die einzelnen Phasen dauern, sagt die Vorlesung nicht - schreib dazu also nichts. Auf Folie 15 stehen außerdem vier Synonyme - Lernstraße, Übungszirkel, Lernparcours, Lernzirkel - und das Beispiel Herbstfrüchte mit sieben Stationen; beides ist die beste Ergänzung, wenn eine Aufgabe mehr als die Merkmale verlangt. Den Ablauf brauchst du später in den Aufgaben zur Aufgabenverteilung wieder, dort aber nur als Nebensatz - hier holst du ihn einmal frei aus dem Kopf.",
+      "quelle": "folie-unterrichtsformen-15",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das Thema kommt nicht spontan aus der Gruppe.",
+          "Woher stammt es? Aus einem amtlichen Dokument.",
+          "Ein Merkmal, das die Freiheit bei der Themenwahl begrenzt."
+        ],
+        [
+          "Das grosse Ganze wird in Haeppchen zerlegt.",
+          "Jede Station bekommt ihren eigenen Ausschnitt.",
+          "Zwischen dem Thema und der einzelnen Station liegt dieser Schritt."
+        ],
+        [
+          "Ein Zettel begleitet das Kind von Angebot zu Angebot.",
+          "Woran sieht ein Kind, was es schon geschafft hat?",
+          "Das Hilfsmittel, das den Ueberblick sichert."
+        ],
+        [
+          "Alles beginnt im Sitzkreis, mit einem Plakat zu den Zielen.",
+          "Zuerst wird geredet, bevor sich jemand bewegt.",
+          "Die Phase, in der alle noch beieinander sitzen."
+        ],
+        [
+          "Bevor gearbeitet wird, sieht die Gruppe alle Angebote einmal an.",
+          "Ein Gang durch den Raum, wie eine kleine Fuehrung.",
+          "Die kurze Phase zwischen Reden und Arbeiten."
+        ],
+        [
+          "Jetzt wird wirklich gewerkelt.",
+          "Die Phase, um die es der ganzen Methode geht.",
+          "Alle verteilen sich auf die Angebote im Raum."
+        ],
+        [
+          "Am Ende kommen wieder alle zusammen.",
+          "Der Kreis schliesst sich dort, wo er begonnen hat.",
+          "Zum Abschluss wird noch einmal miteinander gesprochen."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-7",
+      "unterthema": "Kritik & Vorteile",
+      "afb": 1,
+      "frage": "Die Vorlesung führt eine Reihe von Vorteilen offenen Unterrichts auf. Nennen Sie fünf davon.",
+      "stichpunkte": [
+        "Entscheidungsprozesse werden angebahnt und ermöglicht",
+        "Wahlmöglichkeiten bei Material, Vorgehen, Partner, Reihenfolge",
+        "Das Auswahlverhalten ist auf ähnliche Situationen übertragbar",
+        "Selbstkontrolle der Arbeitsergebnisse",
+        "Selbstvertrauen und Selbstwert werden gestärkt",
+        "Weitere: alle Entwicklungsbereiche, Zeitplanung, Differenzierung"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Vorteile, die die Vorlesung dem offenen Unterricht zuschreibt",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Was die Liste außerdem noch aufführt",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Offener Unterricht führt Schülerinnen und Schüler an Entscheidungsprozesse heran und ermöglicht sie ihnen. Er eröffnet Wahlmöglichkeiten bei den Materialien, bei der Herangehensweise, bei den Arbeitspartnern und bei der Reihenfolge der Bearbeitung. Das dabei geübte Auswahlverhalten lässt sich auf andere, ähnliche Situationen übertragen. Alle Entwicklungsbereiche können angesprochen werden, also Wahrnehmung, Motorik, Kognition, Emotionalität, Sozialverhalten sowie Kommunikation und Sprache. Die Arbeitsergebnisse können selbst kontrolliert werden, und die Zeitplanung verbessert sich. Selbstvertrauen und Selbstwert der Schülerinnen und Schüler werden gestärkt. Schließlich lässt sich innere Differenzierung umsetzen, etwa über Bearbeitungsniveau, Methoden und Inhalt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Offener Unterricht hat mehrere Vorteile.\n\nDie Kinder lernen, Entscheidungen zu treffen. Das wird hier geübt.\n\nSie können viel selbst wählen: das Material, den Weg, den Partner und die Reihenfolge.\n\nDas Wählen hilft ihnen später auch in anderen Situationen. Das nennt man Transfer.\n\nAlle Entwicklungsbereiche können angesprochen werden. Zum Beispiel Wahrnehmung, Bewegung, Denken, Gefühle, Sozialverhalten und Sprache.\n\nDie Kinder können ihre Ergebnisse selbst prüfen.\n\nSie lernen, sich die Zeit besser einzuteilen.\n\nIhr Selbstvertrauen wird stärker.\n\nDie Lehrperson kann jedem Kind eine passende Aufgabe geben. Das nennt man innere Differenzierung."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Liste steht auf Folie 27, in deinen Notizen auf Notizen S. 28 und Notizen S. 29. Fünf zu nennen reicht für diese Aufgabe. Das ist die Vorratsliste für jede Bewertungsaufgabe: Die Kompetenzerwartung verlangt ausdrücklich, die Potentiale der Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung zu bewerten - dafür brauchst du diese Punkte und die Kritikpunkte von Folie 28 nebeneinander. Kleine Stolperstelle: Auf der Folie steht Sozialerhalten, gemeint ist der Entwicklungsbereich Sozialverhalten.",
+      "quelle": "folie-unterrichtsformen-27",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Waehlen will gelernt sein, und genau das wird hier geuebt.",
+          "Der erste Punkt dreht sich ums Sich-Entscheiden.",
+          "Es geht um einen Vorgang, nicht um ein Ergebnis."
+        ],
+        [
+          "Vier Dinge stehen zur Wahl, vom Werkzeug bis zur Sitznachbarin.",
+          "Womit, wie, mit wem und in welcher Ordnung?",
+          "Eine Aufzaehlung dessen, was frei bestimmt werden kann."
+        ],
+        [
+          "Was hier geuebt wird, hilft spaeter auch ausserhalb der Schule.",
+          "Ein Stichwort aus der Lernpsychologie beginnt mit T.",
+          "Der Vorteil reicht ueber die konkrete Stunde hinaus."
+        ],
+        [
+          "Wer merkt, ob es stimmt? Nicht immer die Lehrkraft.",
+          "Das Material selbst kann die Rueckmeldung geben.",
+          "Ein Punkt, der die Lehrperson entlastet."
+        ],
+        [
+          "Wer selbst entscheidet und es schafft, traut sich mehr zu.",
+          "Hier waechst etwas in der Person, nicht im Wissen.",
+          "Zwei verwandte Begriffe aus der Persoenlichkeitsentwicklung."
+        ],
+        [
+          "Drei fehlen: von Wahrnehmung bis Sprache, die Uhr, das Niveau.",
+          "Denk an die Bereiche, die ein Kind insgesamt ausmachen.",
+          "Auch das Einteilen der Zeit und das innere Differenzieren zaehlen."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-8",
+      "unterthema": "Kritik & Vorteile",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt Merkmale geschlossenen und offenen Unterrichts paarweise gegenüber. Nennen Sie fünf dieser Merkmalspaare, jeweils zuerst das Merkmal des geschlossenen und dann das des offenen Unterrichts.",
+      "stichpunkte": [
+        "frontal – differenzierend",
+        "lehrerzentriert – schülerzentriert",
+        "lernzielorientiert – personen- und prozessbezogen",
+        "Kleinschrittigkeit – Langphasigkeit",
+        "einseitig kognitiv – ganzheitlich",
+        "Weitere: formell/informell, rezeptiv/aktiv, Wissen/Fähigkeiten"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Paare, links geschlossen und rechts offen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Weitere Paare aus derselben Tabelle",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Gegenüberstellung ordnet jedem Merkmal des geschlossenen Unterrichts ein Gegenstück des offenen zu. Geschlossener Unterricht ist frontal, offener differenzierend. Geschlossener Unterricht ist formell, offener informell. Geschlossener Unterricht ist lehrerzentriert, offener schülerzentriert. Geschlossener Unterricht ist rezeptiv, offener aktiv. Geschlossener Unterricht ist lernzielorientiert, offener personen- und prozessbezogen. Geschlossener Unterricht informiert, offener lässt entdecken. Geschlossener Unterricht setzt auf Systematik, offener lässt Spontanität zu. Geschlossener Unterricht arbeitet mit Feinstrukturierung und Kleinschrittigkeit, offener mit Grobstrukturierung und Langphasigkeit. Geschlossener Unterricht zielt auf Qualifizierung und Wissen und bleibt einseitig kognitiv, offener zielt auf Sozialisierung und Fähigkeiten und ist ganzheitlich.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt eine Tabelle mit zwei Spalten. Links steht der geschlossene Unterricht. Rechts steht der offene Unterricht. Immer zwei Wörter gehören zusammen.\n\nfrontal - differenzierend\n\nformell - informell\n\nlehrerzentriert - schülerzentriert. Das heißt: Die Lehrperson steht im Mittelpunkt, oder das Kind steht im Mittelpunkt.\n\nrezeptiv - aktiv. Rezeptiv heißt: nur aufnehmen.\n\nlernzielorientiert - personen- und prozessbezogen\n\ninformierend - entdecken lassen\n\nSystematik - Spontanität\n\nFeinstrukturierung - Grobstrukturierung\n\nKleinschrittigkeit - Langphasigkeit\n\nQualifizierung - Sozialisierung\n\neinseitig kognitiv - ganzheitlich. Kognitiv heißt: das Denken betreffend.\n\nWissen - Fähigkeiten"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Tabelle steht auf Folie 32, in deinen Notizen auf Notizen S. 30. Zwölf Paare stehen dort, fünf reichen für diese Aufgabe. Die Quellenangabe kennt nur die Folie: vgl. Forster 2004b, 81, zitiert nach Fischer 2008, 173. Merkhilfe: Die linke Spalte plant alles vor und zieht es eng, die rechte lässt Raum und begleitet. Wer ein Paar hat, kann das Gegenstück meist erschließen - das ist der schnellste Weg durch diese Tabelle.",
+      "quelle": "folie-unterrichtsformen-32",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Alle schauen nach vorn - oder eben nicht alle dasselbe.",
+          "Das erste Paar beschreibt die Ausrichtung im Raum.",
+          "Ein Wort kennst du aus dem Ausdruck Unterricht von vorn."
+        ],
+        [
+          "Wer steht in der Mitte? Zwei Antworten, ein Wortbaustein.",
+          "Dasselbe Grundwort, davor zwei verschiedene Personengruppen.",
+          "Es geht darum, um wen sich die Stunde dreht."
+        ],
+        [
+          "Zaehlt das vorher gesetzte Ziel oder der Weg des Kindes?",
+          "Ein Paar zum Massstab, an dem Erfolg gemessen wird.",
+          "Links das feste Ergebnis, rechts der Mensch und sein Weg."
+        ],
+        [
+          "Viele winzige Schritte gegen wenige lange Strecken.",
+          "Ein Paar zur Groesse der Portionen.",
+          "Es geht um die Laenge der Abschnitte, nicht um den Inhalt."
+        ],
+        [
+          "Nur der Kopf gegen der ganze Mensch.",
+          "Das Paar, das nach dem Umfang der Bildung fragt.",
+          "Links zaehlt allein das Denken, rechts zaehlt alles."
+        ],
+        [
+          "Drei Paare fehlen noch: Form, Haltung und Ertrag.",
+          "Denk an Steifheit gegen Lockerheit und an Aufnehmen gegen Handeln.",
+          "Am Ende der Tabelle steht das, was am Schluss herauskommt."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb1-9",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 1,
+      "frage": "Bei der Freiarbeit (Fischer 2008) entscheiden die Lernenden in sechs Bereichen selbst. Nennen Sie diese sechs Bereiche.",
+      "stichpunkte": [
+        "Ziele",
+        "Inhalte",
+        "Methodische Arbeitsformen",
+        "Mögliche Partner",
+        "Arbeitszeit",
+        "Arbeitsmittel"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die sechs Bereiche der Wahlfreiheit",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Freiarbeit ist ein möglichst umfassend selbstbestimmter Lernprozess: Die Schülerinnen und Schüler lernen und arbeiten selbstverantwortlich. Die Wahlfreiheit erstreckt sich dabei auf sechs Bereiche. Sie wählen die Ziele, auf die sie hinarbeiten, und die Inhalte, mit denen sie sich beschäftigen. Sie entscheiden über die methodischen Arbeitsformen, also darüber, auf welche Art sie vorgehen, und über mögliche Partner, also darüber, ob sie allein, zu zweit oder in einer Gruppe arbeiten. Schließlich bestimmen sie die Arbeitszeit und die Arbeitsmittel selbst. Grenzenlos ist diese Freiheit nicht: Sie wird begrenzt durch vereinbarte Verhaltens- und Umgangsregeln, durch die Anforderungen, die in der Logik der Sache liegen, durch eine Begrenzung des Materialangebotes und durch die Zielsetzungen der Schülerinnen und Schüler selbst.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Bei der Freiarbeit dürfen die Kinder viel selbst bestimmen. Es gibt sechs Bereiche.\n\nZiele: Worauf arbeite ich hin?\n\nInhalte: Womit beschäftige ich mich?\n\nMethodische Arbeitsformen: Auf welche Art arbeite ich?\n\nMögliche Partner: Arbeite ich allein oder mit anderen?\n\nArbeitszeit: Wann arbeite ich, und wie lange?\n\nArbeitsmittel: Womit arbeite ich?\n\nDie Freiheit hat aber Grenzen. Es gibt vereinbarte Regeln. Die Sache selbst stellt Anforderungen. Das Material ist begrenzt. Und die Kinder setzen sich selbst Ziele."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 24, in deinen Notizen Notizen S. 28. Die sechs Bereiche stehen dort eingerückt in der linken Spalte. Dazu gehört immer die rechte Spalte derselben Folie: Freiarbeit ist begrenzt durch vereinbarte Verhaltens- und Umgangsregeln, durch die Logik der Sache, durch das Materialangebot und durch die eigenen Zielsetzungen. Merkhilfe für die sechs Fragen: wozu, was, wie, mit wem, wann, womit. In der Einführungsfolge von Folie 28 steht die Freiarbeit am Ende, nicht am Anfang.",
+      "quelle": "folie-unterrichtsformen-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wohin soll es gehen? Auch das darf mitbestimmt werden.",
+          "Der erste Bereich fragt nach dem Wozu.",
+          "Nicht der Weg, sondern der Punkt am Horizont."
+        ],
+        [
+          "Was steht auf dem Programm? Der Stoff, nicht das Werkzeug.",
+          "Nicht das Wie, sondern das Was.",
+          "Das Thema, an dem gearbeitet wird - noch nicht die Art."
+        ],
+        [
+          "Auf welche Art gearbeitet wird.",
+          "Der Weg zum Ziel, nicht das Ziel selbst.",
+          "Denk an Lesen, Bauen, Malen - alles moeglich."
+        ],
+        [
+          "Allein, zu zweit oder in der Gruppe?",
+          "Es geht um die Menschen mit am Tisch.",
+          "Die Sozialform darf hier selbst gewaehlt werden."
+        ],
+        [
+          "Wann gearbeitet wird und wie lange.",
+          "Die Uhr gehoert hier auch den Lernenden.",
+          "Ein Bereich, der mit Dauer und Zeitpunkt zu tun hat."
+        ],
+        [
+          "Womit gearbeitet wird, also das Material aus dem Regal.",
+          "Der Gegenstand, der in der Hand liegt.",
+          "Denk an Karten, Kaesten und Spiele im offenen Angebot."
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb2-1",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 2,
+      "frage": "Die Tagesplanarbeit steht in der Einführungsreihenfolge offener Formen vor der Wochenplanarbeit. Vergleichen Sie die beiden Methoden: Wodurch sind sie jeweils gekennzeichnet, und was ändert sich beim Übergang von der einen zur anderen in Orientierung, Planung, Ausführung und Kontrolle?",
+      "stichpunkte": [
+        "Vergleichspunkt 1: Der Tagesplan gibt Aufgaben für einen Tag, die Reihenfolge wählen die Schüler:innen selbst; unterteilt in Pflicht- und Wahlaufgaben, ergänzbar um Kontroll- und Fertigspalte",
+        "Vergleichspunkt 2: Der Wochenplan verteilt eine erhöhte Aufgabenzahl über die Woche und stellt damit höhere Anforderungen an die Zeiteinteilung",
+        "Vergleichspunkt 3: Orientierung beim Tagesplan an einer einzelnen Aufgabe und an kurzen Zeitmarken wie Uhr oder Sanduhr, beim Wochenplan an mehreren Aufgaben und an Kalender und Stundenplan",
+        "Vergleichspunkt 4: Planung im Tagesplan als Wahl eines Inhalts mit Arbeitsmittel und Arbeitszeit, im Wochenplan als Wahl mehrerer Inhalte und ihre Zuordnung zu Bearbeitungszeiten",
+        "Vergleichspunkt 5: Ausgeführt wird in beiden Fällen gleich, mit bekannten und beherrschten Verfahren; in der Kontrolle kommt beim Wochenplan der fixierte Plan als zusätzliches Prüfmittel hinzu",
+        "Vergleichspunkt 6: Das Zeitmanagement wächst vom kurzfristigen zum flexibel mittelfristigen, dazu kommt selbstgewählte Komplexität - deshalb folgt der Wochenplan erst nach dem Tagesplan"
+      ],
+      "muster": "Bei der Tagesplanarbeit erhalten die Schüler:innen Aufgaben, die sie innerhalb eines Tages selbstständig bearbeiten sollen. Die Reihenfolge legen sie selbst fest, und die Aufgaben sind in Pflicht- und Wahlaufgaben unterteilt; der Plan lässt sich um eine Kontrollspalte und eine Fertigspalte ergänzen. Die Wochenplanarbeit verteilt eine deutlich höhere Zahl von Aufgaben über die Woche, und mit der erhöhten Aufgabenzahl steigen die Anforderungen an die Zeiteinteilung. Der Vergleich der Lernmöglichkeiten macht den Unterschied genauer sichtbar. In der Orientierung richtet sich der Tagesplan auf eine einzelne Lern- oder Übungsaufgabe und auf kürzere Zeitabläufe, die über Uhr, Klingelzeichen oder Sanduhr fassbar werden; der Wochenplan orientiert an mehreren Aufgaben und an längeren Zeitabläufen, also an Kalender und Wochenstundenplan. In der Planung wählen die Schüler:innen beim Tagesplan einen Arbeitsinhalt samt Arbeitsmittel aus und legen die Arbeitszeit fest, beim Wochenplan wählen sie mehrere Arbeitsinhalte und ordnen sie Bearbeitungszeiten zu. Die Ausführung ist in beiden Fällen dieselbe, nämlich die Anwendung bekannter und beherrschter Verfahren. In der Kontrolle steht beiderseits die Fremdkontrolle durch die Lehrperson neben der Selbstkontrolle am Arbeitsmittel; beim Wochenplan kommt der fixierte Arbeitsplan als zusätzliches Prüfmittel hinzu, an dem sich ablesen lässt, ob eine Aufgabe zur vorgesehenen Zeit bearbeitet wurde. Insgesamt wächst damit das Zeitmanagement vom kurzfristigen zum flexiblen mittelfristigen, und die Komplexität wird selbst gewählt. Genau deshalb steht die Wochenplanarbeit in der Einführungsreihenfolge offener Formen erst nach der Tagesplanarbeit.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Tagesplan ist ein Plan für einen Tag. Die Schülerinnen und Schüler bekommen Aufgaben. Diese Aufgaben sollen sie an diesem Tag allein schaffen. Sie entscheiden selbst, was sie zuerst machen. Es gibt Pflicht-Aufgaben und Wahl-Aufgaben. Pflicht heißt: Das muss sein. Wahl heißt: Das darf ich aussuchen. Der Plan kann noch zwei Spalten haben: eine Spalte zum Kontrollieren und eine Spalte für alles, was fertig ist.\n\nDer Wochenplan gilt für eine ganze Woche. Er hat mehr Aufgaben. Mehr Aufgaben heißt: Die Zeit einteilen wird schwerer.\n\nSo unterscheiden sich die beiden Pläne:\n\n1. Orientierung. Beim Tagesplan geht es um eine Aufgabe. Die Zeit sieht man an der Uhr, am Klingelzeichen oder an der Sanduhr. Beim Wochenplan geht es um mehrere Aufgaben. Die Zeit sieht man am Kalender und am Stundenplan.\n\n2. Planung. Beim Tagesplan wählen die Lernenden eine Aufgabe und das Material dazu. Sie legen die Arbeitszeit fest. Beim Wochenplan wählen sie mehrere Aufgaben. Sie überlegen auch: Wann mache ich was?\n\n3. Ausführung. Hier ist beides gleich. Die Lernenden nutzen Verfahren, die sie schon können.\n\n4. Kontrolle. Bei beiden schaut die Lehrperson mit. Und die Lernenden prüfen sich selbst am Material. Beim Wochenplan kommt etwas dazu: Der Plan selbst zeigt, ob eine Aufgabe rechtzeitig fertig war.\n\nInsgesamt gilt: Beim Wochenplan muss man die Zeit über mehrere Tage einteilen. Man wählt auch selbst, wie schwer es wird. Deshalb kommt der Wochenplan beim Einführen erst nach dem Tagesplan."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Aufgabe verbindet zwei Sachen, die du getrennt schon kennst: die Beschreibung der beiden Pläne und das Raster der Lernmöglichkeiten, mit dem die Vorlesung alle offenen Methoden vergleicht. Nachschlagen kannst du den Tagesplan auf Folie 10 - die Beschreibung selbst steht nur dort, deine Notizen setzen erst bei den Lernmöglichkeiten auf Folie 11 ein, also auf Notizen S. 24. Den Wochenplan zeigt Folie 13 mit dem Kasten zur Aufgabenzahl, in deinen Aufzeichnungen Notizen S. 25. Die Wochenplan-Tabelle auf Folie 14 fehlt in deinen Notizen - sie steht nur auf der Folie, dort lohnt der Blick besonders. Die Einführungsreihenfolge findest du auf Folie 28 und auf Notizen S. 29. Merkhilfe für den Aufbau: erst sagen, was jede Methode ist, dann die vier Spalten der Reihe nach durchgehen, und am Ende die Folgerung ziehen.",
+      "quelle": "folie-unterrichtsformen-14",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was umfasst der kuerzere der beiden Plaene zeitlich?",
+          "Zwei Sorten Aufgaben: muss und darf",
+          "Zwei Spalten kann man ergaenzen, eine davon zum Pruefen"
+        ],
+        [
+          "Mehr auf einmal - was wird dadurch anspruchsvoller?",
+          "Der Kasten unter den beiden Beispielplaenen sagt es",
+          "Die Menge steigt, und mit ihr das Einteilen"
+        ],
+        [
+          "Woran haengt sich der Blick zeitlich, klein gegen gross?",
+          "Einmal ein einzelner Auftrag, einmal ein Buendel",
+          "Zeitmarken im Kleinen gegen Zeitraster im Groesseren"
+        ],
+        [
+          "Wie viel wird vorher ausgesucht, eins oder mehrere?",
+          "Beim laengeren Plan kommt das Verteilen auf Termine dazu",
+          "Der Schritt, der vor dem Anfangen liegt"
+        ],
+        [
+          "Ein Schritt bleibt bei beiden voellig unveraendert",
+          "Neu ist nur, woran sich am Ende pruefen laesst",
+          "Der Plan wird selbst zum Massstab"
+        ],
+        [
+          "Warum steht der eine Plan in der Reihenfolge spaeter?",
+          "Das Zeitfenster wird laenger, die Steuerung schwieriger",
+          "Auch die Schwere der Aufgaben waehlen sie nun mit"
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb3-1",
+      "unterthema": "Methoden offenen Unterrichts",
+      "afb": 3,
+      "frage": "Die Freiarbeit räumt den Lernenden so viel eigene Entscheidung ein wie möglich, zugleich nennt die Vorlesung vier Begrenzungen. Erörtern Sie, ob solche Begrenzungen der Freiarbeit widersprechen oder sie im Förderschwerpunkt geistige Entwicklung erst möglich machen.",
+      "stichpunkte": [
+        "Ausgangspunkt 1: Freiarbeit meint selbstverantwortliches Lernen mit umfänglicher Wahlfreiheit - Ziele, Inhalte, Arbeitsformen, Partner, Arbeitszeit und Arbeitsmittel",
+        "Ausgangspunkt 2: Begrenzt wird sie durch vereinbarte Regeln, die in der Sache liegenden Anforderungen, ein begrenztes Materialangebot und die eigenen Zielsetzungen der Lernenden",
+        "Dafür 1: Die Kritikliste nennt genau die Risiken freier Wahl - schwierige Aufgaben werden vermieden, die eigenen Fähigkeiten überschätzt, offene Materialregale lenken ab",
+        "Dafür 2: Schüler:innen im FSgE werden den Anforderungen nur schwer gerecht; deshalb wird offen erst gestuft eingeführt, vom Tagesplan über Stationen und Wochenplan zur Freiarbeit",
+        "Dagegen 1: Nach Fischer gilt, je freier entschieden werden darf, desto offener der Unterricht - jede Grenze senkt also den Grad der Mit- und Selbstbestimmung",
+        "Dagegen 2: Kritisiert werden auch die vielen verbliebenen Vorgaben und maskierte Übungsphasen; Entscheidungsfähigkeit, Transfer und Selbstwert wachsen aber nur am eigenen Entscheiden",
+        "Fazit 1: Eigenes Urteil, etwa dass Grenzen, die Entscheidungen überschaubar machen, etwas anderes sind als Vorgaben, die sie ersetzen - ein Gerüst, das man zurücknimmt"
+      ],
+      "muster": "Die Freiarbeit ist als möglichst umfassend selbstbestimmter Lernprozess angelegt: Die Schüler:innen entscheiden über Ziele, Inhalte, methodische Arbeitsformen, mögliche Partner, Arbeitszeit und Arbeitsmittel. Zugleich nennt die Vorlesung vier Begrenzungen, nämlich vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebotes und die Zielsetzungen der Schüler:innen selbst. Für die Begrenzungen spricht erstens, dass die Vorlesung die Risiken einer ganz freien Wahl selbst benennt: Wählen die Schüler:innen den Schwierigkeitsgrad, kann es zur Vermeidung schwieriger Aufgaben und zur Überschätzung der eigenen Fähigkeiten kommen, und offene Materialangebote in Regalen können ablenkend wirken. Ein begrenztes Angebot und verabredete Regeln nehmen genau diesen Druck heraus. Zweitens hält die Vorlesung fest, dass Schüler:innen im Förderschwerpunkt geistige Entwicklung den Anforderungen offener Formen nur schwer oder gar nicht gerecht werden; folgerichtig wird Offenheit in Stufen eingeführt, von der Einführung zur Freiarbeit über Tagesplan, Stationenarbeit und Wochenplan bis zur Freiarbeit. Begrenzungen sind in dieser Logik Zwischenstufen, keine Rücknahme. Gegen die Begrenzungen spricht erstens das Kriterium von Fischer: Je freier die Schüler:innen entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener ist der Unterricht zu beurteilen. Jede Begrenzung senkt damit messbar den Grad der Selbstbestimmung. Zweitens gehört zur Kritik am offenen Unterricht gerade, dass weiterhin viele Vorgaben durch die Lehrperson bestehen und methodische Bausteine sich als maskierte Übungsphasen erweisen können - Freiarbeit hieße dann nur noch so. Und die Vorteile, die die Vorlesung aufzählt, entstehen an echten Entscheidungen: die Heranführung an Entscheidungsprozesse, der Transfer des Auswahlverhaltens auf ähnliche Situationen sowie Selbstvertrauen und Selbstwert. Ich halte die Begrenzungen deshalb nicht für einen Widerspruch, wohl aber für begründungspflichtig. Zu unterscheiden ist zwischen Begrenzungen, die eine Entscheidung überhaupt erst überschaubar machen, und Vorgaben, die sie ersetzen. Die ersten wirken wie ein Gerüst, das mit wachsender Sicherheit Stück für Stück zurückgenommen wird; die zweiten machen aus offener Arbeit eine maskierte Übungsphase. Entscheidend ist also nicht, ob begrenzt wird, sondern ob am Ende noch etwas zu entscheiden bleibt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Freiarbeit heißt: Die Schülerinnen und Schüler bestimmen sehr viel selbst. Sie wählen ihr Ziel. Sie wählen den Inhalt. Sie wählen die Arbeitsform. Sie wählen die Partner. Sie wählen die Zeit und das Material.\n\nAber es gibt auch vier Grenzen. Erstens gelten Regeln für das Verhalten. Zweitens gibt die Sache selbst etwas vor. Manche Dinge muss man in einer bestimmten Reihenfolge tun. Drittens ist das Material begrenzt. Es liegt nicht alles bereit. Viertens setzen sich die Lernenden selbst Ziele.\n\nWas spricht für die Grenzen?\n\n1. Die Vorlesung nennt Gefahren bei ganz freier Wahl. Manche wählen nur leichte Aufgaben. Andere überschätzen sich. Volle offene Regale lenken ab. Regeln und weniger Material helfen dagegen.\n\n2. Für Schülerinnen und Schüler im Förderschwerpunkt geistige Entwicklung sind offene Formen sehr anspruchsvoll. Darum wird Schritt für Schritt geöffnet: erst Tagesplan, dann Stationen, dann Wochenplan, dann Freiarbeit. Die Grenzen sind dann nur Zwischenstufen.\n\nWas spricht gegen die Grenzen?\n\n1. Fischer sagt: Je mehr die Lernenden selbst entscheiden dürfen, desto offener ist der Unterricht. Jede Grenze macht den Unterricht also ein Stück weniger offen.\n\n2. Ein Kritikpunkt lautet: Es bleiben immer noch viele Vorgaben von der Lehrperson. Manchmal ist es nur eine versteckte Übung. Dann heißt es Freiarbeit, ist aber keine. Die Vorteile entstehen nämlich nur beim echten Entscheiden. Zum Beispiel: Entscheiden lernen. Das Gelernte auf andere Situationen übertragen. Selbstvertrauen bekommen.\n\nMein Urteil: Grenzen sind kein Widerspruch. Aber man muss sie begründen. Es gibt zwei Arten von Grenzen. Die eine Art macht das Entscheiden überschaubar. Das ist gut. Die andere Art nimmt das Entscheiden weg. Das ist nicht gut. Gute Grenzen sind wie ein Gerüst. Man baut es ab, wenn die Lernenden sicherer werden. Wichtig ist am Ende: Es muss noch etwas zu entscheiden geben."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erörtern ist ein AFB-III-Operator: zwei Punkte dafür, zwei dagegen und am Ende ein eigenes begründetes Urteil, in ganzen Sätzen und mit Fachbegriffen. Die Abwägung selbst steht auf keiner Folie - die führst du wirklich selbst. Das Material dafür liegt aber vollständig bereit: Wahlfreiheiten und Begrenzungen auf Folie 24, bei dir auf Notizen S. 28; das Grad-Kriterium von Fischer auf Folie 5 und Notizen S. 24; die Vorteile auf Folie 27, bei dir beginnen sie schon auf Notizen S. 28 und laufen auf Notizen S. 29 weiter; die Kritikpunkte samt Einführungsreihenfolge auf Folie 28 und ebenfalls Notizen S. 29. Wenn du unsicher bist, wie du anfängst: erst die beiden Listen kurz gegenüberstellen, dann abwägen, dann urteilen.",
+      "quelle": "folie-unterrichtsformen-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was duerfen die Lernenden hier ueberall selbst entscheiden?",
+          "Sechs Bereiche der Wahl, vom Ziel bis zum Material",
+          "Die weitestgehende der offenen Methoden"
+        ],
+        [
+          "Vier Dinge setzen der Freiheit einen Rahmen",
+          "Regeln, Sachzwang, Angebot - und etwas von den Lernenden selbst",
+          "Nicht alles ist offen: was rahmt hier ein?"
+        ],
+        [
+          "Was geht schief, wenn die Wahl voellig frei ist?",
+          "Zwei Fehlgriffe beim Schwierigkeitsgrad, dazu ein Reiz im Regal",
+          "Die Kritikliste liefert hier die Argumente pro Grenze"
+        ],
+        [
+          "Fuer wen wird es besonders anspruchsvoll?",
+          "Die Vorlesung baut eine Treppe statt eines Sprungs",
+          "Von kleinen Plaenen bis zur ganz offenen Form"
+        ],
+        [
+          "Woran misst man ueberhaupt, wie offen etwas ist?",
+          "Ein Kriterium von der Definitionsfolie spricht dagegen",
+          "Mehr Entscheidungsrecht heisst mehr Offenheit"
+        ],
+        [
+          "Wo bleibt der Nutzen, wenn zu viel vorgegeben ist?",
+          "Ein Kritikpunkt sagt: offen genannt, dennoch gesteuert",
+          "Wer nie waehlt, uebt das Waehlen auch nicht"
+        ],
+        [
+          "Dein Urteil: welche Grenzen helfen, welche ersetzen?",
+          "Denk an ein Geruest, das spaeter wieder wegkommt",
+          "Unterscheide zwei Arten von Einschraenkung"
+        ]
+      ]
+    },
+    {
+      "id": "uf-afb3-2",
+      "unterthema": "Geschlossener Unterricht & Lehrgang",
+      "afb": 3,
+      "frage": "Ein Lehrgang ist an der Fachsystematik entlang aufgebaut, kleinschrittig angelegt und stark von der Lehrperson geführt. Erörtern Sie, ob eine solche Methode in einem Unterricht ihren Platz hat, der auf die Selbstbestimmung der Schüler:innen zielt.",
+      "stichpunkte": [
+        "Ausgangspunkt 1: Der Lehrgang vermittelt vor allem fachspezifische Kenntnisse und Fertigkeiten; sein Aufbau richtet sich nach der Fachsystematik und zerlegt den Inhalt in kleine, aufbereitete Schritte",
+        "Dafür 1: Sein Verhältnis von Aufwand und Lernertrag gilt als hoch, gemessen an Zeit, Material und Personal - eine sparsame Methode für den Fertigkeitsaufbau",
+        "Dafür 2: Er zählt zum handlungsorientierten Unterricht, die Fertigkeiten sollen den Alltag bewältigen helfen, und die letzte Phase verlangt eigenständiges Reflektieren und Bewerten",
+        "Dagegen 1: Seine Merkmale liegen auf der geschlossenen Seite der Gegenüberstellung - überwiegend Frontalunterricht mit hoher Lehrerlenkung, dazu Systematik, Feinstrukturierung und Kleinschrittigkeit",
+        "Dagegen 2: Ziel, Inhalt und Weg setzt die Lehrperson - Lernzielorientierung, Elementarisierung, Strukturierung, Instruktion; der Grad der Selbstbestimmung bleibt entsprechend gering",
+        "Fazit 1: Eigenes Urteil, etwa dass die Steuerung schon innerhalb des Verfahrens nachlässt - die letzte Phase verlangt eigenständiges Reflektieren und Bewerten; Prüffrage wäre, welche Fertigkeit eine gewünschte Wahlfreiheit voraussetzt"
+      ],
+      "muster": "Ein Lehrgang ist ein Unterrichtsverfahren, bei dem die Vermittlung fachspezifischer Kenntnisse und Fertigkeiten im Vordergrund steht; der Aufbau orientiert sich an der Fachsystematik des Inhalts, der meist in kleine Schritte untergliedert und für den Lehr-Lern-Prozess rekonstruiert wird. Für seinen Platz im Unterricht spricht erstens seine Effizienz: Das Verhältnis von Zeit-, Material- und Personalaufwand zum Lernertrag gilt als hoch, der Lehrgang ist also eine sparsame Methode, wenn Fertigkeiten aufgebaut werden sollen. Zweitens gilt er ausdrücklich als Teil des handlungsorientierten Unterrichts: Im Rahmen eines Lehrgangs erwerben die Schüler:innen Fertigkeiten, die ihnen die Bewältigung des Alltags und den Erwerb neuer Kompetenzen ermöglichen. Dazu passt, dass die Anwendungsphase mehr verlangt als Nachmachen - die Lernenden wenden das Gelernte unter neuen Bedingungen an und sollen Ausführung und Ergebnis eigenständig reflektieren und bewerten. Gegen den Lehrgang spricht erstens, dass seine Merkmale in der Gegenüberstellung von geschlossenem und offenem Unterricht auf der geschlossenen Seite liegen: Der lehrgangsförmige Unterricht wird mit einem hohen Ausmaß an Lehrerlenkung und überwiegend als Frontalunterricht geführt, sein Aufbau folgt der Systematik der Sache und ist feinstrukturiert und kleinschrittig angelegt. Zweitens liegen alle vier zentralen Momente geschlossener Lehr-Lernformen bei der Lehrperson: Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. Damit bleibt genau das gering, was nach Fischer über die Offenheit eines Unterrichts entscheidet, nämlich der Grad der Mit- und Selbstbestimmung; keine der Dimensionen offenen Unterrichts wird nennenswert geöffnet. Ich halte den Lehrgang deshalb nicht für einen Fremdkörper. Sein Gewicht liegt auf dem sicheren Aufbau von Fertigkeiten, und genau diese Fertigkeiten sind oft die Voraussetzung dafür, dass offene Arbeit überhaupt gelingt: Wer ein Werkzeug nicht sicher bedienen kann, kann in der Werkstattarbeit nicht frei entscheiden. Bemerkenswert ist außerdem, dass die Führung schon innerhalb des Verfahrens nachlässt: Was in der Demonstrationsphase noch vorgemacht wird, sollen die Lernenden in der Anwendungsphase eigenständig reflektieren und bewerten. Meine Prüffrage an die Methode lautet deshalb nicht, wie offen sie insgesamt ist, sondern welche Fertigkeit eine Wahlfreiheit voraussetzt, die ich den Schüler:innen eröffnen möchte - und ob der Lehrgang genau diese Fertigkeit aufbaut.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Ein Lehrgang ist ein bestimmtes Verfahren im Unterricht. Es geht dabei vor allem um Fachwissen und um Fertigkeiten. Fertigkeit heißt: etwas praktisch können. Der Aufbau folgt der Sache selbst. Der Inhalt wird in kleine Schritte zerlegt. Die Schritte werden für das Lernen neu geordnet.\n\nWas spricht für den Lehrgang?\n\n1. Er ist sparsam. Man braucht wenig Zeit, wenig Material und wenig Personal. Und die Lernenden lernen trotzdem viel. Das nennt man Effizienz.\n\n2. Er gehört zum handlungsorientierten Unterricht. Die Lernenden üben Fertigkeiten für den Alltag. Damit können sie später auch Neues lernen. In der letzten Phase machen sie etwas Neues damit. Sie denken selbst darüber nach, wie gut es war.\n\nWas spricht gegen den Lehrgang?\n\n1. Seine Merkmale stehen in der großen Tabelle auf der geschlossenen Seite. Der Unterricht ist meistens frontal. Die Lehrperson lenkt sehr viel. Der Aufbau folgt der Sache selbst. Alles ist fein gegliedert und kleinschrittig.\n\n2. Die Lehrperson bestimmt fast alles: das Ziel, den Inhalt und den Weg. Dazu gehören vier Dinge: Lernziele setzen, den Stoff vereinfachen, alles gut strukturieren und erklären. Die Lernenden bestimmen also wenig selbst. Und genau das ist das Maß für Offenheit.\n\nMein Urteil: Der Lehrgang passt in die Schule. Er hat ein klares Ziel: Fertigkeiten sicher aufbauen. Oft braucht man diese Fertigkeiten zuerst. Erst dann kann offene Arbeit gelingen. Ein Beispiel: Wer ein Werkzeug nicht sicher bedienen kann, kann in der Werkstatt nicht frei entscheiden. Wichtig ist auch: Die Lehrperson führt nicht die ganze Zeit gleich stark. Am Anfang macht sie vor. Am Ende denken die Lernenden selbst über ihre Arbeit nach. Meine Frage an die Methode ist deshalb: Welche Fertigkeit braucht eine Freiheit, die ich den Lernenden geben will? Und baut der Lehrgang genau diese Fertigkeit auf?"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erörtern heißt hier: zwei Punkte dafür, zwei dagegen, dann ein eigenes begründetes Urteil. Die Abwägung selbst steht auf keiner Folie - die führst du wirklich selbst; das Material für beide Seiten aber schon. Definition, Effizienz und die Einordnung als Teil des handlungsorientierten Unterrichts stehen auf Folie 35, bei dir auf Notizen S. 31; die Anwendungsphase auf Folie 37 und Notizen S. 32. Die Gegenseite liefern Folie 30 mit den vier zentralen Momenten und Folie 32 mit der Gegenüberstellung, in deinen Aufzeichnungen Notizen S. 29 und Notizen S. 30; das Grad-Kriterium von Fischer steht auf Folie 5. Dass der lehrgangsförmige Unterricht überwiegend als Frontalunterricht und mit einem hohen Ausmaß an Lehrerlenkung beschrieben wird, steht auf Folie 7, dem handgezeichneten Schaubild von Hilbert Meyer - diese Folie kommt in deinen Notizen nicht vor, und für die drei Grundformen bleibt Folie 6 die sichere Referenz, die beiden also nicht vermischen. Eine Stolperstelle: Ein Lehrgang ist nicht dasselbe wie ein Trainingsprogramm - Trainings werden auf Folie 33 vom Begriff der Bildung und Erziehung abgegrenzt, der Lehrgang wird ausdrücklich dem handlungsorientierten Unterricht zugerechnet.",
+      "quelle": "folie-unterrichtsformen-35",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was rueckt bei dieser Methode in den Vordergrund?",
+          "Die Sache selbst gibt die Reihenfolge vor",
+          "In kleine Portionen zerlegt und neu geordnet"
+        ],
+        [
+          "Wie steht Aufwand zum Ertrag bei dieser Methode?",
+          "Drei Sorten Aufwand, und ein Urteil dazu: hoch",
+          "Ein sparsames Verfahren, sagt die Vorlesung"
+        ],
+        [
+          "Wozu sollen die Fertigkeiten spaeter taugen?",
+          "Ein Zitat ordnet ihn einer offeneren Richtung zu",
+          "Am Ende steht mehr als blosses Nachmachen"
+        ],
+        [
+          "Auf welcher Haelfte der grossen Tabelle landet er?",
+          "Wer lenkt hier stark, und vor welcher Gruppengroesse?",
+          "Wie fein ist der Stoff zerlegt, wie streng geordnet?"
+        ],
+        [
+          "Wer setzt das Ziel - und wer bestimmt den Weg?",
+          "Die vier Momente der geschlossenen Seite",
+          "Das Mass fuer Offenheit faellt hier klein aus"
+        ],
+        [
+          "Dein Urteil: bleibt die Fuehrung ueber alle Phasen gleich?",
+          "Am Schluss geben die Lernenden sich selbst Rueckmeldung",
+          "Frag, was eine Freiheit an Koennen vorher braucht"
         ]
       ]
     }

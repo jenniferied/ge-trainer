@@ -743,6 +743,7 @@
   "frei": [
     {
       "id": "eb-f-1",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
       "afb": 1,
       "frage": "Nennen Sie die 4 Entwicklungsbereiche im SGE. **Gemeint ist die Systematik der KMK (2021).**",
       "stichpunkte": [
@@ -769,6 +770,19 @@
       "tipp": "Original-Beispielaufgabe der Dozentin - die vier Begriffe müssen sitzen. Eselsbrücke: KoKo-EMo (Kognition, Kommunikation, Emotional-sozial, Motorik-Wahrnehmung). Die vier blauen Kästen stehen auf Folie 10, in deinen Notizen auf Notizen S. 44.",
       "quelle": "folie-entwicklungsbereiche-10",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die vier Entwicklungsbereiche der KMK nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
       "hinweise": [
         [
           "Denken, Merken, Problemloesen - dieser Bereich",
@@ -794,23 +808,24 @@
     },
     {
       "id": "eb-f-2",
+      "unterthema": "Dualer Unterricht",
       "afb": 2,
       "frage": "Erläutern Sie das Konzept des dualen Unterrichts mithilfe eines Beispiels.",
       "stichpunkte": [
         "Definition: unterrichtsfachliches Lernen wird unterrichtsimmanent und systematisch mit Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023, 65)",
         "Ausgangspunkt: unterrichtsfachbezogene UND entwicklungsbezogene Bedarfe und Potenziale der Schüler:innen",
-        "Beispiel aus der Vorlesung: Förderung des Kooperationsverhaltens im Sachunterricht beim Thema Der Weg der Milch (Häußler) - fachliches Ziel und Entwicklungsziel (soziales Handeln) laufen zusammen",
+        "Beispiel aus der Vorlesung: Förderung des Kooperationsverhaltens im Sachunterricht beim Thema Der Weg der Milch (Häußler) - fachliches Ziel und Entwicklungsziel (soziales Handeln) decken sich dabei nicht, sie werden im selben Unterricht nur gemeinsam verfolgt",
         "Alternatives Beispiel: Kommunikationstafel im Kunstunterricht zur Kommunikationsförderung, oder Arbeitsplatzorganisation im Deutschunterricht",
         "Einordnung: wertvolle konzeptionelle Ressource, aber empirisch fundierte Konzeptualisierung ist noch weitgehend ein Desiderat - insbesondere im SGE"
       ],
       "muster": "Dualer Unterricht bedeutet, dass das unterrichtsfachliche Lernen unterrichtsimmanent und systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt wird (Jöhnck/Baumann 2023). Ausgangspunkt sind sowohl die fachbezogenen als auch die entwicklungsbezogenen Bedarfe und Potenziale der Schüler:innen. Ein Beispiel: Im Sachunterricht zum Thema Der Weg der Milch wird zugleich das Kooperationsverhalten gefördert - die Klasse erarbeitet das Fachthema in Gruppenarbeit mit vereinbarten Gesprächsregeln, sodass das fachliche Lernen und die Förderung im Entwicklungsbereich emotionale und soziale Entwicklung systematisch zusammenlaufen. Dualer Unterricht ist damit eine wertvolle konzeptionelle Ressource im SGE, auch wenn eine systematische, empirisch fundierte Konzeptualisierung noch weitgehend aussteht.",
       "musterVarianten": {
         "de": {
-          "einfach": "Dualer Unterricht bedeutet, dass zwei Dinge zugleich geschehen. Das erste ist das unterrichtsfachliche Lernen. Damit ist das Lernen im jeweiligen Schulfach gemeint. Das zweite ist die Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen. Beides wird unterrichtsimmanent und systematisch miteinander verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023). Unterrichtsimmanent heißt: Die Förderung findet im Unterricht selbst statt. Sie wird nicht in eine eigene Stunde ausgelagert. Systematisch heißt: Das geschieht geplant und nicht zufällig. Ausgangspunkt sind zwei Arten von Bedarfen und Potenzialen der Schülerinnen und Schüler. Das sind erstens die fachbezogenen Bedarfe und Potenziale. Das sind zweitens die entwicklungsbezogenen Bedarfe und Potenziale. Ein Beispiel zeigt das. Im Sachunterricht geht es um das Thema Der Weg der Milch. Zugleich wird das Kooperationsverhalten gefördert. Die Klasse erarbeitet das Fachthema also in Gruppenarbeit. Dafür werden vorher Gesprächsregeln vereinbart. So laufen zwei Ziele systematisch zusammen. Das eine Ziel ist das fachliche Lernen. Das andere Ziel ist die Förderung im Entwicklungsbereich emotionale und soziale Entwicklung. Dualer Unterricht ist damit eine wertvolle konzeptionelle Ressource im SGE, also im Förderschwerpunkt geistige Entwicklung. Eine systematische und empirisch fundierte Konzeptualisierung steht allerdings noch weitgehend aus. Das heißt: Bisher fehlen Studien, die das Konzept genau prüfen."
+          "einfach": "Dualer Unterricht bedeutet, dass zwei Dinge zugleich geschehen. Das erste ist das unterrichtsfachliche Lernen. Damit ist das Lernen im jeweiligen Schulfach gemeint. Das zweite ist die Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen. Beides wird unterrichtsimmanent und systematisch miteinander verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023). Unterrichtsimmanent heißt: Die Förderung findet im Unterricht selbst statt. Sie wird nicht in eine eigene Stunde ausgelagert. Systematisch heißt: Das geschieht geplant und nicht zufällig. Ausgangspunkt sind zwei Arten von Bedarfen und Potenzialen der Schülerinnen und Schüler. Das sind erstens die fachbezogenen Bedarfe und Potenziale. Das sind zweitens die entwicklungsbezogenen Bedarfe und Potenziale. Ein Beispiel zeigt das. Im Sachunterricht geht es um das Thema Der Weg der Milch. Zugleich wird das Kooperationsverhalten gefördert. Die Klasse erarbeitet das Fachthema also in Gruppenarbeit. Dafür werden vorher Gesprächsregeln vereinbart. So werden zwei Ziele im selben Unterricht verfolgt. Die beiden Ziele decken sich dabei nicht, sie bleiben getrennt. Das eine Ziel ist das fachliche Lernen. Das andere Ziel ist die Förderung im Entwicklungsbereich emotionale und soziale Entwicklung. Dualer Unterricht ist damit eine wertvolle konzeptionelle Ressource im SGE, also im Förderschwerpunkt geistige Entwicklung. Eine systematische und empirisch fundierte Konzeptualisierung steht allerdings noch weitgehend aus. Das heißt: Bisher fehlen Studien, die das Konzept genau prüfen."
         },
         "en": {
           "klausur": "Dual teaching (dualer Unterricht) means that subject-related learning in the school subject is linked, interwoven or complemented with the support of competences from selected developmental domains (Entwicklungsbereiche), and that this happens within the lesson itself (unterrichtsimmanent) and systematically (Jöhnck/Baumann 2023). The starting point is formed both by the subject-related and by the development-related needs and potentials of the pupils. An example: in general studies (Sachunterricht) on the topic Der Weg der Milch (the way of the milk) cooperative behaviour is supported at the same time; the class works on the subject topic in group work with agreed rules of conversation, so that subject learning and support in the developmental domain of emotional and social development converge systematically. Dual teaching is therefore a valuable conceptual resource in the field of intellectual disability (SGE), even though a systematic, empirically grounded conceptualisation is still largely outstanding.",
-          "einfach": "Dual teaching (dualer Unterricht) means that two things happen at the same time. The first is subject-related learning. This means the learning within the respective school subject. The second is the support of competences from selected developmental domains (Entwicklungsbereiche). The two are linked, interwoven or complemented systematically and within the lesson itself (Jöhnck/Baumann 2023). Within the lesson itself (unterrichtsimmanent) means: the support takes place in the lesson. It is not moved into a separate session. Systematically means: this is planned and does not happen by chance. The starting point consists of two kinds of needs and potentials of the pupils. The first kind are the subject-related needs and potentials. The second kind are the development-related needs and potentials. An example shows this. In general studies (Sachunterricht) the topic is Der Weg der Milch, the way of the milk. At the same time cooperative behaviour is supported. The class therefore works on the subject topic in group work. Rules of conversation are agreed on beforehand. In this way two aims converge systematically. One aim is the subject learning. The other aim is the support in the developmental domain of emotional and social development. Dual teaching is therefore a valuable conceptual resource in the field of intellectual disability (SGE). However, a systematic and empirically grounded conceptualisation is still largely outstanding. This means: so far there are no studies that examine the concept closely."
+          "einfach": "Dual teaching (dualer Unterricht) means that two things happen at the same time. The first is subject-related learning. This means the learning within the respective school subject. The second is the support of competences from selected developmental domains (Entwicklungsbereiche). The two are linked, interwoven or complemented systematically and within the lesson itself (Jöhnck/Baumann 2023). Within the lesson itself (unterrichtsimmanent) means: the support takes place in the lesson. It is not moved into a separate session. Systematically means: this is planned and does not happen by chance. The starting point consists of two kinds of needs and potentials of the pupils. The first kind are the subject-related needs and potentials. The second kind are the development-related needs and potentials. An example shows this. In general studies (Sachunterricht) the topic is Der Weg der Milch, the way of the milk. At the same time cooperative behaviour is supported. The class therefore works on the subject topic in group work. Rules of conversation are agreed on beforehand. In this way two aims are pursued in the same lesson. The two aims do not coincide, they remain separate. One aim is the subject learning. The other aim is the support in the developmental domain of emotional and social development. Dual teaching is therefore a valuable conceptual resource in the field of intellectual disability (SGE). However, a systematic and empirically grounded conceptualisation is still largely outstanding. This means: so far there are no studies that examine the concept closely."
         },
         "ar": {
           "klausur": "التدريس المزدوج (dualer Unterricht) معناتو إنّو التعلّم بالمادّة الدراسيّة بينربط أو بينشابك أو بينكمّل مع دعم كفاءات من مجالات تطوّر مختارة (Entwicklungsbereiche)، وهالشي بيصير جوّا الدرس نفسو (unterrichtsimmanent) وبشكل منهجي (Jöhnck/Baumann 2023). نقطة الانطلاق هنّي حاجات وإمكانات التلاميذ، يلي بتكون مرتبطة بالمادّة ومرتبطة بالتطوّر بنفس الوقت. مثال على هيك: بمادّة العلوم العامّة (Sachunterricht) وموضوعها Der Weg der Milch، يعني طريق الحليب، بينندعم بنفس الوقت سلوك التعاون؛ الصفّ بيشتغل عالموضوع بمجموعات مع قواعد حوار متّفقين عليها، هيك بيلتقي التعلّم بالمادّة مع الدعم بمجال التطوّر العاطفي والاجتماعي بشكل منهجي. فالتدريس المزدوج هو مورد مفهومي قيّم بمجال الدعم للتطوّر الذهني (SGE)، مع إنّو لسّا ناقص عملية بناء مفهومي منهجيّة مبنيّة على أبحاث تجريبيّة.",
@@ -834,7 +849,7 @@
         ],
         [
           "Das Sachunterrichts-Beispiel mit dem Kooperationsziel",
-          "Milch-Thema: welches Entwicklungsziel lief mit?",
+          "Milch-Thema: welches Entwicklungsziel wurde daneben verfolgt?",
           "Haeussler-Beispiel: soziales Ziel im Sachunterricht"
         ],
         [
@@ -851,6 +866,7 @@
     },
     {
       "id": "eb-f-3",
+      "unterthema": "Entwicklungsförderung in der Schule",
       "afb": 3,
       "frage": "Diskutieren Sie folgende These: Die fachlichen Inhalte eines Faches sind weniger relevant als die der Entwicklungsförderung.",
       "stichpunkte": [
@@ -914,6 +930,7 @@
     },
     {
       "id": "eb-f-4",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
       "afb": 2,
       "frage": "Erläutern Sie zwei Entwicklungsbereiche nach KMK (2021) mit ihren jeweiligen Förderschwerpunkten.",
       "stichpunkte": [
@@ -966,6 +983,7 @@
     },
     {
       "id": "eb-gen-f-1",
+      "unterthema": "Dualer Unterricht",
       "afb": 2,
       "frage": "Erläutern Sie die Grundform der lerngruppenbezogenen Umsetzung individueller Entwicklungsziele und veranschaulichen Sie sie an einem Beispiel aus der Vorlesung. **Gemeint ist eine der Grundformen dualen Unterrichts nach Jöhnck/Baumann (2023).**",
       "stichpunkte": [
@@ -1024,6 +1042,7 @@
     },
     {
       "id": "eb-gen-f-2",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
       "afb": 2,
       "frage": "Vergleichen Sie die Systematisierung der Entwicklungsbereiche nach KMK (2021) mit der des NRW-Lehrplans (MSB 2022).",
       "stichpunkte": [
@@ -1088,6 +1107,7 @@
     },
     {
       "id": "eb-gen-f-3",
+      "unterthema": "Entwicklungsförderung in der Schule",
       "afb": 3,
       "frage": "In der Schule kann Entwicklung sowohl in exklusiven Angeboten außerhalb des Unterrichts als auch im regulären (Fach-)Unterricht gefördert werden. Erörtern Sie beide Wege und beziehen Sie begründet Stellung, wo der Schwerpunkt liegen sollte.",
       "stichpunkte": [
@@ -1146,6 +1166,7 @@
     },
     {
       "id": "eb-fol-f-1",
+      "unterthema": "Entwicklungsbereiche & lebenspraktische Kompetenzen",
       "afb": 2,
       "frage": "Erläutern Sie am Beispiel Sich waschen, warum sich auch lebenspraktische und lebensweltbezogene Kompetenzen aus Kompetenzen in den Entwicklungsbereichen zusammensetzen. Ziehen Sie eine Folgerung für die Unterrichtsplanung.",
       "stichpunkte": [
@@ -1246,20 +1267,22 @@
     },
     {
       "id": "eb-fol-f-2",
+      "unterthema": "Dualer Unterricht",
       "afb": 2,
       "frage": "Erläutern Sie die Grundformen (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen sowie intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt. Geben Sie zu jeder ein Beispiel und begründen Sie, warum es diese Vielfalt an Grundformen überhaupt braucht.",
       "stichpunkte": [
-        "Vorbemerkung: Nach Jöhnck/Baumann (2023) und Jöhnck (2024) sind mindestens fünf Grundformen der Verwirklichung dualen Unterrichts zu unterscheiden; die beiden hier gefragten sind die dritte und die vierte",
+        "Vorbemerkung: mindestens fünf Grundformen dualen Unterrichts",
+        "Vorbemerkung: nach Jöhnck/Baumann 2023 und Jöhnck 2024; hier 3 und 4",
         "Grundform 3, (nahezu) Deckungsgleichheit: Fach- und Entwicklungsanliegen können sehr nah beieinander bis sogar deckend sein",
-        "Beispiel zu 3: Das Thema 'Cool bleiben - Konflikte klären' im Fach Ethik beziehungsweise Praktische Philosophie ist zugleich in besonderem Maße Entwicklungsbereich Sozialisation",
-        "Beispiel zu 3: Das Thema 'Unsere fünf Sinne' im Sachunterricht ist zugleich Entwicklungsbereich Wahrnehmung",
-        "Beispiel zu 3: Das Vergleichen im Geschichtsunterricht, etwa in der Reihe 'Sah es in Nordkirchen schon immer so aus?', in der frühere und heutige Ortsansichten verglichen werden",
         "Grundform 4, intermittierend temporär: In gewissen Kontexten kann es geboten sein, Fach- und Entwicklungsanliegen nicht in gleich umfänglichem Maße zu verwirklichen",
         "Begründung zu 4: Sonst kann es zu einer Überfrachtung des Unterrichtsgeschehens und einhergehend zu einer Überforderung von Lernenden und Lehrenden kommen",
-        "Beispiel zu 4: unterschiedliche Varianten der Gewichtung der Förderung von Erzählkompetenz und kooperativen Kompetenzen im Deutschunterricht bei Rolf und Lang (2026); auf der Folie als Waage zwischen Fachziel und Entwicklungsziel dargestellt",
-        "Beispiel zu 4: der Scherenführerschein im Kunstunterricht - dazu die Einschränkung der Vorlesung selbst, dass dieses Beispiel ggf. nur so halb zur Grundform passt und auch etwas vom deckungsgleichen Unterricht hat",
-        "Warum diese Vielfalt: Nur Vielfalt und Offenheit entsprechen der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in Lerngruppen",
-        "Ergänzend: Bei jeder Grundform gibt es neben spezifischen Chancen auch typische Stolpersteine"
+        "Beispiel zu 3: Cool bleiben (Ethik/Prakt. Philosophie) = Sozialisation",
+        "Beispiel zu 4: Erzählen vs. Kooperieren, Deutsch (Rolf/Lang, Waage)",
+        "Beispiel zu 3: Unsere fünf Sinne (Sachunterricht) = Wahrnehmung",
+        "Beispiel zu 3: Vergleichen in Geschichte (Nordkirchen früher/heute)",
+        "Beispiel zu 4: Scherenführerschein (Kunst) - halb auch deckungsgleich",
+        "Warum Vielfalt: entspricht Bedarfslagen und Potenzialen der Lerngruppe",
+        "Ergänzend: jede Grundform hat Chancen und typische Stolpersteine"
       ],
       "muster": "Nach Jöhnck und Baumann lassen sich mindestens fünf Grundformen unterscheiden, in denen dualer Unterricht verwirklicht wird; die dritte und die vierte sollen hier näher betrachtet werden. Die dritte Grundform ist die nahezu vollständige Deckungsgleichheit von Fach- und Entwicklungsanliegen. Gemeint ist, dass beide Anliegen sehr nah beieinander liegen können, bis sie sich praktisch decken. Ein Beispiel ist das Thema Cool bleiben, Konflikte klären im Fach Ethik beziehungsweise Praktische Philosophie, das zugleich in besonderem Maße den Entwicklungsbereich Sozialisation bearbeitet. Ein zweites ist das Thema Unsere fünf Sinne im Sachunterricht, das zugleich Entwicklungsbereich Wahrnehmung ist. Auch das Vergleichen im Geschichtsunterricht gehört hierher, etwa in einer Reihe, in der frühere und heutige Ansichten desselben Ortes miteinander verglichen werden. Die vierte Grundform, die intermittierend temporäre Konzentration auf den Fach- oder den Entwicklungsaspekt, geht von einer anderen Ausgangslage aus. Hier fallen die beiden Anliegen gerade nicht zusammen, und es kann geboten sein, sie nicht in gleich umfänglichem Maße zu verwirklichen. Der Grund ist eine Zumutungsgrenze: Andernfalls droht eine Überfrachtung des Unterrichtsgeschehens und damit eine Überforderung sowohl der Lernenden als auch der Lehrenden. Deshalb wird die Gewichtung zeitweise verschoben, mal zugunsten des Fachziels, mal zugunsten des Entwicklungsziels. Als Beispiel dienen unterschiedliche Varianten der Gewichtung von Erzählkompetenz und kooperativen Kompetenzen im Deutschunterricht; die Folie stellt das als Waage zwischen Fachziel und Entwicklungsziel dar. Ein zweites Beispiel ist der Scherenführerschein im Kunstunterricht, wobei die Vorlesung selbst einräumt, dass dieses Beispiel nur bedingt passt und auch Züge des deckungsgleichen Unterrichts trägt. Dass es diese Vielfalt an Grundformen überhaupt gibt, hat einen einfachen Grund: Nur Vielfalt und Offenheit entsprechen der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in einer Lerngruppe. Eine einzige Umsetzungsvariante würde entweder einzelne Kinder oder ganze Gruppen nicht erreichen. Zugleich gilt für jede Grundform, dass sie neben spezifischen Chancen auch typische Stolpersteine mit sich bringt.",
       "musterVarianten": {
@@ -1280,31 +1303,73 @@
       "quelle": "folie-entwicklungsbereiche-25",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "zusatz",
+          "auftrag": "Zahl und Herkunft der Grundformen vorweg",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste",
+          "zusatz": true
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "entfalten",
+          "auftrag": "Die beiden gefragten Grundformen erläutern",
+          "idx": [
+            2,
+            3,
+            4
+          ],
+          "form": "rolle",
+          "satzanfang": "Die dritte Grundform meint, dass …"
+        },
+        {
+          "operator": "zuordnen",
+          "auftrag": "Zu jeder Grundform ein Beispiel, zwei von fünf reichen",
+          "idx": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "form": "liste",
+          "chips": [
+            "zu Grundform 3",
+            "zu Grundform 4",
+            "auch zu Grundform 3",
+            "auch zu Grundform 3",
+            "auch zu Grundform 4"
+          ]
+        },
+        {
+          "operator": "begruenden",
+          "auftrag": "Warum es diese Vielfalt an Grundformen braucht",
+          "idx": [
+            10,
+            11
+          ],
+          "form": "liste"
+        }
+      ],
       "hinweise": [
         [
-          "Einstieg: wie viele Grundformen insgesamt, welche Nummern hier?",
-          "Verorten: Position drei und vier von fuenf",
-          "Die Autoren und die Gesamtzahl nennen"
+          "Einstieg: wie viele Umsetzungsvarianten kennt die Vorlesung?",
+          "Die Zahl vorweg - und das Wort, das die Folie fuer die Varianten benutzt",
+          "Nicht genau so viele, sondern wenigstens so viele"
+        ],
+        [
+          "Wer hat sie unterschieden, und in welchen beiden Jahren?",
+          "Verorten: welche Position haben die beiden gefragten Formen?",
+          "Zwei Veroeffentlichungen, ein Autorenname steht in beiden"
         ],
         [
           "Form drei: wie nah liegen die beiden Zielarten?",
           "Wenn Fachthema und Entwicklungsziel fast dasselbe sind",
           "Das Prinzip der dritten Form beschreiben"
-        ],
-        [
-          "Ethik-Beispiel: Konfliktthema trifft welchen Bereich?",
-          "Streit klaeren als Fach UND Entwicklung",
-          "Cool bleiben - wo deckt sich das?"
-        ],
-        [
-          "Sachunterrichts-Beispiel: Sinnesthema trifft welchen Bereich?",
-          "Fuenf Sinne als Fachinhalt und Foerderung zugleich",
-          "Das zweite Deckungs-Beispiel, aus dem Sachunterricht"
-        ],
-        [
-          "Drittes Beispiel: eine Denkoperation im Geschichtsunterricht",
-          "Frueher und heute vergleichen - welche Reihe?",
-          "Ortsansichten im Wandel: welches Beispiel?"
         ],
         [
           "Form vier: die Gewichte duerfen sich verschieben",
@@ -1317,24 +1382,902 @@
           "Die Begruendung: zu viel auf einmal schadet beiden Seiten"
         ],
         [
-          "Deutsch-Beispiel mit Waage: welche zwei Kompetenzen?",
-          "Erzaehlen versus Kooperieren - wie dargestellt?",
-          "Die Gewichtungs-Varianten von 2026 nennen"
+          "Erstes Deckungs-Beispiel: ein Konfliktthema im Wertefach",
+          "Ruhig werden im Streit - welcher Entwicklungsbereich steckt darin?",
+          "Welches Fach behandelt Konflikte, und was uebt man dabei nebenbei?"
         ],
         [
-          "Kunst-Beispiel mit Einschraenkung: passt nur halb",
-          "Das Schneide-Beispiel und sein Aber",
-          "Welches Werkzeug-Training nennt die Folie - mit Vorbehalt?"
+          "Erstes Beispiel zu Form vier: zwei Kompetenzen im Deutschunterricht",
+          "Welches Bild nutzt die Folie fuer die Gewichtung der Ziele?",
+          "Wer hat die Gewichtungs-Varianten 2026 beschrieben?"
         ],
         [
-          "Wozu so viele Formen? Denk an die Lerngruppen",
-          "Vielfalt der Formen spiegelt Vielfalt von was?",
-          "Die Begruendung fuer die Offenheit des Konzepts"
+          "Zweites Deckungs-Beispiel: ein Thema ueber die Sinnesorgane",
+          "Sehen, hoeren, riechen als Unterrichtsthema und Foerderbereich",
+          "Welcher Entwicklungsbereich faellt hier mit dem Fach zusammen?"
+        ],
+        [
+          "Drittes Deckungs-Beispiel: eine Denkoperation im Geschichtsunterricht",
+          "Alte und neue Ortsfotos nebeneinander legen - an welchem Ort?",
+          "Welche Faehigkeit uebt man beim Nebeneinanderlegen von Damals und Heute?"
+        ],
+        [
+          "Kunst-Beispiel mit Vorbehalt der Dozentin",
+          "Ein Werkzeug-Training mit eigenem Aber - wonach sieht es sonst aus?",
+          "Welches Beispiel raeumt die Vorlesung selbst als unscharf ein?"
+        ],
+        [
+          "Wozu so viele Formen? Denk an die Unterschiede in einer Klasse",
+          "Die Offenheit des Konzepts spiegelt was wider?",
+          "Kein Kind gleicht dem anderen - was folgt daraus fuers Konzept?"
         ],
         [
           "Abschlussnotiz: jede Form hat zwei Seiten",
-          "Neben Staerken auch typische Fallen erwaehnen",
-          "Was gilt fuer alle Grundformen gleichermassen?"
+          "Neben Staerken gibt es auch die bekannten Fallen",
+          "Was gilt fuer alle fuenf Formen gleichermassen?"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-1",
+      "unterthema": "Dualer Unterricht",
+      "afb": 1,
+      "frage": "Jöhnck/Baumann (2023) und Jöhnck (2024) halten fest, dass dualer Unterricht nicht auf einem einzigen Weg zustande kommt, sondern auf mindestens fünf. Nennen Sie diese fünf Grundformen.",
+      "stichpunkte": [
+        "1. Solitäre individuelle Entwicklungsförderung (lerngruppenbezogen)",
+        "2. Lerngruppenbezogene Umsetzung individueller Entwicklungsziele",
+        "3. (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen",
+        "4. Intermittierend temporäre Konzentration (Fach-/Entwicklungsaspekt)",
+        "5. Parallele Verwirklichung mehrerer Entwicklungsschwerpunkte"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die fünf Grundformen, in denen dualer Unterricht verwirklicht werden kann.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Nach Jöhnck/Baumann (2023) und Jöhnck (2024) sind mindestens fünf Grundformen der Verwirklichung dualen Unterrichts zu unterscheiden. Die erste ist die solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht, die zweite die lerngruppenbezogene Umsetzung individueller Entwicklungsziele. Als dritte Grundform gilt die (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen, als vierte die intermittierend temporäre Konzentration auf den Fach- oder den Entwicklungsaspekt. Die fünfte ist die parallele Verwirklichung mehrerer (verwandter) Entwicklungsschwerpunkte aus einem oder auch mehreren Entwicklungsbereichen. Diese Vielfalt ist gewollt, denn nur sie entspricht der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in Lerngruppen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Dualer Unterricht kann auf fünf Arten umgesetzt werden. Erstens: Ein einzelnes Kind bekommt sein eigenes Entwicklungsziel, mitten im gemeinsamen Unterricht. Zweitens: Der Bedarf einzelner Kinder wird zu einem Ziel für die ganze Gruppe. Drittens: Das Fachziel und das Entwicklungsziel sind fast gleich. Viertens: Mal steht das Fach im Vordergrund, mal die Entwicklung. Fünftens: Mehrere Entwicklungsschwerpunkte laufen gleichzeitig. Diese Vielfalt ist wichtig, weil die Kinder in einer Lerngruppe sehr verschiedene Bedarfe haben."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das ist die Kernliste des ganzen Blocks: Folie 20, in deinen Notizen S. 48 (dort sind die ersten vier grün umrandet). Fünf Namen, fünf Punkte - wenn du sie durchnummeriert lernst, hast du auch die Reihenfolge. Die Stichpunkte sind aus Platzgründen gekürzt; die vollständigen Namen stehen in der Musterlösung, und genau die schreibst du in der Klausur. Die fünfte Grundform bekommt im Foliensatz als einzige keine eigene Erläuterungsfolie, du musst sie also nur benennen können.",
+      "quelle": "folie-entwicklungsbereiche-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Nummer eins: ein Ziel gilt nur einem Kind, mitten in der Klasse",
+          "Die Gruppe arbeitet gemeinsam, eine Person verfolgt ihr eigenes Ziel",
+          "Fuer sich allein gesetzt, und trotzdem im ganz normalen Gruppenunterricht"
+        ],
+        [
+          "Nummer zwei: aus einem Einzelbedarf wird ein Ziel fuer alle",
+          "Der Bedarf einer Person wird zum Programm der ganzen Klasse",
+          "Von einzeln zu gemeinsam, dieselbe Richtung fuer alle"
+        ],
+        [
+          "Nummer drei: Fachziel und Entwicklungsziel fallen fast zusammen",
+          "Beide Anliegen liegen so nah beieinander, dass sie sich decken",
+          "Fast dasselbe Ziel, nur zweimal betrachtet"
+        ],
+        [
+          "Nummer vier: mal liegt das Gewicht hier, mal dort",
+          "Zeitweise ruecken die Ansprueche der einen Seite in den Vordergrund",
+          "Gegen Ueberfrachtung: nicht beide Seiten staendig in gleichem Umfang"
+        ],
+        [
+          "Nummer fuenf: mehrere Ziele laufen gleichzeitig nebeneinander",
+          "Nicht einer, sondern gleich mehrere Ziele auf einmal",
+          "Aus einem oder auch aus mehreren Bereichen zugleich"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-2",
+      "unterthema": "Entwicklungsförderung in der Schule",
+      "afb": 1,
+      "frage": "Für das Feld rund um die Entwicklungsbereiche kursieren in der Fachliteratur ganz verschiedene Namen - Jöhnck fragt deshalb, ob hier eine babylonische Begriffsverwirrung herrscht. Nennen Sie fünf dieser Begriffe.",
+      "stichpunkte": [
+        "entwicklungsbezogene Kompetenzen",
+        "überfachliche Kompetenzen",
+        "formale Kompetenzen",
+        "funktionsbezogene Lernbereiche",
+        "adaptive Kompetenzen",
+        "Weitere: lebensweltbezogene oder lebenspraktische Kompetenzen",
+        "Weitere: Lebenskompetenzen",
+        "Weitere: Personale Bildung",
+        "Weitere: Befähigungsbereiche"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne fünf Begriffe, die in der Fachliteratur für dasselbe Feld stehen.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn dir noch mehr einfällt: weitere Namen aus derselben Aufzählung.",
+          "idx": [
+            5,
+            6,
+            7,
+            8
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Vielfalt verschiedener, sich überschneidender Begriffe mit deutlichen Bezügen zu den Entwicklungsbereichen ist immens. Gebräuchlich sind unter anderem entwicklungsbezogene Kompetenzen, überfachliche Kompetenzen, formale Kompetenzen, funktionsbezogene Lernbereiche und adaptive Kompetenzen. Daneben stehen lebensweltbezogene beziehungsweise lebenspraktische Kompetenzen, Lebenskompetenzen, personale Bildung und Befähigungsbereiche. Überschneidungen ergeben sich zudem mit den unterrichtsfachlichen Kompetenzen: Kommunikative Fähigkeiten bilden zugleich den Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Für dieselbe Sache gibt es in der Fachwelt viele Namen. Man sagt entwicklungsbezogene Kompetenzen. Man sagt überfachliche Kompetenzen. Man sagt formale Kompetenzen. Man sagt funktionsbezogene Lernbereiche. Man sagt adaptive Kompetenzen. Es gibt noch mehr Namen: Lebenskompetenzen, personale Bildung und Befähigungsbereiche. Kompetenz heisst hier: was ein Kind können soll. Diese Namen überschneiden sich auch mit den Zielen der Schulfächer. Ein Beispiel: Sprechen und Zuhören im Fach Deutsch ist zugleich Kommunikation."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 16, in deinen Notizen S. 46. Du musst hier nichts erklären - es reicht, fünf Namen sicher hinschreiben zu können. Merkhilfe: Mehrere enden auf Kompetenzen (entwicklungsbezogen, überfachlich, formal, adaptiv, lebensweltbezogen), einer heisst Lernbereiche, und dazu kommen Einzelwörter wie Lebenskompetenzen, Personale Bildung oder Befähigungsbereiche. Der Punkt der Folie ist, dass all diese Begriffe dasselbe Feld meinen und sich überschneiden.",
+      "quelle": "folie-entwicklungsbereiche-16",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der naheliegendste Name - er nimmt das Thema selbst als Adjektiv auf",
+          "Nah dran am Wort, um das es die ganze Vorlesung geht",
+          "Kahlert/Heimlich und der NRW-Lehrplan sagen so"
+        ],
+        [
+          "Was quer zu allen Faechern liegt, nicht in einem einzelnen",
+          "Nicht an ein Fach gebunden, sondern darueber hinaus",
+          "So nennt es das hessische Kultusministerium"
+        ],
+        [
+          "Klafki-Wort: es geht um die Form, nicht um den Inhalt",
+          "Gegenbegriff zu inhaltlich, aus der Bildungstheorie",
+          "Lamers/Heinen nutzen dieses eine Adjektiv"
+        ],
+        [
+          "Speck ordnet nicht nach Koennen, sondern nach dem, was etwas leistet",
+          "Statt Kompetenz steht hier ein Wort fuer abgegrenzte Felder des Lernens",
+          "Das Adjektiv kommt von Funktion und stammt aus Specks Lehrbuch"
+        ],
+        [
+          "Was sich an die Umwelt anpasst, aus der Diagnostik",
+          "Dworschak und Selmayr nennen sie so",
+          "Das Wort steckt auch in Anpassung"
+        ],
+        [
+          "Zwei Adjektive aus dem Alltag, sie kamen weiter oben schon vor",
+          "Was Menschen im Alltag koennen muessen - zwei Woerter dafuer",
+          "Auf der Folie steht dahinter nur ein s. o."
+        ],
+        [
+          "Die Weltgesundheitsorganisation hat diesen Sammelnamen gepraegt",
+          "Ein Wort, das schlicht das ganze Leben in den Blick nimmt",
+          "Ohne Fach, ohne Schule - es geht ums Zurechtkommen ueberhaupt"
+        ],
+        [
+          "Niedersachsen sagt so, und das Wort Kompetenz kommt darin nicht vor",
+          "Zwei Woerter: eines meint die Person, das andere ist der grosse Bildungsbegriff",
+          "Aus dem Kerncurriculum eines norddeutschen Bundeslandes"
+        ],
+        [
+          "Der Lehrplan 21 aus der Schweiz spricht so",
+          "Nicht was jemand kann, sondern wozu jemand in die Lage versetzt wird",
+          "Auch Lernen konkret 2/2024 nutzt diesen Namen"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-3",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
+      "afb": 1,
+      "frage": "Die Unterrichtsvorgaben für Nordrhein-Westfalen (MSB 2022) schneiden die Entwicklungsbereiche anders zu als die KMK. Nennen Sie die fünf Bereiche, mit denen die NRW-Übersicht arbeitet.",
+      "stichpunkte": [
+        "Motorik",
+        "Wahrnehmung",
+        "Kognition",
+        "Sozialisation",
+        "Kommunikation"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die fünf Entwicklungsbereiche der NRW-Übersicht.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Unterrichtsvorgaben für Nordrhein-Westfalen unterscheiden fünf Entwicklungsbereiche: Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation. Jeder dieser Bereiche ist in nummerierte Entwicklungsschwerpunkte gegliedert; aus ihnen ergeben sich die Entwicklungsaspekte und daraus die angestrebten Kompetenzen mit ihren Vernetzungsmöglichkeiten und Performanzsituationen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Nordrhein-Westfalen hat fünf Entwicklungsbereiche. Sie heissen Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation. Unter jedem Bereich stehen Schwerpunkte mit Nummern. Aus den Schwerpunkten werden Aspekte. Und aus den Aspekten wird das, was ein Kind am Ende können soll."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 12, in deinen Notizen S. 45. Die Reihenfolge der Folie ist Motorik, Wahrnehmung, Kognition, Sozialisation, Kommunikation - von aussen nach innen gedacht. Wichtig ist vor allem, diese fünf nicht mit den vier KMK-Bereichen zu verwechseln: Wer in der Klausur nach der KMK gefragt wird, schreibt Motorik und Wahrnehmung zusammen, wer nach NRW gefragt wird, getrennt.",
+      "quelle": "folie-entwicklungsbereiche-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Alles, was sich bewegt: Koerperhaltung, Gehen, Greifen",
+          "Der erste Kasten, ganz links in der Uebersicht",
+          "Auch Zunge, Mund und Augen gehoeren zu diesem Bereich"
+        ],
+        [
+          "Die Sinne, hier als eigener Bereich mit acht Unterpunkten",
+          "Was ueber Haut, Ohr, Auge, Nase und Zunge hereinkommt",
+          "In NRW steht dieser Bereich fuer sich, bei der KMK nicht"
+        ],
+        [
+          "Der Denk-Bereich: Gedaechtnis, Planen, Lernstrategien",
+          "Hier stehen Begriffe bilden und Probleme loesen",
+          "Sechs Unterpunkte, von der Sensomotorik bis zu den Lernwegen"
+        ],
+        [
+          "Der Bereich fuer Gefuehle und Miteinander - aber anders benannt",
+          "Zwei Straenge stecken darin: Gefuehle und Gemeinschaft",
+          "Bei der KMK traegt dieser Bereich einen anderen, laengeren Namen"
+        ],
+        [
+          "Verstaendigung: Stimme, Aeusserungen, Miteinander sprechen",
+          "Der letzte Kasten, mit nur vier Unterpunkten",
+          "Wie ein Kind sich mitteilt und andere versteht"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-4",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
+      "afb": 1,
+      "frage": "Im NRW-Lehrplan ist einer der fünf Bereiche nach Sinnesqualitäten untergliedert: Die Wahrnehmung trägt dort acht Entwicklungsschwerpunkte. Nennen Sie alle acht.",
+      "stichpunkte": [
+        "vibratorische Wahrnehmung",
+        "vestibuläre Wahrnehmung",
+        "kinästhetische Wahrnehmung",
+        "taktile Wahrnehmung",
+        "gustatorische Wahrnehmung",
+        "olfaktorische Wahrnehmung",
+        "auditive Wahrnehmung",
+        "visuelle Wahrnehmung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die acht Wahrnehmungsarten des NRW-Lehrplans.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Der Entwicklungsbereich Wahrnehmung ist in den NRW-Unterrichtsvorgaben nach Sinnesqualitäten gegliedert. Genannt werden die vibratorische, die vestibuläre, die kinästhetische und die taktile Wahrnehmung sowie die gustatorische, die olfaktorische, die auditive und die visuelle Wahrnehmung. Die Aufzählung beginnt bei der vibratorischen Wahrnehmung und endet bei der visuellen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In Nordrhein-Westfalen ist die Wahrnehmung ein eigener Bereich. Sie hat acht Schwerpunkte, sortiert nach den Sinnen. Vibratorisch heisst: Schwingungen spüren. Vestibulär heisst: das Gleichgewicht. Kinästhetisch heisst: die eigene Bewegung spüren. Taktil heisst: tasten und fühlen. Gustatorisch heisst: schmecken. Olfaktorisch heisst: riechen. Auditiv heisst: hören. Visuell heisst: sehen. In dieser Reihenfolge stehen sie auch im Lehrplan."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 12, in deinen Notizen S. 45 - dort steht die Achterreihe vollständig. Merkhilfe für die Reihenfolge: erst die drei körpernahen (Schwingung, Gleichgewicht, Eigenbewegung), dann die Haut, dann Zunge und Nase, zuletzt Ohr und Auge. Die Fachwörter lohnen sich, weil sie in der Klausur die Fachsprache belegen; wer eines vergisst, schreibt die deutsche Entsprechung dazu.",
+      "quelle": "folie-entwicklungsbereiche-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Schwingungen spueren, zum Beispiel einen Bass im Boden",
+          "Der erste Punkt der Achterreihe, ganz koerpernah",
+          "Vom lateinischen Wort fuer zittern"
+        ],
+        [
+          "Der Gleichgewichtssinn, sitzt im Innenohr",
+          "Der zweite Punkt: Balance halten, Lage im Raum",
+          "Wichtig beim Schaukeln und beim Drehen"
+        ],
+        [
+          "Die eigene Bewegung und Muskelspannung spueren",
+          "Der dritte Punkt: wo ist mein Arm gerade, ohne hinzusehen?",
+          "Tiefensensibilitaet, aus dem Griechischen fuer Bewegung"
+        ],
+        [
+          "Tasten und Fuehlen ueber die Haut",
+          "Der vierte Punkt: was die Finger melden",
+          "Vom lateinischen Wort fuer beruehren"
+        ],
+        [
+          "Schmecken - der Sinn, der an der Zunge sitzt",
+          "Der fuenfte Punkt der Reihe, direkt vor dem Riechen",
+          "Das Fachwort steckt auch in Degustation"
+        ],
+        [
+          "Riechen - der Sinn fuer Duefte",
+          "Der sechste Punkt, gleich nach dem Schmecken",
+          "Vom lateinischen Wort fuers Riechen"
+        ],
+        [
+          "Hoeren, der Sinn fuers Ohr",
+          "Der vorletzte Punkt der Reihe",
+          "Vom lateinischen Wort fuers Zuhoeren"
+        ],
+        [
+          "Sehen, der letzte Punkt der Achterreihe",
+          "Der Sinn fuers Auge",
+          "Vom lateinischen Wort fuers Schauen"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-5",
+      "unterthema": "Die 4 Entwicklungsbereiche (KMK)",
+      "afb": 1,
+      "frage": "Die KMK-Übersicht nennt im Bereich Kommunikation nicht nur Förderziele, sondern in einem zweiten Block auch vier Formen der Kommunikation. Nennen Sie diese vier Formen.",
+      "stichpunkte": [
+        "basal",
+        "nonverbal",
+        "mündlich",
+        "schriftlich"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die vier Kommunikationsformen der KMK-Übersicht.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die KMK unterscheidet im Entwicklungsbereich Kommunikation vier Kommunikationsformen: basal, nonverbal, mündlich und schriftlich. Sie stehen dort als eigener Block neben der Erweiterung der individuellen Sprechfähigkeit, des Wortschatzes einschliesslich der Begriffsbildung und des Sprachverständnisses sowie der Entwicklung eines sprachlichen Selbstkonzeptes. Weiter erläutert werden die vier Formen in der Vorlesung nicht.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die KMK nennt vier Formen der Kommunikation. Die erste heisst basal. Basal heisst so viel wie grundlegend. Die zweite heisst nonverbal. Nonverbal heisst: ohne Worte. Die dritte ist mündlich. Mündlich heisst: mit der Stimme. Die vierte ist schriftlich. Schriftlich heisst: mit Buchstaben. Die vier Formen stehen in der Spalte Kommunikation, als eigener Block. Mehr erklärt die Vorlesung dazu nicht."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 10, in deinen Notizen S. 44 - dort steht die Viererreihe als zweiter Block der Kommunikationsspalte. Klein, aber gut abfragbar, weil sie so kurz ist: vier Wörter, die eine Steigerung bilden. Wenn nach dem Bereich Kommunikation gefragt wird, gehören sie mit in die Antwort, zusätzlich zu Sprechfähigkeit, Wortschatz, Sprachverständnis und sprachlichem Selbstkonzept.",
+      "quelle": "folie-entwicklungsbereiche-10",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ein Fremdwort fuer grundlegend - es steht am Anfang der Viererreihe",
+          "Der Wortstamm steckt auch in Basis",
+          "Die erste der vier Formen, und die einzige, deren Name nichts ueber Sprechen oder Schreiben sagt"
+        ],
+        [
+          "Die Vorsilbe verneint, der Rest des Wortes heisst Wort",
+          "Verstanden werden, ohne zu sprechen - die zweite der vier Formen",
+          "Ein Fremdwort, das schlicht ohne Worte bedeutet"
+        ],
+        [
+          "Gesprochen, mit der Stimme",
+          "Der Weg ueber die Lautsprache",
+          "Was aus dem Mund kommt"
+        ],
+        [
+          "Festgehalten auf Papier oder Bildschirm",
+          "Der Weg ueber Buchstaben und Zeichen",
+          "Die vierte und letzte Form der Reihe"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-6",
+      "unterthema": "Entwicklungsförderung in der Schule",
+      "afb": 1,
+      "frage": "Die Vorlesung zählt auf, wie Entwicklung im Rahmen von Schule ganz konkret unterstützt und gefördert werden kann - noch bevor vom Fachunterricht die Rede ist. Nennen Sie fünf dieser Wege.",
+      "stichpunkte": [
+        "gute pädagogische Beziehungen bewusst gestalten",
+        "Elternarbeit",
+        "Patenschaften zwischen Schülerinnen und Schülern",
+        "Essenszeiten und Pausen",
+        "Pflegesituationen",
+        "Weitere: Therapien, evaluierte Trainingsprogramme"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne fünf Wege, auf denen Schule Entwicklung unterstützen kann.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Was dir sonst noch aus dieser Aufzählung einfällt.",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Im Rahmen von Schule kann und sollte die überfachliche Entwicklung von Schüler:innen an vielen Stellen unterstützt und gefördert werden. Besonders wichtig ist die bewusste Gestaltung guter pädagogischer Beziehungen. Dazu kommen die Elternarbeit, Schüler:innenpatenschaften, Phasen wie die Essenszeit oder die Pausen, Pflegesituationen sowie die Zuhilfenahme von Therapien und wissenschaftlich evaluierten Trainingsprogrammen, etwa einem Training sozial-emotionaler Kompetenzen. Sinnvoll sind ausserdem immer wieder exklusive Angebote ausserhalb des regulären Unterrichts. Der reguläre (Fach-)Unterricht bleibt daneben der inhaltlich und zeitlich zentrale Ort und sollte hohe Priorität für die Entwicklungsförderung haben.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Schule kann Entwicklung an vielen Stellen fördern. Am wichtigsten ist eine gute Beziehung zwischen Lehrkraft und Kind. Dazu kommt die Arbeit mit den Eltern. Es gibt Patenschaften zwischen Schüler:innen. Auch die Essenszeit und die Pausen zählen. Auch die Pflege zählt. Dazu kommen Therapien. Und es gibt Trainingsprogramme, die wissenschaftlich geprüft sind. Manchmal sind eigene Angebote ausserhalb des Unterrichts sinnvoll. Trotzdem gilt: Der normale Unterricht ist der wichtigste Ort, weil dort die meiste Zeit ist."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 17, in deinen Notizen S. 46. Die Folie setzt die Beziehungsgestaltung bewusst nach vorne (mit einem ganz wichtig! versehen) - wenn du nur einen Punkt sicher hast, dann diesen. Die Liste ist die Vorstufe zur Kernaussage derselben Folie: Auch der reguläre (Fach-)Unterricht soll hohe Priorität für die Entwicklungsförderung haben, und genau dort setzt der duale Unterricht an.",
+      "quelle": "folie-entwicklungsbereiche-17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Punkt, den die Folie mit ganz wichtig markiert",
+          "Nicht Methode, sondern Haltung im Umgang mit dem Kind",
+          "Wie Lehrkraft und Kind miteinander umgehen - bewusst geplant"
+        ],
+        [
+          "Die Zusammenarbeit mit zu Hause",
+          "Wer ausser der Schule erzieht noch mit?",
+          "Ein Wort, das mit Familie zu tun hat"
+        ],
+        [
+          "Kinder helfen Kindern, verabredet und mit Rolle",
+          "Ein Kind uebernimmt Verantwortung fuer ein anderes",
+          "Das Wort kommt von Pate"
+        ],
+        [
+          "Zwei Phasen im Tagesablauf, keine Unterrichtsstunden",
+          "Satt werden und durchatmen - zwei Zeiten im Schultag",
+          "Wenn nicht gelernt, sondern gespielt und geredet wird"
+        ],
+        [
+          "Koerpernahe Situationen, oft sehr intim",
+          "Waschen, Wickeln, Anziehen - auch das ist Foerderung",
+          "Schlichting hat darueber geschrieben"
+        ],
+        [
+          "Zwei fachlich zugeschnittene Angebote, eines wissenschaftlich geprueft",
+          "Denk an Logopaedie und an ein Programm fuer soziale Kompetenzen",
+          "Fachleute von aussen und ein erprobtes Programm"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-7",
+      "unterthema": "Dualer Unterricht",
+      "afb": 1,
+      "frage": "Beschreiben Sie in einem Satz, worin die erste Grundform dualen Unterrichts besteht - die solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht -, und nennen Sie vier Beispiele aus der Vorlesung.",
+      "stichpunkte": [
+        "unterrichtsintegriert allein individuell bestimmte Ziele angehen",
+        "selbstständige Aufgabenbewältigung, Fokus Umgang mit Hilfe",
+        "individuelle Arbeit mit einer Kommunikationstafel",
+        "Verstärkerplan oder Selbstkontrollkarten für mehr Beteiligung",
+        "Förderung der Konzentrationsfähigkeit in Arbeitsphasen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Beschreibe in einem Satz, worin diese Grundform besteht.",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne vier Beispiele, die die Vorlesung dazu gibt.",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht besteht darin, unterrichtsintegriert mit verschiedenen Handlungen, Massnahmen und Medien allein individuell bestimmte Ziele anzugehen. Die Lerngruppe arbeitet also gemeinsam, während für ein einzelnes Kind ein eigenes Entwicklungsziel mitläuft. Beispiele dafür sind die Förderung selbstständiger Aufgabenbewältigung mit dem Fokus auf den Umgang mit Hilfe, die individuelle Arbeit mit einer Kommunikationstafel zur Kommunikationsförderung, ein reflektiert eingesetzter Verstärkerplan beziehungsweise Selbstkontrollkarten zur erhöhten Unterrichtsbeteiligung sowie die individuelle Förderung der Konzentrationsfähigkeit während der Arbeitsphasen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Bei dieser Grundform bekommt ein einzelnes Kind ein eigenes Entwicklungsziel. Das Ziel läuft mitten im normalen Unterricht mit. Die anderen Kinder machen etwas anderes. Solitär heisst: für sich allein. Es gibt vier Beispiele. Erstens: Ein Kind übt, eine Aufgabe allein zu schaffen und sich Hilfe zu holen. Zweitens: Ein Kind arbeitet mit einer Kommunikationstafel. Drittens: Ein Kind bekommt einen Verstärkerplan oder Karten zur Selbstkontrolle, damit es öfter mitmacht. Viertens: Ein Kind übt, sich beim Arbeiten länger zu konzentrieren."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 21, in deinen Notizen S. 48. Das Wort solitär trägt die Definition schon in sich: Das Ziel steht allein, es gilt nur einer Person. Die vier Beispiele lohnen sich, weil sie in einer Anwendungsaufgabe sofort als eigene Idee taugen - und weil die Fallarbeit der Vorlesung (Unterrichtsbeteiligung und Konzentrationsfähigkeit) genau zwei davon aufgreift.",
+      "quelle": "folie-entwicklungsbereiche-21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das Kennzeichen: ein Ziel gilt nur einem Kind, mitten im Unterricht",
+          "Kein eigener Foerderraum, es laeuft im laufenden Unterricht mit",
+          "Eine Person, ein Ziel, Mittel und Medien darauf zugeschnitten"
+        ],
+        [
+          "Es geht ums Alleine-Schaffen und darum, Unterstuetzung anzunehmen",
+          "Wie hole ich mir Unterstuetzung, ohne abhaengig zu bleiben?",
+          "Beispiel eins zielt darauf, ohne staendige Begleitung zurechtzukommen"
+        ],
+        [
+          "Ein Hilfsmittel mit Symbolen zum Zeigen und Mitteilen",
+          "Beispiel aus dem Kunstunterricht bei Scholz/Stegkemper",
+          "Unterstuetzte Kommunikation fuer eine einzelne Person"
+        ],
+        [
+          "Kleine Karten oder ein Plan, der Mitmachen sichtbar macht",
+          "Damit sich ein Kind oefter meldet - was koennte helfen?",
+          "Belohnung und eigene Kontrolle als Werkzeug"
+        ],
+        [
+          "Bei der Stillarbeit dranbleiben koennen",
+          "Nicht abschweifen, waehrend gearbeitet wird",
+          "Das vierte Beispiel zielt auf Ausdauer beim Arbeiten"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-8",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
+      "afb": 1,
+      "frage": "Der Rahmenlehrplan für Berlin und Brandenburg hält in seinen Grundsätzen fest, wobei Kinder und Jugendliche im Förderschwerpunkt Geistige Entwicklung besondere Unterstützung brauchen. Nennen Sie die vier Bereiche, deren Entwicklung dort genannt wird, und die beiden weiteren Felder, die derselbe Satz danach anführt.",
+      "stichpunkte": [
+        "Wahrnehmung",
+        "Sprache",
+        "Denken",
+        "Handeln",
+        "selbstständige und selbstbestimmte Lebensführung",
+        "Findung und Entfaltung der Persönlichkeit"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die vier Bereiche, bei deren Entwicklung besondere Unterstützung nötig ist.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die beiden weiteren Felder, die derselbe Satz danach anführt.",
+          "idx": [
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Grundsätze des Rahmenlehrplans für Berlin und Brandenburg halten fest, dass Kinder und Jugendliche mit dem Förderschwerpunkt Geistige Entwicklung unterschiedliche Erscheinungsbilder in den verschiedenen Entwicklungsbereichen zeigen. Besondere Unterstützung benötigen sie bei der Entwicklung von Wahrnehmung, Sprache, Denken und Handeln; dazu kommen zwei weitere Felder, nämlich die Unterstützung zur selbstständigen und selbstbestimmten Lebensführung und die Findung und Entfaltung der Persönlichkeit. Zusätzlich wird ihre Lern- und Lebenssituation durch körperliche, psychische und soziale Beeinträchtigungen vielfach erschwert.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Rahmenlehrplan für Berlin und Brandenburg sagt: Kinder mit dem Förderschwerpunkt Geistige Entwicklung sind sehr verschieden. Vier Dinge nennt der Plan zuerst. Sie brauchen besondere Unterstützung bei der Wahrnehmung, bei der Sprache, beim Denken und beim Handeln. Dann kommen zwei weitere Felder. Erstens: das eigene Leben selbst führen und selbst entscheiden. Zweitens: eine eigene Persönlichkeit finden und entfalten. Dazu kommt: Körperliche, seelische und soziale Beeinträchtigungen machen das Lernen und Leben oft schwerer."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 11, in deinen Notizen S. 45 - dort hast du die Kernpassagen selbst gelb markiert. Achte auf die Zählung: Der Satz nennt zuerst vier Bereiche, bei deren Entwicklung Unterstützung nötig ist (Wahrnehmung, Sprache, Denken, Handeln), und hängt danach zwei weitere Felder an. Wenn eine Aufgabe nach vier fragt, ist die erste Vierergruppe gemeint. Nicht vergessen: Der Rahmenlehrplan nennt zusätzlich körperliche, psychische und soziale Beeinträchtigungen als Erschwernis - das ist die Stelle, an der er über eine reine Bereichsliste hinausgeht.",
+      "quelle": "folie-entwicklungsbereiche-11",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was ueber die Sinne hereinkommt - das erste Wort der Reihe",
+          "Bevor gedacht wird, muss etwas ankommen",
+          "Sehen, Hoeren, Fuehlen zusammengefasst"
+        ],
+        [
+          "Das Mittel der Verstaendigung, zweites Wort der Reihe",
+          "Woerter, Saetze, Verstehen",
+          "Was im KMK-Raster Kommunikation heisst"
+        ],
+        [
+          "Was im Kopf passiert - drittes Wort",
+          "Der kognitive Teil der Viererreihe",
+          "Verstehen, planen, schlussfolgern"
+        ],
+        [
+          "Das Tun, viertes Wort der Reihe",
+          "Vom Denken zur Ausfuehrung",
+          "Was aus dem Gedachten wird"
+        ],
+        [
+          "Es geht um Autonomie im Alltag, mit zwei Adjektiven beschrieben",
+          "Beide Adjektive beginnen mit demselben Wortteil und klingen aehnlich",
+          "Nicht fremdbestimmt - wer entscheidet, wie es weitergeht?"
+        ],
+        [
+          "Wer bin ich? Das Ich soll sich zeigen und wachsen duerfen",
+          "Hier geht es ums Ich, nicht um einzelne Faehigkeiten",
+          "Zwei Schritte stecken darin: erst suchen, dann wachsen lassen"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb1-9",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
+      "afb": 1,
+      "frage": "Der NRW-Lehrplan (MSB 2022) gliedert den Entwicklungsbereich Kognition in sechs Entwicklungsschwerpunkte. Nennen Sie sie.",
+      "stichpunkte": [
+        "sensomotorische Entwicklung",
+        "Gedächtnis",
+        "Begriffsbildung und Vorstellung von der Welt",
+        "planvolles Handeln",
+        "Beurteilen, Problemlösen, Bewerten",
+        "Lernstrategien"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die sechs Entwicklungsschwerpunkte des Bereichs Kognition.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Der Entwicklungsbereich Kognition umfasst in den NRW-Unterrichtsvorgaben sechs Entwicklungsschwerpunkte: die sensomotorische Entwicklung, das Gedächtnis, die Begriffsbildung und Vorstellung von der Welt, das planvolle Handeln, das Beurteilen, Problemlösen und Bewerten sowie die Lernstrategien. Die Aufzählung beginnt bei der sensomotorischen Entwicklung und endet bei den Lernstrategien. Inhaltlich deckt sich das weitgehend mit der Kognitionsspalte der KMK, die Merkfähigkeit, handlungsplanendes Denken, das Erkennen und Bewerten von Analogien, Problemlösen und Kreativität nennt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Bereich Kognition hat in Nordrhein-Westfalen sechs Schwerpunkte. Kognition heisst: alles, was im Kopf passiert. Erstens die sensomotorische Entwicklung. Das heisst: Wahrnehmen und Bewegen greifen ineinander. Zweitens das Gedächtnis. Drittens die Begriffsbildung. Das heisst: Wörter mit Bedeutung füllen und sich die Welt vorstellen. Viertens das planvolle Handeln. Fünftens das Beurteilen, Problemlösen und Bewerten. Sechstens die Lernstrategien. Das heisst: Wege kennen, wie man selbst gut lernt."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 12, in deinen Notizen S. 45. Die Folie nummeriert die sechs Schwerpunkte einfach durch, ohne eine Aufbaulogik zu behaupten - lern sie als Reihenfolge, nicht als Stufen. Verwechsle sie nicht mit der KMK-Spalte Kognition (Merkfähigkeit, handlungsplanendes Denken, Analogien, Problemlösen, Kreativität): Gemeint ist dasselbe Feld, aber die Klausur fragt nach einer bestimmten Quelle.",
+      "quelle": "folie-entwicklungsbereiche-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wahrnehmen und Bewegen greifen ineinander - die Grundlage",
+          "Der erste Schwerpunkt der Kognitionsspalte",
+          "Zwei Woerter stecken darin: Sinne und Bewegung"
+        ],
+        [
+          "Behalten und wieder abrufen koennen",
+          "Der zweite Schwerpunkt, ein einziges Wort",
+          "Ohne das bleibt nichts haengen"
+        ],
+        [
+          "Woerter mit Bedeutung fuellen und sich die Umwelt erklaeren",
+          "Was ist ein Hund? Und wie haengt alles zusammen?",
+          "Zwei Teile stecken darin: Bedeutungen bilden und die Umwelt einordnen"
+        ],
+        [
+          "Nicht einfach losmachen, sondern vorher ueberlegen",
+          "Der vierte Schwerpunkt: Schritte im Voraus denken",
+          "Der Gegensatz zum spontanen Drauflos"
+        ],
+        [
+          "Drei Verben in einem Punkt, alle mit Urteil zu tun",
+          "Der fuenfte Schwerpunkt: abwaegen, loesen, einschaetzen",
+          "Hier wird entschieden, nicht nur erinnert"
+        ],
+        [
+          "Wege kennen, wie man selbst gut lernt",
+          "Der letzte Schwerpunkt, ein einziges Wort",
+          "Wie man sich etwas merkt, ist selbst lernbar"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb3-1",
+      "unterthema": "Dualer Unterricht",
+      "afb": 3,
+      "frage": "Ein Schüler Ihrer Lerngruppe meldet sich im Unterricht so gut wie nie und bricht in den Arbeitsphasen schon nach kurzer Zeit ab. Entwickeln Sie zwei Ideen zur unterrichtsimmanenten Entwicklungsförderung für diesen Fall, ordnen Sie sie einer Grundform dualen Unterrichts zu und begründen Sie Ihre Wahl.",
+      "stichpunkte": [
+        "Schritt 1: Der Fall zeigt zwei entwicklungsbezogene Bedarfe - Beteiligung am Unterrichtsgeschehen und Konzentration in den Arbeitsphasen",
+        "Idee 1: ein reflektiert eingesetzter Verstärkerplan oder Selbstkontrollkarten, um die Unterrichtsbeteiligung zu erhöhen",
+        "Idee 2: individuelle Förderung der Konzentrationsfähigkeit in den Arbeitsphasen, etwa mit einer Zielkarte, einem Wecker und wenigen Kriterien für gelingendes Arbeiten",
+        "Beide Ideen gehören zur solitären individuellen Entwicklungsförderung im lerngruppenbezogenen Unterricht: unterrichtsintegriert werden allein individuell bestimmte Ziele angegangen",
+        "Die zweite Grundform wäre es erst, wenn alle Schüler:innen im selben Entwicklungsschwerpunkt gefördert würden - hier bleibt das Ziel individuell",
+        "Begründet wird die Wahl damit, dass der reguläre (Fach-)Unterricht der inhaltlich und zeitlich zentrale Fokus der Schule ist und hohe Priorität für die Entwicklungsförderung haben sollte",
+        "Zu jeder Grundform gehören neben spezifischen Chancen auch typische Stolpersteine - ein Verstärkerplan etwa wirkt nur reflektiert eingesetzt"
+      ],
+      "muster": "In diesem Fall stehen zwei entwicklungsbezogene Bedarfe im Vordergrund: die Beteiligung am Unterrichtsgeschehen und die Konzentrationsfähigkeit in den Arbeitsphasen. Eine erste Idee ist ein reflektiert eingesetzter Verstärkerplan beziehungsweise eine Selbstkontrollkarte, mit der der Schüler seine eigenen Beiträge sichtbar macht und sich so schrittweise stärker beteiligt. Eine zweite Idee ist die individuelle Förderung der Konzentrationsfähigkeit während der Arbeitsphasen: Der Schüler erhält eine Zielkarte mit dem Ziel, drei Minuten ohne Hilfe zu arbeiten, dazu einen Wecker und wenige Kriterien für gelingendes Arbeiten, etwa genau lesen und selbst nachdenken. Ergänzend ließe sich die selbstständige Aufgabenbewältigung mit dem Fokus auf den Umgang mit Hilfe fördern. Beide Ideen gehören zur Grundform der solitären individuellen Entwicklungsförderung im lerngruppenbezogenen Unterricht: Unterrichtsintegriert werden mit Handlungen, Maßnahmen und Medien allein individuell bestimmte Ziele angegangen, während die Lerngruppe weiter am gemeinsamen Fachthema arbeitet. Würden dagegen alle Schüler:innen im selben Entwicklungsschwerpunkt gefördert, läge die zweite Grundform vor, die lerngruppenbezogene Umsetzung individueller Entwicklungsziele. Für den unterrichtsimmanenten Weg spricht, dass der reguläre (Fach-)Unterricht der inhaltlich und zeitlich zentrale Fokus der Schule ist und deshalb hohe Priorität für die Entwicklungsförderung haben sollte; ein zusätzliches Angebot außerhalb des Unterrichts könnte das ergänzen, aber nicht ersetzen. Zugleich gehören zu jeder Grundform neben den spezifischen Chancen auch typische Stolpersteine: Ein Verstärkerplan wirkt nur reflektiert eingesetzt, und die Ziele müssen individuell bestimmt und überschaubar bleiben, damit der Schüler nicht überfordert wird.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In dem Fall geht es um zwei Bedarfe aus der Entwicklung. Der Schüler beteiligt sich kaum am Unterricht. Und er arbeitet in den Arbeitsphasen nur kurz. Die erste Idee ist ein Verstärkerplan oder eine Selbstkontrollkarte. Verstärkerplan heißt: Der Schüler sammelt für sein Verhalten sichtbare Zeichen. Selbstkontrollkarte heißt: Er prüft mit einer Karte selbst, wie er arbeitet. So kann er sich Schritt für Schritt mehr beteiligen. Die zweite Idee ist eine Förderung der Konzentration in den Arbeitsphasen. Der Schüler bekommt eine Zielkarte. Auf der Karte steht sein Ziel: drei Minuten ohne Hilfe arbeiten. Dazu stellt er einen Wecker. Auf der Karte stehen auch wenige Regeln für gutes Arbeiten. Zum Beispiel: genau lesen und selbst nachdenken. Beide Ideen gehören zur ersten Grundform des dualen Unterrichts. Sie heißt solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht. Solitär heißt hier: Das Ziel gilt nur für dieses eine Kind. Die Klasse arbeitet weiter am gemeinsamen Thema. Die zweite Grundform wäre es erst, wenn alle im selben Entwicklungsschwerpunkt gefördert werden. Für den Weg im Unterricht spricht ein wichtiger Grund. Der reguläre Unterricht ist der wichtigste Ort der Schule. Dort ist die meiste Zeit, und dort liegt der zentrale Auftrag. Deshalb soll auch die Entwicklungsförderung dort einen hohen Platz haben. Ein Angebot außerhalb des Unterrichts kann das ergänzen. Ersetzen kann es das nicht. Zu jeder Grundform gehören aber auch Stolpersteine. Ein Verstärkerplan hilft nur, wenn er gut überlegt eingesetzt wird. Und die Ziele müssen klein und überschaubar bleiben."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Deine eigenen Ideen musst du hier nicht erfinden: Die vier Beispiele der ersten Grundform stehen auf Folie 21 (bei dir Notizen S. 48), und zwei davon sind genau die Unterrichtsbeteiligung und die Konzentrationsfähigkeit - dieselben beiden Foki, mit denen die Vorlesung ihre Fallarbeit auf Folie 29 anbietet. Die Zielkarte mit den drei Minuten steht auf Folie 22, die in deinen Notizen fehlt. Für AFB III reicht das Aufzählen von Maßnahmen nicht: Erst die Zuordnung zu einer Grundform und die Begründung machen die Antwort vollständig. Die Grundformen mit dem Satz zu Chancen und Stolpersteinen stehen auf Folie 20 (Notizen S. 48), die Priorität des regulären Unterrichts auf Folie 17 (Notizen S. 46).",
+      "quelle": "folie-entwicklungsbereiche-21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zuerst sortieren: welche zwei Baustellen nennt der Fall?",
+          "Kein fachliches Defizit - zwei Ziele aus der Entwicklung",
+          "Mitmachen und Dranbleiben, so lassen sich die Bedarfe fassen"
+        ],
+        [
+          "Erste Idee: ein Plan, der Beitraege sichtbar macht",
+          "Karten zur Selbstkontrolle - wofuer setzt man sie ein?",
+          "Beispiel der Vorlesung fuer mehr Mitarbeit im Unterricht"
+        ],
+        [
+          "Zweite Idee: Ausdauer beim Arbeiten aufbauen",
+          "Karte mit Ziel, dazu Wecker und wenige Regeln",
+          "Drei Minuten ohne Hilfe - erinnerst du die Zielkarte?"
+        ],
+        [
+          "Welche Grundform passt? Sie steht an erster Stelle",
+          "Nur fuer dieses eine Kind, mitten im gemeinsamen Unterricht",
+          "Im Namen steckt ein lateinisches Wort fuer einzeln"
+        ],
+        [
+          "Wann waere es die naechste Grundform? Frag nach der Reichweite",
+          "Ein Schwerpunkt fuer alle statt eines Ziels fuer eines",
+          "Grenze ziehen: einzelnes Kind oder ganze Lerngruppe"
+        ],
+        [
+          "Warum im Unterricht und nicht daneben? Denk an Zeit und Auftrag",
+          "Wo verbringt Schule die meisten Stunden?",
+          "Das Hauptargument fuer den Fachunterricht als Ort"
+        ],
+        [
+          "Der kritische Schluss: was hat jede Grundform ausser Chancen?",
+          "Ein Plan hilft nur, wenn er wie eingesetzt wird?",
+          "Grenzen benennen gehoert zur Bewertung dazu"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb3-2",
+      "unterthema": "Dualer Unterricht",
+      "afb": 3,
+      "frage": "Das Fazit der Vorlesung lobt den dualen Unterricht in einem Atemzug hoch und nennt ihn zugleich ein wissenschaftlich noch uneingelöstes Vorhaben. Bewerten Sie vor diesem Hintergrund, ob das Konzept schon eine tragfähige Grundlage für die Unterrichtsplanung im SGE ist.",
+      "stichpunkte": [
+        "Dafür 1: Das Konzept ist klar bestimmt - fachliches Lernen wird unterrichtsimmanent und systematisch mit Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt",
+        "Dafür 2: Es liegen mindestens fünf ausdifferenzierte Grundformen mit vielfältigen Beispielen vor, und diese Offenheit entspricht der Vielfalt an Bedarfslagen in Lerngruppen",
+        "Dafür 3: Das Konzept wird aus mehreren Richtungen vertreten - sprachheilpädagogisch, aus der emotionalen und sozialen Entwicklung und fachrichtungsübergreifend",
+        "Dagegen 1: Eine systematische, umfassende und vor allem empirisch fundierte Konzeptualisierung fehlt bislang, besonders im Schwerpunkt Geistige Entwicklung",
+        "Dagegen 2: Die Grundformen sind nicht immer trennscharf - der Scherenführerschein passt nach Jöhncks eigener Anmerkung nur halb zu der Grundform, unter der er steht",
+        "Als Bewertung trägt das Konzept schon als Orientierung für die Planung, bleibt als Forschungsfeld aber offen - gefordert sind Kooperation mit den Fachdidaktiken und Vernetzung der Fachrichtungen"
+      ],
+      "muster": "Für die Tragfähigkeit spricht zunächst, dass das Konzept klar bestimmt ist: Im dualen Unterricht wird das unterrichtsfachliche Lernen unterrichtsimmanent und systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt. Dazu liegen mindestens fünf ausdifferenzierte Grundformen mit vielfältigen Beispielen vor, und gerade diese Vielfalt und Offenheit entspricht der Vielfalt an Bedarfslagen und Entwicklungspotenzialen in Lerngruppen. Hinzu kommt, dass das Konzept nicht nur aus einer Ecke vertreten wird: Es wird vor allem in sprachheilpädagogischen Kontexten und ausgehend von der Fachrichtung Emotionale und soziale Entwicklung propagiert, aber auch fachrichtungsübergreifend. Dagegen spricht, dass eine systematische, umfassende und insbesondere empirisch fundierte Konzeptualisierung bislang ein weitgehendes Desiderat ist, und zwar besonders im Schwerpunkt Geistige Entwicklung. Auch die Grundformen selbst sind nicht immer trennscharf: Jöhnck ordnet den Scherenführerschein im Kunstunterricht seiner Grundform nur mit ausdrücklichem Vorbehalt zu, und zu jeder Grundform gehören typische Stolpersteine. Ich bewerte das Konzept deshalb als tragfähige Orientierung für die Unterrichtsplanung, nicht als fertige Didaktik: Es ordnet Planungsentscheidungen, macht sie begründbar und benennt konkrete Umsetzungswege, bleibt als Forschungsfeld aber offen. Damit sich das ändert, braucht es die Kooperation mit den Fachdidaktiken und eine stärkere Vernetzung der sonderpädagogischen Fachrichtungen untereinander.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Für das Konzept spricht ein erster Grund. Es ist klar bestimmt. Im dualen Unterricht wird fachliches Lernen mit Förderung in Entwicklungsbereichen verbunden. Das geschieht im Unterricht selbst und nach einem System. Ein zweiter Grund: Es gibt mindestens fünf Grundformen mit vielen Beispielen. Diese Offenheit passt zu den vielen verschiedenen Bedarfen in einer Lerngruppe. Ein dritter Grund: Das Konzept kommt nicht nur aus einer Ecke. Es wird in der Sprachheilpädagogik vertreten. Es wird in der Fachrichtung Emotionale und soziale Entwicklung vertreten. Und es wird über die Fachrichtungen hinweg vertreten. Gegen das Konzept spricht ein erster Punkt. Eine systematische und empirisch geprüfte Ausarbeitung fehlt bis heute. Empirisch heißt: mit Forschung überprüft. Ein Desiderat ist etwas, das noch fehlt und gewünscht wird. Das gilt besonders für den Schwerpunkt Geistige Entwicklung. Ein zweiter Punkt: Die Grundformen sind nicht immer klar getrennt. Jöhnck sagt bei einem eigenen Beispiel selbst, dass es nur halb passt. Meine Bewertung: Das Konzept trägt schon als Orientierung für die Planung. Als Forschungsfeld bleibt es offen. Nötig ist die Zusammenarbeit mit den Fachdidaktiken. Nötig ist auch die Vernetzung der sonderpädagogischen Fachrichtungen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Beide Seiten stehen auf den Folien, die Abwägung dazwischen steht nirgends - die führst du wirklich selbst, und genau das ist hier die Leistung. Lob und Einwand stehen sogar im selben Fazit: Folie 31 nennt den dualen Unterricht eine wertvolle konzeptionelle Ressource und im nächsten Punkt ein weitgehendes Desiderat (bei dir Notizen S. 49). Achte auf die Präzisierung: Desiderat ist er nicht, weil es zu wenige Veröffentlichungen gäbe, sondern weil die systematische, empirisch fundierte Konzeptualisierung fehlt (Folie 18, Notizen S. 47). Die fünf Grundformen mit dem Satz zu Chancen und Stolpersteinen liefert Folie 20, die nur halb passende Zuordnung des Scherenführerscheins Folie 28.",
+      "quelle": "folie-entwicklungsbereiche-31",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erstes Dafuer: das Konzept hat eine klare Definition",
+          "Wie lautet die Bestimmung aus dem Aufsatz von 2023?",
+          "Fach und Entwicklung - wie werden sie zusammengebracht?"
+        ],
+        [
+          "Zweites Dafuer: es gibt eine ausgearbeitete Formenlehre",
+          "Wie viele Wege der Umsetzung werden unterschieden?",
+          "Offenheit passt wozu in einer Lerngruppe?"
+        ],
+        [
+          "Drittes Dafuer: nicht nur ein Fach vertritt die Idee",
+          "Aus welchen Fachrichtungen kommt der Zuspruch?",
+          "Breite Traegerschaft statt Einzelmeinung"
+        ],
+        [
+          "Erstes Dagegen: was fehlt der Forschung bis heute?",
+          "Das Stichwort mit D - worauf bezieht es sich genau?",
+          "Nicht die Zahl der Buecher ist das Problem"
+        ],
+        [
+          "Zweites Dagegen: wie scharf sind die Formen wirklich?",
+          "Sogar der Autor raeumt bei einem eigenen Beispiel etwas ein",
+          "Denk an die Schere im Kunstunterricht"
+        ],
+        [
+          "Dein Fazit: wofuer traegt es schon, wofuer noch nicht?",
+          "Zum Schluss: wer soll kuenftig staerker zusammenarbeiten?",
+          "Orientierung ja, fertige Didaktik nein"
+        ]
+      ]
+    },
+    {
+      "id": "eb-afb3-3",
+      "unterthema": "Entwicklungsbereiche in den Lehrplänen",
+      "afb": 3,
+      "frage": "Die KMK und die nordrhein-westfälischen Unterrichtsvorgaben schneiden die Entwicklungsbereiche unterschiedlich zu, der Rahmenlehrplan für Berlin und Brandenburg benennt in seinen Grundsätzen wiederum eigene Felder mit besonderem Unterstützungsbedarf, und in der Fachliteratur stehen daneben noch weitere Begriffe für dasselbe Feld. Erörtern Sie, ob diese Vielfalt für die Arbeit im SGE eher hinderlich oder eher hilfreich ist, und beziehen Sie begründet Stellung.",
+      "stichpunkte": [
+        "Befund 1: Die KMK unterscheidet vier Bereiche, die NRW-Vorgaben fünf; der Rahmenlehrplan für Berlin und Brandenburg führt keine solche Liste, sondern nennt Wahrnehmung, Sprache, Denken und Handeln als Felder mit besonderem Unterstützungsbedarf",
+        "Befund 2: Daneben kursieren sich überschneidende Begriffe - überfachliche, formale, adaptive Kompetenzen, funktionsbezogene Lernbereiche, Lebenskompetenzen, Personale Bildung",
+        "Hinderlich 1: Wer das Bundesland oder die Quelle wechselt, muss ständig übersetzen; zusätzlich überschneidet sich das Feld mit den unterrichtsfachlichen Kompetenzen",
+        "Hinderlich 2: Ohne gemeinsame Sprache wird die Verständigung im Team und mit anderen Disziplinen mühsam, obwohl gerade Kooperation ausdrücklich gefordert ist",
+        "Hilfreich 1: Jede Systematik hat ihren Zweck - die KMK gibt die knappe länderübergreifende Orientierung, die Unterrichtsvorgaben gliedern bis zu Schwerpunkten, Aspekten und angestrebten Kompetenzen",
+        "Hilfreich 2: Erst die feine Gliederung zeigt, dass eine lebensweltbezogene Kompetenz wie Sich waschen Fähigkeiten aus allen Bereichen bündelt",
+        "Vertretbar ist die Stellungnahme, den Lehrplan des eigenen Landes als verbindlichen Rahmen zu nehmen, die KMK als übergreifende Orientierung zu lesen und die übrigen Begriffe zu übersetzen"
+      ],
+      "muster": "Die Entwicklungsbereiche werden in den Vorgaben unterschiedlich zugeschnitten: Die KMK unterscheidet vier Bereiche, die nordrhein-westfälischen Unterrichtsvorgaben fünf, weil dort Motorik und Wahrnehmung getrennt geführt werden und die Sozialisation einen eigenen Bereich bildet. Der Rahmenlehrplan für Berlin und Brandenburg stellt daneben gar keine eigene Bereichssystematik auf, sondern nennt in seinen Grundsätzen Felder, bei denen besondere Unterstützung nötig ist: Wahrnehmung, Sprache, Denken und Handeln sowie die selbstständige und selbstbestimmte Lebensführung und die Findung und Entfaltung der Persönlichkeit. Hinzu kommt eine immense Zahl sich überschneidender Begriffe für dasselbe Feld: überfachliche, formale und adaptive Kompetenzen, funktionsbezogene Lernbereiche, Lebenskompetenzen, Personale Bildung, Befähigungsbereiche und weitere. Gegen diese Vielfalt spricht, dass sie ständiges Übersetzen verlangt: Wer das Bundesland oder die Quelle wechselt, findet dieselbe Sache unter einem anderen Namen und in einem anderen Zuschnitt, und zusätzlich überschneidet sich das Feld mit den unterrichtsfachlichen Kompetenzen - kommunikative Fähigkeiten sind zugleich Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch. Ohne gemeinsame Sprache wird die Verständigung im Team und mit anderen Disziplinen mühsam, obwohl gerade die Kooperation ausdrücklich gefordert wird. Für die Vielfalt spricht, dass jede Systematik ihren eigenen Zweck erfüllt: Die KMK gibt eine knappe, länderübergreifende Orientierung, während die Unterrichtsvorgaben bis hinunter zu Entwicklungsschwerpunkten, Entwicklungsaspekten und angestrebten Kompetenzen gliedern und die Planung dadurch konkret machen. Erst diese feine Gliederung macht sichtbar, dass sich eine lebensweltbezogene Kompetenz wie das Sich-Waschen aus Fähigkeiten aller Bereiche zusammensetzt. Ich halte die Vielfalt deshalb für tragbar, solange man sie ordnet: Verbindlich ist der Lehrplan des eigenen Landes, die KMK-Empfehlung gibt den übergreifenden Rahmen, und die weiteren Begriffe liest man als andere Namen für dasselbe Anliegen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorgaben teilen die Entwicklungsbereiche verschieden ein. Die KMK nennt vier Bereiche. Die Vorgaben aus Nordrhein-Westfalen nennen fünf Bereiche. Dort stehen Motorik und Wahrnehmung getrennt. Und die Sozialisation ist ein eigener Bereich. Der Rahmenlehrplan für Berlin und Brandenburg macht keine eigene Liste von Bereichen. Er sagt nur, wobei die Schüler:innen besondere Unterstützung brauchen. Nämlich bei Wahrnehmung, Sprache, Denken und Handeln. Und bei der selbstständigen Lebensführung und bei der Entfaltung der Persönlichkeit. Dazu kommen viele Begriffe aus der Fachliteratur. Zum Beispiel: überfachliche Kompetenzen, formale Kompetenzen oder Lebenskompetenzen. Sie meinen weitgehend dasselbe Feld. Gegen diese Vielfalt spricht ein Grund. Man muss ständig übersetzen. Wer das Bundesland wechselt, findet dieselbe Sache unter einem anderen Namen. Auch mit den Fächern gibt es Überschneidungen. Kommunikation ist zugleich ein Ziel im Fach Deutsch. Ein zweiter Grund dagegen: Ohne gemeinsame Sprache ist die Verständigung schwer. Das gilt im Team und mit anderen Berufsgruppen. Dabei ist Zusammenarbeit ausdrücklich gewünscht. Für die Vielfalt spricht aber auch etwas. Jede Einteilung hat ihren eigenen Zweck. Die KMK gibt einen kurzen Überblick für alle Bundesländer. Die Unterrichtsvorgaben gehen sehr ins Detail. Sie nennen Schwerpunkte, Aspekte und angestrebte Kompetenzen. Das macht die Planung konkret. So sieht man auch: Eine Alltagsfähigkeit wie Sich waschen braucht Fähigkeiten aus allen Bereichen. Meine Stellungnahme: Verbindlich ist der Lehrplan des eigenen Landes. Die KMK gibt den großen Rahmen. Die anderen Begriffe kann man wie Übersetzungen lesen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Fakten hast du schon: Die KMK-Vierteilung steht auf Folie 10 (bei dir Notizen S. 44), das NRW-Schaubild mit den fünf Bereichen und der Gliederung bis zu Entwicklungsschwerpunkten, Aspekten und angestrebten Kompetenzen auf Folie 12 (Notizen S. 45), die Begriffsliste auf Folie 16 (Notizen S. 46) und das Beispiel Sich waschen auf Folie 14, die in deinen Notizen fehlt. Achte bei Folie 11 auf eine Feinheit: Der Rahmenlehrplan für Berlin und Brandenburg stellt dort keine Systematik von Bereichen auf, sondern nennt im Abschnitt Grundsätze Felder, bei denen besondere Unterstützung nötig ist - seine Aufzählung lässt sich deshalb nicht einfach gegen vier oder fünf Bereiche aufrechnen. Dass die Kooperation mit den Fachdidaktiken und zwischen den sonderpädagogischen Fachrichtungen ausdrücklich gefordert wird, steht im Fazit auf Folie 31 (Notizen S. 49). Ob die Vielfalt nun hilft oder stört, sagt keine einzige Folie - und auch der Gedanke, dass jede Systematik ihren eigenen Zweck erfüllt, ist deine Deutung dieser Folien und steht nirgends so geschrieben. Dieses Abwägen ist dein eigener Teil, und ohne die Stellungnahme am Schluss bleibt die Antwort auf AFB II stehen. Ein guter Anker: Jöhnck setzt hinter seine babylonische Begriffsverwirrung selbst ein Fragezeichen, hält die Sache also offen.",
+      "quelle": "folie-entwicklungsbereiche-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erster Befund: wie viele Bereiche zaehlt welches Papier?",
+          "Zwei der drei Papiere zaehlen Bereiche - welches kommt auf eines mehr?",
+          "Berlin und Brandenburg listet gar keine Bereiche - was dann?"
+        ],
+        [
+          "Zweiter Befund: wie viele Namen kursieren fuer dasselbe Feld?",
+          "Die Wortwolke aus der Fachliteratur - nenn ein paar davon",
+          "Babylon laesst gruessen: welches Bild meint das?"
+        ],
+        [
+          "Erstes Kontra: was kostet der Wechsel zwischen Quellen?",
+          "Uebersetzen statt lesen - warum stoert das im Alltag?",
+          "Auch die Faecher greifen in dasselbe Feld hinein"
+        ],
+        [
+          "Zweites Kontra: was wird ohne einheitliche Sprache schwer?",
+          "Denk an Teams und an andere Berufsgruppen",
+          "Zusammenarbeit ist gewuenscht - und dann?"
+        ],
+        [
+          "Erstes Pro: jede Einteilung hat einen eigenen Zweck",
+          "Ueberblick oben, Detail unten - wer leistet was?",
+          "Knapp und laenderweit gegen fein gegliedert"
+        ],
+        [
+          "Zweites Pro: was bringt die feine Gliederung fuer die Planung?",
+          "Denk an das Wasch-Beispiel aus der Tabelle",
+          "Alltagskoennen setzt sich woraus zusammen?"
+        ],
+        [
+          "Deine Stellungnahme: was ist verbindlich, was nur Rahmen?",
+          "Ordnen statt klagen - welche Rangfolge schlaegst du vor?",
+          "Zum Schluss: wie gehst du mit den fremden Woertern um?"
         ]
       ]
     }

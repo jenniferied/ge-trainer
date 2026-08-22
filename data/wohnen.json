@@ -772,13 +772,17 @@
   "frei": [
     {
       "id": "wo-f-1",
+      "unterthema": "Rechtliche Grundlagen",
       "afb": 1,
       "frage": "Benennen Sie die rechtlichen Grundlagen für die Wohnsituation von Menschen mit Behinderungen. **Gemeint sind die Rechtsquellen, in denen das Wohnrecht steht, und die wichtigen Artikel darin.**",
       "stichpunkte": [
-        "Wohnrecht verankert in: Sozialgesetzbuch, Grundgesetz, UN-Behindertenrechtskonvention",
-        "Grundgesetz: Unversehrtheit der Wohnung; Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG); freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG); Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG)",
-        "UN-BRK Art. 19: gleichberechtigte Wahl von Aufenthaltsort, wo und mit wem man lebt; keine Verpflichtung zu besonderen Wohnformen; Zugang zu Unterstützungsdiensten inkl. persönlicher Assistenz; gemeindenahe, angepasste Dienstleistungen",
-        "Kernsatz: Wohnen ist ein Menschenrecht"
+        "Wohnen ist ein Menschenrecht - Sozialgesetzbuch, Grundgesetz, UN-BRK",
+        "GG: Unversehrtheit der Wohnung; Freizügigkeit (Art. 11 Abs. 1 GG)",
+        "Art. 2 GG: freie Entfaltung (Abs. 1); Leben und Freiheit (Abs. 2)",
+        "UN-BRK Art. 19: wo und mit wem man lebt, gleichberechtigt wählen",
+        "Weitere: keine Pflicht zu besonderen Wohnformen; Assistenz",
+        "Weitere: gemeindenahe, angepasste Dienstleistungen (UN-BRK Art. 19)",
+        "Weitere: Art. 2 Abs. 2 GG nennt auch die körperliche Unversehrtheit"
       ],
       "muster": "Das Wohnrecht von Menschen mit Behinderungen ist im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention verankert - Wohnen ist ein Menschenrecht. Im Grundgesetz stützen es die Unversehrtheit der Wohnung, die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie das Recht auf Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG). Artikel 19 der UN-BRK garantiert zudem, dass Menschen mit Behinderungen gleichberechtigt wählen können, wo und mit wem sie leben, dass sie nicht verpflichtet sind, in besonderen Wohnformen zu leben, und dass sie Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz erhalten.",
       "musterVarianten": {
@@ -798,31 +802,89 @@
       "tipp": "Kleiner Hinweis: Auf der Folie steht die Unversehrtheit der Wohnung mit Art. 14 Abs. 1 GG - im Grundgesetz ist die Unverletzlichkeit der Wohnung eigentlich Art. 13. Lerne es so, wie es auf der Folie steht, aber wundere dich nicht, falls es dir woanders anders begegnet. Nachschlagen kannst du die drei Verankerungen des Wohnrechts auf Folie 7, die vier Grundgesetz-Artikel auf Folie 8 und den Artikel 19 der UN-BRK auf Folie 9; in deinen Notizen steht das Wohnrecht-Schaubild auf Notizen S. 08, die Grundgesetz-Kästen und die UN-BRK-Zitate auf Notizen S. 09.",
       "quelle": "folie-wohnen-8",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Worin das Wohnrecht verankert ist - und welchen Rang es hat",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Die Artikel des Grundgesetzes, die das Wohnen schützen",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Grundgesetz 1",
+            "Grundgesetz 2"
+          ]
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Was die UN-Behindertenrechtskonvention zum Wohnen garantiert",
+          "idx": [
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "UN-BRK"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Das gehört auch dazu, wenn du es noch unterbringst",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
-          "Drei Ebenen von Recht, national bis international.",
-          "In welchen drei Gesetzeswerken ist das Thema verankert?",
-          "Die Grafik mit den drei rechtlichen Saeulen."
+          "Drei Gesetzeswerke, national und international - plus der Rang darüber.",
+          "In welchen drei Büchern steht dieses Recht? Und welchen Status hat es?",
+          "Die Grafik mit den drei Säulen - und der Satz, der darübersteht."
         ],
         [
-          "Vier Garantien aus der Verfassung, mit Artikelnummern.",
-          "Was schuetzt das deutsche Grundrecht rund ums Zuhause?",
-          "Denk an die Artikel 2 und 11 - was steht dort?"
+          "Zwei der vier Kästen der Folie: das Zuhause selbst und das freie Ziehen.",
+          "Was schützt die Verfassung rund um die eigene Tür - und das Umziehen?",
+          "Ein Kasten schützt die Wohnung, der andere den freien Umzug."
         ],
         [
-          "Der internationale Artikel mit der Nummer 19 - worum geht es?",
-          "Konvention: Wer entscheidet ueber Ort und Mitbewohner?",
-          "Keine Pflicht zu einer bestimmten Wohnform - plus Assistenz."
+          "Ein Artikel mit zwei Absätzen - beide schützen den Menschen selbst.",
+          "Womit darf man sich frei entwickeln, und was darf einem niemand nehmen?",
+          "Der Artikel hat zwei Absätze: Entwicklung im ersten, Dasein und Freiheit im zweiten."
         ],
         [
-          "Der eine Satz, der alles zusammenfasst.",
-          "Welchen Rang hat Wohnen unter den Rechten?",
-          "Das kurze Fazit: mehr als ein Beduerfnis."
+          "Der internationale Text - was garantiert er beim Wohnort?",
+          "Konvention: Wer entscheidet über Ort und Mitbewohner?",
+          "Das Kernwort ist Wahlfreiheit - für welche zwei Fragen gilt sie?"
+        ],
+        [
+          "Was die Konvention ausdrücklich ausschließt, und welche Hilfe sie zusagt.",
+          "Niemand muss ins Heim - und wer unterstützt dann zu Hause?"
+        ],
+        [
+          "Angebote für alle, aber am Wohnort und auf den Bedarf zugeschnitten.",
+          "Nicht am Stadtrand, sondern mittendrin - und passend gemacht."
+        ],
+        [
+          "Der zweite Absatz schützt noch etwas Drittes am Menschen selbst.",
+          "Nicht die Wohnung, sondern der Körper - was steht da noch?"
         ]
       ]
     },
     {
       "id": "wo-f-2",
+      "unterthema": "Bedeutung & Geschichte",
       "afb": 2,
       "frage": "Beschreiben Sie die Bedeutung von Wohnen für Menschen mit geistiger Beeinträchtigung im Kontext der geschichtlichen Entwicklung der letzten 70 Jahre. **Mit der geschichtlichen Entwicklung sind die Meilensteine gemeint, die den Wandel des Wohnens markieren.**",
       "stichpunkte": [
@@ -880,6 +942,7 @@
     },
     {
       "id": "wo-f-3",
+      "unterthema": "Wohnformen",
       "afb": 2,
       "frage": "Vergleichen Sie Wohnformen für Erwachsene mit geistiger Beeinträchtigung im Hinblick auf Selbstbestimmung.",
       "stichpunkte": [
@@ -937,6 +1000,7 @@
     },
     {
       "id": "wo-f-4",
+      "unterthema": "Wohnen als Bildungsaufgabe",
       "afb": 3,
       "frage": "Erörtern Sie das Wohnen als Bildungsaufgabe der Schule: Wie kann es didaktisch-methodisch vermittelt werden - und wo liegen Herausforderungen?",
       "stichpunkte": [
@@ -994,6 +1058,7 @@
     },
     {
       "id": "wo-gen-f-1",
+      "unterthema": "Wohnformen",
       "afb": 2,
       "frage": "Erläutern Sie am Fallbeispiel von Herrn M., welche Bedeutung und welche Risiken das Wohnen in der Herkunftsfamilie (beschützende Elternschaft) hat.",
       "stichpunkte": [
@@ -1052,6 +1117,7 @@
     },
     {
       "id": "wo-gen-f-2",
+      "unterthema": "Wohnformen",
       "afb": 2,
       "frage": "Analysieren Sie die statistische Entwicklung des betreuten Wohnens von Menschen mit Behinderungen (2010 bis 2023) und setzen Sie sie in Beziehung zur gewünschten Entwicklungsrichtung der Wohnformen.",
       "stichpunkte": [
@@ -1110,6 +1176,7 @@
     },
     {
       "id": "wo-gen-f-3",
+      "unterthema": "Wohnen als Bildungsaufgabe",
       "afb": 3,
       "frage": "Entwickeln Sie in Grundzügen ein mehrtägiges Wohntraining für eine Abschlussklasse und begründen Sie Ihre Auswahl der Inhalte mit den Fähigkeiten, die selbstständiges Wohnen verlangt. **Gemeint sind die Fähigkeiten aus der Mindmap 'Fähigkeiten Wohnen'.**",
       "stichpunkte": [
@@ -1168,17 +1235,24 @@
     },
     {
       "id": "wo-fol-f-1",
+      "unterthema": "Wohnen als Bildungsaufgabe",
       "afb": 3,
       "frage": "Erörtern Sie die Bildungsziele im Themenfeld Wohnen für die Abschlussstufe unter Bezugnahme auf die curricularen Vorgaben **(gemeint ist der Rahmenlehrplan)**. Gehen Sie von der Leitkompetenz aus, nennen Sie mehrere angestrebte Kompetenzen und arbeiten Sie heraus, worin sich diese Stufe vom Handlungsfeld Wohnen der Klassen 1 bis 10 unterscheidet.",
       "stichpunkte": [
-        "Leitkompetenz 11: Die Schüler:innen erkunden Wohnformen und erweitern ihre Selbstversorgung (SenBildWiss Berlin & LISUM 2013, 49)",
-        "Angestrebte Kompetenzen, Bereich Interesse und Alltagshandeln: Interesse und Freude an Aktivitäten im Wohnbereich und Haushalt zeigen; verschiedene Aktivitäten und Aufgaben benennen; sich bei Körperpflege, Speisezubereitung und Wohnraumpflege möglichst selbstständig einbringen; Maßnahmen der Gesundheitsvorsorge regelmäßig wahrnehmen",
-        "Angestrebte Kompetenzen, Bereich Wissen und Orientierung: sich mit Wohnraumgestaltung, Ernährung, Freizeit und Zusammenleben befassen; die Bedeutung des Wohnens für Wohlbefinden und Gesundheit einschätzen; verschiedene Wohnformen und Wohneinrichtungen erkunden; Unterstützungs- und Betreuungssysteme unterscheiden",
-        "Angestrebte Kompetenzen, Bereich eigene Lebensplanung: die gegenwärtige Wohnsituation darstellen und Visionen entwickeln; Wohnbedürfnisse und -wünsche mit den realen Möglichkeiten abwägen; im Rahmen der individuellen Lebensplanung eigene Vorstellungen von Wohnformen entwickeln und darstellen",
-        "Unterschied zu Kl. 1-10: Dort ist Wohnen im Leitthema Der Mensch im Alltag verortet und wird stark über die Hauswirtschaft konkretisiert (Nahrungszubereitung, Hygiene, Wäschepflege, Pflege von Möbeln und Wohnräumen, Bedienung von Geräten)",
-        "Der Zuwachs liegt in der biografischen und entscheidungsbezogenen Dimension: nicht nur können, sondern auch vergleichen, abwägen und für sich selbst planen",
-        "Verbindung zum Rest des Themas: Das Erkunden von Wohnformen setzt voraus, dass die Wohnformen im Unterricht auch wirklich vorkommen - vom Wohnen in der Familie über vollstationäre und teilstationäre Formen bis zum ambulant unterstützten Wohnen",
-        "Anschlussfähig für eine Bewertung: Abwägen kann nur, wer reale Wahlmöglichkeiten hat - die Bildungsziele stoßen dort an Grenzen, wo das Angebot vor Ort fehlt"
+        "Leitkompetenz 11: Wohnformen erkunden, Selbstversorgung erweitern",
+        "Interesse und Alltagshandeln: im Haushalt selbstständig mittun",
+        "Wissen und Orientierung: Einrichtungen erkunden, Systeme unterscheiden",
+        "Eigene Lebensplanung: Wohnsituation darstellen, Wünsche abwägen",
+        "Klassen 1-10: Wohnen steht im Leitthema Der Mensch im Alltag, konkretisiert über die Hauswirtschaft - Nahrungszubereitung, Hygiene, Wäschepflege, Pflege von Möbeln und Wohnräumen, Geräte bedienen",
+        "Der Zuwachs der Abschlussstufe ist biografisch und entscheidungsbezogen - nicht nur können, sondern vergleichen, abwägen und für sich selbst planen",
+        "Erkunden setzt voraus, dass die Wohnformen im Unterricht wirklich vorkommen - von der Familie über vollstationäre und teilstationäre Formen bis zum ambulant unterstützten Wohnen",
+        "Abwägen kann nur, wer reale Wahlmöglichkeiten hat - die Bildungsziele stoßen dort an Grenzen, wo das Angebot vor Ort fehlt",
+        "Weitere: Freude zeigen, Aufgaben im Wohnbereich benennen, Vorsorge",
+        "Weitere: Körperpflege, Speisezubereitung, Wohnraumpflege",
+        "Weitere: Wohnraumgestaltung, Ernährung, Freizeit, Zusammenleben",
+        "Weitere: Bedeutung des Wohnens für Wohlbefinden und Gesundheit",
+        "Weitere: Visionen entwickeln, eigene Vorstellungen vom Wohnen",
+        "Quelle: SenBildWiss Berlin & LISUM 2013, 49"
       ],
       "muster": "Die curricularen Vorgaben für die Abschlussstufe fassen das Thema Wohnen in einer eigenen Leitkompetenz: Die Schülerinnen und Schüler erkunden Wohnformen und erweitern ihre Selbstversorgung. Die angestrebten Kompetenzen lassen sich in drei Richtungen ordnen. Eine erste Gruppe zielt auf Interesse und Alltagshandeln: Die Schülerinnen und Schüler sollen Freude an Aktivitäten im Wohnbereich zeigen, Aufgaben im Haushalt benennen, sich bei Körperpflege, Speisezubereitung und Wohnraumpflege möglichst selbstständig einbringen und Maßnahmen der Gesundheitsvorsorge regelmäßig wahrnehmen. Eine zweite Gruppe zielt auf Wissen und Orientierung: sich mit Wohnraumgestaltung, Ernährung, Freizeit und Zusammenleben befassen, die Bedeutung des Wohnens für Wohlbefinden und Gesundheit einschätzen, verschiedene Wohnformen und Wohneinrichtungen erkunden und Unterstützungs- und Betreuungssysteme unterscheiden. Die dritte Gruppe schließlich betrifft die eigene Lebensplanung: die gegenwärtige Wohnsituation darstellen und Visionen entwickeln, Wohnbedürfnisse und Wünsche mit den realen Möglichkeiten abwägen und im Rahmen der individuellen Lebensplanung eigene Vorstellungen von Wohnformen entwickeln und darstellen. Gerade diese dritte Gruppe unterscheidet die Abschlussstufe von den Klassen 1 bis 10. Dort ist Wohnen im Leitthema Der Mensch im Alltag verortet und wird vor allem über die Hauswirtschaft konkretisiert, also über Nahrungszubereitung, Hygiene, Wäschepflege, die Pflege von Möbeln und Wohnräumen und die Bedienung von Geräten. Der Zuwachs in der Abschlussstufe liegt damit nicht in erster Linie im Können, sondern im Vergleichen, Abwägen und Planen für die eigene Zukunft. Das setzt allerdings voraus, dass die Wohnformen im Unterricht auch tatsächlich vorkommen und dass vor Ort reale Wahlmöglichkeiten bestehen; wo das nicht der Fall ist, bleibt das Abwägen eine Übung ohne Gegenstand.",
       "musterVarianten": {
@@ -1199,51 +1273,166 @@
       "quelle": "folie-wohnen-29",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Von der Leitkompetenz des Rahmenlehrplans ausgehen",
+          "idx": [
+            0
+          ],
+          "form": "liste",
+          "chips": [
+            "Leitkompetenz"
+          ]
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Mehrere angestrebte Kompetenzen nennen",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "Gruppe 1",
+            "Gruppe 2",
+            "Gruppe 3"
+          ]
+        },
+        {
+          "operator": "vergleichen",
+          "rolle": "positionB",
+          "form": "rolle",
+          "auftrag": "Wie das Handlungsfeld Wohnen in den Klassen 1 bis 10 gefasst ist",
+          "idx": [
+            4
+          ],
+          "satzanfang": "In den Klassen 1 bis 10 …"
+        },
+        {
+          "operator": "vergleichen",
+          "rolle": "unterschied",
+          "form": "rolle",
+          "auftrag": "Worin der Zuwachs der Abschlussstufe liegt",
+          "idx": [
+            5
+          ],
+          "satzanfang": "Der Unterschied liegt darin, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dafuer",
+          "form": "rolle",
+          "auftrag": "Was für die Ziele spricht - und was der Unterricht dafür zeigen muss",
+          "idx": [
+            6
+          ],
+          "satzanfang": "Dafür spricht, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dagegen",
+          "form": "rolle",
+          "auftrag": "Wo die Ziele an Grenzen stoßen",
+          "idx": [
+            7
+          ],
+          "satzanfang": "Dagegen spricht allerdings, dass …"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Diese Kompetenzen stehen ebenfalls im Rahmenlehrplan - Vorrat, kein Muss",
+          "idx": [
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "form": "liste",
+          "zusatz": true
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Die Quellenangabe - ein Extra, wenn sie dir einfällt",
+          "idx": [
+            13
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
-          "Die Nummer der Leitkompetenz und ihre zwei Verben.",
-          "Formen kennenlernen plus Versorgung ausbauen: Wie lautet der Satz?",
-          "Der Ausgangspunkt aus dem Berliner Curriculum, mit Ziffer."
+          "Die Nummer der Kompetenz und ihre zwei Tätigkeiten.",
+          "Der Ausgangspunkt aus dem Berliner Curriculum, mit Ziffer davor.",
+          "Formen kennenlernen plus Versorgung ausbauen - wie heißt das dort?"
         ],
         [
-          "Erster Kompetenzbereich: Freude, Mitmachen, Gesundheit.",
-          "Vier Kompetenzen rund ums aktive Tun im Haushalt.",
-          "Was sollen sie im Alltag selbst uebernehmen?"
+          "Erste Gruppe: Freude am Tun und praktisches Anpacken daheim.",
+          "Wo die Schülerinnen und Schüler selbst Hand anlegen sollen.",
+          "Die Gruppe, die beim Machen ansetzt, nicht beim Wissen."
         ],
         [
-          "Zweiter Bereich: kennen, einschaetzen, unterscheiden.",
-          "Kompetenzen rund ums Wissen ueber Wohnwelten und Hilfen.",
-          "Welche Formen und Systeme sollen sie kennenlernen?"
+          "Zweite Gruppe: kennen, einschätzen, auseinanderhalten.",
+          "Die Gruppe über Wohnwelten und die Hilfen dahinter.",
+          "Nicht anpacken, sondern Bescheid wissen - worüber genau?"
         ],
         [
-          "Dritter Bereich: die eigene Zukunft entwerfen.",
-          "Wunsch und Wirklichkeit abwaegen - wessen Leben, wessen Plan?",
-          "Kompetenzen rund um eigene Zukunftsbilder vom Wohnen."
+          "Dritte Gruppe: die eigene Zukunft entwerfen.",
+          "Wunsch und Wirklichkeit gegeneinanderhalten - wessen Leben ist gemeint?",
+          "Die Gruppe, in der es um Zukunftsbilder geht."
         ],
         [
-          "Wo und wie war das Thema vorher verortet?",
-          "Der Vergleichspunkt: Leitthema und Fach der unteren Klassen.",
-          "Vorher praktisch-hauswirtschaftlich: unter welchem Titel?"
+          "Der Vergleichspunkt: unter welchem Leitthema stand das Thema vorher?",
+          "Vorher praktisch-hauswirtschaftlich - nenne das Fach und ein paar Beispiele.",
+          "Wo war es in den unteren Klassen verortet, und woran wurde es festgemacht?"
         ],
         [
-          "Was ist das qualitativ Neue dieser Stufe?",
-          "Vom Koennen zum Entscheiden: Benenne den Sprung.",
-          "Der Kern des Unterschieds als Gegensatzpaar."
+          "Was ist das qualitativ Neue dieser Stufe? Ein Gegensatzpaar.",
+          "Vom Können zum Entscheiden - benenne den Sprung.",
+          "Die Dimension, die mit dem eigenen Lebenslauf zu tun hat."
         ],
         [
-          "Erkunden braucht Stoff: Was muss im Unterricht vorkommen?",
-          "Die Bruecke zum Anfang des Themas: die Formenvielfalt.",
-          "Ohne Kenntnis der Formen kein Vergleichen - fuehre das aus."
+          "Was muss die Schule vorher gezeigt haben, damit das Ziel überhaupt trägt?",
+          "Die Brücke zum Anfang des Themas - die ganze Formenvielfalt.",
+          "Ohne Kenntnis der Formen kein Vergleichen - führe das aus."
         ],
         [
-          "Der kritische Schlusspunkt: Was begrenzt die Ziele vor Ort?",
-          "Abwaegen setzt echte Auswahl voraus - was, wenn sie fehlt?",
-          "Die Grenze liegt ausserhalb der Schule: Wo genau?"
+          "Der kritische Schlusspunkt: was begrenzt die Ziele vor Ort?",
+          "Eine Wahl braucht etwas zur Auswahl - was, wenn es das nicht gibt?",
+          "Die Grenze liegt außerhalb der Schule - wo genau?"
+        ],
+        [
+          "Drei weitere Punkte der ersten Gruppe, eher Haltung als Handgriff.",
+          "Was man zeigt, was man aufzählen kann, und was der Gesundheit dient."
+        ],
+        [
+          "Die drei Verrichtungen, bei denen selbst mitgemacht wird.",
+          "Am Körper, in der Küche, im Zimmer - je ein Wort dafür."
+        ],
+        [
+          "Vier Themen, mit denen sich die zweite Gruppe befasst.",
+          "Womit richtet man sich ein, was isst man, was tut man, mit wem?"
+        ],
+        [
+          "Warum ein gutes Zuhause mehr ist als ein Dach - zwei Stichworte.",
+          "Was ein Zuhause für Körper und Seele leistet, einschätzen."
+        ],
+        [
+          "Der Zukunftsteil der dritten Gruppe: Bilder vom späteren Leben.",
+          "Nicht nur beschreiben, wie es ist, sondern wie es werden soll."
+        ],
+        [
+          "Wer hat den Rahmenlehrplan herausgegeben - und in welchem Jahr?",
+          "Die Berliner Schulverwaltung und ihr Landesinstitut, dazu Jahr und Seite."
         ]
       ]
     },
     {
       "id": "wo-fol-f-2",
+      "unterthema": "Wohnformen",
       "afb": 2,
       "frage": "Frau S. und Herr U. lernen sich in der Werkstatt kennen und beziehen nach vielen Diskussionen mit ihren Eltern eine Dreizimmer-Wohnung, die sie nach eigenem Geschmack einrichten. Zweimal in der Woche kommt die Bezugsbetreuerin, hilft beim Saubermachen, erstellt mit ihnen einen Einkaufsplan und unterstützt bei Unstimmigkeiten. Analysieren Sie, welche Merkmale des ambulant unterstützten Wohnens in diesem Fall sichtbar werden.",
       "stichpunkte": [
@@ -1321,6 +1510,867 @@
           "Der Bogen zurueck zur Schule: Welche Methode bereitet vor?",
           "Wo werden genau diese Anteile eingeuebt?",
           "Zieh die Schlussfolgerung fuer den Unterricht."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-1",
+      "unterthema": "Bedeutung & Geschichte",
+      "afb": 1,
+      "frage": "Am Anfang der Vorlesung steht eine Mindmap, die auffächert, was ein Zuhause für einen Menschen überhaupt leistet - vom ganz Handfesten bis zu dem, was es innerlich bedeutet. Nennen Sie die sieben Aspekte, die dort um das Wort Wohnen herum stehen.",
+      "stichpunkte": [
+        "Versorgung",
+        "Unterkunft",
+        "Verpflegung",
+        "Geborgenheit",
+        "Eigenständigkeit",
+        "Privatheit",
+        "Offenheit nach außen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die sieben Aspekte, die ein Zuhause für einen Menschen ausmachen.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Vorlesung fasst die Bedeutung des Wohnens in sieben Aspekten zusammen (vgl. Bundesvereinigung Lebenshilfe). Ganz praktisch sichert eine Wohnung Versorgung, Unterkunft und Verpflegung. Darüber hinaus gibt sie Geborgenheit, ermöglicht Eigenständigkeit und schützt die Privatheit. Der siebte Aspekt weist nach draußen: Offenheit nach außen, also die Verbindung zur Umwelt. Wohnen ist damit weit mehr als ein Dach über dem Kopf - es umfasst materielle Grundversorgung, emotionale Sicherheit und soziale Teilhabe zugleich.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Wohnen bedeutet sieben Dinge. Erstens: Versorgung. Zweitens: Unterkunft. Drittens: Verpflegung. Das sind die praktischen Dinge. Dann kommt Geborgenheit. Das heißt: sich sicher fühlen. Dann Eigenständigkeit. Das heißt: selbst über sein Leben bestimmen. Dann Privatheit. Das heißt: für sich sein können, ohne dass jemand zusieht. Und zuletzt Offenheit nach außen. Das heißt: Kontakt zu anderen Menschen haben. Wohnen ist also mehr als ein Dach über dem Kopf."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Merkhilfe: drei praktische Aspekte, drei innere und einer, der nach draußen zeigt. Wer die drei Gruppen im Kopf hat, kommt auf alle sieben. Nachschlagen kannst du die Mindmap auf Folie 5; in deinen Notizen steht sie auf Notizen S. 07. Wenn du eine Definition dazusetzen willst, passt das Klauß-Zitat von Folie 4: die Wohnung ist der Ort, der die Persönlichkeit eines Menschen am stärksten widerspiegelt.",
+      "quelle": "folie-wohnen-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ganz praktisch gedacht - jemand kuemmert sich um die Grundbeduerfnisse.",
+          "Der erste Begriff der Mindmap, noch vor Essen und Dach.",
+          "Was Pflege und Hilfe im Alltag als Oberbegriff ergeben."
+        ],
+        [
+          "Das Dach ueber dem Kopf, mit einem Wort gesagt.",
+          "Der handfeste Ort selbst - Waende, Tuer, ein Bett.",
+          "Was obdachlose Menschen gerade nicht haben."
+        ],
+        [
+          "Es geht ums Essen und Trinken - ein Wort dafuer.",
+          "Der dritte praktische Aspekt, taeglich mehrmals faellig.",
+          "Was in der Kueche entsteht, als Oberbegriff."
+        ],
+        [
+          "Der erste Aspekt, der nach innen geht - ein Gefuehl von Sicherheit.",
+          "Was ein Zuhause emotional gibt, nicht materiell.",
+          "Sich aufgehoben fuehlen, in einem Wort."
+        ],
+        [
+          "Selbst entscheiden koennen, wie der Tag laeuft.",
+          "Der Aspekt, der auf Selbstbestimmung zielt.",
+          "Nicht fremdbestimmt leben - wie heisst das?"
+        ],
+        [
+          "Was Klauss beschreibt: der sozialen Kontrolle entzogen sein.",
+          "Tuer zu, und keiner sieht zu.",
+          "Der Rueckzug, den ein Schlafsaal gerade nicht bietet."
+        ],
+        [
+          "Der einzige Aspekt, der nach draussen zeigt.",
+          "Ein Zuhause ist keine Insel - Kontakt zur Umwelt.",
+          "Das Gegenstueck zum Rueckzug."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-2",
+      "unterthema": "Bedeutung & Geschichte",
+      "afb": 1,
+      "frage": "Vor gut fünfzig Jahren sah das Wohnen von Menschen mit geistiger Beeinträchtigung völlig anders aus als heute. Beschreiben Sie, wo diese Menschen bis 1971 überwiegend lebten, unter welchen Bedingungen, mit welchen Folgen und wer den Wandel anstieß. Nennen Sie danach die drei Etappen, über die der behindertenpolitische Diskurs seit 1950 verlaufen ist, jeweils mit Zeitangabe.",
+      "stichpunkte": [
+        "Bis 1971 Leben in Landeskrankenhäusern und Anstalten",
+        "Gleichförmiger Tagesablauf, Schlafsäle, wenig Förderung",
+        "Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme",
+        "Eltern wünschen familiennahe und humane Lebensräume",
+        "Normalisierungsprinzip (1950-1971)",
+        "Selbstbestimmungsbegriff (1980-1994)",
+        "UN-Behindertenrechtskonvention (2008)"
+      ],
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Beschreiben Sie, wo und wie diese Menschen bis 1971 lebten, mit welchen Folgen - und wer sich etwas anderes wünschte.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die drei Etappen des Diskurses seit 1950, jeweils mit Zeitangabe.",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Bis 1971 lebten Menschen mit geistiger Beeinträchtigung überwiegend in Landeskrankenhäusern und Anstalten. Die Bedingungen dort waren für die Entwicklung schlecht: ein gleichförmiger Tagesablauf, Schlafsäle ohne Privatsphäre und nur ein Mindestmaß an Förderung und individueller Ansprache. Die Folgen waren Isolation, ein Rückgang bereits erworbener Fähigkeiten und Verhaltensprobleme. Vor allem Eltern wünschten sich für ihre Kinder familiennahe und humane Lebensräume; von ihnen ging der Druck zur Veränderung aus. Der behindertenpolitische Diskurs zum Wohnen verlief seither über drei Etappen: das Normalisierungsprinzip (1950 bis 1971), den Selbstbestimmungsbegriff (1980 bis 1994) und die UN-Behindertenrechtskonvention (2008).",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Bis 1971 lebten die meisten Menschen mit geistiger Beeinträchtigung in großen Anstalten. Anstalt heißt: ein sehr großes Heim, oft weit weg von der Stadt. Dort war jeder Tag gleich. Viele schliefen in großen Schlafsälen. Sie hatten keinen Raum für sich allein. Und sie bekamen nur wenig Förderung. Das hatte Folgen. Die Menschen waren einsam. Sie verlernten Dinge, die sie schon konnten. Und es gab Probleme im Verhalten. Vor allem die Eltern wollten das ändern. Sie wünschten sich Wohnorte, die mehr wie eine Familie sind. Danach kamen drei große Schritte. Erster Schritt: das Normalisierungsprinzip, von 1950 bis 1971. Zweiter Schritt: die Selbstbestimmung, von 1980 bis 1994. Dritter Schritt: die UN-Behindertenrechtskonvention, im Jahr 2008."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die drei Etappen mit ihren Zeitspannen sind das Gerüst der ganzen Geschichte - wer sie hat, kann den Rest erzählen. Merkhilfe für die Reihenfolge: erst so normal wie möglich leben, dann selbst bestimmen, dann international verbrieft. Nachschlagen kannst du die Zeit bis 1971 auf Folie 6 und die drei Etappen auf Folie 7; in deinen Notizen steht beides zusammen auf Notizen S. 08. Diese Aufgabe bedient die erste Kompetenzerwartung der Vorlesung.",
+      "quelle": "folie-wohnen-6",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wo lebten fast alle vor der Reformzeit? Grosse Haeuser, weit weg.",
+          "Die Orte, an denen bis Anfang der 70er gewohnt wurde.",
+          "Zwei Woerter fuer sehr grosse Einrichtungen, eines klingt nach Klinik."
+        ],
+        [
+          "Drei Dinge, die die Entwicklung dort gebremst haben.",
+          "Jeder Tag derselbe, kein eigenes Zimmer, kaum Anregung.",
+          "Wie sah der Alltag aus - Rhythmus, Raum, Zuwendung?"
+        ],
+        [
+          "Drei Folgen fuer die Menschen, eine davon ist ein Verlust.",
+          "Was passiert, wenn niemand fordert und niemand da ist?",
+          "Einsamkeit, Verlernen, Auffaelligkeiten - jeweils im Fachwort."
+        ],
+        [
+          "Wer hat den Wandel angeschoben, und was wollte diese Gruppe?",
+          "Nicht die Politik hat begonnen, sondern die Angehoerigen.",
+          "Der Wunsch nach Orten, die mehr wie ein Zuhause sind."
+        ],
+        [
+          "Die erste Etappe - so leben duerfen wie alle anderen auch.",
+          "Sie beginnt in den 50ern und endet mit der Anstaltszeit.",
+          "Der Leitgedanke, der den Alltag an den ueblichen angleichen will."
+        ],
+        [
+          "Die zweite Etappe - der eigene Wille rueckt in den Mittelpunkt.",
+          "Diskutiert in den 80ern und fruehen 90ern.",
+          "Ein Begriff, der aus der Bewegung der Lebenshilfe kommt."
+        ],
+        [
+          "Die dritte Etappe ist ein internationales Abkommen.",
+          "Jahreszahl 2008 - welches Dokument ist gemeint?",
+          "Das voelkerrechtliche Papier, in dem Artikel 19 steht."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-3",
+      "unterthema": "Wohnformen",
+      "afb": 1,
+      "frage": "Dworschak ordnet die möglichen Wohnformen für Erwachsene mit geistiger Behinderung in einem Schaubild von links nach rechts. Nennen Sie die vier Spalten dieses Schaubilds, jeweils mit den Wohnformen, die dort einsortiert sind, und benennen Sie die Kategorie, die als Balken quer über zwei dieser Spalten liegt.",
+      "stichpunkte": [
+        "Leben in der Familie, außerhalb der Stationär-Ambulant-Logik",
+        "Vollstationär - Komplexeinrichtung, Dorfgemeinschaft",
+        "Teilstationär - Wohnheim, eigenständige Wohngruppe, Außenwohngruppe",
+        "Ambulant - ambulant betreutes Wohnen",
+        "Gemeindenahe Wohnformen quer über teilstationär und ambulant"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Spalten des Schaubilds mit ihren Wohnformen.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Benennen Sie die Kategorie, die als Balken quer über zwei Spalten liegt.",
+          "idx": [
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Schaubild nach Dworschak ordnet die Wohnformen von links nach rechts. Ganz links steht das Leben in der Familie; es bildet eine eigene Säule und liegt außerhalb der Systematik von stationär und ambulant. Danach folgen die stationären Wohnformen, die sich in zwei Gruppen teilen: vollstationär mit Komplexeinrichtung und Dorfgemeinschaft, teilstationär mit Wohnheim, eigenständiger Wohngruppe und Außenwohngruppe. Rechts stehen die ambulanten Wohnformen, konkret das ambulant betreute Wohnen. Quer über die teilstationäre und die ambulante Säule liegt zusätzlich der Balken der gemeindenahen Wohnformen. Gemeindenah ist also keine eigene fünfte Säule, sondern ein Merkmal, das beide Bereiche verbinden kann.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt vier große Gruppen von Wohnformen. Erste Gruppe: das Leben in der Familie. Das heißt: die Person wohnt bei den Eltern. Zweite Gruppe: vollstationäres Wohnen. Dazu gehören die Komplexeinrichtung und die Dorfgemeinschaft. Das sind große Einrichtungen. Dritte Gruppe: teilstationäres Wohnen. Dazu gehören das Wohnheim, die eigenständige Wohngruppe und die Außenwohngruppe. Vierte Gruppe: ambulantes Wohnen. Dazu gehört das ambulant betreute Wohnen. Ambulant heißt: die Person wohnt allein oder in einer WG. Eine Betreuerin kommt nur ein paar Stunden. Über der dritten und der vierten Gruppe liegt noch ein Balken. Er heißt: gemeindenahe Wohnformen. Gemeindenah heißt: mitten im Ort, wo auch alle anderen wohnen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Merk dir das Bild als Linie von viel Einrichtung zu viel Selbstständigkeit: Familie ganz links außen, dann vollstationär, teilstationär, ambulant. Der Balken gemeindenah ist die häufigste Stolperstelle - er ist keine eigene Spalte, sondern spannt über teilstationär und ambulant. Nachschlagen kannst du das Schaubild auf Folie 10; in deinen Notizen liegt es auf Notizen S. 10. Kleiner Hinweis: In deinen Notizen heißt die Überschrift Erwachsene mit geistiger Entwicklung, auf der Folie steht Erwachsene mit geistiger Behinderung - im Zweifel gilt die Folie.",
+      "quelle": "folie-wohnen-10",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Saeule ganz links - sie passt in kein Betreuungsschema.",
+          "Wo viele Erwachsene mit Beeintraechtigung bis heute bleiben.",
+          "Der Ort, an dem alles anfaengt: das Elternhaus."
+        ],
+        [
+          "Die groessten Einrichtungen, Betreuung rund um die Uhr.",
+          "Zwei Beispiele: eines klingt nach Gelaende, eines nach Ort.",
+          "Alles auf einem Areal - Wohnen, Arbeit, Freizeit."
+        ],
+        [
+          "Das Dazwischen - kleiner als die Grosseinrichtung, noch nicht allein.",
+          "Drei Beispiele, eines liegt raeumlich getrennt vom Stammhaus.",
+          "Die mittlere Stufe zwischen Anstalt und der Wohnung fuer sich."
+        ],
+        [
+          "Die Saeule mit der geringsten Dichte an Fachkraeften.",
+          "Wer in der Wohnung lebt und nur stundenweise Besuch bekommt.",
+          "Das Gegenstueck zu stationaer."
+        ],
+        [
+          "Kein eigener Kasten, sondern ein Balken ueber zwei Saeulen.",
+          "Das Merkmal mitten im Ort statt am Stadtrand.",
+          "Es verbindet die dritte und die vierte Gruppe."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-4",
+      "unterthema": "Wohnformen",
+      "afb": 1,
+      "frage": "Prochnow-Penedo hat für eine Klasse im Förderschwerpunkt geistige Entwicklung nachgezeichnet, wo die jungen Erwachsenen nach der Schule leben. Benennen Sie den gemeinsamen Ausgangspunkt mit der Personenzahl und nennen Sie danach die fünf Wohnformen, hinter denen im Schaubild eine Personenzahl steht, jeweils mit dieser Zahl.",
+      "stichpunkte": [
+        "Ausgangspunkt Elternhaus mit 9 Personen",
+        "Eigene Wohnung (2)",
+        "Vollstationäre Einrichtung, Erwachsenengruppe (2)",
+        "Teilstationäre Außenwohngruppe (4)",
+        "Ambulant Betreutes Wohnen (2)",
+        "Kleine gemeindenahe Wohneinrichtungen (4)",
+        "Weitere: Schülergruppe als Zwischenstation, auf der Folie ohne Zahl"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Benennen Sie den gemeinsamen Ausgangspunkt mit der Personenzahl.",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die fünf Wohnformen, hinter denen eine Personenzahl steht, jeweils mit dieser Zahl.",
+          "idx": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste",
+          "waehle": 5
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Ein weiterer Kasten steht im Schaubild, ohne Klammerzahl.",
+          "idx": [
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Das Schaubild von Prochnow-Penedo zeichnet die Lebensverläufe einer Klasse im Förderschwerpunkt geistige Entwicklung nach. Ausgangspunkt für alle ist das Elternhaus mit neun Personen. Von dort verteilen sich die Wege auf fünf Wohnformen: in die eigene Wohnung gehen zwei, in die vollstationäre Einrichtung in der Erwachsenengruppe ebenfalls zwei, in die teilstationäre Außenwohngruppe vier, in das ambulant betreute Wohnen zwei und in kleine gemeindenahe Wohneinrichtungen, also Projekte und Modelle, noch einmal vier. Die Zahlen ergeben in der Summe mehr als neun, weil das Schaubild einen Verlauf über die Zeit zeigt: dieselben Menschen wechseln im Lauf ihres Lebens die Wohnform, etwa von der vollstationären Erwachsenengruppe in die Außenwohngruppe und von dort weiter in das ambulant betreute Wohnen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Eine Studie hat eine Klasse begleitet. Alle neun jungen Menschen wohnten zuerst im Elternhaus. Danach zogen sie an fünf verschiedene Orte. Zwei zogen in eine eigene Wohnung. Zwei zogen in eine große Einrichtung, in die Gruppe für Erwachsene. Vier zogen in eine Außenwohngruppe. Das ist eine kleine Gruppe außerhalb der großen Einrichtung. Zwei bekamen ambulant betreutes Wohnen. Das heißt: eigene Wohnung mit Besuch von einer Betreuerin. Und vier zogen in kleine Wohneinrichtungen mitten im Ort. Zählt man alle Zahlen zusammen, sind es mehr als neun. Das liegt daran: Manche sind später noch einmal umgezogen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Lass dich vom Titel nicht irritieren: Die Folie heißt zwar Wohnen in Prozenten, enthält aber keine einzige Prozentzahl, sondern absolute Fallzahlen. Prozentzahlen zur Verteilung stehen auf Folie 12. Die Zahlen gehören hier zur Antwort dazu; am stärksten besetzt sind mit je vier Personen die Außenwohngruppe und die kleinen gemeindenahen Einrichtungen. Ein sechster Kasten steht mit im Bild: die Schülergruppe der vollstationären Einrichtung. Auf der Folie trägt sie keine Klammerzahl, in deinem Heft auf Notizen S. 12 steht eine 3 dahinter - wenn du sie mitnennst, ist das nach deinen eigenen Notizen richtig. Nachschlagen kannst du das Flussdiagramm auf Folie 13, Quelle ist Prochnow-Penedo 2014. Eine Zahl in Klammern hinter einem Kasten meint die Personen in dieser Wohnform, eine Zahl am Pfeil dagegen die Übergänge; in deinen Notizen sind diese beiden Zahlenarten an einer Stelle vertauscht.",
+      "quelle": "folie-wohnen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wo alle starten, bevor sich die Wege trennen.",
+          "Die ganze Klasse an einem Ort - und wie viele sind es?",
+          "Der Ort, aus dem die Abloesung erst noch kommen muss."
+        ],
+        [
+          "Der selbststaendigste Weg von allen, zwei gehen ihn.",
+          "Ganz ohne Einrichtung leben - wie heisst das im Schaubild?",
+          "Vier Waende, die niemandem sonst gehoeren."
+        ],
+        [
+          "Das grosse Haus mit Rundumversorgung, nicht mehr die Schuelergruppe.",
+          "Zwei Personen, hoechste Betreuungsdichte, nach der Schulzeit.",
+          "Der Kasten mit der intensivsten Begleitung."
+        ],
+        [
+          "Das Dazwischen, ausgelagert aus dem Stammhaus, vier Personen.",
+          "Eine der beiden haeufigsten Zielformen in diesem Schaubild.",
+          "Kleine Gruppe, raeumlich getrennt von der Einrichtung."
+        ],
+        [
+          "Eigene Wohnung plus stundenweise Unterstuetzung.",
+          "Zwei Personen bekommen nur Besuch, keine Rundumbetreuung.",
+          "Die vierte Saeule der Systematik, hier mit Zahl."
+        ],
+        [
+          "Projekte und Modelle mitten im Ort, vier Personen.",
+          "Wenige Plaetze statt vieler, im Wohngebiet statt am Stadtrand.",
+          "Die zweite Zielform mit vier Personen."
+        ],
+        [
+          "Ein Kasten im Bild traegt gar keine Klammerzahl.",
+          "Die Station, die zwischen Elternhaus und Erwachsenengruppe liegt.",
+          "Dein Heft schreibt eine 3 dahinter, die Folie nicht."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-5",
+      "unterthema": "Wohnformen",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt eine inklusive Dorfgemeinschaft als Wohnkonzept vor. Nennen Sie fünf Merkmale dieses Dorfes - also wer dort lebt, wie das Zusammenleben organisiert ist und welchen Anspruch das Projekt für sich selbst formuliert.",
+      "stichpunkte": [
+        "Menschen mit und ohne Unterstützungsbedarf leben und arbeiten dort",
+        "Heimat für alle Altersgruppen, vom Kind bis zum Lebensabend",
+        "Vision eines Ortes gleichberechtigter Teilhabe",
+        "Hausgemeinschaft als familiäre kleinste Einheit des Dorfes",
+        "Werkstätten als gemeinsame Arbeitsstätte im Dorfalltag",
+        "Weitere: Raum für Begegnung und persönliche Entwicklung"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie fünf Merkmale dieses Dorfes.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Das steht ebenfalls auf der Seite und passt gut dazu.",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Dorfgemeinschaft Münzinghof ist ein inklusives Wohnkonzept. Dort leben und arbeiten Menschen mit und ohne Unterstützungsbedarf unter einem Dach und wollen die Gemeinschaft gemeinsam gestalten und entwickeln. Das Dorf ist Heimat für Menschen jeden Alters, für Kinder, Jugendliche, Erwachsene und ältere Menschen, die dort ihren Lebensabend verbringen. Als Anspruch und Vision formuliert das Projekt, ein Ort gleichberechtigter Teilhabe zu sein. Organisatorisch ist die kleinste Einheit die Hausgemeinschaft mit familiärer Struktur; sie gilt als Baustein des dörflichen Organismus und soll ein Raum intensiver Begegnung und persönlicher Entwicklung sein. Die Werkstätten sind Arbeitsstätte für Menschen mit sehr verschiedenen Begabungen und Fähigkeiten und zentraler Bestandteil des gemeinsamen Tuns im Dorfalltag.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Münzinghof ist ein Dorf. Dort leben Menschen mit Behinderung und Menschen ohne Behinderung zusammen. Sie wohnen zusammen und sie arbeiten zusammen. Im Dorf leben alle Altersgruppen: Kinder, Jugendliche, Erwachsene und alte Menschen. Das Dorf sagt: Bei uns sollen alle gleichberechtigt dabei sein. Gleichberechtigt heißt: alle haben die gleichen Rechte. Die kleinste Einheit im Dorf ist eine Hausgemeinschaft. Das ist eine Gruppe, die zusammen lebt wie eine Familie. Im Dorf gibt es auch Werkstätten. Dort arbeiten Menschen mit ganz verschiedenen Fähigkeiten zusammen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Folie fehlt in deinen Notizen ganz - schau sie dir also einmal direkt an. Nachschlagen kannst du die Dorfgemeinschaft Münzinghof auf Folie 14. Merkhilfe: alle Generationen, gemeinsam wohnen und arbeiten, kleine Hausgemeinschaften als Einheit. Für die Klausur wichtig: Münzinghof ist das inklusive Wohnkonzept, das die Vorlesung inhaltlich beschreibt. Das zweite heißt Wohnsinn und wird in den Kompetenzerwartungen namentlich verlangt - auf Folie 32 steht dazu allerdings nur ein Arbeitsauftrag mit Link, kein Inhalt. Wenn du zu Wohnsinn etwas schreiben möchtest, brauchst du einen eigenen Blick auf die Website.",
+      "quelle": "folie-wohnen-14",
+      "quelleSicherheit": "unsicher",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wer wohnt dort? Es ist gerade keine reine Einrichtung.",
+          "Zwei Gruppen unter einem Dach, und nicht nur beim Wohnen.",
+          "Das Wort inklusiv, in einen Satz uebersetzt."
+        ],
+        [
+          "Vom Kleinkind bis zu den Aeltesten - niemand muss ausziehen.",
+          "Welche Generationen finden dort Platz?",
+          "Auch die Aeltesten bleiben bis zuletzt dort."
+        ],
+        [
+          "Der Satz, mit dem sich das Projekt selbst beschreibt.",
+          "Was das Dorf sein will - alle dabei, ohne Rangfolge.",
+          "Ein Ziel, kein Angebot: worauf zielt das Konzept?"
+        ],
+        [
+          "Die kleine Zelle darunter, sie lebt zusammen wie Verwandte.",
+          "Nicht das Dorf als Ganzes, sondern die Ebene darunter.",
+          "Wo taeglich zusammen gegessen und gelebt wird."
+        ],
+        [
+          "Wo im Dorf gearbeitet wird, mit sehr verschiedenen Begabungen.",
+          "Nicht nur Wohnen - der zweite Teil des Tages dort.",
+          "Der Ort, an dem etwas hergestellt wird."
+        ],
+        [
+          "Was das Zusammenleben im Inneren bewirken soll.",
+          "Zwei Stichworte zum Miteinander, ueber die Organisation hinaus.",
+          "Warum das Dorf mehr sein will als eine Wohnform."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-6",
+      "unterthema": "Wohnformen",
+      "afb": 1,
+      "frage": "Als Praxisbeispiel für eine vollstationäre Wohnform stellt die Vorlesung das Angebot eines Brandenburger Trägers vor. Nennen Sie fünf Merkmale dieses Angebots - Leistungsgrundlage, Betreuungsumfang, Zimmersituation, Zielgruppe und Beteiligung der Bewohnerinnen und Bewohner.",
+      "stichpunkte": [
+        "Eingliederungshilfe nach SGB IX als Leistungsgrundlage",
+        "Betreuung durch geschultes Personal, 24 Stunden",
+        "Individuelles Wohnen im Einzelzimmer",
+        "Erwachsene mit primärer geistiger Behinderung als Zielgruppe",
+        "Mitbestimmung der Bewohner über den Wohnbeirat",
+        "Weitere: Barrierefreiheit, Rundumversorgung, Freizeitangebote"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie fünf Merkmale dieses vollstationären Angebots.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Unter den Besonderheiten des Hauses steht außerdem das hier.",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Das Beispiel Wohnen in der Potsdamer Landstraße zeigt ein vollstationäres Angebot in Brandenburg. Das Betreuungsangebot richtet sich an erwachsene Menschen mit einer primären geistigen Behinderung sowie zusätzlichen Beeinträchtigungen; die Leistung wird auf Grundlage der Eingliederungshilfe nach SGB IX erbracht. Betreut wird durch geschultes Personal 24 Stunden am Tag, auf Grundlage einer individuellen Betreuungsplanung, die sich an Wünschen und Bedürfnissen orientiert. Gewohnt wird individuell im Einzelzimmer, und bis auf ein Haus sind alle Häuser barrierefrei. Zu den Besonderheiten zählen eine Rundumversorgung des täglichen Lebens mit Wäsche, Hauswirtschaft, Hausmeister und Verpflegung, eine Tagesgruppe für Senioren, Gästewohnen, Freizeit- und Reiseangebote, eine christliche Lebensbegleitung sowie die aktive Mitbestimmung durch den Wohnbeirat.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorlesung zeigt ein Beispiel aus Brandenburg. Es ist ein Haus für erwachsene Menschen mit geistiger Behinderung. Das Geld für die Betreuung kommt aus der Eingliederungshilfe. Das steht im Sozialgesetzbuch, Teil neun. Im Haus sind rund um die Uhr Fachleute da, also 24 Stunden. Jede Person hat ein eigenes Zimmer. Fast alle Häuser sind barrierefrei. Nur ein Haus ist es nicht. Barrierefrei heißt: man kommt auch mit dem Rollstuhl überall hin. Die Bewohnerinnen und Bewohner dürfen mitbestimmen. Dafür gibt es einen Wohnbeirat. Das Haus bietet außerdem Wäsche, Essen, Freizeit und Reisen an."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Folie fehlt in deinen Notizen - schau sie dir einmal direkt an. Nachschlagen kannst du das Beispiel auf Folie 18. Die Platzzahlen der einzelnen Häuser musst du nicht lernen; wichtig sind die Merkmale, die jedes vollstationäre Angebot beschreiben: Zielgruppe, Rechtsgrundlage, Betreuungsdichte, Zimmersituation und Mitbestimmung. Wenn du in einer Klausurantwort ein konkretes Beispiel aus Brandenburg brauchst, ist das hier deins. Der Kontrast dazu steht direkt davor auf Folie 17: dort geht es um die Schattenseiten des Heimwohnens, hier um ein Haus, das sich selbst vorstellt.",
+      "quelle": "folie-wohnen-18",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Welches Sozialgesetzbuch zahlt hier, und wie heisst die Hilfeart?",
+          "Die rechtliche Basis des Angebots, ein Kuerzel mit roemischer Zahl.",
+          "Nicht die Pflegeversicherung, sondern die Hilfe zur Teilhabe."
+        ],
+        [
+          "Wie lange am Tag ist jemand da? Und wer genau?",
+          "Der Umfang der Begleitung - das Gegenteil von nur ab und zu.",
+          "Rund um die Uhr, von ausgebildeten Kraeften."
+        ],
+        [
+          "Wie viele teilen sich ein Zimmer? Genau einer.",
+          "Ganz anders als die Schlafsaele der Anstaltszeit.",
+          "Die Zimmersituation im Haus."
+        ],
+        [
+          "An wen richtet sich das Haus? Nicht an Kinder.",
+          "Die Personengruppe, fuer die das Angebot gemacht ist.",
+          "Erste Beeintraechtigung ist die kognitive, oft kommt noch etwas dazu."
+        ],
+        [
+          "Wie reden die Bewohnenden mit? Es gibt ein Gremium dafuer.",
+          "Das Mitspracherecht im Haus, aehnlich einem Personalrat.",
+          "Beteiligung, nicht nur Versorgung."
+        ],
+        [
+          "Bauliche Zugaenglichkeit plus alles, was den Alltag traegt.",
+          "Was das Haus ausser Wohnen und Pflege noch anbietet.",
+          "Die Zeile mit den Besonderheiten des Hauses."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-7",
+      "unterthema": "Wohnen als Bildungsaufgabe",
+      "afb": 1,
+      "frage": "Der Rahmenlehrplan für die Klassen 1 bis 10 behandelt das Wohnen nicht für sich allein, sondern hängt es in ein größeres Leitthema ein. Benennen Sie dieses Leitthema und nennen Sie die fünf Handlungsfelder, die dort zusammenstehen.",
+      "stichpunkte": [
+        "Leitthema Der Mensch im Alltag",
+        "Selbstversorgung",
+        "Freizeit",
+        "Wohnen",
+        "Zusammenleben",
+        "Mediennutzung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Benennen Sie das Leitthema, in dem das Wohnen verortet ist.",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die fünf Handlungsfelder, die in diesem Leitthema zusammenstehen.",
+          "idx": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Im Rahmenlehrplan für die Klassen 1 bis 10 ist das Wohnen im Leitthema Der Mensch im Alltag verortet. In diesem Leitthema stehen fünf Handlungsfelder nebeneinander: Selbstversorgung, Freizeit, Wohnen, Zusammenleben und Mediennutzung. Wohnen ist damit kein isolierter Gegenstand, sondern ein Feld unter mehreren, die alle zur alltäglichen Lebensbewältigung gehören und sich inhaltlich überschneiden - wer wohnt, versorgt sich auch selbst, gestaltet seine Freizeit und lebt mit anderen zusammen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Im Rahmenlehrplan gibt es ein großes Thema. Es heißt: Der Mensch im Alltag. Rahmenlehrplan heißt: der Plan, der sagt, was in der Schule gelernt wird. In diesem großen Thema stehen fünf Bereiche. Erstens: Selbstversorgung. Zweitens: Freizeit. Drittens: Wohnen. Viertens: Zusammenleben. Fünftens: Mediennutzung. Wohnen ist also einer von fünf Bereichen. Die Bereiche gehören zusammen. Wer wohnt, versorgt sich auch selbst und lebt mit anderen zusammen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das ist eine kurze, sichere Punktequelle: fünf Begriffe plus die Überschrift darüber. Merkhilfe: alles, was ein Mensch an einem gewöhnlichen Tag tut - sich versorgen, wohnen, mit anderen leben, Freizeit haben, Medien nutzen. Nachschlagen kannst du das Schaubild auf Folie 26; in deinen Notizen steht es auf Notizen S. 13. Wie das Handlungsfeld Wohnen dann konkret gefüllt wird, steht kurz danach auf Folie 28.",
+      "quelle": "folie-wohnen-26",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Ueberschrift ueber allen fuenf Feldern, ganz nah am gewoehnlichen Tag.",
+          "Nicht Wohnkunde, sondern etwas Groesseres. Wie heisst es?",
+          "Vier Woerter, und das letzte meint den ganz normalen Tag."
+        ],
+        [
+          "Sich um Essen, Kleidung und Koerper kuemmern - ein Wort dafuer.",
+          "Das Feld, das dem Wohnen inhaltlich am naechsten liegt.",
+          "Was man braucht, um ohne fremde Hilfe durch den Tag zu kommen."
+        ],
+        [
+          "Die Zeit, die weder Schule noch Arbeit ist.",
+          "Ein Handlungsfeld, das mit Erholung und Spass zu tun hat.",
+          "Was nach Feierabend uebrig bleibt."
+        ],
+        [
+          "Das Feld, um das es in dieser ganzen Vorlesung geht.",
+          "Steht mitten im Schaubild und ist dein Thema.",
+          "Dach ueber dem Kopf, als Handlungsfeld formuliert."
+        ],
+        [
+          "Mit anderen Menschen auskommen - ein Wort dafuer.",
+          "Das soziale Feld: Nachbarn, Mitbewohnende, Familie.",
+          "Nicht allein sein, sondern miteinander."
+        ],
+        [
+          "Das juengste Feld - Handy, Fernsehen, Internet.",
+          "Womit man heute Kontakt haelt und sich informiert.",
+          "Ein Feld, das es vor dreissig Jahren so nicht gab."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-8",
+      "unterthema": "Wohnen als Bildungsaufgabe",
+      "afb": 1,
+      "frage": "Damit jemand mit nur stundenweiser Unterstützung in einer eigenen Wohnung leben kann, braucht er bestimmte Fähigkeiten. Die Vorlesung sammelt sie in einer Mindmap als Beispiel. Nennen Sie die sechs Fähigkeiten, die dort stehen.",
+      "stichpunkte": [
+        "Orientierung im eigenen Zuhause",
+        "Orientierung in der Nachbarschaft",
+        "Vermittlung von Bedürfnissen und Entscheidungen",
+        "Initiieren sozialer Kontakte",
+        "Anwendung lebenspraktischer Fähigkeiten",
+        "Anwendung lebensbedeutsamen Wissens"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die sechs Fähigkeiten, die selbstständiges Wohnen voraussetzt.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Mindmap Beispiel Fähigkeiten Wohnen nennt sechs Fähigkeiten, die selbstständiges Wohnen voraussetzt. Zwei betreffen die räumliche Orientierung: im eigenen Zuhause und in der Nachbarschaft. Zwei betreffen das Soziale: die Vermittlung von Bedürfnissen und Entscheidungen und das Initiieren sozialer Kontakte. Zwei weitere sind besonders hervorgehoben, weil sie das Handeln bündeln: die Anwendung lebenspraktischer Fähigkeiten und die Anwendung lebensbedeutsamen Wissens. Diese sechs Fähigkeiten sind die Zielgrößen des schulischen Wohntrainings, denn erst mit ihnen genügt eine stundenweise Betreuung.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Wer allein wohnen will, braucht sechs Fähigkeiten. Erstens: sich in der eigenen Wohnung zurechtfinden. Zweitens: sich in der Nachbarschaft zurechtfinden. Drittens: sagen können, was man braucht und was man will. Viertens: von sich aus Kontakt zu anderen Menschen aufnehmen. Fünftens: praktische Dinge im Alltag können, zum Beispiel kochen und putzen. Sechstens: Wissen anwenden, das im Leben wichtig ist. Diese sechs Fähigkeiten übt die Schule im Wohntraining."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Merk dir die sechs als drei Paare: zweimal Orientierung (drinnen und draußen), zweimal Soziales (sich mitteilen und Kontakte knüpfen), zweimal Anwendung (praktisches Können und Wissen). Die beiden Anwendungs-Kreise sind auf der Folie dunkel hervorgehoben, sie sind der Kern. Nachschlagen kannst du die Mindmap auf Folie 27, Quelle ist Fornefeld 2020; in deinen Notizen steht sie auf Notizen S. 14. Inhaltlich gehört sie zum ambulant unterstützten Wohnen - diese Zuordnung fehlt in deinen Notizen, die Mindmap selbst hast du.",
+      "quelle": "folie-wohnen-27",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Sich in den vier Waenden der Wohnung zurechtfinden.",
+          "Die erste von zwei raeumlichen Faehigkeiten - drinnen.",
+          "Wo ist die Kueche, wo das Bad?"
+        ],
+        [
+          "Die zweite raeumliche Faehigkeit, jetzt draussen.",
+          "Den Weg zum Supermarkt und wieder zurueck finden.",
+          "Sich im Wohnviertel auskennen."
+        ],
+        [
+          "Sagen koennen, was man braucht und was man will.",
+          "Die kommunikative Faehigkeit, nach aussen gerichtet.",
+          "Ohne sie bleibt jede eigene Wahl unsichtbar."
+        ],
+        [
+          "Von sich aus auf andere zugehen.",
+          "Nicht warten, bis jemand kommt - selbst anfangen.",
+          "Die zweite Faehigkeit im Umgang mit Menschen, man wird selbst aktiv."
+        ],
+        [
+          "Alles, was im Haushalt praktisch getan werden muss, als Oberbegriff.",
+          "Einer der beiden dunkel hervorgehobenen Kreise.",
+          "Kochen, putzen, waschen - aber im Fachwort."
+        ],
+        [
+          "Der zweite hervorgehobene Kreis, hier geht es um den Kopf.",
+          "Was man gelernt hat, im Alltag auch wirklich einsetzen.",
+          "Das Gegenstueck zum praktischen Koennen."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb1-9",
+      "unterthema": "Wohnen als Bildungsaufgabe",
+      "afb": 1,
+      "frage": "Im Rahmenlehrplan bekommt ein Unterrichtsbereich die Aufgabe, das Handlungsfeld Wohnen konkret zu füllen. Benennen Sie diesen Bereich und den Auftrag, den der Rahmenlehrplan ihm gibt, und nennen Sie vier der acht Inhalte, die dort aufgelistet sind.",
+      "stichpunkte": [
+        "Hauswirtschaft",
+        "Auf möglichst selbstbestimmtes Wohnen vorbereiten und trainieren",
+        "Nahrungszubereitung und Ernährungslehre",
+        "Hygiene",
+        "Körperpflege",
+        "Wäschepflege",
+        "Weitere: Wirtschaftlichkeit, Arbeitssicherheit, Möbel, Geräte"
+      ],
+      "waehle": 6,
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Benennen Sie den Unterrichtsbereich und den Auftrag, den der Rahmenlehrplan ihm gibt.",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie vier der acht Inhalte, die dafür aufgelistet sind.",
+          "idx": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste",
+          "waehle": 4
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Diese Inhalte stehen ebenfalls auf der Liste.",
+          "idx": [
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Der Rahmenlehrplan weist diese Aufgabe der Hauswirtschaft zu: Sie hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren. Dafür listet er acht Inhalte auf: Nahrungszubereitung und Ernährungslehre, Aspekte der Wirtschaftlichkeit eines Haushaltes, Hygiene, Arbeitssicherheit, Arbeitsorganisation und umweltbewusstes Handeln, Pflege und Wartung von Möbeln und Wohnräumen, Körperpflege, Wäschepflege sowie die Bedienung und Wartung von elektrischen Klein- und Großgeräten. Der Auftrag ist damit doppelt formuliert, vorbereiten und trainieren, und die Inhalte decken sowohl die Versorgung der eigenen Person als auch die Instandhaltung der Wohnung ab.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Im Rahmenlehrplan gibt es den Bereich Hauswirtschaft. Hauswirtschaft soll die Schülerinnen und Schüler auf das eigene Wohnen vorbereiten. Sie sollen so selbstbestimmt wie möglich wohnen können. Selbstbestimmt heißt: selbst entscheiden. Und sie sollen es üben, nicht nur davon hören. Dafür gibt es acht Inhalte. Erstens: kochen und etwas über Ernährung lernen. Zweitens: mit Geld im Haushalt umgehen. Drittens: Hygiene, also Sauberkeit. Viertens: sicher arbeiten, die Arbeit einteilen und die Umwelt schonen. Fünftens: Möbel und Räume pflegen. Sechstens: Körperpflege. Siebtens: Wäsche waschen. Achtens: kleine und große Geräte bedienen und pflegen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Merkhilfe: Vier Inhalte betreffen die eigene Person (Ernährung, Hygiene, Körperpflege, Wäsche), vier die Wohnung und den Haushalt (Wirtschaftlichkeit, Arbeitssicherheit und Arbeitsorganisation, Pflege von Möbeln und Räumen, Bedienung der Geräte). In der Klausur reichen vier oder fünf Beispiele - der Auftragssatz vorbereiten und trainieren ist der Teil, der wirklich sitzen sollte. Nachschlagen kannst du die Liste auf Folie 28; in deinen Notizen steht sie auf Notizen S. 14. Das übergeordnete Leitthema Der Mensch im Alltag steht auf Folie 26.",
+      "quelle": "folie-wohnen-28",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Unterrichtsbereich, in dem gekocht, geputzt und gewaschen wird.",
+          "Das Fach rund um den Haushalt.",
+          "Wer bereitet in der Schule aufs eigene Wohnen vor?"
+        ],
+        [
+          "Der Auftrag hat zwei Verben, eines davon klingt nach Sport.",
+          "Worauf zielt das Fach? Auf ein Wohnen mit eigener Entscheidung.",
+          "Nicht nur davon hoeren, sondern ueben - und wofuer?"
+        ],
+        [
+          "Was in der Schulkueche passiert, plus die Theorie dazu.",
+          "Der erste Inhalt der Liste, Essen von zwei Seiten.",
+          "Kochen und das Wissen darueber."
+        ],
+        [
+          "Sauberkeit als Oberbegriff, ein Fremdwort.",
+          "Was Krankheiten im Haushalt verhindert.",
+          "Steht in der Liste zwischen Wirtschaftlichkeit und Arbeitssicherheit."
+        ],
+        [
+          "Waschen, Zaehneputzen, Haare - an der eigenen Person.",
+          "Sauberkeit, aber nur am Menschen selbst.",
+          "Der Inhalt, der mit dem Duschen anfaengt."
+        ],
+        [
+          "Waschen, Trocknen, Buegeln - aber nicht am Menschen.",
+          "Was mit Kleidung und Bettzeug passiert.",
+          "Der Inhalt, fuer den man eine Maschine braucht."
+        ],
+        [
+          "Drei Inhalte drehen sich um Geld, Sicherheit und Technik.",
+          "Was die Liste ausser Essen und Sauberkeit noch aufzaehlt.",
+          "Haushaltsfuehrung im weiteren Sinn."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb3-1",
+      "unterthema": "Wohnformen",
+      "afb": 3,
+      "frage": "Ein Träger stellt sich nicht als Einrichtung vor, sondern als ganzes Dorf: Gewohnt und gearbeitet wird an einem Ort, und die Vorlesung führt das Projekt als inklusives Wohnkonzept ein. Diskutieren Sie die Vor- und Nachteile eines solchen Konzepts. Führen Sie zwei Punkte an, die dafür sprechen, und drei, die dagegen sprechen, und schließen Sie mit einem begründeten eigenen Urteil.",
+      "stichpunkte": [
+        "Dafür 1: Menschen mit und ohne Unterstützungsbedarf leben und arbeiten unter einem Dach, das Dorf ist Heimat für jedes Lebensalter und will ein Ort gleichberechtigter Teilhabe sein",
+        "Dafür 2: Kleinste Einheit ist die familiäre Hausgemeinschaft, die Werkstätten machen das gemeinsame Tun zum Mittelpunkt - die familiennahen Lebensräume, die Eltern nach 1971 wollten",
+        "Dagegen 1: In der Systematik nach Dworschak steht die Dorfgemeinschaft neben der Komplexeinrichtung unter den vollstationären Wohnformen und gerade nicht unter den gemeindenahen",
+        "Dagegen 2: Die UN-Behindertenrechtskonvention verlangt freie Wahl des Wohnorts, keine Pflicht zu besonderen Wohnformen, keine Absonderung - ein eigenes Dorf kann nach außen abgrenzen",
+        "Dagegen 3: Die Einwände gegen große Einrichtungen bleiben zu prüfen - organisiertes statt natürliches Wohnen, nichts davon wählbar, Primat der Gruppe vor Individualbedürfnissen",
+        "Fazit 1: Ein eigenes begründetes Urteil, das die gewünschte Entwicklungsrichtung mitdenkt und sagt, für wen dieser Ort taugt und wo er hinter seinem Anspruch zurückbleibt"
+      ],
+      "muster": "Inklusive Wohnkonzepte wie eine Dorfgemeinschaft versprechen etwas, das große Einrichtungen lange nicht eingelöst haben. Für das Konzept spricht zunächst, dass Menschen mit und ohne Unterstützungsbedarf dort gemeinsam leben und arbeiten. Das Dorf versteht sich als Heimat für Menschen jeden Alters, von Kindern bis zu älteren Menschen, die dort ihren Lebensabend verbringen, und formuliert für sich selbst den Anspruch, ein Ort gleichberechtigter Teilhabe zu sein. Zweitens ist die kleinste Einheit bewusst die familiäre Hausgemeinschaft, und die Werkstätten machen das gemeinsame Tun zum Mittelpunkt des Dorfalltags. Damit löst das Konzept genau den Wunsch ein, mit dem der Wandel nach 1971 begann: Eltern wünschten sich für ihre Kinder familiennahe und humane Lebensräume statt Anstalt und Schlafsaal.\n\nDagegen spricht erstens die Einordnung in die Systematik der Wohnformen: Die Dorfgemeinschaft steht dort neben der Komplexeinrichtung unter den vollstationären Wohnformen, also gerade nicht unter den gemeindenahen Formen, die über die teilstationären und die ambulanten Angebote reichen. Zweitens verlangt die UN-Behindertenrechtskonvention, dass Menschen mit Behinderungen ihren Aufenthaltsort frei wählen können, nicht verpflichtet sind, in besonderen Wohnformen zu leben, und dass Isolation und Absonderung verhindert werden. Ein eigenes Dorf schafft Gemeinschaft nach innen, kann aber zugleich eine Sonderwelt bleiben. Drittens sind die bekannten Einwände gegen große Einrichtungen nicht automatisch entkräftet: organisiertes statt natürliches Wohnen, ein Tagesablauf, Wohnraum und Mitarbeitende, die die Bewohnerinnen und Bewohner nicht wählen, und das Primat der Gruppe vor den Individualbedürfnissen.\n\nIch halte das Konzept für einen echten Fortschritt gegenüber der Anstalt, aber nicht für den Zielpunkt. Die gewünschte Entwicklungsrichtung führt von der Heimwohngruppe über Trainingswohnung und Außenwohngruppe zum betreuten Einzelwohnen. Für Menschen mit hohem Unterstützungsbedarf und für alle, die Gemeinschaft und feste Strukturen ausdrücklich wollen, kann ein solches Dorf ein sehr guter Ort sein. Als Regelangebot bliebe es hinter dem eigenen Anspruch auf gleichberechtigte Teilhabe zurück, solange es keine echte Wahl zwischen ihm und einem Leben mitten in der Gemeinde gibt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Inklusive Wohnkonzepte sind Wohnprojekte, in denen Menschen mit und ohne Behinderung zusammenleben. Ein Beispiel ist eine Dorfgemeinschaft. Zuerst die Vorteile.\n\nVorteil 1: In dem Dorf leben und arbeiten Menschen mit und ohne Unterstützungsbedarf zusammen. Das Dorf ist eine Heimat für alle Altersgruppen. Kinder leben dort. Ältere Menschen leben dort. Das Dorf sagt selbst: Wir wollen ein Ort mit gleichen Rechten für alle sein.\n\nVorteil 2: Die kleinste Einheit im Dorf ist die Hausgemeinschaft. Eine Hausgemeinschaft ist eine kleine Gruppe wie eine Familie. Die Werkstätten gehören zum Alltag dazu. Alle arbeiten gemeinsam. Genau das wollten die Eltern nach 1971. Sie wollten Orte, die einer Familie ähnlich sind. Und sie wollten menschliche Orte.\n\nJetzt die Nachteile.\n\nNachteil 1: In der Übersicht der Wohnformen steht die Dorfgemeinschaft bei den vollstationären Wohnformen. Vollstationär heißt: Die Einrichtung versorgt die Menschen rund um die Uhr. Die Dorfgemeinschaft steht also nicht bei den gemeindenahen Wohnformen. Gemeindenah heißt: mitten im normalen Ort.\n\nNachteil 2: Die UN-Behindertenrechtskonvention ist ein Vertrag über die Rechte von Menschen mit Behinderungen. Dort steht: Jeder Mensch darf selbst wählen, wo er lebt. Niemand muss in einer besonderen Wohnform leben. Und niemand soll abgesondert leben. Ein eigenes Dorf hält aber vielleicht andere Menschen fern.\n\nNachteil 3: Die alten Einwände gegen große Einrichtungen gelten vielleicht auch hier. Das Wohnen ist organisiert und nicht natürlich. Die Menschen können den Wohnraum nicht wählen. Sie können die Mitarbeiter nicht wählen. Sie können den Tagesablauf nicht wählen. Die Gruppe zählt mehr als der einzelne Mensch.\n\nMein Urteil: Das Dorf ist besser als eine alte Anstalt. Es ist aber nicht das Ziel. Das Ziel ist ein Weg von der Heimgruppe bis zum betreuten Einzelwohnen. Für Menschen mit viel Unterstützungsbedarf kann das Dorf sehr gut sein. Für alle anderen gilt: Es muss eine echte Wahl geben."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Aufgabe gehört zu einer Kompetenzerwartung der Dozentin: Vor- und Nachteile inklusiver Wohnkonzepte diskutieren. In der Kompetenzerwartung auf Folie 2 heißt das Beispiel allerdings „Wohnsinn“ - und zu Wohnsinn steht auf Folie 32 nur ein Arbeitsauftrag mit Link und QR-Code, kein Inhalt. Inhaltliche Substanz hat im Foliensatz nur die Dorfgemeinschaft Münzinghof, deshalb übt diese Aufgabe die Abwägung an ihr; den Namen Wohnsinn solltest du trotzdem parat haben. Die Folien liefern dir beide Seiten, aber an verschiedenen Stellen - die Verbindung machst wirklich du. Die Selbstbeschreibung des Dorfes steht auf Folie 14, die Einordnung der Dorfgemeinschaft unter die vollstationären Wohnformen auf Folie 10, der Elternwunsch nach 1971 auf Folie 6, die Vorgaben der UN-Behindertenrechtskonvention auf Folie 9, die Heim-Kritik auf Folie 17 und die gewünschte Entwicklungsrichtung auf Folie 21. Keine Folie sagt, ob das Dorf ein inklusives Wohnen ist oder eine Sonderwelt - diese Abwägung führst du selbst, und genau dafür gibt es die Punkte. Erfinde keine Zahlen zu Bewohnern oder Personal, die stehen nirgends. In deinen Notizen fehlt das Dorf ganz; die Wohnformen-Systematik hast du auf Notizen S. 10, die Heim-Kritik auf Notizen S. 12 und die Entwicklungsrichtung auf Notizen S. 13.",
+      "quelle": "folie-wohnen-14",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wer lebt dort zusammen, und aus welchen Lebensaltern?",
+          "Der Anspruch, den das Projekt selbst formuliert: gleiche Rechte woran?",
+          "Nicht Einrichtung fuer, sondern Ort mit - fuehre das aus."
+        ],
+        [
+          "Welche Einheit bildet den Kern des Dorfes?",
+          "Arbeit als gemeinsamer Mittelpunkt - was steht dafuer im Dorf?",
+          "Bogen zur Geschichte: Was wuenschten sich die Eltern damals?"
+        ],
+        [
+          "Schau in die Schublade: In welcher Spalte steht so ein Dorf?",
+          "Der Balken quer ueber zwei Spalten - liegt es darunter?",
+          "Nachbar der Komplexeinrichtung, nicht des Betreuten Wohnens."
+        ],
+        [
+          "Was sagt die Konvention ueber Zwang zu besonderen Formen?",
+          "Zwei Forderungen aus Artikel 19, die gegen so ein Dorf sprechen.",
+          "Ein Dorf bindet zusammen - und trennt zugleich wovon?"
+        ],
+        [
+          "Die bekannte Kritik am Heim - was war dort nicht waehlbar?",
+          "Organisiert oder natuerlich - welcher Gegensatz passt hier?",
+          "Gruppe vor Einzelnem: Wie hiess dieses Merkmal?"
+        ],
+        [
+          "Die Treppe der Wohnformen: Wohin soll die Bewegung gehen?",
+          "Fuer wen passt so ein Ort, fuer wen nicht? Entscheide dich.",
+          "Zum Schluss dein Urteil - mit Begruendung, nicht nur Meinung."
+        ]
+      ]
+    },
+    {
+      "id": "wo-afb3-2",
+      "unterthema": "Rechtliche Grundlagen",
+      "afb": 3,
+      "frage": "Grundgesetz und UN-Behindertenrechtskonvention geben Menschen mit Behinderungen weitreichende Rechte in Bezug auf das Wohnen. Erörtern Sie, wie weit diese Rechte in der Wohnwirklichkeit von Menschen mit geistiger Beeinträchtigung eingelöst sind. Stellen Sie dem, was die Rechtsquellen zusichern, das gegenüber, was die Vorlesung über die tatsächliche Wohnsituation zeigt, und kommen Sie zu einem begründeten Urteil.",
+      "stichpunkte": [
+        "Anspruch 1: Wohnen ist ein Menschenrecht - das Grundgesetz sichert Unversehrtheit der Wohnung, Freizügigkeit, freie Entfaltung der Persönlichkeit sowie Leben und Freiheit der Person",
+        "Anspruch 2: Artikel 19 der UN-Behindertenrechtskonvention sichert die freie Wahl von Wohnort und Mitbewohnern zu, verbietet den Zwang zu besonderen Wohnformen und fordert gemeindenahe Angebote",
+        "Anspruch 3: Artikel 19 verlangt außerdem Unterstützungsdienste zu Hause und in Einrichtungen, einschließlich persönlicher Assistenz, ausdrücklich zur Verhinderung von Isolation und Absonderung",
+        "Wirklichkeit 1: Wer Ende 2023 in einer besonderen Wohnform lebte, hatte zu 64 Prozent primär eine geistige Behinderung; außerhalb dieser Wohnformen waren es nur 23,4 Prozent, dort überwiegen mit 70,7 Prozent seelische Behinderungen",
+        "Wirklichkeit 2: Im Heim teilen 56 Prozent ihren Wohnraum mit 100 bis 500 Bewohnern, und Wohnraum, Mitarbeiter oder Tagesablauf können nicht gewählt werden - organisiertes statt natürliches Wohnen",
+        "Wirklichkeit 3: Auch der Auszug aus der Herkunftsfamilie ist selten gewählt - die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung",
+        "Fazit 1: Ein eigenes begründetes Urteil - die Rechte gelten unstrittig, eingelöst sind sie erst teilweise; das wachsende ambulante Wohnen zeigt Bewegung und bietet die größten Freiräume für den eigenen Lebensalltag, die freie Wahl bleibt für viele dennoch theoretisch"
+      ],
+      "muster": "Rechtlich ist die Lage eindeutig. Wohnen ist ein Menschenrecht: Das Grundgesetz schützt die Unversehrtheit der Wohnung, die Freizügigkeit im gesamten Bundesgebiet, die freie Entfaltung der Persönlichkeit sowie Leben, körperliche Unversehrtheit und die Freiheit der Person. Die UN-Behindertenrechtskonvention wird in Artikel 19 noch deutlicher: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben, und sie sind nicht verpflichtet, in besonderen Wohnformen zu leben. Dazu kommen der gleichberechtigte Zugang zu Unterstützungsdiensten zu Hause und in Einrichtungen einschließlich persönlicher Assistenz, ausdrücklich zur Verhinderung von Isolation und Absonderung, sowie gemeindenahe Dienstleistungen, die auch Menschen mit Behinderungen offenstehen und ihren Bedürfnissen angepasst werden.\n\nDie Wohnwirklichkeit sieht anders aus. Ende 2023 hatten 64 Prozent aller Leistungsbeziehenden, die in einer besonderen Wohnform lebten, primär eine geistige Behinderung; außerhalb besonderer Wohnformen waren es nur 23,4 Prozent, dort stellen mit 70,7 Prozent Menschen mit seelischer Behinderung die Mehrheit. Besondere Wohnformen sind also gerade der Ort, an dem Menschen mit geistiger Beeinträchtigung das Bild prägen, während das ambulante Feld überwiegend anderen Gruppen gehört. Das Wohnen im Heim ist zudem selten ein selbstbestimmtes Wohnen: 56 Prozent der Menschen, die in Heimen leben, teilen ihren Wohnraum mit 100 bis 500 Bewohnern, Wohnraum, Mitarbeitende und Tagesablauf können sie nicht wählen, es handelt sich um organisiertes und nicht um natürliches Wohnen, und die Gruppe hat Vorrang vor den Individualbedürfnissen. Auch dort, wo Erwachsene in der Herkunftsfamilie leben, ist der Wohnort selten frei gewählt: Die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung der Eltern.\n\nMein Urteil: Die Rechte gelten unstrittig, eingelöst sind sie erst teilweise. Es gibt eine deutliche Bewegung, denn die Zahl der Menschen, die außerhalb besonderer Wohnformen unterstützt werden, hat sich seit 2010 mehr als verdoppelt, das ambulant unterstützte Wohnen bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ein hohes Maß an kultureller Teilnahme, und die gewünschte Entwicklungsrichtung führt vom Heim über Zwischenformen zum betreuten Einzelwohnen. Solange aber gerade die besonderen Wohnformen der Ort bleiben, an dem Menschen mit geistiger Beeinträchtigung den größten Anteil stellen, während sie im ambulanten Feld deutlich in der Minderheit sind, und solange ein Auszug häufig erst durch einen Notfall ausgelöst wird, ist die freie Wahl des Wohnorts für viele eher ein Anspruch auf dem Papier als eine gelebte Möglichkeit. Der entscheidende Hebel liegt deshalb weniger im Recht selbst als im Ausbau ambulanter und gemeindenaher Unterstützung.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Zuerst das Recht.\n\nWohnen ist ein Menschenrecht. Das Grundgesetz ist die wichtigste Rechtsquelle in Deutschland. Es schützt die Wohnung. Es erlaubt jedem Menschen, im ganzen Land zu wohnen, wo er will. Das heißt Freizügigkeit. Es schützt die freie Entfaltung der Persönlichkeit. Und es schützt Leben und Freiheit.\n\nDie UN-Behindertenrechtskonvention ist ein Vertrag über die Rechte von Menschen mit Behinderungen. In Artikel 19 steht: Menschen mit Behinderungen dürfen selbst wählen, wo sie leben. Sie dürfen auch wählen, mit wem sie leben. Niemand muss in einer besonderen Wohnform leben. Eine besondere Wohnform ist zum Beispiel ein Wohnheim.\n\nIn Artikel 19 steht noch mehr. Menschen mit Behinderungen brauchen Unterstützung zu Hause und in Einrichtungen. Dazu gehört persönliche Assistenz. Assistenz ist Hilfe durch einen Menschen im Alltag. Die Hilfe soll verhindern, dass Menschen einsam und abgesondert leben.\n\nJetzt die Wirklichkeit.\n\nDie Grafik zeigt für jede Wohnform hundert Prozent. Sie teilt diese hundert Prozent nach der Behinderungsart auf. Ende 2023 hatten von allen Menschen in einer besonderen Wohnform 64 Prozent eine geistige Behinderung. Außerhalb der besonderen Wohnformen waren es nur 23,4 Prozent. Dort haben 70,7 Prozent eine seelische Behinderung. Das heißt: In den besonderen Wohnformen leben besonders viele Menschen mit geistiger Behinderung. Im ambulanten Wohnen sind sie dagegen eine kleine Gruppe.\n\nIm Heim ist die Wahl klein. 56 Prozent der Menschen im Heim teilen ihren Wohnraum mit 100 bis 500 Bewohnern. Sie können den Wohnraum nicht wählen. Sie können die Mitarbeiter nicht wählen. Sie können den Tagesablauf nicht wählen. Das Wohnen ist organisiert und nicht natürlich.\n\nAuch der Auszug aus der Familie ist oft nicht frei gewählt. Er passiert oft erst nach einem schweren Ereignis. Zum Beispiel nach dem Tod der Mutter. Oder nach einer Krankheit. Oder wenn die Eltern überlastet sind.\n\nMein Urteil: Die Rechte gelten. Sie sind aber erst zum Teil eingelöst. Es gibt eine gute Bewegung. Immer mehr Menschen leben außerhalb von besonderen Wohnformen. Die Zahl hat sich seit 2010 mehr als verdoppelt. Und das ambulante Wohnen gibt den größten Spielraum für den eigenen Alltag. Aber in den besonderen Wohnformen bilden Menschen mit geistiger Behinderung noch immer die größte Gruppe. Im ambulanten Wohnen sind sie eine kleine Gruppe. Deshalb ist die freie Wahl für viele Menschen bis jetzt nur ein Satz auf dem Papier."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Kompetenzerwartung verlangt nur, die rechtlichen Grundlagen zu benennen - hier baust du darauf auf und hältst Anspruch und Wirklichkeit gegeneinander. Bau die Antwort in zwei Hälften: erst was zugesichert ist, dann was die Zahlen und Beschreibungen zeigen, und zum Schluss dein Urteil. Die vier Grundrechte stehen auf Folie 8 (dort ist die Unversehrtheit der Wohnung als Art. 14 GG angegeben; im Grundgesetz ist es Art. 13 GG - in der Klausur reicht die Sache, die Artikelnummer musst du nicht riskieren), die drei Auszüge aus Artikel 19 auf Folie 9, die Verteilung Ende 2023 auf Folie 12, das Wohnen im Heim auf Folie 17, die Ablösung aus der Familie auf Folie 15, die Freiräume des ambulant unterstützten Wohnens auf Folie 19 und die Entwicklung seit 2010 auf Folie 11. Beim Lesen von Folie 12 ist die Richtung entscheidend: Jede Säule steht für eine Wohnform und ergibt hundert Prozent, aufgeteilt nach Behinderungsart - du liest also senkrecht, nicht quer. Die 64 Prozent heißen: Von allen, die in besonderen Wohnformen leben, haben 64 Prozent primär eine geistige Behinderung. Sie heißen nicht, dass 64 Prozent der Menschen mit geistiger Behinderung dort leben - das wäre die häufigste Fehllesart dieser Grafik. Dass zwischen Anspruch und Wirklichkeit eine Lücke klafft, sagt keine Folie ausdrücklich - dieses Urteil führst du selbst, und dafür gibt es die Punkte. In deinen Notizen findest du das Recht auf Notizen S. 09, die Prozentzahlen auf Notizen S. 11, Heim und Familie auf Notizen S. 12 und das ambulante Wohnen auf Notizen S. 13.",
+      "quelle": "folie-wohnen-9",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Vier Garantien des Grundgesetzes rund ums Wohnen - welche?",
+          "Der Satz in der Mitte des Schaubilds nennt einen Rechtsrang.",
+          "Wohnung, Umzug, Persoenlichkeit, Freiheit - vier Schutzgueter."
+        ],
+        [
+          "Artikel 19 zuerst: Wer entscheidet ueber Ort und Mitbewohner?",
+          "Was darf niemandem vorgeschrieben werden?",
+          "Dienste vor Ort statt Sonderwelt - welche Forderung ist das?"
+        ],
+        [
+          "Rechte allein genuegen nicht - was muss dazukommen?",
+          "Assistenz wo? Nenne beide Orte.",
+          "Wovor soll die Hilfe schuetzen? Zwei Begriffe aus dem Vertrag."
+        ],
+        [
+          "Die Saeulen dieser Grafik summieren sich senkrecht auf hundert.",
+          "Welche Behinderungsart praegt drinnen das Bild, welche draussen?",
+          "Zwei Werte fuer unseren Personenkreis, dazu der Spitzenwert der anderen Gruppe."
+        ],
+        [
+          "Wie gross sind die Haeuser, in denen viele leben?",
+          "Drei Dinge, ueber die Bewohner nicht bestimmen.",
+          "Ein Gegensatzpaar beschreibt dieses Wohnen treffend."
+        ],
+        [
+          "Der dritte Beleg kommt aus der Herkunftsfamilie.",
+          "Warum ist der Auszug oft keine freie Entscheidung?",
+          "Drei Ausloeser, die niemand plant."
+        ],
+        [
+          "Zum Schluss dein Urteil: Gilt das Recht ueberall gleich?",
+          "Papier und Alltag - wie weit liegen sie auseinander?",
+          "Nenne trotzdem die Bewegung und den Spielraum, den sie eroeffnet."
         ]
       ]
     }

@@ -838,6 +838,7 @@
   "frei": [
     {
       "id": "mo-f-1",
+      "unterthema": "Curriculum & Kompetenzen",
       "afb": 1,
       "frage": "Benennen Sie 5 Mobilitätskompetenzen nach Stöppler.",
       "stichpunkte": [
@@ -846,7 +847,8 @@
         "Motorik",
         "Reaktion",
         "Aufmerksamkeit",
-        "Weitere: Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition, Interaktion"
+        "Weitere: Gedächtnis, Kommunikation, soziale Kompetenzen",
+        "Weitere: Kognition, Interaktion"
       ],
       "muster": "Stöppler nennt insgesamt zehn Mobilitätskompetenzen. Fünf davon sind die visuelle Wahrnehmung, die auditive Wahrnehmung, die Motorik, die Reaktion und die sozialen Kompetenzen. Daneben gehören auch Aufmerksamkeit, Gedächtnis, Kommunikation, Kognition und Interaktion dazu.",
       "musterVarianten": {
@@ -867,49 +869,78 @@
       "quelle": "folie-mobilitaet-17",
       "quelleSicherheit": "geprueft",
       "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Nenne fünf der Mobilitätskompetenzen nach Stöppler.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn du magst, nenne auch die übrigen aus der Zehnerliste.",
+          "idx": [
+            5,
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
-          "Der Sinneskanal für Ampelfarben und Verkehrszeichen",
-          "Was die Augen im Straßenverkehr leisten müssen",
-          "Sehen: Symbole, Farben, Entfernungen"
+          "Welcher Kanal meldet Ampelfarben, Schilder und Entfernungen?",
+          "Der Bereich, den das Blind-Szenario der Übung wegnimmt",
+          "Ohne Licht fällt dieser Bereich als Erstes aus"
         ],
         [
-          "Der Sinneskanal fürs Hören von Verkehr",
-          "Geräusche erkennen und orten - welcher Bereich?",
-          "Was die Ohren im Verkehr leisten"
+          "Welcher Kanal meldet das Auto, bevor man es sieht?",
+          "Hupen, Motoren und Sirenen kommen hier an",
+          "Der Bereich, den die Geräusche-Spiele im Unterricht trainieren"
         ],
         [
-          "Körperbeherrschung: Gleichgewicht und Bewegung",
-          "Der Bereich rund um Bewegungsabläufe",
-          "Was der Körper können muss: Balance, Tempo"
+          "Gleichgewicht halten, Tempo wechseln, sicher stehen bleiben",
+          "Was der Körper am Bordstein leisten muss",
+          "Der Bereich, auf den Feuer-Wasser-Luft zielt"
         ],
         [
-          "Schnell und passend antworten, wenn etwas passiert",
-          "Blitzschnelles Umschalten in Gefahrenmomenten",
-          "Prompt stoppen oder ausweichen können"
+          "Zwischen Reiz und Handlung soll wenig Zeit liegen",
+          "Ein Ball rollt auf die Fahrbahn - was ist jetzt gefragt?",
+          "Prompt anhalten oder ausweichen können"
         ],
         [
-          "Bei der Sache bleiben, Ablenkung ausblenden",
-          "Konzentration aufs Verkehrsgeschehen",
-          "Den Fokus halten können"
+          "Ablenkung ausblenden und beim Verkehr bleiben",
+          "Was schwindet, wenn unterwegs das Handy piept",
+          "Den Fokus über den ganzen Weg halten"
         ],
         [
-          "Es sind insgesamt zehn - fünf weitere gibt es noch",
-          "Denk an Denken, Sprechen und Miteinander",
-          "Die restlichen fünf der Zehnerliste"
+          "Drei der fünf übrigen: Merken, Sprechen, Umgang miteinander",
+          "Was man behalten, mitteilen und im Miteinander können muss",
+          "Drei Bereiche aus der Liste, die nichts mit den Sinnen zu tun haben"
+        ],
+        [
+          "Zwei fehlen noch, einer fürs Denken, einer fürs Zusammenspiel",
+          "Erst mit diesen beiden ist die Zehnerliste voll"
         ]
       ]
     },
     {
       "id": "mo-f-2",
+      "unterthema": "Bedeutung & Mobilitätsbehinderungen",
       "afb": 1,
       "frage": "Fassen Sie die wesentlichen Mobilitätsbehinderungen zusammen, auf die Menschen im Bereich GE im Alltag stoßen können. **Zusammenfassen heißt hier: die Mobilitätsbehinderungen aus der Vorlesung im Überblick wiedergeben, nicht einzelne ausführen.**",
       "stichpunkte": [
         "Sensorisch: Blindheit, Gehörlosigkeit",
         "Körperlich: Körperbehinderung, vorübergehende Unfallfolgen, Alter",
-        "Kognitiv/psychisch: Lernschwierigkeiten, psychische Behinderung, fehlende Ortskenntnis",
-        "Umfeld/strukturell: Einstellung und Verhalten Anderer, fehlende Mobilitätsbildung, Reisebehinderung",
-        "Konsequenz: geringeres Mobilitätsniveau, Angewiesensein auf Fahrdienste, Begleitung, Assistenz -> Abhängigkeit"
+        "Kognitiv: Lernschwierigkeiten, psych. Behinderung, Ortskenntnis fehlt",
+        "Umfeld: Einstellung/Verhalten, keine Mobilitätsbildung, Reisebeh.",
+        "Konsequenz: geringes Mobilitätsniveau, Fahrdienst/Begleitung/Assistenz"
       ],
       "muster": "Menschen im Bereich GE können im Alltag auf vielfältige Mobilitätsbehinderungen stoßen: auf sensorische wie Blindheit und Gehörlosigkeit, auf körperliche wie eine Körperbehinderung, vorübergehende Unfallfolgen oder das Alter, auf kognitive und psychische wie Lernschwierigkeiten, eine psychische Behinderung oder fehlende Ortskenntnis sowie auf Barrieren im Umfeld wie die Einstellung und das Verhalten anderer Menschen, eine Reisebehinderung und fehlende Mobilitätsbildung. In der Folge haben sie ein deutlich geringeres Mobilitätsniveau und sind häufig auf Fahrdienste, Begleitung und Assistenz angewiesen.",
       "musterVarianten": {
@@ -929,36 +960,58 @@
       "tipp": "Original-Beispielaufgabe. Trick zum Merken: in vier Gruppen denken (Sinne, Körper, Kognition/Psyche, Umfeld) statt elf Einzelbegriffe. Die Kreis-Mindmap mit allen elf Faktoren steht auf Folie 9, das Spannungsfeld Abhängigkeit gegen Selbstbestimmung auf Folie 7; in deinen Notizen liegt beides zusammen auf Notizen S. 16.",
       "quelle": "folie-mobilitaet-9",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Zuerst die Mobilitätsbehinderungen selbst - die Vierer-Merkhilfe hilft beim Sortieren.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann, was aus all dem für den Alltag folgt.",
+          "idx": [
+            4
+          ],
+          "form": "liste"
+        }
+      ],
       "hinweise": [
         [
-          "Wenn ein Sinn ausfällt",
-          "Einschränkungen von Sehen oder Hören",
-          "Die Sinnesorgane als Hürde"
+          "Die Gruppe, bei der ein Wahrnehmungskanal ausfällt",
+          "Was das Rollstuhl-und-Blind-Spiel der Vorlesung erfahrbar macht",
+          "Zwei Kreise der Mindmap betreffen Augen und Ohren"
         ],
         [
-          "Der Bewegungsapparat, auch zeitweise oder altersbedingt",
-          "Wenn der Körper nicht mitmacht",
-          "Physische Einschränkungen, dauerhaft oder vorübergehend"
+          "Die Gruppe, in die man mit einem Gipsbein eine Weile hineinrutscht",
+          "Der Bewegungsapparat, dauerhaft oder nur eine Zeit lang",
+          "Auch die Jahre zählen hier mit"
         ],
         [
-          "Hürden im Denken, Erleben und Sich-Auskennen",
-          "Innere Barrieren: Lernen, Psyche, Orientierung",
-          "Wenn Wissen oder Seele die Wege erschweren"
+          "Hürden im Lernen, im Erleben und im Sich-Zurechtfinden",
+          "Barrieren, die man einer Person von außen nicht ansieht",
+          "Die dritte davon kennt, wer an einem fremden Bahnhof steht"
         ],
         [
-          "Barrieren, die von außen kommen",
-          "Was Gesellschaft und fehlende Bildung beitragen",
-          "Hürden, die nicht in der Person liegen"
+          "Barrieren, die gar nicht in der Person liegen",
+          "Was Mitmenschen, Schule und Verkehrssystem beisteuern",
+          "Wer nie geübt hat, allein zu fahren, scheitert nicht am Körper"
         ],
         [
-          "Was folgt daraus für die Eigenständigkeit?",
-          "Das Ergebnis: auf andere angewiesen sein",
-          "Wohin führt all das im Alltag?"
+          "Was daraus im Alltag folgt: weniger eigene Wege",
+          "Der gelbe Kleinbus auf der Folie steht dafür",
+          "Wer bringt die Person hin, wenn sie nicht allein hinkommt?"
         ]
       ]
     },
     {
       "id": "mo-f-3",
+      "unterthema": "Methoden der Mobilitätsförderung",
       "afb": 2,
       "frage": "Ordnen Sie verschiedene Unterrichtsmaßnahmen den jeweiligen Mobilitätskompetenzen zu. **Gemeint sind die Maßnahmen aus der Vorlesung und die Mobilitätskompetenzen nach Stöppler.**",
       "stichpunkte": [
@@ -1016,6 +1069,7 @@
     },
     {
       "id": "mo-f-4",
+      "unterthema": "Alltagsmobilität in Zahlen",
       "afb": 2,
       "frage": "Vergleichen Sie die Verkehrsmittel in der Alltagsmobilität im Jahre 2002 und 2023.",
       "stichpunkte": [
@@ -1085,6 +1139,7 @@
     },
     {
       "id": "mo-f-5",
+      "unterthema": "Bedeutung & Mobilitätsbehinderungen",
       "afb": 3,
       "frage": "Diskutieren Sie, was ein geringes eigenständiges Mobilitätsniveau für Personen im GE bedeutet.",
       "stichpunkte": [
@@ -1148,6 +1203,7 @@
     },
     {
       "id": "mo-gen-f-1",
+      "unterthema": "Curriculum & Kompetenzen",
       "afb": 2,
       "frage": "Erläutern Sie anhand der vier Teilbereiche der schulischen Mobilitäts- und Verkehrserziehung, warum diese mehr umfasst als das Einüben von Verkehrsregeln.",
       "stichpunkte": [
@@ -1212,6 +1268,7 @@
     },
     {
       "id": "mo-gen-f-2",
+      "unterthema": "Verkehrsteilnahme konkret",
       "afb": 3,
       "frage": "Entwickeln Sie eine Unterrichtssequenz zur Vorbereitung auf die ÖPNV-Nutzung, die vom Schonraum bis zur Ernstsituation führt. Benennen Sie Lernziele und thematisierte Gefahren.",
       "stichpunkte": [
@@ -1276,6 +1333,7 @@
     },
     {
       "id": "mo-gen-f-3",
+      "unterthema": "Methoden der Mobilitätsförderung",
       "afb": 3,
       "frage": "Diskutieren Sie die These: Verkehrserziehung im SGE sollte aus Sicherheitsgründen vor allem im Schonraum stattfinden.",
       "stichpunkte": [
@@ -1340,6 +1398,7 @@
     },
     {
       "id": "mo-fol-f-1",
+      "unterthema": "Barrierefreiheit & Rahmenbedingungen",
       "afb": 2,
       "frage": "Für alle Maßnahmen der Barrierefreiheit gelten nach Stöppler drei Regeln. Benennen und erläutern Sie diese Regeln und geben Sie zu jeder ein Beispiel aus dem Verkehrsraum.",
       "stichpunkte": [
@@ -1404,6 +1463,7 @@
     },
     {
       "id": "mo-fol-f-2",
+      "unterthema": "Curriculum & Kompetenzen",
       "afb": 3,
       "frage": "Der Rahmenlehrplan setzt als Ziel, dass alle Schüler:innen, denen es möglich ist, den Schulweg beziehungsweise den Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen. Die Dozentin fragt dazu kritisch: Wird so Teilhabe erzielt? Nehmen Sie begründet Stellung.",
       "stichpunkte": [
@@ -1481,6 +1541,646 @@
           "Das abgestufte Urteil: nötig, aber nicht genug",
           "Wie fällt die Gesamtbewertung aus?",
           "Mindestziel oder Maßstab - deine Einordnung"
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-1",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
+      "frage": "Wer schulische Mobilitäts- und Verkehrserziehung nur als Regelkunde versteht, greift zu kurz: Die Vorlesung fächert sie in vier Erziehungsbereiche auf. Nennen Sie diese vier Bereiche.",
+      "stichpunkte": [
+        "Sicherheitserziehung",
+        "Gesundheitserziehung",
+        "Umwelterziehung",
+        "Sozialerziehung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die vier Erziehungsbereiche, aus denen sich die schulische Mobilitäts- und Verkehrserziehung zusammensetzt.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Bereichen zusammen. Sie umfasst die Sicherheitserziehung, die Gesundheitserziehung, die Umwelterziehung und die Sozialerziehung. Das Einüben von Verkehrsregeln gehört damit nur zu einem dieser vier Bereiche.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Schule übt Mobilität in vier Bereichen. Der erste Bereich ist die Sicherheitserziehung. Der zweite Bereich ist die Gesundheitserziehung. Der dritte Bereich ist die Umwelterziehung. Der vierte Bereich ist die Sozialerziehung. Erziehung heißt hier: Die Schule bringt den Schülerinnen und Schülern etwas bei. Verkehrsregeln zu lernen ist nur ein Teil davon."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Schaubild mit den vier Feldern steht auf Folie 13, bei dir in den Notizen auf Notizen S. 17. Merkhilfe zur Struktur: Es sind vier gleich große Felder rund um die Mitte, keines steht über den anderen, und alle vier Namen enden auf -erziehung. Die vertiefte Fassung dieser Aufgabe ist die AFB-II-Aufgabe, in der du zu jedem Bereich ein Unterrichtsbeispiel gibst - hier reicht das Nennen.",
+      "quelle": "folie-mobilitaet-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Bereich, der Gefahren im Blick hat und Unfälle vermeiden will.",
+          "Denk an das Überqueren der Straße - worum geht es dabei zuerst?",
+          "Ein Bereich fragt zuerst: Was kann hier passieren, und wie schütze ich mich?"
+        ],
+        [
+          "Hier zählt der eigene Körper: sich bewegen statt gefahren zu werden.",
+          "Zu Fuß gehen und Rad fahren tun nicht nur dem Verkehr gut, sondern auch ...",
+          "Der Bereich, der auf die körperliche und seelische Leistungsfähigkeit zielt."
+        ],
+        [
+          "Welche Verkehrsmittel schonen Klima und Ressourcen?",
+          "Beim Fahrrad steht Nachhaltigkeit ausdrücklich als Lernziel - dazu passt dieser Bereich."
+        ],
+        [
+          "Verkehr ist ein Miteinander: Rücksicht nehmen, Absichten anderer lesen.",
+          "Der Bereich, in dem Empathie und Regelverständnis zu Hause sind."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-2",
+      "unterthema": "Barrierefreiheit & Rahmenbedingungen",
+      "afb": 1,
+      "frage": "Barrierefreiheit endet nicht bei der Rampe. Die Vorlesung nennt drei Regeln, die für alle Maßnahmen der Barrierefreiheit gelten. Nennen Sie diese drei Regeln.",
+      "stichpunkte": [
+        "Räder-Füße-Regel",
+        "Mehr-Kanal-Regel",
+        "KISS-Regel"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die drei Regeln, die für alle Maßnahmen der Barrierefreiheit gelten.",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Für alle Maßnahmen der Barrierefreiheit gelten nach Stöppler drei Regeln. Das sind die Räder-Füße-Regel, die Mehr-Kanal-Regel und die KISS-Regel. Zwei von ihnen betreffen die Gestaltung von Informationen, eine betrifft das Erreichen der Ziele selbst.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt drei Regeln für Barrierefreiheit. Die erste Regel heißt Räder-Füße-Regel. Die zweite Regel heißt Mehr-Kanal-Regel. Die dritte Regel heißt KISS-Regel. Zwei dieser Regeln sagen, wie Informationen gestaltet sein sollen. Eine Regel sagt, dass man alle Ziele erreichen können soll."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Folie fehlt in deinen Vorlesungsnotizen ganz, die drei Regeln sind also neu - dafür verrät jeder Name schon, worum es geht. Nachschlagen kannst du sie auf Folie 35. Merkhilfe zur Struktur: Zwei der drei Namen betreffen die Gestaltung von Informationen, der dritte das Hinkommen; einer der drei ist eine englische Abkürzung, die beiden anderen sind deutsche Wortverbindungen mit Bindestrich. Wer sie sicher benennen kann, ist für die größere AFB-II-Aufgabe gerüstet, die zu jeder Regel zusätzlich eine Erläuterung und ein Beispiel verlangt.",
+      "quelle": "folie-mobilitaet-35",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Diese Regel nennt zwei Arten der Fortbewegung nebeneinander, eine davon rollt.",
+          "Denk an Rampen und Aufzüge - wofür sorgen sie?",
+          "Es geht ums Ankommen, nicht um Informationen."
+        ],
+        [
+          "Eine Anzeige plus eine Durchsage - über wie viele Sinne läuft die Nachricht da?",
+          "Der Name zählt die Wege, auf denen eine Information ankommt.",
+          "Wer nicht hört, soll es sehen können - und umgekehrt."
+        ],
+        [
+          "Ein englisches Merkwort aus vier Buchstaben, jeder Buchstabe steht für ein Wort.",
+          "Diese Regel zielt auf Verständlichkeit, nicht auf Technik.",
+          "Sie verlangt nichts Bauliches, sondern etwas an der Sprache."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-3",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 1,
+      "frage": "Mobilität lässt sich nicht nur auf einem Weg einüben. Das Schaubild der Vorlesung stellt vier methodische Zugänge nebeneinander. Nennen Sie diese vier Methoden der Mobilitätsförderung.",
+      "stichpunkte": [
+        "Praktische Übungen und Spiel",
+        "Übungen in Schonräumen",
+        "Übungen in Ernstsituationen",
+        "Pädagogisches Puppenspiel"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die vier Methoden, mit denen Mobilität gefördert wird.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Vorlesung nennt vier Methoden der Mobilitätsförderung. Das sind praktische Übungen und Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und das pädagogische Puppenspiel. Im Schaubild stehen über diesen vier Methoden die didaktischen Prinzipien und unter ihnen die Kooperationen: Die Methoden werden also von Prinzipien geleitet und von Zusammenarbeit getragen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt vier Methoden, um Mobilität zu fördern. Die erste Methode sind praktische Übungen und Spiele. Die zweite Methode sind Übungen in Schonräumen. Ein Schonraum ist ein geschützter Ort ohne echten Verkehr, zum Beispiel der Schulhof. Die dritte Methode sind Übungen in Ernstsituationen. Das heißt: üben im echten Verkehr. Die vierte Methode ist das pädagogische Puppenspiel. Über allen vier Methoden stehen die didaktischen Prinzipien. Darunter steht die Zusammenarbeit mit anderen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Folie 24 zeigt die vier Methoden mit je einem Foto, bei dir stehen sie auf Notizen S. 20. Merkhilfe für die Reihenfolge: erst spielen, dann im geschützten Raum üben, dann hinaus in die echte Situation - das Puppenspiel kommt als eigener Zugang dazu. Diese vier sind das Gerüst, auf dem die großen Planungs- und Diskussionsaufgaben zum Schonraum und zur ÖPNV-Sequenz aufbauen; hier musst du sie nur nennen können.",
+      "quelle": "folie-mobilitaet-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der spielerische Zugang, mit dem die Reihe anfängt.",
+          "Das Foto auf der Folie zeigt eine Gruppe beim Würfel-Stopp - wie heißt dieser Zugang?"
+        ],
+        [
+          "Der Verkehrsübungsplatz ohne echten Verkehr - wie heißt so ein Ort?",
+          "Geschützt üben, bevor es ernst wird."
+        ],
+        [
+          "Jetzt mit Warnweste an den echten Bordstein.",
+          "Das Gegenstück zum geschützten Ort: Es passiert wirklich."
+        ],
+        [
+          "Mit Figuren und kleiner Bühne wird eine Verkehrsszene gespielt.",
+          "Ein Zugang, der aus dem Theater kommt und Kinder besonders anspricht."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-4",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 1,
+      "frage": "Über den vier Methoden der Mobilitätsförderung steht im Schaubild eine Kopfzeile mit didaktischen Prinzipien, die für jede dieser Methoden gelten. Nennen Sie diese sechs Prinzipien.",
+      "stichpunkte": [
+        "Sicherheit",
+        "Lebensnähe",
+        "Anschaulichkeit",
+        "Strukturierung",
+        "Individualisierung oder personenzentrierte Mobilität",
+        "Kontinuität"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die sechs didaktischen Prinzipien, unter denen die Methoden der Mobilitätsförderung stehen.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Schaubild zu den Methoden der Mobilitätsförderung nennt sechs didaktische Prinzipien. Das sind Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung im Sinne einer personenzentrierten Mobilität und Kontinuität. Sie stehen als Kopfzeile über allen vier Methoden und gelten deshalb für jede einzelne von ihnen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt sechs didaktische Prinzipien. Didaktisch heißt: Es geht um das Lehren und Lernen. Das erste Prinzip ist Sicherheit. Das zweite Prinzip ist Lebensnähe. Das heißt: Geübt wird, was im Alltag wirklich vorkommt. Das dritte Prinzip ist Anschaulichkeit. Das vierte Prinzip ist Strukturierung. Das fünfte Prinzip ist Individualisierung. Das heißt: Jeder Mensch bekommt das, was er selbst braucht. Das sechste Prinzip ist Kontinuität. Das heißt: Geübt wird regelmäßig und über lange Zeit. Die sechs Prinzipien gelten für alle vier Methoden."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Kopfzeile steht auf Folie 24, bei dir auf Notizen S. 20. Wichtig für die Klausur: Die Folie nennt die Prinzipien nur, sie erklärt sie nicht - nennen können reicht hier also, ausführen musst du sie nicht. In einer Planungsaufgabe sind sie trotzdem viel wert, weil du mit ihnen begründen kannst, warum eine Sequenz so und nicht anders aufgebaut ist.",
+      "quelle": "folie-mobilitaet-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das Prinzip, das im Verkehr immer zuerst kommt und in der Kopfzeile vorn steht.",
+          "Ohne dieses Prinzip wäre Üben im echten Verkehr unverantwortlich."
+        ],
+        [
+          "Geübt wird das, was im Alltag wirklich vorkommt.",
+          "Warum der Schonraum allein nicht reicht - das Prinzip dahinter."
+        ],
+        [
+          "Zeigen statt nur erklären: Bilder, Modelle, echte Gegenstände.",
+          "Das Prinzip, das über die Augen geht: Man sieht, worum es geht."
+        ],
+        [
+          "Klarer Aufbau, feste Abfolge, erkennbare Schritte.",
+          "Ein Prinzip, das Ordnung in den Ablauf bringt - Schritt für Schritt statt alles auf einmal."
+        ],
+        [
+          "Die Förderung richtet sich nach der einzelnen Person, nicht nach der Gruppe.",
+          "Im Schaubild stehen für dieses eine Prinzip zwei Bezeichnungen, getrennt durch einen Schrägstrich."
+        ],
+        [
+          "Einmal üben reicht nicht, es muss immer wieder stattfinden.",
+          "Das Prinzip, das auf Dauer und Regelmäßigkeit zielt."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-5",
+      "unterthema": "Alltagsmobilität in Zahlen",
+      "afb": 1,
+      "frage": "Die Mobilitätsstudie, aus der die Vorlesung ihre Zahlen nimmt, sortiert alle zurückgelegten Wege danach, wozu sie dienen. Nennen Sie die sechs Wegzwecke, die diese Zeitreihe unterscheidet.",
+      "stichpunkte": [
+        "Beruf",
+        "Ausbildung",
+        "Einkauf",
+        "Erledigung",
+        "Freizeit",
+        "Begleitung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die sechs Zwecke, nach denen die Studie die Wege sortiert.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Zeitreihe zum Verkehrsaufkommen unterscheidet sechs Wegzwecke. Das sind Beruf, Ausbildung, Einkauf, Erledigung, Freizeit und Begleitung. Nach diesen sechs Zwecken werden sowohl die Anteile an allen Wegen als auch die Anteile an den Personenkilometern aufgeschlüsselt, und zwar für die Jahre 2002, 2008, 2017 und 2023.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Studie teilt alle Wege in sechs Gruppen ein. Ein Wegzweck sagt, wozu jemand unterwegs ist. Die sechs Zwecke sind: Beruf, Ausbildung, Einkauf, Erledigung, Freizeit und Begleitung. Begleitung heißt: Man bringt jemanden hin oder holt jemanden ab. Die Studie zeigt die Zahlen für vier Jahre. Diese Jahre sind 2002, 2008, 2017 und 2023."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Grafik ist neu für dich: In deinen Notizen fehlt sie ganz, nachschlagen kannst du sie auf Folie 5. Sie zeigt zwei gestapelte Säulen, einmal die Anteile an allen Wegen und einmal die Anteile an den Personenkilometern. Merkhilfe: Die Vorlesung hat dich am Anfang gefragt, welche Wege du gestern zurückgelegt hast und wozu - genau diese Sortierung ist hier gemeint, und einer der sechs Zwecke gilt nicht dir selbst, sondern einer anderen Person. Nicht mit Folie 6 verwechseln, dort geht es um die Verkehrsmittel.",
+      "quelle": "folie-mobilitaet-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Weg zur Arbeit - wie heißt dieser Zweck in der Grafik?",
+          "Der Zweck, der 2023 den größten Anteil aller Wege hat."
+        ],
+        [
+          "Schule, Studium, Lehre - alles unter einem Wort.",
+          "Der kleinste Anteil der Reihe, rund sieben Prozent."
+        ],
+        [
+          "Wege in den Supermarkt und in Geschäfte.",
+          "Dieser Zweck hat seit 2002 deutlich an Anteil verloren."
+        ],
+        [
+          "Zum Amt, zum Arzt, zur Post - keine Ware, sondern ein Anliegen.",
+          "Der Sammelzweck für alles, was zu regeln ist, ohne einzukaufen."
+        ],
+        [
+          "Sport, Besuch, Kino - die Wege, die man gerne geht.",
+          "Der Zweck, der 2002 noch den größten Anteil aller Wege hatte."
+        ],
+        [
+          "Man ist nur unterwegs, um jemanden zu bringen oder zu holen.",
+          "Der Zweck, bei dem der Weg nicht einem selbst gilt."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-6",
+      "unterthema": "Verkehrsteilnahme konkret",
+      "afb": 1,
+      "frage": "Die Vorlesung zeigt ein fertiges Arbeitsmaterial, mit dem eine Schule das sichere Zu-Fuß-Gehen abnimmt und am Ende eine Urkunde ausstellt. Nennen Sie, aus welchen zwei Teilen diese Prüfung besteht, was in jedem Teil verlangt wird und wie über das Bestehen entschieden wird.",
+      "stichpunkte": [
+        "Zwei Teile, ein theoretischer und ein praktischer Prüfungsteil",
+        "Im theoretischen Teil fünf Verkehrszeichen benennen und ausmalen",
+        "Im praktischen Teil zuerst die Benutzung des Gehwegs",
+        "Überqueren der Fahrbahn am Zebrastreifen, ohne und mit Verkehr",
+        "Überqueren der Fahrbahn an einer ungesicherten Stelle",
+        "Überqueren der Fahrbahn an der Druckknopfampel",
+        "47 erreichbare Punkte, bestanden ab 25 Punkten"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne, aus welchen zwei Teilen die Prüfung besteht und was im theoretischen Teil verlangt wird.",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne die vier Bereiche, die im praktischen Teil abgenommen werden.",
+          "idx": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne, wie viele Punkte erreichbar sind und ab wann die Prüfung bestanden ist.",
+          "idx": [
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Material gliedert die Prüfung in zwei Teile, einen theoretischen und einen praktischen Prüfungsteil. Im theoretischen Teil sollen fünf Verkehrszeichen benannt und ausgemalt werden. Der praktische Teil nimmt vier Bereiche ab: die Benutzung des Gehwegs, das Überqueren der Fahrbahn am Zebrastreifen einmal ohne und einmal mit Verkehr, das Überqueren an einer ungesicherten Stelle und das Überqueren an der Druckknopfampel. Bewertet wird über Punkte: 47 Punkte sind erreichbar, ab 25 Punkten gilt die Prüfung als bestanden. Wer besteht, bekommt eine Urkunde mit Schulstempel.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Prüfung hat zwei Teile. Der erste Teil ist die Theorie. Dort sollen fünf Verkehrszeichen benannt und ausgemalt werden. Der zweite Teil ist die Praxis. Dort werden vier Sachen geprüft. Erstens: Wie benutzt man den Gehweg? Zweitens: Wie überquert man die Straße am Zebrastreifen? Das wird zweimal geübt, einmal ohne Verkehr und einmal mit Verkehr. Drittens: Wie überquert man die Straße an einer Stelle ohne Ampel und ohne Zebrastreifen? Viertens: Wie überquert man die Straße an einer Ampel mit Knopf? Am Ende gibt es Punkte. Man kann 47 Punkte bekommen. Ab 25 Punkten hat man bestanden. Dann gibt es eine Urkunde mit dem Stempel der Schule."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Dieses Material ist neu für dich: In deinen Notizen kommt es nicht vor, ansehen kannst du es auf Folie 27. Der Druck ist winzig, aber du brauchst nur das Gerüst: erst Theorie, dann Praxis, am Ende die Bewertung. Merkhilfe: Der praktische Teil hat vier Stationen, drei davon sind Varianten des Überquerens, eine ist das Gehen selbst; ganz unten stehen zwei Zahlen, eine erreichbare Punktzahl und eine Mindestpunktzahl. Genau darauf zielt eine der Kompetenzerwartungen der Vorlesung, nämlich konkrete Beispiele für Maßnahmen zur Mobilitäts- und Verkehrsbildung zu formulieren - hier reicht das Nennen.",
+      "quelle": "folie-mobilitaet-27",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie in der Fahrschule: einmal auf dem Papier, einmal draußen.",
+          "Die Prüfung zerfällt in zwei ungleiche Hälften - Wissen und Können."
+        ],
+        [
+          "Hier kommen Buntstifte zum Einsatz - was tut das Kind mit den Schildern?",
+          "Fünf Schilder, darunter zwei Ampelbilder in verschiedenen Farben."
+        ],
+        [
+          "Bevor es ums Überqueren geht: Wo läuft man überhaupt?",
+          "Auf der verkehrsabgewandten Seite laufen und anderen ausweichen - welcher Block ist das?"
+        ],
+        [
+          "Der Ort mit den weißen Streifen - hier wird gleich zweimal geübt.",
+          "Erst auf dem Schulhof geprobt, dann auf der echten Straße.",
+          "Handzeichen geben und Blickkontakt zum Fahrer aufnehmen gehört hierher."
+        ],
+        [
+          "Keine Ampel, keine Streifen - trotzdem muss man hinüber.",
+          "Hier gilt vor allem: warten, bis wirklich frei ist."
+        ],
+        [
+          "Man muss selbst etwas tun, damit es grün wird.",
+          "Die Station mit einem Knopf an der Säule."
+        ],
+        [
+          "Zwei Zahlen entscheiden: wie viel geht höchstens, und wie viel muss sein.",
+          "Etwas mehr als die Hälfte genügt zum Bestehen."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-7",
+      "unterthema": "Curriculum & Kompetenzen",
+      "afb": 1,
+      "frage": "Der Orientierungs- und Handlungsrahmen für Berlin und Brandenburg fasst das, was mobil sein ausmacht, in sechs Kernkompetenzen. Benennen Sie diese sechs Kernkompetenzen.",
+      "stichpunkte": [
+        "Selbstständig mobil sein",
+        "Sicher mobil sein",
+        "Verantwortungsbewusst mobil sein",
+        "Gesundheitsbewusst mobil sein",
+        "Nachhaltig mobil sein",
+        "Zukunftsfähige Mobilität mitgestalten"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Benenne die sechs Kernkompetenzen aus dem Orientierungs- und Handlungsrahmen.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Der Orientierungs- und Handlungsrahmen benennt sechs Kernkompetenzen: selbstständig mobil sein, sicher mobil sein, verantwortungsbewusst mobil sein, gesundheitsbewusst mobil sein, nachhaltig mobil sein und zukunftsfähige Mobilität mitgestalten. Fünf davon beschreiben, auf welche Weise jemand mobil ist; die sechste geht darüber hinaus und zielt auf die Mitgestaltung künftiger Mobilität.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Orientierungs- und Handlungsrahmen nennt sechs Kernkompetenzen. Eine Kernkompetenz ist eine besonders wichtige Fähigkeit. Die erste heißt: selbstständig mobil sein. Die zweite heißt: sicher mobil sein. Die dritte heißt: verantwortungsbewusst mobil sein. Die vierte heißt: gesundheitsbewusst mobil sein. Die fünfte heißt: nachhaltig mobil sein. Die sechste heißt: zukunftsfähige Mobilität mitgestalten. Fünf sagen, WIE jemand mobil ist. Die sechste sagt: Man gestaltet die Mobilität von morgen mit."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Übersicht steht auf Folie 16 rechts, bei dir auf Notizen S. 18. Merkhilfe: Fünf der sechs antworten auf die Frage, WIE ich mobil bin, und enden auf mobil sein - nur die sechste bricht das Muster und blickt nach vorn. Verwechsle sie nicht mit dem Kompetenzmodell links auf derselben Folie: Das hat drei Kompetenzen (Erkennen, Beurteilen, Handeln und Kommunizieren) rund um den Kern sicher und umweltbewusst mobil sein. Und verwechsle sie auch nicht mit den zehn Mobilitätskompetenzen nach Stöppler auf Folie 17 - das ist eine andere Liste aus einer anderen Quelle.",
+      "quelle": "folie-mobilitaet-16",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ohne fremde Hilfe unterwegs sein - die erste der sechs.",
+          "Die Kompetenz, um die es beim Thema Teilhabe zuallererst geht."
+        ],
+        [
+          "Risiken kennen, Gefahren vermeiden, sich der Lage anpassen.",
+          "Die Kompetenz, die auf das eigene Reaktionsvermögen achtet."
+        ],
+        [
+          "Rücksichtsvoll und kooperativ, den Verkehr als soziales System begreifen.",
+          "Diese Kompetenz denkt an die anderen im Straßenverkehr."
+        ],
+        [
+          "Hier geht es um die eigene körperliche und psychische Leistungsfähigkeit.",
+          "Die Kompetenz, die zur Gesundheitserziehung passt."
+        ],
+        [
+          "Umweltbewusst und ressourcenschonend, mit Blick auf den Klimaschutz.",
+          "Die Kompetenz, die zur Umwelterziehung passt."
+        ],
+        [
+          "Die einzige, die nicht auf mobil sein endet - sie blickt nach vorn.",
+          "Teilhabe an technischen, ökologischen und sozialen Entwicklungen."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb1-8",
+      "unterthema": "Bedeutung & Mobilitätsbehinderungen",
+      "afb": 1,
+      "frage": "Bevor es um Förderung geht, klärt die Vorlesung, warum Mobilität überhaupt so wichtig ist. Nennen Sie, wie Mobilität dort bestimmt wird und womit ihre Relevanz begründet wird.",
+      "stichpunkte": [
+        "Beweglichkeit, Schnelligkeit, jede Positionsveränderung",
+        "Moderne Gesellschaften verlangen viel räumliche Mobilität",
+        "Das Leben wird komplexer, die Optionenvielfalt steigt",
+        "Uneingeschränkt mobil zu sein ist ein Grundbedürfnis",
+        "Ausdruck selbstständiger Lebensführung und von Partizipation",
+        "Zehn Partizipationsfelder, etwa Arbeit, Bildung, Freizeit, Recht"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne, was die Vorlesung unter Mobilität versteht.",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nenne, womit die Vorlesung die Relevanz von Mobilität begründet.",
+          "idx": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Mobilität wird in der Vorlesung weit gefasst: als Beweglichkeit, als Schnelligkeit und als jegliche Positionsveränderung. Ihre Relevanz begründet die Vorlesung damit, dass moderne Gesellschaften ein hohes Maß an räumlicher Mobilität verlangen. Weil das gesellschaftliche Leben immer komplexer wird und die Optionenvielfalt steigt, wird auch mehr Mobilität nötig. Uneingeschränkt mobil zu sein gilt deshalb als Grundbedürfnis und als Ausdruck einer selbstständigen Lebensführung und gesellschaftlicher Partizipation. Die Abbildung dazu zeigt zehn Felder, an denen Mobilität Teilhabe eröffnet, darunter Arbeit, Bildung, Freizeit, Gesundheit und Recht.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Mobilität bedeutet in der Vorlesung sehr viel. Sie bedeutet Beweglichkeit. Sie bedeutet Schnelligkeit. Und sie bedeutet jede Veränderung des Ortes. Warum ist Mobilität so wichtig? Unsere Gesellschaft braucht viel Bewegung im Raum. Das Leben wird immer komplizierter. Es gibt immer mehr Möglichkeiten. Darum braucht man mehr Mobilität. Ohne Einschränkung mobil zu sein ist ein Grundbedürfnis. Ein Grundbedürfnis ist etwas, das jeder Mensch braucht. Mobilität zeigt außerdem: Ich führe mein Leben selbst, und ich gehöre dazu. Ein Bild zeigt zehn Felder der Teilhabe. Dazu gehören zum Beispiel Arbeit, Bildung, Freizeit und Recht."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Folie fehlt in deinen Notizen: Sie starten direkt bei der Mobilität im Bereich GE, die Definition steht nur auf Folie 4. Sie ist der Grundstein für die Kompetenzerwartung, den Stellenwert von Mobilität zu erläutern - hier reicht aber das Nennen, das Erläutern kommt in den größeren Aufgaben. Kern ist der Dreischritt: weite Definition, Grundbedürfnis, Teilhabe. Die zehn Partizipationsfelder musst du nicht vollständig können, vier Beispiele reichen.",
+      "quelle": "folie-mobilitaet-4",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Drei Wörter, ganz weit gefasst - eines davon meint schlicht Tempo.",
+          "Schon jede Veränderung des Ortes zählt dazu.",
+          "Die Definition ist absichtlich breit und nicht auf Verkehr beschränkt."
+        ],
+        [
+          "Wie viel Bewegung im Raum setzt unsere heutige Gesellschaft voraus?",
+          "Das erste Argument schaut auf die Gesellschaft als Ganzes."
+        ],
+        [
+          "Je mehr Auswahl das Leben bietet, desto mehr Wege entstehen.",
+          "Ein Wort für die wachsende Zahl an Möglichkeiten steht hier im Zentrum."
+        ],
+        [
+          "Etwas, das jeder Mensch braucht - so stuft die Folie es ein.",
+          "Kein Luxus und keine Kür, sondern eine Grundlage."
+        ],
+        [
+          "Mobil sein zeigt zweierlei: Ich führe mein Leben selbst, und ich gehöre dazu.",
+          "Zwei große Wörter des Faches: das eigene Leben führen und dazugehören."
+        ],
+        [
+          "Ein Kreis mit zehn Feldern rund um das Wort in der Mitte.",
+          "Jedes dieser Felder ist ein Lebensbereich, zu dem man erst einmal hinkommen muss."
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb2-1",
+      "unterthema": "Methoden der Mobilitätsförderung",
+      "afb": 2,
+      "frage": "Bei einer Schülerin fällt im Schulwegtraining auf, dass sie Verkehrszeichen und Ampelfarben sicher erkennt, dass sie aber, solange sie etwas nicht sieht, nicht sagen kann, ob gerade ein Auto anfährt, ein Rasenmäher läuft oder jemand einen Rollkoffer zieht. Erläutern Sie an einer Übung, zu der die Vorlesung eine Methodenkarte zeigt, wie sich der betroffene Wahrnehmungsbereich gezielt fördern lässt. Benennen Sie den Bereich und die Übung mit ihrem Material, entfalten Sie Ablauf und Variation und belegen Sie, welche Förderziele des Bereichs dabei getroffen werden.",
+      "stichpunkte": [
+        "Der betroffene Bereich ist die auditive Wahrnehmung, eine der zehn Mobilitätskompetenzen nach Stöppler, für die die Mobilitätsförderung einen eigenen Zielkatalog führt",
+        "Passend ist die Methodenkarte Geräuscheraten; als Geräuschquellen dienen zum Beispiel Fahrradklingel, Schiffsglocke, Triangel, Wecker und Zimbel",
+        "Im Ablauf erzeugt die Lehrkraft die Klingelgeräusche, die Teilnehmenden stehen oder sitzen mit dem Rücken zu ihr und benennen die einzelnen Geräuschquellen",
+        "Als Variation werden zwei Quellen zugleich angeschlagen, oder es soll ein Geräusch herausgefunden werden, das ganz anders klingt, etwa Hupe oder Flöte",
+        "Der methodische Hinweis setzt davor an, denn die Geräte werden vorher betrachtet, ausprobiert und benannt, damit das Heraushören auf bekanntem Material aufsetzt",
+        "Getroffen werden die Ziele des Bereichs, also Erkennen, Zuordnen und Differenzieren von Verkehrsgeräuschen sowie auditive Diskriminierung - trainiert wird damit, was im Straßenverkehr gebraucht wird"
+      ],
+      "muster": "Betroffen ist die auditive Wahrnehmung. Sie zählt zu den zehn Mobilitätskompetenzen nach Stöppler, und für sie ist ein eigener Katalog mobilitätsspezifischer Förderziele formuliert. Fördern lässt sie sich mit der Übung Geräuscheraten. Dafür braucht es verschiedene Geräuschquellen, etwa eine Fahrradklingel, eine Schiffsglocke, eine Triangel, einen Wecker oder eine Zimbel. Im Ablauf erzeugt die Lehrkraft mit diesen Quellen nacheinander Klingelgeräusche, während die Teilnehmenden mit dem Rücken zu ihr stehen oder sitzen; ihre Aufgabe ist es, die einzelnen Geräuschquellen zu benennen. Steigern lässt sich die Übung, indem zwei Quellen gleichzeitig angeschlagen werden oder indem ein Geräusch herausgefunden werden soll, das ganz anders klingt als die übrigen, zum Beispiel eine Hupe oder eine Flöte. Methodisch wichtig ist der Schritt davor: Die Teilnehmenden betrachten die Geräte, probieren sie aus und benennen sie, damit das spätere Heraushören auf bekanntem Material aufsetzt. Damit trifft die Übung genau die Ziele, die für den auditiven Bereich formuliert sind: das Erkennen, das Zuordnen und das Differenzieren von Verkehrsgeräuschen sowie die auditive Diskriminierung, die die Variation mit dem abweichenden Geräusch besonders fordert. Die Geräuschquellen selbst sind überwiegend keine Verkehrsgeräusche; trainiert wird aber genau die Fähigkeit, die im Straßenverkehr gebraucht wird, und Fahrradklingel und Hupe stellen den Bezug ausdrücklich her.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es geht um die auditive Wahrnehmung. Auditiv heißt: mit dem Gehör. Die auditive Wahrnehmung ist eine der zehn Mobilitätskompetenzen nach Stöppler. Für diesen Bereich gibt es eigene Förderziele. Eine passende Übung heißt Geräuscheraten. Man braucht dafür verschiedene Geräuschquellen. Zum Beispiel eine Fahrradklingel, eine Schiffsglocke, eine Triangel, einen Wecker oder eine Zimbel. So läuft die Übung ab. Die Lehrkraft macht mit diesen Quellen nacheinander Klingelgeräusche. Die Teilnehmenden stehen oder sitzen mit dem Rücken zur Lehrkraft. Sie sehen also nicht, welches Gerät klingt. Ihre Aufgabe ist es, die Geräuschquellen zu benennen. Die Übung lässt sich schwerer machen. Man kann zwei Quellen gleichzeitig anschlagen. Oder ein Geräusch soll herausgefunden werden, das ganz anders klingt. Zum Beispiel eine Hupe oder eine Flöte. Wichtig ist ein Schritt davor. Die Teilnehmenden sehen sich die Geräte erst an. Sie probieren sie aus. Und sie benennen sie. So kennen sie das Material schon, bevor sie raten. Die Übung trifft genau die Ziele für den auditiven Bereich. Das erste Ziel ist das Erkennen von Verkehrsgeräuschen. Das zweite ist das Zuordnen. Das dritte ist das Differenzieren, also das Unterscheiden. Dazu kommt die auditive Diskriminierung. Diskriminierung heißt hier: heraushören, was anders ist. Genau das übt die Variation mit dem abweichenden Geräusch. Die Geräte selbst sind meist keine Verkehrsgeräusche. Trainiert wird aber genau die Fähigkeit, die man im Straßenverkehr braucht. Und die Fahrradklingel und die Hupe stellen den Bezug zum Verkehr her."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erläutern heißt hier mehr als aufzählen: Die Punkte liegen im Beleg, also darin, dass du die Ziele des auditiven Bereichs neben den Ablauf der Übung legst. Nimm dir für den Schluss zwei Sätze Zeit, in denen du beides ausdrücklich verbindest. Zum Nachschlagen: Die Methodenkarte Geräuscheraten steht mit Ablauf, Variation, Material und methodischem Hinweis auf Folie 22, die Ziele der auditiven Wahrnehmung im ZIELE-Kasten auf Folie 18, die Liste der zehn Mobilitätskompetenzen auf Folie 17. In deinen Notizen stehen nur die Namen der Übungen (Notizen S. 20), die Beschreibungen kommen ausschließlich von den Folien - dass sie dir dort fehlen, ist also normal. Zwei Ziele des Bereichs deckt Geräuscheraten übrigens nicht ab, das Lokalisieren und das Entfernungshören. Wenn du das am Ende erwähnst, zeigst du, dass du den Zielkatalog wirklich gelesen hast.",
+      "quelle": "folie-mobilitaet-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Welcher Sinn ist hier gefragt?",
+          "Hören statt Sehen - und wie heißt der Bereich?",
+          "Einer der zehn Kompetenzbereiche mit eigenem Zielkasten"
+        ],
+        [
+          "Wie heißt die orange Methodenkarte aus der Vorlesung?",
+          "Klingeln, Glocken, Schlaginstrumente - was braucht man dafür?",
+          "Der Name der Übung sagt schon, was die Gruppe tun soll"
+        ],
+        [
+          "Warum darf die Gruppe nicht hinsehen?",
+          "Wer macht die Töne, wer antwortet?",
+          "Die Körperhaltung im Raum gehört zum Aufbau"
+        ],
+        [
+          "Wie macht man es schwerer?",
+          "Zwei auf einmal - oder eines, das nicht dazugehört",
+          "Der Ausreißer als Steigerungsstufe"
+        ],
+        [
+          "Was passiert, bevor die eigentliche Übung startet?",
+          "Unbekanntes kann man nicht wiedererkennen",
+          "Erst kennenlernen, dann raten"
+        ],
+        [
+          "Jetzt der Beleg: was steht im Zielkasten dieses Bereichs?",
+          "Drei Tätigkeiten und ein Fachwort - und alle vier drehen sich um Töne des Verkehrs",
+          "Womit die Aufzählung endet: unterscheiden können, mit dem Fremdwort dafür"
+        ]
+      ]
+    },
+    {
+      "id": "mo-afb3-1",
+      "unterthema": "Bausteine selbstbestimmter Mobilität",
+      "afb": 3,
+      "frage": "Am Ende der Vorlesung stehen ein autonom fahrendes Konzeptfahrzeug und ein selbstfahrender Kleinbus, dazu die offene Frage, ob solche Fahrzeuge mehr Teilhabe bringen. Erörtern Sie diese Frage für Menschen im Förderschwerpunkt geistige Entwicklung. Führen Sie je drei Argumente dafür und dagegen an und kommen Sie zu einem begründeten Fazit.",
+      "stichpunkte": [
+        "Dafür 1: Von der Kita bis ins Arbeitsleben sind Menschen im SGE auf Fahrdienste, Begleitung und Assistenz angewiesen - ein Fahrzeug ohne fremde Fahrperson könnte diese Abhängigkeit verringern",
+        "Dafür 2: Uneingeschränkte Mobilität gilt als Grundbedürfnis und öffnet Felder wie Arbeit, Bildung, Freizeit und soziale Beziehungen - mehr erreichbare Ziele heißt mehr Teilhabefelder",
+        "Dafür 3: Eine der sechs Kernkompetenzen heißt zukunftsfähige Mobilität mitgestalten und meint die Teilhabe an den sozialen, technischen, ökologischen und ökonomischen Entwicklungsprozessen für die Mobilität der Zukunft - neue Mobilitätstechnik ist damit selbst ein Feld, an dem teilzuhaben ist",
+        "Dagegen 1: Selbstbestimmte Mobilität ruht auf zwei Bausteinen, der Bewegungsmöglichkeit und dem Wissen für die sichere eigenständige Verkehrsteilnahme - Technik liefert nur den ersten",
+        "Dagegen 2: Fehlende Mobilitätsbildung und die Einstellung anderer stehen selbst in der Liste der Mobilitätsbehinderungen - beide verschwinden nicht, weil ein Fahrzeug selbst lenkt",
+        "Dagegen 3: Räder-Füße-Regel, Mehr-Kanal-Regel und KISS-Regel gelten weiter - ein Shuttle, das nur über einen Bildschirm in Schriftsprache bedient wird, schafft neue Barrieren",
+        "Als Fazit erweitert die Technik die Möglichkeit, ersetzt die Mobilitätsbildung aber nicht; Teilhabe entsteht erst, wenn beide Bausteine zusammenkommen - dazu die eigene Position"
+      ],
+      "muster": "Für ein Mehr an Teilhabe spricht zunächst die Ausgangslage. Menschen im Förderschwerpunkt geistige Entwicklung sind von der Kita über die Schule bis ins Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen, und genau daraus entsteht Abhängigkeit. Ein Fahrzeug, das ohne fremde Fahrperson auskommt, könnte diese Abhängigkeit an einer entscheidenden Stelle verringern. Zweitens gilt uneingeschränkte Mobilität als Grundbedürfnis und als Ausdruck einer selbstständigen Lebensführung; sie öffnet Felder wie Arbeit, Bildung, Freizeit, Gesundheit und soziale Beziehungen. Wer mehr Ziele erreichen kann, erreicht damit auch mehr dieser Felder. Drittens ist das Mitgestalten einer zukunftsfähigen Mobilität selbst als Kernkompetenz formuliert, also als Teilhabe an den sozialen, technischen, ökologischen und ökonomischen Entwicklungsprozessen in der Gesellschaft für die Mobilität der Zukunft. Eine neue Mobilitätstechnik ist damit nicht bloß ein Angebot, das man nutzt oder liegen lässt; sie ist selbst eines der Felder, an denen teilzuhaben ist, und wer an ihrer Gestaltung beteiligt wird, gewinnt genau die Teilhabe, die diese Kernkompetenz beschreibt. Dagegen spricht erstens, dass selbstbestimmte Mobilität auf zwei Bausteinen ruht: auf der tatsächlichen Möglichkeit, sich in der Umgebung zu bewegen, und auf dem Wissen darüber, sich sicher und eigenständig im Verkehr zu bewegen. Ein autonomes Fahrzeug liefert nur den ersten Baustein. Zweitens stehen fehlende Mobilitätsbildung sowie die Einstellung und das Verhalten anderer selbst in der Reihe der Mobilitätsbehinderungen; beide verschwinden nicht dadurch, dass ein Fahrzeug selbst lenkt. Drittens gelten für alle Maßnahmen der Barrierefreiheit weiterhin drei Regeln: Alle Ziele sollen zu Fuß wie mit dem Rollstuhl erreichbar sein, alle Informationen über mindestens zwei Sinne erfahrbar sein und kurz und einfach gestaltet werden. Ein Shuttle, das sich nur über einen Bildschirm in Schriftsprache bedienen lässt, verfehlt diese Regeln und schafft neue Barrieren, statt alte abzubauen. Als Fazit lässt sich festhalten, dass die Technik die Möglichkeit erweitert, die Mobilitätsbildung aber nicht ersetzt. Mehr Teilhabe entsteht erst, wenn beide Bausteine zusammenkommen und die Regeln der Barrierefreiheit von Anfang an mitgedacht werden; dieser Position schließe ich mich an.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Zuerst die Argumente dafür. Das erste Argument ist die heutige Lage. Menschen im Förderschwerpunkt geistige Entwicklung brauchen oft besondere Fahrdienste. Das gilt in der Kita, in der Schule und im Arbeitsleben. Sie brauchen auch Begleitung und Assistenz. Daraus entsteht Abhängigkeit. Ein Fahrzeug ohne fremde Fahrperson könnte diese Abhängigkeit kleiner machen. Das zweite Argument ist die Bedeutung von Mobilität. Uneingeschränkt mobil zu sein gilt als Grundbedürfnis. Mobilität öffnet viele Lebensbereiche. Zum Beispiel Arbeit, Bildung, Freizeit, Gesundheit und soziale Beziehungen. Wer mehr Orte erreichen kann, erreicht auch mehr dieser Bereiche. Das dritte Argument kommt aus dem Katalog der sechs Kernkompetenzen. Eine davon heißt: zukunftsfähige Mobilität mitgestalten. Damit ist gemeint: an den sozialen, technischen, ökologischen und ökonomischen Entwicklungsprozessen in der Gesellschaft teilhaben. Neue Fahrzeuge sind also nicht nur ein Angebot, das man nutzt oder liegen lässt. Sie sind selbst ein Feld, an dem man teilhaben kann. Wer bei ihrer Gestaltung mitreden darf, hat genau diese Teilhabe. Jetzt die Argumente dagegen. Das erste Argument sind die zwei Bausteine. Selbstbestimmte Mobilität braucht zwei Dinge. Erstens die Möglichkeit, sich in der Umgebung zu bewegen. Zweitens das Wissen, wie man sich sicher und allein im Verkehr bewegt. Ein selbstfahrendes Auto liefert nur das Erste. Das zweite Argument sind die Mobilitätsbehinderungen. Zu dieser Liste gehört auch die fehlende Mobilitätsbildung. Und dazu gehört die Einstellung und das Verhalten anderer Menschen. Beides bleibt bestehen, auch wenn ein Fahrzeug selbst lenkt. Das dritte Argument ist die Barrierefreiheit. Für sie gelten drei Regeln. Alle Ziele sollen zu Fuß und mit dem Rollstuhl erreichbar sein. Alle Informationen sollen über mindestens zwei Sinne ankommen. Und alle Informationen sollen kurz und einfach sein. Ein Shuttle mit einem Bildschirm voller Schrift erfüllt diese Regeln nicht. Es schafft dann neue Barrieren. Am Ende steht das Fazit. Die Technik erweitert die Möglichkeit. Sie ersetzt aber die Mobilitätsbildung nicht. Mehr Teilhabe entsteht erst, wenn beide Bausteine zusammenkommen. Und wenn die Regeln der Barrierefreiheit von Anfang an mitgedacht werden. Dieser Position schließe ich mich an."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erörtern heißt: beide Seiten mit Material belegen und dann selbst entscheiden. Die Abwägung selbst steht auf keiner Folie - die führst du wirklich selbst, und genau das ist hier verlangt. Was du dafür zusammenträgst, liegt verstreut: die Abhängigkeit von Fahrdiensten auf Folie 7, Mobilität als Grundbedürfnis samt Partizipationsfeldern auf Folie 4, die Kernkompetenz zur zukunftsfähigen Mobilität auf Folie 16, die zwei Bausteine selbstbestimmter Mobilität auf Folie 11, die Mobilitätsbehinderungen auf Folie 9 und die drei Regeln der Barrierefreiheit auf Folie 35. Die Bilderfolie selbst ist Folie 36; sie trägt außer der Frage keinen Text, du sollst dort also nichts wiedergeben. In deinen Notizen fehlt dieser Schluss ganz - das ist keine Lücke bei dir, er kommt nur auf den Folien vor. Drei Argumente je Seite trägt das Material bequem; wichtiger als die Zahl ist, dass jedes einzelne an einem Inhalt der Vorlesung hängt.",
+      "quelle": "folie-mobilitaet-11",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wovon sind viele heute abhängig, um irgendwo hinzukommen?",
+          "Was fällt weg, wenn niemand mehr lenken muss?",
+          "Denk an die besonderen Fahrdienste im Kapitel zum SGE"
+        ],
+        [
+          "Warum ist Mobilität überhaupt so wichtig?",
+          "Der Kreis mit den zehn Lebensbereichen",
+          "Mehr Orte erreichbar - und was folgt daraus?"
+        ],
+        [
+          "Eine aus dem Sechserkatalog blickt nach vorn - welche ist das?",
+          "Woran genau soll man teilhaben? Vier Sorten von Prozessen werden aufgezählt",
+          "Neue Technik ist nicht nur Werkzeug, sondern ein Feld zum Mitmachen"
+        ],
+        [
+          "Wie viele Säulen trägt selbstbestimmte Mobilität?",
+          "Technik ersetzt nicht das Können",
+          "Erinnerst du dich an das Bild mit der Frage in der Mitte?"
+        ],
+        [
+          "Zwei Einträge aus der Mindmap bleiben bestehen",
+          "Was hilft ein Fahrzeug gegen Vorurteile?",
+          "Bildung und Haltung anderer sind auch Hindernisse"
+        ],
+        [
+          "Drei Regeln muss auch ein neues Fahrzeug erfüllen",
+          "Was gilt für Erreichbarkeit, Information und Sprache?",
+          "Was passiert bei reiner Bildschirmbedienung?"
+        ],
+        [
+          "Beide Seiten zusammenführen und selbst Stellung beziehen",
+          "Technik allein oder Technik plus Bildung?",
+          "Was gehört ans Ende jeder Erörterung?"
         ]
       ]
     }

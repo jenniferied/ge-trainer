@@ -743,14 +743,16 @@
   "frei": [
     {
       "id": "ko-f-1",
+      "unterthema": "Wandel der Konzeptionen",
       "afb": 1,
       "frage": "Nennen Sie drei didaktische Konzeptionen mit ihren jeweiligen Zielen. **Gemeint sind die Konzeptionen aus der Tabelle von Stöppler und Wachsmuth.**",
       "stichpunkte": [
-        "Defizitär/reduktionistisch (Saegert, Fuchs): Brauchbarmachung, Nutzen für die Allgemeinheit",
-        "Defizitorientiert (u. a. Bach, Moor, Vetter; Bernart, KMK): Selbstständigkeit ohne Selbstbestimmung, Selbsterkenntnis, Selbstverwirklichung in sozialer Integration",
-        "Kompetenz-/entwicklungsorientiert (Speck, Mühl, John): Autonomie",
-        "Entwicklungslogisch (Feuser): Selbstbestimmung, Mitbestimmung, Solidaritätsfähigkeit",
-        "Subjekt- und bedarfsorientiert (Fischer): persönliche Sinnstiftung"
+        "Defizitär/reduktionistisch: Brauchbarmachung, Nutzen für Allgemeinheit",
+        "Kompetenz-/entwicklungsorientiert: Autonomie",
+        "Entwicklungslogisch: Selbst-, Mitbestimmung, Solidaritätsfähigkeit",
+        "Weitere: Defizitorientiert: Selbstständigkeit ohne Selbstbestimmung",
+        "Weitere: Defizitorientiert: Selbsterkenntnis, Selbstverwirklichung",
+        "Weitere: Subjekt-/bedarfsorientiert: persönliche Sinnstiftung"
       ],
       "muster": "Drei didaktische Konzeptionen mit ihren Zielen sind: erstens die defizitäre bzw. reduktionistische Konzeption (Saegert, Fuchs) mit dem Ziel der Brauchbarmachung und des Nutzens für die Allgemeinheit, zweitens die kompetenz- bzw. entwicklungsorientierte Konzeption (Speck, Mühl, John) mit dem Ziel der Autonomie und drittens die entwicklungslogische Konzeption (Feuser) mit den Zielen Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit.",
       "musterVarianten": {
@@ -771,36 +773,69 @@
       "quelle": "dozentin-beispiel",
       "quelleSicherheit": "geprueft",
       "waehle": 3,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Drei Konzeptionen nennen, zu jeder ihr Ziel",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Konzeption 1",
+            "Konzeption 2",
+            "Konzeption 3"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Was in der Tabelle sonst noch steht, wenn es dir einfällt",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
-          "Erste Tabellenzeile: das Ziel dreht sich um Nuetzlichkeit fuer die Gesellschaft",
-          "Ganz frueh: Menschen sollten fuer andere verwendbar gemacht werden",
-          "Zwei Vertreter mit S und F, das Ziel klingt nach Verwertbarkeit"
+          "Die aelteste Tabellenzeile: der Mensch soll verwertbar werden",
+          "Ganz frueh gedacht - wem soll die Person spaeter dienen?",
+          "Zwei Ziele, beide drehen sich um Verwendbarkeit fuer die Gesellschaft"
         ],
         [
-          "Zweite Zeile: drei Selbst-Woerter als Ziele, ein viertes fehlt bewusst",
-          "Blick noch auf Schwaechen; allein handeln ja, selbst entscheiden nein",
-          "Der Komponisten-Name gehoert hierher; die Ziele beginnen alle gleich"
+          "Die mittlere Zeile: der Blick wandert zu den Faehigkeiten",
+          "Ein einziges Zielwort, griechischen Ursprungs - ein eigenstaendiges Leben",
+          "Speck und zwei Kollegen stehen hier; das Ziel ist ein Fremdwort"
         ],
         [
-          "Mittlere Zeile, drei Vertreter, ein einziges Ziel-Wort",
-          "Der Blick wandert zu den Faehigkeiten; Ziel: ein eigenstaendiges Leben",
-          "Speck und zwei Kollegen; das Ziel ist ein griechisches Fremdwort"
+          "Die Zeile mit dem Zieltrio aus Klafkis Paedagogik",
+          "Drei Ziele im Paket: zweimal Bestimmen, einmal Zusammenhalt",
+          "Feusers Zeile - dieselbe Dreierreihe steht im Klafki-Dreieck auf Folie 13"
         ],
         [
-          "Vierte Zeile: das Zieltrio stammt aus Klafkis Paedagogik",
-          "Der Mann mit dem Bildungsrecht-Leitsatz; drei Ziele im Paket",
-          "Zwei Bestimmungs-Ziele plus ein soziales drittes"
+          "Zweite Tabellenzeile: allein handeln ja, selbst entscheiden nein",
+          "Der Vorrat hinter den drei Pflichtnennungen beginnt hier",
+          "Diese Zeile darfst du statt einer der drei nennen - sie zaehlt genauso"
         ],
         [
-          "Letzte Zeile, ein einzelner Vertreter, das Ziel fragt nach eigenem Sinn",
-          "Die juengste Konzeption: Was bedeutet der Inhalt fuer mich selbst?",
-          "Der Vertreter-Name klingt nach einem Beruf am Wasser"
+          "Zweites und drittes Ziel derselben Zeile",
+          "Sich selbst kennen, und sich entfalten als Teil der Gemeinschaft"
+        ],
+        [
+          "Die juengste Zeile: Was bedeutet der Inhalt fuer mich?",
+          "Fischers Konzeption; das Ziel fragt nach eigenem Sinn",
+          "Auch diese Zeile ist eine gueltige der drei Nennungen"
         ]
       ]
     },
     {
       "id": "ko-f-2",
+      "unterthema": "Wandel der Konzeptionen",
       "afb": 2,
       "frage": "Erläutern Sie den Wandel der didaktischen Konzeptionen über die Zeit hinweg.",
       "stichpunkte": [
@@ -858,6 +893,7 @@
     },
     {
       "id": "ko-f-3",
+      "unterthema": "Wandel der Konzeptionen",
       "afb": 3,
       "frage": "Diskutieren Sie die defizitäre didaktische Konzeption aus heutiger Sicht.",
       "stichpunkte": [
@@ -921,6 +957,7 @@
     },
     {
       "id": "ko-f-4",
+      "unterthema": "ICF-Modell",
       "afb": 2,
       "frage": "Erläutern Sie die Bestandteile des ICF-Modells und seine Bedeutung für die schulische Bildung.",
       "stichpunkte": [
@@ -978,15 +1015,16 @@
     },
     {
       "id": "ko-gen-f-1",
+      "unterthema": "Wandel der Konzeptionen",
       "afb": 1,
       "frage": "Ordnen Sie die Vertreter:innen Saegert, Bach, Speck, Feuser und Fischer den fünf didaktischen Konzeptionen zu und geben Sie jeweils die zugehörige Unterrichtsmethode an.",
       "stichpunkte": [
         "Saegert: defizitär/reduktionistisch - Gesamtunterricht",
         "Bach: defizitorientiert - Gesamtunterricht",
-        "Speck: kompetenz-/entwicklungsorientiert - handlungsorientierter Unterricht",
+        "Speck: kompetenz-/entwicklungsorientiert - handlungsorientierter U.",
         "Feuser: entwicklungslogisch - offener Unterricht",
         "Fischer: subjekt- und bedarfsorientiert - offener Unterricht",
-        "Merkhilfe: die Methoden wandeln sich in drei Schritten - Gesamtunterricht, handlungsorientiert, offen"
+        "Merkhilfe: von Gesamtunterricht über handlungsorientiert zu offen"
       ],
       "muster": "Saegert gehört zur defizitären bzw. reduktionistischen Konzeption, deren Methode der Gesamtunterricht ist. Bach zählt zur defizitorientierten Konzeption, die ebenfalls mit Gesamtunterricht arbeitet. Speck steht für die kompetenz- und entwicklungsorientierte Konzeption mit dem handlungsorientierten Unterricht als Methode. Feuser vertritt die entwicklungslogische Konzeption und Fischer die subjekt- und bedarfsorientierte Konzeption; beide setzen auf offenen Unterricht.",
       "musterVarianten": {
@@ -1007,6 +1045,36 @@
       "quelle": "folie-konzeptionen-9",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zu jedem der fünf Namen die Konzeption und ihre Methode",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "chips": [
+            "Saegert",
+            "Bach",
+            "Speck",
+            "Feuser",
+            "Fischer"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Eine Merkhilfe für die Reihenfolge der Methoden",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
           "Der aelteste Name der Liste: erste Tabellenzeile, fruehe Methode",
@@ -1019,9 +1087,9 @@
           "Selbst-Ziele ohne echtes Entscheiden; die Methode wechselt noch nicht"
         ],
         [
-          "Mittlere Zeile; jetzt wechselt die Methode zum ersten Mal",
-          "Der Blick auf Faehigkeiten; der Unterricht setzt aufs Tun",
-          "Die Autonomie-Zeile; Methode Nummer zwei von dreien"
+          "Mittlere Zeile; hier wechselt die Methodenspalte zum ersten Mal",
+          "Sein Ziel ist Autonomie; im Unterricht steht jetzt das Tun im Mittelpunkt",
+          "Dritte Zeile der Tabelle; die Methode ruecht das Handeln in den Vordergrund"
         ],
         [
           "Der mit dem Bildungsrecht fuer jedes Kind; Methode maximal frei",
@@ -1034,14 +1102,15 @@
           "Die juengste Konzeption, gleiche Offenheit wie die Zeile davor"
         ],
         [
-          "Eselsbruecke: Wie viele Methodenstationen gibt es insgesamt?",
-          "Zusatz: die Methodenfolge als kurze Dreier-Kette merken",
-          "Merkbild: fuenf Zeilen, aber nur drei Unterrichtsformen"
+          "Die Methodenspalte hat nur drei verschiedene Eintraege - in welcher Richtung?",
+          "Merk dir die Bewegung: erst alle gemeinsam, dann das Tun, dann frei",
+          "Fuenf Zeilen, aber nur drei Unterrichtsformen - wie ist ihre Reihenfolge?"
         ]
       ]
     },
     {
       "id": "ko-gen-f-2",
+      "unterthema": "Klafki",
       "afb": 2,
       "frage": "Erläutern Sie Klafkis Verständnis kategorialer Bildung im Doppelsinn und zeigen Sie, welche beiden Einseitigkeiten damit überwunden werden. **Für die beiden Einseitigkeiten sind Klafkis Fachbegriffe gefragt.**",
       "stichpunkte": [
@@ -1094,6 +1163,7 @@
     },
     {
       "id": "ko-gen-f-3",
+      "unterthema": "Feuser & Pitsch",
       "afb": 3,
       "frage": "Diskutieren Sie Feusers These „Egal, wie ein Kind beschaffen ist, es hat das Recht, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt“ (Feuser 1999) vor dem Hintergrund des Wandels der didaktischen Konzeptionen.",
       "stichpunkte": [
@@ -1152,17 +1222,18 @@
     },
     {
       "id": "ko-fol-f-1",
+      "unterthema": "Spannungsfelder der Disziplin",
       "afb": 3,
       "frage": "Terfloth und Bauersfeld beschreiben vier zentrale Spannungsfelder der Disziplin. Stellen Sie diese dar und erörtern Sie an zwei davon, warum sie sich nicht endgültig auflösen lassen.",
       "stichpunkte": [
-        "Spannungsfeld 1: Die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten",
-        "Spannungsfeld 2: Die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch",
-        "Spannungsfeld 3: Die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion - zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik",
-        "Spannungsfeld 4: Das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten",
-        "Zu 1: Die ICF löst den Gegensatz nicht auf, sondern hält beide Seiten zusammen - Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren; wer nur medizinisch schaut, übersieht Barrieren, wer nur sozial schaut, übersieht individuellen Unterstützungsbedarf",
-        "Zu 4: Der Wandel der didaktischen Konzeptionen zeigt die Pendelbewegung - von der Sinnesschulung über die lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte einfordern; beide Pole haben gute Gründe, und die Gewichtung muss individuell entschieden werden",
-        "Alternativ zu 3: Eine eigene Didaktik für den Förderschwerpunkt oder eine Spezifizierung allgemeiner Modelle - beide Antworten haben Kosten, entweder Sonderwissen ohne Anschluss oder Anschluss ohne Passung",
-        "Argument für die Unauflösbarkeit: Es handelt sich um Spannungsfelder, nicht um Fehler - beide Pole benennen jeweils ein berechtigtes Anliegen, sodass eine Entscheidung für eine Seite immer etwas verliert",
+        "Spannungsfeld 1: Behinderung: sozial oder medizinisch",
+        "Spannungsfeld 2: Förderschwerpunkt: Bewahrung oder Bildungsanspruch",
+        "Spannungsfeld 3: Öffnung: Spezifikation oder allgemeine Didaktik",
+        "Spannungsfeld 4: Bildung und Lernen: Lebenspraxis oder Fachinhalte",
+        "Argument für die Unauflösbarkeit: Es sind Spannungsfelder und keine Fehler - jeder Pol benennt ein berechtigtes Anliegen, deshalb gibt jede Entscheidung für eine Seite etwas auf",
+        "Zu 1: Die ICF hält beide Seiten zusammen - Funktionsfähigkeit und Behinderung als dynamische Interaktion von Gesundheitsproblem und Kontextfaktoren; klinisch übersieht man Barrieren, sozial den Bedarf",
+        "Zu 4: Der Wandel der Konzeptionen zeigt eine Pendelbewegung von der Sinnesschulung über die lebenspraktische Ausrichtung bis zu Ansätzen mit fachlichen Bildungsinhalten; beide Pole haben gute Gründe",
+        "Alternativ zu 3: Eigene Didaktik für den Förderschwerpunkt oder Spezifizierung allgemeiner Modelle - beide Antworten haben Kosten, entweder Sonderwissen ohne Anschluss oder Anschluss ohne Passung",
         "Konsequenz für die Praxis: Statt einer Grundsatzentscheidung braucht es eine begründete, immer wieder neu justierte Balance an der einzelnen Schülerin und dem einzelnen Schüler"
       ],
       "muster": "Terfloth und Bauersfeld benennen vier zentrale Spannungsfelder der Disziplin. Das erste betrifft die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten. Das zweite betrifft die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch. Das dritte betrifft die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion, und zwar zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik. Das vierte betrifft das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten. Am ersten und am vierten Spannungsfeld lässt sich zeigen, warum solche Felder sich nicht endgültig auflösen lassen. Beim Behinderungsbegriff wäre die einfache Lösung, sich für eine Seite zu entscheiden. Wer Behinderung rein medizinisch fasst, übersieht jedoch, dass Barrieren in der Umwelt Teilhabe verhindern; wer sie rein sozial fasst, übersieht den individuellen Unterstützungsbedarf. Die ICF entscheidet den Streit deshalb nicht, sondern hält beide Seiten zusammen, indem sie Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren beschreibt. Ähnlich verhält es sich beim Verständnis von Bildung. Der Wandel der didaktischen Konzeptionen zeigt eine Pendelbewegung: von der Sinnesschulung über eine stark lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte ausdrücklich einfordern. Beide Pole haben gute Gründe. Wer nur lebenspraktisch unterrichtet, hält Bildungsinhalte vor, auf die alle anderen ein Recht haben; wer nur fachlich unterrichtet, verliert die Anschlussfähigkeit an den Alltag. Genau daran zeigt sich, dass es sich um Spannungsfelder und nicht um Fehler handelt: Jeder Pol benennt ein berechtigtes Anliegen, und jede Entscheidung für eine Seite gibt etwas auf. Für die Praxis folgt daraus keine Grundsatzentscheidung, sondern eine begründete Balance, die an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden muss.",
@@ -1184,51 +1255,907 @@
       "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Die vier Spannungsfelder darstellen, jeweils mit beiden Polen",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "Spannungsfeld 1",
+            "Spannungsfeld 2",
+            "Spannungsfeld 3",
+            "Spannungsfeld 4"
+          ],
+          "punkte": 2
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "these",
+          "auftrag": "Die Grundthese: warum ein Spannungsfeld kein Fehler ist",
+          "idx": [
+            4
+          ],
+          "form": "rolle",
+          "satzanfang": "Diese Felder bleiben bestehen, weil …",
+          "punkte": 1
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dafuer",
+          "auftrag": "An zwei der vier Felder zeigen, was jeder Pol sieht und was er übersieht",
+          "idx": [
+            5,
+            6,
+            7
+          ],
+          "form": "rolle",
+          "waehle": 2,
+          "satzanfang": "Dafür spricht das erste Feld, denn …",
+          "punkte": 1
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "fazit",
+          "auftrag": "Was daraus für die Praxis folgt",
+          "idx": [
+            8
+          ],
+          "form": "rolle",
+          "satzanfang": "Für die Praxis folgt daraus, dass …",
+          "punkte": 1
+        }
+      ],
       "hinweise": [
         [
-          "Erstes Feld: zwei Brillen auf Behinderung",
-          "Der Streit der Perspektiven: Koerper oder Gesellschaft?",
-          "Feld eins liegt bei der Frage, was Behinderung ueberhaupt ist"
+          "Erstes Feld: zwei Blickwinkel auf denselben Begriff",
+          "Die Frage Was ist Behinderung - einer der Pole kommt aus der Klinik",
+          "Zwei Sichtweisen, die sich nicht ineinander uebersetzen lassen"
         ],
         [
-          "Zweites Feld: die Geschichte des Foerderschwerpunkts, zwei Pole",
-          "Beschuetzen oder etwas zutrauen? Das historische Spannungsfeld",
-          "Feld zwei: Schonraum gegen den Anspruch auf Lernen"
+          "Zweites Feld: die Geschichte des Schwerpunkts, vom Verwahren zum Recht auf Lernen",
+          "Wozu ist der Schwerpunkt da? Zwei Antworten, hundert Jahre auseinander"
         ],
         [
-          "Drittes Feld: gemeinsamer Unterricht - eigenes Fachwissen oder Anschluss ans Allgemeine?",
-          "Die Inklusionsfrage: Sonderweg oder allgemeine Lehre?",
-          "Feld drei fragt nach dem Ort der Disziplin zwischen speziell und allgemein"
+          "Drittes Feld: braucht der Schwerpunkt eine eigene Fachdidaktik?",
+          "Der Weg in den gemeinsamen Unterricht - Spezialwissen oder Anschluss?"
         ],
         [
-          "Viertes Feld: Alltagskoennen gegen Fachinhalte",
-          "Was zaehlt als Lernen - das praktische Leben oder die Faecher?",
-          "Feld vier: die Frage nach dem richtigen Stoff"
+          "Viertes Feld: Was soll gelernt werden? Alltag oder Fach",
+          "Der Streit ueber Inhalte, den auch die Konzeptionen austragen"
         ],
         [
-          "Vertiefung eins: das WHO-Modell zeigt, dass beide Brillen noetig bleiben",
-          "Warum bleibt Feld eins offen? Jede Sichtweise allein uebersieht etwas",
-          "Das biopsychosoziale Modell verbindet die Pole, statt einen zu streichen"
+          "Die Grundthese zuerst: warum ist das kein Konstruktionsmangel?",
+          "Was hat jede der beiden Seiten fuer sich, und was kostet eine Festlegung?",
+          "Der Satz, der die ganze Eroerterung traegt"
         ],
         [
-          "Vertiefung zwei: die Konzeptions-Geschichte als Pendel zwischen den Polen",
-          "Der Wandel der Didaktik belegt: die Gewichtung schwankt seit jeher",
-          "Warum bleibt Feld vier offen? Beide Seiten haben Rueckhalt in der Geschichte"
+          "Erstes Beispiel: das Modell der WHO entscheidet den Streit nicht",
+          "Beide einseitigen Blicke verlieren etwas - was jeweils?",
+          "Das Schaubild mit den Doppelpfeilen steht auf Folie 4, der Satz dazu auf Folie 7"
         ],
         [
-          "Ausweich-Option: Feld drei vertiefen - zwei Loesungswege, beide mit Preis",
-          "Alternative Vertiefung: eigenes Modell oder angepasstes allgemeines, je mit Nachteil",
-          "Wer Feld drei waehlt: zwei Antworten, keine ist gratis"
+          "Zweites Beispiel: die Geschichte der Konzeptionen schwingt hin und her",
+          "Von den fruehen Sinnesuebungen bis heute - wohin schlaegt das Pendel?",
+          "Warum laesst sich der Streit ueber die Inhalte nicht endgueltig entscheiden?"
         ],
         [
-          "Der Kerngedanke: Warum heisst es Feld und nicht Problem?",
-          "Beide Seiten wollen etwas Berechtigtes - was folgt daraus fuers Aufloesen?",
-          "Begruendung: jede klare Entscheidung wuerde etwas Wichtiges opfern"
+          "Ein drittes Beispiel, falls dir das dritte Feld naeher liegt",
+          "Sonderwissen oder Anpassung des Allgemeinen - was kostet welche Antwort?"
         ],
         [
-          "Der Schluss: Was heisst das fuer den Umgang im Schulalltag?",
-          "Praxis-Folgerung: kein Grundsatzbeschluss, sondern Abwaegen pro Kind",
-          "Am Ende liegt die Antwort beim einzelnen Kind, immer wieder neu"
+          "Zum Schluss: was folgt daraus fuer den Unterrichtsalltag?",
+          "Keine einmalige Festlegung, sondern etwas, das an jedem Kind neu austariert wird"
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-1",
+      "unterthema": "ICF-Modell",
+      "afb": 1,
+      "frage": "Die Weltgesundheitsorganisation beschreibt Behinderung in einem biopsychosozialen Schaubild, in dem mehrere Kästen durch Doppelpfeile miteinander verbunden sind. Benennen Sie alle sechs Bausteine dieses Modells.",
+      "stichpunkte": [
+        "Gesundheitsproblem, also Gesundheitsstörung oder Krankheit",
+        "Körperfunktionen und -strukturen",
+        "Aktivitäten",
+        "Partizipation, also Teilhabe",
+        "Umweltfaktoren als Kontextfaktor",
+        "Personenbezogene Faktoren als Kontextfaktor"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Alle sechs Bausteine des Schaubilds benennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das biopsychosoziale Modell der ICF besteht aus sechs Bausteinen. An der Spitze steht das Gesundheitsproblem, also eine Gesundheitsstörung oder Krankheit. Auf der mittleren Ebene stehen die Körperfunktionen und -strukturen, die Aktivitäten und die Partizipation, also die Teilhabe; sie sind durch Doppelpfeile untereinander und mit dem Gesundheitsproblem verbunden. Darunter liegen die beiden Kontextfaktoren, nämlich die Umweltfaktoren und die personenbezogenen Faktoren. Die Doppelpfeile zeigen, dass die Ebenen wechselseitig aufeinander wirken. Das Schaubild trägt den Namen biopsychosoziales ICF-Modell.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die ICF ist ein Modell der Weltgesundheitsorganisation. Das Modell hat sechs Teile. Ganz oben steht das Gesundheitsproblem. Das ist eine Krankheit oder eine Störung. In der Mitte stehen drei Teile. Der erste Teil sind die Körperfunktionen und die Körperstrukturen. Der zweite Teil sind die Aktivitäten. Das heißt: Was tut ein Mensch? Der dritte Teil ist die Partizipation. Partizipation heißt Teilhabe. Unten stehen zwei Teile. Sie heißen Kontextfaktoren. Der eine Teil sind die Umweltfaktoren. Der andere Teil sind die personenbezogenen Faktoren. Alle Teile wirken aufeinander."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Sechs Bausteine sind sechs Punkte - zähl sie beim Lernen an der Hand ab: einer oben, drei in der Mitte, zwei unten. Das Schaubild steht auf Folie 4 und noch einmal groß auf Folie 5, in deinen Notizen auf Notizen S. 51. Wenn du die beiden unteren ausdrücklich als Kontextfaktoren mitbenennst, zeigst du, dass du die Ebenen auseinanderhältst.",
+      "quelle": "folie-konzeptionen-4",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ganz oben im Schaubild, medizinisch gedacht.",
+          "Was eine Diagnose beschreibt, steht an der Spitze.",
+          "Der obere Kasten meint Stoerung oder Erkrankung."
+        ],
+        [
+          "Die erste Mitte-Ebene fragt nach dem Leib: Leistung und Bau.",
+          "Ein Wort fuers Funktionieren, eines fuer den Aufbau."
+        ],
+        [
+          "Was ein Mensch tatsaechlich tut, ganz allgemein.",
+          "Handeln im Alltag, in einem einzigen Wort."
+        ],
+        [
+          "Das Fremdwort fuer Mitmachen in der Gemeinschaft.",
+          "Dabei sein duerfen - der deutsche Zusatz steht in Klammern."
+        ],
+        [
+          "Untere Ebene: alles, was von aussen auf den Menschen wirkt.",
+          "Rampen, Hilfsmittel, Haltungen der anderen gehoeren hierher."
+        ],
+        [
+          "Nicht die Umgebung, sondern was der Mensch selbst mitbringt.",
+          "Der zweite Kasten der unteren Ebene."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-2",
+      "unterthema": "Klafki",
+      "afb": 1,
+      "frage": "Klafki nennt acht Probleme, die er als kennzeichnend für eine ganze Epoche versteht. Nennen Sie sechs davon.",
+      "stichpunkte": [
+        "die Friedensfrage",
+        "die Umweltfrage",
+        "die wachsende Weltbevölkerung",
+        "die gesellschaftlich bedingte Ungleichheit",
+        "die Gefahren und Möglichkeiten neuer Technologien",
+        "die menschliche Sexualität und die Geschlechterbeziehung",
+        "Weitere: Nationalitätsprinzip, Industrie- und Entwicklungsländer"
+      ],
+      "waehle": 6,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Sechs der acht Schlüsselprobleme nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Die beiden übrigen, wenn sie dir noch einfallen",
+          "idx": [
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Klafki nennt acht epochaltypische Schlüsselprobleme. Dazu gehören die Friedensfrage, die Umweltfrage, die wachsende Weltbevölkerung und die gesellschaftlich bedingte Ungleichheit. Hinzu kommen die Gefahren und Möglichkeiten neuer Technologien sowie die menschliche Sexualität und die Geschlechterbeziehung. Die beiden übrigen sind die Problematik des Nationalitätsprinzips und das Verhältnis der sogenannten entwickelten Industriegesellschaften zu den Entwicklungsländern. Epochaltypisch heißen sie, weil sie nicht einzelne Menschen betreffen, sondern für eine ganze Epoche kennzeichnend sind.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Klafki nennt acht große Probleme. Diese Probleme betreffen alle Menschen einer Zeit. Man nennt sie darum epochaltypisch. Epochaltypisch heißt: typisch für eine ganze Zeit. Das erste ist der Frieden. Das zweite ist die Umwelt. Das dritte ist: Es leben immer mehr Menschen auf der Erde. Das vierte ist: Manche Menschen haben viel weniger als andere. Das fünfte ist die neue Technik mit ihren Chancen und Gefahren. Das sechste ist die Sexualität und das Verhältnis der Geschlechter. Dazu kommen zwei weitere Probleme. Eines ist die Frage nach den Nationen. Das andere ist das Verhältnis von reichen und armen Ländern."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Acht sind es insgesamt, sechs reichen hier für die volle Punktzahl - lerne trotzdem alle, dann kannst du in der Klausur die aussuchen, die dir zuerst einfallen. Die Liste steht auf Folie 13, in deinen Notizen auf Notizen S. 52 und 53. Merkhilfe in drei Paaren: zwei globale Fragen (Frieden, Umwelt), zwei zur Verteilung (Weltbevölkerung, Ungleichheit), zwei zur Lebenswelt (Technologien, Sexualität) - dazu Nation und Nord-Süd. Wenn du das Nationalitätsprinzip oder das Verhältnis von Industrie- und Entwicklungsländern unter deine sechs nimmst, zählt das genauso; die beiden stehen hier nur deshalb in der Zusatzzeile, weil die Liste sechs Zeilen zum Abhaken braucht.",
+      "quelle": "folie-konzeptionen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das Gegenteil von Krieg, als Frage formuliert.",
+          "Steht bei Klafki an erster Stelle."
+        ],
+        [
+          "Natur, Klima und Ressourcen in einem Wort.",
+          "Das Thema, das seit den Achtzigern nicht kleiner wird."
+        ],
+        [
+          "Eine Zahl, die immer groesser wird - Menschen auf der Erde.",
+          "Nicht die Natur, sondern wie viele wir sind."
+        ],
+        [
+          "Arm und reich, Chancen sehr ungleich verteilt.",
+          "Nicht die Natur macht den Unterschied, sondern das Miteinander."
+        ],
+        [
+          "Zwei Seiten derselben Medaille bei allem Neuen aus dem Labor.",
+          "Chancen und Risiken - Klafki nennt beide in einem Atemzug."
+        ],
+        [
+          "Koerper, Liebe und das Verhaeltnis der Geschlechter zueinander.",
+          "Ein Thema, das im Unterricht lange als heikel galt."
+        ],
+        [
+          "Die zwei, die man leicht vergisst - Voelker und Nord-Sued.",
+          "Eines fragt nach Staaten, eines nach reichen und armen Laendern."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-3",
+      "unterthema": "Klafki",
+      "afb": 1,
+      "frage": "Klafki verbindet in einem Dreiecks-Schaubild drei Fähigkeiten wechselseitig miteinander. Benennen Sie diese drei Fähigkeiten und nennen Sie die didaktische Konzeption samt ihrem Vertreter, in deren Zielspalte dieselben drei Ziele noch einmal auftauchen.",
+      "stichpunkte": [
+        "Selbstbestimmungsfähigkeit",
+        "Mitbestimmungsfähigkeit",
+        "Solidaritätsfähigkeit",
+        "Dieselbe Zielreihe steht bei der entwicklungslogischen Konzeption",
+        "Ihr Vertreter ist Feuser"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die drei Fähigkeiten aus dem Dreieck",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die Konzeption und ihren Vertreter",
+          "idx": [
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Klafki verbindet in seiner Zieltrias drei Fähigkeiten wechselseitig miteinander: die Selbstbestimmungsfähigkeit, die Mitbestimmungsfähigkeit und die Solidaritätsfähigkeit. Die Doppelpfeile im Dreieck zeigen, dass keine der drei für sich steht, sondern dass sie einander bedingen. In der Tabelle zum Wandel der didaktischen Konzeptionen stehen dieselben drei Ziele noch einmal, und zwar bei der entwicklungslogischen Konzeption; die ersten beiden sind dort ohne den Zusatz -fähigkeit geschrieben, also als Selbstbestimmung und Mitbestimmung. Ihr Vertreter ist Feuser, der dazu mit allgemeinen Bildungsinhalten und offenem Unterricht arbeitet.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Klafki nennt drei Fähigkeiten. Sie gehören zusammen. Die erste heißt Selbstbestimmungsfähigkeit. Das heißt: Ich kann über mein Leben selbst bestimmen. Die zweite heißt Mitbestimmungsfähigkeit. Das heißt: Ich kann in der Gesellschaft mitreden. Die dritte heißt Solidaritätsfähigkeit. Das heißt: Ich setze mich für andere Menschen ein. Diese drei Ziele stehen auch in der Tabelle der Konzeptionen. Dort gehören sie zur entwicklungslogischen Konzeption. In der Tabelle heißen die ersten beiden nur Selbstbestimmung und Mitbestimmung. Ihr Vertreter heißt Feuser."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Drei Fähigkeiten sind drei Punkte, die Zuordnung bringt zwei weitere. Das Dreieck steht auf Folie 13; in der Zielspalte auf Folie 10 stehen dieselben drei Ziele noch einmal, bei den ersten beiden allerdings ohne das angehängte -fähigkeit. In deinen Notizen findest du beides auf Notizen S. 52 und 53. Dass dieselbe Zielreihe an zwei Stellen des Foliensatzes auftaucht, ist eine gute Brücke zum Merken - dass Feuser sie von Klafki übernommen hätte, sagen die Folien allerdings nicht, also bleib beim Beschreiben.",
+      "quelle": "folie-konzeptionen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ueber das eigene Leben entscheiden koennen.",
+          "Das erste Wort im Dreieck, es faengt mit Selbst an."
+        ],
+        [
+          "Nicht nur fuer sich, sondern in der Gemeinschaft mitreden.",
+          "Eine Silbe unterscheidet es vom ersten Wort."
+        ],
+        [
+          "Sich fuer andere einsetzen, gerade fuer Benachteiligte.",
+          "Das dritte Wort meint Zusammenhalt."
+        ],
+        [
+          "In welcher Zeile der Konzeptionen-Tabelle taucht diese Zielreihe ein zweites Mal auf?",
+          "Die Zeile mit einem einzigen Vertreter und der Methode offener Unterricht.",
+          "Ihr Name enthaelt das Wort fuer einen Verlauf von Entwicklung; die beiden ersten Ziele stehen dort ohne die Endung aus dem Dreieck."
+        ],
+        [
+          "Der Mann mit dem Satz vom Recht auf die ganze Welt.",
+          "In dieser Tabellenzeile steht nur ein einziger Name."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-4",
+      "unterthema": "Feuser & Pitsch",
+      "afb": 1,
+      "frage": "Feusers Abbildung zur dreidimensionalen didaktischen Struktur gibt jeder seiner drei Strukturanalysen einen eigenen Platz im Bild. Benennen Sie, welche Analyse auf welcher Seite beziehungsweise Achse steht, und nennen Sie die drei Beschriftungen der Objektseite von unten nach oben.",
+      "stichpunkte": [
+        "Die Objektseite steht für die Sachstrukturanalyse",
+        "Die Subjektseite steht für die Tätigkeitsstrukturanalyse",
+        "Die Achse quer darunter trägt die Handlungsstrukturanalyse",
+        "Unten auf der Objektseite die momentane Handlungskompetenz",
+        "In der Mitte methodische und mediale Strukturhilfen",
+        "Oben die neue Handlungskompetenz"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst, welche Analyse wo im Bild steht",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die drei Beschriftungen der Objektseite von unten nach oben",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Feuser verschränkt in seiner dreidimensionalen didaktischen Struktur drei Analysen und gibt jeder im Bild einen eigenen Platz. Die Objektseite steht für die Sachstrukturanalyse, also für die Analyse von Projekten, Vorhaben, Inhalten, Sachzusammenhängen und Wissenschaftsbereichen. Die Subjektseite steht für die Tätigkeitsstrukturanalyse, die den biographischen Prozess der Persönlichkeitsentwicklung in den Blick nimmt. Quer unter beiden Seiten verläuft die Achse der Handlungsstrukturanalyse. Auf der Objektseite selbst liest man von unten nach oben zuerst die momentane Handlungskompetenz, darüber die methodischen und medialen Strukturhilfen und ganz oben die neue Handlungskompetenz. Der Weg von der momentanen zur neuen Handlungskompetenz führt also über die Strukturhilfen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Feuser hat ein Bild gezeichnet. Das Bild hat drei Teile. Ein Teil heißt Objektseite. Er zeigt die Sachstrukturanalyse. Hier fragt man: Was ist der Inhalt? Der andere Teil heißt Subjektseite. Er zeigt die Tätigkeitsstrukturanalyse. Hier fragt man: Wo steht das Kind in seiner Entwicklung? Unten läuft eine Achse quer durch das Bild. Sie zeigt die Handlungsstrukturanalyse. Auf der Objektseite steht unten die momentane Handlungskompetenz. Das heißt: Was kann das Kind jetzt schon? Darüber stehen methodische und mediale Strukturhilfen. Das sind Wege und Material zum Lernen. Ganz oben steht die neue Handlungskompetenz. Das heißt: Was soll das Kind neu lernen?"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Feuser nummeriert seine drei Analysen im Bild selbst mit: (1) Tätigkeitsstrukturanalyse auf der Subjektseite, (2) Handlungsstrukturanalyse auf der Achse unten, (3) Sachstrukturanalyse auf der Objektseite. Die Abbildung steht auf Folie 15 (Feuser 2018, 158), in deinen Notizen auf Notizen S. 54. Wenn du die Objektseite von unten nach oben liest, wird nebenbei sichtbar, dass die Strukturhilfen die Brücke zwischen den beiden Kompetenzständen sind.",
+      "quelle": "folie-konzeptionen-15",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Seite, auf der es um den Gegenstand geht.",
+          "Welche Analyse fragt nach der Sache selbst?"
+        ],
+        [
+          "Die Seite des Kindes und seiner Entwicklung.",
+          "Welche Analyse fragt nach dem Tun der Person?"
+        ],
+        [
+          "Quer unter beiden Seiten laeuft die dritte Analyse.",
+          "Benannt nach dem, was jemand konkret ausfuehrt."
+        ],
+        [
+          "Ganz unten: was jemand jetzt schon kann.",
+          "Der Ausgangspunkt, bevor Hilfen dazukommen."
+        ],
+        [
+          "Der Kasten dazwischen - Wege und Material.",
+          "Was die Bruecke zwischen unten und oben baut."
+        ],
+        [
+          "Das Ziel ganz oben, Gegenstueck zum Ausgangspunkt.",
+          "Was nach dem Lernen dazugekommen ist."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-5",
+      "unterthema": "Feuser & Pitsch",
+      "afb": 1,
+      "frage": "Auf der Subjektseite von Feusers Abbildung ist eine Skala von 1 bis 6 an drei Stellen beschriftet, und unter beiden Seiten läuft quer eine zweite Achse. Nennen Sie die drei Beschriftungen der Skala, beschreiben Sie, was die Achse quer darunter zeigt, und nennen Sie ihre sechs Stufen.",
+      "stichpunkte": [
+        "Bei den Stufen 2 und 3 die Zone der aktuellen Entwicklung",
+        "Bei Stufe 4 lernstrukturelle, assistive und therapeutische Hilfen",
+        "Bei Stufe 5 die Zone der nächsten Entwicklung",
+        "Die untere Achse trägt sechs Stufen der Interiorisation nach Gal'perin",
+        "Stufe I Orientierungsgrundlage, Stufe II materielle Handlung",
+        "Stufe III materialisierte Handlung, Stufe IV lautsprachliche Handlung",
+        "Stufe V äußere Sprache für sich, Stufe VI innere Sprache"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zuerst die drei Beschriftungen der Skala 1 bis 6",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Dann, was die Achse quer unter beiden Seiten zeigt",
+          "idx": [
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Zuletzt die sechs Stufen dieser Achse der Reihe nach",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Subjektseite von Feusers Abbildung trägt eine Skala von eins bis sechs, die an drei Stellen beschriftet ist. Bei den Stufen zwei und drei liegt die Zone der aktuellen Entwicklung, gemeint ist damit die momentane Wahrnehmungs-, Denk- und Handlungskompetenz. Bei Stufe vier setzen die lernstrukturellen, assistiven und therapeutischen Hilfen an, und bei Stufe fünf liegt die Zone der nächsten Entwicklung. Quer unter beiden Seiten verläuft die Achse der Handlungsstrukturanalyse; sie trägt die Stufen der Interiorisation nach Gal'perin, sechs an der Zahl und jede noch einmal in A, B, C und D unterteilt. Die sechs Stufen heißen Orientierungsgrundlage, materielle Handlung, materialisierte Handlung, lautsprachliche Handlung, äußere Sprache für sich und innere Sprache; sie führen Schritt für Schritt von der äußeren Handlung ins Denken. Die Hilfen sitzen damit genau zwischen dem, was schon gelingt, und dem, was als Nächstes erreichbar ist.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Subjektseite zeigt eine Leiter mit sechs Stufen. Drei Stellen sind beschriftet. Bei Stufe 2 und 3 steht: Zone der aktuellen Entwicklung. Das heißt: Was kann das Kind heute allein? Bei Stufe 4 stehen Hilfen. Diese Hilfen sind lernstrukturell, assistiv und therapeutisch. Assistiv heißt: Es hilft beim Tun. Bei Stufe 5 steht: Zone der nächsten Entwicklung. Das heißt: Was schafft das Kind bald mit Hilfe? Unten läuft eine zweite Achse quer durch das Bild. Sie hat sechs Stufen mit römischen Zahlen, von I bis VI. Jede Stufe hat noch vier Teile: A, B, C und D. Diese Stufen heißen Stufen der Interiorisation. Interiorisation heißt: Etwas wandert von außen nach innen ins Denken. Der Name dafür kommt von Gal'perin. Die sechs Stufen haben Namen. Stufe I heißt Orientierungsgrundlage. Stufe II heißt materielle Handlung. Stufe III heißt materialisierte Handlung. Stufe IV heißt lautsprachliche Handlung. Stufe V heißt äußere Sprache für sich. Stufe VI heißt innere Sprache. Das heißt: Erst tue ich etwas mit den Händen. Dann spreche ich dabei. Am Ende denke ich es nur noch."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die beiden Zonen sind der Kern: Unterricht setzt zwischen dem an, was schon gelingt, und dem, was als Nächstes möglich ist - genau dazwischen stehen die Hilfen. Die Abbildung steht auf Folie 15, in deinen Notizen auf Notizen S. 54; dort siehst du auch, dass jede der sechs römischen Stufen noch einmal in A bis D unterteilt ist. Wie die sechs Stufen heißen, zeigt Folie 15 allerdings nicht - ausgeschrieben stehen sie bei Pitsch auf Folie 17 und in deinen Notizen auf Notizen S. 55. Achte auf eine Falle: Die Stufen der Interiorisation nach Gal'perin gehören zur Achse der Handlungsstrukturanalyse; in deinen Notizen sind sie an dieser Stelle der Objektseite zugeordnet, die Folie sagt es anders.",
+      "quelle": "folie-konzeptionen-15",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die untere Markierung - was heute schon gelingt.",
+          "Wahrnehmen, Denken und Handeln im Moment."
+        ],
+        [
+          "Dazwischen setzt die Unterstuetzung an, dreifach benannt.",
+          "Drei Adjektive vor dem Wort fuer Unterstuetzung."
+        ],
+        [
+          "Die obere Markierung - was bald erreichbar ist.",
+          "Das Gegenstueck zur unteren Markierung, einen Schritt weiter."
+        ],
+        [
+          "Ein Fachwort fuers Verinnerlichen, dazu ein russischer Name.",
+          "Von aussen nach innen - roemisch gezaehlt, sechsmal.",
+          "Wie viele Schritte sind es, und nach wem heissen sie?"
+        ],
+        [
+          "Erst sich zurechtfinden, dann mit echten Dingen hantieren.",
+          "Die beiden untersten Schritte der Reihe."
+        ],
+        [
+          "Erst am Ersatz statt am Ding, dann laut ausgesprochen.",
+          "Die beiden Schritte in der Mitte der Reihe."
+        ],
+        [
+          "Erst noch hoerbar zu sich selbst, dann nur noch gedacht.",
+          "Die beiden obersten Schritte, ganz am Ende der Reihe."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-6",
+      "unterthema": "Feuser & Pitsch",
+      "afb": 1,
+      "frage": "Feusers Schaubild zur Struktur der Didaktik integrativer Pädagogik zeigt links vier aufsteigende Kästen und in der Mitte einen Baum. Nennen Sie die vier Kästen von unten nach oben und benennen Sie, wofür Wurzeln, Stamm und Krone stehen.",
+      "stichpunkte": [
+        "Ganz unten Bewegen, Sehen, Hören, Anfassen",
+        "Darüber sinnlich-konkretes materialisiertes Erfassen",
+        "Darüber formal-logisches dialektisches Denken",
+        "Ganz oben Sprache, Schrift, Formeln",
+        "Wurzeln sind Fach- und Humanwissenschaften, elementar und fundamental",
+        "Der Stamm ist das gemeinsame Projekt bzw. die Einheit",
+        "Die Krone sind die individualisierten Lernziele"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zuerst die vier Kästen links von unten nach oben",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Dann Wurzeln, Stamm und Krone des Baums",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Feusers Schaubild heißt Struktur der Didaktik integrativer Pädagogik und meint damit innere Differenzierung und Individualisierung. Links stehen die Aneignungsniveaus, von unten nach oben gelesen: zuerst Bewegen, Sehen, Hören und Anfassen, darüber das sinnlich-konkrete materialisierte Erfassen, darüber das formal-logische dialektische Denken und ganz oben Sprache, Schrift und Formeln. In der Mitte steht ein Baum. Seine Wurzeln sind die Fach- und Humanwissenschaften, also die den äußeren Erscheinungen zugrunde liegenden Prozesse des Elementaren und Fundamentalen. Der Stamm ist das gemeinsame Projekt beziehungsweise die Einheit, an der alle arbeiten, und die Krone besteht aus vielen individualisierten Lernzielen. Der Gegenstand bleibt also für alle derselbe, während die Ziele sich unterscheiden.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Feuser zeigt ein Bild mit einem Baum. Links stehen vier Kästen. Sie zeigen, wie ein Mensch sich etwas aneignet. Ganz unten steht: Bewegen, Sehen, Hören, Anfassen. Darüber steht: sinnlich-konkretes materialisiertes Erfassen. Das heißt: mit den Sinnen und mit Material begreifen. Darüber steht: formal-logisches dialektisches Denken. Das heißt: im Kopf denken und Gegensätze verbinden. Ganz oben steht: Sprache, Schrift, Formeln. Der Baum hat drei Teile. Die Wurzeln sind die Fach- und Humanwissenschaften. Sie meinen das Grundlegende hinter den Dingen. Der Stamm ist ein gemeinsames Projekt. Die Krone sind viele Lernziele. Jedes Kind hat sein eigenes Lernziel. Aber alle arbeiten am selben Projekt."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Bild ist Feusers Antwort auf die Frage, wie ein gemeinsamer Gegenstand und individuelle Ziele zusammengehen: ein Stamm, viele Zweige. Es steht auf Folie 16, in deinen Notizen auf Notizen S. 54. Die vier Kästen links lernst du am besten als Treppe von unten nach oben, vom Anfassen bis zur Formel. Und wenn du bei den Wurzeln die Prozesse des Elementaren und Fundamentalen erwähnst, triffst du Feusers eigenen Wortlaut.",
+      "quelle": "folie-konzeptionen-16",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die unterste Stufe - mit dem Koerper und den Sinnen.",
+          "Was ein kleines Kind zuerst kann, ganz ohne Worte."
+        ],
+        [
+          "Begreifen mit echtem Material in der Hand.",
+          "Zweite Stufe, noch am Gegenstand, aber schon geordnet."
+        ],
+        [
+          "Dritte Stufe, jetzt im Kopf statt in der Hand.",
+          "Denken in Regeln und in Gegensaetzen."
+        ],
+        [
+          "Die oberste Stufe - Zeichen statt Dinge.",
+          "Reden, schreiben, rechnen ohne Anschauung."
+        ],
+        [
+          "Unter der Erde liegt das Wissen der Disziplinen.",
+          "Woraus der Baum seinen Inhalt zieht.",
+          "Dazu zwei grossgeschriebene Adjektive fuers Grundlegende."
+        ],
+        [
+          "Die Mitte, an der alle zusammen arbeiten.",
+          "Ein einziger Gegenstand fuer die ganze Gruppe."
+        ],
+        [
+          "Oben viele Zweige, fuer jedes Kind einer.",
+          "Was sich unterscheidet, obwohl der Rest derselbe bleibt."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-7",
+      "unterthema": "Bildungsinhalte & RLP",
+      "afb": 1,
+      "frage": "Für die Auswahl von Bildungsinhalten im Förderschwerpunkt geistige Entwicklung gilt in Berlin und Brandenburg ein eigener Rahmenlehrplan. Nennen Sie, für welche Stufen er gilt, und benennen Sie die drei sich überschneidenden Bereiche, aus denen er die Bildungsinhalte ableitet.",
+      "stichpunkte": [
+        "Er gilt von der Eingangsstufe bis zur Oberstufe",
+        "Das entspricht Jahrgangsstufe 1 bis Jahrgangsstufe 10",
+        "Individuelle Bedürfnisse und Voraussetzungen der Lernenden",
+        "Bedeutsame Leitthemen und Handlungsfelder der Lebenswirklichkeit",
+        "Inhalte und Kompetenzen der Fachdidaktiken"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zuerst der Geltungsbereich des Rahmenlehrplans",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Dann die drei Bereiche, die sich im Schaubild überschneiden",
+          "idx": [
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die landesspezifische Vorgabe für den Förderschwerpunkt geistige Entwicklung ist in Berlin und Brandenburg der gemeinsame Rahmenlehrplan. Er gilt von der Eingangsstufe bis zur Oberstufe, das entspricht den Jahrgangsstufen eins bis zehn. Die Bildungsinhalte leitet er aus drei Bereichen ab, die als drei sich überschneidende Kreise dargestellt sind: aus den individuellen Bedürfnissen und Voraussetzungen der Lernenden, aus den für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfeldern sowie aus den Inhalten und Kompetenzen der Fachdidaktiken. Weil die Kreise sich überschneiden, werden die drei Bereiche nicht nacheinander abgearbeitet, sondern zusammen gedacht.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Berlin und Brandenburg haben einen eigenen Rahmenlehrplan. Er gilt für den Förderschwerpunkt geistige Entwicklung. Er gilt von der Eingangsstufe bis zur Oberstufe. Das sind die Jahrgangsstufen 1 bis 10. Der Plan sagt: Bildungsinhalte kommen aus drei Bereichen. Der erste Bereich sind die Bedürfnisse der Lernenden. Dazu gehört auch: Was kann jemand schon? Der zweite Bereich sind Leitthemen und Handlungsfelder. Sie sind wichtig für das Leben der Lernenden. Der dritte Bereich sind die Fachdidaktiken. Das sind die Inhalte der Schulfächer. Die drei Bereiche überschneiden sich."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Genau hier sitzt die Kompetenzerwartung, landesspezifische Vorgaben erläutern zu können - der Rahmenlehrplan von Berlin und Brandenburg ist diese Vorgabe. Cover und Schaubild stehen auf Folie 21, in deinen Notizen auf Notizen S. 56. Die drei Kreise sicher zu haben lohnt sich, weil sie zusammen die Begründung tragen: Ein Inhalt ist nicht schon deshalb dran, weil er im Fachplan steht.",
+      "quelle": "folie-konzeptionen-21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Vom Einstieg bis ganz nach oben, zwei Stufennamen.",
+          "Wo faengt der Plan an, und wo hoert er auf?"
+        ],
+        [
+          "Dieselbe Spanne noch einmal in Zahlen.",
+          "Zehn Schuljahre, von der ersten an gezaehlt."
+        ],
+        [
+          "Der Kreis, der beim einzelnen Kind ansetzt.",
+          "Was jemand braucht und was er schon mitbringt."
+        ],
+        [
+          "Der Kreis, der aus dem Alltag der Lernenden kommt.",
+          "Sechs davon gibt es, alle beginnen mit dem Menschen."
+        ],
+        [
+          "Der Kreis, der von den Schulfaechern her denkt.",
+          "Deutsch, Mathe, Sport - woher kommen deren Inhalte?"
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb1-8",
+      "unterthema": "Bildungsinhalte & RLP",
+      "afb": 1,
+      "frage": "Der Rahmenlehrplan bündelt die Handlungsfelder in sechs übergeordneten Leitthemen, die auch Lernfelder genannt werden; in jedem ihrer Namen kommt dasselbe Wort vor. Nennen Sie diese sechs Leitthemen.",
+      "stichpunkte": [
+        "L1 Der Mensch im Alltag",
+        "L2 Der Mensch und die Arbeit",
+        "L3 Der Mensch und die Gesundheit",
+        "L4 Der Mensch in der Gesellschaft",
+        "L5 Der mobile Mensch",
+        "L6 Der Mensch in Natur und Umwelt"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Alle sechs Leitthemen in ihrer Reihenfolge nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Der Rahmenlehrplan für den Förderschwerpunkt geistige Entwicklung fasst die Handlungsfelder in sechs Leitthemen zusammen, die auch als Lernfelder bezeichnet werden. Sie heißen der Mensch im Alltag, der Mensch und die Arbeit, der Mensch und die Gesundheit, der Mensch in der Gesellschaft, der mobile Mensch sowie der Mensch in Natur und Umwelt. Alle sechs sind vom Menschen her formuliert und nicht von einem Schulfach her; die Unterrichtsfächer bilden im Rahmenlehrplan eine eigene Gruppe neben den Leitthemen. Die Leitthemen sind damit die Brücke zwischen der Lebenswirklichkeit der Lernenden und den Inhalten des Unterrichts.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Rahmenlehrplan hat sechs große Themen. Diese Themen heißen Leitthemen. Man sagt auch Lernfelder dazu. In jedem Namen kommt das Wort Mensch vor. Das erste heißt: Der Mensch im Alltag. Das zweite heißt: Der Mensch und die Arbeit. Das dritte heißt: Der Mensch und die Gesundheit. Das vierte heißt: Der Mensch in der Gesellschaft. Das fünfte heißt: Der mobile Mensch. Mobil heißt: unterwegs sein. Das sechste heißt: Der Mensch in Natur und Umwelt. Die Schulfächer sind eine eigene Gruppe. Sie gehören nicht zu den Leitthemen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Sechs Leitthemen sind sechs Punkte, und sie lassen sich gut als Reihe merken: Alltag, Arbeit, Gesundheit, Gesellschaft, Mobilität, Natur. Mit den Nummern L1 bis L6 stehen sie auf Folie 22, in deinen Notizen auf Notizen S. 56. Verwechsle sie nicht mit den Unterrichtsfächern, die auf derselben Folie danebenstehen - Sachunterricht oder Musik sind Fächer, keine Leitthemen. Welches Handlungsfeld zu welchem Leitthema gehört, steht dagegen auf keiner Folie - das war die Moodle-Übung; für die Klausur reichen die sechs Namen.",
+      "quelle": "folie-konzeptionen-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das erste in der Liste, mit der Nummer L1.",
+          "Wo der ganz normale Tag stattfindet, ohne besonderen Anlass."
+        ],
+        [
+          "Nummer L2 in der Reihe.",
+          "Das zweite; gemeint ist, wovon Menschen ihren Lebensunterhalt bestreiten."
+        ],
+        [
+          "Nummer L3 - es geht um Wohlbefinden und um Krankheit.",
+          "Das dritte in der Liste; was Aerztinnen und Pflegekraefte im Blick haben."
+        ],
+        [
+          "Nummer L4 - nicht allein, sondern als Teil eines grossen Ganzen.",
+          "Das vierte; sein Schlusswort meint alle Menschen eines Landes zusammen."
+        ],
+        [
+          "Nummer L5 - hier steht das Wort Mensch ausnahmsweise am Ende.",
+          "Das fuenfte; das Eigenschaftswort davor bedeutet unterwegs sein."
+        ],
+        [
+          "Nummer L6, das letzte der sechs - draussen, jenseits von Haus und Stadt.",
+          "Zwei Woerter am Schluss: das Gewachsene und alles ringsum."
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb2-1",
+      "unterthema": "Bildungsinhalte & RLP",
+      "afb": 2,
+      "frage": "Der Rahmenlehrplan für Berlin und Brandenburg bestimmt die Bildungsinhalte nicht aus einer einzigen Quelle, sondern aus dem Zusammenspiel dreier Bereiche. Erläutern Sie dieses Zusammenspiel und machen Sie deutlich, was daraus für die Auswahl eines Unterrichtsinhalts folgt.",
+      "stichpunkte": [
+        "Der Plan leitet Inhalte aus drei Bereichen zugleich ab - individuelle Voraussetzungen der Lernenden, lebensbedeutsame Leitthemen und Handlungsfelder, Inhalte und Kompetenzen der Fachdidaktiken",
+        "Die drei Kreise überschneiden sich, und erst im gemeinsamen Feld liegt ein tragfähiger Bildungsinhalt - ein Bereich allein begründet ihn nicht",
+        "Für die Auswahl folgt daraus, dass ein Fachinhalt nicht schon deshalb dran ist, weil er im Fachplan steht - er muss lebensbedeutsam sein und zu den Voraussetzungen des Kindes passen",
+        "Umgekehrt genügt Lebensbedeutsamkeit allein ebenso wenig - ein Leitthema bleibt eine Überschrift, solange es nicht über die Fachdidaktiken erschlossen wird",
+        "Als Beispiel wird ein Leitthema wie Der Mensch und die Gesundheit durch Fächer wie Sachunterricht oder Sport erschlossen und zugleich am Bedarf der Lernenden zugeschnitten"
+      ],
+      "muster": "Der Rahmenlehrplan für den Förderschwerpunkt geistige Entwicklung gewinnt seine Bildungsinhalte aus dem Zusammenspiel dreier Bereiche: aus den individuellen Bedürfnissen und Voraussetzungen der Lernenden, aus den für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfeldern und aus den Inhalten und Kompetenzen der Fachdidaktiken. Dargestellt sind diese Bereiche als drei sich überschneidende Kreise, und genau die Überschneidung ist der Kern der Aussage: Ein Inhalt trägt erst dann, wenn er sich aus allen drei Bereichen zugleich begründen lässt. Daraus folgt für die Auswahl zweierlei. Ein Fachinhalt ist nicht schon deshalb im Unterricht am Platz, weil er im Fachplan vorgesehen ist - er muss auch für die Lebenswirklichkeit der Lernenden bedeutsam sein und zu ihren Voraussetzungen passen. Umgekehrt genügt Lebensbedeutsamkeit allein ebenso wenig: Ein Leitthema bleibt eine Überschrift, solange es nicht über die Fachdidaktiken fachlich erschlossen wird. So wird etwa das Leitthema Der Mensch und die Gesundheit über Fächer wie Sachunterricht oder Sport zugänglich gemacht und zugleich auf den Bedarf der einzelnen Lernenden zugeschnitten. Die Auswahl eines Inhalts ist damit immer eine begründete Entscheidung aus drei Blickrichtungen, nicht das Abarbeiten einer Fachliste.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der Rahmenlehrplan gilt für den Förderschwerpunkt geistige Entwicklung in Berlin und Brandenburg. Er sagt, woher die Bildungsinhalte kommen. Die Inhalte kommen aus drei Bereichen zugleich. Der erste Bereich sind die individuellen Bedürfnisse und Voraussetzungen der Lernenden. Das heißt: Was braucht dieses Kind, und was kann es schon? Der zweite Bereich sind die Leitthemen und Handlungsfelder. Das sind Themen, die für das Leben der Lernenden wichtig sind. Der dritte Bereich sind die Inhalte und Kompetenzen der Fachdidaktiken. Fachdidaktik heißt: das Wissen darüber, wie man ein Fach unterrichtet. Die drei Bereiche werden als drei Kreise gezeichnet. Die Kreise überschneiden sich. Diese Überschneidung ist wichtig. Ein Inhalt ist erst dann gut gewählt, wenn alle drei Bereiche für ihn sprechen. Daraus folgen zwei Dinge. Erstens: Ein Inhalt ist nicht schon deshalb richtig, weil er im Fachplan steht. Er muss auch für das Leben der Lernenden wichtig sein. Und er muss zu ihren Voraussetzungen passen. Zweitens: Es reicht auch nicht, wenn ein Thema nur lebenswichtig ist. Ein Leitthema bleibt sonst nur eine Überschrift. Es braucht die Fächer, damit die Lernenden es wirklich verstehen. Ein Beispiel ist das Leitthema Der Mensch und die Gesundheit. Fächer wie Sachunterricht oder Sport machen dieses Thema zugänglich. Und die Lehrkraft passt es an den Bedarf der einzelnen Lernenden an."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Genau hier hängt die Kompetenzerwartung, landesspezifische Vorgaben erläutern zu können - der Rahmenlehrplan ist diese Vorgabe. Erläutern heißt mehr als aufzählen: Die drei Bereiche zu nennen ist der Anfang, die Punkte holst du dir mit der Überschneidung und mit dem, was daraus für die Auswahl folgt. Achte darauf: Die Folie zeichnet die drei Kreise und ihren gemeinsamen Bereich, sie zieht die Folgerung für die Auswahl aber nicht selbst - die ist deine eigene Deutung des Bildes, und genau so eine Deutung ist bei erläutern gefragt. Das Schaubild mit den drei Kreisen steht auf Folie 21, die Leitthemen und die Unterrichtsfächer daneben auf Folie 22; in deinen Notizen ist beides auf Notizen S. 56. Welches Handlungsfeld zu welchem Leitthema gehört, steht auf keiner Folie - dein Beispiel darf also frei aus den beiden Listen der Folie 22 gebaut sein.",
+      "quelle": "folie-konzeptionen-21",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Drei Kreise, drei Herkuenfte - Kind, Lebenswelt, Fach",
+          "Woher kommt ein Inhalt? Drei Quellen auf einmal",
+          "Die Ausgangsliste des Schaubilds, dreiteilig"
+        ],
+        [
+          "Warum liegen sie uebereinander? Die Schnittmenge ist der Punkt",
+          "Der gemeinsame Bereich traegt, nicht der einzelne Kreis",
+          "Einer davon reicht nie - was folgt daraus?"
+        ],
+        [
+          "Erste Folgerung - der Blick vom Fach her, und seine Grenze",
+          "Reicht es, dass etwas im Plan des Faches vorkommt?",
+          "Was fehlt einem reinen Fachthema noch, damit es traegt?"
+        ],
+        [
+          "Zweite Folgerung - jetzt die Gegenrichtung",
+          "Und wenn nur die Lebenswelt spricht? Was fehlt dann?",
+          "Ohne fachlichen Zugang bleibt das grosse Thema leer"
+        ],
+        [
+          "Zum Schluss ein konkreter Fall aus der Sechserliste, dazu zwei Faecher",
+          "Mach es anschaulich - ein Thema und passende Faecher dazu",
+          "Ein Beispiel bindet die drei Kreise sichtbar zusammen"
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb2-2",
+      "unterthema": "Feuser & Pitsch",
+      "afb": 2,
+      "frage": "Pitsch baut seine Didaktik auf Feusers Modell auf und fügt ihm eine vierte Dimension hinzu. Erläutern Sie, worauf er aufbaut, was diese vierte Dimension beschreibt und was ihre Stufenfolge für die Unterstützung im Unterricht bedeutet.",
+      "stichpunkte": [
+        "Pitsch übernimmt Feusers drei Dimensionen - die Objektseite mit der Sachstrukturanalyse, die Subjektseite mit den Tätigkeits- und Entwicklungsniveaus und die Handlungsstruktur mit den Stufen I bis VI",
+        "Die vierte Dimension ist die Steuerungsform, also die Frage, wie viel Lenkung von außen eine Handlung noch braucht",
+        "Sie verläuft von interindividueller Fremdsteuerung zu intraindividueller Selbststeuerung",
+        "Sieben Stufen markieren diesen Weg, von körperlich vollständiger und körperlich teilweiser Hilfe über Modell, ikonisch, lautsprachlich und Schrift bis hin zur Handlung ohne Hilfsmittel",
+        "Für die Planung heißt das, Unterstützung wird nicht nur gegeben oder weggelassen, sondern Stufe für Stufe zurückgenommen, bis die Handlung selbst gesteuert wird"
+      ],
+      "muster": "Pitsch setzt bei Feuser an und übernimmt dessen drei Dimensionen: die Objektseite im Sinne der Sachstrukturanalyse von Vorhaben, Inhalten, Gegenständen und Sachzusammenhängen, die Subjektseite mit der Analyse des Tätigkeits-, Entwicklungs- beziehungsweise Abbildungsniveaus und die Handlungsstruktur mit den Stufen I bis VI, die jeweils noch einmal unterteilt sind. Hinzu kommt bei ihm eine vierte Dimension, die Steuerungsform. Sie beantwortet die Frage, wie viel Lenkung von außen eine Handlung im Moment noch braucht, und sie verläuft von der interindividuellen Steuerung, also der Fremdsteuerung, zur intraindividuellen Steuerung, also der Selbststeuerung. Diesen Weg gliedert Pitsch in sieben Stufen: körperlich vollständige Unterstützung, körperlich teilweise Unterstützung, Modell, ikonische Hilfe, lautsprachliche Hilfe, Schrift und schließlich die Handlung ohne Hilfsmittel. Für die Unterrichtsplanung liegt darin der eigentliche Ertrag. Unterstützung ist keine Entscheidung zwischen Alles und Nichts, sondern eine Abfolge: Die Lehrkraft beginnt auf der Stufe, die eine Schülerin oder ein Schüler gerade braucht, und nimmt die Hilfe Stufe für Stufe zurück, bis die Handlung selbst gesteuert wird. Damit wird die Unterstützung planbar und ihr Abbau beschreibbar.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Pitsch baut auf dem Modell von Feuser auf. Er übernimmt von Feuser drei Dimensionen. Die erste Dimension ist die Objektseite. Dort steht die Sachstrukturanalyse. Das heißt: Man schaut sich den Lerngegenstand genau an. Die zweite Dimension ist die Subjektseite. Dort schaut man auf das Tätigkeits- und Entwicklungsniveau des Kindes. Die dritte Dimension ist die Handlungsstruktur mit den Stufen I bis VI. Zu diesen drei Dimensionen fügt Pitsch eine vierte hinzu. Die vierte Dimension heißt Steuerungsform. Sie fragt: Wie viel Lenkung von außen braucht diese Handlung noch? Die Steuerungsform hat eine Richtung. Sie geht von der interindividuellen Steuerung zur intraindividuellen Steuerung. Interindividuell heißt: Ein anderer Mensch lenkt. Intraindividuell heißt: Das Kind lenkt sich selbst. Auf diesem Weg gibt es sieben Stufen. Stufe 1 ist die körperlich vollständige Hilfe. Stufe 2 ist die körperlich teilweise Hilfe. Stufe 3 ist das Modell. Stufe 4 ist die ikonische Hilfe, also ein Bild. Stufe 5 ist die lautsprachliche Hilfe, also ein gesprochener Hinweis. Stufe 6 ist die Schrift. Stufe 7 ist die Handlung ohne Hilfsmittel. Für die Planung im Unterricht ist das sehr nützlich. Hilfe ist dann nicht mehr alles oder nichts. Die Lehrkraft beginnt auf der Stufe, die das Kind gerade braucht. Danach nimmt sie die Hilfe Stufe für Stufe zurück. Am Ende steuert das Kind die Handlung selbst."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die sieben Stufen sind die eigentliche Beute dieser Folie - sie lassen sich gut als Reihe merken: erst die Hand, dann das Bild, dann das Wort, dann gar nichts mehr. Die Abbildung steht auf Folie 17, in deinen Notizen auf Notizen S. 55. Achte darauf: Die Folie zeigt nur das Schaubild, der Satz über den Nutzen für die Planung ist deine eigene Deutung der Pfeilrichtung - genau so eine Deutung ist bei erläutern gefragt. Und merk dir das Begriffspaar sicher: inter meint zwischen den Menschen, also Fremdsteuerung, intra meint innerhalb der Person, also Selbststeuerung.",
+      "quelle": "folie-konzeptionen-17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was ist geerbt? Drei bekannte Achsen aus dem aelteren Modell",
+          "Zuerst das Fundament nennen - wer liefert die ersten drei?",
+          "Objekt, Subjekt, Handlung - alle drei kurz benennen"
+        ],
+        [
+          "Das Neue bei ihm dreht sich um Unterstuetzung",
+          "Vierte Achse - wer lenkt hier eigentlich gerade?",
+          "Wie viel Fuehrung braucht das Tun in diesem Moment?"
+        ],
+        [
+          "Ein Begriffspaar, das zwischen und innerhalb unterscheidet",
+          "Von aussen nach innen - wer uebernimmt am Ende?",
+          "Die Bewegung dieser Achse in einem Satz"
+        ],
+        [
+          "Wie viele Zwischenschritte? Erst Hand, dann Bild, dann Wort",
+          "Die Leiter dazwischen - zaehl sie ab, es sind mehr als fuenf",
+          "Von Anfassen ueber Zeigen und Sagen bis gar nichts mehr"
+        ],
+        [
+          "Der Ertrag fuer den Unterricht - ausblenden statt abschalten",
+          "Was macht die Lehrkraft praktisch mit dieser Leiter?",
+          "Nicht alles oder nichts, sondern in kleinen Schritten weniger"
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb3-1",
+      "unterthema": "Klafki",
+      "afb": 3,
+      "frage": "Klafki bindet Bildung an Probleme, die für eine ganze Epoche kennzeichnend sind, und an drei Fähigkeiten, die einander bedingen. Erörtern Sie, ob diese Inhalte auch den Unterricht im Förderschwerpunkt geistige Entwicklung leiten sollten.",
+      "stichpunkte": [
+        "Klafki knüpft Bildung an acht epochaltypische Schlüsselprobleme und an eine Trias von Selbstbestimmungs-, Mitbestimmungs- und Solidaritätsfähigkeit",
+        "Dafür spricht, dass dieselben drei Ziele in der Konzeptionentabelle als Ziele der entwicklungslogischen Didaktik stehen - die Zielrichtung ist im Förderschwerpunkt also längst angekommen",
+        "Dafür spricht Feusers Satz vom Recht jedes Kindes auf alles Wichtige über die Welt; auch die Leitthemen des Rahmenlehrplans berühren Gesellschaft, Gesundheit sowie Natur und Umwelt",
+        "Dagegen steht das Spannungsfeld zwischen Lebenspraxis und fachbezogenen Bildungsinhalten - große Weltprobleme können den Bezug zum Alltag der Lernenden verlieren",
+        "Dagegen steht die erste Säule des Rahmenlehrplans - Inhalte müssen zu den individuellen Voraussetzungen passen, und abstrakte Themen verlangen eine Aufbereitung bis auf sinnlich-konkrete Zugänge",
+        "Am Ende ein eigenes Urteil mit Begründung, das beide Seiten aufnimmt, statt eine davon wegzuwischen"
+      ],
+      "muster": "Klafki bindet Bildung an acht epochaltypische Schlüsselprobleme - unter anderem die Friedensfrage, die Umweltfrage, die gesellschaftlich bedingte Ungleichheit und die menschliche Sexualität - und an eine Trias von Selbstbestimmungsfähigkeit, Mitbestimmungsfähigkeit und Solidaritätsfähigkeit. Für den Förderschwerpunkt geistige Entwicklung spricht zunächst, dass diese Zielrichtung dort nicht fremd ist: Die entwicklungslogische Didaktik nennt als ihre Ziele Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, also dieselben drei Fähigkeiten. Dafür spricht zweitens Feusers Satz, jedes Kind habe ein Recht darauf, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt; und auch der Rahmenlehrplan des Landes führt Leitthemen, die Gesellschaft, Gesundheit sowie Natur und Umwelt berühren. Dagegen lässt sich das Spannungsfeld zwischen Lebenspraxis und fachbezogenen Bildungsinhalten anführen: Wer den Unterricht an großen Weltproblemen ausrichtet, kann den Bezug zum Alltag der Lernenden verlieren. Dagegen spricht zweitens die erste Säule des Rahmenlehrplans, nach der Inhalte zu den individuellen Bedürfnissen und Voraussetzungen passen müssen - ein abstraktes Thema erreicht die Lernenden nur, wenn es bis auf sinnlich-konkrete Zugänge aufbereitet wird. In der Abwägung überzeugt mich die mittlere Position: Die Schlüsselprobleme taugen als Themenrahmen auch hier, aber nicht als fertige Unterrichtsinhalte. Sie müssen über die Leitthemen an die Lebenswirklichkeit gebunden und über zugängliche Aneignungsniveaus erschlossen werden. Sie einfach auszusparen hieße dagegen, den Lernenden die Welt vorzuenthalten - genau das, wovon sich die Didaktik im Förderschwerpunkt seit den defizitorientierten Konzeptionen gelöst hat.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Klafki bindet Bildung an acht Schlüsselprobleme. Schlüsselprobleme sind große Probleme, die für eine ganze Zeit kennzeichnend sind. Dazu gehören zum Beispiel die Friedensfrage und die Umweltfrage. Dazu kommt bei Klafki eine Trias. Trias heißt: eine Gruppe aus drei Teilen. Die drei Fähigkeiten sind Selbstbestimmungsfähigkeit, Mitbestimmungsfähigkeit und Solidaritätsfähigkeit. Nun die Frage: Sollen diese Inhalte auch im Förderschwerpunkt geistige Entwicklung gelten? Ein erstes Argument dafür: Diese Zielrichtung gibt es dort schon. Die entwicklungslogische Didaktik nennt als Ziele Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit. Das sind dieselben drei Fähigkeiten. Ein zweites Argument dafür: Feuser sagt, jedes Kind hat ein Recht darauf, alles Wichtige über die Welt zu erfahren. Denn es lebt in dieser Welt. Auch der Rahmenlehrplan hat Leitthemen zu Gesellschaft, Gesundheit sowie Natur und Umwelt. Ein erstes Argument dagegen: Es gibt ein Spannungsfeld zwischen Lebenspraxis und fachlichen Bildungsinhalten. Wer nur große Weltprobleme unterrichtet, verliert vielleicht den Bezug zum Alltag der Lernenden. Ein zweites Argument dagegen: Der Rahmenlehrplan hat eine erste Säule. Sie sagt: Die Inhalte müssen zu den Voraussetzungen des Kindes passen. Ein abstraktes Thema muss also erst aufbereitet werden. Es braucht Zugänge, die man sehen und anfassen kann. Meine Bewertung: Ich halte eine mittlere Position für richtig. Die Schlüsselprobleme taugen auch hier als Rahmen für Themen. Sie sind aber keine fertigen Unterrichtsinhalte. Man muss sie an die Lebenswirklichkeit binden. Und man muss sie so aufbereiten, dass die Lernenden sie erreichen können. Sie einfach wegzulassen wäre falsch. Das hieße, den Lernenden die Welt vorzuenthalten."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Abwägung selbst steht auf keiner Folie - die führst du wirklich selbst. Halte dich an das Punkteschema der Dozentin für solche Aufgaben: zwei Argumente dafür, zwei dagegen, dann eine eigene Bewertung. Die Schlüsselprobleme und das Dreiecks-Schaubild stehen auf Folie 13, in deinen Notizen auf Notizen S. 52 und 53. Die Brücke lohnt sich zu merken: Feusers Zeile in der Konzeptionentabelle auf Folie 10 nennt fast dieselben drei Ziele (dort ohne das Wort Fähigkeit bei den ersten beiden) - das ist dein stärkstes Pro-Argument. Das Gegenargument holst du dir vom vierten Spannungsfeld auf Folie 3 und von der ersten Säule des Rahmenlehrplans auf Folie 21.",
+      "quelle": "folie-konzeptionen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erst die Ausgangsposition umreissen - eine Achterliste, dazu ein Dreieck",
+          "Woran macht er den Bildungsbegriff fest? Zwei Bausteine, acht und drei",
+          "Grosse Zeitfragen auf der einen Seite, drei Faehigkeiten auf der anderen"
+        ],
+        [
+          "Erstes Pro - das Dreieck taucht in der Tabelle wieder auf",
+          "Wo hast du diese drei Ziele schon einmal gesehen?",
+          "Bruecke zu einem bekannten Ansatz derselben Vorlesung"
+        ],
+        [
+          "Zweites Pro - ein beruehmtes Zitat, dazu der Landesplan",
+          "Wer sagt, kein Kind duerfe von der Welt ausgeschlossen werden?",
+          "Die Sechserliste des Plans zeigt aehnliche Themenfelder"
+        ],
+        [
+          "Erstes Contra - eines der vier Spannungsfelder passt genau hierher",
+          "Was droht verloren zu gehen, wenn die Themen sehr gross werden?",
+          "Der Alltag der Lernenden meldet sich zu Wort"
+        ],
+        [
+          "Zweites Contra - der erste Kreis des Landesplans meldet sich",
+          "Wie kommt ein abstraktes Thema bei jedem Kind wirklich an?",
+          "Ohne Herunterbrechen bleibt der Stoff unerreichbar"
+        ],
+        [
+          "Der Schluss gehoert dir - beziehe Position",
+          "Ein Fazit, das keine der beiden Seiten einfach streicht",
+          "Wie stehst du dazu, und womit begruendest du das?"
+        ]
+      ]
+    },
+    {
+      "id": "ko-afb3-2",
+      "unterthema": "ICF-Modell",
+      "afb": 3,
+      "frage": "Das biopsychosoziale Modell gilt als Abkehr von einer einseitigen Sicht auf Behinderung. Bewerten Sie, wie weit diese Abkehr im Modell selbst und in seinen Folgen für die schulische Förderung tatsächlich trägt.",
+      "stichpunkte": [
+        "Das Modell verbindet Körperfunktionen und -strukturen, Aktivitäten und Partizipation mit Umwelt- und personenbezogenen Faktoren und beschreibt Behinderung als dynamische Interaktion",
+        "Dafür spricht die ausdrückliche Abkehr von einem monokausalen und eindimensionalen Begründungszusammenhang von Behinderung",
+        "Dafür spricht der Ertrag im Unterricht - Barrieren für Aktivität und Partizipation werden differenziert erfassbar, und Umfeld, Hilfsmittel und personelle Hilfe zielen auf größtmögliche Teilhabe",
+        "Dagegen spricht, dass das Schaubild oben beim Gesundheitsproblem ansetzt, also bei einer Gesundheitsstörung oder Krankheit - der medizinische Ausgangspunkt bleibt erhalten",
+        "Dagegen spricht, dass das Modell beschreibt und ordnet, aber nicht entscheidet, welche Barriere zuerst abgebaut wird und wie viel Förderung an der Person ansetzt",
+        "Am Ende eine eigene Bewertung, die sagt, wie weit die Abkehr trägt und wo sie an ihre Grenze kommt"
+      ],
+      "muster": "Das biopsychosoziale Modell stellt Körperfunktionen und -strukturen, Aktivitäten und Partizipation nebeneinander und koppelt sie mit den Kontextfaktoren, also mit Umweltfaktoren und personenbezogenen Faktoren zurück; Funktionsfähigkeit wie Behinderung erscheinen darin als dynamische Interaktion. Für die Abkehr von einer einseitigen Sicht spricht zunächst, dass sie ausdrücklich benannt wird: Der monokausale und eindimensionale Begründungszusammenhang von Behinderung wird aufgegeben, Behinderung ist damit nicht mehr allein eine Eigenschaft der Person. Dafür spricht zweitens der praktische Ertrag für die Schule. Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt - der Blick geht also auf die Bedingungen und nicht nur auf das Kind. Dagegen spricht, dass das Schaubild oben beim Gesundheitsproblem ansetzt, also bei einer Gesundheitsstörung oder Krankheit; der medizinische Ausgangspunkt bleibt im Modell erhalten, auch wenn er nicht mehr allein erklärt. Dagegen spricht zweitens, dass das Modell beschreibt und ordnet, aber nicht entscheidet: Es sagt nicht, welche Barriere zuerst abgebaut wird und wie viel Förderung an der Person selbst ansetzen soll. In der Bewertung trägt die Abkehr weit, aber nicht vollständig. Sie verändert die Frage, die eine Lehrkraft stellt, von Was fehlt diesem Kind zu Was hindert dieses Kind hier und jetzt an Teilhabe. Die Antwort auf diese Frage muss sie weiterhin selbst begründen - das Modell liefert ihr dafür die Ordnung, nicht die Entscheidung.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Das biopsychosoziale Modell zeigt Behinderung in einem Schaubild. In der Mitte stehen drei Bereiche: Körperfunktionen und -strukturen, Aktivitäten und Partizipation. Partizipation heißt Teilhabe. Unten stehen die Kontextfaktoren. Das sind die Umweltfaktoren und die personenbezogenen Faktoren. Alle Teile sind mit Pfeilen verbunden. Behinderung entsteht also im Zusammenspiel. Der Fachbegriff dafür heißt dynamische Interaktion. Nun die Frage: Wie weit trägt die Abkehr von einer einseitigen Sicht? Ein erstes Argument dafür: Die Abkehr wird ausdrücklich genannt. Behinderung hat nicht mehr nur eine Ursache und nicht mehr nur eine Richtung. Sie ist also keine reine Eigenschaft der Person. Ein zweites Argument dafür: Die Schule hat einen praktischen Nutzen davon. Man kann genau erfassen, welche Barrieren die Teilhabe stören. Dann verändert man das Unterrichtsumfeld. Man stellt Hilfsmittel bereit. Und man organisiert personelle Hilfe. Das Ziel ist die größtmögliche Aktivität und Teilhabe. Ein erstes Argument dagegen: Ganz oben im Schaubild steht das Gesundheitsproblem. Damit ist eine Gesundheitsstörung oder Krankheit gemeint. Der medizinische Anfangspunkt bleibt also im Modell. Ein zweites Argument dagegen: Das Modell beschreibt und ordnet nur. Es entscheidet nicht. Es sagt nicht, welche Barriere zuerst wegkommt. Und es sagt nicht, wie viel Förderung beim Kind selbst ansetzen soll. Meine Bewertung: Die Abkehr trägt weit, aber nicht ganz. Das Modell verändert die Frage der Lehrkraft. Sie fragt nicht mehr: Was fehlt diesem Kind? Sie fragt: Was hindert dieses Kind gerade an der Teilhabe? Die Antwort muss die Lehrkraft aber weiter selbst begründen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Abwägung selbst steht auf keiner Folie - erwarte keine Fundstelle für dein Urteil, das ist genau der Teil, den du lieferst. Halte dich an das Punkteschema der Dozentin: zwei Argumente dafür, zwei dagegen, dann die Bewertung. Für die Gegenseite hast du einen gedruckten Anker: Das erste der vier Spannungsfelder auf Folie 3 nennt die Sichtweise auf Behinderung ausdrücklich als Spannungsfeld zwischen sozialen und medizinischen Aspekten - die Vorlesung sagt dort also selbst, dass diese Frage offen ist. Achte auf die Zuschreibung, sie ist eine beliebte Stolperstelle: Das Schaubild selbst ist mit WHO 2005 belegt (Folie 4), die Sätze über die dynamische Interaktion und die Bedeutung für die schulische Förderung stehen dagegen auf Folie 7 und sind dort mit Terfloth & Bauersfeld 2015 belegt. In deinen Notizen findest du beides auf Notizen S. 51 - allerdings fehlt dort ausgerechnet der Satz über die Abkehr vom monokausalen und eindimensionalen Begründungszusammenhang, dein stärkstes Pro-Argument. Den holst du dir von der Folie.",
+      "quelle": "folie-konzeptionen-7",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zuerst das Schaubild kurz aufrufen - Ebenen plus Kontext",
+          "Womit faengst du an? Die Bestandteile und das Wort fuers Wechselspiel",
+          "Ein Fachwort fuers Wechselspiel, nicht fuer einen Zustand"
+        ],
+        [
+          "Erstes Pro - eine Absage an die eine einzige Ursache",
+          "Zwei Fachwoerter, die eine einzige Ursache und eine einzige Achse verneinen",
+          "Behinderung hat nicht nur einen Grund und nicht nur eine Achse"
+        ],
+        [
+          "Zweites Pro - was die Schule praktisch davon hat",
+          "Erst genau hinsehen, wo es klemmt, dann drei Arten von Unterstuetzung",
+          "Raum, Material, Mensch - wofuer werden sie eingesetzt?"
+        ],
+        [
+          "Erstes Contra - schau nach, was ganz oben im Bild steht",
+          "Wo beginnen die Pfeile? Das verraet die Blickrichtung",
+          "Die aerztliche Seite ist nicht verschwunden"
+        ],
+        [
+          "Zweites Contra - ein Ordnungsraster nimmt dir die Wahl nicht ab",
+          "Was leistet das Modell NICHT? Es setzt keine Reihenfolge",
+          "Beschreiben ist noch kein Handeln"
+        ],
+        [
+          "Dein Urteil zum Schluss, mit einem klaren Wie weit",
+          "Fazit ziehen - Reichweite und Grenze benennen",
+          "Position beziehen, statt beide Seiten stehen zu lassen"
         ]
       ]
     }

@@ -839,6 +839,7 @@
   "frei": [
     {
       "id": "pr-f-1",
+      "unterthema": "Überblick der Prinzipien",
       "afb": 1,
       "frage": "Nennen Sie fünf didaktische Prinzipien im sonderpädagogischen Schwerpunkt geistige Entwicklung.",
       "stichpunkte": [
@@ -847,7 +848,9 @@
         "Ganzheitlichkeit",
         "Kleine Schritte und/oder Sinnzusammenhang",
         "Handlungsorientierung",
-        "Weitere: Elementarisierung, Strukturierung, Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen"
+        "Weitere: Elementarisierung, Strukturierung",
+        "Weitere: Anschaulichkeit, adaptives Lernen",
+        "Weitere: Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen"
       ],
       "muster": "Fünf didaktische Prinzipien im SGE sind Lebenspraxis und Lebensnähe, Individualisierung bzw. Differenzierung, Ganzheitlichkeit, Handlungsorientierung und Elementarisierung. Daneben gelten unter anderem Strukturierung, Anschaulichkeit, kleine Schritte und/oder Sinnzusammenhang, adaptives Lernen, der Anstoß zur Eigenaktivität und die Ermöglichung von Erfahrungen.",
       "musterVarianten": {
@@ -868,41 +871,90 @@
       "quelle": "folie-prinzipien-5",
       "quelleSicherheit": "geprueft",
       "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf der elf Prinzipien nennen - welche fünf, ist dir überlassen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "chips": [
+            "Prinzip 1",
+            "Prinzip 2",
+            "Prinzip 3",
+            "Prinzip 4",
+            "Prinzip 5"
+          ],
+          "punkte": 4
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Sechs weitere aus der Elferliste, falls dir mehr einfällt",
+          "idx": [
+            5,
+            6,
+            7
+          ],
+          "form": "liste",
+          "chips": [
+            "Zusatz 1",
+            "Zusatz 2",
+            "Zusatz 3"
+          ]
+        }
+      ],
       "hinweise": [
         [
-          "Alltag als Unterrichtsstoff - was nach der Schule gebraucht wird",
-          "Bildungsgut fuers Leben danach (Pitsch)",
-          "Merkbild: der Tafelspruch ueber Lernen fuers Leben"
+          "Alltagshandlungen werden zum Unterrichtsinhalt (Pitsch)",
+          "Bildungsgut, das nach der Schulzeit gebraucht wird",
+          "Merkbild: der Tafelspruch ueber das Lernen fuers Leben"
         ],
         [
           "Auf die Verschiedenheit der Gruppe eingehen",
-          "Innen wie aussen, in Menge wie Schwierigkeit anpassbar",
-          "Jedes Kind auf seinem eigenen Niveau abholen"
+          "Innen wie aussen anpassbar, in Menge wie Schwierigkeit",
+          "Doppelbegriff: einer meint den Einzelnen, einer die Aufgabe"
         ],
         [
-          "Kopf, Herz und Hand zusammen",
-          "Moeglichst viele Sinneskanaele einbeziehen",
-          "Merkbild: die Fahrrad-Stunde stand fuer dieses Prinzip"
+          "Kopf, Herz und Hand zusammen (Pestalozzi)",
+          "Vielkanallernen nach Vester - moeglichst alle Sinne",
+          "Merkbild: die Fahrrad-Dynamo-Stunde stand dafuer"
         ],
         [
-          "Das Spannungspaar der Aufgabenstruktur: zerlegen, aber Sinn behalten",
+          "Das Spannungspaar: portionieren, ohne den Sinn zu verlieren",
           "Merkbild: die Waage zwischen Teilschritt und grossem Ganzen",
-          "Klein portionieren und trotzdem das Ziel zeigen"
+          "Folie 28: zerlegen und trotzdem das Ziel zeigen"
         ],
         [
-          "Konfuzius: lass mich selbst tun",
-          "Schueleraktiv, mit vereinbartem Produkt als Leitplanke",
+          "Konfuzius: lass es mich tun, und ich behalte es",
+          "Schueler:innen tun selbst, mit vereinbartem Produkt als Leitplanke",
           "Merkbild: der Koffer mit Auto und Fernbedienung"
         ],
         [
-          "Die Elferliste geht weiter - sechs stehen noch aus",
-          "Rest der Tabelle, vier davon kursiv gedruckt",
-          "Zusatz: zwei erklaerte plus die vier nur genannten"
+          "Die beiden aufrechten Zeilen, die noch fehlen",
+          "Eines vereinfacht auf den Kern, eines gibt Sicherheit im Ablauf",
+          "Merkbild: die fuenf Sechsecke (Folie 15) und der Time-Timer (Folie 32)"
+        ],
+        [
+          "Zwei der vier kursiv gesetzten Zeilen",
+          "Eines meint Anschauung, eines passt das Niveau an",
+          "Nur genannt, nie erklaert - deshalb reicht hier Nennen"
+        ],
+        [
+          "Die letzten beiden kursiven Zeilen der Elferliste",
+          "Eines stupst zum Selbermachen an, eines schafft Gelegenheiten",
+          "Beide kehren im Rahmenlehrplan wieder (Folie 33)"
         ]
       ]
     },
     {
       "id": "pr-f-2",
+      "unterthema": "Handlungsorientierung",
       "afb": 2,
       "frage": "Erläutern Sie das Prinzip der Handlungsorientierung anhand eines Beispiels.",
       "stichpunkte": [
@@ -966,6 +1018,7 @@
     },
     {
       "id": "pr-f-3",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
       "afb": 2,
       "frage": "Erläutern Sie die vier Aneignungsebenen mit jeweils einem Beispiel.",
       "stichpunkte": [
@@ -1017,6 +1070,7 @@
     },
     {
       "id": "pr-f-4",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
       "afb": 3,
       "frage": "Diskutieren Sie das Spannungsverhältnis von kleinen Schritten und Sinnzusammenhang bei der Strukturierung von Aufgaben. **Gemeint ist das didaktische Prinzip „kleine Schritte und/oder Sinnzusammenhang“; diskutieren heißt hier: beide Seiten abwägen, nicht nur beschreiben.**",
       "stichpunkte": [
@@ -1068,6 +1122,7 @@
     },
     {
       "id": "pr-gen-f-1",
+      "unterthema": "Elementarisierung",
       "afb": 2,
       "frage": "Erläutern Sie das Prinzip der Elementarisierung und zeigen Sie am Energie-Beispiel der Vorlesung, wie aus einer sachanalytischen Betrachtung elementarisierte Aussagen werden.",
       "stichpunkte": [
@@ -1132,6 +1187,7 @@
     },
     {
       "id": "pr-gen-f-2",
+      "unterthema": "Handlungsorientierung",
       "afb": 2,
       "frage": "Erläutern Sie anhand der fünf Hilfeniveaus, wie die Unterstützung bei der Handlungsdurchführung an die Ausgangslage der Person angepasst wird. Nennen Sie zu jedem Niveau das jeweilige Ziel.",
       "stichpunkte": [
@@ -1196,14 +1252,15 @@
     },
     {
       "id": "pr-gen-f-3",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
       "afb": 3,
       "frage": "Analysieren Sie die Fahrrad-Dynamo-Stunde aus der Vorlesung: Welche didaktischen Prinzipien lassen sich in ihrem Aufbau erkennen? Begründen Sie am Material und bewerten Sie abschließend, wie die Stunde mehrere Prinzipien miteinander verbindet.",
       "stichpunkte": [
-        "Ablauf: verdecktes Fahrrad ertasten und raten → handelnde Auseinandersetzung (Räder anstupsen, Kurbel drehen, ggf. mit Unterstützung) → Lenkung auf Dynamo, Leuchten der Lampen, Verkabelung → vom Gegenstand zum Symbol (Foto + Wort an der Tafel) → Weiterführung: Energieumwandlung",
-        "Ganzheitlichkeit: viele Sinne einbezogen (Tasten, Sehen, Hören - Dynamo-Geräusch über Kopftaste, Fahrradklingel); die Vorlesung führt die Stunde als Beispiel für dieses Prinzip",
-        "Aneignungsebenen/Lebensnähe: der Aufbau wandert vom körperlich-sinnlichen Zugang (Ertasten, Kurbeln) hin zum Anschaulichen (Foto und Schriftwort als Symbol)",
-        "Individualisierung/Differenzierung: unterschiedliche Zugänge parallel - GoTalk mit vier Antwortmöglichkeiten (Fahrrad, Pferd, Tisch, Rollstuhl), Kopftaste, Unterstützung beim Drehen der Kurbel",
-        "Handlungsorientierung: Schüler:innen entdecken handelnd Wirkungen (gedrehte Räder bewegen den Dynamo, die Lampe leuchtet)",
+        "Ablauf: ertasten+raten → kurbeln → Dynamo+Lampe → Symbol → Energie",
+        "Prinzip 1: Ganzheitlichkeit - Tasten, Sehen, Hören; so die Folie",
+        "Prinzip 2: Aneignungsebenen/Lebensnähe - vom Ertasten zum Foto+Wort",
+        "Prinzip 3: Individualisierung/Differenzierung - GoTalk, Kopftaste",
+        "Prinzip 4: Handlungsorientierung - selbst kurbeln, Lampe leuchtet",
         "Bewertung: eigene Einschätzung begründen, z. B. dass die Prinzipien hier nicht nacheinander abgehakt, sondern in einer Handlung verschränkt werden"
       ],
       "muster": "Die Stunde beginnt damit, dass die Schüler:innen ein verdecktes Fahrrad ertasten und raten, worum es sich handelt; anschließend setzen sie sich handelnd damit auseinander, stupsen die Räder an oder drehen die Kurbel mit Unterstützung, bis der Blick auf den mitlaufenden Dynamo und das Leuchten der Lampen gelenkt wird; zuletzt kommen Foto und Schriftwort an die Tafel. Am deutlichsten zeigt sich die Ganzheitlichkeit: Die Stunde bezieht viele Sinne ein - Tasten, Sehen und Hören, etwa über das per Kopftaste auslösbare Dynamo-Geräusch - und entspricht damit dem Vielkanallernen. Zugleich steckt in der Abfolge eine Bewegung über die Aneignungsebenen: vom körperlich-sinnlichen Ertasten über das handelnde Erkunden bis zum Symbol aus Foto und Wort. Individualisierung und Differenzierung werden sichtbar, weil parallel unterschiedliche Zugänge angeboten werden, etwa der GoTalk mit vier Antwortmöglichkeiten und die Kopftaste. Und weil die Schüler:innen Wirkungen selbst entdecken - die gedrehten Räder bewegen den Dynamo, die Lampe leuchtet -, arbeitet die Stunde auch handlungsorientiert. In der Bewertung überzeugt gerade, dass die Prinzipien nicht nacheinander abgearbeitet, sondern in einer einzigen Handlung verschränkt werden: Derselbe Gegenstand ist gleichzeitig Sinneserfahrung, Handlungsanlass und Symbol.",
@@ -1225,41 +1282,85 @@
       "quelle": "folie-prinzipien-31",
       "quelleSicherheit": "unsicher",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "analysieren",
+          "form": "liste",
+          "auftrag": "Den Aufbau der Stunde Schritt für Schritt festhalten",
+          "idx": [
+            0
+          ],
+          "chips": [
+            "Der Ablauf"
+          ],
+          "punkte": 1
+        },
+        {
+          "operator": "begruenden",
+          "form": "liste",
+          "auftrag": "Die erkennbaren Prinzipien nennen und jedes am Material belegen",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "chips": [
+            "Prinzip 1",
+            "Prinzip 2",
+            "Prinzip 3",
+            "Prinzip 4"
+          ],
+          "punkte": 3
+        },
+        {
+          "operator": "bewerten",
+          "rolle": "fazit",
+          "form": "rolle",
+          "auftrag": "Abschließend bewerten, wie die Stunde die Prinzipien verbindet",
+          "idx": [
+            5
+          ],
+          "punkte": 1,
+          "satzanfang": "Insgesamt zeigt die Stunde, dass …"
+        }
+      ],
       "hinweise": [
         [
-          "Die fuenf nummerierten Stationen der Stunde nacherzaehlen",
-          "Vom Raten unterm Tuch bis zur Folgestunde",
-          "Erst tasten, dann hantieren, dann Symbol, dann Ausblick"
+          "Die fuenf nummerierten Kaesten der Folie 31 der Reihe nach",
+          "Was liegt am Anfang unterm Tuch, wohin fuehrt die Folgestunde?",
+          "Fuenf Schritte: raten, hantieren, entdecken, benennen, weiterdenken"
         ],
         [
-          "Welches Prinzip illustriert die Stunde laut Vorlesung?",
-          "Viele Sinneskanaele: hoeren, sehen, fuehlen",
-          "Kopf, Herz und Hand in einer Stunde"
+          "Welches Prinzip illustriert die Stunde laut Vorlesung selbst?",
+          "Kopf, Herz und Hand - welche Sinne waren im Spiel?",
+          "Drei Wahrnehmungswege waren beteiligt - welche?"
         ],
         [
           "Wohin wandert der Zugang im Stundenverlauf?",
-          "Vom Koerperlichen zum Foto mit Schriftwort",
-          "Stufenweg: erst spueren, spaeter Symbol"
+          "Welche Ebene steht am Anfang, welche am Ende?",
+          "Terfloth & Cesak: wie heisst die Leiter dieser Zugangswege?"
         ],
         [
           "Welche Hilfsmittel eroeffnen parallele Zugaenge?",
-          "Sprechgeraet, grosse Taste, gefuehrte Bewegung",
-          "Vier Bildantworten zur Auswahl - wozu?"
+          "Wie konnte auch ohne Sprache jemand mitraten?",
+          "Jedes Kind auf seinem eigenen Weg zur Antwort"
         ],
         [
           "Wo entdecken die Kinder Wirkung durch eigenes Tun?",
-          "Kurbeln - und etwas beginnt zu leuchten",
-          "Effekt selbst ausloesen statt vorgefuehrt bekommen"
+          "Effekt selbst ausloesen statt vorgefuehrt bekommen",
+          "Welchen Effekt loesen die Kinder selbst aus?"
         ],
         [
           "Dein eigenes Urteil: wie greifen die Prinzipien ineinander?",
-          "Schlussgedanke: alles in einer Handlung vereint",
+          "Schlussgedanke: alles greift in einem einzigen Tun",
           "Wertung mit Begruendung, kein blosses Aufzaehlen"
         ]
       ]
     },
     {
       "id": "pr-fol-f-1",
+      "unterthema": "Was sind didaktische Prinzipien?",
       "afb": 2,
       "frage": "Erklären Sie, um was es sich bei didaktischen Prinzipien handelt, und erörtern Sie ihre Relevanz für die Unterrichtsplanung. Ordnen Sie die Prinzipien dabei in das Verhältnis zu Methoden, Techniken, Sozialformen und Medien ein. **Drei Teilaufgaben: erklären, erörtern (Für und Wider nennen) und einordnen.**",
       "stichpunkte": [
@@ -1267,12 +1368,12 @@
         "Sie sind nicht immer wissenschaftlich fundiert, haben aber eine große Relevanz für die Arbeit von Lehrkräften (vgl. Arndt 2020, 340)",
         "In den einzelnen Fachdidaktiken und von einzelnen Vertreter:innen werden unterschiedliche Prinzipien für mehr oder weniger bedeutsam gehalten - es gibt also keine verbindliche Einheitsliste",
         "Unterschieden werden fachspezifische und fächerübergreifende Prinzipien",
-        "Rangfolge von oben nach unten: didaktische Prinzipien, Unterrichtsmethoden, Unterrichtstechniken, Sozialformen, Medien - vom Allgemeinen zum Konkreten",
         "Relevanz 1: Prinzipien geben Orientierung, wo der Einzelfall keine fertige Lösung hergibt - sie sind Entscheidungshilfen, keine Rezepte",
         "Relevanz 2: Sie machen Planungsentscheidungen begründbar und damit für Kolleg:innen und Eltern nachvollziehbar",
         "Relevanz 3: Sie decken die drei Phasen ab - Planung, Durchführung und Evaluation -, wirken also auch nach der Stunde als Maßstab",
-        "Relevanz 4: Sie kehren als Qualitätsmerkmale im Rahmenlehrplan wieder (Lebensweltliche und lebenspraktische Orientierung, Differenzierung und Individualisierung, Ganzheitlichkeit, Handlungs- und situationsbezogenes Lernen), sind also auch curricular verankert",
-        "Kritischer Punkt für die Erörterung: Weil die Fundierung uneinheitlich ist und die Listen je nach Vertreter:in variieren, ersetzen Prinzipien keine fachliche Analyse des Einzelfalls; sie können bei rigider Anwendung sogar in die Irre führen, etwa wenn kleine Schritte den Sinnzusammenhang verdecken"
+        "Relevanz 4: im Rahmenlehrplan als Qualitätsmerkmale - lebensweltliche/lebenspraktische Orientierung, Differenzierung/Individualisierung, Ganzheitlichkeit, handlungs- und situationsbezogenes Lernen",
+        "Grenze: uneinheitliche Fundierung, wechselnde Listen - sie ersetzen keine Analyse des Einzelfalls und führen starr angewandt in die Irre, etwa wenn kleine Schritte den Sinnzusammenhang verdecken",
+        "Rangfolge: Prinzipien → Methoden → Techniken → Sozialformen → Medien"
       ],
       "muster": "Didaktische Prinzipien sind grundlegende Regeln, Grundsätze beziehungsweise Orientierungen für die Unterrichtsplanung, die Unterrichtsdurchführung und die Unterrichtsevaluation. Sie beantworten nicht die Frage, wie eine Stunde konkret abläuft, sondern woran sich Entscheidungen ausrichten sollen. Genau darin liegt auch ihre Stellung im Gefüge didaktischer Kategorien: Von oben nach unten stehen zuerst die Unterrichtsprinzipien beziehungsweise didaktischen Prinzipien, darunter die Unterrichtsmethoden, dann die Unterrichtstechniken, danach die Sozialformen und zuletzt die Medien. Die Reihe läuft also vom Allgemeinen zum Konkreten, und die Prinzipien setzen den Rahmen, innerhalb dessen die übrigen Ebenen ausgestaltet werden. Zu ihrem Status gehört eine Einschränkung: Die Prinzipien sind nicht immer wissenschaftlich fundiert, und in den einzelnen Fachdidaktiken werden von unterschiedlichen Vertreterinnen und Vertretern unterschiedliche Prinzipien für mehr oder weniger bedeutsam gehalten. Unterschieden werden dabei fachspezifische und fächerübergreifende Prinzipien. Trotz dieser uneinheitlichen Fundierung ist ihre Relevanz für die Arbeit von Lehrkräften groß. Erstens geben sie Orientierung, wo der Einzelfall keine fertige Lösung bereithält; sie sind Entscheidungshilfen, keine Rezepte. Zweitens machen sie Planungsentscheidungen begründbar und für Kolleginnen, Kollegen und Eltern nachvollziehbar. Drittens greifen sie über die Planung hinaus in Durchführung und Evaluation, wirken also auch im Rückblick als Maßstab. Und viertens sind sie curricular verankert, denn im Rahmenlehrplan kehren sie als Qualitätsmerkmale wieder, etwa als lebensweltliche und lebenspraktische Orientierung, als Differenzierung und Individualisierung, als Ganzheitlichkeit oder als handlungs- und situationsbezogenes Lernen. Kritisch anzumerken bleibt, dass Prinzipien die fachliche Analyse des Einzelfalls nicht ersetzen. Rigide angewandt können sie sogar in die Irre führen, etwa wenn das Prinzip der kleinen Schritte so konsequent umgesetzt wird, dass der Sinnzusammenhang für die Schülerinnen und Schüler verloren geht. Ihre Stärke liegt deshalb im abwägenden Gebrauch.",
       "musterVarianten": {
@@ -1293,56 +1394,968 @@
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "erklaeren",
+          "rolle": "benennen",
+          "form": "rolle",
+          "auftrag": "Erklären, was didaktische Prinzipien sind und wie gesichert sie sind",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "punkte": 2,
+          "satzanfang": "Didaktische Prinzipien sind …"
+        },
+        {
+          "operator": "erklaeren",
+          "rolle": "entfalten",
+          "form": "rolle",
+          "auftrag": "Erörtern, was für ihre Relevanz in der Planung spricht und was dagegen",
+          "idx": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "punkte": 2,
+          "satzanfang": "Für ihre Relevanz spricht …, dagegen spricht …"
+        },
+        {
+          "operator": "zuordnen",
+          "form": "liste",
+          "auftrag": "Die Prinzipien ins Gefüge von Methoden, Techniken, Sozialformen und Medien einordnen",
+          "idx": [
+            9
+          ],
+          "chips": [
+            "Von oben nach unten"
+          ],
+          "punkte": 1
+        }
+      ],
       "hinweise": [
         [
-          "Die Grundsatz-Definition nach Weber - wofuer geben sie Halt?",
-          "Drei Unterrichtsphasen stecken schon in der Definition",
-          "Was sind Prinzipien laut der Basisfolie? (Fehlt in deinen Notizen)"
+          "Die Basisfolie nach Weber - wofuer geben sie Halt?",
+          "Drei Unterrichtsphasen stecken schon im ersten Satz",
+          "Woran richtet man Entscheidungen aus? (Folie fehlt in deinen Notizen)"
         ],
         [
-          "Wissenschaftlichkeit contra Praxisbedeutung (Arndt)",
-          "Der Satz mit dem Obwohl",
-          "Eine Einschraenkung - und trotzdem Gewicht im Schulalltag"
+          "Der Einwand mit dem Obwohl - und trotzdem Gewicht im Alltag",
+          "Wie gut abgesichert sind sie eigentlich? (Arndt 2020)",
+          "Schwache Fundierung, starke Bedeutung im Schulalltag"
         ],
         [
-          "Warum gibt es keine verbindliche Einheitsliste?",
+          "Warum gibt es keine allgemein gueltige Liste?",
           "Jede Fachrichtung gewichtet anders",
-          "Verschiedene Autor:innen, verschiedene Schwerpunkte"
+          "Die Auswahl schwankt - je nachdem, wen man fragt"
         ],
         [
-          "Die Zweiteilung: nur ein Fach oder alle?",
+          "Die Zweiteilung: gilt es in einem Fach oder in allen?",
           "Welches Begriffspaar beschreibt die Reichweite?",
-          "Gilt es im einzelnen Fach oder ueberall?"
-        ],
-        [
-          "Das Stufendiagramm: fuenf Ebenen von grob nach fein",
-          "Was steht ganz oben, was ganz unten?",
-          "Vom Grundsatz ueber Methode und Technik bis zum Material"
+          "Ein Fach - oder quer durch den Stundenplan?"
         ],
         [
           "Erster Nutzen: Halt, wo es keine Patentloesung gibt",
           "Hilfe beim Entscheiden, kein Kochbuch",
-          "Orientierung im offenen Einzelfall"
+          "Was tun, wenn der Fall keine Standardantwort hat?"
         ],
         [
-          "Zweiter Nutzen: Entscheidungen erklaerbar machen",
-          "Wem gegenueber wird die Planung transparent?",
-          "Begruendbarkeit fuer Team und Elternhaus"
+          "Zweiter Nutzen: die Planung wird erklaerbar",
+          "Wem gegenueber muss die Entscheidung tragen?",
+          "Transparenz fuer Team und Elternhaus"
         ],
         [
-          "Dritter Nutzen: wirkt auch nach Stundenende",
-          "Welche drei Phasen deckt der Massstab ab?",
-          "Vor, waehrend und nach dem Unterricht"
+          "Dritter Nutzen: wirkt auch noch nach dem Klingeln",
+          "Welche drei Zeitpunkte deckt der Massstab ab?",
+          "Nicht nur vorher, sondern auch waehrend und danach"
         ],
         [
-          "Vierter Nutzen: Verankerung im Lehrplan",
-          "Wo kehren sie als Qualitaetsmerkmale wieder?",
-          "Auch das Curriculum greift vier davon auf"
+          "Vierter Nutzen: das Curriculum greift sie auf (Folie 33)",
+          "Welche vier Merkmale tauchen im Berliner Lehrplan wieder auf?",
+          "Nicht nur Fachmeinung - amtlich festgeschrieben"
         ],
         [
-          "Zum Schluss die Grenze: was koennen Prinzipien NICHT leisten?",
-          "Gefahr bei starrer Anwendung - dein Einwand",
+          "Die Gegenprobe: was koennen sie NICHT leisten?",
+          "Gefahr bei starrer Anwendung - hier kommt dein Einwand",
           "Kein Ersatz fuer den genauen Blick aufs einzelne Kind"
+        ],
+        [
+          "Das Stufendiagramm auf Folie 3: fuenf Ebenen von grob nach fein",
+          "Was steht ganz oben, was ganz unten?",
+          "Vom Grundsatz ueber Verfahren und Handgriff bis zum Material"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-1",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
+      "afb": 1,
+      "frage": "Terfloth und Cesak unterscheiden vier Wege, auf denen sich Schüler:innen einen Inhalt zu eigen machen. Nennen Sie diese vier Ebenen in der Reihenfolge vom körperlich-sinnlichen bis zum gedanklichen Zugang.",
+      "stichpunkte": [
+        "Ebene 1: basal-perzeptiv, über Körper und Sinne",
+        "Ebene 2: konkret-gegenständlich, handelnd am Gegenstand",
+        "Ebene 3: anschaulich, über Bild, Foto oder Modell",
+        "Ebene 4: abstrakt-begrifflich, über Sprache und Gedanken"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Ebenen der Reihe nach.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Vorlesung unterscheidet vier Aneignungsebenen. Auf der basal-perzeptiven Ebene setzen sich Schüler:innen über Wahrnehmung und Bewegung des eigenen Körpers mit der Umwelt auseinander und machen sich Inhalte über Fühlen, Schmecken, Sehen, Riechen, Hören und Spüren zu eigen. Konkret-gegenständlich nutzen sie Gegenstände handelnd oder vollziehen Vorgänge nach und entdecken dabei Wirkungen und Effekte. Auf der anschaulichen Ebene erschließen sie Zusammenhänge, indem sie sich ein Bild davon machen, etwa über Fotos, Abbildungen, Modelle oder darstellendes Spiel; der handelnde Vollzug ist dann nicht mehr nötig. Abstrakt-begrifflich geschieht die Auseinandersetzung schließlich über Sprache und Gedanken, also auch dort, wo es nichts direkt zu sehen gibt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt vier Wege, wie sich ein Mensch etwas zu eigen macht. Aneignung heißt: etwas zu seinem eigenen Wissen machen. Weg 1 heißt basal-perzeptiv. Das Kind lernt über den eigenen Körper und über die Sinne. Weg 2 heißt konkret-gegenständlich. Das Kind fasst Dinge an und probiert aus, was passiert. Weg 3 heißt anschaulich. Das Kind sieht ein Foto oder ein Modell und versteht so den Zusammenhang. Weg 4 heißt abstrakt-begrifflich. Das Kind denkt und spricht über die Sache, auch ohne sie zu sehen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Reihenfolge ist die Eselsbrücke: vom eigenen Körper über das Anfassen und das Bild bis zum reinen Denken. Wer die Richtung hat, bekommt die vier Namen fast von selbst. Nachschlagen kannst du die Tabelle mit Beschreibung und Beispiel auf Folie 7, in deinen eigenen Aufzeichnungen auf Notizen S. 35.",
+      "quelle": "folie-prinzipien-7",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erste Stufe: der eigene Leib ist der Zugang",
+          "Fuehlen, schmecken, riechen - noch ganz nah am Spueren",
+          "Merkbild: Handfuehrung an einem Schalter"
+        ],
+        [
+          "Zweite Stufe: anfassen, ausprobieren, Wirkung entdecken",
+          "Merkbild: Salz verschwindet im Wasserglas",
+          "Die Welt wird handelnd erforscht"
+        ],
+        [
+          "Dritte Stufe: es genuegt ein Abbild im Kopf",
+          "Fotos, Modelle, darstellendes Spiel statt echtem Vollzug",
+          "Merkbild: die Bildfolge neben der Waschmaschine"
+        ],
+        [
+          "Vierte Stufe: nur noch denken und darueber reden",
+          "Ohne Anschauung, rein auf gedanklichem Weg",
+          "Merkbild: das Garverfahren, das niemand sehen kann"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-2",
+      "unterthema": "Handlungsorientierung",
+      "afb": 1,
+      "frage": "Handeln vollzieht sich nach der Vorlesung nicht in einem Zug, sondern durchläuft vom Anfang bis zum Ende vier Phasen. Nennen Sie diese vier Phasen in ihrer Reihenfolge.",
+      "stichpunkte": [
+        "Schritt 1: Handlungsorientierung, Möglichkeiten wahrnehmen",
+        "Schritt 2: Handlungsplanung, vorausschauendes Denken",
+        "Schritt 3: Handlungsausführung, Ziel im Auge behalten",
+        "Schritt 4: Handlungskontrolle, Ziel und Ergebnis vergleichen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Phasen in ihrer Reihenfolge.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Handeln setzt sich nach der Vorlesung aus vier Bestandteilen zusammen. Am Anfang steht die Handlungsorientierung: Die Person nimmt wahr, welche Handlungsmöglichkeiten und welche Anforderungen es gibt, und wägt zwischen Zielsetzung, Bedürfnis und Interesse ab. Es folgt die Handlungsplanung als vorausschauendes Denken. In der Handlungsausführung wird die Zielverfolgung im Auge behalten, Abläufe und Strukturen werden eingehalten und das Vorhaben motorisch wie gedanklich umgesetzt. Am Ende steht die Handlungskontrolle als Vergleich zwischen Ziel, Umsetzung und Ergebnis.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Eine Handlung hat vier Teile. Teil 1 heißt Handlungsorientierung. Die Person schaut: Was kann ich hier tun? Was will ich? Teil 2 heißt Handlungsplanung. Die Person denkt vorher nach. Teil 3 heißt Handlungsausführung. Die Person macht es und behält das Ziel im Blick. Teil 4 heißt Handlungskontrolle. Die Person vergleicht: Ist das herausgekommen, was ich wollte?"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Vier Wörter, die alle mit Handlungs- beginnen - das ist die halbe Merkarbeit. Der Rest ist die Logik: erst schauen, dann planen, dann tun, dann prüfen. Das Rautenschaubild mit Handeln in der Mitte steht auf Folie 22, in deinen Aufzeichnungen auf Notizen S. 38.",
+      "quelle": "folie-prinzipien-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ganz am Anfang: die Lage ueberhaupt erfassen",
+          "Abwaegen zwischen Zielsetzung, Beduerfnis und Interesse",
+          "Merkbild: der Blick in den geoeffneten Koffer, bevor jemand zugreift"
+        ],
+        [
+          "Danach wird vorausgedacht, bevor etwas passiert",
+          "Der zweite Teil ist der Plan im Kopf",
+          "Erst denken, dann greifen"
+        ],
+        [
+          "Jetzt wird wirklich getan, koerperlich wie gedanklich",
+          "Dritter Teil: dranbleiben, Ablaeufe einhalten",
+          "Vom Plan in die Bewegung"
+        ],
+        [
+          "Zum Schluss der Abgleich: war es das, was gewollt war?",
+          "Vierter Teil: pruefen, was herausgekommen ist",
+          "Die Schleife schliesst sich am Ende"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-3",
+      "unterthema": "Handlungsorientierung",
+      "afb": 1,
+      "frage": "Jank und Meyer beschreiben, woran sich handlungsorientierter Unterricht erkennen lässt. Nennen Sie die fünf Merkmale, die die Vorlesung dazu aufführt.",
+      "stichpunkte": [
+        "Merkmal 1: Ausgangspunkt sind die Interessen der Schüler:innen",
+        "Merkmal 2: selbsttätiges Handeln in Dialektik zur Führung",
+        "Merkmal 3: Kopf- und Handarbeit ausgewogen",
+        "Merkmal 4: Einübung solidarischen Handelns",
+        "Merkmal 5: Produktorientierung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die fünf Merkmale.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Handlungsorientierter Unterricht trägt nach Jank und Meyer fünf Merkmale. Ausgangspunkt sind die subjektiven Interessen der Schüler:innen. Der Unterricht ist von selbsttätigem Handeln geprägt, weil er in einer Dialektik aus Führung und Selbsttätigkeit steht. Kopf- und Handarbeit sollen in ein ausgewogenes Verhältnis gebracht werden. Dazu kommt die Einübung solidarischen Handelns, also das gemeinsame Tun in der Gruppe. Fünftens ist der Unterricht produktorientiert: Die vereinbarten Handlungsprodukte leiten den Unterrichtsprozess.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Handlungsorientierter Unterricht hat fünf Merkmale. Erstens: Der Unterricht startet bei dem, was die Schüler:innen interessiert. Zweitens: Die Schüler:innen handeln selbst. Die Lehrkraft führt, lässt aber Raum. Drittens: Denken und Tun sind im Gleichgewicht. Viertens: Die Klasse übt, miteinander zu handeln und sich zu helfen. Fünftens: Am Ende steht ein Produkt. Das Produkt lenkt den Unterricht."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die beiden ersten Merkmale stecken schon in der Definition, die du kennst - Kopf und Hand im Gleichgewicht, Handlungsprodukte als Leitplanke. Wirklich neu sind das solidarische Handeln und die Produktorientierung. Die Liste steht auf Folie 20, in deinen Aufzeichnungen auf Notizen S. 38.",
+      "quelle": "folie-prinzipien-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Womit faengt so ein Unterricht an? Bei den Kindern selbst",
+          "Nicht der Stoff gibt den Start vor, sondern das Interesse",
+          "Merkposten eins: der Ausgangspunkt"
+        ],
+        [
+          "Die Klasse tut selbst - und wird trotzdem geleitet",
+          "Ein Spannungspaar aus Leiten und Selbermachen",
+          "Merkposten zwei: das Tun liegt bei den Schueler:innen"
+        ],
+        [
+          "Denken und Tun im Gleichgewicht",
+          "Weder nur Arbeitsblatt noch nur Werkbank",
+          "Merkposten drei: die beiden Koerperteile im Zitat"
+        ],
+        [
+          "Miteinander statt nebeneinander - das will geuebt sein",
+          "Merkposten vier: die soziale Seite des Handelns",
+          "Fuereinander einstehen, gemeinsam arbeiten"
+        ],
+        [
+          "Am Ende soll etwas dastehen, das die Klasse gemacht hat",
+          "Merkposten fuenf: das Ergebnis leitet den Prozess",
+          "Merkbild: die Plakate an der Waescheleine"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-4",
+      "unterthema": "Elementarisierung",
+      "afb": 1,
+      "frage": "Lamers stellt die Elementarisierung als gemeinsamen Suchprozess dar: Um die Mitte gruppieren sich mehrere Felder, jedes mit einem eigenen Blickwinkel auf das Elementare. Nennen Sie die fünf Felder dieses Suchprozesses.",
+      "stichpunkte": [
+        "Feld 1: elementare lebensleitende Grundannahmen",
+        "Feld 2: elementare Strukturen",
+        "Feld 3: elementare Erfahrungen",
+        "Feld 4: elementare Zugänge",
+        "Feld 5: elementare Aneignungswege"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die fünf Felder des Suchprozesses.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Elementarisierung wird als gemeinsamer Suchprozess mit fünf Feldern dargestellt. Die elementaren lebensleitenden Grundannahmen erschließen fundamentale Lebensgrundlagen schrittweise und nehmen damit den kulturell-gesellschaftlichen Blickwinkel ein. Die elementaren Strukturen vereinfachen den Unterrichtsgegenstand sach- und schülergemäß, das ist der sachorientierte Blickwinkel. Die elementaren Erfahrungen reflektieren die Lebensbedeutung auf der Sach- und Schülerebene und stehen für den anthropologischen Blickwinkel. Die elementaren Zugänge ermöglichen lebensgeschichtliche und entwicklungspsychologische Anknüpfung. Die elementaren Aneignungswege gestalten sach- und schülergerechte Lernwege und stehen für den methodisch-medialen Blickwinkel.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Elementarisierung heißt: Man sucht das Wichtigste an einem Thema. Diese Suche hat fünf Felder. Feld 1 sind die elementaren lebensleitenden Grundannahmen. Es geht um die großen Fragen des Lebens. Feld 2 sind die elementaren Strukturen. Der Lernstoff wird einfacher gemacht, bleibt aber richtig. Feld 3 sind die elementaren Erfahrungen. Man fragt: Was bedeutet das für das Leben der Klasse? Feld 4 sind die elementaren Zugänge. Man fragt: Wo steht dieses Kind gerade? Feld 5 sind die elementaren Aneignungswege. Man sucht den passenden Lernweg."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Alle fünf beginnen mit dem Wort elementar - danach kommt jeweils eine andere Sorte von Antwort: Grundannahmen, Strukturen, Erfahrungen, Zugänge, Wege. Das Schaubild steht auf Folie 15, in deinen Aufzeichnungen auf Notizen S. 36. Eine Stelle zum Aufpassen: Über dem Schaubild steht bei dir sechs Felder, aufgezählt hast du fünf - und fünf ist richtig.",
+      "quelle": "folie-prinzipien-15",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der kulturell-gesellschaftliche Blick: was traegt ein Leben ueberhaupt",
+          "Die grossen Lebensfragen hinter dem Stoff",
+          "Fundamentale Lebensgrundlagen, Schritt fuer Schritt erschlossen"
+        ],
+        [
+          "Der sachorientierte Blick: den Gegenstand vereinfachen, ohne ihn zu verbiegen",
+          "Was ist das Geruest der Sache?",
+          "Sach- und schuelergemaess zurechtlegen"
+        ],
+        [
+          "Der anthropologische Blick: was bedeutet das im Leben der Klasse",
+          "Bedeutung auf Sach- und Schuelerebene bedenken",
+          "Was hat der Stoff mit ihnen zu tun?"
+        ],
+        [
+          "Der entwicklungspsychologische Blick: wo steht dieses Kind gerade",
+          "Lebensgeschichtlich anknuepfen, wo etwas moeglich ist",
+          "Die Tuer zum Thema, passend geoeffnet"
+        ],
+        [
+          "Der methodisch-mediale Blick: auf welchem Weg kommt es an",
+          "Lernwege gestalten, sach- und schuelergerecht",
+          "Die Strasse, auf der das Wissen ankommt"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-5",
+      "unterthema": "Handlungsorientierung",
+      "afb": 1,
+      "frage": "Schulte-Peschel und Tödtler fragen, worauf Handeln überhaupt aufbaut. Nennen Sie die vier Grundlagen der Handlungsorientierung, die die Vorlesung dazu aufführt.",
+      "stichpunkte": [
+        "Grundlage 1: Bedürfnisse, Interessen und Gefühle",
+        "Grundlage 2: Einstellungen und Gewohnheiten",
+        "Grundlage 3: Erfahrungen und Kenntnisse",
+        "Grundlage 4: kognitive Strategien und Fähigkeiten",
+        "Weitere: Wachheit, Wahrnehmungstätigkeit, basale Kommunikation"
+      ],
+      "waehle": 4,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Grundlagen des Handelns.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn es dir einfällt: Was kommt bei komplexer Behinderung dazu?",
+          "idx": [
+            4
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Vorlesung führt vier Grundlagen der Handlungsorientierung auf. Handeln baut erstens auf Bedürfnissen, Interessen und Gefühlen auf, zweitens auf Einstellungen und Gewohnheiten, drittens auf Erfahrungen und Kenntnissen und viertens auf kognitiven Strategien und Fähigkeiten. Bei Menschen mit komplexer Behinderung kommen weitere Aspekte hinzu: Wachheit, Aktivität und Aufmerksamkeit, die Wahrnehmungstätigkeit sowie basale Kommunikation und Interaktion.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Handeln braucht eine Grundlage. Die Vorlesung nennt vier Grundlagen. Erstens: Bedürfnisse, Interessen und Gefühle. Zweitens: Einstellungen und Gewohnheiten. Drittens: Erfahrungen und Kenntnisse. Viertens: kognitive Strategien und Fähigkeiten. Kognitiv heißt: das Denken betreffend. Bei Menschen mit komplexer Behinderung kommt noch etwas dazu. Nämlich: wach und aufmerksam sein, wahrnehmen, und basale Kommunikation. Basal heißt: ganz einfach und grundlegend."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die vier Grundlagen laufen von innen nach außen: erst was einer will und fühlt, dann was er gewohnt ist, dann was er schon erlebt hat, dann was er denken kann. Die Liste steht auf Folie 24, in deinen Aufzeichnungen auf Notizen S. 39. Die drei zusätzlichen Aspekte bei komplexer Behinderung sind ein guter Zusatzpunkt, wenn die Zeit reicht.",
+      "quelle": "folie-prinzipien-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was einer will und was ihn bewegt - die innerste Schicht",
+          "Erste Grundlage: der Antrieb, gefuehlt und gewollt",
+          "Womit faengt Handeln an? Mit einem Wollen"
+        ],
+        [
+          "Was einer schon mitbringt an Haltung und Routine",
+          "Zweite Grundlage: was jemand gewohnt ist zu tun",
+          "Die eingeschliffene Seite der Person"
+        ],
+        [
+          "Was einer schon erlebt und schon gelernt hat",
+          "Dritte Grundlage: der Vorrat aus dem bisherigen Leben",
+          "Gelebtes und Gewusstes zusammen"
+        ],
+        [
+          "Die Denkseite: Strategien, mit denen jemand Aufgaben angeht",
+          "Vierte Grundlage: das Werkzeug im Kopf",
+          "Wie geht jemand ein Problem gedanklich an?"
+        ],
+        [
+          "Bei komplexer Behinderung kommen drei Aspekte dazu",
+          "Wachsein, Spueren, Kontakt - die Ebene noch vor dem Denken",
+          "Zusatz: was zaehlt, wenn Sprache und Planung nicht tragen"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-6",
+      "unterthema": "Differenzierung",
+      "afb": 1,
+      "frage": "Eine Lehrkraft lässt die Lerngruppe zusammen und passt stattdessen die Arbeit innerhalb der Gruppe an deren Verschiedenheit an. Nennen Sie sechs Kriterien, an denen sie eine solche Differenzierung im Unterricht festmachen kann.",
+      "stichpunkte": [
+        "Stoffumfang und/oder Zeitaufwand",
+        "Komplexitätsgrad",
+        "Anzahl der notwendigen Durchgänge",
+        "Notwendigkeit direkter Hilfe, Grad der Selbständigkeit",
+        "inhaltliche und methodische Zugänge, Vorerfahrungen",
+        "Kooperationsfähigkeit",
+        "Weitere: eingesetzte Medien, Interessen, Hausaufgaben, Team-Teaching"
+      ],
+      "waehle": 6,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie sechs Kriterien der inneren Differenzierung.",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Fällt dir noch mehr ein? Vier Kriterien stehen zusätzlich in der Liste.",
+          "idx": [
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Innere Differenzierung kann an sehr unterschiedlichen Stellen ansetzen. Die Vorlesung nennt als Kriterien den Stoffumfang und den Zeitaufwand, den Komplexitätsgrad, die Anzahl der notwendigen Durchgänge, die Notwendigkeit direkter Hilfe beziehungsweise den Grad der Selbständigkeit, die inhaltlichen und methodischen Zugänge und damit die Vorerfahrungen sowie die Kooperationsfähigkeit. Dazu kommen die im Unterricht eingesetzten Medien, die Interessen der Schüler:innen, Art und Umfang der Hausaufgaben und das Team-Teaching. Die Lerngruppe bleibt dabei zusammen; angepasst wird die Arbeit innerhalb der Gruppe.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Innere Differenzierung heißt: Die Klasse bleibt zusammen. Aber jedes Kind arbeitet passend zu sich. Dafür gibt es viele Kriterien. Zum Beispiel: Wie viel Stoff? Wie viel Zeit? Wie schwer ist die Aufgabe? Wie oft muss geübt werden? Wie viel Hilfe braucht das Kind? Über welchen Zugang lernt es am besten? Wie gut kann es mit anderen arbeiten? Dazu kommen: die Medien, die Interessen, die Hausaufgaben und Team-Teaching. Team-Teaching heißt: Zwei Lehrkräfte unterrichten zusammen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Zehn Kriterien stehen auf der Folie - sechs davon reichen für die volle Punktzahl, such dir die aus, die du dir am besten merken kannst. Ein Muster hilft: erst Menge und Zeit, dann Schwierigkeit und Wiederholung, dann Hilfe und Zugang, dann das Soziale. Die Tabelle mit der äußeren Differenzierung daneben steht auf Folie 10, in deinen Aufzeichnungen auf Notizen S. 35.",
+      "quelle": "folie-prinzipien-10",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie viel und wie lange - die schlichteste Stellschraube",
+          "Menge des Stoffs und die Zeit dafuer",
+          "Manche brauchen mehr Minuten, manche weniger Aufgaben"
+        ],
+        [
+          "Wie schwierig darf es sein?",
+          "Der Grad an Verschachtelung in der Aufgabe",
+          "Einfach oder verschachtelt - das laesst sich abstufen"
+        ],
+        [
+          "Wie oft muss etwas wiederholt werden, bis es sitzt?",
+          "Manche brauchen mehr Runden am selben Inhalt",
+          "Die Zahl der Wiederholungen unterscheidet sich"
+        ],
+        [
+          "Wie viel Unterstuetzung braucht jemand, wie viel geht allein?",
+          "Von Handfuehrung bis voellig eigenstaendig",
+          "Die Naehe der Lehrkraft ist selbst ein Kriterium"
+        ],
+        [
+          "Ueber welchen Weg kommt jemand an den Inhalt?",
+          "Was schon erlebt wurde, oeffnet unterschiedliche Tueren",
+          "Zugaenge unterscheiden sich nach Inhalt und Methode"
+        ],
+        [
+          "Die soziale Seite: wie gut klappt Zusammenarbeit?",
+          "Allein, zu zweit oder in der Gruppe - auch das differenziert",
+          "Wie gut kann jemand mit anderen arbeiten?"
+        ],
+        [
+          "Vier weitere Kriterien stehen noch in der Tabelle",
+          "Zusatz: Material, Neigung, Aufgaben fuer zu Hause, zwei Lehrkraefte",
+          "Es geht weiter mit dem, was hinzukommt statt am Kind liegt"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-7",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
+      "afb": 1,
+      "frage": "Die Vorlesung stützt das Prinzip der Ganzheitlichkeit auf das Modell der ganzheitlichen Entwicklung von Fröhlich und Haupt. Benennen Sie die drei Aspekte, die Ganzheitlichkeit nach Fröhlich kennzeichnen, und nennen Sie vier der sieben Entwicklungsbereiche.",
+      "stichpunkte": [
+        "Aspekt 1: Gleichzeitigkeit",
+        "Aspekt 2: Gleichwirklichkeit",
+        "Aspekt 3: Gleichgewichtigkeit",
+        "Bereich 1: Wahrnehmung",
+        "Bereich 2: Kognition",
+        "Bereich 3: Bewegung",
+        "Bereich 4: Körpererfahrung",
+        "Weitere: Gefühle, Sozialerfahrung, Kommunikation"
+      ],
+      "waehle": 7,
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Benennen Sie die drei Aspekte, die Ganzheitlichkeit kennzeichnen.",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie vier der sieben Entwicklungsbereiche.",
+          "idx": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn du magst: Welche Bereiche fehlen noch?",
+          "idx": [
+            7
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Ganzheitlichkeit ist nach Fröhlich durch drei Aspekte charakterisiert: Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit. Dahinter steht das Modell der ganzheitlichen Entwicklung von Fröhlich und Haupt mit sieben Entwicklungsbereichen, die in permanenter Wechselwirkung zueinander stehen und keiner hierarchischen Ordnung unterliegen. Es sind Wahrnehmung, Kognition, Bewegung, Körpererfahrung, Gefühle, Sozialerfahrung und Kommunikation. Für den Unterricht heißt das, mehrere, wenn nicht alle Sinne einzubeziehen - in der Tradition des Lernens mit Kopf, Herz und Hand nach Pestalozzi und des Vielkanallernens nach Vester.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Ganzheitlichkeit hat drei Aspekte. Sie heißen Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit. Das bedeutet: Alle Bereiche der Entwicklung laufen zusammen. Keiner ist wichtiger als der andere. Das Modell kommt von Fröhlich und Haupt. Es hat sieben Entwicklungsbereiche: Wahrnehmung, Kognition, Bewegung, Körpererfahrung, Gefühle, Sozialerfahrung und Kommunikation. Kognition heißt: Denken. Für den Unterricht heißt das: Möglichst viele Sinne mitnehmen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die drei Aspekte beginnen alle mit Gleich- - das ist die Eselsbrücke und zugleich die Aussage: gleichzeitig, gleich wirklich, gleich gewichtig. Bei den sieben Bereichen reichen vier für die Punkte; das Blütenschaubild dazu steht auf Folie 30, in deinen Aufzeichnungen auf Notizen S. 41. Wichtig für die Schreibweise: Auf der Folie steht Pestalozi mit einem z, richtig ist Pestalozzi.",
+      "quelle": "folie-prinzipien-30",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Alles laeuft zur selben Zeit ab, nicht nacheinander",
+          "Nichts wartet, bis das andere fertig ist"
+        ],
+        [
+          "Jeder Bereich ist genauso echt wie die anderen",
+          "Kein Bereich ist blosse Begleitmusik"
+        ],
+        [
+          "Keiner wiegt schwerer als ein anderer, es gibt keine Rangfolge",
+          "Alle zaehlen gleich viel"
+        ],
+        [
+          "Der Bereich der Sinne - sehen, hoeren, spueren",
+          "Womit nimmt ein Mensch die Welt auf?",
+          "Steht auch als erste Aneignungsebene Pate"
+        ],
+        [
+          "Der Bereich des Denkens, mit Fachwort",
+          "Verstehen, ordnen, schlussfolgern",
+          "Das lateinische Wort fuers Denken"
+        ],
+        [
+          "Der Bereich, in dem sich etwas ruehrt",
+          "Motorik, vom Greifen bis zum Gehen",
+          "Ohne diesen Bereich bliebe alles stehen"
+        ],
+        [
+          "Das Wissen vom eigenen Leib und seinen Grenzen",
+          "Wie sich der eigene Koerper anfuehlt",
+          "Nicht die Aussenwelt, sondern der eigene Leib"
+        ],
+        [
+          "Drei Bereiche stehen noch aus: Gemuet, Miteinander, Verstaendigung",
+          "Zusatz: was fuehlt, was verbindet, was sich mitteilt",
+          "Es fehlen noch drei der sieben Blueten"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-8",
+      "unterthema": "Ganzheitlichkeit & Strukturierung",
+      "afb": 1,
+      "frage": "Das Prinzip der Strukturierung bleibt abstrakt, solange offen ist, woran es im Schulalltag konkret ansetzt. Nennen Sie die vier Bereiche, in denen die Vorlesung dieses Prinzip ausbuchstabiert.",
+      "stichpunkte": [
+        "Bereich 1: Verdeutlichung von Abläufen",
+        "Bereich 2: Verhalten steuern, Konsequenzen vorhersehbar machen",
+        "Bereich 3: Zeit",
+        "Bereich 4: Räume"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Bereiche der Strukturierung.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Strukturierung wirkt nach der Vorlesung über vier Bereiche. Erstens werden Abläufe verdeutlicht, etwa durch einen Morgenkreis oder eine bebilderte Tagesstruktur. Zweitens wird Verhalten gesteuert, indem Konsequenzen vorhersehbar gemacht werden, zum Beispiel über eine Bildkette mit einem roten und einem grünen Weg. Drittens wird die Zeit strukturiert, etwa mit einem Time-Timer, der Dauer sichtbar macht. Viertens gehören die Räume dazu: Sie werden mit Symbolen und Schildern gekennzeichnet, etwa mit einem Symbol für das Bällebad oder einer Beschilderung an der Tür. Struktur und Rhythmus geben den Schüler:innen damit die Sicherheit, die sie brauchen, um sich der Umwelt zu öffnen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Struktur gibt Sicherheit. Die Vorlesung nennt vier Bereiche. Erstens: Abläufe deutlich machen. Zum Beispiel mit einem Morgenkreis oder mit Bildkarten für den Tag. Zweitens: Verhalten steuern. Die Kinder sollen vorher wissen, was passiert. Drittens: Zeit. Ein Time-Timer zeigt, wie lange etwas dauert. Viertens: Räume. Die Räume bekommen Symbole und Schilder."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Zwei Bereiche sind Sachen zum Anfassen - Zeit und Raum -, zwei sind Vorgänge: Abläufe zeigen und Verhalten vorhersehbar machen. Mit dieser Zweiteilung hast du alle vier. Das Schaubild mit den vier Quadranten steht auf Folie 32, in deinen Aufzeichnungen auf Notizen S. 42.",
+      "quelle": "folie-prinzipien-32",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was passiert wann? Der Tag wird sichtbar gemacht",
+          "Merkbild: das Piktogramm fuer den Morgenkreis",
+          "Der erste Quadrant zeigt, wie es der Reihe nach geht"
+        ],
+        [
+          "Vorher wissen, was auf ein Verhalten folgt",
+          "Merkbild: die Bildkette mit rotem und gruenem Weg",
+          "Nichts kommt ueberraschend - das beruhigt"
+        ],
+        [
+          "Dauer sichtbar machen, nicht nur ansagen",
+          "Merkbild: die Uhr, deren rote Flaeche kleiner wird",
+          "Der dritte Quadrant ist eine Groesse, die man nicht sieht"
+        ],
+        [
+          "Wo findet was statt? Auch das wird kenntlich gemacht",
+          "Merkbild: das Schild an der Tuer, das Baellebad-Symbol",
+          "Der vierte Quadrant ist das, was einen umgibt"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb1-9",
+      "unterthema": "Lebensnähe & Aneignungsebenen",
+      "afb": 1,
+      "frage": "Eine Klasse deckt jeden Morgen gemeinsam den Frühstückstisch. Die Vorlesung zeigt als Pfeilkette, welchen Weg die Schüler:innen bei einer solchen Alltagshandlung zurücklegen. Nennen Sie die vier Schritte dieser Kette in ihrer Reihenfolge.",
+      "stichpunkte": [
+        "Schritt 1: Aufgaben erkennen",
+        "Schritt 2: in eine bestimmte Reihenfolge bringen",
+        "Schritt 3: Handlungsplanungen und -strategien entwickeln",
+        "Schritt 4: Handlungsplanung eigenständig durchführen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Nennen Sie die vier Schritte der Reihe nach.",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Lebensnähe kennzeichnet nach Pitsch jenes Bildungsgut, das für das spätere Leben benötigt wird; Alltagshandlungen werden deshalb als Unterrichtsinhalte gewählt. Die Vorlesung beschreibt dafür einen Weg in vier Schritten. Zuerst erkennen die Schüler:innen die anstehenden Aufgaben. Dann bringen sie diese in eine bestimmte Reihenfolge. Anschließend entwickeln sie Handlungsplanungen und Strategien. Zuletzt führen sie die Handlungsplanung eigenständig durch. Komplexe Inhalte werden dabei unter Beachtung der Alltagsrelevanz und gemäß den Aneignungsmöglichkeiten der Schüler:innen gestaltet.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Lebensnähe heißt: In der Schule wird gelernt, was im Leben gebraucht wird. Alltagshandlungen werden zum Unterricht. Dafür gibt es vier Schritte. Schritt 1: Das Kind erkennt, welche Aufgaben es gibt. Schritt 2: Das Kind bringt die Aufgaben in eine Reihenfolge. Schritt 3: Das Kind entwickelt einen Plan, wie es vorgeht. Schritt 4: Das Kind führt den Plan allein aus. Der Unterricht passt sich dabei an, was das Kind schon kann."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Kette läuft von außen nach innen: erst sehen, was ansteht, dann ordnen, dann planen, dann allein tun. Am Ende steht immer die Selbständigkeit - das ist der Sinn des ganzen Prinzips. Die Pfeilkette steht auf Folie 6, in deinen Aufzeichnungen auf Notizen S. 34.",
+      "quelle": "folie-prinzipien-6",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ganz am Anfang: ueberhaupt sehen, was ansteht",
+          "Bevor etwas geordnet wird, muss es auffallen",
+          "Der erste Pfeil ist ein Blick auf die Lage"
+        ],
+        [
+          "Danach wird sortiert: was kommt zuerst, was danach?",
+          "Der zweite Pfeil bringt Ordnung in die Aufgaben",
+          "Reihung statt Durcheinander"
+        ],
+        [
+          "Jetzt entsteht ein Vorgehen, nicht nur eine Liste",
+          "Der dritte Pfeil fragt: wie packe ich es an?",
+          "Vom Sortieren zum eigenen Weg"
+        ],
+        [
+          "Am Ende ohne fremde Hand, allein umgesetzt",
+          "Der vierte Pfeil ist das Ziel des Prinzips",
+          "Der Plan wird selbst in die Tat gebracht"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb3-1",
+      "unterthema": "Differenzierung",
+      "afb": 3,
+      "frage": "Eine Lehrkraft im SGE möchte ihren Unterricht weit öffnen: Wochenplan, freie Materialwahl, eigenes Tempo für alle. Eine Kollegin hält dagegen, so viel Offenheit überfordere die Lerngruppe. Diskutieren Sie, wie weit Öffnung und Differenzierung in einer heterogenen Lerngruppe tragen, und kommen Sie zu einem begründeten Fazit. **Diskutieren heißt hier: beide Seiten am Material belegen und dann selbst Stellung nehmen.**",
+      "stichpunkte": [
+        "Ausgangslage 1: jede Klasse ist eine heterogene Lerngruppe - Differenzierung ist damit kein Sonderfall, sondern der Normalfall jeder Planung",
+        "Dafür 1: innere Differenzierung reagiert zeitlich flexibel auf diese Verschiedenheit, während äußere Differenzierung möglichst homogene Gruppen über längere Zeit festschreibt",
+        "Dafür 2: es liegen konkrete Stellschrauben vor - Stoffumfang und Zeitaufwand, Komplexitätsgrad, Grad der Selbständigkeit, Zugänge und Vorerfahrungen, Interessen, Team-Teaching",
+        "Dagegen 1: differenzierte und geöffnete Unterrichtsformen bedürfen einer Einführung und Sicherung - sie tragen nicht schon dadurch, dass man sie eröffnet",
+        "Dagegen 2: Transparenz des Unterrichtsablaufs wirkt der Überforderung entgegen; fehlt sie, kippt Offenheit in Orientierungslosigkeit",
+        "Fazit 1: ein Gleichgewicht zwischen selbstständigem Arbeiten und der Vermittlung von Orientierung - Öffnung und Struktur sind zu dosieren, nicht gegeneinander auszuspielen"
+      ],
+      "muster": "Der Ausgangspunkt ist unstrittig: Jede Klasse stellt eine heterogene Lerngruppe dar. Differenzierung ist deshalb kein Sonderfall, sondern der Normalfall jeder Unterrichtsplanung. Für die Öffnung spricht, dass innere Differenzierung zeitlich flexibel auf diese Verschiedenheit reagieren kann, während äußere Differenzierung versucht, möglichst homogene Gruppen zu bilden und über einen längeren Zeitraum aufrechtzuerhalten. Dafür spricht auch, dass konkrete Stellschrauben zur Verfügung stehen: Stoffumfang und Zeitaufwand, Komplexitätsgrad, der Grad der Selbständigkeit beziehungsweise die Notwendigkeit direkter Hilfe, inhaltliche und methodische Zugänge, Interessen oder Team-Teaching. Die Kollegin hat dennoch einen Punkt: Differenzierte und geöffnete Unterrichtsformen bedürfen einer Einführung und Sicherung, sie tragen also nicht schon dadurch, dass man sie eröffnet. Und die Transparenz des Unterrichtsablaufs wirkt der Überforderung entgegen - fehlt sie, kippt Offenheit in Orientierungslosigkeit. Mein Fazit lautet deshalb: Es geht nicht um möglichst viel Öffnung, sondern um ein Gleichgewicht zwischen selbstständigem Arbeiten und der Vermittlung von Orientierung. Öffnung und Struktur sind zu dosieren, nicht gegeneinander auszuspielen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Jede Klasse ist verschieden. Man sagt dazu: Die Lerngruppe ist heterogen. Darum gehört Differenzierung zu jeder Planung dazu. Sie ist kein Sonderfall.\n\nFür die Öffnung spricht: Die innere Differenzierung kann schnell auf die Verschiedenheit reagieren. Innere Differenzierung heißt: Die Gruppe bleibt zusammen. Die Aufgaben werden angepasst. Die äußere Differenzierung macht es anders. Sie bildet möglichst gleiche Gruppen. Und sie hält diese Gruppen lange zusammen.\n\nFür die Öffnung spricht auch: Es gibt viele Stellschrauben. Zum Beispiel: wie viel Stoff, wie viel Zeit, wie schwer eine Aufgabe ist, wie viel Hilfe nötig ist, welcher Zugang passt, was die Kinder interessiert. Oder Team-Teaching. Team-Teaching heißt: Zwei Lehrkräfte unterrichten zusammen.\n\nGegen zu viel Öffnung spricht: Offene Formen brauchen eine Einführung. Und sie brauchen eine Sicherung. Sie funktionieren nicht von allein.\n\nGegen zu viel Öffnung spricht auch: Die Schülerinnen und Schüler müssen wissen, wie die Stunde abläuft. Das nennt man Transparenz. Transparenz schützt vor Überforderung. Fehlt sie, wissen die Kinder nicht mehr, was sie tun sollen.\n\nMein Fazit: Es geht nicht um möglichst viel Öffnung. Es geht um ein Gleichgewicht. Die Kinder sollen selbstständig arbeiten. Und sie sollen Orientierung bekommen. Beides gehört zusammen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das ist eine klassische Diskutieren-Aufgabe: erst die Ausgangslage, dann tragende Argumente für beide Seiten, dann dein Fazit. Die Ausgangslage und beide Gegenargumente stehen auf Folie 11, die Gegenüberstellung von äußerer und innerer Differenzierung samt Kriterienliste auf Folie 10; in deinen Aufzeichnungen auf Notizen S. 35 und 36. Gut zu wissen: Die Formel vom Gleichgewicht zwischen selbstständigem Arbeiten und der Vermittlung von Orientierung steht schon auf Folie 11 - sie zu nennen ist also Wiedergabe, kein eigenes Urteil. Deine Leistung liegt darin, für diesen konkreten Fall zu begründen, wie viel Öffnung und wie viel Struktur er verträgt. Genau dafür gibt es hier die Punkte.",
+      "quelle": "folie-prinzipien-11",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Womit faengt jede Planung an? Verschiedenheit als Normalzustand",
+          "Keine Klasse ist innerlich gleich - was folgt daraus?",
+          "Warum ist Differenzierung nie die Ausnahme?"
+        ],
+        [
+          "Zwei Bauformen im Vergleich: beweglich gegen festgelegt",
+          "Wer bleibt zusammen, wer wird vorher sortiert?",
+          "Die eine Form reagiert kurzfristig, die andere haelt lange"
+        ],
+        [
+          "An welchen Schrauben laesst sich drehen? Vier bis sechs reichen",
+          "Menge, Schwierigkeit, Hilfebedarf, Zugang, Interesse",
+          "Die Kriterienliste zur inneren Form"
+        ],
+        [
+          "Was braucht eine offene Form, bevor sie laeuft?",
+          "Einfuehren und absichern - sonst traegt sie nicht",
+          "Der erste Einwand der Kollegin"
+        ],
+        [
+          "Was schuetzt vor Ueberforderung? Ein Wort mit T",
+          "Wenn niemand den Ablauf kennt, wird Freiheit zur Last",
+          "Durchschaubarkeit des Tages als Schutz"
+        ],
+        [
+          "Dein Schluss: Waage statt Entweder-oder",
+          "Zwei Pole in Balance - welche beiden?",
+          "Nicht wenig oder viel, sondern richtig dosiert"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb3-2",
+      "unterthema": "Handlungsorientierung",
+      "afb": 3,
+      "frage": "Bewerten Sie, ob das didaktische Prinzip der Handlungsorientierung auch für Schüler:innen mit komplexer Behinderung trägt. Führen Sie dazu vier Argumente dafür und drei dagegen an und kommen Sie zu einem eigenen Urteil. **Bewerten heißt hier: beide Seiten am Material belegen, dann selbst Stellung nehmen.**",
+      "stichpunkte": [
+        "Dafür 1: die Vorlesung setzt Handlungskompetenz bei allen Schüler:innen voraus, nur auf jeweils unterschiedlichen Niveaustufen (vgl. Pitsch 2019, 14 f.)",
+        "Dafür 2: Globalhandlung und Einzelhandlung unterscheiden sich im Umfang, ihre Strukturmerkmale gleichen sich - auch eine einzelne Teilhandlung ist damit vollwertiges Handeln",
+        "Dafür 3: die Begründung ruht auf vier Ansätzen - entwicklungstheoretisch, lerntheoretisch, sozialisationstheoretisch, bildungstheoretisch - und auf der Forderung nach mehr Selbstbestimmung",
+        "Dafür 4: die Hilfeniveaus reichen bis zur stellvertretenden Ausführung, und selbst dort lautet das Ziel Anregung zu eigener Aktivität",
+        "Dagegen 1: die Definition nach Jank und Meyer setzt zwischen Lehrkraft und Schüler:innen vereinbarte Handlungsprodukte voraus - eine Vereinbarung erfordert Verständigung",
+        "Dagegen 2: die vier Grundlagen der Handlungsorientierung setzen einiges voraus - Bedürfnisse und Interessen, Einstellungen und Gewohnheiten, Erfahrungen und Kenntnisse, kognitive Strategien",
+        "Dagegen 3: bei Menschen mit komplexer Behinderung nennt die Vorlesung eigens weitere Aspekte - Wachheit, Aktivität und Aufmerksamkeit, Wahrnehmungstätigkeit, basale Kommunikation und Interaktion",
+        "Fazit 1: eigenes Urteil begründen, etwa dass das Prinzip trägt, der Ansatzpunkt sich aber verschiebt - weg vom vereinbarten Produkt, hin zu Wachheit, Wahrnehmung und basaler Verständigung"
+      ],
+      "muster": "Für das Prinzip spricht zunächst seine eigene Grundannahme: Grundsätzlich gelten alle Schüler:innen als handlungskompetent, nur auf jeweils unterschiedlichen Niveaustufen. Dazu passt die Unterscheidung von Globalhandlung und Einzelhandlung - beide unterscheiden sich im Umfang, ihre Strukturmerkmale gleichen sich, und damit ist auch eine einzelne Teilhandlung vollwertiges Handeln. Auch die Begründung ist breit angelegt: Sie ruht auf entwicklungstheoretischen, lerntheoretischen, sozialisationstheoretischen und bildungstheoretischen Ansätzen und auf der Forderung nach mehr Selbstbestimmung. Schließlich reichen die Hilfeniveaus bis zur stellvertretenden Ausführung, und selbst dort heißt das Ziel Anregung zu eigener Aktivität. Dagegen lässt sich einwenden, dass die Definition handlungsorientierten Unterrichts zwischen Lehrkraft und Schüler:innen vereinbarte Handlungsprodukte voraussetzt, und eine Vereinbarung erfordert Verständigung. Ebenso setzen die vier Grundlagen der Handlungsorientierung einiges voraus: Bedürfnisse, Interessen und Gefühle, Einstellungen und Gewohnheiten, Erfahrungen und Kenntnisse sowie kognitive Strategien und Fähigkeiten. Nicht zufällig nennt die Vorlesung für Menschen mit komplexer Behinderung eigens weitere Aspekte - Wachheit, Aktivität und Aufmerksamkeit, Wahrnehmungstätigkeit sowie basale Kommunikation und Interaktion. Ich halte das Prinzip deshalb für tragfähig, aber nicht unverändert: Es trägt, wenn sich der Ansatzpunkt verschiebt - weg vom gemeinsam vereinbarten Produkt, hin zu Wachheit, Wahrnehmung und basaler Verständigung als dem, woran Handeln hier ansetzt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Dafür spricht: Die Vorlesung sagt, alle Schülerinnen und Schüler können handeln. Nur eben auf ganz verschiedenen Stufen.\n\nDafür spricht auch: Es gibt große Handlungen und kleine Handlungen. Eine große Handlung ist zum Beispiel: ein Vogelhaus bauen. Eine kleine Handlung ist zum Beispiel: eine Schutzbrille aufsetzen. Beide sind gleich aufgebaut. Darum ist auch eine kleine Handlung eine echte Handlung.\n\nDafür spricht außerdem: Die Begründung ist breit. Sie kommt aus vier Richtungen. Aus der Entwicklung, aus dem Lernen, aus der Sozialisation und aus der Bildung. Dazu kommt: Menschen sollen mehr selbst bestimmen.\n\nUnd dafür spricht: Es gibt Stufen der Hilfe. Die letzte Stufe heißt: Die Lehrkraft macht es stellvertretend. Aber auch dann bleibt das Ziel: Die Person soll zu eigener Aktivität angeregt werden.\n\nDagegen spricht: In der Definition steht, dass Lehrkraft und Schüler etwas vereinbaren. Sie machen ein Handlungsprodukt aus. Für eine Vereinbarung muss man sich verständigen.\n\nDagegen spricht auch: Handeln braucht Grundlagen. Zum Beispiel Bedürfnisse und Interessen. Oder Gewohnheiten. Oder Erfahrungen. Oder Denk-Strategien.\n\nDagegen spricht außerdem: Für Menschen mit komplexer Behinderung nennt die Vorlesung extra weitere Punkte. Nämlich: wach sein und aufmerksam sein. Wahrnehmen. Und basale Kommunikation. Basal heißt: ganz einfach und körpernah.\n\nMein Urteil: Das Prinzip trägt auch hier. Aber es beginnt an einer anderen Stelle. Nicht beim gemeinsam vereinbarten Produkt. Sondern beim Wachsein, beim Wahrnehmen und bei der einfachen Verständigung."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Der Aufbau ist der aus der Beispielaufgabe der Dozentin: erst die Argumente dafür, dann die dagegen, dann deine Bewertung - hier sind vier und drei verlangt, welche du nimmst, ist dir überlassen. Der Satz über die Handlungskompetenz aller und die Definition nach Jank und Meyer stehen auf Folie 19, die Begründungsansätze und das Paar Globalhandlung/Einzelhandlung auf Folie 21, die Grundlagen und die weiteren Aspekte bei komplexer Behinderung auf Folie 24, die Hilfeniveaus auf Folie 26; in deinen Aufzeichnungen auf Notizen S. 37, 38 und 39, die Hilfeniveaus auf Notizen S. 40. Gut zu wissen: Als Streitfrage stellt die Vorlesung das nirgends - sie legt beide Seiten nebeneinander, ohne sie gegeneinander zu halten. Die Abwägung führst du wirklich selbst, und genau dafür gibt es hier die Punkte.",
+      "quelle": "folie-prinzipien-24",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die Grundannahme des Prinzips: niemand ist ausgenommen",
+          "Kompetenz vorausgesetzt - nur die Stufe wechselt",
+          "Wen haelt Pitsch fuer handlungsfaehig?"
+        ],
+        [
+          "Grosses Werkstueck oder ein Handgriff - was gleicht sich?",
+          "Zwei Zuschnitte von Handlung, ein gemeinsamer Bauplan",
+          "Warum zaehlt auch der kleine Ausschnitt als echtes Handeln?"
+        ],
+        [
+          "Vier Begruendungsstraenge und ein Leitgedanke dazu",
+          "Woher kommt die Rechtfertigung - und welche Forderung kommt dazu?",
+          "Aus welchen Richtungen wird das Prinzip gerechtfertigt?"
+        ],
+        [
+          "Auch bei voller Uebernahme bleibt ein Ziel - welches?",
+          "Das unterste Hilfeniveau und sein Zweck",
+          "Selbst wenn die Lehrkraft alles macht: wozu?"
+        ],
+        [
+          "Der Definitionssatz enthaelt eine Bedingung - welche?",
+          "Etwas muss ausgehandelt werden, bevor gearbeitet wird",
+          "Wo setzt die beruehmte Definition Verstaendigung voraus?"
+        ],
+        [
+          "Worauf baut Handeln ueberhaupt auf? Vier Posten",
+          "Innere Voraussetzungen: Wollen, Gewohnheit, Erlebtes, Denken",
+          "Die Liste von Schulte-Peschel und Toedtler"
+        ],
+        [
+          "Was kommt hinzu, wenn eine Behinderung komplex ist?",
+          "Drei Zusaetze: wach sein, wahrnehmen, sich verstaendigen",
+          "Eine eigene Zeile auf derselben Folie - wofuer?"
+        ],
+        [
+          "Dein Urteil: traegt es, und wenn ja: wie veraendert?",
+          "Wohin wandert der Ansatzpunkt in deinem Schluss?",
+          "Nicht ja oder nein, sondern verschoben - wohin?"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb2-1",
+      "unterthema": "Differenzierung",
+      "afb": 2,
+      "frage": "In der Vorlesung reicht eine Lehrperson mehrere gleiche Versuchsaufbauten in die Klasse: Über einen Kopfhörer lässt sich hören, wie der Strom einer Blockbatterie fließt. Alle beschäftigen sich mit demselben Gegenstand, aber nicht auf dieselbe Weise. Analysieren Sie, mit welchen Mitteln hier differenziert wird. Gehen Sie dazu die Schüler:innen durch, für die der Text eine eigene Maßnahme beschreibt, und ordnen Sie jeder Beobachtung ein Differenzierungskriterium aus der Vorlesung zu. **Belegen Sie am Material.**",
+      "stichpunkte": [
+        "Einordnung 1: es handelt sich um innere Differenzierung - die Lerngruppe bleibt zusammen, angepasst wird innerhalb der Stunde und zeitlich flexibel",
+        "Beobachtung 1: Pia wechselt zwischen zwei Möglichkeiten und wird von Mitschüler:innen unterstützt - hier zählt der Grad der Selbständigkeit bzw. die Notwendigkeit direkter Hilfe",
+        "Beobachtung 2: Ali baut sich die Versuchsanordnung, am Beispiel orientiert, selbst auf - hier wirken die inhaltlichen und methodischen Zugänge und die Vorerfahrungen",
+        "Beobachtung 3: Tina kann wählen - Versuch mit der Blockbatterie oder Variante mit der Zitrone als Energiequelle; das bedient Interessen und einen anderen Komplexitätsgrad",
+        "Einordnung 2: die Vorlesung überschreibt das Beispiel selbst mit der Differenzierung des Umfangs und des Komplexitätsniveaus - beide Wörter stammen aus der Kriterienliste der inneren Differenzierung"
+      ],
+      "muster": "Die Sequenz arbeitet mit innerer Differenzierung: Die Lerngruppe bleibt zusammen, angepasst wird innerhalb der Stunde und zeitlich flexibel. Alle beschäftigen sich mit demselben Gegenstand, dem Versuchsaufbau aus Kopfhörer, Stromleitern und Blockbatterie, mit dem sich der Strom hören lässt. Unterschiedlich ist, wie die Einzelnen daran arbeiten. Pia wechselt zwischen den Möglichkeiten, die Batterie zu halten oder unter Assistenz einen Kontakt zur Batterie zu führen, und wird dabei von Mitschüler:innen unterstützt; differenziert wird hier über den Grad der Selbständigkeit beziehungsweise die Notwendigkeit direkter Hilfe. Ali baut sich die Versuchsanordnung, am Beispiel orientiert, selbst auf; hier wirken die inhaltlichen und methodischen Zugänge und die Vorerfahrungen. Tina kann wählen, ob sie den Versuch mit der Blockbatterie durchführt oder die Variante mit der Zitrone als Energiequelle erprobt; das bedient ihre Interessen und zugleich einen anderen Komplexitätsgrad. Die Vorlesung selbst überschreibt das Beispiel mit der Differenzierung des Umfangs und des Komplexitätsniveaus; beide Wörter stammen aus der Kriterienliste der inneren Differenzierung. Alle arbeiten damit am selben Gegenstand, aber mit unterschiedlich viel Unterstützung und auf unterschiedlichem Anspruchsniveau - genau das ist der Kern innerer Differenzierung.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In dieser Stunde gibt es innere Differenzierung. Das heißt: Die Gruppe bleibt zusammen. Die Lehrerin passt die Arbeit innerhalb der Stunde an.\n\nAlle arbeiten am gleichen Versuch. Ein Kopfhörer wird an zwei Stromleiter gehalten. Die Stromleiter sind mit einer Batterie verbunden. So kann man den Strom hören.\n\nAber jedes Kind arbeitet anders daran. Pia kann zwischen zwei Möglichkeiten wechseln. Mal hält sie die Batterie. Mal führt sie mit Hilfe einen Kontakt. Mitschülerinnen und Mitschüler helfen ihr. Hier geht es also darum: Wie selbstständig kann jemand arbeiten? Und wie viel direkte Hilfe braucht die Person?\n\nAli baut den Versuch allein auf. Er schaut sich das Beispiel an. Hier geht es um den Zugang und um seine Vorerfahrung.\n\nTina darf wählen. Sie kann den Versuch mit der Batterie machen. Oder sie probiert eine andere Form. Dann ist eine Zitrone die Energiequelle. Hier geht es um ihr Interesse. Und die Aufgabe ist anders schwer.\n\nDie Vorlesung schreibt über dieses Beispiel: Differenzierung des Umfangs und des Komplexitätsniveaus. Beide Wörter stehen auch in der Liste der Kriterien.\n\nZusammen heißt das: Alle haben denselben Gegenstand. Aber jedes Kind bekommt anders viel Hilfe. Und die Aufgabe ist unterschiedlich schwer. Genau das ist innere Differenzierung."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Geh die Personen einzeln durch - bei jeder steht im Text, was anders ist als bei den anderen, und dazu passt jeweils ein Kriterium der inneren Differenzierung. Bei zwei Kindern sagt der Text nur, dass sie mitexplorieren; dort ist keine eigene Maßnahme beschrieben, such also nichts, was nicht da ist. Die Sequenz steht wörtlich auf Folie 12, die Kriterienliste und die Unterscheidung von äußerer und innerer Differenzierung auf Folie 10; in deinen Aufzeichnungen auf Notizen S. 35. Folie 12 selbst fehlt in deinen Aufzeichnungen ganz, hier lohnt der Blick auf die Folie. Gut zu wissen: Das Begriffspaar quantitativ und qualitativ nennt Folie 13 nur im Arbeitsauftrag zum Video, erklärt wird es dort nicht - deshalb fragt diese Aufgabe bewusst nicht danach, und du brauchst es hier auch nicht.",
+      "quelle": "folie-prinzipien-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Welche der beiden Grundformen liegt hier vor?",
+          "Niemand wird aus der Gruppe herausgenommen - wie heisst das?",
+          "Angepasst wird drinnen, nicht ueber neue Gruppen"
+        ],
+        [
+          "Die Schuelerin mit den zwei Varianten - welches Kriterium?",
+          "Wie viel Hilfe braucht sie, und von wem kommt sie?",
+          "Stichwort Selbstaendigkeit und Assistenz"
+        ],
+        [
+          "Der Schueler, der nach dem Vorbild allein aufbaut",
+          "Welches Kriterium passt zum eigenstaendigen Nachbauen?",
+          "Zugang und das, was er schon mitbringt"
+        ],
+        [
+          "Das Maedchen mit der Wahl zwischen zwei Aufbauten",
+          "Eine ungewoehnliche Energiequelle statt der Batterie",
+          "Wahlmoeglichkeit - welche zwei Kriterien stecken darin?"
+        ],
+        [
+          "Womit ueberschreibt die Vorlesung diesen Kasten?",
+          "Zwei Kriterien stehen schon im Titel des Beispiels",
+          "Menge und Anspruch als Ueberschrift gedacht"
+        ]
+      ]
+    },
+    {
+      "id": "pr-afb3-4",
+      "unterthema": "Elementarisierung",
+      "afb": 3,
+      "frage": "Die Vorlesung führt Elementarisierung doppelt ein: als fachdidaktisches Prinzip und zugleich als didaktisches Vorgehen bei der Unterrichtsplanung. In einer Teamsitzung sagt eine Kollegin: 'Ein eigenes Prinzip braucht es dafür nicht, das ist einfach gute Unterrichtsvorbereitung.' Erörtern Sie, ob Elementarisierung mehr ist als ein Schritt der Planung. Führen Sie je drei Argumente für beide Seiten an und kommen Sie zu einem begründeten Urteil. **Erörtern heißt hier: beide Seiten am Material belegen und dann selbst Stellung nehmen. Messen Sie daran, was ein didaktisches Prinzip laut Vorlesung leisten soll.**",
+      "stichpunkte": [
+        "Maßstab 1: gemessen wird an den drei Phasen und an der Rangfolge über den Methoden - orientiert Elementarisierung auch Durchführung und Evaluation oder nur die Planung?",
+        "Dafür 1: die Leitfrage lautet, was das Elementare im Bildungsprozess ist - sie verschränkt Lerninhalt und Lernsubjekt und ist vor jeder Methodenwahl zu beantworten",
+        "Dafür 2: das Schaubild nennt sie einen gemeinsamen Suchprozess mit fünf Blickwinkeln - kulturell-gesellschaftlich, sachorientiert, anthropologisch, entwicklungspsychologisch, methodisch-medial; gesucht wird, ein Raster wird nicht abgearbeitet",
+        "Dafür 3: die didaktische Reduktion umfasst ausdrücklich das Reduzieren als Lernhandlung - dann wirkt Elementarisierung in der Stunde selbst und nicht nur in ihrer Vorbereitung",
+        "Dagegen 1: in der Gegenüberstellung findet jede Ebene ihren Platz im Planungsraster - Grundannahmen und Strukturen bei der Auseinandersetzung mit dem Bildungsinhalt, Erfahrungen und Zugänge bei den Lernvoraussetzungen, Aneignungswege bei den methodischen Entscheidungen; ein Rest bleibt nicht, und das Raster beruht auf Klafki",
+        "Dagegen 2: auch das Energie-Beispiel läuft als Kreislauf aus sachanalytischer Betrachtung, Erfahrungsmöglichkeiten, elementarisierten Aussagen und didaktischer Reduktion - das sind Schritte, die eine Lehrkraft vor der Stunde geht",
+        "Dagegen 3: im Rahmenlehrplan-Abgleich bleibt die Zeile Elementarisierung leer, ein eigenes Qualitätsmerkmal gibt es dort nicht - das Argument wiegt allerdings begrenzt, weil auch Kleine Schritte und Strukturierung leer bleiben",
+        "Fazit 1: eigenes Urteil begründen, etwa: als Planungsvorgehen ist sie im Raster vollständig abgebildet, als Prinzip trägt sie nur, solange die Frage nach dem Elementaren auch Durchführung und Evaluation steuert"
+      ],
+      "muster": "Ob Elementarisierung mehr ist als ein Schritt der Unterrichtsplanung, misst sich an dem, was ein didaktisches Prinzip leisten soll: Es orientiert nicht nur die Planung, sondern auch Durchführung und Evaluation, und es steht in der Rangfolge über Methoden, Techniken, Sozialformen und Medien. Die Frage lautet also, ob Elementarisierung alle drei Phasen orientiert oder nur die erste. Für ein eigenes Prinzip spricht dreierlei. Ihre Leitfrage lautet, was das Elementare im Bildungsprozess ist; sie verschränkt Lerninhalt und Lernsubjekt und ist damit vor jeder Methodenwahl zu beantworten. Das Schaubild von Lamers nennt sie einen gemeinsamen Suchprozess und legt fünf Blickwinkel nebeneinander, einen kulturell-gesellschaftlichen, einen sachorientierten, einen anthropologischen, einen entwicklungspsychologischen und einen methodisch-medialen; gesucht wird also, ein Raster wird nicht abgearbeitet. Und die didaktische Reduktion umfasst ausdrücklich das Reduzieren als Lernhandlung, wirkt also in der Stunde selbst und nicht nur in ihrer Vorbereitung. Dagegen spricht die Gegenüberstellung des Elementarisierungsprozesses nach Heinen mit dem Unterrichtsplanungsraster von Terfloth und Bauersfeld: Dort findet jede Ebene ihren Platz - die elementaren Grundannahmen und Strukturen in der Auseinandersetzung mit dem Bildungsinhalt, die elementaren Erfahrungen und Zugänge bei den Lernvoraussetzungen, die Vermittlungs- beziehungsweise Aneignungswege bei den methodischen Entscheidungen. Es bleibt kein Rest, und das Raster beruht auf Klafki, stammt also aus der allgemeinen Didaktik. Auch das Energie-Beispiel läuft als Kreislauf aus sachanalytischer Betrachtung, Erfahrungsmöglichkeiten, elementarisierten Aussagen und didaktischer Reduktion ab, und das sind Schritte, die eine Lehrkraft vor der Stunde geht. Schließlich bleibt im Abgleich mit dem Rahmenlehrplan die Zeile Elementarisierung leer, ein eigenes Qualitätsmerkmal gibt es dort nicht. Dieses Argument wiegt allerdings begrenzt, denn auch Kleine Schritte und Strukturierung bleiben ohne Entsprechung, ohne dass die Vorlesung sie deshalb aus der Liste der Prinzipien nähme. Mein Urteil: Als Planungsvorgehen ist Elementarisierung im Raster vollständig abgebildet, insofern hat die Kollegin recht. Als Prinzip trägt sie dennoch, aber nur unter einer Bedingung: Die Frage nach dem Elementaren muss auch die Durchführung und die Evaluation steuern, also mitbestimmen, wie viel in der Stunde reduziert wird und woran am Ende gemessen wird, ob der Inhalt wirklich elementar war. Bleibt sie auf die Vorbereitung beschränkt, ist sie ein Planungsschritt unter anderen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Frage ist: Ist Elementarisierung ein eigenes Prinzip? Oder ist sie nur ein Schritt der Unterrichtsplanung? Zum Antworten braucht man einen Maßstab. Ein didaktisches Prinzip gibt Orientierung. Es gibt sie für die Planung, für die Durchführung und für die Evaluation. Evaluation heißt: Man prüft danach, ob der Unterricht gelungen ist. Ein Prinzip steht außerdem über den Methoden, den Techniken, den Sozialformen und den Medien. An diesem Maßstab kann man den Fall messen. Die Frage lautet also: Orientiert Elementarisierung alle drei Phasen? Oder nur die erste? Es spricht einiges dafür, Elementarisierung ein eigenes Prinzip zu nennen. Erstens ist ihre Leitfrage groß: Was ist das Elementare im Bildungsprozess? Elementar heißt: das Wesentliche, das Grundlegende. Diese Frage verbindet den Lerninhalt und den lernenden Menschen. Und man muss sie beantworten, bevor man eine Methode auswählt. Zweitens zeigt das Schaubild von Lamers einen gemeinsamen Suchprozess. Es hat fünf Blickwinkel. Der erste ist kulturell-gesellschaftlich. Der zweite ist sachorientiert. Der dritte ist anthropologisch, also auf den Menschen bezogen. Der vierte ist entwicklungspsychologisch. Der fünfte ist methodisch-medial. Man sucht also gemeinsam. Man arbeitet keine feste Liste ab. Drittens gehört zur didaktischen Reduktion auch das Reduzieren als Lernhandlung. Das heißt: Auch die Schüler:innen vereinfachen selbst. Dann wirkt Elementarisierung in der Stunde und nicht nur davor. Es spricht aber auch einiges dagegen. Erstens gibt es eine Tabelle mit zwei Spalten. Links steht der Elementarisierungsprozess nach Heinen. Rechts steht das Unterrichtsplanungsraster von Terfloth und Bauersfeld. Jede Ebene links findet rechts einen Platz. Die Grundannahmen und die Strukturen gehören zur Auseinandersetzung mit dem Bildungsinhalt. Die Erfahrungen und die Zugänge gehören zu den Lernvoraussetzungen. Die Aneignungswege gehören zu den methodischen Entscheidungen. Es bleibt also nichts übrig. Dieses Raster beruht auf Klafki. Es kommt damit aus der allgemeinen Didaktik. Zweitens ist auch das Energie-Beispiel ein Kreislauf. Er hat vier Stationen: die sachanalytische Betrachtung, die Erfahrungsmöglichkeiten, die elementarisierten Aussagen und die didaktische Reduktion. Diese Schritte geht eine Lehrkraft vor der Stunde. Drittens gibt es die Abgleich-Tabelle zum Rahmenlehrplan. Dort bleibt die Zeile Elementarisierung leer. Es gibt kein Qualitätsmerkmal dazu. Sie ist also curricular nicht verankert. Curricular heißt: im Lehrplan festgeschrieben. Dieses Argument ist aber nicht sehr stark. Denn auch bei Kleine Schritte und bei Strukturierung bleibt die Zeile leer. Trotzdem sind das Prinzipien der Vorlesung. Mein Urteil ist deshalb zweiteilig. Als Planungsvorgehen ist Elementarisierung im Raster vollständig abgebildet. So weit hat die Kollegin recht. Als Prinzip trägt sie trotzdem, aber nur unter einer Bedingung. Die Frage nach dem Elementaren muss auch die Durchführung steuern. Und sie muss auch die Evaluation steuern. Sie muss also mitbestimmen, wie viel in der Stunde vereinfacht wird. Und sie muss am Ende den Maßstab liefern, ob der Inhalt wirklich elementar war. Bleibt sie nur bei der Vorbereitung, dann ist sie ein Planungsschritt unter anderen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Der Aufbau ist der einer Erörterung: erst der Maßstab, dann drei Argumente für jede Seite, dann dein Urteil. Der Maßstab ist hier das Wichtigste - er steht auf Folie 3 (Orientierung für Planung, Durchführung und Evaluation, dazu die Rangfolge bis hinunter zu den Medien), und ohne ihn bleibt die Erörterung ein Meinungsaustausch. Der Suchprozess mit den fünf Blickwinkeln steht auf Folie 15, das Energie-Beispiel mit der didaktischen Reduktion auf Folie 16, die Gegenüberstellung mit dem Planungsraster auf Folie 18, die Rahmenlehrplan-Tabelle auf Folie 33; in deinen Aufzeichnungen auf Notizen S. 36 und 37, Folie 3 fehlt dort. Eine Stelle zum Aufpassen: Dieselben fünf Felder tragen in dieser Vorlesung zwei Namen - auf Folie 15 heißen sie Lamers (zitiert nach Terfloth & Bauersfeld), auf Folie 18 steht über derselben Spalte 'Elementarisierungsprozess nach Heinen'. Beides ist richtig, je nach Folie; wenn du unsicher bist, schreib die Felder ohne Namen. Gut zu wissen: Als Streitfrage stellt die Vorlesung das nirgends - sie stellt beide Rollen nur nebeneinander. Auf Folie 3 steht allerdings ausdrücklich, dass verschiedene Didaktiken verschiedene Prinzipien für mehr oder weniger bedeutsam halten; dass über den Rang eines Prinzips gestritten werden kann, ist also gedeckt. Die Abwägung für genau dieses Prinzip führst du selbst, und dafür gibt es hier die Punkte. Auch das Argument, das Planungsraster beruhe auf Klafki und komme damit aus der allgemeinen Didaktik, ist deine eigene Schlussfolgerung - auf der Folie steht nur der Name.",
+      "quelle": "folie-prinzipien-18",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Woran misst du ueberhaupt? Denk an die Begriffsklaerung am Anfang des Themas",
+          "Drei Phasen deckt ein Prinzip ab - und in der Rangfolge steht es ganz oben",
+          "Was muss etwas koennen, damit es mehr ist als ein Arbeitsschritt?"
+        ],
+        [
+          "Womit faengt dieses Prinzip an? Mit einer Frage nach dem Kern",
+          "Zwei Seiten werden miteinander verzahnt: der Stoff und die Person",
+          "Diese Frage kommt vor jeder Entscheidung ueber Methoden"
+        ],
+        [
+          "Wie nennt das Schaubild den Vorgang? Kein Abhaken, sondern ein Suchen",
+          "Fuenf Sechsecke, und jedes schaut aus einer anderen Richtung",
+          "Gesellschaft, Sache, Mensch, Entwicklung, Methode - was ist das jeweils?"
+        ],
+        [
+          "Vereinfachen tut nicht nur die Lehrkraft - wer noch?",
+          "Ein Punkt im Reduktions-Kasten macht Schueler:innen zu Handelnden",
+          "Wenn es auch waehrend der Stunde wirkt: was folgt daraus fuer die Frage?"
+        ],
+        [
+          "Die Tabelle mit den zwei Spalten: was passiert dort mit jeder Ebene?",
+          "Wohin wandern Grundannahmen, wohin Erfahrungen, wohin die Wege?",
+          "Bleibt am Ende etwas uebrig, das keinen Platz findet? Und woher stammt das Raster?"
+        ],
+        [
+          "Der Vorgang im Beispiel: vier Stationen, im Kreis angeordnet",
+          "Wann geht die Lehrkraft diese Schritte - vorher oder mittendrin?",
+          "Von der Sachanalyse bis zum Vereinfachen: wo passiert das?"
+        ],
+        [
+          "Schau in die Tabelle zum Lehrplan: was steht in dieser Zeile rechts?",
+          "Nicht jede Zeile hat ein Gegenstueck - wie stark ist das als Argument?",
+          "Wie fest ist es im Lehrplan festgeschrieben, und wem geht es genauso?"
+        ],
+        [
+          "Dein Urteil: gilt es fuer beide Rollen gleich?",
+          "Vielleicht traegt die eine Haelfte und die andere nicht - welche?",
+          "Woran haengt dein Ja oder Nein? An dem Massstab vom Anfang"
         ]
       ]
     }

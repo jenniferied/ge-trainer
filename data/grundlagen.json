@@ -520,14 +520,17 @@
   "frei": [
     {
       "id": "gr-f-1",
+      "unterthema": "Merkmale der Förderschule",
       "afb": 1,
       "frage": "Nennen Sie vier strukturelle Merkmale von Förderschulen im Schwerpunkt geistige Entwicklung.",
       "stichpunkte": [
-        "Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen",
+        "Frühförderung und schulvorbereitende Gruppen",
         "Ganztagsbeschulung",
         "Wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben",
         "Relativ kleine Klassenfrequenzen",
-        "Zusätzlich möglich: Stufenmodell (4 Stufen à 3 Jahre), eigenständige Werkstufe, verlängerter Schulbesuch (9 auf 12 Jahre)"
+        "Zusätzlich möglich: Stufenmodell (4 Stufen à 3 Jahre)",
+        "Zusätzlich möglich: eigenständige Werkstufe",
+        "Zusätzlich möglich: verlängerter Schulbesuch (9 auf 12 Jahre)"
       ],
       "muster": "Förderschulen im SGE weisen unter anderem folgende strukturelle Merkmale auf: Sie bieten Frühförderung und schulvorbereitende Gruppen an, es gibt eine Ganztagsbeschulung, die Klassenzimmer sind wohnlich gestaltet als Orte zum Lernen und Leben, und die Klassenfrequenzen sind relativ klein.",
       "musterVarianten": {
@@ -548,6 +551,30 @@
       "quelle": "folie-grundlagen-18",
       "quelleSicherheit": "geprueft",
       "waehle": 4,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Vier Merkmale, an denen man den Aufbau dieser Schule erkennt",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Bonus, wenn dir noch mehr einfällt",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
       "hinweise": [
         [
           "Was passiert schon vor dem Schuleintritt?",
@@ -570,13 +597,22 @@
           "Hier geht es um eine Zahl pro Klasse."
         ],
         [
-          "Zusatz: Besonderheiten rund um Aufbau und Dauer der Schulzeit.",
-          "Bonus: Denk an Abschnitte, letzten Abschnitt, Extra-Jahre."
+          "Bonus: Wie viele Abschnitte, und wie lang ist jeder?",
+          "Bonus: Das Produkt der beiden Zahlen ergibt zwoelf."
+        ],
+        [
+          "Bonus: Der letzte Abschnitt steht ziemlich fuer sich.",
+          "Bonus: Welcher Teil bereitet auf die Zeit danach vor?"
+        ],
+        [
+          "Bonus: Zwei Zahlen - die Schulzeit darf laenger dauern.",
+          "Bonus: Um wie viel darf man ueber das Uebliche hinaus bleiben?"
         ]
       ]
     },
     {
       "id": "gr-f-2",
+      "unterthema": "Stufenmodell",
       "afb": 2,
       "frage": "Erläutern Sie das Stufenmodell der Förderschule im Schwerpunkt geistige Entwicklung.",
       "stichpunkte": [
@@ -622,6 +658,7 @@
     },
     {
       "id": "gr-f-3",
+      "unterthema": "Gemeinsamer Unterricht",
       "afb": 3,
       "frage": "Beziehen Sie begründet Stellung zu der Fragestellung: Förderschule oder allgemeinbildende Schule - welches ist der bessere Lernort für Schüler:innen im SGE?",
       "stichpunkte": [
@@ -647,7 +684,7 @@
         }
       },
       "musterVariantenGeprueft": false,
-      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark.",
+      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark. Zur Einordnung: Das Thema Inklusion im SGE ist laut Folie 11 als einziges von der Klausur ausgenommen. Diese Aufgabe bleibt trotzdem wertvoll - sie ist die Format-Vorlage der Dozentin, und das Geruest 2 dafuer, 2 dagegen, dann bewerten traegt bei jeder AFB-III-Aufgabe, egal zu welchem Thema.",
       "quelle": "dozentin-beispiel",
       "quelleSicherheit": "geprueft",
       "hinweise": [
@@ -685,6 +722,7 @@
     },
     {
       "id": "gr-gen-f-1",
+      "unterthema": "Gemeinsamer Unterricht",
       "afb": 2,
       "frage": "Vergleichen Sie die vier Formen des gemeinsamen Unterrichts im Hinblick auf die schulrechtliche Zuordnung der Schüler:innen.",
       "stichpunkte": [
@@ -737,6 +775,7 @@
     },
     {
       "id": "gr-gen-f-2",
+      "unterthema": "Merkmale der Förderschule",
       "afb": 2,
       "frage": "Erläutern Sie anhand des exemplarischen Stundenplans, welche strukturellen Merkmale der Förderschule darin sichtbar werden.",
       "stichpunkte": [
@@ -746,8 +785,7 @@
         "Spezifische Lernfelder: Soziales Lernen, Klassenrat, Bewegung und Entspannung, Hauswirtschaft, Schwimmen, Arbeit am Wochenplan - neben Mathematik, Deutsch und Sachunterricht",
         "Kleine Lerngruppen: der Plan bildet die Woche einer einzigen Lerngruppe ab, die zusammenbleibt; Klassenrat und Wochenplan sind Formate für die ganze Klasse, passend zu den relativ kleinen Klassenfrequenzen",
         "Gemeinsame Mahlzeiten gehören zum Schulalltag: Frühstück mit kleiner Pause und Mittagessen mit großer Pause als eigene Einheiten im Plan (freitags endet der Tag abweichend mit dem Schwimmen um 12:30 Uhr)",
-        "Nur als ausdrücklich gekennzeichneter Zusatz: das wohnlich gestaltete Klassenzimmer ist ein strukturelles Merkmal der Förderschule, am Stundenplan selbst aber nicht ablesbar",
-        "Erläutern heißt: Merkmal benennen UND am Stundenplan-Detail festmachen"
+        "Nur als ausdrücklich gekennzeichneter Zusatz: das wohnlich gestaltete Klassenzimmer ist ein strukturelles Merkmal der Förderschule, am Stundenplan selbst aber nicht ablesbar"
       ],
       "muster": "Der exemplarische Stundenplan macht sechs strukturelle Merkmale der Förderschule sichtbar. Erstens ist der Unterricht in Blöcken organisiert: Das Zeitraster kennt die Einheiten von 8:30 bis 10 Uhr, von 10:45 bis 12:15 Uhr und von 13:30 bis 15 Uhr, also 90-Minuten-Blöcke statt eines 45-Minuten-Takts. Zweitens zeigt genau dieses Raster von etwa 8:30 bis 15 Uhr die Ganztagsschule. Drittens ist der Plan mit Symbolen visualisiert: In jedem Feld steht neben der Bezeichnung ein METACOM-Symbol, das den Ablauf des Tages auch bildlich zugänglich macht. Viertens stehen neben Mathematik, Deutsch und Sachunterricht spezifische Lernfelder im Plan, nämlich Soziales Lernen, Klassenrat, Bewegung und Entspannung, Hauswirtschaft, Schwimmen und die Arbeit am Wochenplan. Fünftens verweist der Plan auf kleine Lerngruppen: Er bildet die ganze Woche einer einzigen Lerngruppe ab, die in allen Einheiten zusammenbleibt, und mit Klassenrat und Wochenplan enthält er Formate, die auf die Klasse als überschaubare Gruppe zugeschnitten sind - passend zu den relativ kleinen Klassenfrequenzen. Sechstens gehören gemeinsame Mahlzeiten zum Schulalltag: Frühstück mit kleiner Pause und Mittagessen mit großer Pause stehen als eigene Einheiten im Plan; freitags endet der Tag abweichend mit dem Schwimmen um 12:30 Uhr. Ein weiteres strukturelles Merkmal der Förderschule ist das wohnlich gestaltete Klassenzimmer; am Stundenplan selbst ist es nicht ablesbar und daher nur als ausdrücklicher Zusatz zu nennen.",
       "musterVarianten": {
@@ -764,7 +802,7 @@
         }
       },
       "musterVariantenGeprueft": false,
-      "tipp": "Bei Erläutern-Aufgaben mit Material immer die Brücke schlagen: erst das Detail aus dem Material, dann das Merkmal, das es belegt. Die Dozentin hat den Stundenplan auf Folie 19 selbst beschriftet, und zwar mit sechs Ablesungen: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Genau diese sechs sind deine sicherste Punktequelle, und die Musterlösung geht sie der Reihe nach durch - wer sie in dieser Sechser-Ordnung lernt, verliert beim Schreiben keine. Merkhilfe: zwei Merkmale stecken im Zeitraster (Blöcke, Ganztag), zwei in den Feldinhalten (Symbole, Lernfelder), zwei im Schulalltag, den der Plan mit abbildet (eine Lerngruppe, gemeinsame Mahlzeiten). Die allgemeine Merkmalsliste nach Fischer 2008 steht auf Folie 18; von dort stammt das wohnlich gestaltete Klassenzimmer, das am Stundenplan nicht ablesbar ist - nenne es nur als ausdrücklichen Zusatz, sonst antwortest du an der Aufgabenstellung vorbei. In deinen Notizen ist der Stundenplan auf Notizen S. 57, die sechs Beschriftungen dort aber nicht.",
+      "tipp": "Bei Erläutern-Aufgaben mit Material immer die Brücke schlagen: erst das Detail aus dem Material, dann das Merkmal, das es belegt. Die Dozentin hat den Stundenplan auf Folie 19 selbst beschriftet, und zwar mit sechs Ablesungen: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Genau diese sechs sind deine sicherste Punktequelle, und die Musterlösung geht sie der Reihe nach durch - wer sie in dieser Sechser-Ordnung lernt, verliert beim Schreiben keine. Merkhilfe: zwei Merkmale stecken im Zeitraster (Blöcke, Ganztag), zwei in den Feldinhalten (Symbole, Lernfelder), zwei im Schulalltag, den der Plan mit abbildet (eine Lerngruppe, gemeinsame Mahlzeiten). Die allgemeine Merkmalsliste nach Fischer 2008 steht auf Folie 18; von dort stammt das wohnlich gestaltete Klassenzimmer, das am Stundenplan nicht ablesbar ist - nenne es nur als ausdrücklichen Zusatz, sonst antwortest du an der Aufgabenstellung vorbei. In deinen Notizen ist der Stundenplan auf Notizen S. 57, die sechs Beschriftungen dort aber nicht. Erläutern heißt hier: das Merkmal benennen UND es an einem Detail des Stundenplans festmachen.",
       "quelle": "folie-grundlagen-19",
       "quelleSicherheit": "geprueft",
       "generiert": true,
@@ -803,16 +841,12 @@
           "Zusatz: Ein Merkmal sieht man am Plan gerade nicht.",
           "Bonus: Welches Merkmal betrifft den Raum, nicht die Zeit?",
           "Ein Merkmal fehlt im Raster - ehrlich benennen."
-        ],
-        [
-          "Denk an den Operator: Behauptung plus Beleg am Detail.",
-          "Jedes Merkmal braucht seine Stelle im Plan.",
-          "Nicht nur aufzaehlen - zeigen, woran man es sieht."
         ]
       ]
     },
     {
       "id": "gr-gen-f-3",
+      "unterthema": "Merkmale der Förderschule",
       "afb": 3,
       "frage": "Erörtern Sie, warum die Förderschule im SGE als Ort zum Lernen und Leben gestaltet ist, und bewerten Sie diese Doppelrolle.",
       "stichpunkte": [
@@ -865,6 +899,7 @@
     },
     {
       "id": "gr-fol-f-1",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
       "afb": 3,
       "frage": "Die Vorlesung stellt eine Frage in den Mittelpunkt: Kann es eine spezielle Didaktik und Methodik für den Förderschwerpunkt Geistige Entwicklung geben? Oder müssen allgemeine Modelle und Theorien für diesen Förderschwerpunkt spezifiziert werden? Erörtern Sie diese Frage und beziehen Sie begründet Position.",
       "stichpunkte": [
@@ -942,6 +977,878 @@
           "Zum Schluss: Was folgt daraus fuer den Unterrichtsalltag?",
           "Beides koennen: das Allgemeine kennen, fuers Kind zuschneiden.",
           "Dein Fazit in einem Satz - welche Formel traegt es?"
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-1",
+      "unterthema": "Gemeinsamer Unterricht",
+      "afb": 1,
+      "frage": "Das Schaubild zur Organisation des gemeinsamen Unterrichts teilt sich in zwei Äste. Benennen Sie das Kriterium, nach dem geteilt wird, und nennen Sie die vier Formen mit ihrer jeweiligen Zuordnung.",
+      "stichpunkte": [
+        "Kriterium ist die schulrechtliche Zuordnung, nicht der Lernort",
+        "Integrationsklasse (Regelschule)",
+        "Integrative Regelklasse (Regelschule)",
+        "Einzelintegration (Regelschule)",
+        "Kooperationsklasse (Förderschule)"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst das Kriterium, nach dem sich das Schaubild teilt",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die vier Formen mit ihrer jeweiligen Zuordnung",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Schaubild zum gemeinsamen Unterricht ordnet die Formen danach, welcher Schule die Schülerinnen und Schüler schulrechtlich zugeordnet sind; der Lernort selbst ist nicht das Kriterium. Sind sie schulrechtlich der Regelschule zugeordnet, gibt es drei Formen: die Integrationsklasse, die integrative Regelklasse und die Einzelintegration. Bleiben sie schulrechtlich der Förderschule zugeordnet, handelt es sich um die Kooperationsklasse. Alle vier Formen sind gemeinsamer Unterricht, sie unterscheiden sich allein im rechtlichen Status.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Beim gemeinsamen Unterricht lernen Kinder mit und ohne Behinderung zusammen. Wichtig ist die Frage: Zu welcher Schule gehört das Kind auf dem Papier? Das nennt man schulrechtliche Zuordnung. Der Ort ist dabei nicht entscheidend. Gehört das Kind zur Regelschule, gibt es drei Formen. Sie heißen Integrationsklasse, integrative Regelklasse und Einzelintegration. Gehört das Kind zur Förderschule, heißt die Form Kooperationsklasse."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "AFB I heißt hier: sauber benennen, in ganzen Sätzen. Das Baumdiagramm mit den beiden Ästen steht auf Folie 17, in deinen Notizen auf Notizen S. 57. Merkhilfe drei zu eins: drei Formen hängen am Ast der Regelschule, nur eine am Ast der Förderschule. Wer das Kriterium zuerst nennt, hat den Rest sofort sortiert - und genau darauf zielt die Kompetenzerwartung, Beschulungsmöglichkeiten vergleichen zu können.",
+      "quelle": "folie-grundlagen-17",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Nicht das Gebaeude entscheidet, sondern der Status auf dem Papier.",
+          "Denk an die Frage: zu welcher Schule zaehlt das Kind offiziell?",
+          "Ein Begriff aus dem Schulrecht, kein Ort."
+        ],
+        [
+          "Eine eigene Klassenform, benannt nach dem Gedanken der Teilhabe.",
+          "Die erste der drei Formen am einen Ast."
+        ],
+        [
+          "Eine gewoehnliche Klasse, mit einem Adjektiv davor.",
+          "Zweite Form am selben Ast, das Wort Klasse steckt schon drin."
+        ],
+        [
+          "Was ist es, wenn nur ein einziges Kind aufgenommen wird?",
+          "Denk an die kleinste denkbare Gruppe: eine Person."
+        ],
+        [
+          "Zwei Schulen arbeiten zusammen, das Kind zaehlt zur anderen Seite.",
+          "Die einzige Form am zweiten Ast, ihr Name meint Zusammenarbeit."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-2",
+      "unterthema": "Stufenmodell",
+      "afb": 1,
+      "frage": "Die Schulzeit an der Förderschule im Schwerpunkt geistige Entwicklung ist in gleich lange Abschnitte gegliedert. Nennen Sie diese Abschnitte in der richtigen Reihenfolge und geben Sie an, wie viele es sind und wie lange jeder besucht wird.",
+      "stichpunkte": [
+        "Insgesamt 4 Stufen, jede wird 3 Jahre lang besucht",
+        "Stufe 1: Vor-, Unter- bzw. Grundstufe",
+        "Stufe 2: Mittelstufe",
+        "Stufe 3: Ober- bzw. Hauptstufe",
+        "Stufe 4: Werk- bzw. Abschlussstufe"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die beiden Zahlen zum Aufbau",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die Abschnitte in ihrer Reihenfolge",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Schulzeit an der Förderschule im Schwerpunkt geistige Entwicklung ist in vier Stufen unterteilt, die die Schülerinnen und Schüler jeweils drei Jahre lang besuchen. Am Anfang steht die Vor-, Unter- bzw. Grundstufe, darauf folgen die Mittelstufe und die Ober- bzw. Hauptstufe, den Abschluss bildet die Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106). Vier Stufen zu je drei Jahren ergeben zusammen zwölf Schulbesuchsjahre.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Schulzeit ist in vier Abschnitte geteilt. Diese Abschnitte heißen Stufen. Jede Stufe dauert drei Jahre. Die erste Stufe heißt Vorstufe, Unterstufe oder Grundstufe. Danach kommt die Mittelstufe. Dann kommt die Oberstufe, sie heißt auch Hauptstufe. Am Ende kommt die Werkstufe, sie heißt auch Abschlussstufe. Vier mal drei Jahre sind zwölf Jahre."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Stufenmodell steht auf Folie 20 und in deinen Notizen auf Notizen S. 58. Im Folientitel steht Fischer 2008, 30, für die vier Stufen selbst der Beleg Fornefeld 2004, 106 - eine Quellenangabe kostet einen Halbsatz und bringt in einer AFB-I-Aufgabe leicht einen Punkt. Merkhilfe: 4 mal 3 ergibt die 12 Jahre, auf die der Schulbesuch verlängert werden kann.",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zwei Zahlen, ihr Produkt ergibt zwoelf.",
+          "Wie viele Abschnitte, und wie viele Jahre pro Abschnitt?",
+          "Alle Abschnitte sind gleich lang - eine kleine Zahl."
+        ],
+        [
+          "Der Anfang, und dafuer gibt es gleich drei gaengige Namen.",
+          "Hier steigen die Kinder ein, ganz unten."
+        ],
+        [
+          "Der Name sagt schon, wo dieser Abschnitt liegt.",
+          "Zwischen Anfang und Ende, ganz schlicht benannt."
+        ],
+        [
+          "Zwei Namen, beide klingen nach dem oberen Ende der Schulzeit.",
+          "Der vorletzte Abschnitt, mit zwei gaengigen Bezeichnungen."
+        ],
+        [
+          "Der letzte Abschnitt, benannt nach Arbeit und nach dem Ende.",
+          "Hier geht der Blick schon Richtung Zeit nach der Schule."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-3",
+      "unterthema": "Stufenmodell",
+      "afb": 1,
+      "frage": "Am Ende der Schulzeit steht ein Abschnitt mit einer eigenen Aufgabe. Benennen Sie diesen Abschnitt, beschreiben Sie seine besondere Zielsetzung und geben Sie an, was sich in ihm an der Dauer des Schulbesuchs ändert.",
+      "stichpunkte": [
+        "Der Abschnitt heißt Werkstufe und ist relativ eigenständig",
+        "Das Ziel geht über allgemeine Bildungsangebote hinaus",
+        "Vorbereitung auf nachschulische Lebenswelten",
+        "Vor allem Vorbereitung auf das Berufsleben",
+        "Der Schulbesuch wird von 9 auf 12 Jahre verlängert",
+        "In begründeten Fällen ist eine weitere Verlängerung möglich"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst der Name des Abschnitts und sein Status",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Dann seine besondere Zielsetzung",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Zuletzt, was sich an der Dauer des Schulbesuchs ändert",
+          "idx": [
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Der letzte Abschnitt der Schulzeit ist die Werkstufe. Sie ist relativ eigenständig und verfolgt eine besondere Zielsetzung: Sie bereitet über die allgemeinen Bildungsangebote hinaus auf die nachschulischen Lebenswelten vor, vor allem auf das Berufsleben. Damit verbunden ist eine Verlängerung des Schulbesuchs im Werkstufenbereich von neun auf zwölf Jahre; in begründeten Fällen ist eine weitere Verlängerung möglich.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Der letzte Abschnitt heißt Werkstufe. Diese Stufe steht ziemlich für sich allein. Sie hat eine eigene Aufgabe. Sie bereitet auf das Leben nach der Schule vor. Vor allem bereitet sie auf die Arbeit vor. Deshalb dauert die Schulzeit hier länger. Statt neun Jahre sind es zwölf Jahre. Wenn es einen guten Grund gibt, darf es noch länger dauern."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Werkstufe steht auf Folie 20, in deinen Notizen auf Notizen S. 58. Sie ist die Stelle, an der die Förderschule im Schwerpunkt geistige Entwicklung am deutlichsten eigene Wege geht - deshalb lohnt es sich, Zielsetzung und Schulzeitverlängerung zusammen zu lernen. Merkhilfe: 9 ist die übliche Schulbesuchsdauer, 12 die verlängerte, und die Ausnahme in begründeten Fällen gehört zum Satz dazu.",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Name verbindet Arbeit mit dem Ende der Schulzeit.",
+          "Diese Stufe steht ein Stueck weit fuer sich allein."
+        ],
+        [
+          "Der Auftrag reicht weiter als der uebliche Unterrichtsstoff.",
+          "Hier hoert es nicht beim Lernen fuer die Schule auf."
+        ],
+        [
+          "Wohin gehen die Jugendlichen, wenn die Schule vorbei ist?",
+          "Denk an den ganzen Alltag danach, nicht nur an Arbeit."
+        ],
+        [
+          "Ein Bereich steht dabei im Vordergrund: das spaetere Arbeiten.",
+          "Womit verdienen Menschen spaeter ihren Lebensunterhalt?"
+        ],
+        [
+          "Zwei Jahreszahlen: die uebliche Dauer und die laengere.",
+          "Die Schulzeit waechst um drei Jahre."
+        ],
+        [
+          "Es gibt eine Ausnahme, wenn es gute Gruende gibt.",
+          "Die Obergrenze ist nicht in Stein gemeisselt."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-4",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Der exemplarische Stundenplan ist in der Vorlesung mit sechs Beschriftungen versehen, die zeigen, was sich an ihm ablesen lässt. Nennen Sie diese sechs Merkmale.",
+      "stichpunkte": [
+        "Unterricht in Blöcken statt im 45-Minuten-Takt",
+        "Ganztagsschule von morgens bis in den Nachmittag",
+        "Der Stundenplan ist mit Symbolen visualisiert",
+        "Spezifische Lernfelder neben den klassischen Fächern",
+        "Kleine Lerngruppen",
+        "Gemeinsame Mahlzeiten gehören zum Schulalltag"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zwei Merkmale stecken im Zeitraster",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Zwei Merkmale stecken in dem, was in den Feldern steht",
+          "idx": [
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Zwei Merkmale zeigen den Schulalltag",
+          "idx": [
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Am exemplarischen Stundenplan werden sechs Merkmale sichtbar. Der Unterricht findet in Blöcken statt und nicht im kurzen Fachstundentakt. Der Tag reicht von morgens bis in den Nachmittag, die Schule ist also eine Ganztagsschule. Der Plan selbst ist mit Symbolen visualisiert, sodass ihn auch Kinder nutzen können, die noch nicht schriftsprachlich lesen. Neben den klassischen Fächern stehen spezifische Lernfelder. Der Plan bildet die Woche einer kleinen Lerngruppe ab, die zusammenbleibt. Und die gemeinsamen Mahlzeiten stehen als eigene Einheiten im Plan, gehören also zum Schulalltag.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Am Stundenplan kann man sechs Merkmale sehen. Erstens: Der Unterricht läuft in langen Blöcken. Zweitens: Die Schule dauert den ganzen Tag. Drittens: Im Plan stehen Bilder, nicht nur Wörter. So können ihn auch Kinder lesen, die noch keine Schrift lesen. Viertens: Es gibt besondere Lernfelder, nicht nur die üblichen Fächer. Fünftens: Die Lerngruppe ist klein. Sechstens: Man isst gemeinsam, das gehört zum Schultag dazu."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese sechs Beschriftungen stehen auf Folie 19 - in deinen Notizen ist der Stundenplan zwar abgezeichnet (Notizen S. 57), die Auswertung dazu aber nicht. Genau deshalb sind sie eine sichere Punktequelle: Sie sind unmittelbar Antworten auf die Leitfrage nach den Merkmalen von Förderschulen. Merkhilfe in Paaren: zwei stecken im Zeitraster (Blöcke, Ganztag), zwei in den Feldinhalten (Symbole, Lernfelder), zwei im Schulalltag (eine Lerngruppe, gemeinsame Mahlzeiten).",
+      "quelle": "folie-grundlagen-19",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie lang ist eine Einheit? Denk an das Zeitraster.",
+          "Nicht viele kurze Stunden, sondern grosse Zeitfenster."
+        ],
+        [
+          "Wann endet der Schultag hier?",
+          "Der Tag reicht weit ueber das Mittagessen hinaus."
+        ],
+        [
+          "Wie findet sich ein Kind zurecht, das noch nicht liest?",
+          "In jedem Feld steht mehr als nur Text."
+        ],
+        [
+          "Welche Angebote im Plan gibt es an der Regelschule so nicht?",
+          "Eine eigene Kategorie neben Mathe, Deutsch und Sachunterricht."
+        ],
+        [
+          "Wie viele Kinder lernen hier zusammen?",
+          "Der Plan zeigt eine Gruppe, die den ganzen Tag zusammenbleibt."
+        ],
+        [
+          "Zweimal am Tag wird im Plan gegessen - was heisst das?",
+          "Essen ist hier nicht nur Pause, sondern Programm."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-5",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Das Übersichtsschaubild zur Förderschule zeigt nicht nur Angebote, sondern an seinem Rand auch, wer dort arbeitet. Nennen Sie vier Berufsgruppen, die an einer Förderschule im Schwerpunkt geistige Entwicklung tätig sind.",
+      "stichpunkte": [
+        "Sonderschullehrerinnen und Sonderschullehrer",
+        "Sozialpädagoginnen und Sozialpädagogen",
+        "Werklehrerinnen und Werklehrer",
+        "Erzieherinnen und Erzieher"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Vier Berufsgruppen, die an einer solchen Schule arbeiten",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "An einer Förderschule im Schwerpunkt geistige Entwicklung arbeiten mehrere Berufsgruppen nebeneinander. Das Übersichtsschaubild führt Sonderschullehrerinnen und Sonderschullehrer auf, dazu Sozialpädagoginnen und Sozialpädagogen, Werklehrerinnen und Werklehrer sowie Erzieherinnen und Erzieher. Die Aufzählung endet mit einem und andere, ist also ausdrücklich offen; hinzu kommen im selben Schaubild die Fachkräfte der therapeutischen Angebote. Dass an dieser Schulform mehrere Professionen zusammenarbeiten, gehört damit selbst zu ihren Merkmalen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "An einer Förderschule arbeiten verschiedene Berufe zusammen. Es gibt Lehrerinnen und Lehrer für die Sonderpädagogik. Es gibt Sozialpädagoginnen und Sozialpädagogen. Es gibt Werklehrerinnen und Werklehrer. Sie zeigen praktische Arbeit. Und es gibt Erzieherinnen und Erzieher. Im Schaubild steht am Ende auch: und andere. Es sind also noch mehr Berufe. Zum Beispiel Fachleute für Therapie. Viele Berufe an einem Ort, das ist ein Merkmal dieser Schule."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Berufsgruppen stehen in der linken Spalte des Schaubilds auf Folie 20 - und du hast sie in deinen Notizen sogar mitgeschrieben, Notizen S. 58. Das Schaubild ist klein gedruckt, die Bezeichnungen sind sinngemäß sicher, nicht wortgenau; auf die Berufsbilder kommt es an, nicht auf die Schreibweise. Merkhilfe in Paaren: zwei Berufe unterrichten (Sonderschullehrkraft, Werklehrkraft), zwei begleiten den Alltag (Sozialpädagogik, Erziehungsdienst). Ein Halbsatz dazu, dass hier mehrere Professionen unter einem Dach arbeiten, rundet jede Antwort zu den Merkmalen ab.",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "unsicher",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Beruf, der das Unterrichten an genau dieser Schulform meint.",
+          "Ein langes Wort: Schulform plus die Taetigkeit vor der Klasse."
+        ],
+        [
+          "Eine paedagogische Fachkraft, die nicht vom Unterricht her kommt.",
+          "Ihr Feld ist das Soziale - an Schulen wie in vielen anderen Einrichtungen."
+        ],
+        [
+          "Wer leitet das praktische Arbeiten an, etwa in der Werkstufe?",
+          "Der Name verbindet die Werkbank mit dem Lehren."
+        ],
+        [
+          "Der Beruf aus Kita und Hort, hier im Haus mit dabei.",
+          "Zustaendig fuer Betreuung und Alltag, nicht fuer den Fachunterricht."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-6",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 1,
+      "frage": "Das Übersichtsschaubild zur Förderschule ordnet die Angebote entlang des Lebensalters von null bis etwa 21 Jahren an. Nennen Sie vier Angebote oder Dienste, die dort vor oder neben der eigentlichen Schulzeit stehen.",
+      "stichpunkte": [
+        "Früherziehung im frühen Kindesalter",
+        "Kindergarten oder schulvorbereitende Einrichtung (Bayern)",
+        "Tagesstätte (Bayern)",
+        "Integrierte therapeutische Angebote wie Physiotherapie",
+        "Weitere: mobile sonderpädagogische Dienste anderer Schulen"
+      ],
+      "waehle": 4,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Vier Angebote vor oder neben der eigentlichen Schulzeit",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn dir noch etwas einfällt",
+          "idx": [
+            4
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Das Übersichtsschaubild ordnet die Angebote entlang des Lebensalters von null bis etwa 21 Jahren an. Vor der eigentlichen Schulzeit stehen die Früherziehung und daran anschließend der Regel- oder Sonderkindergarten beziehungsweise eine schulvorbereitende Einrichtung; die Klammer Schule umfasst erst die vier Stufen darüber. Neben der Schule stehen die Tagesstätte sowie integrierte therapeutische Angebote, etwa Physiotherapie, Ergotherapie, Krankenpflege, Logopädie und ein psychologischer Dienst. Hinzu kommen mobile sonderpädagogische Dienste, die von anderen Förderschulen und Förderzentren aus arbeiten. Das Schaubild ist am bayerischen System ausgerichtet: schulvorbereitende Einrichtung und Tagesstätte tragen dort ausdrücklich den Zusatz Bayern.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Das Schaubild zeigt das Leben von der Geburt bis etwa 21 Jahre. Vor der Schule gibt es die Früherziehung. Danach kommt ein Kindergarten. Das kann ein normaler Kindergarten sein oder ein Sonderkindergarten. Es kann auch eine Einrichtung sein, die auf die Schule vorbereitet. Diese Einrichtung gibt es so in Bayern. Neben der Schule gibt es die Tagesstätte. Auch sie steht im Bild mit dem Zusatz Bayern. Dort werden Kinder außerhalb des Unterrichts betreut. Es gibt auch Therapien im Haus. Zum Beispiel Physiotherapie, Ergotherapie und Logopädie. Und es gibt mobile Dienste. Diese Fachleute fahren zu anderen Schulen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Schaubild steht rechts auf Folie 20, in deinen Notizen auf Notizen S. 58. Es ist am bayerischen System ausgerichtet - schulvorbereitende Einrichtung und Tagesstätte tragen im Bild den Zusatz Bayern, und genau dieser Halbsatz macht in einer Potsdamer Klausur den Unterschied zwischen abgeschrieben und verstanden. Das Bild ist außerdem sehr klein gedruckt: die Spaltenbeschriftungen sind sinngemäß sicher, einzelne Wortlaute nicht. Für die Klausur zählt die Aussage dahinter: Die Förderschule steht nicht allein, sie ist umgeben von vorschulischen Angeboten, Betreuung und Therapie. Früherziehung und Kindergarten liegen im Bild außerhalb der Klammer Schule - das passt zum ersten strukturellen Merkmal auf Folie 18, den Angeboten der Frühförderung.",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "unsicher",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Ganz unten auf der Altersskala, lange vor der Einschulung.",
+          "Die Foerderung beginnt schon bei den Kleinsten."
+        ],
+        [
+          "Wo sind Kinder zwischen drei und sechs Jahren - regulaer oder gesondert?",
+          "Das Schema stammt aus einem suedlichen Bundesland; dort traegt die vorschulische Form einen eigenen Namen."
+        ],
+        [
+          "Betreuung ausserhalb des Unterrichts, im Bild eine eigene senkrechte Spalte.",
+          "Auch dieser Kasten traegt den Zusatz des Bundeslandes, aus dem das Schema stammt."
+        ],
+        [
+          "Fachleute fuer Bewegung, Sprache und Pflege arbeiten im Haus mit.",
+          "Behandlungen finden nicht draussen statt, sie gehoeren dazu."
+        ],
+        [
+          "Bonus: Fachkraefte, die zu anderen Schulen hinausfahren.",
+          "Zusatz: Unterstuetzung, die von aussen an andere Schulen kommt."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-7",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt eine übergeordnete Frage in den Mittelpunkt und das Modul nennt dazu drei Qualifikationsziele. Geben Sie beide Hälften dieser Frage wieder und nennen Sie die drei Ziele.",
+      "stichpunkte": [
+        "Kann es eine spezielle Didaktik und Methodik geben?",
+        "Oder müssen allgemeine Modelle dafür spezifiziert werden?",
+        "Ziel 1: didaktische Ansätze und methodische Aspekte kennen",
+        "Ziel 2: Förderung mit akademischen und kulturellen Inhalten planen",
+        "Ziel 3: Unterricht strukturieren und planen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die beiden Hälften der Rahmenfrage",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die drei Ziele des Moduls",
+          "idx": [
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Vorlesung stellt die Frage in den Mittelpunkt, ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt Geistige Entwicklung geben kann und inwiefern allgemeine Modelle und Theorien für diesen Förderschwerpunkt spezifiziert werden müssen. Dazu nennt das Modul drei Qualifikationsziele: Die Studierenden kennen didaktische Ansätze und methodische Aspekte der Pädagogik bei Menschen mit geistiger Behinderung, sie können eine Förderung mit akademischen und kulturellen Lerninhalten planen, und sie sind in der Lage, Unterricht für Menschen mit einer geistigen Behinderung zu strukturieren und zu planen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorlesung stellt eine große Frage. Die Frage hat zwei Hälften. Erste Hälfte: Braucht dieser Förderschwerpunkt eine eigene Didaktik und Methodik? Didaktik heißt: die Lehre vom Lehren und Lernen. Zweite Hälfte: Oder reicht es, die allgemeinen Modelle anzupassen? Anpassen heißt hier spezifizieren. Das Modul hat drei Ziele. Erstens: Die Studierenden kennen didaktische Ansätze und Methoden. Zweitens: Sie können Förderung mit schulischen und kulturellen Inhalten planen. Drittens: Sie können Unterricht aufbauen und vorbereiten."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Diese Rahmenfrage und die drei Qualifikationsziele stehen auf Folie 5 - in deinen Notizen fehlt diese Folie ganz, dort beginnt V1 erst bei den Kompetenzerwartungen auf Notizen S. 57. Die Frage ist die Klammer über die ganze Vorlesungsreihe und lässt sich fast auf jedes der acht Themen anwenden; wer sie parat hat, hat für jede Erörterungsaufgabe einen Einstieg. Merkhilfe für die Ziele: kennen, planen, strukturieren - vom Wissen über die Förderung bis zur Stunde.",
+      "quelle": "folie-grundlagen-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erste Haelfte: Braucht dieser Bereich etwas ganz Eigenes?",
+          "Denk an das Wort speziell - was waere dann anders?"
+        ],
+        [
+          "Zweite Haelfte: Oder reicht es, Bekanntes anzupassen?",
+          "Die Gegenposition arbeitet mit dem, was ohnehin gilt."
+        ],
+        [
+          "Das erste Ziel bleibt beim Wissen ueber Ansaetze und Methoden.",
+          "Zuerst nur kennen, noch nicht selbst machen."
+        ],
+        [
+          "Das zweite Ziel betrifft das Planen mit anspruchsvollen Inhalten.",
+          "Welche Art von Inhalten steht hier neben den lebenspraktischen?"
+        ],
+        [
+          "Das dritte Ziel meint die Arbeit an der Stunde selbst.",
+          "Zwei Taetigkeiten: ordnen und vorbereiten."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-8",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 1,
+      "frage": "Zu den Kompetenzerwartungen dieser Sitzung gehört, die Literatur und die Recherchewege des Fachgebiets zu kennen. Nennen Sie vier deutschsprachige Fachzeitschriften dieses Feldes und geben Sie an, wo eine Gesamtübersicht solcher Zeitschriften zu finden ist.",
+      "stichpunkte": [
+        "Zeitschrift für Heilpädagogik",
+        "Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete",
+        "Sonderpädagogische Förderung heute",
+        "Behindertenpädagogik",
+        "Die Gesamtübersicht steht unter difgb.de/fachzeitschriften",
+        "Weitere: Teilhabe, Menschen, Impulse, Ohrenkuss"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Vier Fachzeitschriften aus dem deutschsprachigen Feld",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann der Ort, an dem eine Gesamtübersicht steht",
+          "idx": [
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Wenn dir noch eine Zeitschrift einfällt",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Das Fachgebiet hat eine eigene Zeitschriftenlandschaft. Zu den deutschsprachigen Fachzeitschriften gehören die Zeitschrift für Heilpädagogik, die Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete, Sonderpädagogische Förderung heute und Behindertenpädagogik; hinzu kommen unter anderem Teilhabe, Menschen, Impulse und das Magazin Ohrenkuss. Eine Gesamtübersicht über die deutsch- und englischsprachigen Fachzeitschriften sowie die Online-Zeitschriften des Gebiets steht unter difgb.de/fachzeitschriften. Damit ist der Rechercheweg des Fachs benannt: eigene Fachzeitschriften und eine gepflegte Übersicht, über die sich aktuelle Beiträge finden lassen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Das Fachgebiet hat eigene Zeitschriften. Eine heißt Zeitschrift für Heilpädagogik. Eine heißt Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete. Vierteljahresschrift heißt: Sie kommt viermal im Jahr. Eine heißt Sonderpädagogische Förderung heute. Eine heißt Behindertenpädagogik. Es gibt noch mehr. Zum Beispiel Teilhabe, Menschen, Impulse und das Magazin Ohrenkuss. Eine große Liste aller Zeitschriften steht im Internet. Die Adresse ist difgb.de/fachzeitschriften. Dort findet man auch englische Zeitschriften."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Zeitschriftenliste steht auf Folie 13, die Cover dazu auf Folie 12 - in deinen Notizen kommt beides nicht vor, das ist also neuer Stoff und keine Wiederholung. Warum es sich lohnt: Die erste Kompetenzerwartung dieser Sitzung verlangt ausdrücklich, aktuelle Literatur sowie Recherche- und Informationsmöglichkeiten zu kennen - hier ist der Rechercheweg selbst der Inhalt. Beide Listen sind auf der Folie Bild und klein gesetzt, einzelne Schreibweisen können minimal abweichen: es zählt der Titel, nicht das Komma. Merkhilfe: dreimal steckt Heilpädagogik oder Förderung im Namen, dazu ein Titel, der schlicht die Fachrichtung nennt - und die Adresse difgb.de/fachzeitschriften für alles Weitere.",
+      "quelle": "folie-grundlagen-13",
+      "quelleSicherheit": "unsicher",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der schlichteste Titel: Gattung plus Fachgebiet, sonst nichts.",
+          "Das Blatt eines Fachverbands, benannt nach der aelteren Bezeichnung des Gebiets."
+        ],
+        [
+          "Sie erscheint viermal im Jahr, das steckt schon im Namen.",
+          "Sie schaut auch in die angrenzenden Felder; das Kuerzel lautet VHN."
+        ],
+        [
+          "Das Fachgebiet im Namen, dahinter ein Wort fuer die Gegenwart.",
+          "Klingt wie ein Programm: was in diesem Feld gerade gilt."
+        ],
+        [
+          "Ein einziges langes Wort - die Fachrichtung selbst als Titel.",
+          "Kein Zusatz, keine Gattung davor: nur der Name der Disziplin."
+        ],
+        [
+          "Fuer den vollen Ueberblick nennt die Sitzung eine Internetadresse.",
+          "Ein Fachverband pflegt die Liste; sein Kuerzel steckt in der Adresse."
+        ],
+        [
+          "Bonus: drei kurze Titel und ein Magazin mit ungewoehnlichem Namen.",
+          "Zusatz: In der linken Spalte der Folie stehen noch viele weitere."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb1-9",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 1,
+      "frage": "Diese Sitzung führt am Ende die Literatur auf, auf die sie sich stützt. Nennen Sie vier dieser Titel jeweils mit Verfasser oder Herausgeber und Jahr.",
+      "stichpunkte": [
+        "Fischer 2008, Bildung im Förderschwerpunkt geistige Entwicklung",
+        "Stöppler 2017, Einführung in die Pädagogik bei geistiger Behinderung",
+        "KMK 2021, Empfehlungen zur schulischen Bildung im Schwerpunkt",
+        "Amt für Statistik Berlin-Brandenburg 2021, Bericht zu den Schulen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zuerst die beiden Fachbücher mit Verfasser und Jahr",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die beiden Papiere von Institutionen",
+          "idx": [
+            2,
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Literaturliste dieser Sitzung nennt vier Titel. Erhard Fischer hat 2008 Bildung im Förderschwerpunkt geistige Entwicklung vorgelegt, den Entwurf einer subjekt- und bedarfsorientierten Didaktik; auf ihn stützt sich die Darstellung der strukturellen Merkmale und Besonderheiten von Förderschulen. Reinhilde Stöppler hat 2017 eine Einführung in die Pädagogik bei geistiger Behinderung veröffentlicht. Dazu kommen zwei Papiere von Institutionen: die Empfehlungen der Kultusministerkonferenz von 2021 zur schulischen Bildung, Beratung und Unterstützung im sonderpädagogischen Schwerpunkt Geistige Entwicklung sowie der Statistische Bericht des Amtes für Statistik Berlin-Brandenburg von 2021 zu den allgemeinbildenden Schulen im Land Brandenburg. Für einen Beleg in der Klausur genügen Nachname beziehungsweise Institution und Jahr.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Sitzung nennt am Ende vier Quellen. Erstens ein Buch von Erhard Fischer aus dem Jahr 2008. Es heißt Bildung im Förderschwerpunkt geistige Entwicklung. Aus diesem Buch stammen die Merkmale der Förderschule. Zweitens ein Buch von Reinhilde Stöppler aus dem Jahr 2017. Es ist eine Einführung in die Pädagogik bei geistiger Behinderung. Drittens ein Papier der Kultusministerkonferenz aus dem Jahr 2021. Die Kultusministerkonferenz heißt kurz KMK. Sie schreibt Empfehlungen für die Schulen. Viertens ein Bericht vom Amt für Statistik Berlin-Brandenburg aus dem Jahr 2021. Darin stehen Zahlen zu den Schulen im Land Brandenburg. Für die Klausur reicht der Name und das Jahr."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die vier Titel stehen auf der Literaturfolie 22. Die Seitenangabe Fischer 2008, 30 findest du zusätzlich in den Folientiteln von Folie 18 und Folie 20; den Beleg Fornefeld 2004, 106 für die vier Stufen nennt nur der Text von Folie 20, auf der Literaturliste steht er nicht. In deinen Notizen ist von alldem nur Fornefeld notiert, Notizen S. 58. Eine Quellenangabe kostet in der Klausur einen Halbsatz und zeigt genau die Kompetenz, die als erste Erwartung der Sitzung steht: die Literatur des Fachs zu kennen. Merkhilfe: zwei Bücher (Fischer, Stöppler), zwei Institutionen (KMK, Amt für Statistik) - und für die Merkmale zitierst du Fischer 2008, für die Stufen Fornefeld 2004.",
+      "quelle": "folie-grundlagen-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wer steht im Titel der beiden Merkmals-Folien? Ein Nachname genuegt.",
+          "Sein Buch traegt den Untertitel subjekt- und bedarfsorientierte Didaktik."
+        ],
+        [
+          "Ein Lehrbuch, das in das ganze Fachgebiet einfuehrt - Nachname genuegt.",
+          "Das juengere der beiden Buecher, erschienen bei einem Verlag mit UTB-Reihe."
+        ],
+        [
+          "Das gemeinsame Gremium der Bundeslaender fuer Schulfragen.",
+          "Sein Papier heisst nicht Gesetz, sondern spricht nur Ratschlaege aus."
+        ],
+        [
+          "Eine Behoerde, die amtliche Zahlen zu den Schulen zweier Laender fuehrt.",
+          "Woher kommen Schuelerzahlen fuer Brandenburg - nicht aus einem Buch."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb2-1",
+      "unterthema": "Stufenmodell",
+      "afb": 2,
+      "frage": "Zum Stufenmodell der Förderschule im Schwerpunkt geistige Entwicklung stehen in der Vorlesung zwei Darstellungen nebeneinander: ein Fließtext und eine Übersichtsabbildung, die eine Alters-Skala von der Geburt bis etwa zum einundzwanzigsten Lebensjahr abträgt. Erläutern Sie, welche Angebote die senkrechte Beschriftung Schule in dieser Abbildung umfasst und welche außerhalb bleiben, und vergleichen Sie anschließend die Stufenbezeichnungen beider Darstellungen.",
+      "stichpunkte": [
+        "Die Abbildung trägt eine senkrechte Alters-Skala von null bis etwa 21 Jahren ab und ordnet alle Angebote daran ein",
+        "Die senkrechte Beschriftung Schule umfasst genau vier Ovale - Unterstufe, Mittelstufe, Oberstufe und darüber, durch eine gestrichelte Linie abgesetzt, die Werk- bzw. Berufsschulstufe",
+        "Unterhalb dieser Klammer und damit außerhalb dessen, was die Abbildung als Schule bezeichnet, liegen die Früherziehung sowie Regelkindergarten, Sonderkindergarten und schulvorbereitende Einrichtung (Bayern)",
+        "In der Zahl stimmen Bild und Fließtext überein - vier Stufen, die jeweils drei Jahre besucht werden",
+        "In den Bezeichnungen weichen beide leicht ab: der Fließtext nennt die Vor-, Unter- bzw. Grundstufe, die Ober- bzw. Hauptstufe und die Werk- bzw. Abschlussstufe, die Abbildung kürzer Unterstufe und Oberstufe und am Ende die Werk- bzw. Berufsschulstufe",
+        "Weitere: neben der Klammer laufen Spalten über die ganze Skala - Tagesstätte (Bayern), integrierte therapeutische Angebote, mobile sonderpädagogische Dienste anderer Förderschulen und -zentren sowie eine Spalte mit den Berufsgruppen"
+      ],
+      "muster": "Zum Stufenmodell stehen zwei Darstellungen nebeneinander. Die Übersichtsabbildung trägt eine senkrechte Alters-Skala von null bis etwa einundzwanzig Jahren ab und ordnet alle Angebote daran ein. Entscheidend ist die senkrechte Beschriftung Schule: Sie umfasst genau vier Ovale, nämlich Unterstufe, Mittelstufe, Oberstufe und darüber, durch eine gestrichelte Linie abgesetzt, die Werk- beziehungsweise Berufsschulstufe. Unterhalb dieser Klammer liegen die Früherziehung sowie Regelkindergarten, Sonderkindergarten und schulvorbereitende Einrichtung; sie gehören damit nicht zu dem, was die Abbildung als Schule bezeichnet. Daneben laufen weitere Spalten über die ganze Skala: die Tagesstätte, integrierte therapeutische Angebote, mobile sonderpädagogische Dienste anderer Förderschulen und -zentren sowie eine Spalte mit den Berufsgruppen. In der Zahl stimmt das Bild mit dem Fließtext überein: vier Stufen, die jeweils drei Jahre besucht werden. In den Bezeichnungen unterscheiden sich beide leicht. Der Fließtext spricht von der Vor-, Unter- beziehungsweise Grundstufe, von der Ober- beziehungsweise Hauptstufe und von der Werk- beziehungsweise Abschlussstufe; die Abbildung nennt kürzer Unterstufe und Oberstufe und am Ende die Werk- beziehungsweise Berufsschulstufe. Gemeint ist beide Male dieselbe Abfolge - die Doppelbezeichnungen halten nur fest, dass für dieselbe Stufe mehrere Namen gebräuchlich sind.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Es gibt zwei Darstellungen vom Stufenmodell. Eine ist ein Text. Eine ist ein Bild. Im Bild läuft am Rand eine Linie mit dem Alter. Sie geht von null bis etwa einundzwanzig Jahren. Am Rand steht senkrecht das Wort Schule. Dieses Wort umfasst genau vier Ovale: Unterstufe, Mittelstufe, Oberstufe und ganz oben die Werkstufe oder Berufsschulstufe. Die oberste ist mit einer gestrichelten Linie abgetrennt. Darunter stehen die Früherziehung, der Kindergarten und die schulvorbereitende Einrichtung. Sie gehören nicht zu dem, was das Bild Schule nennt. Daneben laufen noch andere Spalten: die Tagesstätte, die Therapie, die mobilen Dienste von anderen Förderzentren und die Berufsgruppen. Die Zahl ist im Bild und im Text gleich: vier Stufen, jede dauert drei Jahre. Die Namen sind ein bisschen anders. Der Text sagt Vor- oder Unterstufe oder Grundstufe, Ober- oder Hauptstufe und Werk- oder Abschlussstufe. Das Bild sagt kürzer Unterstufe und Oberstufe und am Ende Werk- oder Berufsschulstufe. Gemeint ist aber dieselbe Reihenfolge."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erläutern heißt hier: erst sagen, was im Bild wo steht, dann Bild und Text nebeneinanderlegen. Beides steht auf Folie 20 - links der Fließtext zum Stufenmodell, rechts die Übersichtsabbildung; in deinen Notizen ist das Notizen S. 58, die Klammer selbst hast du dort nicht vermerkt. Das Bild ist klein gedruckt und am bayerischen System ausgerichtet (schulvorbereitende Einrichtung und Tagesstätte tragen im Bild den Zusatz Bayern), und die beiden Fußnoten darin sind nicht lesbar - dazu musst du also nichts sagen. Ehrlich dazugesagt: Warum die Frühförderung trotzdem als Merkmal dieser Schulform gilt, sagt keine Folie; auf der Merkmalsliste steht sie nur als Punkt. Halte dich deshalb an das, was die Abbildung zeigt - die Klammer trennt die Schulzeit von allem, was daneben und davor läuft. Merkhilfe: vier mal drei ergibt die zwölf Jahre, auf die der Schulbesuch verlängert werden kann.",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Was laeuft am Rand der Abbildung von unten nach oben?",
+          "Sie beginnt bei den ersten Lebensjahren.",
+          "Zwei Zahlen begrenzen sie, oben steht die einundzwanzig."
+        ],
+        [
+          "Was fasst die senkrecht gedruckte Klammer zusammen?",
+          "Nur die Ovale gehoeren hinein, die Kaesten darunter nicht.",
+          "Vier Namen, und der oberste ist gestrichelt abgetrennt."
+        ],
+        [
+          "Welche Angebote sitzen im Bild tiefer als die Klammer?",
+          "Vor der Einschulung stehen dort drei Kaesten und ein Angebot fuer die ersten Jahre.",
+          "Bei zweien steht ein Bundesland dabei."
+        ],
+        [
+          "Vergleich eins: Worin sind sich Bild und Text einig?",
+          "Zwei Zahlen - wie viele Abschnitte, wie lang jeder.",
+          "Die Rechnung dahinter kennst du aus dem Stufenmodell."
+        ],
+        [
+          "Vergleich zwei: Wo gehen die Namen auseinander?",
+          "Der Text haengt an drei Stufen einen zweiten Namen an.",
+          "Am Schluss heisst es einmal Abschluss und einmal Berufsschule."
+        ],
+        [
+          "Zusatz: Was steht im Bild sonst noch neben dem Schulteil?",
+          "Bonus: Betreuung, Therapie, ein Dienst von auswaerts und die Leute, die dort arbeiten."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb2-2",
+      "unterthema": "Rahmenfrage & Qualifikationsziele",
+      "afb": 2,
+      "frage": "Die Modulbeschreibung hält fest, dass in den Veranstaltungen auch Inhalte, die in anderen Veranstaltungen bereits vermittelt wurden, für den Förderschwerpunkt Geistige Entwicklung spezifiziert werden - und sie stellt zugleich eine Grundsatzfrage in den Mittelpunkt der Vorlesung. Geben Sie diese Frage in eigenen Worten wieder, erläutern Sie, was mit dem Spezifizieren gemeint ist, und arbeiten Sie heraus, worin sich die beiden Möglichkeiten unterscheiden, die die Frage einander gegenüberstellt. Eine eigene Bewertung ist hier noch nicht verlangt.",
+      "stichpunkte": [
+        "Die Frage hat zwei Hälften - ob es für diesen Förderschwerpunkt eine eigene, spezielle Didaktik und Methodik geben kann, und inwiefern allgemeine Modelle und Theorien für ihn spezifiziert werden müssen",
+        "Spezifizieren meint im Modultext, dass Inhalte aus anderen Veranstaltungen für diesen Förderschwerpunkt zugeschnitten werden",
+        "Der zweite Weg beginnt damit nicht bei null - das allgemeine Modell bleibt bestehen und wird zugeschnitten, während der erste Weg gerade nicht an bereits Vermitteltem ansetzen würde",
+        "Gegenstand des Moduls sind ausdrücklich die Fragen der Didaktik und Methodik des inklusiven Unterrichts in diesem Förderschwerpunkt",
+        "Beide Hälften stehen mit verschiedenen Fragewörtern da - vorn heißt es ob, hinten inwiefern",
+        "Weitere: die Vorlesung rückt diese Frage ausdrücklich in den Mittelpunkt, sie ist also die Klammer über alle Sitzungen und nicht nur der Einstieg der ersten Stunde"
+      ],
+      "muster": "Die Vorlesung stellt eine Grundsatzfrage in den Mittelpunkt, und diese Frage hat zwei Hälften: Kann es für den Förderschwerpunkt Geistige Entwicklung eine eigene, spezielle Didaktik und Methodik geben - und inwiefern müssen allgemeine Modelle und Theorien für diesen Förderschwerpunkt spezifiziert werden? Was Spezifizieren heißt, sagt die Modulbeschreibung selbst: Inhalte, die in anderen Veranstaltungen bereits vermittelt wurden, werden für diesen Förderschwerpunkt zugeschnitten. Der zweite Weg beginnt also nicht bei null. Das allgemeine Modell bleibt bestehen und wird zugeschnitten, während der erste Weg gerade nicht an bereits Vermitteltem ansetzen würde, sondern nach etwas Eigenem für diesen Förderschwerpunkt fragt. Der Unterschied liegt damit im Ausgangspunkt: einmal etwas Eigenes, einmal ein Zuschnitt am Vorhandenen. Dazu passt, dass das Modul als seinen Gegenstand ausdrücklich die Fragen der Didaktik und Methodik des inklusiven Unterrichts in diesem Förderschwerpunkt benennt. Auffällig ist schließlich, dass die beiden Hälften mit verschiedenen Fragewörtern dastehen: vorn steht ob, hinten inwiefern.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorlesung stellt eine große Frage in den Mittelpunkt. Die Frage hat zwei Teile. Erster Teil: Kann es eine eigene Didaktik und Methodik für diesen Förderschwerpunkt geben? Zweiter Teil: Und wie weit muss man allgemeine Modelle für diesen Förderschwerpunkt anpassen? Anpassen heißt hier: Inhalte aus anderen Veranstaltungen werden auf diesen Förderschwerpunkt zugeschnitten. Man fängt also nicht bei null an. Das allgemeine Modell bleibt. Nur der Zuschnitt ändert sich. Der erste Weg wäre anders. Er würde nicht bei dem anfangen, was schon da ist. Er fragt nach etwas Eigenem. Das Modul sagt auch, worum es geht: um Didaktik und Methodik im inklusiven Unterricht in diesem Förderschwerpunkt. Auffällig ist noch etwas: Vorn steht das Wort ob. Hinten steht das Wort inwiefern."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Hier ist noch kein Urteil gefragt, sondern sauberes Lesen - die Bewertung derselben Frage übst du in der AFB-III-Aufgabe dazu. Die Rahmenfrage und der Satz über das Spezifizieren stehen auf Folie 5, oben im Abschnitt zu den Inhalten des Moduls. In deinen Notizen fehlt diese Folie ganz, dort beginnt V1 erst bei den Kompetenzerwartungen auf Notizen S. 57 - das ist also neuer Stoff und keine Wiederholung. Ehrlich dazugesagt: Wie eine eigene Sonderdidaktik im Einzelnen aussähe, sagt die Folie nicht; du beschreibst nur den Ausgangspunkt der beiden Wege, und der steht im Satz über das Spezifizieren. Wenn du aus den beiden Fragewörtern etwas herausliest - inwiefern klingt nach Ausmaß, ob nach einer Grundsatzentscheidung -, dann sag dazu, dass das deine Lesart ist; die Folie stellt beide Hälften nebeneinander und beantwortet keine davon. Und keine Sorge wegen des Worts inklusiver Unterricht: Ausgenommen ist die Sitzung Inklusion im SGE, nicht dieser Satz aus der Modulbeschreibung. Merkhilfe: ein eigenes Gebäude oder ein Umbau am vorhandenen - das ist der ganze Unterschied.",
+      "quelle": "folie-grundlagen-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Womit faengt die Antwort an - die Frage selbst, in zwei Teilen.",
+          "Einmal etwas ganz Eigenes, einmal etwas Angepasstes.",
+          "Beide Teile handeln von Didaktik und von Methodik."
+        ],
+        [
+          "Was steht im Modultext hinter dem Wort spezifizieren?",
+          "Es geht um Stoff, den du woanders schon gehoert hast.",
+          "Zuschneiden statt neu erfinden."
+        ],
+        [
+          "Wo setzt der eine Weg an, wo der andere?",
+          "Einer nimmt etwas Vorhandenes und passt es an.",
+          "Der andere faengt bei nichts Vorhandenem an."
+        ],
+        [
+          "Worum geht es im Modul laut eigener Beschreibung?",
+          "Zwei Faecher-Woerter und ein Wort fuer die Unterrichtsform.",
+          "Es ist nicht auf die Foerderschule beschraenkt."
+        ],
+        [
+          "Schau genau hin, wie die beiden Haelften gefragt sind.",
+          "Zwei kleine Fragewoerter stehen davor, und sie sind verschieden.",
+          "Eines fragt nach dem Ob, das andere nach dem Wie weit."
+        ],
+        [
+          "Zusatz: Welchen Rang hat diese Frage in der Vorlesung?",
+          "Bonus: Sie gilt nicht nur fuer die erste Sitzung."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb3-1",
+      "unterthema": "Stufenmodell",
+      "afb": 3,
+      "frage": "Im Werkstufenbereich dauert der Schulbesuch im Schwerpunkt geistige Entwicklung zwölf statt neun Jahre. Diskutieren Sie, ob diese Verlängerung für die Schülerinnen und Schüler ein Gewinn ist, und beziehen Sie am Ende begründet Position.",
+      "stichpunkte": [
+        "Befund - die Schulzeit gliedert sich in vier Stufen zu je drei Jahren, im Werkstufenbereich wird der Schulbesuch von neun auf zwölf Jahre verlängert, in begründeten Fällen auch darüber hinaus",
+        "Dafür 1: Die Werkstufe hat einen eigenen Auftrag jenseits der allgemeinen Bildungsangebote - Vorbereitung auf nachschulische Lebenswelten und vor allem auf das Berufsleben; das braucht Zeit",
+        "Dafür 2: Die Werkstufe ist relativ eigenständig, sie verlängert also nicht einfach das Bisherige, sondern setzt einen anderen Schwerpunkt",
+        "Dafür 3: Dass in begründeten Fällen weiter verlängert werden kann, erlaubt es, den Übergang an einzelnen Jugendlichen auszurichten statt an einem festen Datum",
+        "Dagegen 1: Die Vorbereitung auf das Leben nach der Schule findet weiter in der Schule statt - je länger sie dauert, desto später beginnt die Erfahrung draußen",
+        "Dagegen 2: Die Altersskala des Übersichtsschaubilds reicht bis etwa 21 Jahre, junge Erwachsene bleiben also lange im Status von Schülerinnen und Schülern",
+        "Fazit - die Verlängerung ist gerechtfertigt, weil die Werkstufe ein eigener Bildungsabschnitt mit eigenem Ziel ist; ihr Gewinn hängt aber daran, dass sie sich nach außen öffnet"
+      ],
+      "muster": "Die Schulzeit im Schwerpunkt geistige Entwicklung gliedert sich in vier Stufen zu je drei Jahren; im Werkstufenbereich verlängert sich der Schulbesuch von neun auf zwölf Jahre, in begründeten Fällen auch darüber hinaus. Für diese Verlängerung spricht zunächst, dass die Werkstufe einen eigenen Auftrag hat: Sie soll über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten, und ein solcher Auftrag braucht Zeit. Hinzu kommt, dass sie als relativ eigenständige Stufe gilt; sie verlängert also nicht einfach das Bisherige, sondern setzt einen anderen Schwerpunkt. Auch die Möglichkeit, in begründeten Fällen weiter zu verlängern, spricht dafür, weil sich der Übergang so an einzelnen Jugendlichen ausrichten lässt statt an einem festen Datum. Dagegen lässt sich einwenden, dass die Vorbereitung auf das Leben nach der Schule weiterhin in der Schule stattfindet: Je länger sie dauert, desto später beginnt die Erfahrung an genau den Orten, auf die sie vorbereiten soll. Das Übersichtsschaubild reicht bis etwa zum einundzwanzigsten Lebensjahr, junge Erwachsene bleiben also lange im Status von Schülerinnen und Schülern. Offen bleibt außerdem, nach welchen Kriterien eine weitere Verlängerung begründet wird und wer darüber entscheidet. Ich halte die Verlängerung dennoch für gerechtfertigt, weil die Werkstufe ein eigener Bildungsabschnitt mit eigenem Ziel und keine bloß angehängte Schulzeit ist. Ihr Gewinn hängt allerdings daran, dass sie sich in diesen Jahren nach außen öffnet und die Vorbereitung nicht im geschützten Rahmen belässt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Schulzeit hat vier Stufen. Jede Stufe dauert drei Jahre. Am Ende steht die Werkstufe. Deshalb dauert die Schule zwölf Jahre statt neun. Manchmal sogar länger. Dafür spricht: Die Werkstufe hat eine eigene Aufgabe. Sie bereitet auf das Leben nach der Schule vor, vor allem auf die Arbeit. Das braucht Zeit. Die Werkstufe ist auch ziemlich selbstständig. Sie wiederholt nicht einfach die Schule von vorher. Und man kann die Zeit für einzelne Jugendliche noch verlängern. Dagegen spricht: Die Jugendlichen bleiben lange in der Schule. Sie sind dann fast 21 Jahre alt. Das Leben draußen beginnt spät. Und niemand sagt genau, wer über eine weitere Verlängerung entscheidet. Meine Meinung: Die längere Zeit ist gut. Denn die Werkstufe hat ein eigenes Ziel. Aber sie muss nach draußen gehen. Sonst bleibt die Vorbereitung nur ein Üben im Schutzraum."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Gerüst der Dozentin trägt auch hier: zwei Punkte dafür, zwei dagegen, dann eine klare Bewertung - und in ganzen Sätzen schreiben. Die Fakten stehen auf Folie 20: vier Stufen zu je drei Jahren, die relativ eigenständige Werkstufe mit ihrer Zielsetzung, die Verlängerung von neun auf zwölf Jahre und die Option in begründeten Fällen; die Altersskala bis etwa 21 Jahre liest du am Übersichtsschaubild rechts auf derselben Folie ab. In deinen Notizen ist das Notizen S. 58. Die Abwägung selbst steht auf keiner Folie - die führst du wirklich selbst, und genau dafür gibt es bei AFB III die Punkte. Such also keine Fundstelle für die Gegenseite; es reicht völlig, dass deine Argumente an den Fakten der Folie hängen. Ein dritter Einwand, wenn du ihn brauchst: Nach welchen Kriterien eine weitere Verlängerung begründet wird und wer darüber entscheidet, sagt das Material nicht. Und ein Satz, der immer trägt: Was gewinnt die Schülerin, und was verliert sie in derselben Zeit?",
+      "quelle": "folie-grundlagen-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Fang mit den Zahlen an, ueber die gestritten wird.",
+          "Wie viele Abschnitte, wie lang jeder, wie lang insgesamt?",
+          "Und eine Tuer fuer Ausnahmen steht auch offen."
+        ],
+        [
+          "Warum braucht der letzte Abschnitt ueberhaupt Zeit?",
+          "Denk an sein Ziel jenseits der allgemeinen Bildung.",
+          "Arbeit und das Leben danach stehen im Mittelpunkt."
+        ],
+        [
+          "Ist der letzte Abschnitt eine Wiederholung oder etwas Neues?",
+          "Ein Wort auf der Folie sagt, wie frei er steht.",
+          "Anderer Schwerpunkt statt mehr vom Gleichen."
+        ],
+        [
+          "Welche Ausnahmeregel spricht fuer Individualisierung?",
+          "Der Uebergang muss nicht bei allen am selben Tag enden.",
+          "Die Folie laesst eine Tuer offen, das ist ein Argument."
+        ],
+        [
+          "Wo findet die Vorbereitung statt, und wo spaeter das Leben?",
+          "Uebung im Haus ersetzt die Erfahrung draussen nicht.",
+          "Je laenger drinnen, desto spaeter draussen."
+        ],
+        [
+          "Welche Zahl am Rand des Schaubilds ist unbequem?",
+          "Wie alt ist jemand am Ende dieser Schulzeit?",
+          "Erwachsen und trotzdem Schuelerin - das ist der Punkt."
+        ],
+        [
+          "Jetzt deine Position, mit Grund und mit Bedingung.",
+          "Sag Ja oder Nein und haenge ein Aber daran.",
+          "Kein Sowohl-als-auch - eine Richtung, klar begruendet."
+        ]
+      ]
+    },
+    {
+      "id": "gr-afb3-2",
+      "unterthema": "Merkmale der Förderschule",
+      "afb": 3,
+      "frage": "Die Leitfrage der Sitzung lautet, welche Merkmale Förderschulen aufweisen. Beantwortet wird sie durch die Merkmalsliste nach Fischer 2008; die Beschriftungen am exemplarischen Stundenplan gelten dabei als bloße Ablesehilfe zu dieser Liste. Prüfen Sie, ob sich wirklich jede dieser Beschriftungen unter einen Punkt der Liste einordnen lässt, und beziehen Sie begründet Position, ob die Liste die Leitfrage vollständig beantwortet.",
+      "stichpunkte": [
+        "Befund - die Merkmalsliste steht auf zwei Folien und nennt vier Rahmenbedingungen von der Frühförderung bis zu den kleinen Klassenfrequenzen, dazu Stufenlogik, Werkstufe und zwölf Schuljahre",
+        "Dafür 1: Diese Punkte decken sehr verschiedene Ebenen ab - den Rand der Schulzeit, den Tagesrahmen, den Raum, die Gruppengröße und die gesamte Laufbahn bis zum Berufsleben",
+        "Dafür 2: Zwei Beschriftungen am Stundenplan lassen sich einem Punkt der Liste unmittelbar zuordnen - die Ganztagsschule der Ganztagsbeschulung und die kleinen Lerngruppen den relativ kleinen Klassenfrequenzen",
+        "Einschränkung zu Dafür 2: Die gemeinsamen Mahlzeiten stehen in keinem Punkt der Liste - sie lassen sich nur mittelbar über den Ganztag anschließen, und das gehört als eigener Schluss gekennzeichnet",
+        "Dagegen 1: Drei Beschriftungen finden in der Liste keinen Platz - der Unterricht in Blöcken, die Visualisierung mit Symbolen und die spezifischen Lernfelder; alle drei betreffen die Gestaltung des Unterrichts und nicht seinen Rahmen",
+        "Dagegen 2: Auch das Übersichtsschaubild zeigt Merkmale, die in der Liste fehlen - mehrere Berufsgruppen unter einem Dach sowie Tagesstätte und therapeutische Angebote",
+        "Dagegen 3: Die Liste beschreibt die Schulform von außen und sagt wenig darüber, wie dort gelernt wird und was gelernt wird",
+        "Fazit - als Beschreibung der Rahmenbedingungen trägt die Liste, als volle Antwort auf die Leitfrage reicht sie nicht; zu ergänzen sind die Unterrichtsgestaltung und die beteiligten Professionen"
+      ],
+      "muster": "Die Sitzung beantwortet ihre Leitfrage zweimal. Die Merkmalsliste nach Fischer nennt über beide Folien hinweg Angebote der Frühförderung und schulvorbereitende Gruppen, die Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer, relativ kleine Klassenfrequenzen sowie die Vierteilung der Schulzeit, die eigenständige Werkstufe und die Verlängerung des Schulbesuchs von neun auf zwölf Jahre. Für ihre Tragfähigkeit spricht, dass sie sehr verschiedene Ebenen abdeckt: den Rand der Schulzeit, den Tagesrahmen, den Raum, die Gruppengröße und die gesamte Laufbahn bis hin zum Berufsleben. Hinzu kommt, dass sich zwei Beschriftungen am exemplarischen Stundenplan unmittelbar zuordnen lassen: die Ganztagsschule der Ganztagsbeschulung und die kleinen Lerngruppen den relativ kleinen Klassenfrequenzen. Die gemeinsamen Mahlzeiten stehen dagegen in keinem Punkt der Liste; sie lassen sich nur mittelbar über den Ganztag anschließen, und diesen Schluss sollte man als solchen kennzeichnen. Dagegen spricht, dass drei Beschriftungen unter keinen Punkt der Liste passen: der Unterricht in Blöcken, die Visualisierung des Stundenplans mit Symbolen und die spezifischen Lernfelder. Alle drei betreffen die Gestaltung des Unterrichts und nicht seinen Rahmen. Auch das Übersichtsschaubild zeigt Merkmale, die in der Liste fehlen, nämlich mehrere Berufsgruppen unter einem Dach sowie Tagesstätte und therapeutische Angebote. Insgesamt beschreibt die Liste die Schulform von außen und sagt wenig darüber, wie und was dort gelernt wird. Ich halte sie deshalb für einen richtigen, aber unvollständigen Einstieg: Als Beschreibung der Rahmenbedingungen trägt sie, als vollständige Antwort auf die Leitfrage muss sie um die Merkmale der Unterrichtsgestaltung und um die Professionen ergänzt werden, die an dieser Schule zusammenarbeiten.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorlesung fragt: Was ist typisch für eine Förderschule? Es gibt zwei Antworten. Die erste Antwort ist eine Liste. Sie nennt die Frühförderung, den Ganztag, wohnliche Klassenzimmer, kleine Klassen, die vier Stufen, die Werkstufe und die zwölf Schuljahre. Das ist viel. Am Stundenplan stehen sechs Beschriftungen. Zwei davon passen genau zur Liste: der Ganztag und die kleinen Gruppen. Das gemeinsame Essen passt nur ungefähr dazu, über den Ganztag. In der Liste steht es nicht. Drei Beschriftungen fehlen in der Liste ganz: der Unterricht in Blöcken, die Symbole im Plan und die besonderen Lernfelder. Alle drei sagen etwas über den Unterricht. Die Liste sagt aber nur etwas über den Rahmen. Auch die Berufsgruppen und die Therapie fehlen. Meine Meinung: Die Liste ist ein guter Anfang. Sie reicht aber nicht. Man muss den Unterricht und die Fachleute dazu nehmen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Schöne an dieser Aufgabe: Beide Seiten stehen wirklich im Material, du musst sie nur gegeneinander stellen. Die Merkmalsliste steht auf Folie 18 und wird auf Folie 20 fortgesetzt, beide Male mit Fischer 2008, 30 im Folientitel; die sechs Beschriftungen am Stundenplan stehen auf Folie 19, das Übersichtsschaubild mit Berufsgruppen, Tagesstätte und Therapie rechts auf Folie 20. In deinen Notizen sind das Notizen S. 57 und 58, die sechs Beschriftungen fehlen dort. Die Bewertung selbst steht auf keiner Folie - dass die Liste unvollständig sei, sagt die Dozentin nirgends, das ist dein eigenes Urteil, und genau dafür gibt es bei AFB III die Punkte. Struktur wie bei der Beispielaufgabe: zwei Punkte dafür, zwei dagegen, dann Position beziehen. Zähl beim Zuordnen ruhig mit: Von den sechs Beschriftungen passen zwei glatt in die Liste, eine kommt nur über den Ganztag hinein, und drei bleiben übrig. Der Unterricht in Blöcken ist dabei das sauberste Beispiel - er steht in keinem einzigen Punkt der Liste. Merkhilfe für die Gegenseite: Blöcke, Symbole und Lernfelder sind Unterricht, die Liste ist Rahmen.",
+      "quelle": "folie-grundlagen-18",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zuerst zusammentragen, worueber du urteilen sollst.",
+          "Sie steht nicht auf einer einzigen Folie.",
+          "Rahmen, Raum, Gruppe, Laufbahn - alles gehoert hinein."
+        ],
+        [
+          "Was spricht dafuer? Denk an die Bandbreite.",
+          "Sie deckt sehr unterschiedliche Ebenen ab.",
+          "Von der Zeit vor der Einschulung bis zur Arbeit."
+        ],
+        [
+          "Wie viele Ablesungen passen glatt in die Liste?",
+          "Es sind weniger, als man beim ersten Lesen denkt.",
+          "Tageslaenge und Gruppengroesse - dafuer gibt es je einen Listenpunkt."
+        ],
+        [
+          "Und was ist mit dem Essen im Plan?",
+          "Es steht in keinem Punkt, haengt aber am langen Tag.",
+          "Erschlossen ist nicht dasselbe wie belegt."
+        ],
+        [
+          "Welche Ablesungen bleiben nun uebrig?",
+          "Drei Stueck: die Taktung, die Bilder und die besonderen Faecher.",
+          "Gestaltung ist etwas anderes als Rahmenbedingung."
+        ],
+        [
+          "Was zeigt das grosse Schaubild noch, was in der Liste fehlt?",
+          "Denk an Menschen und an Angebote neben der Schule.",
+          "Wer arbeitet dort, und was gibt es ausser Unterricht?"
+        ],
+        [
+          "Welche Perspektive nimmt die Liste ein?",
+          "Sie schaut von aussen auf das Haus.",
+          "Ueber Inhalte und Methoden schweigt sie."
+        ],
+        [
+          "Jetzt dein Urteil, und zwar zweiteilig.",
+          "Was traegt, und was muss ergaenzt werden?",
+          "Ein klares Ja mit einer Bedingung ist eine Position."
         ]
       ]
     }

@@ -589,7 +589,7 @@
    Verkleinerung NICHT verloren. Der Klick-Handler ist eine delegierte Regel auf
    .info-btn[data-methode] und funktioniert deshalb unveraendert weiter.
    Die Kachel bleibt div[role=button] und kein <button>: ein Knopf im Knopf ist
-   ungueltiges HTML, und bindHub() haengt ohnehin an [data-spiel]. */
+   ungueltiges HTML, und binde() haengt ohnehin an [data-daily]. */
 .daily-kachel { position: relative; }
 .daily-kachel .d-info {
   position: absolute; top: 1px; right: 2px;
@@ -612,6 +612,54 @@
   .daily-kachel.frisch-erledigt { animation: none; }
   .daily-kachel:active { transform: none; }
 }
+
+/* Eine Tageskachel ohne Ziel (GE: "Sechs wiederholen", wenn der Stapel leer
+   ist). Sie bleibt sichtbar und abgehakt stehen, ist aber kein Knopf — also
+   auch keine Hand und kein Druck-Effekt. Lag bis zum 22.08.2026 nur in der
+   GE-App; seit tages-hub.js kann der geteilte Baustein den Zustand erzeugen
+   (geh: null), also gehoert die Regel zu ihm. Die Kopie drueben in
+   ge-trainer/app/css/style.css bleibt vorerst stehen und ist unschaedlich:
+   identische Regeln, geteilt.css wird VOR style.css geladen, die spaetere
+   gewinnt mit demselben Ergebnis. */
+.daily-kachel.nur-anzeige { cursor: default; }
+.daily-kachel.nur-anzeige:active { transform: none; }
+
+/* Die Zaehl-Blase an der Stelle des Hakens: der Haken sagt nur "durch", die
+   Blase sagt, WIE OFT heute (GE: wie viele Themen). Werte byteweise aus
+   ge-trainer/app/css/style.css uebernommen — wer sie beim Kopieren auch nur um
+   ein Pixel aendert, aendert Roses GE-Startseite aus Versehen mit. Dort steht
+   der erste Block als ".tl-blase, .d-blase"; die Themen-Kachel-Variante
+   .tl-blase ist GE-eigen und bleibt drueben, hier steht nur, was der Baustein
+   baut. Zweite Regel ist die Verkleinerung fuer die Tageskachel: nur die Zahl,
+   ohne Wort — der Kachelname sagt schon, worum es geht. */
+.d-blase {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  border-radius: 999px; padding: 4px 12px;
+  border: 1.5px solid var(--ok);
+  background: color-mix(in srgb, var(--ok) 14%, transparent);
+  color: var(--ok); font-weight: 700; line-height: 1.2;
+}
+.d-blase { padding: 2px 10px; font-size: .95rem; gap: 2px; }
+
+/* Drei an einem Tag: Regenbogen-Schimmer und ein Stern. Die Animation ist
+   bewusst langsam und schwach — ein Schimmern, kein Blinken. Wer weniger
+   Bewegung will, bekommt denselben Verlauf ohne Lauf (unten). Der Baustein
+   setzt .tl-regenbogen ab blase >= 3 und haengt dann .tl-stern hinein; ohne
+   die Keyframes waere die Regel still wirkungslos, deshalb ziehen sie mit. */
+.tl-regenbogen {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(90deg, #f0a4c8, #f5c877, #a8e0b0, #8fc7f0, #c3a8ee, #f0a4c8) border-box;
+  background-size: auto, 300% 100%;
+  animation: tl-schimmer 9s linear infinite;
+}
+.tl-stern { font-style: normal; }
+@keyframes tl-schimmer {
+  from { background-position: 0 0, 0% 50%; }
+  to   { background-position: 0 0, 300% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .tl-regenbogen { animation: none; } }
 
 
 /* ===========================================================================

@@ -840,15 +840,18 @@
   "frei": [
     {
       "id": "fr-f-1",
+      "unterthema": "Freizeitbedürfnisse",
       "afb": 1,
       "frage": "Benennen Sie fünf Freizeitbedürfnisse (Zielfunktionen von Freizeit) mit ihrer jeweiligen Bedeutung.",
       "stichpunkte": [
-        "Rekreation (Erholung): Erholung, Ruhe, Wohlbefinden, angenehmes Körpergefühl",
-        "Kompensation (Ausgleich): Ausgleich, Ablenkung, Vergnügen",
-        "Edukation (Weiterbildung): Kennenlernen, Weiter- und Umlernen",
-        "Kontemplation (Besinnlichkeit): Selbsterfahrung und Selbstfindung",
-        "Kommunikation: Mitteilung, vielfältige soziale Beziehungen, Geselligkeit",
-        "Weitere: Integration/Inklusion (Zusammensein, Gemeinschaftsbezug, soziale Stabilität), Partizipation (Beteiligung, Mitbestimmung, Engagement), Enkulturation (kreative Entfaltung, produktive Betätigung, Teilnahme am kulturellen Leben)"
+        "Bedürfnis 1: Rekreation - Erholung, Ruhe, Wohlbefinden, Körpergefühl",
+        "Bedürfnis 2: Kompensation - Ausgleich, Ablenkung, Vergnügen",
+        "Bedürfnis 3: Edukation - Kennenlernen, Weiter- und Umlernen",
+        "Bedürfnis 4: Kontemplation - Selbsterfahrung, Selbstfindung",
+        "Bedürfnis 5: Kommunikation - Mitteilung, Beziehungen, Geselligkeit",
+        "Weitere: Integration/Inklusion - Zusammensein, Gemeinschaftsbezug",
+        "Weitere: Partizipation - Beteiligung, Mitbestimmung, Engagement",
+        "Weitere: Enkulturation - kreative Entfaltung, kulturelles Leben"
       ],
       "muster": "Fünf Zielfunktionen von Freizeit sind: Rekreation, das Bedürfnis nach Erholung, Ruhe und Wohlbefinden; Kompensation, das Bedürfnis nach Ausgleich, Ablenkung und Vergnügen; Edukation, das Bedürfnis nach Kennenlernen sowie Weiter- und Umlernen; Kommunikation, das Bedürfnis nach Mitteilung, vielfältigen sozialen Beziehungen und Geselligkeit; und Enkulturation, das Bedürfnis nach kreativer Entfaltung und Teilnahme am kulturellen Leben.",
       "musterVarianten": {
@@ -869,21 +872,53 @@
       "quelle": "folie-freizeit-8",
       "quelleSicherheit": "geprueft",
       "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Fünf Freizeitbedürfnisse mit ihrer Bedeutung benennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "chips": [
+            "Bedürfnis 1",
+            "Bedürfnis 2",
+            "Bedürfnis 3",
+            "Bedürfnis 4",
+            "Bedürfnis 5"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Diese drei gehören auch zur Achterliste",
+          "idx": [
+            5,
+            6,
+            7
+          ],
+          "form": "liste"
+        }
+      ],
       "hinweise": [
         [
-          "Die Funktion fuers Auftanken: Körper und Ruhe im Mittelpunkt",
-          "Was Pausen und Schlaf erfüllen - Fachwort mit Re-",
-          "Denk ans Ausruhen und ein gutes Körpergefühl"
+          "Die Funktion fürs Auftanken - Körper und Ruhe stehen im Mittelpunkt",
+          "Fachwort mit Re-: was Schlaf und Pause erfüllen",
+          "Denk ans Ausruhen und daran, wie sich der Körper danach anfühlt"
         ],
         [
-          "Der Gegenpol zum Alltag: etwas ganz anderes tun, Spaß haben",
-          "Die Funktion, die Belastung ausbalanciert - denk an Zerstreuung",
-          "Fachwort mit K: Alltagsstress durch Abwechslung auffangen"
+          "Der Gegenpol zum Alltag: etwas ganz anderes tun",
+          "Fachwort mit K: Belastung auffangen, Zerstreuung suchen",
+          "Es geht um Abwechslung und darum, Spaß zu haben"
         ],
         [
           "Die Lern-Funktion der Freizeit",
-          "Neues entdecken und dazulernen - welches Fachwort passt?",
-          "Bildung auch außerhalb der Schule, ein Leben lang"
+          "Neues entdecken, dazulernen, auch umdenken - welches Fachwort?",
+          "Bildung außerhalb der Schule, ein Leben lang"
         ],
         [
           "Die stille Funktion: zu sich selbst finden",
@@ -893,17 +928,25 @@
         [
           "Die soziale Funktion: mit anderen im Austausch sein",
           "Reden, Kontakte, Beisammensein - welches Fachwort?",
-          "Es geht ums Miteinander-Sprechen und um Beziehungen"
+          "Es geht ums Miteinander-Sprechen und um Freundschaften"
         ],
         [
-          "Drei weitere Funktionen: Dazugehören, Mitbestimmen, Kultur",
-          "Der Rest der Achterliste - Gemeinschaft, Beteiligung, Kreatives",
-          "Denk an die übrigen drei Zielfunktionen"
+          "Dazugehören: das Bedürfnis nach Gemeinschaft",
+          "Fachwort mit I: Teil einer Gruppe sein und Halt finden"
+        ],
+        [
+          "Mitreden und mitentscheiden dürfen",
+          "Fachwort mit P: sich einbringen, sich engagieren"
+        ],
+        [
+          "Das Kreative und das Kulturelle",
+          "Fachwort mit E: selbst gestalten und am Kulturleben teilhaben"
         ]
       ]
     },
     {
       "id": "fr-f-2",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
       "afb": 2,
       "frage": "Beschreiben Sie die prozessbezogenen Kompetenzen des Kompetenzstrukturmodells Freizeitgestaltung.",
       "stichpunkte": [
@@ -955,6 +998,7 @@
     },
     {
       "id": "fr-f-3",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
       "afb": 2,
       "frage": "Erläutern Sie Selbstbestimmung als Ziel der Freizeitbildung. **Erläutern heißt hier: den Begriff nicht nur definieren, sondern mit Begründungen und Belegen aus der Vorlesung entfalten.**",
       "stichpunkte": [
@@ -1018,6 +1062,7 @@
     },
     {
       "id": "fr-f-4",
+      "unterthema": "Spannungsfelder",
       "afb": 3,
       "frage": "Beurteilen Sie ein Spannungsfeld der Freizeitbildung und leiten Sie pädagogische Handlungsoptionen ab.",
       "stichpunkte": [
@@ -1075,16 +1120,24 @@
     },
     {
       "id": "fr-f-5",
+      "unterthema": "Teilhabe & Barrieren",
       "afb": 1,
       "frage": "Welche Teilhaberisiken und Barrieren bestehen für Menschen mit Behinderung im Freizeitbereich? **Das Wörtchen und verbindet hier zwei verschiedene Systematiken: Teilhaberisiken und Barrieren sind nicht dasselbe, beide Teile gehören in die Antwort.**",
       "stichpunkte": [
-        "Teilhaberisiken (Schuck 2019): jedem der acht Freizeitbedürfnisse steht eine typische Benachteiligung gegenüber",
-        "Rekreation: Abhängigkeit von Unterstützung, fremdbestimmte Tagesstruktur, fehlende Rückzugsmöglichkeiten; Kompensation: eingeschränkte Mobilität, Umweltbarrieren, fehlende inklusive Freizeitangebote; Edukation: begrenzte Bildungs- und Weiterbildungsangebote, erschwerter Zugang zu Bildung; Kontemplation: Bevormundung, häufig wechselnde Bezugspersonen, Isolation",
-        "Kommunikation: Verständigungsschwierigkeiten, eingeschränkte soziale Kontakte; Integration/Inklusion: Diskriminierung, soziale Ausgrenzung; Partizipation: Fremdbestimmung, fehlende Entscheidungsmöglichkeiten; Enkulturation: fehlende kulturelle Angebote, mangelnde Barrierefreiheit",
-        "Strukturelle Barrieren: schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse, fehlende Unterstützungssysteme",
-        "Soziale Barrieren: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal, defizitorientierte Sichtweisen",
-        "Ressourcenprobleme: fehlende Assistenz, Sicherheitsbedenken, zu wenig Betreuungspersonal",
-        "Zahlen aus dem Sport: nur 2,4 % statt 9,6 % im Vereinssport, 55 % treiben keinen Sport, nur 35 % inklusiv arbeitende Vereine, nur 4 % inklusive öffentliche Freizeitflächen"
+        "Nach Schuck 2019 steht jedem Bedürfnis eine Benachteiligung gegenüber",
+        "Rekreation: Abhängigkeit, fremdbestimmte Tagesstruktur, kein Rückzug",
+        "Kompensation: kaum Mobilität, Umweltbarrieren, kein inklusives Angebot",
+        "Edukation: begrenzte Weiterbildung, erschwerter Zugang zu Bildung",
+        "Kontemplation: Bevormundung, wechselnde Bezugspersonen, Isolation",
+        "Kommunikation: Verständigungsschwierigkeiten, wenige Kontakte",
+        "Integration/Inklusion: Diskriminierung, soziale Ausgrenzung",
+        "Partizipation: Fremdbestimmung, keine Entscheidungsmöglichkeiten",
+        "Enkulturation: fehlende Kulturangebote, fehlende Barrierefreiheit",
+        "Barriere 1: strukturell - Wege, Bauten, Barrierefreiheit, Hilfesystem",
+        "Barriere 2: sozial - Unsicherheiten, wenig Personal, Defizitblick",
+        "Barriere 3: Ressourcen - fehlende Assistenz, Sicherheitsbedenken",
+        "Zahlen aus dem Sport: 2,4 % statt 9,6 % im Verein, 55 % ohne Sport",
+        "Weitere: nur 35 % inklusive Vereine, nur 4 % inklusive Flächen"
       ],
       "muster": "Nach Schuck (2019) lassen sich die Teilhaberisiken entlang der acht Freizeitbedürfnisse benennen, weil jedem Bedürfnis eine typische Benachteiligung gegenübersteht. Bei der Rekreation sind das die Abhängigkeit von Unterstützung, eine fremdbestimmte Tagesstruktur und fehlende Rückzugsmöglichkeiten, bei der Kompensation eingeschränkte Mobilität, Umweltbarrieren und fehlende inklusive Freizeitangebote, bei der Edukation begrenzte Bildungs- und Weiterbildungsangebote und ein erschwerter Zugang zu Bildung, bei der Kontemplation Bevormundung, häufig wechselnde Bezugspersonen und Isolation. Bei der Kommunikation sind es Verständigungsschwierigkeiten und eingeschränkte soziale Kontakte, bei Integration und Inklusion Diskriminierung und soziale Ausgrenzung, bei der Partizipation Fremdbestimmung und fehlende Entscheidungsmöglichkeiten, bei der Enkulturation fehlende kulturelle Angebote und mangelnde Barrierefreiheit. Davon zu unterscheiden sind die Barrieren im Freizeitbereich; sie lassen sich in drei Gruppen ordnen: strukturelle Barrieren wie die schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme; soziale Barrieren wie Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal und defizitorientierte Sichtweisen; sowie Ressourcenprobleme wie fehlende Assistenz und Sicherheitsbedenken. Wie stark diese Barrieren wirken, zeigt der Sport: Nur 2,4 Prozent der Menschen mit Behinderung sind im Vereinssport aktiv statt 9,6 Prozent in der Gesamtbevölkerung, und 55 Prozent treiben gar keinen Sport.",
       "musterVarianten": {
@@ -1104,46 +1157,142 @@
       "tipp": "Achte auf das Wörtchen und in der Aufgabe - es verbindet zwei verschiedene Dinge: Teilhaberisiken sind etwas anderes als Barrieren, und eine vollständige Antwort bringt beides. Die Teilhaberisiken hat die Vorlesung als eigene Tabelle auf Folie 13 (acht Freizeitbedürfnisse, je eine typische Benachteiligung) - in deinen Notizen fehlt diese Tabelle, deshalb lohnt sich der Blick auf die Folie hier besonders. Die acht Bedürfnisnamen kennst du schon von den Zielfunktionen von Freizeit; du hängst nur je eine typische Benachteiligung dran, dann hast du diesen Teil. Bei den Barrieren ist die Dreiteilung strukturell - sozial - Ressourcen das Gerüst; eine Beispielzahl aus dem Sport macht die Antwort anschaulich. War auch Quiz-Frage in der Vorlesung. Die Barrieren-Kästen stehen auf Folie 16, die Sport-Zahlen auf Folie 17, beides auch bei dir auf Notizen S. 02.",
       "quelle": "folie-freizeit-16",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Zuerst die Systematik der Teilhaberisiken",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Zu jedem der acht Freizeitbedürfnisse eine typische Benachteiligung",
+          "idx": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "form": "liste",
+          "chips": [
+            "Rekreation",
+            "Kompensation",
+            "Edukation",
+            "Kontemplation",
+            "Kommunikation",
+            "Integration/Inklusion",
+            "Partizipation",
+            "Enkulturation"
+          ]
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die drei Gruppen von Barrieren und eine Zahl, die zeigt, wie stark sie wirken",
+          "idx": [
+            9,
+            10,
+            11,
+            12
+          ],
+          "form": "liste",
+          "chips": [
+            "Barriere 1",
+            "Barriere 2",
+            "Barriere 3",
+            "Beispielzahl"
+          ]
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Diese Zahlen stehen in derselben Grafik",
+          "idx": [
+            13
+          ],
+          "form": "liste"
+        }
+      ],
       "hinweise": [
         [
           "Das Grundprinzip der Tabelle: jede Funktion hat eine Schattenseite",
-          "Schucks Systematik: Bedürfnis und passendes Risiko als Paar",
-          "Wie sind die Risiken geordnet? Entlang der Zielfunktionen"
+          "Wer hat die Risiken 2019 geordnet - und wonach?",
+          "Die Risiken laufen an den acht Zielfunktionen entlang"
         ],
         [
-          "Risiken der ersten vier Funktionen: Ausruhen bis Besinnung",
-          "Was steht Erholung, Ausgleich, Lernen und Innenschau entgegen?",
-          "Denk an Taktung von außen, Wege, Zugänge, Bevormundung"
+          "Beim Ausruhen: Wer bestimmt den Tagesablauf, und wo ist Rückzug möglich?",
+          "Erholung braucht eigene Zeit und einen eigenen Ort - beides fehlt oft",
+          "Denk an Taktung von außen und an fehlende Rückzugsorte"
         ],
         [
-          "Risiken der zweiten Vierergruppe: vom Austausch bis zur Kultur",
-          "Was erschwert Kontakt, Dazugehören, Mitbestimmen und Kulturleben?",
-          "Denk an Ausgrenzung, fehlende Wahl, fehlende Angebote"
+          "Ausgleich braucht Wege und Angebote, die für alle offen sind",
+          "Was hindert am Hinkommen, und wer wird beim Angebot nicht mitgedacht?",
+          "Denk an Fortbewegung, an Hindernisse in der Umwelt und an fehlende Offenheit"
         ],
         [
-          "Die Kategorie rund um Wege, Gebäude und Systeme",
-          "Barrieren, die in der Umwelt gebaut sind",
+          "Lernen hört nach der Schule nicht auf - die Angebote schon",
+          "Was fehlt beim Weiterlernen, und wie steht es um den Zugang?",
+          "Denk an Kurse, die es nicht gibt oder die schwer zu erreichen sind"
+        ],
+        [
+          "Zur Ruhe kommen geht schlecht, wenn andere für einen entscheiden",
+          "Denk an wechselndes Personal und an Alleinsein ohne Wahl",
+          "Selbstbesinnung braucht Verlässlichkeit und Respekt"
+        ],
+        [
+          "Kontakt braucht eine gemeinsame Sprache",
+          "Was erschwert das Gespräch, und was den Kreis an Menschen?",
+          "Denk an Verstehen und Verstandenwerden"
+        ],
+        [
+          "Dazugehören scheitert oft an den anderen",
+          "Zwei Wörter, die Ausschluss beschreiben",
+          "Denk an Abwertung und an Draußenbleiben"
+        ],
+        [
+          "Mitbestimmen geht nicht, wenn andere die Wahl treffen",
+          "Wer entscheidet - und was fehlt, wenn nicht ich?",
+          "Das Gegenteil von Selbstbestimmung, dazu die fehlende Wahl"
+        ],
+        [
+          "Kultur mitmachen: Was fehlt im Programm, und was am Gebäude?",
+          "Denk an Museen und Bühnen, die es nicht gibt oder die zu sind",
+          "Zwei Lücken: das kulturelle Angebot und der Zugang dazu"
+        ],
+        [
+          "Die erste Gruppe sitzt in der gebauten Umwelt und in den Hilfestrukturen",
+          "Hindernisse, die schon da sind, bevor ein Mensch ins Spiel kommt",
           "Was macht Orte schwer erreichbar oder unzugänglich?"
         ],
         [
-          "Die Kategorie in den Köpfen der Menschen",
+          "Die Gruppe in den Köpfen der Menschen",
           "Haltungen und Berührungsängste als Hindernis",
-          "Barrieren, die aus Blickwinkeln und Unsicherheit entstehen"
+          "Hindernisse, die aus Blickwinkeln und Verunsicherung entstehen"
         ],
         [
           "Woran fehlt es personell und praktisch?",
-          "Die dritte Spalte: knappe Mittel und Bedenken",
+          "Die dritte Gruppe: knappe Mittel und Bedenken",
           "Denk an fehlende Hände und an Absicherungsfragen"
         ],
         [
-          "Die vier Sport-Zahlen: Verein, Inaktive, inklusive Vereine, Flächen",
-          "Welche Prozentwerte belegen die Lücke beim Sport?",
-          "Denk an die Statistik: überall sehr kleine Anteile"
+          "Die Zahl, die den Abstand beim Verein zeigt",
+          "Wie viele sind dabei - und wie viele gar nicht?",
+          "Zwei Prozentwerte, einer davon ein Vergleich"
+        ],
+        [
+          "Zwei weitere Prozentwerte: Vereine und Flächen",
+          "Wie viele Vereine arbeiten inklusiv, und wie viel Platz gibt es draußen?"
         ]
       ]
     },
     {
       "id": "fr-gen-f-1",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
       "afb": 2,
       "frage": "Wenden Sie die drei prozessbezogenen Kompetenzen des Kompetenzstrukturmodells Freizeitgestaltung auf ein konkretes Beispiel an: Eine Schülergruppe soll einen gemeinsamen Nachmittag außerhalb der Schule planen.",
       "stichpunkte": [
@@ -1202,6 +1351,7 @@
     },
     {
       "id": "fr-gen-f-2",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
       "afb": 3,
       "frage": "Entwickeln Sie ein schulisches Vorhaben zur Förderung selbstbestimmter Freizeitgestaltung und begründen Sie Ihre Entscheidungen fachlich. **Fachlich begründen heißt hier: jede Entscheidung an ein Modell oder eine Position aus der Vorlesung binden, nicht nur beschreiben, was gemacht wird.**",
       "stichpunkte": [
@@ -1266,6 +1416,7 @@
     },
     {
       "id": "fr-gen-f-3",
+      "unterthema": "Spannungsfelder",
       "afb": 3,
       "frage": "Diskutieren Sie die These: Freizeit ist Privatsache der Schüler:innen, die Schule hat sich herauszuhalten. Nennen Sie zwei Argumente dafür, zwei dagegen und kommen Sie zu einer begründeten Bewertung.",
       "stichpunkte": [
@@ -1330,16 +1481,19 @@
     },
     {
       "id": "fr-fol-f-1",
+      "unterthema": "Begriffsverständnis & Zeitmodell",
       "afb": 2,
       "frage": "Erläutern Sie Opaschowskis Modell der Lebenszeit. Benennen Sie die drei Zeitarten, ordnen Sie jeweils ein Beispiel zu und erklären Sie, was das Modell über den Zusammenhang von Zeit und Selbstbestimmung aussagt.",
       "stichpunkte": [
-        "Determinationszeit: fremdbestimmt, festgelegt, abhängig - Beispiele Arbeit, Krankheit",
-        "Obligationszeit: gebundene Zeit, wird für zweckbestimmte Tätigkeiten benötigt - Beispiele Schlafen, Essen",
-        "Dispositionszeit: freie, selbst bestimmbare Zeit - Beispiele Urlaub, Vereinsarbeit",
-        "Das Modell reiht die drei Zeitarten auf einem Kontinuum von Fremdbestimmung zu Selbstbestimmung auf",
-        "Freizeit ist damit nicht einfach die Restzeit nach der Arbeit, sondern der Bereich mit dem größten Verfügungsspielraum über die eigene Zeit",
-        "Anschluss an das moderne Freizeitverständnis (Folie 5): Freizeit als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung",
-        "Für das SGE bedeutsam: Wo Alltag stark von Fahrdiensten, Betreuungszeiten und Tagesstrukturen bestimmt ist, schrumpft die Dispositionszeit - genau hier setzt Freizeitbildung an"
+        "Determinationszeit: fremdbestimmt, festgelegt, abhängig",
+        "Obligationszeit: gebundene Zeit für zweckbestimmte Tätigkeiten",
+        "Dispositionszeit: freie, selbst bestimmbare Zeit",
+        "Arbeit, Krankheit",
+        "Schlafen, Essen",
+        "Urlaub, Vereinsarbeit",
+        "Kontinuum von Fremdbestimmung zu Selbstbestimmung; Freizeit ist nicht Restzeit, sondern der größte Verfügungsspielraum über die eigene Zeit",
+        "Anschluss an das moderne Freizeitverständnis: Freizeit als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung",
+        "Im SGE schrumpft die Dispositionszeit durch Fahrdienste, Betreuungszeiten und Tagesstrukturen - genau dort setzt Freizeitbildung an"
       ],
       "muster": "Opaschowski unterscheidet in seinem Modell der Lebenszeit drei Zeitarten. Die Determinationszeit ist fremdbestimmt und festgelegt, man ist in ihr abhängig; typische Beispiele sind die Arbeit oder eine Krankheit. Die Obligationszeit ist gebundene Zeit, die für zweckbestimmte Tätigkeiten benötigt wird, etwa für Schlafen und Essen. Die Dispositionszeit schließlich ist die freie, selbst bestimmbare Zeit, zu der zum Beispiel Urlaub oder Vereinsarbeit gehören. Entscheidend am Modell ist, dass diese drei Zeitarten auf einem Kontinuum liegen, das von Fremdbestimmung zu Selbstbestimmung verläuft. Freizeit erscheint damit nicht als bloße Restzeit nach der Arbeit, sondern als der Lebensbereich, in dem der Verfügungsspielraum über die eigene Zeit am größten ist. Das passt zum modernen Freizeitverständnis, das Freizeit als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung fasst. Für den Förderschwerpunkt geistige Entwicklung ist das Modell besonders aufschlussreich: Wenn der Alltag stark durch Fahrdienste, Betreuungszeiten und institutionelle Tagesstrukturen geprägt ist, verschiebt sich das Verhältnis zugunsten von Determinations- und Obligationszeit, und die Dispositionszeit wird schmaler. Genau an dieser Stelle hat Freizeitbildung ihren Auftrag.",
       "musterVarianten": {
@@ -1362,53 +1516,108 @@
       "generiert": true,
       "hinweise": [
         [
-          "Erste Zeitart: von außen festgelegt - mit Beispielen",
-          "Die Spalte ohne eigenen Spielraum",
-          "Denk an Pflichten, die niemand wählt"
+          "Erste Zeitart: von außen gesetzt, kein eigener Spielraum",
+          "Die Spalte, in der man abhängig ist - Fachwort mit De-",
+          "Denk an Pflichten, die niemand freiwillig wählt"
         ],
         [
-          "Zweite Zeitart: nötig für Grundbedürfnisse",
-          "Die Spalte der Muss-Tätigkeiten des Körpers",
-          "Was der Alltag zwingend verlangt - mit Beispielen"
+          "Zweite Zeitart: nötig, damit der Tag überhaupt läuft",
+          "Die Muss-Stunden des Körpers und des Haushalts",
+          "Gebunden, aber nicht fremd auferlegt - Fachwort mit Ob-"
         ],
         [
-          "Dritte Zeitart: Hier entscheidest du selbst - mit Beispielen",
-          "Die Spalte mit dem größten Spielraum",
-          "Denk an frei wählbare Tätigkeiten"
+          "Dritte Zeitart: hier entscheidest du",
+          "Die Spalte mit dem größten Spielraum - Fachwort mit Dis-",
+          "Denk an frei wählbare Beschäftigungen"
+        ],
+        [
+          "Zwei Beispiele zur ersten Zeitart: eines aus dem Beruf, eines aus der Gesundheit",
+          "Womit verdient man Geld, und was legt einen ins Bett?"
+        ],
+        [
+          "Zwei Beispiele zur zweiten Zeitart, beides braucht der Körper täglich",
+          "Was man jede Nacht und mehrmals am Tag tun muss"
+        ],
+        [
+          "Zwei Beispiele zur dritten Zeitart: eines im Sommer, eines im Ehrenamt",
+          "Wofür nimmt man sich frei, und wo engagiert man sich freiwillig?"
         ],
         [
           "Wie sind die drei angeordnet? Als Verlauf zwischen zwei Polen",
-          "Die Achse von außen- zu eigengesteuert",
-          "Das Ordnungsprinzip hinter den drei Spalten"
+          "Die Pointe: mehr als die übrigen Stunden nach der Arbeit",
+          "Das Ordnungsprinzip hinter den Spalten - und was daraus folgt"
         ],
         [
-          "Was folgt für den Freizeitbegriff? Mehr als übrige Stunden",
-          "Die Pointe: Freizeit neu gedacht als Gestaltungsraum",
-          "Warum ist Feierabend allein noch keine Definition?"
+          "Brücke zur Nachbarfolie: wie der Begriff heute gefasst wird",
+          "Ein Stück des ganzen Lebens, nicht der Rest davon",
+          "Wo im Modell steckt der Platz für eigene Entscheidungen?"
         ],
         [
-          "Brücke zur Nachbarfolie: das heutige Verständnis",
-          "Wie passt das Modell zum modernen Begriff?",
-          "Verbindung zu Lebenszeit und Eigenregie ziehen"
-        ],
-        [
-          "Übertrag auf den Förderschwerpunkt: Wo schrumpft der Spielraum?",
-          "Was bedeuten feste Abläufe und Abholzeiten fürs Modell?",
-          "Der Praxisbezug: Warum setzt Freizeitbildung genau hier an?"
+          "Übertrag auf den Förderschwerpunkt: welche Spalte wird schmaler?",
+          "Was machen feste Abholzeiten und Tagesabläufe mit dem Modell?",
+          "Der Praxisbezug: warum hat Freizeitbildung genau hier ihren Auftrag?"
         ]
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Die drei Zeitarten benennen",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Zeitart 1",
+            "Zeitart 2",
+            "Zeitart 3"
+          ],
+          "punkte": 2
+        },
+        {
+          "operator": "zuordnen",
+          "auftrag": "Zu jeder Zeitart ein Beispiel",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "liste",
+          "parallelZu": 0,
+          "punkte": 1
+        },
+        {
+          "operator": "erklaeren",
+          "rolle": "entfalten",
+          "auftrag": "Was das Modell über Zeit und Selbstbestimmung sagt",
+          "idx": [
+            6,
+            7,
+            8
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Das Modell zeigt, dass …"
+        }
       ]
     },
     {
       "id": "fr-fol-f-2",
+      "unterthema": "Praktische Umsetzung",
       "afb": 2,
       "frage": "Stellen Sie zwei benannte Unterrichtskonzepte zur Freizeitbildung vor: die Freizeitwoche nach Dworschak und Kragl sowie die Erstellung eines Freizeitführers nach dem LehrplanPLUS Bayern. Arbeiten Sie heraus, wodurch beide Selbstbestimmung fördern.",
       "stichpunkte": [
-        "Freizeitwoche: vielfältiges Programm mit Angeboten für alle Schüler:innen",
-        "Freizeitwoche: Schüler:innen stellen sich ihr Angebot individuell selbst zusammen",
-        "Freizeitwoche: häufig klassenübergreifende Durchführung nach der Planung",
-        "Freizeitwoche: Nachbereitung mit Besprechung und Reflexion als wichtiger Baustein",
-        "Freizeitwoche: Ziel ist, Erkenntnisse über die eigenen Freizeitpräferenzen mitzunehmen und beim nächsten Mal anzuwenden",
-        "Freizeitführer, fünf Schritte: Vorbereitung (Themen finden, Aufgaben verteilen, Ziele festlegen), Recherche (Angebote, Orte, Zugänge), Aufbereitung (auswählen, strukturieren, verständlich gestalten), Gestaltung (digital oder gedruckt), Weitergabe (veröffentlichen und zugänglich machen)",
+        "Freizeitwoche: vielfältiges Programm mit Angeboten für alle",
+        "Freizeitwoche: Schüler:innen stellen ihr Angebot selbst zusammen",
+        "Freizeitwoche: Durchführung häufig klassenübergreifend",
+        "Freizeitwoche: Nachbereitung mit Besprechung und Reflexion",
+        "Freizeitwoche: eigene Freizeitpräferenzen erkennen und anwenden",
+        "Schritt 1: Vorbereitung - Themen, Aufgaben, Ziele festlegen",
+        "Schritt 2: Recherche - Angebote, Orte und Zugänge ermitteln",
+        "Schritt 3: Aufbereitung - auswählen, ordnen, verständlich machen",
+        "Schritt 4: Gestaltung - den Führer digital oder gedruckt umsetzen",
+        "Schritt 5: Weitergabe - veröffentlichen und zugänglich machen",
         "Gemeinsamer Kern: beide arbeiten mit echter Wahl und mit Erfahrung statt mit Belehrung",
         "Beide bahnen Kompetenzen an, die selbstbestimmte Freizeitgestaltung braucht - Wissen über Möglichkeiten, Können in der Umsetzung, Wollen im Sinne eigener Interessen",
         "Der Freizeitführer wirkt über die Schule hinaus, weil das Ergebnis anderen zugänglich gemacht wird"
@@ -1432,51 +1641,863 @@
       "quelle": "folie-freizeit-31",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Zuerst die Freizeitwoche nach Dworschak und Kragl vorstellen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "chips": [
+            "Merkmal 1",
+            "Merkmal 2",
+            "Merkmal 3",
+            "Merkmal 4",
+            "Merkmal 5"
+          ]
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Dann den Freizeitführer nach dem LehrplanPLUS in fünf Schritten",
+          "idx": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "form": "liste",
+          "chips": [
+            "Schritt 1",
+            "Schritt 2",
+            "Schritt 3",
+            "Schritt 4",
+            "Schritt 5"
+          ]
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "benennen",
+          "auftrag": "Wodurch beide Selbstbestimmung fördern - der gemeinsame Kern",
+          "idx": [
+            10
+          ],
+          "form": "rolle",
+          "satzanfang": "Beide Konzepte fördern Selbstbestimmung, weil …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "entfalten",
+          "auftrag": "Was das für die Schüler:innen konkret heißt",
+          "idx": [
+            11
+          ],
+          "form": "rolle",
+          "satzanfang": "Konkret heißt das, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "belegen",
+          "auftrag": "Woran man das am Freizeitführer besonders deutlich sieht",
+          "idx": [
+            12
+          ],
+          "form": "rolle",
+          "satzanfang": "Besonders deutlich wird das daran, dass …"
+        }
+      ],
       "hinweise": [
         [
-          "Woche, Merkmal eins: Breite des Angebots für alle",
-          "Was zeichnet das Programm aus? Vielfalt",
-          "Für jede Person soll etwas dabei sein"
+          "Woche, Merkmal eins: die Breite des Angebots",
+          "Für jede Person soll etwas dabei sein",
+          "Was zeichnet das Programm aus? Vielfalt"
         ],
         [
-          "Woche, Merkmal zwei: Wer wählt aus? Die Lernenden selbst",
+          "Woche, Merkmal zwei: Wer wählt aus?",
           "Das eigene Wochenpaket schnüren",
-          "Hier steckt die echte Wahlfreiheit der Woche"
+          "Hier steckt die echte Wahlfreiheit"
         ],
         [
-          "Woche, Merkmal drei: Gruppen mischen sich",
-          "Wie läuft die Durchführung organisatorisch? Über Klassengrenzen hinweg",
-          "Denk an neue Zusammensetzungen nach der Planung"
+          "Woche, Merkmal drei: die Gruppen mischen sich",
+          "Über Klassengrenzen hinweg",
+          "Denk an neue Zusammensetzungen"
         ],
         [
-          "Woche, Merkmal vier: Was kommt danach? Gespräch und Rückblick",
+          "Woche, Merkmal vier: Was kommt danach?",
           "Der reflektierende Abschluss gehört dazu",
           "Nicht einfach aufhören - auswerten"
         ],
         [
-          "Woche, das Ziel: sich selbst besser kennenlernen",
-          "Was nimmt man mit? Wissen über eigene Vorlieben",
-          "Die Erkenntnis für die nächste Runde nutzen"
+          "Woche, das Ziel: sich selbst besser kennen",
+          "Was nimmt man mit? Wissen über sich",
+          "Beim nächsten Mal klüger wählen"
         ],
         [
-          "Führer: die fünf Etappen vom Themenfund bis zur Veröffentlichung",
-          "Der komplette Ablauf des Produkts - fünf Stationen",
-          "Von der Idee bis zum fertigen Ergebnis: alle Schritte"
+          "Ganz am Anfang: Wer macht was, und wozu?",
+          "Klären, bevor es losgeht - Thema, Rollen, Absicht",
+          "Der eine Schritt, in dem noch gar nichts gesucht wird"
         ],
         [
-          "Was verbindet beide Konzepte? Selber tun statt zuhören",
-          "Der rote Faden: eigene Entscheidung und eigenes Erleben",
-          "Beide setzen auf Erfahrung, nicht auf Vortrag"
+          "Jetzt wird gesucht: Was gibt es überhaupt?",
+          "Wo, wann, wie hinkommen - Informationen zusammentragen",
+          "Der Schritt, der das Material heranschafft"
         ],
         [
-          "Brücke zu den drei W: Beide bauen sie auf",
-          "Welche Trias fördern beide Konzepte?",
-          "Denk an Kenntnis, Fähigkeit und Motivation"
+          "Aus dem Haufen wird Ordnung",
+          "Sortieren und leicht lesbar machen",
+          "Denk an Einfache Sprache und an Struktur"
         ],
         [
-          "Besonderheit des Führers: Das Ergebnis bleibt nicht intern",
-          "Wer profitiert noch vom fertigen Produkt?",
-          "Die Außenwirkung des zweiten Konzepts"
+          "Wie sieht das Ding am Ende aus?",
+          "Papier oder Bildschirm?",
+          "Jetzt entsteht das Produkt selbst"
+        ],
+        [
+          "Für wen ist er da? Dieser Schritt führt aus der Klasse hinaus",
+          "Nicht in der Schublade liegen lassen",
+          "Andere sollen ihn benutzen können"
+        ],
+        [
+          "Was beide Konzepte teilen: echte Entscheidung statt Vortrag",
+          "Selber tun schlägt Erklärtbekommen",
+          "Zwei Stichworte: Wahl und Erleben"
+        ],
+        [
+          "Die drei Komponenten aus dem Modell von Thümmel und Stöppler",
+          "Drei Voraussetzungen: eine im Kopf, eine in den Händen, eine im Interesse",
+          "Welche drei Voraussetzungen braucht selbstbestimmte Freizeit?"
+        ],
+        [
+          "Was den zweiten Vorschlag über die Klasse hinaushebt",
+          "Das Ergebnis bleibt nicht bei denen, die es gemacht haben",
+          "Andere haben etwas davon"
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-1",
+      "unterthema": "Selbstbestimmung & Kompetenzmodell",
+      "afb": 1,
+      "frage": "Freizeitgestaltung lernt sich nicht dadurch, dass jemand eine Liste von Angeboten auswendig kann. Thümmel und Stöppler nennen drei Komponenten, die zusammenkommen müssen, damit ein Mensch seine Freizeit selbst gestalten kann. Benennen Sie die drei Komponenten und beschreiben Sie zu jeder, was dazugehört.",
+      "stichpunkte": [
+        "Wissen",
+        "Können",
+        "Wollen",
+        "Kenntnisse über Freizeitmöglichkeiten, ihre Bedeutung und ihr Nutzen",
+        "praktische Fertigkeiten, sportlich, kreativ, musisch, organisatorisch",
+        "Interesse und Motivation, gute Erfahrungen, Vorlieben weiterentwickeln"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die drei Komponenten benennen",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Komponente 1",
+            "Komponente 2",
+            "Komponente 3"
+          ]
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Dann zu jeder Komponente, was dazugehört",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "liste",
+          "parallelZu": 0,
+          "chips": [
+            "dazu gehört bei 1",
+            "dazu gehört bei 2",
+            "dazu gehört bei 3"
+          ]
+        }
+      ],
+      "muster": "Selbstbestimmte Freizeitgestaltung ruht nach Thümmel und Stöppler auf drei Komponenten: Wissen, Können und Wollen. Wissen meint Kenntnisse über die vorhandenen Freizeitmöglichkeiten und das Verständnis dafür, welche Bedeutung und welchen Nutzen verschiedene Freizeitaktivitäten haben. Können meint die praktischen Fertigkeiten, die eine Aktivität verlangt, also zum Beispiel sportliche, kreative, musische und organisatorische Kompetenzen. Wollen meint Interesse und Motivation für Freizeitaktivitäten: positive Erfahrungen sammeln, die eigenen Vorlieben erkennen, reflektieren und weiterentwickeln. Erst im Zusammenspiel der drei entsteht Selbstbestimmung - wer nur weiß, was es gibt, geht deshalb noch nirgendwohin.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Für die eigene Freizeit braucht ein Mensch drei Dinge. Sie heißen Wissen, Können und Wollen. Wissen heißt: Ich kenne die Angebote. Ich verstehe auch, warum sie mir guttun. Können heißt: Ich kann das, was die Aktivität verlangt. Zum Beispiel Sport, Musik, Basteln oder Planen. Wollen heißt: Ich habe Lust darauf. Ich sammle gute Erfahrungen. Ich merke, was ich mag. Alle drei gehören zusammen. Wer nur die Angebote kennt, geht trotzdem nicht hin."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Merkhilfe: Kopf, Hand und Herz - Wissen ist der Kopf, Können die Hand, Wollen das Herz. Die Tabelle steht auf Folie 22, und du hast sie in deinen Notizen auf Notizen S. 03 stehen. Kern ist, dass die drei zusammengehören - genau deshalb taugt das Schema auch als Bauplan für eine Unterrichtsidee auf AFB III: Deckt mein Vorhaben alle drei ab?",
+      "quelle": "folie-freizeit-22",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der erste Baustein: Man muss die Angebote überhaupt kennen.",
+          "Ohne diese Grundlage kann man gar nicht erst auswählen."
+        ],
+        [
+          "Der zweite Baustein: Es reicht nicht, die Angebote zu kennen - man muss es auch tun.",
+          "Ohne ihn bleibt es beim guten Vorsatz."
+        ],
+        [
+          "Der dritte Baustein: Ohne Lust darauf bleibt alles liegen.",
+          "Er entscheidet, ob aus dem Gelernten je etwas wird."
+        ],
+        [
+          "Zwei Dinge stehen hier: was es gibt - und wozu es gut ist.",
+          "Nicht nur die Aufzählung der Angebote, auch ihr Sinn."
+        ],
+        [
+          "Vier Beispielfelder, von der Turnhalle bis zum Planen.",
+          "Was man mit Händen, Stimme und Organisationstalent tut."
+        ],
+        [
+          "Lust, gute Erlebnisse und der Blick auf die eigenen Neigungen.",
+          "Was hier zählt, kann man niemandem beibringen, nur ermöglichen."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-2",
+      "unterthema": "Spannungsfelder",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt drei Waagen auf: Jedes Mal stehen sich zwei Seiten gegenüber, die beide ihre Berechtigung haben, und Freizeitbildung muss zwischen ihnen austarieren. Nennen Sie diese drei Gegensatzpaare und benennen Sie, worauf die Vorlesung am Ende hinauswill.",
+      "stichpunkte": [
+        "Selbstbestimmung und Fürsorge",
+        "Pädagogisierung von Freizeit und Zweckfreiheit",
+        "Struktur und Offenheit",
+        "Ziel ist eine ausgewogene Balance zwischen beiden Seiten"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die drei Gegensatzpaare nennen",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Paar 1",
+            "Paar 2",
+            "Paar 3"
+          ]
+        },
+        {
+          "operator": "benennen",
+          "auftrag": "Dann, worauf die Vorlesung am Ende hinauswill",
+          "idx": [
+            3
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Freizeitbildung bewegt sich in drei Spannungsfeldern. Das erste liegt zwischen Selbstbestimmung und Fürsorge: Schülerinnen und Schüler sollen eigenständig entscheiden und Selbstverantwortung entwickeln, sind zugleich aber oft auf Unterstützung angewiesen, und dabei droht die stellvertretende Entscheidung. Das zweite liegt zwischen der Pädagogisierung von Freizeit und ihrer Zweckfreiheit: Wird Freizeit funktionalisiert, geht der Raum für freie Entfaltung verloren. Das dritte liegt zwischen Struktur und Offenheit: Verlässliche Rahmenbedingungen geben Orientierung und Sicherheit, zu viel Offenheit kann überfordern. Keines der drei Felder lässt sich zugunsten einer Seite auflösen; das Ziel ist eine ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In der Freizeitbildung gibt es drei Spannungsfelder. Ein Spannungsfeld ist wie eine Waage mit zwei Seiten. Beide Seiten sind wichtig. Das erste Paar heißt Selbstbestimmung und Fürsorge. Die Schüler sollen selbst entscheiden. Sie brauchen aber auch Hilfe. Das zweite Paar heißt Pädagogisierung und Zweckfreiheit. Pädagogisierung heißt: Aus der Freizeit wird eine Förderung. Zweckfreiheit heißt: Freizeit darf ohne Ziel sein. Das dritte Paar heißt Struktur und Offenheit. Struktur gibt Sicherheit. Offenheit gibt Freiraum. Zu viel Offenheit überfordert. Das Ziel ist immer eine gute Balance."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Schaubild mit den drei Waagen steht auf Folie 33, in deinen Notizen auf Notizen S. 05. Achte auf die Schneidekante: Wenige Zeilen darunter stehen auf derselben Notizenseite die Paare Unterstützung und Kontrolle sowie Förderung und Freiheit - die stammen von der Abschlussfolie und gehören hier nicht dazu. Gefragt sind die drei Waagen. Merkhilfe für die Reihenfolge: erst geht es um die Person, dann um den Zweck, dann um den Rahmen. Kern ist der Fußbalken: Es gibt keine richtige Seite, nur eine Balance - und genau darauf zielen die AFB-III-Aufgaben zu diesem Thema.",
+      "quelle": "folie-freizeit-33",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Hier steht das eigene Entscheiden gegen das Angewiesensein auf Hilfe.",
+          "Die Gefahr auf dieser Waage heißt stellvertretende Entscheidung."
+        ],
+        [
+          "Wenn aus dem Nachmittag ein Förderprogramm wird - und was dabei verloren geht.",
+          "Das Funktionalisieren steht gegen das Recht, einfach nichts zu müssen."
+        ],
+        [
+          "Verlässlicher Rahmen gegen Raum für eigene Ideen.",
+          "Zu viel von der zweiten Seite überfordert, zu viel von der ersten engt ein."
+        ],
+        [
+          "Auf der Waage soll keine Seite ganz nach unten gehen.",
+          "Kein Entweder-oder, sondern ein Mittelweg."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-3",
+      "unterthema": "Praktische Umsetzung",
+      "afb": 1,
+      "frage": "Bevor Schülerinnen und Schüler wählen können, muss ihnen jemand zeigen, wie breit das Feld überhaupt ist. Die Vorlesung ordnet Freizeitaktivitäten dafür in sieben Bereiche. Nennen Sie fünf dieser Bereiche und geben Sie zu jedem ein Beispiel an.",
+      "stichpunkte": [
+        "Kultur - Museumsbesuche, Theater",
+        "Medien - Podcasts, Fotografie",
+        "Bewegung - Klettern, Schwimmen",
+        "Kreativität - Musikprojekte, Kunst",
+        "Natur - Urban Gardening, Waldprojekte",
+        "Weitere: Entspannung mit Yoga, Ehrenamt mit Schülerlotsen"
+      ],
+      "waehle": 5,
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Fünf Bereiche mit je einem Beispiel nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "zusatz",
+          "auftrag": "Diese beiden Bereiche gehören auch dazu",
+          "idx": [
+            5
+          ],
+          "form": "liste",
+          "zusatz": true
+        }
+      ],
+      "muster": "Die Vorlesung sortiert Freizeitaktivitäten in sieben Gegenstandsbereiche. Zur Kultur gehören zum Beispiel Museumsbesuche und Theater, zu den Medien Podcasts und Fotografie, zur Bewegung Klettern und Schwimmen, zur Kreativität Musikprojekte und Kunst und zur Natur Urban Gardening oder Waldprojekte. Hinzu kommen die Entspannung mit Yoga und Achtsamkeit sowie das Ehrenamt, etwa als Schülerlotse oder in Umweltprojekten. Die Systematik ist deshalb wichtig, weil Schülerinnen und Schüler nur wählen können, was sie kennen: Wer nie etwas anderes als Sport und Fernsehen gesehen hat, entscheidet sich auch nur zwischen diesen beiden.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Freizeit hat viele Seiten. Die Vorlesung teilt sie in sieben Bereiche ein. Kultur heißt zum Beispiel Museum oder Theater. Medien heißt zum Beispiel Podcast oder Fotografie. Bewegung heißt zum Beispiel Klettern oder Schwimmen. Kreativität heißt zum Beispiel Musik oder Kunst. Natur heißt zum Beispiel Gärtnern oder ein Projekt im Wald. Dazu kommen noch zwei Bereiche: Entspannung, zum Beispiel Yoga. Und Ehrenamt, zum Beispiel Schülerlotse. Kinder können nur das wählen, was sie kennen. Darum zeigt man ihnen alle Bereiche."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Mindmap steht auf Folie 26 - diese Folie fehlt in deinen Notizen, du kennst sie also nur vom Bild. Fünf reichen für die volle Punktzahl, mehr schadet nicht. Merkhilfe: drei Bereiche gehen nach außen (Kultur, Natur, Ehrenamt), zwei nach innen (Entspannung, Kreativität), zwei über Geräte und den Körper (Medien, Bewegung).",
+      "quelle": "folie-freizeit-26",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Bereich, für den man Karten kauft und sich hinsetzt.",
+          "Was andere gestaltet haben und man sich ansieht oder anhört."
+        ],
+        [
+          "Alles, was über Bildschirm, Kamera oder Kopfhörer läuft.",
+          "Zwei Beispiele: eins zum Hören, eins mit der Kamera."
+        ],
+        [
+          "Der Bereich, bei dem der Puls hochgeht - im Wasser oder an der Wand.",
+          "Körperlicher Einsatz, drinnen wie draußen."
+        ],
+        [
+          "Selbst etwas hervorbringen statt es nur zu betrachten - mit Ton oder Farbe.",
+          "Der Bereich für alles Selbstgemachte und Erfundene."
+        ],
+        [
+          "Draußen, mit Erde und Bäumen - auch mitten in der Stadt.",
+          "Wo etwas wächst, notfalls im Hochbeet zwischen Häusern."
+        ],
+        [
+          "Zwei fehlen noch: einer beruhigt, der andere hilft anderen.",
+          "Denk an Atemübungen und an einen freiwilligen Dienst."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-4",
+      "unterthema": "Praktische Umsetzung",
+      "afb": 1,
+      "frage": "Die Vorlesung ordnet die Freizeitbildung fünf Fächern und Bereichen der Schule zu und zeigt sie in einem Schaubild. Nennen Sie diese fünf und geben Sie zu jedem an, was dort konkret gemacht wird.",
+      "stichpunkte": [
+        "Sportunterricht - Spiele und Sportarten, Outdoor, Turniere",
+        "Medienbildung - Medienwerkstatt, Fotografie, KI, Reflexion",
+        "Mobilitätstraining - Bus und Bahn nutzen, Wege planen",
+        "Deutsch - Lektüren und Geschichten zum Thema Freizeit",
+        "Religion und AGs - Yoga, Pilates, Autogenes Training"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die fünf Fächer und Bereiche mit je einem Inhalt nennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Freizeitbildung verteilt sich auf mehrere Fächer und Bereiche. Im Sportunterricht werden Spiele und Sportarten vorgestellt, es gibt Outdoor-Erlebnisse sowie Wettbewerbe und Turniere. Die Medienbildung arbeitet mit Medienwerkstätten, digitaler Fotografie und Bildbearbeitung, der Nutzung künstlicher Intelligenz und der Reflexion über die eigene Mediennutzung. Das Mobilitätstraining übt die Nutzung öffentlicher Verkehrsmittel, das Planen von Wegen und fördert damit Selbstständigkeit. Im Deutschunterricht werden Lektüren ausgewählt, die den Freizeitbedürfnissen entsprechen, und literarische Geschichten zum Thema Freizeit gelesen. In Religion und in Arbeitsgemeinschaften werden Techniken zur seelischen und körperlichen Entspannung kennengelernt, etwa Yoga, Pilates und Autogenes Training. Ziel ist über alle Bereiche hinweg dasselbe: mehr Selbstbestimmung, Teilhabe und Lebensqualität.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Freizeit lernt man in vielen Fächern. Im Sport lernt man Spiele und Sportarten. Man geht nach draußen und macht Turniere. In der Medienbildung arbeitet man mit Fotos und mit dem Computer. Man denkt auch darüber nach, wie man Medien nutzt. Im Mobilitätstraining übt man Bus und Bahn. Man plant Wege allein. In Deutsch liest man Bücher über Freizeit. In Religion und in AGs lernt man Ruhe. Zum Beispiel Yoga oder Pilates. Alle Fächer haben dasselbe Ziel: mehr Selbstbestimmung und Teilhabe."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Schaubild steht auf Folie 30 - es fehlt in deinen Notizen, du kennst es also nur vom Bild. Merkhilfe: zwei Fächer bewegen (Sport, Mobilität), zwei arbeiten mit Zeichen (Medien, Deutsch), eins beruhigt (Religion und AGs). In der Mitte des Schaubilds steht, worauf alle fünf zielen: mehr Selbstbestimmung, Teilhabe und Lebensqualität.",
+      "quelle": "folie-freizeit-30",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Das Fach mit Halle und Gelände - dort werden auch Wettkämpfe ausgetragen.",
+          "Wo man Sportarten ausprobiert, bevor man eine für sich wählt."
+        ],
+        [
+          "Der Bereich rund um Kamera, Bildschirm und den bewussten Umgang damit.",
+          "Hier kommt sogar die künstliche Intelligenz vor."
+        ],
+        [
+          "Das Training, das aus dem Schulhaus hinausführt - Fahrplan inklusive.",
+          "Selbstständig von A nach B kommen, das ist hier das Ziel."
+        ],
+        [
+          "Das Fach mit Büchern - ausgewählt nach den Interessen der Klasse.",
+          "Über Freizeit lesen, statt sie nur zu planen."
+        ],
+        [
+          "Hier geht es ums Runterkommen, mit Techniken für Körper und Seele.",
+          "Zwei Orte in einem Kasten: einer im Stundenplan, einer freiwillig danach."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-5",
+      "unterthema": "Freizeitteilhabe in Zahlen",
+      "afb": 1,
+      "frage": "Eine Erhebung zum Freizeitverhalten der Bundesbürger sortiert die genannten Tätigkeiten in vier nummerierte Gruppen. Benennen Sie diese vier Gruppen in der Reihenfolge, in der die Grafik sie führt, und geben Sie an, welche Gruppe die höchsten und welche die niedrigsten Anteile hat.",
+      "stichpunkte": [
+        "Medienkonsum",
+        "Persönliche Erholung",
+        "Soziale Interaktionen",
+        "Aktivitäten",
+        "Medienkonsum hat die höchsten Anteile, Aktivitäten die niedrigsten"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die vier Gruppen in der Reihenfolge der Grafik benennen",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "Gruppe 1",
+            "Gruppe 2",
+            "Gruppe 3",
+            "Gruppe 4"
+          ]
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann, welche Gruppe oben und welche unten steht",
+          "idx": [
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Balkendiagramm zur Freizeitgestaltung der Bundesbürger fasst die Tätigkeiten in vier nummerierte Gruppen zusammen. An erster Stelle steht der Medienkonsum mit Internetnutzung, Fernsehen, Musikhören, Computer- und Smartphonenutzung, sozialen Medien und Radio; hier liegen die Anteile am höchsten. Es folgt die persönliche Erholung mit dem Nachdenken über eigene Gedanken, dem Faulenzen und Entspannen und dem Ausschlafen. Die dritte Gruppe sind die sozialen Interaktionen: wichtige Gespräche führen und Zeit mit der Partnerin oder dem Partner verbringen. Die vierte Gruppe heißt Aktivitäten und umfasst Spaziergänge, Hobbys und Sport; ihre Anteile sind die niedrigsten der Grafik.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Eine Umfrage hat gefragt: Was machen die Menschen in Deutschland in ihrer Freizeit? Die Antworten stehen in vier Gruppen. Gruppe eins heißt Medienkonsum. Dazu gehören Internet, Fernsehen und Musik. Diese Gruppe hat die höchsten Werte. Gruppe zwei heißt persönliche Erholung. Dazu gehören Nachdenken, Faulenzen und Ausschlafen. Gruppe drei heißt soziale Interaktionen. Dazu gehören wichtige Gespräche und Zeit mit dem Partner. Gruppe vier heißt Aktivitäten. Dazu gehören Spaziergänge, Hobbys und Sport. Diese Gruppe hat die niedrigsten Werte."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Balkendiagramm steht auf Folie 11 - es fehlt in deinen Notizen, du kennst es also nur vom Bild. Die Kopfzeile der Folie nennt als Quelle den Zukunftsmonitor 2025, im Literaturverzeichnis steht dagegen nur der Freizeitmonitor 2025; gemeint ist offenbar derselbe. Die einzelnen Prozentwerte musst du nicht auswendig können - gefragt sind die vier Gruppen und ihre Reihenfolge. Wenn du doch eine Zahl nennen möchtest: der höchste Balken der ganzen Grafik ist die Internetnutzung mit 98 Prozent.",
+      "quelle": "folie-freizeit-11",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die größte Gruppe - alles, was über Bildschirm oder Lautsprecher läuft.",
+          "Sieben Balken stehen hier, alle bei 70 Prozent und darüber."
+        ],
+        [
+          "Die Gruppe, in der man nichts tut oder nur für sich ist.",
+          "Ausschlafen und Faulenzen sind ihre kleineren Balken."
+        ],
+        [
+          "Die kleinste Gruppe - zwei Balken, beide mit anderen Menschen.",
+          "Die zweite Nennung hier ist die Zeit mit dem Partner oder der Partnerin."
+        ],
+        [
+          "Die Gruppe für alles, wofür man aufsteht und losgeht.",
+          "Der schlichteste Sammelname der vier."
+        ],
+        [
+          "Der Vergleich zum Schluss: eine Gruppe ganz oben, eine ganz unten.",
+          "Die längsten Balken laufen über Geräte, die kürzesten verlangen Bewegung."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-6",
+      "unterthema": "Bildungsauftrag & Recht",
+      "afb": 1,
+      "frage": "Dass Freizeit im Förderschwerpunkt geistige Entwicklung unterrichtet wird, ist keine Idee einzelner Schulen, sondern steht im Rahmenlehrplan von 2011. Benennen Sie das Leitthema, unter dem das Handlungsfeld Freizeit dort steht, und nennen Sie, was Schülerinnen und Schüler sich in diesem Handlungsfeld aneignen sollen.",
+      "stichpunkte": [
+        "Leitthema L1 Der Mensch im Alltag",
+        "Fähigkeiten und Strategien zur Wahrnehmung von Freizeitaktivitäten",
+        "Freizeit nach eigenen Möglichkeiten, Interessen und Wünschen planen",
+        "das Lernen zielt auch auf soziale Integration",
+        "bei Älteren als eigenes Unterrichtsangebot mit Blick auf später"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst das Leitthema benennen",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann, was im Handlungsfeld Freizeit gelernt werden soll",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Das Handlungsfeld Freizeit steht im Rahmenlehrplan unter dem Leitthema L1 Der Mensch im Alltag, gemeinsam mit Handlungsfeldern wie Selbstversorgung, Wohnen, Zusammenleben und Mediennutzung. Im Handlungsfeld eignen sich Schülerinnen und Schüler grundlegende Fähigkeiten und Strategien an, um Freizeitaktivitäten wahrzunehmen und zu planen, und zwar solche, die ihren individuellen Möglichkeiten, Interessen und Wünschen entsprechen. Das Lernen im Handlungsfeld zielt außerdem auf soziale Integration. Besonders bei älteren Schülerinnen und Schülern wird die Freizeitgestaltung als spezielles Unterrichtsangebot in den Unterricht einbezogen, und zwar unter Berücksichtigung der zukünftigen Lebenssituation. Damit ist Freizeit curricular verankert und nicht dem Zufall überlassen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Freizeit steht im Lehrplan. Das Leitthema heißt: Der Mensch im Alltag. Dazu gehören auch Wohnen und Selbstversorgung. Im Handlungsfeld Freizeit lernen die Schüler zwei Dinge. Erstens: Sie merken, welche Angebote es gibt. Zweitens: Sie planen ihre Freizeit selbst. Wichtig ist dabei: Es soll zu ihnen passen. Zu ihren Möglichkeiten, Interessen und Wünschen. Das Lernen hat noch ein Ziel: Die Schüler sollen dazugehören. Ältere Schüler bekommen eigenen Unterricht dazu. Denn sie denken schon an die Zeit nach der Schule."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Zitat aus dem Rahmenlehrplan steht auf Folie 20 - diese Folie fehlt in deinen Notizen. Sie ist der eigentliche Beleg dafür, dass Freizeit ein Bildungsauftrag ist: Wenn du auf AFB II erläutern sollst, warum Schule sich um Freizeit kümmert, ist der Rahmenlehrplan dein stärkstes Argument. Kern sind die drei Wörter Möglichkeiten, Interessen, Wünsche - sie sagen, dass der Maßstab von der Person kommt.",
+      "quelle": "folie-freizeit-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Oberbegriff, unter dem auch Wohnen und Selbstversorgung stehen.",
+          "Es geht um das ganz gewöhnliche Leben, nicht um ein Schulfach."
+        ],
+        [
+          "Bevor geplant wird, muss man ein Angebot überhaupt erst bemerken.",
+          "Es geht um Grundlegendes, nicht um eine einzelne Aktivität."
+        ],
+        [
+          "Der Maßstab kommt von der Person selbst, nicht von der Schule.",
+          "Drei Dinge entscheiden: was geht, was gefällt, was gewünscht ist."
+        ],
+        [
+          "Es bleibt nicht bei der einzelnen Person - die Gruppe ist mitgemeint.",
+          "Ein Ziel, das über die Freizeitgestaltung selbst hinausreicht."
+        ],
+        [
+          "Je näher der Schulabschluss, desto eigenständiger wird das Thema.",
+          "Eine Altersgruppe bekommt es extra - wegen dem, was danach kommt."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-7",
+      "unterthema": "Teilhabe & Barrieren",
+      "afb": 1,
+      "frage": "Die Vorlesung fasst die Bedeutung von Freizeit unter einem eigenen Thesen-Namen zusammen und begründet damit, warum Freizeit für Menschen mit Behinderung mehr ist als eine angenehme Nebensache. Benennen Sie diese These, nennen Sie die Bedeutungen, die Freizeit dort zugeschrieben werden, und beschreiben Sie, was daraus für Menschen folgt, die von Freizeit ausgeschlossen bleiben.",
+      "stichpunkte": [
+        "Stigma-Identitäts-These nach Markowetz",
+        "Freizeit prägt Lebensstile und die Work-Life-Balance",
+        "Raum für Selbstverwirklichung und soziale Anerkennung",
+        "Ausdruck von Wohlstand, Ungleichheit sichtbar, identitätsbildend",
+        "kann soziale Integration und Autonomie fördern",
+        "fehlende Teilhabe führt zu Isolation, Autonomieverlust, Exklusion"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die These benennen",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die Bedeutungen, die Freizeit zugeschrieben werden",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Zum Schluss, was aus fehlender Freizeitteilhabe folgt",
+          "idx": [
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Bedeutung von Freizeit ist in der Vorlesung unter dem Namen Stigma-Identitäts-These zusammengefasst; sie stammt von Markowetz. Freizeit prägt danach die Lebensstile von Menschen und ihre Work-Life-Balance. Sie bietet Raum für Selbstverwirklichung und für soziale Anerkennung. Sie ist Ausdruck von Wohlstand, kann soziale Ungleichheiten sichtbar machen und wirkt identitätsbildend. Und sie kann soziale Integration und Autonomie fördern. Genau deshalb wiegt der Ausschluss schwer: Fehlende Freizeitteilhabe begünstigt soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Markowetz hat eine These zur Freizeit. Sie heißt Stigma-Identitäts-These. Die These sagt: Freizeit prägt, wie ein Mensch lebt. Sie prägt auch, wie sich Arbeit und Freizeit verteilen. Freizeit gibt Raum, sich selbst zu verwirklichen. Andere Menschen erkennen einen dafür an. Freizeit zeigt auch, wer viel Geld hat und wer wenig. So werden Unterschiede sichtbar. Freizeit macht mit aus, wer ich bin. Freizeit hilft beim Dazugehören und beim Selbstbestimmen. Wer keine Freizeit teilen kann, ist oft allein. Er verliert Selbstständigkeit. Er gehört nicht dazu."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die These steht auf Folie 12 - diese Folie fehlt in deinen Notizen. Was die beiden Wörter im Namen bedeuten, erklärt die Vorlesung nirgends; lern deshalb den Namen und die Aussagen darunter und erfinde keine Deutung dazu. Auf der Folie laufen Wohlstand, Ungleichheit und Identität ohne Satztrennung in einem Punkt zusammen - schreib sie ruhig in einem Satz, sie zählen hier als ein Baustein. Kern ist der Pfeil am Ende: Was Freizeit ermöglicht, nimmt ihr Fehlen weg.",
+      "quelle": "folie-freizeit-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Zwei Begriffe im Namen: ein Mal von außen und die Frage, wer man ist.",
+          "Der Autor schrieb das Freizeit-Kapitel im Handbuch emotional-soziale Entwicklung."
+        ],
+        [
+          "Wie jemand lebt - und wie sich Arbeit und übriges Leben verteilen.",
+          "Es geht um den Zuschnitt des ganzen Alltags."
+        ],
+        [
+          "Sich selbst entfalten - und dafür von anderen gesehen werden.",
+          "Zwei Seiten in einem Punkt: die eigene und die der Gruppe."
+        ],
+        [
+          "Ein Punkt, drei Aussagen: Geld zeigt sich, Unterschiede werden sichtbar, und es prägt, wer jemand ist.",
+          "Hier sind auf der Folie zwei Gedanken ohne Punkt zusammengelaufen."
+        ],
+        [
+          "Zwei Gewinne: dazugehören und über sich selbst bestimmen.",
+          "Das Gegenteil dessen, was der Ausschluss anrichtet."
+        ],
+        [
+          "Drei Folgen, wenn Freizeit ausfällt: allein, unselbstständig, draußen.",
+          "Der Pfeil am Ende der Folie zieht die Bilanz."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb1-8",
+      "unterthema": "Begriffsverständnis & Zeitmodell",
+      "afb": 1,
+      "frage": "Die Vorlesung zitiert eine Definition von Freizeit, die mit einer Aussage über deren Stellenwert beginnt und Freizeit dann über drei Merkmale bestimmt. Beschreiben Sie, welchen Stellenwert die Definition der Freizeit einräumt, nennen Sie die drei Merkmale und beschreiben Sie, welchen Platz Erholung darin noch hat.",
+      "stichpunkte": [
+        "Freizeit ist heute für alle Menschen von großer Bedeutung",
+        "freie Wahlmöglichkeiten",
+        "bewusste Eigenentscheidungen",
+        "soziales Handeln",
+        "Erholung und Zerstreuung spielen weiter eine entscheidende Rolle",
+        "als reine, frei verfügbare Erholungszeit gedacht greift sie zu kurz"
+      ],
+      "abschnitte": [
+        {
+          "operator": "beschreiben",
+          "auftrag": "Zuerst, welchen Stellenwert die Definition der Freizeit einräumt",
+          "idx": [
+            0
+          ],
+          "form": "liste"
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Dann die drei Merkmale der Definition nennen",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "Merkmal 1",
+            "Merkmal 2",
+            "Merkmal 3"
+          ]
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Zum Schluss, welchen Platz Erholung behält und wo die Definition eine Grenze zieht",
+          "idx": [
+            4,
+            5
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Freizeit wird in der Vorlesung mit einer Definition von Schuck bestimmt. Danach ist Freizeit in der heutigen Gesellschaft für alle Menschen von großer Bedeutung. Sie ist eine Zeit, die durch freie Wahlmöglichkeiten, durch bewusste Eigenentscheidungen und durch soziales Handeln charakterisiert ist. Erholung und Zerstreuung spielen dabei auch gegenwärtig noch eine entscheidende Rolle; sie fallen also nicht weg. Es greift nach dieser Definition aber zu kurz, von Freizeit als reiner Erholungszeit in einem völlig frei verfügbaren Rahmen zu sprechen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In der Vorlesung steht eine Definition von Freizeit. Sie ist von Schuck. Die Definition sagt: Freizeit ist für alle Menschen wichtig. Freizeit hat drei Merkmale. Erstens: Man kann frei wählen. Zweitens: Man entscheidet selbst und mit Absicht. Drittens: Man ist mit anderen Menschen zusammen. Ausruhen gehört auch heute noch dazu. Das ist weiter wichtig. Aber Freizeit ist mehr als nur Ausruhen. Wer nur an Ausruhen denkt, sieht zu wenig."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Das Zitat steht auf Folie 7 - diese Folie fehlt in deinen Notizen. Achtung beim Namen: Die Kopfzeile der Folie schreibt Schuck, die Quellenangabe im Zitatkasten Schluck; im Literaturverzeichnis steht Schuck, 2019 - schreib also Schuck, und wenn du unsicher bist, nenne die Definition ohne Namen. Merkhilfe für die drei Merkmale: auswählen, entscheiden, mit anderen sein. Wenn nach zentralen Begriffen der Freizeitbildung gefragt wird, ist diese Definition die naheliegendste Antwort.",
+      "quelle": "folie-freizeit-7",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Der Einstiegssatz sagt, wen das Thema angeht: nicht nur eine Gruppe.",
+          "Ein Satz über den Stellenwert, bevor es um Merkmale geht."
+        ],
+        [
+          "Erstes Merkmal: Man sucht selbst aus, statt zugewiesen zu bekommen.",
+          "Es steht mehr als ein Weg offen, und keiner ist vorgeschrieben."
+        ],
+        [
+          "Zweites Merkmal: nicht nebenbei, sondern mit Absicht getroffen.",
+          "Der Unterschied zwischen 'ist halt passiert' und 'so habe ich es gewollt'."
+        ],
+        [
+          "Drittes Merkmal: Freizeit findet nicht nur allein statt.",
+          "Es geht um das Tun mit anderen und für andere."
+        ],
+        [
+          "Das Alte verschwindet nicht: Ausruhen und Ablenkung zählen weiter.",
+          "Die Definition streicht diesen Teil nicht, sie ergänzt ihn nur."
+        ],
+        [
+          "Die Grenze am Ende: Wer Freizeit nur als Ausruhen versteht, sieht zu wenig.",
+          "Genau diesen engen Blick weist die Definition zurück."
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb3-1",
+      "unterthema": "Begriffsverständnis & Zeitmodell",
+      "afb": 3,
+      "frage": "Eine Schule richtet für die gesamte Oberstufe eine Freizeit-AG ein, an der alle Schüler:innen teilnehmen müssen. Erörtern Sie, ob ein solches Pflichtangebot Freizeit im Sinne der Vorlesung sein kann. Führen Sie je zwei Argumente für und gegen das Pflichtangebot an und schließen Sie mit einem eigenen, begründeten Urteil.",
+      "stichpunkte": [
+        "Dagegen 1: Opaschowski ordnet Lebenszeit auf einer Achse von Fremd- zu Selbstbestimmung - eine Pflicht-AG ist festgelegt und gebunden, also keine Dispositionszeit",
+        "Dagegen 2: Modern gilt Freizeit als Raum für Selbstbestimmung, bedürfnis- statt zeitorientiert - eine für alle verordnete Aktivität stellt die Vorgabe über das Bedürfnis",
+        "Dafür 1: Struktur und Offenheit bilden ein eigenes Spannungsfeld - eine verlässliche Struktur gibt Orientierung und Sicherheit, während zu viel Offenheit auch überfordern kann",
+        "Dafür 2: Der Rahmenlehrplan zählt Freizeit zum Handlungsfeld des Leitthemas Der Mensch im Alltag und sieht die Freizeitgestaltung besonders bei älteren Schüler:innen als eigenes Unterrichtsangebot mit Blick auf die zukünftige Lebenssituation vor - ein gesetztes Angebot in der Oberstufe ist damit Auftrag, nicht Willkür",
+        "Beispiel 1: Einen Weg aus dem Widerspruch zeigt die Freizeitwoche - die Schule setzt den Rahmen und hält ein vielfältiges Programm mit Angeboten für alle bereit, ausgewählt und zusammengestellt wird individuell, die Durchführung ist häufig klassenübergreifend, und die Nachbereitung bringt Erkenntnisse für die eigenen Vorlieben",
+        "Bewertung 1: Zu trennen sind Rahmen und Inhalt - als Zeitform bleibt eine Pflicht-AG gebundene Zeit; als Unterrichtsangebot ist sie vertretbar, wenn sie offene Formen mit echter Wahl nutzt und die Lehrkräfte sich wohlwollend zurückhalten, denn Selbstbestimmung muss schon in der Schulzeit gezielt gefördert werden; Ziel bleibt die ausgewogene Balance"
+      ],
+      "muster": "Ob eine verpflichtende Freizeit-AG noch Freizeit ist, hängt davon ab, woran man Freizeit misst. Gegen die AG spricht zunächst das Zeitmodell von Opaschowski. Es ordnet die Lebenszeit auf einer Achse von Fremdbestimmung zu Selbstbestimmung: Festgelegte, abhängige Zeit ist Determinationszeit, gebundene Zeit für zweckbestimmte Tätigkeiten ist Obligationszeit, und nur die frei verfügbare, selbstbestimmbare Zeit ist Dispositionszeit. Eine Veranstaltung mit Teilnahmepflicht ist gesetzt und gebunden und liegt damit auf der falschen Seite dieser Achse. Dagegen spricht zweitens das moderne Freizeitverständnis. Es begreift Freizeit nicht mehr als Restzeit nach der Arbeit, sondern als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung, und es denkt sie bedürfnis- und handlungsorientiert statt zeitorientiert. Eine Aktivität, die für alle gleich verordnet wird, stellt die Vorgabe wieder über das Bedürfnis. Für die AG spricht dagegen das Spannungsfeld von Struktur und Offenheit. Eine verlässliche Struktur gibt Orientierung und Sicherheit, während zu viel Offenheit Schülerinnen und Schüler auch überfordern kann. Zweitens ist Freizeitbildung in der Oberstufe kein freiwilliges Zusatzangebot, sondern Auftrag: Der Rahmenlehrplan führt Freizeit als Handlungsfeld des Leitthemas Der Mensch im Alltag und sieht vor, dass die Freizeitgestaltung besonders bei älteren Schülerinnen und Schülern als spezielles Unterrichtsangebot unter Berücksichtigung der zukünftigen Lebenssituation in den Unterricht einbezogen wird. Wer sie setzt, handelt also nicht willkürlich, sondern erfüllt einen Auftrag. Einen Weg aus dem Widerspruch zeigt die Freizeitwoche: Die Schule setzt den Rahmen und sorgt dafür, dass das Programm vielfältig ist und Angebote für alle Schülerinnen und Schüler enthält; ausgewählt und zusammengestellt wird individuell, die Durchführung ist häufig klassenübergreifend, und in der Nachbereitung besprechen und reflektieren die Schülerinnen und Schüler, was sie für ihre eigenen Freizeitvorlieben mitnehmen. Ich bewerte deshalb so: Als Zeitform ist eine Pflicht-AG streng genommen keine freie Zeit, sie bleibt gebundene Zeit. Als Unterrichtsangebot ist sie trotzdem vertretbar, denn Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden; sie stellt sich nicht von allein ein. Voraussetzung ist, dass die AG offene Formen mit echten Wahl- und Entscheidungsmöglichkeiten nutzt und die Lehrkräfte sich wohlwollend zurückhalten, statt eine bestimmte Aktivität vorzuschreiben. Entscheidend ist der Unterschied zwischen dem Rahmen und dem Inhalt, und das Ziel bleibt die ausgewogene Balance zwischen Unterstützung und Freiheit.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Frage lautet: Ist eine Freizeit-AG mit Teilnahmepflicht wirklich Freizeit? Zwei Argumente sprechen dagegen. Das erste Argument kommt von Opaschowski. Er teilt die Lebenszeit in drei Arten ein. Die erste Art ist festgelegt und fremdbestimmt, zum Beispiel Arbeit. Die zweite Art ist gebunden. Man braucht sie für Dinge wie Schlafen und Essen. Die dritte Art ist frei und selbstbestimmbar, zum Beispiel Urlaub. Nur diese dritte Art ist wirklich freie Zeit. Eine AG mit Pflicht gehört nicht dazu. Sie ist festgelegt. Das zweite Argument ist das moderne Verständnis von Freizeit. Freizeit ist heute mehr als die Zeit nach der Arbeit. Sie ist ein Raum für Selbstbestimmung. Selbstbestimmung heißt: Ich entscheide selbst. Freizeit richtet sich außerdem nach den Bedürfnissen der Menschen. Wenn alle das Gleiche machen müssen, zählt die Vorgabe mehr als das Bedürfnis. Zwei Argumente sprechen aber auch dafür. Das erste Argument ist die Struktur. Struktur heißt: Es gibt einen festen und verlässlichen Rahmen. Ein solcher Rahmen gibt Orientierung und Sicherheit. Zu viel Offenheit kann Schülerinnen und Schüler überfordern. Das zweite Argument ist der Rahmenlehrplan. Dort steht Freizeit als eigenes Handlungsfeld. Das Leitthema dazu heißt: Der Mensch im Alltag. Im Plan steht auch: Bei älteren Schülerinnen und Schülern gehört die Freizeitgestaltung als eigenes Unterrichtsangebot in den Unterricht. Dabei zählt die spätere Lebenssituation. Die Schule darf das Thema also nicht einfach weglassen. Ein gutes Beispiel ist die Freizeitwoche. Die Schule setzt den Rahmen. Das Programm ist vielfältig. Es gibt Angebote für alle Schülerinnen und Schüler. Jede Schülerin und jeder Schüler stellt das eigene Programm zusammen. Die Durchführung ist oft klassenübergreifend. Das heißt: Schülerinnen und Schüler aus verschiedenen Klassen machen zusammen mit. Danach wird darüber gesprochen. So lernen die Schülerinnen und Schüler, was ihnen selbst gefällt. Meine Bewertung ist deshalb: Eine Pflicht-AG ist streng genommen keine freie Zeit. Als Unterrichtsangebot ist sie trotzdem in Ordnung. Denn Selbstbestimmung muss schon in der Schulzeit gezielt gefördert werden. Sie kommt nicht von allein. Die AG muss aber Wahlmöglichkeiten öffnen. Die Lehrkräfte sollen sich zurückhalten. Sie dürfen keine Aktivität vorschreiben. Wichtig ist der Unterschied zwischen dem Rahmen und dem Inhalt. Das Ziel bleibt die Balance zwischen Unterstützung und Freiheit."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Erörtern ist ein AFB-III-Operator: zwei Punkte dafür, zwei dagegen, dann eine begründete Bewertung. Das Abwägen nimmt dir keine Folie ab - die Bausteine dafür stehen im Material, das Urteil führst du selbst. Deine schärfste Waffe gegen das Pflichtangebot ist das Zeitmodell von Folie 6, weil es die Frage in einen definierten Begriff übersetzt, dazu der Wandel des Freizeitbegriffs auf Folie 5. Für ein gesetztes Angebot sprechen der Rahmenlehrplan auf Folie 20, der die Freizeitgestaltung für ältere Schüler:innen ausdrücklich in den Unterricht holt, und das Spannungsfeld Struktur und Offenheit auf Folie 33. Die Freizeitwoche auf Folie 31 ist dein Auflösungsbeispiel; dass Selbstbestimmung schon in der Schulzeit gefördert werden muss, steht auf Folie 21, und die Maßnahmen für Wahlmöglichkeiten und die wohlwollende Zurückhaltung auf Folie 25. Gestellt hat die Frage die Vorlesung selbst auf Folie 34. In deinen Notizen findest du die Spannungsfelder auf Notizen S. 05 und das Selbstbestimmungs-Schaubild auf Notizen S. 03; das Zeitmodell, der Begriffswandel, der Rahmenlehrplan, die Fördermaßnahmen und die Freizeitwoche fehlen dort - genau deshalb lohnt hier ein Blick in die Folien.",
+      "quelle": "folie-freizeit-6",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erstes Contra: Wie ist die geforderte Zeit einzuordnen?",
+          "Denk an die drei Zeitarten und den Pfeil darunter",
+          "Das Definitions-Argument: Pflicht liegt am falschen Ende"
+        ],
+        [
+          "Zweites Contra: Wonach richtet sich Freizeit heute?",
+          "Was hat sich am Begriff seit früher geändert?",
+          "Ein Angebot für alle trifft nicht jedes Interesse"
+        ],
+        [
+          "Erstes Pro: Eine der drei Waagen passt hier genau",
+          "Was gibt ein fester Rahmen den Schüler:innen?",
+          "Die Kehrseite von zu viel Freiraum"
+        ],
+        [
+          "Zweites Pro: Steht das überhaupt im Belieben der Schule?",
+          "Ein Lehrplan von 2011 kennt dafür ein eigenes Handlungsfeld",
+          "Was gilt dort besonders für die älteren Jahrgänge?"
+        ],
+        [
+          "Ein Praxiskonzept aus der Vorlesung löst den Widerspruch elegant",
+          "Welches Vorhaben verbindet ein gesetztes Programm mit eigener Wahl?",
+          "Denk an Planung, Durchführung und das, was danach kommt"
+        ],
+        [
+          "Dein Urteil: Zwei Ebenen trennen, dann Position beziehen",
+          "Worin unterscheiden sich Gefäß und Füllung?",
+          "Welche Haltung der Lehrkräfte macht es tragbar - und das Zielwort zum Schluss"
+        ]
+      ]
+    },
+    {
+      "id": "fr-afb3-2",
+      "unterthema": "Teilhabe & Barrieren",
+      "afb": 3,
+      "frage": "Eine Schülerin lebt in einer Wohngruppe und zieht sich nachmittags am liebsten mit Musik in ihr Zimmer zurück. Das Team der Wohngruppe hält gemeinsame Gruppenangebote für die bessere Verwendung dieser Zeit und ermuntert sie immer wieder dazu. Bewerten Sie das Vorgehen des Teams fachlich und leiten Sie pädagogische Handlungsoptionen ab.",
+      "stichpunkte": [
+        "Dafür 1: Freizeit erfüllt auch soziale Zielfunktionen - Bedürfnisse nach Mitteilung und Geselligkeit, nach Zusammensein und Gemeinschaftsbezug sowie nach Beteiligung und Mitbestimmung",
+        "Dafür 2: Fehlende Freizeitteilhabe begünstigt soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion - die Sorge des Teams ist fachlich also nicht unbegründet",
+        "Dagegen 1: Erholung, Ruhe und Wohlbefinden sind ebenso Zielfunktionen wie Selbsterfahrung und Selbstfindung - Musik hören und allein sein bedienen genau diese Bedürfnisse",
+        "Dagegen 2: Als typische Benachteiligungen nennt die Vorlesung in eben diesen beiden Bereichen eine fremdbestimmte Tagesstruktur, fehlende Rückzugsmöglichkeiten, Bevormundung und Isolation",
+        "Dagegen 3: Der Maßstab, Gruppenangebote seien sinnvoller, ist selbst der strittige Punkt - Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert, und auch Nichtstun ist erlaubt",
+        "Einordnung 1: Der Fall liegt im Spannungsfeld von Selbstbestimmung und Fürsorge - Unterstützung droht in stellvertretende Entscheidungen zu kippen, und Fremdbestimmung erschwert die Selbstverantwortung",
+        "Handlungsoptionen 1: wohlwollende Zurückhaltung der Lehrkräfte statt beständigem Motivieren, dazu Unterstützung beim Formulieren eigener Interessen",
+        "Handlungsoptionen 2: aktive Beteiligung an der Planung von Angeboten, offene Unterrichtsformen mit echten Wahl- und Entscheidungsmöglichkeiten, und ihr die Gegenstandsbereiche von Freizeitaktivitäten aufzeigen, etwa Entspannung oder Medien",
+        "Bewertung 1: als Fürsorge nachvollziehbar, in der Sache aber Fremdbestimmung - die Behindertenrechtskonvention zielt auf Zugang und gleichberechtigte Teilhabe, nicht auf eine Teilnahmepflicht"
+      ],
+      "muster": "Das Vorgehen des Teams lässt sich in beide Richtungen begründen. Dafür spricht, dass Freizeit auch soziale Zielfunktionen hat: Sie erfüllt Bedürfnisse nach Mitteilung und Geselligkeit, nach Zusammensein und Gemeinschaftsbezug sowie nach Beteiligung und Mitbestimmung. Dazu kommt, dass fehlende Freizeitteilhabe soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion begünstigt. Die Sorge, eine Schülerin könnte sich dauerhaft zurückziehen, ist fachlich also nicht unbegründet. Dagegen spricht dreierlei. Erstens sind Erholung, Ruhe und Wohlbefinden ebenso Zielfunktionen von Freizeit wie Selbsterfahrung und Selbstfindung; Musik hören und allein sein bedienen genau diese Bedürfnisse. Zweitens benennt die Vorlesung als typische Benachteiligungen ausgerechnet in diesen beiden Bereichen eine fremdbestimmte Tagesstruktur und fehlende Rückzugsmöglichkeiten sowie Bevormundung und Isolation. Das Team wiederholt damit genau das Teilhaberisiko, das es eigentlich abbauen möchte. Drittens ist der Maßstab, Gruppenangebote seien sinnvoller, selbst der strittige Punkt: Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert, und auch Nichtstun darf Freizeit sein. Der Fall gehört damit in das Spannungsfeld von Selbstbestimmung und Fürsorge. Unterstützung droht hier in stellvertretende Entscheidungen zu kippen, und Fremdbestimmung erschwert gerade das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen. Als Handlungsoptionen leite ich daraus zweierlei ab. Zur Haltung: wohlwollende Zurückhaltung statt beständigem Motivieren und Unterstützung dabei, eigene Interessen zu formulieren. Zu den Angeboten: Beteiligung der Schülerin an deren Planung, offene Formen, die echte Wahl- und Entscheidungsmöglichkeiten lassen, und das Aufzeigen der Breite möglicher Gegenstandsbereiche, etwa Entspannung oder Medien, statt eine Gruppenaktivität zu setzen. In der Bewertung heißt das: Das Vorgehen ist als Fürsorge nachvollziehbar, in der Sache aber Fremdbestimmung. Der Anspruch der Behindertenrechtskonvention richtet sich auf gleichberechtigte Teilhabe am kulturellen Leben und auf Zugang zu Freizeit-, Sport- und Erholungsangeboten, also auf das Eröffnen von Möglichkeiten und nicht auf eine Pflicht zur Teilnahme. Das Ziel bleibt die Balance: Unterstützung, die stärkt, und Freiheit, die wachsen lässt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Das Team meint es gut. Man kann für das Vorgehen etwas sagen. Freizeit erfüllt auch soziale Bedürfnisse. Dazu gehören Gespräche und Geselligkeit. Dazu gehören Gemeinschaft und Zusammensein. Dazu gehört auch Mitbestimmung. Außerdem gilt: Wer nicht an Freizeit teilhat, ist oft allein. Die Vorlesung nennt drei Folgen. Die erste Folge ist soziale Isolation. Isolation heißt: Der Mensch ist von anderen abgeschnitten. Die zweite Folge ist der Verlust von Autonomie. Autonomie heißt: selbst über sich bestimmen. Die dritte Folge ist Exklusion. Exklusion heißt: Der Mensch gehört nicht mehr dazu. Die Sorge des Teams ist also nicht falsch. Es gibt aber drei starke Gegenargumente. Erstens gehören auch Erholung und Ruhe zu den Zielen von Freizeit. Dazu gehört auch die Besinnung auf sich selbst. Musik hören und allein sein erfüllen genau diese Ziele. Zweitens nennt die Vorlesung typische Benachteiligungen. Menschen mit Behinderung haben oft einen fremdbestimmten Tagesablauf. Sie haben oft keinen Ort für den Rückzug. Sie erleben Bevormundung. Bevormundung heißt: Andere entscheiden über sie. Das Team wiederholt also genau dieses Risiko. Drittens ist der Maßstab selbst das Problem. Das Team findet Gruppenangebote sinnvoller. Aber Freizeit muss nicht nützlich sein. Freizeit ist für jeden Menschen etwas anderes. Auch Nichtstun darf Freizeit sein. Der Fall gehört in ein Spannungsfeld. Auf der einen Seite steht die Selbstbestimmung. Auf der anderen Seite steht die Fürsorge. Fürsorge heißt: für jemanden sorgen. Die Gefahr ist: Andere entscheiden stellvertretend. Stellvertretend heißt: an ihrer Stelle. Wer immer fremdbestimmt wird, lernt keine Selbstverantwortung. Daraus folgen mehrere Handlungsoptionen. Die Fachkräfte halten sich freundlich zurück. Sie planen die Angebote gemeinsam mit der Schülerin. Sie helfen ihr, ihre eigenen Wünsche in Worte zu fassen. Sie bieten offene Formen mit echter Auswahl an. Sie zeigen ihr die ganze Breite möglicher Bereiche, zum Beispiel Entspannung oder Medien. Meine Bewertung ist: Das Vorgehen ist gut gemeint. In der Sache ist es aber Fremdbestimmung. Die Behindertenrechtskonvention fordert Zugang und gleiche Teilhabe. Sie fordert keine Pflicht zur Teilnahme. Das Ziel bleibt die Balance. Unterstützung soll stärken. Freiheit soll wachsen lassen."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Bewerten ist ein AFB-III-Operator, und die Aufgabe verlangt zwei Schritte: erst das fachliche Urteil, dann die Handlungsoptionen. Die Abwägung selbst steht auf keiner Folie - dass das Team hier kippt, musst du selbst begründen; die Bausteine dazu liegen im Material. Der Fall stammt von Folie 14, wo auch die Frage steht, wo Fremdbestimmung beginnt. Die Zielfunktionen von Freizeit findest du auf Folie 8, die typischen Benachteiligungen dazu auf Folie 13, den Merksatz, dass Freizeit nicht produktiv sein muss, auf Folie 9. Das Spannungsfeld von Selbstbestimmung und Fürsorge steht auf Folie 33, die Sätze von Hahn und Niehoff auf Folie 21, die Fördermaßnahmen auf Folie 25, die Gegenstandsbereiche dazu auf Folie 26 und der Artikel 30 auf Folie 28; der Schlusssatz über die Balance steht auf der Fazit-Folie 36. Bei dir liegen die Zielfunktionen und der Merksatz auf Notizen S. 01, das Selbstbestimmungs-Schaubild auf Notizen S. 03, die Spannungsfelder und das Fazit auf Notizen S. 05; der Fall, die Benachteiligungs-Tabelle, die Fördermaßnahmen, die Gegenstandsbereiche und der Artikel 30 fehlen dort.",
+      "quelle": "folie-freizeit-14",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Erstes Pro: Freizeit hat auch nach außen gerichtete Ziele",
+          "Welche Bedürfnisse aus der Achter-Tabelle sprechen für Gruppe?",
+          "Kontakt, Gemeinschaft, Mitreden - drei davon passen"
+        ],
+        [
+          "Zweites Pro: Was passiert, wenn Teilhabe ausbleibt?",
+          "Die Folgerung unter der benannten These",
+          "Drei Folgen, alle drei klingen bedrohlich"
+        ],
+        [
+          "Erstes Contra: Die Achter-Tabelle hat auch stille Ziele",
+          "Welche zwei Bedürfnisse erfüllt ein Nachmittag für sich?",
+          "Ruhe und Sich-selbst-Finden zählen genauso"
+        ],
+        [
+          "Zweites Contra: Die Risiko-Tabelle passt genau zu diesen Zielen",
+          "Was steht dort in den Zeilen zu Erholung und Besinnung?",
+          "Das Team erzeugt gerade das, was abgebaut werden soll"
+        ],
+        [
+          "Drittes Contra: Wer entscheidet über gut und schlecht?",
+          "Denk an Sport, Fernsehen und das blaue Fragezeichen",
+          "Der Merksatz über Produktivität und Subjektivität"
+        ],
+        [
+          "Die Einordnung: eine der drei Waagen passt hier",
+          "Wie heißt die Gefahr, wenn andere für jemanden entscheiden?",
+          "Was macht ständiges Bestimmen mit dem Lernen von Verantwortung?"
+        ],
+        [
+          "Erster Teil deiner Vorschläge: Wie treten die Fachkräfte auf?",
+          "Zwei Dinge: eine Haltung und eine Hilfe beim Aussprechen",
+          "Nicht drängen - und ihr helfen, eigene Wünsche in Worte zu fassen"
+        ],
+        [
+          "Zweiter Teil: Wie sehen die Angebote selbst aus?",
+          "Sie soll mitplanen dürfen und wirklich auswählen können",
+          "Zeig ihr die Breite des Feldes - die Mindmap mit sieben Ästen"
+        ],
+        [
+          "Dein Urteil in einem Satz, plus die Rechtslage",
+          "Gut gemeint, aber was ist es in der Sache?",
+          "Recht auf Zugang ist kein Zwang zur Teilnahme"
         ]
       ]
     }
