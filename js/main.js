@@ -187,7 +187,10 @@ var HOOKS = {
       // Geruest und Portion gibt es nur beim Schreiben. Wiedererkennen braucht
       // keine Felder, und eine Portion setzt dort schon o.teil unten.
       felder: !ziehen && Reife.modusFuer(stufe) === "frei-hinweise",
-      teil: stufe < 3 ? ThemenLernen.lvl1Teil(f, stufe) : null,
+      // Der Modus wird MITGEGEBEN: hier haengt er an Roses Runden-Wahl, nicht an
+      // der Reifestufe. Ohne ihn schnitte lvl1Teil bei R0/R1 an Saeulengrenzen,
+      // waehrend die Karte Abschnitte zeichnet - und die Portion fiele weg.
+      teil: stufe < 3 ? ThemenLernen.lvl1Teil(f, stufe, ziehen ? "ziehen" : "frei") : null,
       // Rotation ueber die LERNTAGE statt ueber einen Wiederholungszaehler: den
       // gibt es auf diesem Weg nicht, und ein Hinweis, der sich taeglich dreht,
       // ist genau das, wofuer f.hinweise mehrere Versionen traegt.

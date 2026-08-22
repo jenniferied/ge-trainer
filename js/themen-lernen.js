@@ -375,7 +375,7 @@ function schrittKopf(s) {
    geuebte Aufgabe kann also ueber Nacht eine andere Portion zeigen. Das ist
    hinnehmbar (es geht nichts verloren, die Reife laeuft weiter), aber es soll
    niemanden ueberraschen. */
-export function lvl1Teil(f, stufe) {
+export function lvl1Teil(f, stufe, modus) {
   var budget = bausteinBudget(stufe);
   if (budget === null) return null;                 // ab R3 immer die ganze Aufgabe
   var kernZahl = stichpunkteTeilen(f).kern.length;
@@ -383,12 +383,20 @@ export function lvl1Teil(f, stufe) {
   /* DIE PORTION MUSS DIESELBE QUELLE LESEN WIE DER RENDERER, sonst misst sie
      etwas anderes, als Rose sieht. abrufKarte betritt den Abschnitts-Pfad NUR
      ausserhalb des Zieh-Modus (dort waere eine Abschnitts-Ueberschrift eine
-     Verraeterin, genau wie die Saeulen-Ansicht). Bei R0/R1 gibt modusFuer
-     "ziehen" zurueck - dort gilt also weiter der Saeulen-Weg, und gezaehlt
-     werden die Knoepfe der Mischliste, nicht Abschnitts-Zeilen. Sonst liesse
-     eine Rolle mit fuenf Vorratspunkten als "eine Zeile" durch und Rose bekaeme
-     acht Knoepfe, wo vier vereinbart waren. */
-  var ab = stufe <= 1 ? null : abschnitteFuer(f);
+     Verraeterin, genau wie die Saeulen-Ansicht). Im Zieh-Modus gilt deshalb
+     weiter der Saeulen-Weg, und gezaehlt werden die Knoepfe der Mischliste,
+     nicht Abschnitts-Zeilen. Sonst liesse eine Rolle mit fuenf Vorratspunkten
+     als "eine Zeile" durch und Rose bekaeme acht Knoepfe, wo vier vereinbart
+     waren.
+
+     GEFRAGT WIRD NACH DEM MODUS, NICHT NACH DER STUFE. Im Themen-Lernen faellt
+     beides zusammen (modusFuer), in der ZWEITEN TUER aber nicht: dort waehlt
+     Rose beim Bauen der Runde, ob ein Lernschritt davorkommt, und bei
+     lernschritt "an" wird auch auf R0/R1 aufgedeckt statt gezogen. Wer dort
+     aus der Stufe auf den Modus schliesst, misst die Portion am Saeulen-Weg,
+     waehrend der Renderer die Abschnitte zeichnet - die Grenzen passen dann
+     nicht zueinander, und die Portion faellt still ganz weg. */
+  var ab = (modus || modusFuer(stufe)) === "ziehen" ? null : abschnitteFuer(f);
   if (ab) {
     var teilA = [], zeilen = 0;
     for (var a = 0; a < ab.liste.length; a++) {
