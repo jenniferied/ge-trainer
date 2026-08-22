@@ -15,7 +15,7 @@
 
 import { state, speichern, logAntwort, beiSpeicherVoll, app, el, mischen, leeren, autoWachsen,
   starteRunde, beendeRunde, merkeSitzung, antwortText as kuerzeText, sekundenSeit, reichZeile, ohneHilfe, stichpunkteTeilen } from "./core.js";
-import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, erklaerAbfrage } from "./ui.js";
+import { setzeFarbe, stickerEl, standStickerEl, konfetti, segmentWahl, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, erklaerAbfrage, themenAuswahl } from "./ui.js";
 import { syncSession, frageChatSagen } from "./sync.js";
 // Beleg-Chips: aus "Folie 29" im Text wird ein Sprung in den Folien-Viewer.
 import * as Beleg from "./beleg.js";
@@ -1995,16 +1995,47 @@ export function zeigeMcQuer(themen, zurueck) {
   }
 
   leeren();
-  kopfLeiste("Alle Themen", "Konzept-Check quer durch alle acht Themen.");
-  app.appendChild(rundenSetup({
+  kopfLeiste("Ankreuzen", "Konzept-Check quer durch alle acht Themen – oder genau durch die, die du auswählst.");
+
+  /* THEMENWAHL AUCH HIER (Jennifer, 22.08.2026: "Bei MC alle Themen, aber auch
+     Themen auswählbar machen, mit Anzahl wie viel es gibt jeweils"). Der
+     Baukasten der MC-Runde hatte bis dahin Laenge, Auswahl und Erklaer-Modus,
+     aber keine Themenwahl - die gab es nur in der Eigenen Runde. Die Vorgabe
+     bleibt "alle an": die Klausur zieht ihre fuenf Themen auch unangekuendigt. */
+  var auswahl = themenAuswahl(THEMEN, {
+    titel: "Welche Themen",
+    klein: "Alle an ist die Vorgabe. Die Zahl in Klammern sagt, wie viele Ankreuzfragen dahinterstehen.",
+    zaehle: function (id, unter) {
+      return pool.filter(function (e) {
+        return e.t.id === id && (unter == null || e.f.unterthema === unter);
+      }).length;
+    }
+  });
+
+  var leerHinweis = el("div", "klein baukasten-leer",
+    "Ohne ein angehaktes Thema gibt es nichts zu ziehen – wähl mindestens eins aus.");
+  leerHinweis.hidden = true;
+
+  var setup = rundenSetup({
     wahl: rundenEinstellungen(),
     zeilen: rundenZeilen("Fragen"),
     startText: "Runde starten",
     aufStart: function (wahl) {
+      var g = auswahl.gewaehlt();
+      var erlaubt = {};
+      g.unterthemen.forEach(function (k) { erlaubt[k] = true; });
+      var gefiltert = pool.filter(function (e) {
+        return erlaubt[e.t.id + "/" + e.f.unterthema];
+      });
+      if (!gefiltert.length) { leerHinweis.hidden = false; return; }
       rundenEinstellungenMerken(wahl);
-      starteMcQuer(pool, wahl);
+      starteMcQuer(gefiltert, wahl);
     }
-  }));
+  });
+  // Auswahl und Hinweis vor den Startknopf, der immer das letzte Kind ist.
+  setup.insertBefore(auswahl.knoten, setup.lastElementChild);
+  setup.insertBefore(leerHinweis, setup.lastElementChild);
+  app.appendChild(setup);
 }
 
 function starteMcQuer(pool, wahl) {
@@ -2036,7 +2067,13 @@ function starteMcQuer(pool, wahl) {
     setzeFarbe(app, t.farbe);
 
     var karte = el("div", "karte");
-    karte.appendChild(el("div", "frage-fortschritt", "Alle Themen · Frage " + (index + 1) + " von " + gezogen.length));
+    /* Die Kopfzeile nennt das Thema, wenn nur EINES gezogen wurde - "Alle
+       Themen" waere dann schlicht falsch, seit die Runde eine Themenwahl hat
+       (23.08.2026). Bei mehreren bleibt es bei der neutralen Angabe: fuenf von
+       acht Namen in einer Fortschrittszeile liest niemand. */
+    var einThema = gezogen.length && gezogen.every(function (x) { return x.t.id === gezogen[0].t.id; })
+      ? gezogen[0].t.titel : "Alle Themen";
+    karte.appendChild(el("div", "frage-fortschritt", einThema + " · Frage " + (index + 1) + " von " + gezogen.length));
     karte.appendChild(reichZeile("div", ohneHilfe(f.frage), "frage-text"));
 
     var optionen = mischen(f.optionen);

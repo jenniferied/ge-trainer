@@ -103,8 +103,12 @@ export function zeigeStoebern(themen, hooks) {
   kopf.appendChild(zeile);
   app.appendChild(kopf);
 
-  app.appendChild(materialKarte());
-
+  /* "DEIN MATERIAL" STEHT SEIT DEM 23.08.2026 UNTEN (Jennifer, 22.08.:
+     "Dein Material Sektion nach unten"). Es sind zwei Kacheln, die den
+     Gesamtbestand aufschlagen - 262 Folienseiten und 58 Notizenseiten am
+     Stueck. Das ist der Griff ins Regal, nicht der Einstieg: wer stoebert,
+     sucht fast immer ein THEMA, und das stand bis dahin unter einem Block,
+     der schon die ganze Vorlesungsreihe anbietet. */
   var themenBox = el("div");
   app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
   app.appendChild(themenBox);
@@ -113,12 +117,17 @@ export function zeigeStoebern(themen, hooks) {
   // Medienzeilen kommen dazu, sobald die kleine JSON durch ist. Auf einem
   // langsamen Handy ist das der Unterschied zwischen "laedt" und "leer".
   themen.forEach(function (t) { themenBox.appendChild(themaKarte(t, [], hooks)); });
+  var unten = el("div");
+  app.appendChild(unten);
+  unten.appendChild(el("h2", "abschnitt-titel", "Dein Material"));
+  unten.appendChild(materialKarte());
   Promise.all([ladeMedien(), ladeHefte()]).then(function (beides) {
     var liste = beides[0];
     themenBox.innerHTML = "";
     themen.forEach(function (t) {
       themenBox.appendChild(themaKarte(t, liste.filter(function (m) { return m.thema === t.id; }), hooks));
     });
+    // Die Fusskarte bleibt ganz unten - sie kommentiert den ganzen Schirm.
     app.appendChild(fussKarte(liste));
   });
 }
@@ -127,8 +136,10 @@ export function zeigeStoebern(themen, hooks) {
 
 function materialKarte() {
   var k = el("div", "karte");
-  k.appendChild(el("h2", null, "Dein Material"));
-  k.appendChild(el("p", "muted", "Die Originale. Blättern mit ‹ › oder den Pfeiltasten."));
+  // Die Ueberschrift steht seit dem 23.08. als Abschnitts-Titel darueber,
+  // gleiche Bauform wie "Nach Thema". Zweimal "Dein Material" untereinander
+  // waere eine Dopplung.
+  k.appendChild(el("p", "muted", "Die Originale, von vorn bis hinten. Blättern mit ‹ › oder den Pfeiltasten."));
 
   // Zwei statt drei Spalten: es sind genau zwei Kacheln, und im Dreier-Raster
   // stuenden sie schmal am linken Rand mit einem Loch daneben.
@@ -183,7 +194,7 @@ function themaKarte(thema, eigene, hooks) {
   // Zeile 2: die Fragen, die es zu dem Thema schon gibt.
   var mc = mcStand(thema), fr = freiStand(thema);
   k.appendChild(stbZeile("🗂", "Alle Fragen ansehen",
-    mc.gesamt + " Konzept-Checks · " + fr.gesamt + " offene Aufgaben",
+    mc.gesamt + " Konzept-Checks · " + fr.gesamt + " offene Aufgaben · einzeln anklickbar",
     function () { hooks.thema(thema); }));
 
   /* Zeile 3ff: das Erzeugte. Feste Reihenfolge deck -> podcast -> video statt

@@ -530,7 +530,9 @@ const BS_ERSATZ = { passt: "hatte", halb: "halb", "passt-nicht": "fehlte", leer:
      bleibt und roh bei der Oberflaeche ankommt, zeigte ein erfundener oder
      verrutschter Index dort auf nichts. Dieselbe Regel wie serverseitig fuer
      abschnitte[].idx ausserhalb des Bereichs. */
-function saubereUrteile(d, erlaubteI, sollOderNull) {
+var BS_LOGIK = ["traegt", "wackelt", "traegt-nicht", "leer"];
+
+function saubereUrteile(d, erlaubteI, sollOderNull, abschnittIdx) {
   if (!d || typeof d.gesamt !== "string" || !d.gesamt.trim()) return null;
   if (!Array.isArray(d.urteile)) return null;
   const erlaubt = new Set(erlaubteI);
@@ -568,7 +570,43 @@ function saubereUrteile(d, erlaubteI, sollOderNull) {
     const n = urteile.filter((u) => u.stufe === "passt" && !u.dublette).length;
     zaehlung = { n: Math.min(n, sollOderNull), soll: sollOderNull };
   }
-  return { gesamt: d.gesamt.trim(), urteile, zaehlung };
+  /* DIE ABSCHNITTS-URTEILE (23.08.2026, Jennifer: "es soll ja nicht nur sagen,
+     sind diese Abschnitte da, sondern auch: sind sie logisch/richtig?").
+
+     Gefiltert wie die Feld-Urteile, nur ueber nr statt i: eine Nummer, die es
+     nicht gibt, fliegt still raus, doppelte Nummern gewinnen beim ersten
+     Auftreten. OPTIONAL - ein altes Function-Deployment, das das Feld noch
+     nicht kennt, liefert einfach nichts, und die Oberflaeche zeigt dann eben
+     nur die Feld-Urteile. Deshalb kein return null, wenn abschnitte fehlt. */
+  const logik = [];
+  const idxListen = Array.isArray(abschnittIdx) ? abschnittIdx : [];
+  if (Array.isArray(d.abschnitte) && idxListen.length) {
+    const gesehenNr = new Set();
+    for (const a of d.abschnitte) {
+      if (!a || typeof a !== "object") continue;
+      if (typeof a.nr !== "number" || !isFinite(a.nr)) continue;
+      const nr = Math.floor(a.nr);
+      if (nr < 1 || nr > idxListen.length || gesehenNr.has(nr)) continue;
+      if (BS_LOGIK.indexOf(a.logik) < 0) continue;
+      gesehenNr.add(nr);
+      /* DIE idx-LISTE FAEHRT MIT, und das ist kein Luxus: die Oberflaeche
+         nummeriert ihre Abschnitte NICHT wie diese Nutzlast. treppe.js fasst
+         parallele Unterabschnitte (parallelZu) mit ihrem Elternabschnitt zu
+         EINEM Block zusammen, hier stehen sie einzeln - ab der ersten solchen
+         Aufgabe waere jede Positionsnummer dahinter um eins verschoben, und
+         zwar STILL: ein Logik-Urteil unter dem falschen Abschnitt sieht aus wie
+         ein Urteil. Ueber die idx-Liste ordnet der Renderer selbst zu. */
+      logik.push({
+        nr,
+        logik: a.logik,
+        satz: typeof a.satz === "string" ? a.satz.trim() : "",
+        idx: idxListen[nr - 1].slice(),
+      });
+    }
+    logik.sort((a, b) => a.nr - b.nr);
+  }
+
+  return { gesamt: d.gesamt.trim(), urteile, zaehlung, logik };
 }
 
 /* Ein Urteil je aufgedecktem Baustein. Vertrag im Dateikopf.
@@ -765,7 +803,12 @@ export async function bausteinUrteile(thema, aufgabe, eingaben, opts) {
     }
     const d = await r.json();
     if (!d || d.fehler) { melde("netz"); return null; }
-    const erg = saubereUrteile(d, roh, soll);
+    /* abschnitte.length ist die Obergrenze fuer nr - genau die Liste, die
+       gleich als ABSCHNITT 1..n in den Prompt geht. Der Server nummeriert nach
+       derselben Reihenfolge (forEach mit nr + 1), die beiden koennen also nicht
+       auseinanderlaufen. */
+    const erg = saubereUrteile(d, roh, soll,
+      abschnitte.map((a) => (a.items || []).map((it) => it.i)));
     if (!erg) melde("netz");
     return erg;
   } catch {

@@ -12,7 +12,7 @@
 
 import { state, speichern, app, el, leeren, starteRunde, beendeRunde,
   merkeOffeneKarte, vergissOffeneKarte, offeneKarte } from "./core.js";
-import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen } from "./ui.js";
+import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, themenAuswahl } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
    Das GE-antwortLog kennt (anders als der ST-Trainer) keine Punkte, sondern
@@ -251,7 +251,20 @@ var SPIEL_TEXT = {
      desselben Tages in EINER Zeile - der Gruppenschluessel unten ist Tag + art.
      Kein badge "Spiel": Themen-Lernen ist ausdruecklich kein Spiel
      (themen-lernen.js, Kopfkommentar). */
-  "spiel-themenlernen": { icon: "📚", name: "Themen-Lernen", badge: "Lernen" }
+  "spiel-themenlernen": { icon: "📚", name: "Themen-Lernen", badge: "Lernen" },
+  /* Zuordnen und Modell-Steckbrief, nachgetragen am 23.08.2026. Sie fehlten
+     seit dem Tag ihres Einbaus - und ein fehlender Eintrag ist hier kein
+     kosmetischer Mangel, sondern ein stiller Datenfehler: der Rueckfall unten
+     (letzteRunden) macht aus jeder unbekannten Spiel-Art "spiel-begriffe", und
+     der Gruppenschluessel ist Tag + art. Eine Modell-Steckbrief-Runde
+     verschwand dadurch in der Begriffe-Blitz-Zeile DESSELBEN Tages: sie zaehlte
+     im Tagespensum mit, war im Verlauf aber nicht zu sehen, nicht zu loeschen
+     und nicht zu wiederholen. Genau das hat Rose am 22.08. gemeldet.
+     WER HIER EIN SPIEL ANLEGT, TRAEGT ES IN DREI TABELLEN EIN: hier, in
+     SPIEL_ROUTE (main.js, sonst startet der 🔁-Knopf ein anderes Spiel) und in
+     heuteGespielt (spiele.js, sonst zaehlt der Tag nicht). */
+  "spiel-opzuordnen": { icon: "↔️", name: "Zuordnen", badge: "Spiel" },
+  "spiel-modelle": { icon: "🪪", name: "Modell-Steckbrief", badge: "Spiel" }
 };
 
 function istSpielAntwort(a) { return a.modus === "spiel" || a.sid === "spiel"; }
@@ -583,9 +596,31 @@ function fokusFaktor(ts) {
       befreit und mit dem Faktor DES TAGES neu skaliert. Der Faktor ist
       datumsgebunden, also auch fuer kuenftige Tage bekannt (Zielband rechts
       von heute). */
+/* DIE ERSTEN ZWEI TAGE, EINGEFROREN (23.08.2026).
+   Am 12.08. abends ist das Pensum umgestellt worden (Commit 99f1cea: TZ_MIN/
+   TZ_MAX von 10/40 auf 15/60, dazu DURCHGAENGE = 1,7). Bis dahin galt
+   ziel = r5(bedarf / restTage), praktisch 20 - mit Minimum 10 und Streckziel
+   30. Die Rekonstruktion unten kann diesen Sprung NICHT einfangen: sie
+   korrigiert nur den Fokus-Faktor und rechnet sonst mit dem HEUTIGEN Ziel.
+
+   Nachgerechnet an Roses Stand: der 11.08. (34 Antworten) und der 12.08. (23)
+   waren an ihrem Tag Regenbogen und Gruen. Heute stehen beide auf Gelb, und
+   zwar allein deshalb, weil sich hinterher die Skala geaendert hat. Das ist
+   genau der Fehler, gegen den tzHist geschrieben wurde ("always true to what
+   was true on the day", Jennifer 21.08.) - er lag nur vor dem Zeitraum, den
+   tzHist abdeckt. Zwei Tage, eine Tabellenzeile.
+
+   Der 12.08. bekommt das ALTE Band, obwohl die Umstellung an seinem Abend kam:
+   Roses Antworten dieses Tages liegen davor. Ab dem 13.08. greift die
+   Rekonstruktion, und dort stimmt sie auch - nachgerechnet fuer den 14.08.
+   liegt sie beim selben Minimum wie die echte Formel des Tages. */
+var TZ_ALT_BIS = "2026-08-12";
+var TZ_ALT = { ziel: 20, minimum: 10, stretch: 30 };
+
 export function schwellenFuerTag(ts, tz) {
   var hist = (state.tzHist || {})[isoTag(ts)];
   if (hist && hist.ziel) return hist;
+  if (isoTag(ts) <= TZ_ALT_BIS) return TZ_ALT;
   var fTag = fokusFaktor(ts), fHeute = fokusFaktor(Date.now());
   if (fTag === fHeute) return tz;
   var ziel = Math.max(TZ_MIN, Math.min(r5(TZ_MAX * fTag), r5(tz.ziel / fHeute * fTag)));
@@ -1312,7 +1347,68 @@ export function zeigeMix(themen, hooks, nurWiederholung) {
 export function zeigeNeu(themen, hooks) {
   var pool = alleItems(themen);
   if (!pool.length) return hooks.home();
-  mixRunde(pool, themen, hooks, "neu", { anzahl: 5, auswahl: "neu" });
+
+  /* SEIT DEM 23.08.2026 MIT VORSCHALTSCHIRM (Jennifer, 22.08.: "vorher eine
+     Auswahl, welche Themen rankommen können, wie beim ST-Trainer").
+
+     Das ist bewusst ein Bruch mit der alten Begruendung ("der Modus IST die
+     Einstellung, ein Setup davor waere eine Huerde vor der kuerzesten Runde").
+     Der Grund dafuer steht in Roses Zahlen: ueber alle Modi hat sie in
+     unterrichtsformen 74 Antworten und in grundlagen 19, und die Klausur zieht
+     fuenf von acht Themen. Fuenf ungesehene Karten quer durch alles fuehren
+     nicht dorthin, wo es duenn ist - eine Auswahl schon.
+
+     Klein gehalten bleibt es trotzdem: nur die Themenwahl, keine Laenge, kein
+     Auswahlmodus. Fuenf und "Neues zuerst" sind der Modus, und die aendert der
+     Schirm nicht. */
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  var zurueck = el("button", "zurueck", "← Startseite");
+  zurueck.addEventListener("click", function () { hooks.home(); });
+  app.appendChild(zurueck);
+  var kopf = el("div", "kopf");
+  kopf.appendChild(el("h1", null, "🌱 Neu"));
+  kopf.appendChild(el("div", "untertitel", "Fünf Karten, die du so noch nie gesehen hast."));
+  app.appendChild(kopf);
+
+  // Gezaehlt wird das UNGESEHENE, nicht der ganze Bestand: die Zahl in
+  // Klammern soll sagen, wie viel dieser Modus in dem Thema noch hergibt.
+  var neuPool = pool.filter(ungesehen);
+  var karte = el("div", "karte kl-setup");
+  if (!neuPool.length) {
+    karte.appendChild(el("p", null, "Du hast jede Karte schon einmal gesehen – das ist der Zustand, auf den dieser Modus hinarbeitet. Weiter geht es über den Stapel oder eine gemischte Runde."));
+    app.appendChild(karte);
+    return;
+  }
+
+  var auswahl = themenAuswahl(themen, {
+    titel: "Welche Themen dürfen drankommen",
+    klein: "Die Zahl in Klammern sagt, wie viele ungesehene Karten dort noch liegen. Alle an ist die Vorgabe.",
+    zaehle: function (id, unter) {
+      return neuPool.filter(function (i) {
+        return i.thema.id === id && (unter == null || i.f.unterthema === unter);
+      }).length;
+    }
+  });
+  karte.appendChild(auswahl.knoten);
+
+  var leerHinweis = el("div", "klein baukasten-leer",
+    "Ohne ein angehaktes Thema gibt es nichts zu ziehen – wähl mindestens eins aus.");
+  leerHinweis.hidden = true;
+  karte.appendChild(leerHinweis);
+
+  var los = el("button", "knopf", "Fünf neue starten");
+  los.style.marginTop = "16px";
+  los.addEventListener("click", function () {
+    var g = auswahl.gewaehlt();
+    var erlaubt = {};
+    g.unterthemen.forEach(function (k) { erlaubt[k] = true; });
+    var gefiltert = pool.filter(function (i) { return erlaubt[i.thema.id + "/" + i.f.unterthema]; });
+    if (!gefiltert.length) { leerHinweis.hidden = false; return; }
+    mixRunde(gefiltert, themen, hooks, "neu", { anzahl: 5, auswahl: "neu" });
+  });
+  karte.appendChild(los);
+  app.appendChild(karte);
 }
 
 /* Sechs zum Wiederholen - die abhakbare Tagesrunde aus dem Wackel-Stapel.
@@ -1418,24 +1514,16 @@ var MIX_TEXT = {
     art: "neu",
     titel: "Fünf neue", unter: "Größtenteils Ungesehenes",
     fertig: "Fünf durch, überwiegend Sachen, die du noch nicht hattest.",
-    /* Jennifer wollte am 13.08. zu BEIDEN neuen Modi "jeweils 2 kurze games zum
-       aufwaermen". Beim Klausurfrage-Modus stehen sie davor, hier bewusst
-       DANACH - und zwar aus zwei Gruenden:
+    /* HIER STAND BIS ZUM 23.08.2026 EIN KNOPF "Signalwörter, kurz" (Jennifer,
+       22.08.: "Vorher kurz warm werden und ähnliche Cross-Verlinkungen von
+       anderen Modi auf andere Modi allgemein weg"). Er war der letzte Rest der
+       Aufwaerm-Idee vom 13.08.
 
-       1. Eine Vorschaltseite vor der kuerzesten Runde der App waere genau die
-          Huerde, gegen die es diese Kachel gibt. Zwei Spiele vor fuenf Fragen
-          ist ausserdem mehr Vorlauf als Runde.
-       2. Vorher ist das Aufwaermen ohnehin einen Tipp entfernt: dieselbe
-          Startseite traegt Signalwoerter und Begriffe-Blitz schon als
-          Tageskacheln, direkt ueber den Uebungs-Kacheln.
-
-       Der Knopf zeigte bis zum 22.08.2026 auf die Hub-Seite "Kurze Runden",
-       weil runde() genau EINEN Extra-Knopf kann und dort beide Spiele
-       nebeneinanderstanden. Die Seite ist gefallen (Zwischenseite ohne
-       Eingang von der Startseite); der eine Knopf springt jetzt direkt in
-       eine Signalwoerter-Runde (hooks.spielOp), und die Beschriftung sagt
-       konkret, was passiert. */
-    extraText: "🎯 Signalwörter, kurz"
+       Weggefallen ist er aus demselben Grund wie das Aufwaermen vor der
+       Klausurfrage: das Ende einer Runde ist der Moment, in dem Rose
+       entscheidet, ob sie weitermacht - ein Knopf, der in ein anderes Spiel
+       fuehrt, entscheidet das fuer sie. Die Startseite traegt Signalwoerter
+       ohnehin als Tageskachel, einen Tipp entfernt. */
   }
 };
 
@@ -1452,10 +1540,11 @@ function mixRunde(pool, themen, hooks, art, wahl) {
     // steht vor der Runde, nicht zwischen zwei Runden.
     nochmal: function () { mixRunde(pool, themen, hooks, art, wahl); },
     fertigSatz: t.fertig,
-    // Nur die Neu-Runde traegt einen Extra-Knopf (siehe MIX_TEXT). Fehlt
-    // extraText, laesst fertig() den Platz weg - kein leerer Knopf.
+    /* Kein Extra-Knopf mehr am Rundenende - der Mechanismus (extraText/extra)
+       bleibt in runde() stehen, er ist ein Angebot fuer den naechsten, der
+       einen braucht. Fehlt extraText, laesst fertig() den Platz weg. */
     extraText: t.extraText || null,
-    extra: t.extraText ? function () { hooks.spielOp(); } : null
+    extra: null
   }, hooks, wahl);
 }
 

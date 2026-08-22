@@ -1916,6 +1916,21 @@ p { margin: 0 0 var(--sp-3); }
   color: var(--ink-soft); padding: 4px 12px; font-size: .82rem; font-weight: 700; cursor: pointer;
 }
 .gl-schalt.an { border-color: var(--tfarbe); color: var(--tfarbe); background: color-mix(in srgb, var(--tfarbe) 10%, transparent); }
+/* Die kleine Bauform: Alle/Keine oben und die Sprachreihe im Eintrag. Sie soll
+   sich unterordnen - der Text daneben ist die Hauptsache. */
+.gl-schalt.gl-klein { font-size: .72rem; padding: 3px 10px; }
+/* Themen-Auswahl (23.08.2026). Jeder Chip traegt ueber --tfarbe-basis seine
+   eigene Themenfarbe, Hell- und Dunkelmodus kommen darueber von allein. */
+.gl-kat-zeile { display: flex; align-items: center; gap: var(--sp-2); }
+.gl-kat-titel {
+  font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink-soft); margin-right: auto;
+}
+.gl-kat { display: inline-flex; align-items: baseline; gap: 6px; }
+.gl-kat-zahl { font-size: .72rem; font-weight: 600; opacity: .65; }
+/* Die Sprachwahl sitzt am Fuss der aufgeklappten Box, mit etwas Luft nach oben
+   und einer Spur zurueckgenommen: sie ist der Ausweg, nicht der Einstieg. */
+.gl-sprachreihe { margin-top: var(--sp-3); opacity: .9; }
 .gl-eintrag { border-top: 1px solid var(--line); }
 .gl-eintrag:first-of-type { border-top: 0; }
 .gl-begriff {
@@ -2321,3 +2336,213 @@ p { margin: 0 0 var(--sp-3); }
    verschachtelten Knoten mit und wuerfe die Auszeichnung auf eine eigene
    Zeile. Hier zurueck auf inline, ohne die Regel oben anzufassen. */
 .nachlesen-zeile b b { display: inline; margin-bottom: 0; }
+
+/* ==========================================================================
+   Nachtrag 23.08.2026 — die Bauteile aus Roses Feedback vom 22.08.
+   ========================================================================== */
+
+/* ---------- Breite Modus-Kacheln ("Ernst üben") ----------
+   Woertlich uebernommen aus dem ST-Trainer (app/css/style.css, Block
+   "Modus-Grid"), Jennifer: "übernehme 1:1 den Stil". Die Tokens (--sp-*,
+   --radius, --shadow, --line, --card, --ink-soft) liegen in geteilt.css und
+   sind in beiden Apps dieselben - die Regeln passen also ohne Uebersetzung.
+
+   Warum sie hier stehen und nicht im geteilten Paket: .mode-card ist drueben
+   ausdruecklich KEINE .card und folgt der geteilten Kasten-Treppe deshalb
+   nicht von selbst (Kommentar in geteilt.css, Block 10). Sie ins geteilte
+   Paket zu ziehen ist ein eigener Auftrag und steht als offene Zeile in
+   beiden ROADMAPs. Bis dahin: zwei Kopien, aber identische. */
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.mode-card {
+  border: 1.5px solid var(--line); border-radius: var(--radius);
+  background: var(--card); padding: var(--sp-5) var(--sp-4); text-align: left;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 4px;
+  font: inherit; color: inherit; cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.mode-card:hover { transform: translateY(-1px); border-color: var(--accent); }
+.mode-card b { font-family: "Fraunces", serif; font-size: 1.05rem; }
+.mode-card span { font-size: .84rem; color: var(--ink-soft); line-height: 1.4; }
+.mode-card.wide { grid-column: 1 / -1; }
+@media (min-width: 640px) { .mode-grid { gap: var(--sp-4); } .mode-card { padding: var(--sp-6); } }
+@media (max-width: 460px) { .mode-card { padding: var(--sp-4) var(--sp-3); } .mode-card span { font-size: .82rem; } }
+
+/* ---------- Themen-Lernen als breite Zeile in der Tagesliste ----------
+   Jennifer, 22.08.: "themen lernen sollte dann über die anderen spiele eine
+   breite reihe bekommen (damit klar wird, dass es ein längeres spiel ist)".
+
+   Die Kachel selbst baut der geteilte Tages-Hub, der beiden Apps gehoert -
+   deshalb steht die Sonderform HIER und nicht dort: dass GE ein laengeres
+   Spiel hat, ist kein geteilter Gedanke. .dailies-reihe ist ein Grid mit
+   --dailies-spalten Spalten, 1 / -1 spannt also ueber die ganze Reihe. */
+.dailies-reihe .daily-kachel.daily-breit {
+  grid-column: 1 / -1;
+  flex-direction: row; align-items: center; justify-content: flex-start;
+  gap: var(--sp-3); text-align: left; min-height: 0;
+  padding: var(--sp-3) var(--sp-4);
+}
+.daily-kachel.daily-breit .d-icon { font-size: 1.5rem; }
+.daily-kachel.daily-breit .d-klein {
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.35;
+  flex: 1; min-width: 0;
+}
+/* Auf sehr schmalen Schirmen wandert der Untertitel unter den Namen, statt
+   ihn auf zwei Buchstaben zusammenzuquetschen. */
+@media (max-width: 420px) {
+  .dailies-reihe .daily-kachel.daily-breit { flex-wrap: wrap; }
+  .daily-kachel.daily-breit .d-klein { flex-basis: 100%; }
+}
+
+/* ---------- Themen- und Unterthemen-Auswahl (ui.js themenAuswahl) ----------
+   Bauform woertlich aus dem ST-Trainer: eine FLACHE Liste, Oberthema und
+   Unterthema sind beide ein label.check, die Hierarchie macht allein die
+   Einrueckung von .check.sub. Kein Akkordeon - wer auswaehlt, will alles
+   gleichzeitig sehen. */
+.themen-wahl-alle { display: flex; gap: var(--sp-3); margin: 2px 0 var(--sp-2); }
+.check {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: 7px 10px; border-radius: 10px; cursor: pointer;
+  font-size: .92rem; line-height: 1.3;
+  border-left: 3px solid var(--tfarbe, transparent);
+}
+.check:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.check input { accent-color: var(--tfarbe, var(--accent)); width: 18px; height: 18px; flex: none; }
+.check b { font-weight: 600; }
+.check.sub {
+  margin-left: 26px; padding: 5px 10px; font-size: .87rem;
+  border-left: 0;
+}
+.check input:disabled + span { opacity: .45; }
+/* Die Auswahl steht in einer .zeile des Baukastens, wo sonst eine
+   Segment-Reihe sitzt - die ist nebeneinander, diese Liste untereinander. */
+.themen-wahl .themen-wahl-liste { display: block; }
+.afb-wahl .themen-wahl-liste { display: block; }
+
+/* ---------- Die Fragenliste eines Themas (zeigeThema) ---------- */
+.fragen-zeile { border-top: 1px solid var(--line); }
+.fragen-zeile:first-of-type { border-top: 0; }
+.fragen-knopf {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  width: 100%; text-align: left; padding: 10px 2px;
+  background: none; border: 0; font: inherit; color: inherit; cursor: pointer;
+}
+.fragen-knopf:hover .fragen-text { color: var(--accent); }
+.fragen-marken { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.fragen-typ {
+  font-size: .72rem; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.fragen-text { font-size: .93rem; line-height: 1.4; }
+.fragen-zeile.offen .fragen-text { font-weight: 600; }
+/* Die aufgeklappte Karte ist eine ganz normale .karte - damit sie in der
+   Liste nicht wie ein zweiter Kasten im Kasten wirkt, faellt hier ihr Rand
+   weg und nur der eingerueckte Balken zeigt die Zugehoerigkeit. */
+.fragen-detail { margin: 0 0 var(--sp-3) 0; border-left: 3px solid var(--tfarbe, var(--accent)); padding-left: var(--sp-3); }
+.fragen-detail > .karte { border: 0; box-shadow: none; padding-left: 0; padding-right: 0; background: none; }
+
+/* ---------- Ein Modell-Steckbrief mit allen drei Fragen ----------
+   Die drei Bloecke brauchen eine sichtbare Trennung, sonst liest sich die
+   Karte als eine Frage mit neun Optionen. */
+.md-block { margin-top: var(--sp-4); padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+.md-block:first-of-type { border-top: 0; padding-top: 0; }
+.md-block .frage-text { margin-bottom: var(--sp-2); }
+.md-fuss { margin-top: var(--sp-4); }
+
+/* Modellnamen sind laenger als Signalwoerter - "Handlungsstrukturanalyse" ist
+   ein Wort und lief bei 1,8 rem seitlich aus der Karte heraus (gemessen bei
+   390 px am 23.08.2026). .op-wort wird fuer den Steckbrief deshalb kleiner
+   gesetzt und darf im Wort umbrechen; das Signalwort-Spiel, fuer das die
+   Klasse urspruenglich gebaut ist, bleibt unveraendert gross. */
+.op-wort { overflow-wrap: anywhere; hyphens: auto; }
+/* Die Klasse setzt spiele.js an der Steckbrief-Karte - bewusst per JS und
+   nicht per :has(), damit die Regel nicht an einem alten Browser haengt. */
+.md-karte .op-wort { font-size: 1.35rem; line-height: 1.2; }
+@media (max-width: 420px) { .md-karte .op-wort { font-size: 1.15rem; } }
+
+/* Die Kopfzeile einer zugeklappten Auswahl. Kein eigenes Dreieck-Zeichen:
+   das setzt der Browser, und ein zweites danebenzumalen hiesse, den Zustand
+   zweimal zu behaupten. */
+.wahl-summary {
+  cursor: pointer; list-style: revert;
+  display: flex; align-items: baseline; gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+}
+.wahl-summary .label { flex: 1; min-width: 0; }
+.wahl-stand {
+  font-size: .82rem; color: var(--ink-soft); white-space: nowrap;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px;
+}
+details.themen-wahl[open] .wahl-summary,
+details.afb-wahl[open] .wahl-summary { margin-bottom: var(--sp-2); }
+
+/* ---------- Das Logik-Urteil je Abschnitt (23.08.2026) ----------
+   Jennifer: "es soll ja nicht nur sagen, sind diese Abschnitte da, sondern
+   auch: sind sie logisch/richtig? (sind jeweils Einschaetzungen, sie soll das
+   selber setzen dann)".
+
+   Der Kasten sitzt UNTEN im Abschnitt, hinter den Zeilen: er urteilt ueber das
+   Zusammenspiel, das man erst gelesen haben muss. Leer nimmt er keinen Platz -
+   solange die KI nicht geantwortet hat, ist er nicht da.
+
+   Farben wie bei den Baustein-Urteilen, aber gedaempfter: das hier ist eine
+   Beobachtung ueber den TEXT, kein Urteil ueber Rose. Kein Rot. */
+.treppe-logik:not(:empty) {
+  margin-top: var(--sp-3);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.treppe-logik-kopf { display: flex; align-items: center; gap: var(--sp-2); }
+.treppe-logik-marke {
+  font-size: .78rem; font-weight: 700; letter-spacing: .02em;
+  border-radius: 999px; padding: 3px 10px;
+  border: 1px solid currentColor;
+}
+.treppe-logik-marke.gut   { color: var(--ok); }
+.treppe-logik-marke.halb  { color: var(--zone-y); }
+.treppe-logik-marke.offen { color: var(--zone-o); }
+.treppe-logik-marke.leer  { color: var(--ink-soft); }
+.treppe-logik-satz {
+  font-size: .88rem; line-height: 1.5; margin-top: 6px;
+}
+/* Roses eigene Einschaetzung. Sie steht NACH dem Satz - erst lesen, was
+   beobachtet wurde, dann entscheiden. */
+.treppe-logik-wahl {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: var(--sp-2); margin-top: 10px;
+}
+.treppe-logik-frage { font-size: .8rem; color: var(--ink-soft); }
+.treppe-logik-knopf {
+  font: inherit; font-size: .8rem; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 4px 12px; background: var(--card); color: var(--ink-soft);
+  transition: border-color .15s ease, color .15s ease;
+}
+.treppe-logik-knopf:hover { border-color: var(--accent); color: var(--ink); }
+.treppe-logik-knopf.an {
+  border-color: var(--accent); color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 14%, var(--card));
+  font-weight: 600;
+}
+
+/* ---------- REPARATUR 23.08.2026: die Auswahl im Baukasten ----------
+   `.kl-setup .zeile` (papier.css) setzt `display: flex` — dort steht sonst
+   links ein Label und rechts eine Segment-Reihe. Die Themen- und AFB-Auswahl
+   traegt dieselbe Klasse `zeile`, ist aber ein <details>: zugeklappt faellt
+   nichts auf, AUFGEKLAPPT legte Flex Kopfzeile, Alle/Keine-Reihe und Liste
+   nebeneinander. Gemessen bei 390 px: die Seite wurde 456 px breit, die halbe
+   Themenliste lag ausserhalb des Schirms, und die Ueberschrift rutschte
+   1080 px nach unten.
+
+   Die Spezifitaet ist Absicht und kein Zufall: papier.css laedt NACH style.css,
+   eine gleich spezifische Regel hier verloere. `.kl-setup .zeile.themen-wahl`
+   (0,3,0) schlaegt `.kl-setup .zeile` (0,2,0) unabhaengig von der Reihenfolge.
+   Die Klausurfrage war nie betroffen — dort steht die Auswahl in einer
+   normalen .karte. */
+details.themen-wahl,
+details.afb-wahl,
+.kl-setup .zeile.themen-wahl,
+.kl-setup .zeile.afb-wahl {
+  display: block;
+}

@@ -257,9 +257,32 @@ var SPRACHEN = [
   { id: "ar", text: "AR" }
 ];
 
-// Nur fuer diesen Besuch, bewusst kein state-Feld: eine Lesehilfe, die ein
-// Neustart zuruecksetzen darf (dieselbe Entscheidung wie in muster.js).
-var anzeige = { sprache: "de", einfach: false };
+/* Nur fuer diesen Besuch, bewusst kein state-Feld: eine Lesehilfe, die ein
+   Neustart zuruecksetzen darf (dieselbe Entscheidung wie in muster.js). Kein
+   Sync, kein localStorage - in welcher Sprache Rose gestern einen Begriff
+   gelesen hat, ist kein Lernstand.
+
+   Seit dem 23.08.2026 haengt die Wahl nicht mehr global ueber dem ganzen
+   Glossar, sondern an jedem Eintrag einzeln (Jennifer: der Toggle fuer die
+   Sprachen soll bei den Fachbegriffen selber stehen). Eine Sprache gehoert zu
+   EINEM Wort: wer bei einem sperrigen Begriff in die einfache Fassung wechselt,
+   will die anderen 130 deshalb nicht mit umstellen.
+
+   Warum die Map hier oben liegt und nicht in der Zeile: das Suchfeld baut die
+   Liste bei jedem Tastendruck komplett neu. Haenge der Zustand am DOM-Knoten,
+   spraenge beim Tippen jeder Eintrag zurueck auf Deutsch und aufgeklappt. */
+var eintragsAnzeige = new Map();
+
+function anzeigeVon(id) {
+  var a = eintragsAnzeige.get(id);
+  if (!a) { a = { sprache: "de", einfach: false, zu: false }; eintragsAnzeige.set(id, a); }
+  return a;
+}
+
+/* Die ausgeblendeten Themen - gespeichert wird das Weggeschaltete, nicht das
+   Angeschaltete. So ist der Default (leere Menge) alles an, und ein spaeter
+   dazukommendes Thema ist von sich aus dabei statt unsichtbar. */
+var themenAus = new Set();
 
 function fassungVon(e, sprache, einfach) {
   var f = e.fassungen || {};
@@ -272,19 +295,43 @@ function fassungVon(e, sprache, einfach) {
 /* Die Definition als DOM-Knoten, mit RTL fuer Arabisch und der Maschinell-Marke
    fuer alles Uebersetzte. Beleg-Chips nur in der deutschen Fassung: in einer
    englischen oder arabischen Definition waere ein deutscher Chip-Text ein
-   Fremdkoerper mitten im Satz. */
-function definitionEl(e, thema) {
+   Fremdkoerper mitten im Satz.
+
+   Sprache und Einfach kommen seit dem 23.08.2026 als Parameter herein statt aus
+   einem globalen Objekt: die Wahl gehoert jetzt dem einzelnen Eintrag, und ohne
+   Angabe steht hier die deutsche Klausurfassung - das ist die Sprache, in der
+   am 10.09. geschrieben wird. */
+function definitionEl(e, thema, sprache, einfach) {
+  sprache = sprache || "de";
   var box = el("div", "gl-definition");
-  var text = fassungVon(e, anzeige.sprache, anzeige.einfach);
-  if (anzeige.sprache === "de") {
+  var text = fassungVon(e, sprache, !!einfach);
+  if (sprache === "de") {
     box.appendChild(belegZeile("div", text, idVon(thema)));
   } else {
     var d = el("div", null, text);
-    if (anzeige.sprache === "ar") { d.dir = "rtl"; d.lang = "ar"; d.className = "gl-ar"; }
+    if (sprache === "ar") { d.dir = "rtl"; d.lang = "ar"; d.className = "gl-ar"; }
     box.appendChild(d);
     box.appendChild(el("div", "gl-maschinell", "maschinell übersetzt – im Zweifel gilt die deutsche Fassung"));
   }
   return box;
+}
+
+/* Die Schalterreihe IM Eintrag: dieselben sechs Fassungen wie bei den
+   Musterloesungen, aber nur fuer diesen einen Begriff. Sie steht bewusst unten
+   in der Box und klein - Rose soll zuerst die deutsche Definition lesen und die
+   Uebersetzung als Ausweg haben, nicht als erste Wahl. neu() zeichnet die
+   Detailbox danach neu; ein zweiter Renderpfad waere eine zweite Wahrheit. */
+function sprachReihe(a, neu) {
+  var reihe = el("div", "gl-schalter gl-sprachreihe");
+  SPRACHEN.forEach(function (s) {
+    var b = el("button", "gl-schalt gl-klein" + (a.sprache === s.id ? " an" : ""), s.text);
+    b.addEventListener("click", function () { a.sprache = s.id; neu(); });
+    reihe.appendChild(b);
+  });
+  var einf = el("button", "gl-schalt gl-klein gl-einfach" + (a.einfach ? " an" : ""), "Einfache Sprache");
+  einf.addEventListener("click", function () { a.einfach = !a.einfach; neu(); });
+  reihe.appendChild(einf);
+  return reihe;
 }
 
 /* Die Fundstelle unter der Definition. quelle ist "folie-<thema>-NN" (auch als
@@ -375,8 +422,11 @@ export function zeigeGlossar(themen, hooks) {
     return;
   }
 
-  // Suchfeld + die zwei Umschalter (Sprache, Einfache Sprache) - dieselben
-  // sechs Fassungen wie bei den Musterloesungen.
+  /* Suchfeld + die Themen-Auswahl. Oben stand bis zum 23.08.2026 die
+     Sprachwahl; die ist zum einzelnen Eintrag gewandert (sprachReihe), und an
+     ihre Stelle kommt das, was wirklich das ganze Regal betrifft: welche Themen
+     ueberhaupt dastehen. Wer nur Konzeptionen wiederholt, schaltet den Rest weg
+     und bekommt eine Seite, die man zu Ende scrollen kann. */
   var werkzeug = el("div", "karte gl-werkzeug");
   var suche = document.createElement("input");
   suche.type = "search";
@@ -384,27 +434,50 @@ export function zeigeGlossar(themen, hooks) {
   suche.className = "gl-suche";
   werkzeug.appendChild(suche);
 
-  var schalter = el("div", "gl-schalter");
-  SPRACHEN.forEach(function (s) {
-    var b = el("button", "gl-schalt" + (anzeige.sprache === s.id ? " an" : ""), s.text);
-    b.addEventListener("click", function () {
-      anzeige.sprache = s.id;
-      schalter.querySelectorAll(".gl-schalt").forEach(function (x) { x.classList.remove("an"); });
-      b.classList.add("an");
-      einfach.classList.toggle("an", anzeige.einfach);
+  var katZeile = el("div", "gl-kat-zeile");
+  katZeile.appendChild(el("span", "gl-kat-titel", "Themen"));
+  var alleKnopf = el("button", "gl-schalt gl-klein", "Alle");
+  var keineKnopf = el("button", "gl-schalt gl-klein", "Keine");
+  katZeile.appendChild(alleKnopf);
+  katZeile.appendChild(keineKnopf);
+  werkzeug.appendChild(katZeile);
+
+  /* Die Zahl auf dem Chip zaehlt ALLE Begriffe des Themas, nicht die gerade
+     gefundenen: eine Zahl, die beim Tippen mitzappelt, liest man nicht mehr,
+     und der Chip ist ein Wegweiser, keine Trefferanzeige. */
+  var chips = el("div", "gl-schalter gl-kat-chips");
+  var katKnoepfe = [];
+  themen.forEach(function (t) {
+    var n = eintraegeZu(t.id).length;
+    if (!n) return; // ein Thema ohne Begriffe waere ein Schalter ohne Wirkung
+    var chip = el("button", "gl-schalt gl-kat", t.titel);
+    setzeFarbe(chip, t.farbe);
+    chip.appendChild(el("span", "gl-kat-zahl", String(n)));
+    chip.addEventListener("click", function () {
+      if (themenAus.has(t.id)) themenAus.delete(t.id); else themenAus.add(t.id);
+      chipsAuffrischen();
       neuZeichnen();
     });
-    schalter.appendChild(b);
+    katKnoepfe.push({ id: t.id, knopf: chip });
+    chips.appendChild(chip);
   });
-  var einfach = el("button", "gl-schalt gl-einfach" + (anzeige.einfach ? " an" : ""), "Einfache Sprache");
-  einfach.addEventListener("click", function () {
-    anzeige.einfach = !anzeige.einfach;
-    einfach.classList.toggle("an", anzeige.einfach);
+  werkzeug.appendChild(chips);
+  app.appendChild(werkzeug);
+
+  function chipsAuffrischen() {
+    katKnoepfe.forEach(function (k) { k.knopf.classList.toggle("an", !themenAus.has(k.id)); });
+  }
+  alleKnopf.addEventListener("click", function () {
+    themenAus.clear();
+    chipsAuffrischen();
     neuZeichnen();
   });
-  schalter.appendChild(einfach);
-  werkzeug.appendChild(schalter);
-  app.appendChild(werkzeug);
+  keineKnopf.addEventListener("click", function () {
+    katKnoepfe.forEach(function (k) { themenAus.add(k.id); });
+    chipsAuffrischen();
+    neuZeichnen();
+  });
+  chipsAuffrischen();
 
   var halter = el("div");
   app.appendChild(halter);
@@ -413,6 +486,7 @@ export function zeigeGlossar(themen, hooks) {
     halter.innerHTML = "";
     var filter = normal(suche.value || "");
     themen.forEach(function (t) {
+      if (themenAus.has(t.id)) return;
       var liste = eintraegeZu(t.id).filter(function (e) {
         return !filter || normal(e.begriff).indexOf(filter) >= 0;
       });
@@ -423,7 +497,14 @@ export function zeigeGlossar(themen, hooks) {
       kz.appendChild(el("span", "thema-titel", t.titel));
       kz.appendChild(el("span", "vl-badge", liste.length + (liste.length === 1 ? " Begriff" : " Begriffe")));
       karte.appendChild(kz);
+      /* Seit dem 23.08.2026 steht jeder Eintrag von Anfang an offen (Jennifer:
+         alle schon eingeblendet, in normaler Sprache). Das Glossar ist zum
+         Lesen da - wer nachschlaegt, will nicht erst 131-mal tippen. Der
+         Begriff bleibt anklickbar, nur die Richtung dreht sich um: Klick klappt
+         jetzt ZU, und dass er zu ist, merkt sich anzeigeVon ueber jeden
+         Suchlauf hinweg. */
       liste.forEach(function (e) {
+        var a = anzeigeVon(e.id);
         var reihe = el("div", "gl-eintrag");
         var knopf = el("button", "gl-begriff");
         knopf.appendChild(el("span", null, e.begriff));
@@ -432,23 +513,35 @@ export function zeigeGlossar(themen, hooks) {
           u.title = "Die Folie nennt den Begriff, erklärt ihn aber nicht – die Definition ist aus dem Zusammenhang erschlossen.";
           knopf.appendChild(u);
         }
+        reihe.appendChild(knopf);
+
         var detail = null;
-        knopf.addEventListener("click", function () {
-          if (detail) { detail.remove(); detail = null; reihe.classList.remove("offen"); return; }
+        function detailZeichnen() {
+          if (detail) { detail.remove(); detail = null; }
+          reihe.classList.toggle("offen", !a.zu);
+          if (a.zu) return;
           detail = el("div", "gl-detail");
-          detail.appendChild(definitionEl(e, t));
+          detail.appendChild(definitionEl(e, t, a.sprache, a.einfach));
           var q = quelleEl(e, t);
           if (q) detail.appendChild(q);
+          detail.appendChild(sprachReihe(a, detailZeichnen));
           reihe.appendChild(detail);
-          reihe.classList.add("offen");
-        });
-        reihe.appendChild(knopf);
+        }
+        knopf.addEventListener("click", function () { a.zu = !a.zu; detailZeichnen(); });
+        detailZeichnen();
+
         karte.appendChild(reihe);
       });
       halter.appendChild(karte);
     });
+    /* Zwei Gruende fuer eine leere Seite, und sie brauchen verschiedene Saetze:
+       wer alle Themen weggeschaltet hat, hat nichts falsch gesucht - der
+       Suchsatz waere dort schlicht die falsche Auskunft. */
     if (!halter.children.length) {
-      halter.appendChild(el("div", "karte muted", "Kein Begriff passt zu deiner Suche."));
+      var leerText = katKnoepfe.length && themenAus.size >= katKnoepfe.length
+        ? "Gerade sind alle Themen ausgeblendet. Tipp oben eins wieder an – dann sind die Begriffe sofort da."
+        : "Kein Begriff passt zu deiner Suche.";
+      halter.appendChild(el("div", "karte muted", leerText));
     }
   }
   suche.addEventListener("input", neuZeichnen);

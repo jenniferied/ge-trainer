@@ -94,8 +94,44 @@ var NEU_BEGRIFFE = 15;
 var NEU_MC = 4;
 
 /* Deckel fuer die ganze Sitzung. Unten wird kommentarlos abgeschnitten: eine
-   Liste, die sagt "und 60 weitere", ist eine Drohung, keine Information. */
-var SITZUNG_MAX = 40;
+   Liste, die sagt "und 60 weitere", ist eine Drohung, keine Information.
+
+   VON 40 AUF 25 GESENKT (23.08.2026). Rose hat am 22.08. eine Runde mit 38
+   Schritten vor sich gehabt und die Menge gemeldet. 40 war als Notbremse
+   gedacht, nicht als Vorgabe - aber ein Deckel, der ueber der ueblichen Menge
+   liegt, ist keine Bremse, sondern eine Ansage. 25 ist ungefaehr das, was der
+   Neu-Block plus ein kurzer Stapel ohnehin ergibt (4 MC + 6 Aufgaben + 15
+   Begriffe): der Deckel greift jetzt genau dort, wo der Stapel eine Sitzung
+   sonst verdoppeln wuerde. Faellig bleibt faellig, der Rest kommt morgen. */
+var SITZUNG_MAX = 25;
+
+/* DER NEUSTART-STEMPEL (Jennifer, 22.08.2026: "resette da nochmal alles -
+   einfach alle Themen jungfraeulich anbieten"). Abschluss-Eintraege VOR diesem
+   Zeitpunkt zaehlen nicht mehr: Rotation und Level fangen bei null an, alle
+   acht Themen stehen wieder offen, jedes auf Level 1 - und damit, seit dem
+   AFB-Gate unten, auf AFB I.
+
+   WARUM EIN STEMPEL UND KEIN LOESCHEN: Roses Lernstand wird nicht angefasst.
+   Die alten Eintraege bleiben im antwortLog stehen, sie zaehlen nur hier nicht
+   mehr mit. Das ist auf jedem Geraet dieselbe Rechnung (kein neues Sync-Feld,
+   Muster wie ueberall in dieser Datei), es geht nichts verloren, was der
+   Reife-Stand oder die Statistik brauchen, und zuruecknehmen laesst es sich,
+   indem die Zahl wieder auf 0 gesetzt wird.
+
+   Der Reife-Stand der einzelnen Aufgaben (reife.js, aus den tlab-Eintraegen)
+   bleibt bewusst stehen: was Rose kann, kann sie - der Neustart betrifft die
+   REIHENFOLGE, in der Themen angeboten werden, nicht ihr Wissen. */
+var TL_NEUSTART = new Date(2026, 7, 23, 0, 0, 0).getTime();
+
+/* AB WIE VIELEN SACHEN EINE RUNDE ZAEHLT (Jennifer, 22.08.2026). Darunter
+   schreibt fazit() KEINEN Abschluss-Eintrag: die Rotation dreht nicht weiter,
+   das Level bleibt, die Tageskachel bleibt offen, und der Rest wandert als
+   Pause auf den Stapel. Vorher reichte eine einzige Antwort - Rose hatte das
+   Themen-Lernen einmal angetippt, um zu sehen, was es ist, und danach stand
+   das Thema als erledigt da, ohne dass irgendetwas zum Fortfahren dalag.
+   Gezaehlt werden SACHEN (versucht), nicht Schirme: eine dreimal wiederholte
+   Aufgabe ist eine Sache, keine drei - dieselbe Zaehlweise wie im Fazit. */
+var ABSCHLUSS_MIN = 10;
 
 /* Wie oft ein Schritt in DERSELBEN Sitzung wiederkommen darf. Zwoelf ist
    grosszuegig gemeint - wer zwoelfmal hintereinander an derselben Sache
@@ -129,8 +165,14 @@ var REQUEUE_MAX = 12;
    drei bis vier). Die soll sie am Stueck bekommen, nicht ueber Wochen verteilt.
    Ungesehenes steht dabei immer vorn. GESEHENES faellt nicht weg, es steht
    dahinter - wer nach den neuen aufhoert, hat trotzdem genau das Neue gehabt.
-   Das ist bewusst ein Schalter und kein Dauerzustand: Liste leeren, fertig. */
-var NACHHOLEN = ["freizeit", "prinzipien"];
+   Das ist bewusst ein Schalter und kein Dauerzustand: Liste leeren, fertig.
+
+   GELEERT AM 23.08.2026. Der Neustart oben leistet dasselbe und mehr: alle acht
+   Themen stehen wieder offen, und was Rose noch nie gesehen hat, steht ohnehin
+   vorn. Ein Nachhol-Schalter DANEBEN haette den Deckel NEU_AUFGABEN aufgehoben
+   und bei 165 freien Aufgaben bis zu 35 Schritte am Stueck gezeigt - ein Berg,
+   ausgerechnet in der Sitzung, die wieder klein anfangen soll. */
+var NACHHOLEN = [];
 
 /* AUSNAHME VON DER ROTATIONS-SPERRE (19.08.2026, Jennifer): "prinzipien" bleibt
    waehlbar, auch wenn es in der laufenden Runde schon dran war - die
@@ -140,9 +182,11 @@ var NACHHOLEN = ["freizeit", "prinzipien"];
    reicht es, die Liste hier zu leeren.
    Die Nachhol-Themen stehen automatisch mit drin - ein Thema nachholen zu
    lassen, das die Rotation gerade sperrt, waere sonst ein stiller Widerspruch. */
-var FREIGEGEBEN = ["prinzipien"].concat(NACHHOLEN.filter(function (id) {
-  return id !== "prinzipien";
-}));
+/* Ebenfalls geleert am 23.08.2026: nach dem Neustart sperrt die Rotation
+   ohnehin kein Thema mehr, eine Ausnahme von einer Sperre, die es nicht gibt,
+   waere nur noch Ballast. Kommt die Rotation wieder in Gang und ein Thema soll
+   trotzdem waehlbar bleiben, gehoert seine Id hier hinein. */
+var FREIGEGEBEN = [].concat(NACHHOLEN);
 
 /* Ab Level 3 macht die Pruefung auch die AFB-III-Aufgaben auf. Level 1 und 2
    bleiben bei AFB I/II - erst die Basis, dann das Diskutieren. */
@@ -235,6 +279,8 @@ function pauseLesen(themen) {
 function istAbschluss(a) {
   if (a.modus !== "spiel") return false;
   if (a.spiel !== "themenlernen" && a.spiel !== "tagesspiel") return false;
+  // Alles vor dem Neustart-Stempel zaehlt nicht mehr (siehe TL_NEUSTART).
+  if (a.ts && a.ts < TL_NEUSTART) return false;
   var q = String(a.qid);
   return q.indexOf("tl-") === 0 || q.indexOf("ts-") === 0;
 }
@@ -694,7 +740,14 @@ export function zeigeThemenLernen(themen, hooks) {
     var benutzt = Object.create(null);
     var schritte = [];
 
-    var maxAfb = lvl >= 3 ? 3 : 2;
+    /* ERST BREITE, DANN TIEFE (Jennifer, 19.08.2026), scharfgestellt am
+       23.08.2026: Level 1 sieht nur noch AFB I. Bis dahin stand hier
+       "lvl >= 3 ? 3 : 2", und Level 1 mischte AFB II mit hinein - was zu dem
+       Zeitpunkt noch noetig war, weil es kaum AFB-I-Aufgaben gab. Seit dem
+       22.08. hat jedes Thema zehn davon, also traegt die Stufe jetzt: Level 1
+       beschreiben und benennen, Level 2 dazu erlaeutern und anwenden, ab
+       Level 3 auch diskutieren und bewerten. */
+    var maxAfb = lvl >= 3 ? 3 : lvl;
     // Der AFB-Wert ist das einzige Sieb. Die Groesse siebt seit dem 19.08. nicht
     // mehr aus, sie portioniert nur noch (lvl1Teil) - sonst fehlten auf Level 1
     // ausgerechnet die Aufgaben, in denen die Modelle und die Grundprinzipien
@@ -726,7 +779,7 @@ export function zeigeThemenLernen(themen, hooks) {
         return a.neu - b.neu || a.stufe - b.stufe || a.zufall - b.zufall;
       });
     // Beim Nachholen faellt der Deckel weg: alles, was fuer dieses Level offen
-    // ist, kommt in einer Sitzung. SITZUNG_MAX schneidet weiterhin bei 40 ab.
+    // ist, kommt in einer Sitzung. SITZUNG_MAX schneidet weiterhin ab.
     if (!nachholen) aufgaben = aufgaben.slice(0, NEU_AUFGABEN);
     aufgaben.forEach(function (x) {
       benutzt[x.f.id] = true;
@@ -751,8 +804,21 @@ export function zeigeThemenLernen(themen, hooks) {
     // aller anderen - und die Sitzung, die das Neue endlich zeigen soll, saehe
     // aus wie ein Berg. Faellig bleibt faellig, es kommt morgen wieder.
     if (!nachholen) themen.forEach(function (t) {
+      /* DER STAPEL SIEBT SEIT DEM 23.08.2026 EBENFALLS NACH AFB - und zwar
+         nach dem Level des Themas, aus dem die Aufgabe stammt, nicht nach dem
+         des Tagesthemas. Ohne das lief die AFB-Regel oben ins Leere: gemessen
+         am 22.08. fuellte der AFB-blinde Stapel die Sitzung bis SITZUNG_MAX
+         wieder auf, mit AFB II und sogar AFB III, waehrend der Neu-Block
+         brav bei AFB I blieb. Level 1 hiess dann "erst breite, dann tiefe" nur
+         auf den ersten sechs Karten.
+
+         Nach dem Level DES EIGENEN Themas, weil das Level sagt, wie weit Rose
+         in diesem Stoff ist. Eine AFB-III-Aufgabe aus Konzeptionen bleibt
+         faellig; sie kommt wieder, sobald Konzeptionen auf Level 3 steht. */
+      var tMax = levelVon(t) >= 3 ? 3 : levelVon(t);
       (t.frei || []).forEach(function (f) {
         if (benutzt[f.id] || !(f.stichpunkte || []).length) return;
+        if ((f.afb || 2) > tMax) return;
         var st = stand.get(f.id);
         // Kein Stand heisst: noch nie begonnen. Das gehoert ins Thema, nicht
         // in den Stapel - sonst kaeme fremdes Neuland durch die Hintertuer.
@@ -1121,10 +1187,23 @@ export function zeigeThemenLernen(themen, hooks) {
     // Gezaehlt wird ueber verschiedene Sachen (siehe oben bei versucht/sass) -
     // so rechnet der Ausstieg mitten in der Runde genauso ehrlich wie das
     // regulaere Ende.
+    /* DIE SCHWELLE (Jennifer, 22.08.2026): "Der Punkt sollte nur bei einem
+       abgeschlossenen Spiel gesetzt werden, wenn mindestens 10 Aspekte geuebt
+       wurden auf dem Stapel." Vorher reichte EINE Antwort - Rose hatte das
+       Themen-Lernen einmal angetippt, um es anzusehen, und danach stand das
+       Thema als durch da: Rotation weiter, Level hoch, Tageskachel abgehakt,
+       und zum Fortfahren lag nichts mehr da, weil fazit() die Pause loescht.
+       Unter der Schwelle passiert jetzt genau das Gegenteil: kein
+       Abschluss-Eintrag, und der Rest wandert auf den Stapel, damit die Runde
+       ein Angebot bleibt statt zu verschwinden. */
     function abschliessen() {
       var dran = Object.keys(versucht).length;
       var sassen = Object.keys(sass).filter(function (k) { return sass[k]; }).length;
-      fazit(thema, sassen, dran, mitgenommenZahl, wiederholungen);
+      var zaehlt = dran >= ABSCHLUSS_MIN;
+      // Reihenfolge zaehlt: erst die Pause ablegen, dann das Fazit zeichnen -
+      // fazit() raeumt die Pause weg, sobald die Runde wirklich zaehlt.
+      if (!zaehlt) pauseSpeichern();
+      fazit(thema, sassen, dran, mitgenommenZahl, wiederholungen, zaehlt);
     }
 
     schritt();
@@ -1140,12 +1219,18 @@ export function zeigeThemenLernen(themen, hooks) {
   }
 
   /* ---------- Fazit + Abschluss-Eintrag ---------- */
-  function fazit(thema, punkte, gesamt, offenMorgen, nochmalZahl) {
+  function fazit(thema, punkte, gesamt, offenMorgen, nochmalZahl, zaehlt) {
     /* DER Abschluss-Eintrag: markiert das Thema als durch und traegt Rotation
-       UND Level (gespielteRunde und levelVon lesen genau diese Eintraege). */
-    logSpiel("themenlernen", "tl-" + thema.id, true, { thema: thema.id });
-    // Die Runde ist durch - ein liegendes Angebot waere ab jetzt eine Luege.
-    pauseLoeschen();
+       UND Level (gespielteRunde und levelVon lesen genau diese Eintraege).
+       Er faellt weg, wenn die Runde unter ABSCHLUSS_MIN Sachen geblieben ist -
+       dann hat Rose reingeschaut, und Reinschauen ist keine Runde. Die Pause
+       hat abschliessen() in dem Fall schon abgelegt; sie darf hier nicht
+       weggeraeumt werden, sonst waere das Fortfahren wieder weg. */
+    if (zaehlt !== false) {
+      logSpiel("themenlernen", "tl-" + thema.id, true, { thema: thema.id });
+      // Die Runde ist durch - ein liegendes Angebot waere ab jetzt eine Luege.
+      pauseLoeschen();
+    }
 
     var heuteZahl = heuteThemen();
     leeren();
@@ -1161,10 +1246,17 @@ export function zeigeThemenLernen(themen, hooks) {
        derselben Aufgabe zu sitzen und sie am Ende zu koennen, ist ein Treffer
        und kein Abzug. Die Wiederholungen stehen als eigener, freundlicher Satz
        daneben - sie sind der Teil, der haengen bleibt. */
-    karte.appendChild(el("div", "satz",
-      "Durch" + (gesamt ? " – " + punkte + " von " + gesamt + " Sachen saßen" : "")
-      + ". Was nicht kam, bringen die nächsten Runden von selbst wieder."
-      + (offenMorgen ? " Ein paar Sachen nehmen wir morgen nochmal mit." : "")));
+    /* Zwei Saetze, je nachdem ob die Runde zaehlt. Der untere sagt ausdruecklich,
+       was passiert ist und was nicht - Rose soll nicht raten muessen, warum die
+       Kachel noch offen aussieht. Kein Mahnwort: es ist eine Auskunft, kein
+       Vorwurf, und der Rest liegt sichtbar bereit. */
+    karte.appendChild(el("div", "satz", zaehlt !== false
+      ? "Durch" + (gesamt ? " – " + punkte + " von " + gesamt + " Sachen saßen" : "")
+        + ". Was nicht kam, bringen die nächsten Runden von selbst wieder."
+        + (offenMorgen ? " Ein paar Sachen nehmen wir morgen nochmal mit." : "")
+      : "Reingeschaut" + (gesamt ? " – " + punkte + " von " + gesamt + " Sachen saßen" : "")
+        + ". Das zählt noch nicht als Runde: dafür braucht es " + ABSCHLUSS_MIN
+        + " Sachen. Der Rest liegt bereit, du kannst jederzeit weitermachen."));
     if (nochmalZahl) {
       karte.appendChild(el("div", "satz",
         nochmalZahl === 1 ? "Einmal bist du nochmal drangegangen – genau das ist der Teil, der hängen bleibt."
@@ -1178,7 +1270,10 @@ export function zeigeThemenLernen(themen, hooks) {
     }
     var reihe = el("div", "knopf-reihe");
     reihe.style.justifyContent = "center";
-    var noch = el("button", "knopf", "Noch ein Thema");
+    /* Zaehlt die Runde nicht, steht der Weg zurueck in DIESE Runde vorn - das
+       ist der naechste Schritt, den Rose vermutlich meint. start() findet die
+       abgelegte Pause von selbst und bietet sie an. */
+    var noch = el("button", "knopf", zaehlt !== false ? "Noch ein Thema" : "Weitermachen");
     noch.addEventListener("click", function () {
       gesperrt = gespielteRunde(themen);
       start();

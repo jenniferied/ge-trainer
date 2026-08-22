@@ -132,6 +132,9 @@ function zeige(route, arg) {
     case "bg-kategorien": return Spiele.zeigeBegriffKategorien(themen, HOOKS, function () { zeige("start"); });
     // Modell-Steckbrief: ein Modell einordnen - wer, Kern, Bestandteile.
     case "modelle": return Spiele.starteModelle(themen, HOOKS, function () { zeige("start"); });
+    // Und seine Themenliste, dasselbe Verhaeltnis wie Begriffe-Blitz zu
+    // "Begriffe nach Thema": die Tageskachel startet, hier waehlt Rose selbst.
+    case "md-themen": return Spiele.zeigeModellThemen(themen, HOOKS, function () { zeige("start"); });
     /* Fuenf neue: wie "wiederholen" ohne Baukasten, der Modus IST die
        Einstellung, es gibt keine Vorschaltseite. Wie bei "mix" und
        "wiederholen" schreibt runde() (stats.js) die Sitzung. */
@@ -161,11 +164,11 @@ function zeige(route, arg) {
 var HOOKS = {
   home: function () { zeige("start"); },
   stats: function () { zeige("stats"); },
-  /* HOOKS.spiele ist mit der Seite "Kurze Runden" gefallen (22.08.2026).
-     spielOp ist der eine bewusst gebaute Ersatz: der Knopf "Signalwörter,
-     kurz" nach der Neu-Runde (stats.js) springt direkt in eine Runde statt
-     auf eine Seite; der Rueckweg der Route fuehrt auf die Startseite. */
-  spielOp: function () { zeige("spiel-op"); },
+  /* HOOKS.spiele ist mit der Seite "Kurze Runden" gefallen (22.08.2026),
+     HOOKS.spielOp am 23.08. mit dem Knopf "Signalwörter, kurz" am Ende der
+     Neu-Runde - Cross-Verlinkungen von Modus zu Modus sind raus (Jennifer).
+     Wer einen solchen Sprung wieder will, baut ihn dort, wo er hingehoert:
+     als Tageskachel auf der Startseite. */
   // Der Weg aus dem Stoebern-Raum in die Fragen eines Themas - dieselbe
   // Themenansicht, die auch die Startseite oeffnet, kein zweiter Bau.
   thema: function (t) { zeige("thema", t); },
@@ -1339,7 +1342,12 @@ var SPIEL_ROUTE = {
   "spiel-begriffe": "spiel-bg",
   "spiel-glossar": "fachbegriffe",
   "spiel-themenlernen": "themenlernen",
-  "spiel-tagesspiel": "themenlernen"
+  "spiel-tagesspiel": "themenlernen",
+  // Nachgetragen 23.08.2026, zusammen mit SPIEL_TEXT drueben in stats.js.
+  // Ohne den Eintrag fuehrte der 🔁-Knopf einer Zuordnen- oder
+  // Steckbrief-Zeile in den Begriffe-Blitz.
+  "spiel-opzuordnen": "spiel-opz",
+  "spiel-modelle": "modelle"
 };
 
 function zuletztAktionen(r, aufNeu) {
@@ -1865,7 +1873,7 @@ function tagesAufgaben() {
     key: "tl", icon: "📚", titel: "Themen-Lernen", kurz: "Themen-Lernen",
     klein: tlOffen
       ? tlOffen.titel + " liegt angefangen da"
-      : "ein Thema · erarbeiten, dann prüfen",
+      : "ein Thema · erarbeiten, dann prüfen · die längste Runde, pausierbar",
     blase: tlHeute,
     erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
   }, {
@@ -1881,6 +1889,19 @@ function tagesAufgaben() {
     klein: "5 Paare · Signalwort und Auftrag",
     erledigt: !!heute.opzuordnen, geh: function () { zeige("spiel-opz"); }
   }];
+  /* Der Modell-Steckbrief steht VOR dem Begriffe-Blitz (Jennifer, 22.08.2026)
+     und ist seit dem 23.08. eine vollwertige Tageskachel. Er stand vorher nur
+     unter "Kurz einsteigen", mit der Begruendung, die Fuenfer-Reihe sei voll -
+     das stimmt nicht mehr, seit Themen-Lernen als breite Zeile darueber sitzt.
+     Und es war ohnehin die falsche Ecke: eine Runde, die ins Tagespensum
+     zaehlt, gehoert in die Tagesliste, sonst zaehlt sie unsichtbar mit. */
+  if (Spiele.hatModelle()) {
+    liste.push({
+      key: "md", icon: "🪪", titel: "Modell-Steckbrief", kurz: "Modell-Steckbrief",
+      klein: "4 Modelle · wer, Kern, Bestandteile",
+      erledigt: !!heute.modelle, geh: function () { zeige("modelle"); }
+    });
+  }
   if (Spiele.hatBegriffe()) {
     liste.push({
       key: "bg", icon: "🃏", titel: "Begriffe-Blitz", kurz: "Begriffe-Blitz",
@@ -1977,6 +1998,24 @@ function heuteDranKarte() {
   // Klick und Enter/Space je Kachel - baueHub haengt bewusst keine Handler an.
   bindeHub(karte, liste);
 
+  /* THEMEN-LERNEN ALS BREITE ZEILE UEBER DEN SPIELEN (Jennifer, 22.08.2026:
+     "damit klar wird, dass es ein längeres Spiel ist"). Die Breite macht CSS
+     (.dailies-reihe [data-daily=tl] spannt ueber alle Spalten), den Untertitel
+     setzen wir hier nach: der geteilte Baustein zeichnet klein ausschliesslich
+     in den title-Tooltip, und ein Tooltip ist auf 360 px unsichtbar - dieselbe
+     Beobachtung wie beim Liegt-Angefangen-Satz weiter unten.
+
+     GE-LOKAL UND ABSICHTLICH SO: geteilt-tages-hub.js gehoert beiden Apps, und
+     eine Kachel breiter zu machen, weil GE ein laengeres Spiel hat, ist kein
+     geteilter Gedanke. Fehlt die Kachel (kein Themen-Lernen), passiert hier
+     schlicht nichts. */
+  var tlKachel = karte.querySelector('.dailies-reihe [data-daily="tl"]');
+  var tlEintrag = liste.filter(function (a) { return a.key === "tl"; })[0];
+  if (tlKachel && tlEintrag && tlEintrag.klein) {
+    tlKachel.classList.add("daily-breit");
+    tlKachel.appendChild(el("span", "d-klein", tlEintrag.klein));
+  }
+
   /* Eine angefangene Themen-Lernen-Runde findet sich hier wieder. Sie steht als
      eigene Zeile und nicht nur im klein-Text der Kachel: der geteilte Baustein
      (geteilt-tages-hub.js, gehoert einer anderen Session) zeichnet klein
@@ -2037,8 +2076,25 @@ function uebenKacheln() {
      unten. Der leere Zustand wird oben in "Heute dran" ohnehin ausgesprochen. */
   var wdhPool = Stats.wiederholPool(themen).length;
   var kurz = [
-    ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }]
+    ["🌱", "Neu", "Fünf ungesehene", function () { zeige("neu"); }],
+    ["📝", "MC", "Ankreuzen, Themen wählbar", function () { zeige("mcquer"); }],
+    ["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]
   ];
+  /* DIE REIHENFOLGE AM SCHLUSS IST JENNIFERS (22.08.2026): "ordne die dann so:
+     Modelle nach Thema, Begriffe nach Thema, Ganzer Stapel". Die drei gehoeren
+     zusammen - zweimal dieselbe Bauform (ein Spiel, aber du waehlst das Thema
+     selbst) und danach der Stapel, der auch ohne Ende laeuft. */
+  if (Spiele.hatModelle()) {
+    kurz.push(["🪪", "Modelle nach Thema", "Thema selbst wählen", function () { zeige("md-themen"); }]);
+  }
+  /* Die Kategorienliste des Begriffe-Blitz, seit dem 22.08. von vorn
+     erreichbar (vorher nur als Rueckfall-Ziel der abgeschafften Seite "Kurze
+     Runden"). Genau das lobt Rose am ST-Trainer: "spezifisch zu jedem Thema
+     und Unterthema zuordnen". Die Tageskachel oben startet direkt die
+     wackligste Kategorie - hier waehlt sie selbst. */
+  if (Spiele.hatBegriffe()) {
+    kurz.push(["🃏", "Begriffe nach Thema", "Kategorie selbst wählen", function () { zeige("bg-kategorien"); }]);
+  }
   if (wdhPool) {
     /* Die Zahl steht als Blase in der Ecke, nicht mehr in der kleinen Zeile
        (Jennifer, 19.08.2026). Damit sagt die Kachel drei Dinge auf drei Ebenen,
@@ -2052,48 +2108,53 @@ function uebenKacheln() {
       "Ganzer Stapel: " + wdhPool + (wdhPool === 1 ? " Frage" : " Fragen")
         + ", alles was zuletzt danebenlag · ohne festes Ende"]);
   }
-  kurz.push(["📝", "MC", "Ankreuzen, alle Themen", function () { zeige("mcquer"); }]);
-  kurz.push(["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]);
-  /* Die Kategorienliste des Begriffe-Blitz, seit dem 22.08. von vorn
-     erreichbar (vorher nur als Rueckfall-Ziel der abgeschafften Seite "Kurze
-     Runden"). Genau das lobt Rose am ST-Trainer: "spezifisch zu jedem Thema
-     und Unterthema zuordnen". Die Tageskachel oben startet direkt die
-     wackligste Kategorie - hier waehlt sie selbst. */
-  if (Spiele.hatBegriffe()) {
-    kurz.push(["🃏", "Begriffe nach Thema", "Kategorie selbst wählen", function () { zeige("bg-kategorien"); }]);
-  }
-  /* Der Modell-Steckbrief (neu 22.08.): ein Modell in Sekunden einordnen -
-     wer, Kern, Bestandteile. Bewusst HIER und nicht in der Tagesliste: die
-     Fuenf-Spalten-Reihe oben ist mit fuenf Eintraegen genau voll, ein
-     sechster machte eine zweite Reihe mit einer einzelnen Kachel auf. */
-  if (Spiele.hatModelle()) {
-    kurz.push(["🪪", "Modell-Steckbrief", "Wer, Kern, Bestandteile", function () { zeige("modelle"); }]);
-  }
+  /* "ERNST UEBEN" TRAEGT SEIT DEM 23.08.2026 BREITE KACHELN (Jennifer:
+     "übernehme 1:1 den Stil ... als breite Kachel mit mehr Infos über die
+     Wahloptionen und Länge"). Vorbild und Bauform sind woertlich die
+     .mode-card.wide des ST-Trainers - dort steht in der zweiten Zeile immer,
+     WAS man einstellen kann und WIE LANGE es dauert, und genau diese zwei
+     Auskuenfte fehlten hier. Auf einer Drittel-Kachel war dafuer kein Platz;
+     das ist der eigentliche Grund fuer die Breite, nicht die Optik.
+
+     Kurz einsteigen und Nachschauen bleiben als Icon-Raster: dort ist die
+     Kuerze der Punkt, und eine Kachel ohne Setup hat nichts zu erklaeren. */
   [
-    ["Kurz einsteigen", kurz],
-    ["Ernst üben", [
-      ["🧩", "Klausurfrage", "Aufdröseln, dann schreiben", function () { zeige("klausurfrage"); }],
-      ["✍️", "Frei", "Offene Aufgaben nach Thema", function () { zeige("freiwahl"); }],
-      ["🎲", "Eigene Runde", "Du stellst ein", function () { zeige("mix"); }],
-      ["📄", "Klausur", "Papier & Stift", function () { zeige("klausur"); }]
-    ]],
-    ["Nachschauen", [
+    { titel: "Kurz einsteigen", kacheln: kurz },
+    { titel: "Ernst üben", breit: true, kacheln: [
+      ["🧩", "Klausurfrage", "Eine echte Klausuraufgabe – Thema und Anforderungsstufe wählbar · erst aufdröseln, dann schreiben · 10–20 min", function () { zeige("klausurfrage"); }],
+      ["✍️", "Frei", "Offene Aufgaben eines Themas, mit Musterlösung und KI-Rückmeldung · du bestimmst, wie viele es werden", function () { zeige("freiwahl"); }],
+      ["🎲", "Eigene Runde", "Themen, Anzahl, Aufgabentyp, Lernschritt – alles frei wählbar · von fünf Minuten bis zum ganzen Abend", function () { zeige("mix"); }],
+      ["📄", "Klausur", "Papier & Stift wie am 10.09.: 5 zufällige Themen, Punkte je Aufgabe, KI-Korrektur · 90 min, für dich 120", function () { zeige("klausur"); }]
+    ] },
+    { titel: "Nachschauen", kacheln: [
       ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
       ["📖", "Glossar", "Alle Fachbegriffe", function () { zeige("glossar"); }],
       ["🗂", "Stöbern", "Folien, Podcasts & Co.", function () { zeige("stoebern"); }]
-    ]]
+    ] }
   ].forEach(function (gruppe) {
     // Die Fachbegriffe- und Glossar-Kacheln haengen an derselben Datei wie der
     // Begriffe-Blitz an seiner: ohne glossar.json verschwinden sie.
-    var kacheln = gruppe[1].filter(function (k) {
+    var kacheln = gruppe.kacheln.filter(function (k) {
       if (k[1] === "Fachbegriffe" || k[1] === "Glossar") return Glossar.hatGlossar();
       return true;
     });
     if (!kacheln.length) return;
     var box = el("div", "abschnitt");
-    box.appendChild(el("h2", "abschnitt-titel", gruppe[0]));
-    var grid = el("div", "kachel-grid");
+    box.appendChild(el("h2", "abschnitt-titel", gruppe.titel));
+    var grid = el("div", gruppe.breit ? "mode-grid" : "kachel-grid");
     kacheln.forEach(function (k) {
+      /* Zwei Bauformen aus EINER Tabelle: die breite traegt Icon und Namen in
+         einer Zeile und den Erklaersatz darunter (ST-Muster), die schmale
+         stapelt Icon, Name, Kurztext. Mehr Unterschied ist es nicht - und
+         genau deshalb steht hier keine zweite Schleife. */
+      if (gruppe.breit) {
+        var w = el("button", "mode-card wide");
+        w.appendChild(el("b", null, k[0] + " " + k[1]));
+        w.appendChild(el("span", null, k[2]));
+        w.addEventListener("click", k[3]);
+        grid.appendChild(w);
+        return;
+      }
       var b = el("button", "kachel glimmer");
       b.appendChild(el("span", "kachel-icon", k[0]));
       b.appendChild(el("b", null, k[1]));
@@ -2280,12 +2341,37 @@ function zeigeFreiWahl() {
 
 /* ---------- Themen-Ansicht ---------- */
 
+/* ---------- Alle Fragen eines Themas ----------
+   SEIT DEM 23.08.2026 EINE LISTE ZUM AUSSUCHEN, KEIN RUNDEN-STARTER
+   (Jennifer, 22.08.: "bei alle Fragen ansehen bitte auch darunter alle Fragen
+   als Liste anzeigen? Und sie dann bearbeitbar machen - dann kann sie Fragen
+   suchen, wo sie sich confident findet sie zu bearbeiten, anstatt plötzlich
+   alle abzufragen. Den Aspekt raus.")
+
+   Bis dahin standen hier zwei grosse Knoepfe, die eine Runde ueber ALLE
+   Ankreuzfragen bzw. ALLE offenen Aufgaben des Themas starteten. Der Schirm
+   hiess "Alle Fragen ansehen" und fragte dann ab - er hielt also nicht, was
+   sein Name versprach. Jetzt steht hier wirklich die Liste, und jede Zeile
+   klappt ihre Karte an Ort und Stelle auf. Wer eine Runde will, findet sie
+   auf der Startseite: MC mit Themenwahl, Frei nach Thema, Eigene Runde.
+
+   Vorbild ist der Explore-Schirm des ST-Trainers ("Alle Fragen browsen: nach
+   Thema und Quelle sortiert, aufklappbar, direkt übbar") - genau die Bauform,
+   die dort seit Monaten steht und die Rose kennt.
+
+   GELOGGT WIRD GANZ NORMAL. Eine Karte hier ist dieselbe Karte wie in einer
+   Runde, sie haengt nur an keiner Sitzung - im Verlauf sammeln sich diese
+   Antworten deshalb als abgeleitete Zeile (letzteRunden, Zweig "lose"). Das
+   ist die vorhandene Mechanik fuer Antworten ohne Runde und braucht nichts
+   Neues. */
 function zeigeThema(thema) {
   leeren();
   setzeFarbe(app, thema.farbe);
 
-  var zurueck = el("button", "zurueck", "← Alle Themen");
-  zurueck.addEventListener("click", function () { zeige("start"); });
+  // Der einzige Eingang hierher ist die Stoebern-Zeile "Alle Fragen ansehen"
+  // (hooks.thema) - also fuehrt der Rueckweg genau dorthin zurueck.
+  var zurueck = el("button", "zurueck", "← Stöbern");
+  zurueck.addEventListener("click", function () { zeige("stoebern"); });
   app.appendChild(zurueck);
 
   var kopf = el("div", "kopf");
@@ -2293,35 +2379,139 @@ function zeigeThema(thema) {
   kopf.appendChild(el("div", "untertitel", thema.leitfrage));
   app.appendChild(kopf);
 
-  var chips = el("div", "chip-reihe");
-  thema.unterthemen.forEach(function (u) { chips.appendChild(el("span", "chip", u)); });
-  app.appendChild(chips);
-
   var mc = mcStand(thema), fr = freiStand(thema);
+  var info = el("div", "karte");
+  info.appendChild(el("p", null, mc.gesamt + " Ankreuzfragen und " + fr.gesamt
+    + " offene Aufgaben. Tipp auf eine Zeile, dann klappt genau diese Aufgabe auf – such dir aus, was du dir gerade zutraust."));
 
-  var knoepfe = el("div", "modus-knoepfe");
+  /* Filter und Suche, beides sitzungslokal im DOM. Kein state-Feld: eine
+     Einschraenkung, die beim naechsten Besuch noch steht, versteckt stumm die
+     Haelfte des Bestands. */
+  var such = document.createElement("input");
+  such.type = "search";
+  such.placeholder = "In den Fragen suchen …";
+  such.className = "gl-suche";
+  info.appendChild(such);
 
-  var k1 = el("button", "modus-knopf primaer");
-  setzeFarbe(k1, thema.farbe);
-  k1.appendChild(el("span", "gross", "Konzept-Check"));
-  k1.appendChild(el("span", "klein", mc.gesamt + " schnelle Fragen · " + mc.richtig + " sitzen schon"));
-  k1.addEventListener("click", function () { zeige("check", thema); });
-  knoepfe.appendChild(k1);
+  var typ = "alle";
+  var filterReihe = el("div", "kl-seg");
+  [["alle", "Alle"], ["mc", "Ankreuzen"], ["frei", "Offene Aufgaben"]].forEach(function (w) {
+    var b = el("button", "kl-seg-knopf" + (w[0] === typ ? " an" : ""), w[1]);
+    b.addEventListener("click", function () {
+      typ = w[0];
+      Array.prototype.forEach.call(filterReihe.querySelectorAll(".kl-seg-knopf"), function (x) { x.classList.remove("an"); });
+      b.classList.add("an");
+      zeichnen();
+    });
+    filterReihe.appendChild(b);
+  });
+  info.appendChild(filterReihe);
+  app.appendChild(info);
 
-  var k2 = el("button", "modus-knopf");
-  k2.appendChild(el("span", "gross", "Frei üben (AFB)"));
-  k2.appendChild(el("span", "klein", fr.gesamt + " Klausur-Aufgaben mit Musterlösung"));
-  k2.addEventListener("click", function () { zeige("frei", thema); });
-  knoepfe.appendChild(k2);
+  var halter = el("div");
+  app.appendChild(halter);
 
-  // Hook: weitere Modus-Knoepfe (z. B. Klausur-Simulation je Thema) hier anfuegen.
+  // Wie es zuletzt lief, in einem Wort. Nie "falsch", nie Rot - dieselbe
+  // Sprache wie ueberall sonst in der App.
+  function standMarke(eintrag) {
+    if (eintrag.typ === "mc") {
+      var s = state.mc[eintrag.f.id];
+      if (!s) return { text: "neu", klasse: "q0" };
+      return s.zuletztRichtig ? { text: "saß", klasse: "q3" } : { text: "kommt wieder", klasse: "q1" };
+    }
+    var r = state.frei[eintrag.f.id];
+    if (!r) return { text: "neu", klasse: "q0" };
+    return r === "gut" ? { text: "saß", klasse: "q3" }
+      : r === "mittel" ? { text: "halb", klasse: "q2" }
+        : { text: "kommt wieder", klasse: "q1" };
+  }
 
-  app.appendChild(knoepfe);
+  function zeichnen() {
+    halter.innerHTML = "";
+    var suche = (such.value || "").toLowerCase().trim();
+    var alle = [];
+    if (typ !== "frei") (thema.mc || []).forEach(function (f) { alle.push({ typ: "mc", f: f }); });
+    if (typ !== "mc") (thema.frei || []).forEach(function (f) { alle.push({ typ: "frei", f: f }); });
+    if (suche) {
+      alle = alle.filter(function (e) { return String(e.f.frage || "").toLowerCase().indexOf(suche) >= 0; });
+    }
 
-  var hinweis = el("div", "karte");
-  hinweis.appendChild(el("h2", null, "Empfehlung"));
-  hinweis.appendChild(el("p", null, "Check zum Aufwärmen, freie Aufgaben als eigentliches Training – die Klausur fragt offen."));
-  app.appendChild(hinweis);
+    // Gruppiert nach Unterthema, in der Reihenfolge des Themas - so liest sich
+    // die Liste wie die Vorlesung und nicht wie eine Datei.
+    var gruppen = {}, reihenfolge = [];
+    alle.forEach(function (e) {
+      var u = e.f.unterthema || "Ohne Unterthema";
+      if (!gruppen[u]) { gruppen[u] = []; reihenfolge.push(u); }
+      gruppen[u].push(e);
+    });
+    (thema.unterthemen || []).forEach(function (u) {
+      if (gruppen[u] && reihenfolge.indexOf(u) >= 0) {
+        reihenfolge.splice(reihenfolge.indexOf(u), 1);
+        reihenfolge.unshift(u);
+      }
+    });
+    reihenfolge.sort(function (a, b) {
+      var ia = (thema.unterthemen || []).indexOf(a), ib = (thema.unterthemen || []).indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+
+    if (!reihenfolge.length) {
+      halter.appendChild(el("div", "karte muted", "Zu deiner Suche steht hier gerade nichts."));
+      return;
+    }
+
+    reihenfolge.forEach(function (u) {
+      var karte = el("div", "karte");
+      setzeFarbe(karte, thema.farbe);
+      var kz = el("div", "thema-kopfzeile");
+      kz.appendChild(el("span", "thema-titel", u));
+      kz.appendChild(el("span", "vl-badge", gruppen[u].length + (gruppen[u].length === 1 ? " Aufgabe" : " Aufgaben")));
+      karte.appendChild(kz);
+
+      gruppen[u].forEach(function (e) {
+        var reihe = el("div", "fragen-zeile");
+        var knopf = el("button", "fragen-knopf");
+        var oben = el("span", "fragen-marken");
+        oben.appendChild(el("span", "fragen-typ", e.typ === "mc" ? "Ankreuzen" : "AFB " + ["", "I", "II", "III"][e.f.afb || 2]));
+        var m = standMarke(e);
+        oben.appendChild(el("span", "q-pille " + m.klasse, m.text));
+        knopf.appendChild(oben);
+        knopf.appendChild(reichZeile("span", e.f.frage, "fragen-text"));
+
+        var offen = null;
+        function zuklappen() {
+          if (!offen) return;
+          offen.remove(); offen = null;
+          reihe.classList.remove("offen");
+        }
+        knopf.addEventListener("click", function () {
+          if (offen) return zuklappen();
+          offen = el("div", "fragen-detail");
+          /* Der Weiter-Knopf der MC-Karte heisst hier "Fertig" und klappt zu -
+             in einer Runde traegt er die naechste Frage, hier gibt es keine.
+             Ein Knopf, bei dem nichts passiert, waere schlechter als keiner.
+             Die freie Karte braucht das nicht: sie endet mit dem Selbstcheck
+             und traegt gar keinen Weiter-Knopf. */
+          offen.appendChild(e.typ === "mc"
+            ? mcKarte(thema, e.f, null, "Fertig", function () {
+              zuklappen();
+              // Die Marke sagt jetzt etwas anderes - Zeile neu zeichnen.
+              zeichnen();
+            })
+            : freiKarte(thema, e.f, { einzeln: true }));
+          reihe.appendChild(offen);
+          reihe.classList.add("offen");
+          offen.scrollIntoView({ block: "nearest" });
+        });
+        reihe.appendChild(knopf);
+        karte.appendChild(reihe);
+      });
+      halter.appendChild(karte);
+    });
+  }
+
+  such.addEventListener("input", zeichnen);
+  zeichnen();
 }
 
 /* ---------- Chat an der einzelnen Aufgabe ----------
@@ -2496,6 +2686,15 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
   return karte;
 }
 
+/* Der Konzept-Check eines einzelnen Themas: alle Ankreuzfragen als Runde.
+
+   SEIT DEM 23.08.2026 OHNE EINGANG IN DER OBERFLAECHE. Er hing an der
+   Themenansicht, und die ist jetzt eine Liste zum Aussuchen statt ein
+   Rundenstarter (siehe zeigeThema). Die Route bleibt stehen, weil sie nichts
+   kostet und der Weg zurueck genau eine Zeile waere - geloescht wird sie erst,
+   wenn feststeht, dass Rose diese Form nicht vermisst. Die MC-Kachel der
+   Startseite kann seit demselben Tag dasselbe und mehr: Themen und
+   Unterthemen einzeln waehlbar. */
 function starteQuiz(thema) {
   var fragen = mischen(thema.mc);
   var index = 0, punkte = 0;
@@ -2543,9 +2742,8 @@ function starteQuiz(thema) {
     var nochmal = el("button", "knopf", "Nochmal");
     nochmal.addEventListener("click", function () { zeige("check", thema); });
     reihe.appendChild(nochmal);
-    var freiKnopf = el("button", "knopf sekundaer", "Frei üben (AFB)");
-    freiKnopf.addEventListener("click", function () { zeige("frei", thema); });
-    reihe.appendChild(freiKnopf);
+    // Kein "Frei üben (AFB)" mehr daneben (23.08.2026): Verlinkungen von einem
+    // Modus in den naechsten sind raus (Jennifer).
     var home = el("button", "knopf sekundaer", "Zurück zum Thema");
     home.addEventListener("click", function () { zeige("thema", thema); });
     reihe.appendChild(home);

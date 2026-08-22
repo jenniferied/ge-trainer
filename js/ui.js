@@ -236,6 +236,214 @@ export function rundenSetup(cfg) {
   return karte;
 }
 
+/* ---------- Themen- und Unterthemen-Auswahl ----------
+   DER EINE BAUSTEIN FUER DREI SCHIRME (Jennifer, 22.08.2026): vor "Neu",
+   vor der MC-Runde und vor einer Klausurfrage steht dieselbe Frage - welche
+   Themen duerfen drankommen. Vorbild ist der ST-Trainer, wo Rose seit jeher
+   Ober- und Unterthemen einzeln an- und abwaehlt und dabei sieht, wie viele
+   Fragen hinter jedem Haken stehen. Ihr Lob dort ("spezifisch zu jedem Thema
+   und Unterthema") ist der Grund, warum es hier nachgebaut ist.
+
+   DIE BAUFORM IST WOERTLICH DIE DRUEBEN: eine FLACHE Geschwisterliste, kein
+   Akkordeon. Oberthema und Unterthema sind beide ein label.check, eingerueckt
+   wird allein per CSS (.check.sub). Das ist drueben eine bewusste Trennung -
+   Auswahl flach, Stoebern als Akkordeon - und sie gilt hier genauso: wer
+   auswaehlt, will alles gleichzeitig sehen, nicht erst aufklappen.
+
+   Der Haken am Oberthema schaltet seinen ganzen Block: an heisst "alle
+   Unterthemen an und aenderbar", aus heisst "alle aus und gesperrt". Zahlen
+   stehen in Klammern hinter jedem Unterthema und als Summe am Oberthema.
+
+   ZUSTAND STEHT IM DOM, nirgends sonst - kein state-Feld, kein localStorage,
+   kein Sync. Eine abgewaehlte Vorlesung soll beim naechsten Mal nicht still
+   abgewaehlt bleiben; dieselbe Begruendung wie beim Baukasten in stats.js.
+
+   cfg = {
+     zaehle(themaId, unterthema|null) -> Zahl   Pflicht. Was zaehlt, entscheidet
+                                                der Aufrufer: MC, freie Aufgaben,
+                                                beides.
+     titel, klein                               Beschriftung des Blocks.
+   }
+   Zurueck kommt { knoten, gewaehlt() }. gewaehlt() liefert
+   { themen: [ids], unterthemen: ["id/unterthema"], leer: bool } - frisch aus
+   dem DOM gelesen, bei jedem Aufruf. */
+export function themenAuswahl(themen, cfg) {
+  var o = cfg || {};
+  var zaehle = o.zaehle || function () { return 0; };
+
+  /* ZUGEKLAPPT IST DER NORMALZUSTAND. Acht Themen mit 46 Unterthemen sind
+     54 Zeilen - vor einem Startknopf ist das eine Wand, und die Vorgabe
+     "alles an" ist ohnehin das, was Rose meistens will (Jennifer: "beides
+     jeweils bei Default mit der Option zufällig"). Der zugeklappte Zustand
+     SAGT, was gerade gilt, statt es zu verschweigen: die Zusammenfassung in
+     der Kopfzeile zaehlt mit, sobald etwas abgewaehlt ist.
+
+     <details> statt eigener Klapplogik: der Browser kann das, es ist per
+     Tastatur bedienbar und ein Screenreader liest den Zustand mit vor. */
+  var block = el("details", "zeile themen-wahl");
+  var kopf = document.createElement("summary");
+  kopf.className = "wahl-summary";
+  var label = el("div", "label", o.titel || "Welche Themen");
+  if (o.klein) label.appendChild(el("div", "klein", o.klein));
+  kopf.appendChild(label);
+  var stand = el("span", "wahl-stand", "alle");
+  kopf.appendChild(stand);
+  block.appendChild(kopf);
+
+  /* Alle/Keine als Paar. Drueben gibt es sie nicht - dort sind es sechs
+     Oberthemen, hier acht mit zusammen 46 Unterthemen, und einmal alles
+     abzuwaehlen, um genau eins zu behalten, waeren 46 Tipps. */
+  var reihe = el("div", "themen-wahl-alle");
+  var alle = el("button", "text-knopf", "Alle");
+  var keine = el("button", "text-knopf", "Keine");
+  reihe.appendChild(alle);
+  reihe.appendChild(keine);
+  block.appendChild(reihe);
+
+  var liste = el("div", "themen-wahl-liste");
+  themen.forEach(function (t) {
+    var unter = (t.unterthemen || []).map(function (u) {
+      return { u: u, n: zaehle(t.id, u) };
+    }).filter(function (x) { return x.n > 0; });
+    var gesamt = zaehle(t.id, null);
+    if (!gesamt) return;
+
+    var kopf = el("label", "check");
+    if (t.farbe) setzeFarbe(kopf, t.farbe);
+    var obox = document.createElement("input");
+    obox.type = "checkbox";
+    obox.className = "th";
+    obox.value = t.id;
+    obox.checked = true;
+    kopf.appendChild(obox);
+    var ktext = el("span");
+    ktext.appendChild(el("b", null, t.titel));
+    ktext.appendChild(el("span", "muted", " (" + gesamt + ")"));
+    kopf.appendChild(ktext);
+    liste.appendChild(kopf);
+
+    unter.forEach(function (x) {
+      var z = el("label", "check sub");
+      var ubox = document.createElement("input");
+      ubox.type = "checkbox";
+      ubox.className = "uth";
+      ubox.dataset.th = t.id;
+      ubox.value = t.id + "/" + x.u;
+      ubox.checked = true;
+      z.appendChild(ubox);
+      z.appendChild(el("span", null, x.u));
+      z.appendChild(el("span", "muted", " (" + x.n + ")"));
+      liste.appendChild(z);
+    });
+
+    /* Die Kaskade wie drueben (bindThemen): der Ober-Haken setzt alle seine
+       Unter-Haken UND sperrt sie. Gesperrt statt nur abgewaehlt, damit ein
+       Tipp auf ein Unterthema unter einem ausgeschalteten Oberthema nicht
+       stillschweigend wirkungslos bleibt. */
+    obox.addEventListener("change", function () {
+      Array.prototype.forEach.call(liste.querySelectorAll('.uth[data-th="' + t.id + '"]'), function (b) {
+        b.checked = obox.checked;
+        b.disabled = !obox.checked;
+      });
+    });
+  });
+  block.appendChild(liste);
+
+  function setzeAlle(an) {
+    Array.prototype.forEach.call(liste.querySelectorAll(".th"), function (b) { b.checked = an; });
+    Array.prototype.forEach.call(liste.querySelectorAll(".uth"), function (b) {
+      b.checked = an; b.disabled = !an;
+    });
+  }
+  function lies() {
+    var ids = Array.prototype.map.call(liste.querySelectorAll(".th:checked"), function (b) { return b.value; });
+    var uns = Array.prototype.map.call(liste.querySelectorAll(".uth:checked"), function (b) { return b.value; });
+    return { themen: ids, unterthemen: uns, leer: !uns.length };
+  }
+
+  // Die Kopfzeile sagt im zugeklappten Zustand, was gerade gilt.
+  function standSchreiben() {
+    var g = lies();
+    var themenAlle = liste.querySelectorAll(".th").length;
+    var unterAlle = liste.querySelectorAll(".uth").length;
+    stand.textContent = !g.unterthemen.length ? "keins"
+      : (g.unterthemen.length === unterAlle && g.themen.length === themenAlle) ? "alle"
+        : g.themen.length + " von " + themenAlle;
+  }
+  block.addEventListener("change", standSchreiben);
+  alle.addEventListener("click", function () { setzeAlle(true); standSchreiben(); });
+  keine.addEventListener("click", function () { setzeAlle(false); standSchreiben(); });
+  standSchreiben();
+
+  return { knoten: block, gewaehlt: lies };
+}
+
+/* ---------- AFB-Auswahl ----------
+   Es gibt im ST-Trainer kein Vorbild dafuer - dort tragen die Fragen gar kein
+   Niveau. Hier ist die Anforderungsstufe aber das, was die Klausur strukturiert
+   (I beschreiben/benennen, II erlaeutern/analysieren/anwenden, III
+   bewerten/eroertern/diskutieren), also gibt es sie als eigene Reihe.
+
+   Mehrfachauswahl, nicht Entweder-Oder: Jennifer, 22.08.2026 - "wenn zufällig,
+   dann soll sie auswählen können zwischen welchen Themen und/oder welchen AFBs
+   (also soll es AFB I und II sein oder z. B. nur III und II)". Genau deshalb
+   ist es KEIN segmentWahl.
+
+   Alles abgewaehlt ist kein gueltiger Zustand und wird beim Lesen wie "alles
+   an" behandelt: eine Runde ohne Anforderungsstufe gibt es nicht. */
+export var AFB_TEXTE = [
+  { wert: 1, kurz: "AFB I", lang: "beschreiben, benennen" },
+  { wert: 2, kurz: "AFB II", lang: "erläutern, analysieren, anwenden" },
+  { wert: 3, kurz: "AFB III", lang: "bewerten, erörtern, diskutieren" }
+];
+
+export function afbAuswahl(cfg) {
+  var o = cfg || {};
+  var zaehle = o.zaehle || function () { return null; };
+  // Gleiche Huelle wie die Themenwahl - drei Zeilen sind zwar keine Wand,
+  // aber zwei verschiedene Klapp-Zustaende untereinander waeren unruhig.
+  var block = el("details", "zeile afb-wahl");
+  var kopf = document.createElement("summary");
+  kopf.className = "wahl-summary";
+  var label = el("div", "label", o.titel || "Welche Anforderungsstufe");
+  if (o.klein) label.appendChild(el("div", "klein", o.klein));
+  kopf.appendChild(label);
+  var stand = el("span", "wahl-stand", "alle");
+  kopf.appendChild(stand);
+  block.appendChild(kopf);
+
+  var liste = el("div", "themen-wahl-liste");
+  AFB_TEXTE.forEach(function (a) {
+    var n = zaehle(a.wert);
+    if (n === 0) return;
+    var z = el("label", "check");
+    var box = document.createElement("input");
+    box.type = "checkbox";
+    box.className = "afb";
+    box.value = String(a.wert);
+    box.checked = true;
+    z.appendChild(box);
+    var txt = el("span");
+    txt.appendChild(el("b", null, a.kurz));
+    txt.appendChild(el("span", "muted", " – " + a.lang + (n == null ? "" : " (" + n + ")")));
+    z.appendChild(txt);
+    liste.appendChild(z);
+  });
+  block.appendChild(liste);
+
+  function lies() {
+    var g = Array.prototype.map.call(liste.querySelectorAll(".afb:checked"), function (b) { return +b.value; });
+    return g.length ? g : AFB_TEXTE.map(function (a) { return a.wert; });
+  }
+  block.addEventListener("change", function () {
+    var g = Array.prototype.filter.call(liste.querySelectorAll(".afb"), function (b) { return b.checked; });
+    stand.textContent = !g.length || g.length === liste.querySelectorAll(".afb").length
+      ? "alle"
+      : g.map(function (b) { return ["", "I", "II", "III"][+b.value]; }).join(" + ");
+  });
+  return { knoten: block, gewaehlt: lies };
+}
+
 /* ---------- Sticker (Meme-Feedback) ---------- */
 
 var STICKER = {

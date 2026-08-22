@@ -579,34 +579,34 @@
         [
           "Was passiert schon vor dem Schuleintritt?",
           "Denk an die Zeit vor der Einschulung.",
-          "Unterstuetzung setzt hier frueher an als anderswo."
+          "Unterstützung setzt hier früher an als anderswo."
         ],
         [
           "Wie lang ist der Schultag hier?",
           "Denk an den Rahmen von morgens bis nachmittags.",
-          "Nicht nur vormittags - der Tag dauert laenger."
+          "Nicht nur vormittags - der Tag dauert länger."
         ],
         [
-          "Denk an die Atmosphaere der Raeume, fast wie zuhause.",
+          "Denk an die Atmosphäre der Räume, fast wie zuhause.",
           "Der Raum ist mehr als ein Unterrichtsort.",
-          "Die Raeume erfuellen im Alltag eine Doppelrolle."
+          "Die Räume erfüllen im Alltag eine Doppelrolle."
         ],
         [
           "Wie viele Kinder sitzen in einer Gruppe?",
-          "Denk an die Gruppengroesse im Vergleich zur Regelschule.",
+          "Denk an die Gruppengröße im Vergleich zur Regelschule.",
           "Hier geht es um eine Zahl pro Klasse."
         ],
         [
           "Bonus: Wie viele Abschnitte, und wie lang ist jeder?",
-          "Bonus: Das Produkt der beiden Zahlen ergibt zwoelf."
+          "Bonus: Das Produkt der beiden Zahlen ergibt zwölf."
         ],
         [
-          "Bonus: Der letzte Abschnitt steht ziemlich fuer sich.",
+          "Bonus: Der letzte Abschnitt steht ziemlich für sich.",
           "Bonus: Welcher Teil bereitet auf die Zeit danach vor?"
         ],
         [
-          "Bonus: Zwei Zahlen - die Schulzeit darf laenger dauern.",
-          "Bonus: Um wie viel darf man ueber das Uebliche hinaus bleiben?"
+          "Bonus: Zwei Zahlen - die Schulzeit darf länger dauern.",
+          "Bonus: Um wie viel darf man über das Übliche hinaus bleiben?"
         ]
       ]
     },
@@ -641,18 +641,18 @@
       "hinweise": [
         [
           "Zwei Zahlen: wie viele Abschnitte, wie lange jeder?",
-          "Merkhilfe: das Produkt beider Zahlen ergibt zwoelf.",
+          "Merkhilfe: das Produkt beider Zahlen ergibt zwölf.",
           "Denk an die Namen der vier Abschnitte, von Anfang bis Ende."
         ],
         [
           "Der letzte Abschnitt hat ein eigenes Ziel: was kommt danach?",
-          "Denk an den Uebergang ins Leben nach der Schule.",
+          "Denk an den Übergang ins Leben nach der Schule.",
           "Diese Stufe blickt schon Richtung Arbeitswelt."
         ],
         [
           "Die Schulzeit kann wachsen - von wo nach wo?",
-          "Zwei Jahreszahlen: uebliche Dauer und moegliche Dauer.",
-          "Denk auch an die Ausnahme fuer besondere Faelle."
+          "Zwei Jahreszahlen: übliche Dauer und mögliche Dauer.",
+          "Denk auch an die Ausnahme für besondere Fälle."
         ]
       ]
     },
@@ -684,7 +684,7 @@
         }
       },
       "musterVariantenGeprueft": false,
-      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark. Zur Einordnung: Das Thema Inklusion im SGE ist laut Folie 11 als einziges von der Klausur ausgenommen. Diese Aufgabe bleibt trotzdem wertvoll - sie ist die Format-Vorlage der Dozentin, und das Geruest 2 dafuer, 2 dagegen, dann bewerten traegt bei jeder AFB-III-Aufgabe, egal zu welchem Thema.",
+      "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark. Zur Einordnung: Das Thema Inklusion im SGE ist laut Folie 11 als einziges von der Klausur ausgenommen. Diese Aufgabe bleibt trotzdem wertvoll - sie ist die Format-Vorlage der Dozentin, und das Gerüst 2 dafür, 2 dagegen, dann bewerten trägt bei jeder AFB-III-Aufgabe, egal zu welchem Thema.",
       "quelle": "dozentin-beispiel",
       "quelleSicherheit": "geprueft",
       "abschnitte": [
@@ -740,16 +740,16 @@
         [
           "Wie ist die Antwort aufgebaut? Denk ans Zahlenschema.",
           "Erst beide Seiten, dann dein Urteil.",
-          "Die Dozentin wuenscht sich ein festes Antwortgeruest."
+          "Die Dozentin wünscht sich ein festes Antwortgerüst."
         ],
         [
-          "Was spricht fuer die spezialisierte Schulform? Denk an ihre Merkmale.",
+          "Was spricht für die spezialisierte Schulform? Denk an ihre Merkmale.",
           "Die vier Strukturmerkmale liefern hier die Argumente.",
-          "Kleine Gruppen, viel Zeit, passende Raeume - welche Seite ist das?"
+          "Kleine Gruppen, viel Zeit, passende Räume - welche Seite ist das?"
         ],
         [
-          "Was spricht fuer gemeinsames Lernen mit allen? Denk an Menschenrechte.",
-          "Hier zaehlen Kontakt, Rechte und Miteinander.",
+          "Was spricht für gemeinsames Lernen mit allen? Denk an Menschenrechte.",
+          "Hier zählen Kontakt, Rechte und Miteinander.",
           "Eine UN-Konvention liefert ein starkes Argument."
         ],
         [
@@ -758,13 +758,13 @@
           "Denk an Abgrenzung statt Miteinander."
         ],
         [
-          "Woran stoesst gemeinsamer Unterricht praktisch an Grenzen?",
+          "Woran stößt gemeinsamer Unterricht praktisch an Grenzen?",
           "Denk an Anforderungsniveau und Ausstattung.",
-          "Zwei Huerden: der Unterricht selbst und das, was fehlt."
+          "Zwei Hürden: der Unterricht selbst und das, was fehlt."
         ],
         [
           "Wie endet die Antwort? Nicht unentschieden bleiben.",
-          "Am Schluss zaehlt deine klare Haltung.",
+          "Am Schluss zählt deine klare Haltung.",
           "Der letzte Schritt: selbst Farbe bekennen."
         ]
       ]
@@ -801,24 +801,24 @@
       "generiert": true,
       "hinweise": [
         [
-          "Womit beginnt ein guter Vergleich? Mit dem Massstab.",
-          "Es geht um Recht, nicht um Raeume.",
+          "Womit beginnt ein guter Vergleich? Mit dem Maßstab.",
+          "Es geht um Recht, nicht um Räume.",
           "Erst sagen, woran verglichen wird."
         ],
         [
-          "Drei Formen haengen am selben Ast - welche?",
-          "Der groessere Zweig des Baumdiagramms, drei Eintraege.",
-          "Welche Formen gehoeren rechtlich zur allgemeinen Schule?"
+          "Drei Formen hängen am selben Ast - welche?",
+          "Der größere Zweig des Baumdiagramms, drei Einträge.",
+          "Welche Formen gehören rechtlich zur allgemeinen Schule?"
         ],
         [
           "Nur eine Form steht auf der anderen Seite.",
-          "Der Einzelgaenger im Baumdiagramm - wie heisst er?",
-          "Eine einzige Form gehoert rechtlich zur anderen Schulart."
+          "Der Einzelgänger im Baumdiagramm - wie heißt er?",
+          "Eine einzige Form gehört rechtlich zur anderen Schulart."
         ],
         [
           "Was verbindet trotzdem alle vier?",
           "Der Unterschied ist nur juristisch - was bleibt gleich?",
-          "Zum Vergleich gehoert auch das Verbindende."
+          "Zum Vergleich gehört auch das Verbindende."
         ]
       ]
     },
@@ -859,30 +859,30 @@
         [
           "Wie lang sind die Einheiten? Kein Dreiviertelstunden-Takt.",
           "Denk ans Zeitraster: doppelt so lange Abschnitte.",
-          "Die Uhrzeiten im Plan verraten die Einheitenlaenge."
+          "Die Uhrzeiten im Plan verraten die Einheitenlänge."
         ],
         [
           "Wann beginnt und endet der Tag laut Plan?",
           "Der Zeitrahmen selbst ist schon ein Merkmal.",
-          "Morgens bis in den Nachmittag - was heisst das?"
+          "Morgens bis in den Nachmittag - was heißt das?"
         ],
         [
           "Wie bleibt der Plan lesbar, auch ohne Lesen?",
           "Neben jedem Wort steht noch etwas Bildhaftes.",
-          "Denk an Unterstuetzung durch Piktogramme."
+          "Denk an Unterstützung durch Piktogramme."
         ],
         [
-          "Welche Faecher gibt es hier, die anderswo fehlen?",
-          "Neben den klassischen Faechern stehen besondere Inhalte.",
+          "Welche Fächer gibt es hier, die anderswo fehlen?",
+          "Neben den klassischen Fächern stehen besondere Inhalte.",
           "Denk an Alltagskompetenzen und Miteinander im Plan."
         ],
         [
-          "Fuer wie viele Gruppen gilt dieser eine Plan?",
-          "Die Klasse bleibt zusammen - was sagt das ueber die Groesse?",
+          "Für wie viele Gruppen gilt dieser eine Plan?",
+          "Die Klasse bleibt zusammen - was sagt das über die Größe?",
           "Denk an Formate, die nur mit wenigen funktionieren."
         ],
         [
-          "Zweimal taeglich wird zusammen gegessen - wo im Plan?",
+          "Zweimal täglich wird zusammen gegessen - wo im Plan?",
           "Essen hat eigene Zeitfenster - was bedeutet das?",
           "Denk an feste Pausenrituale mit Verpflegung."
         ],
@@ -926,7 +926,7 @@
       "hinweise": [
         [
           "Erst beschreiben: Woran zeigt sich die Doppelrolle konkret?",
-          "Sammle die Indizien: Raeume, Zeit, Essen, Dauer.",
+          "Sammle die Indizien: Räume, Zeit, Essen, Dauer.",
           "Was macht diese Schule zu mehr als Unterricht?"
         ],
         [
@@ -935,14 +935,14 @@
           "Was gewinnt jemand, der hier viel Zeit verbringt?"
         ],
         [
-          "Wo liegt die Kehrseite? Denk an die Welt draussen.",
+          "Wo liegt die Kehrseite? Denk an die Welt draußen.",
           "Was fehlt, wenn alles drinnen stattfindet?",
-          "Denk an das Risiko eines geschuetzten Raums."
+          "Denk an das Risiko eines geschützten Raums."
         ],
         [
-          "Zum Schluss das bekannte Antwortgeruest mit eigenem Urteil.",
-          "Beide Seiten waegen, dann klar Position beziehen.",
-          "Wie schliesst eine Eroerterung? Mit deiner Haltung."
+          "Zum Schluss das bekannte Antwortgerüst mit eigenem Urteil.",
+          "Beide Seiten wägen, dann klar Position beziehen.",
+          "Wie schließt eine Erörterung? Mit deiner Haltung."
         ]
       ]
     },
@@ -993,24 +993,24 @@
           "Denk an die Merkmalsliste mit Quellenangabe."
         ],
         [
-          "Zweites Pro: Aufbau und Laenge der Schulzeit sind anders.",
+          "Zweites Pro: Aufbau und Länge der Schulzeit sind anders.",
           "Denk an Abschnitte, besonderes Ende, Extra-Jahre.",
           "Vier mal drei - und die Zeit kann wachsen."
         ],
         [
           "Drittes Pro: Inhalte und Tagesablauf, die es sonst nicht gibt.",
-          "Denk an besondere Faecher und Essenszeiten.",
+          "Denk an besondere Fächer und Essenszeiten.",
           "Der Schultag selbst sieht hier anders aus."
         ],
         [
-          "Erstes Contra: Wo lernen diese Schueler:innen ueberall?",
-          "Denk ans Baumdiagramm - die Mehrheit haengt woanders.",
-          "Drei zu eins - was heisst das fuer einen Sonderweg?"
+          "Erstes Contra: Wo lernen diese Schüler:innen überall?",
+          "Denk ans Baumdiagramm - die Mehrheit hängt woanders.",
+          "Drei zu eins - was heißt das für einen Sonderweg?"
         ],
         [
           "Zweites Contra: Wer muss im gemeinsamen Unterricht kooperieren?",
-          "Ein voellig eigenes System wuerde Bruecken kappen.",
-          "Denk an Anschlussfaehigkeit zwischen den Schularten."
+          "Ein völlig eigenes System würde Brücken kappen.",
+          "Denk an Anschlussfähigkeit zwischen den Schularten."
         ],
         [
           "Drittes Contra: Welche Inhalte nennt die Modulbeschreibung selbst?",
@@ -1018,14 +1018,14 @@
           "Denk an die Ziele des Moduls: gleicher Stoff, anderer Weg."
         ],
         [
-          "Wie loest die Vorlesung selbst den Widerspruch auf?",
+          "Wie löst die Vorlesung selbst den Widerspruch auf?",
           "Anpassen statt neu erfinden - die Mitte zwischen beiden Polen.",
-          "Denk an das Schluesselwort aus der Modulfrage."
+          "Denk an das Schlüsselwort aus der Modulfrage."
         ],
         [
-          "Zum Schluss: Was folgt daraus fuer den Unterrichtsalltag?",
-          "Beides koennen: das Allgemeine kennen, fuers Kind zuschneiden.",
-          "Dein Fazit in einem Satz - welche Formel traegt es?"
+          "Zum Schluss: Was folgt daraus für den Unterrichtsalltag?",
+          "Beides können: das Allgemeine kennen, fürs Kind zuschneiden.",
+          "Dein Fazit in einem Satz - welche Formel trägt es?"
         ]
       ]
     },
@@ -1083,8 +1083,8 @@
       "generiert": true,
       "hinweise": [
         [
-          "Nicht das Gebaeude entscheidet, sondern der Status auf dem Papier.",
-          "Denk an die Frage: zu welcher Schule zaehlt das Kind offiziell?",
+          "Nicht das Gebäude entscheidet, sondern der Status auf dem Papier.",
+          "Denk an die Frage: zu welcher Schule zählt das Kind offiziell?",
           "Ein Begriff aus dem Schulrecht, kein Ort."
         ],
         [
@@ -1092,7 +1092,7 @@
           "Die erste der drei Formen am einen Ast."
         ],
         [
-          "Eine gewoehnliche Klasse, mit einem Adjektiv davor.",
+          "Eine gewöhnliche Klasse, mit einem Adjektiv davor.",
           "Zweite Form am selben Ast, das Wort Klasse steckt schon drin."
         ],
         [
@@ -1100,7 +1100,7 @@
           "Denk an die kleinste denkbare Gruppe: eine Person."
         ],
         [
-          "Zwei Schulen arbeiten zusammen, das Kind zaehlt zur anderen Seite.",
+          "Zwei Schulen arbeiten zusammen, das Kind zählt zur anderen Seite.",
           "Die einzige Form am zweiten Ast, ihr Name meint Zusammenarbeit."
         ]
       ]
@@ -1159,12 +1159,12 @@
       "generiert": true,
       "hinweise": [
         [
-          "Zwei Zahlen, ihr Produkt ergibt zwoelf.",
+          "Zwei Zahlen, ihr Produkt ergibt zwölf.",
           "Wie viele Abschnitte, und wie viele Jahre pro Abschnitt?",
           "Alle Abschnitte sind gleich lang - eine kleine Zahl."
         ],
         [
-          "Der Anfang, und dafuer gibt es gleich drei gaengige Namen.",
+          "Der Anfang, und dafür gibt es gleich drei gängige Namen.",
           "Hier steigen die Kinder ein, ganz unten."
         ],
         [
@@ -1173,7 +1173,7 @@
         ],
         [
           "Zwei Namen, beide klingen nach dem oberen Ende der Schulzeit.",
-          "Der vorletzte Abschnitt, mit zwei gaengigen Bezeichnungen."
+          "Der vorletzte Abschnitt, mit zwei gängigen Bezeichnungen."
         ],
         [
           "Der letzte Abschnitt, benannt nach Arbeit und nach dem Ende.",
@@ -1245,27 +1245,27 @@
       "hinweise": [
         [
           "Der Name verbindet Arbeit mit dem Ende der Schulzeit.",
-          "Diese Stufe steht ein Stueck weit fuer sich allein."
+          "Diese Stufe steht ein Stück weit für sich allein."
         ],
         [
-          "Der Auftrag reicht weiter als der uebliche Unterrichtsstoff.",
-          "Hier hoert es nicht beim Lernen fuer die Schule auf."
+          "Der Auftrag reicht weiter als der übliche Unterrichtsstoff.",
+          "Hier hört es nicht beim Lernen für die Schule auf."
         ],
         [
           "Wohin gehen die Jugendlichen, wenn die Schule vorbei ist?",
           "Denk an den ganzen Alltag danach, nicht nur an Arbeit."
         ],
         [
-          "Ein Bereich steht dabei im Vordergrund: das spaetere Arbeiten.",
-          "Womit verdienen Menschen spaeter ihren Lebensunterhalt?"
+          "Ein Bereich steht dabei im Vordergrund: das spätere Arbeiten.",
+          "Womit verdienen Menschen später ihren Lebensunterhalt?"
         ],
         [
-          "Zwei Jahreszahlen: die uebliche Dauer und die laengere.",
-          "Die Schulzeit waechst um drei Jahre."
+          "Zwei Jahreszahlen: die übliche Dauer und die längere.",
+          "Die Schulzeit wächst um drei Jahre."
         ],
         [
-          "Es gibt eine Ausnahme, wenn es gute Gruende gibt.",
-          "Die Obergrenze ist nicht in Stein gemeisselt."
+          "Es gibt eine Ausnahme, wenn es gute Gründe gibt.",
+          "Die Obergrenze ist nicht in Stein gemeißelt."
         ]
       ]
     },
@@ -1333,11 +1333,11 @@
       "hinweise": [
         [
           "Wie lang ist eine Einheit? Denk an das Zeitraster.",
-          "Nicht viele kurze Stunden, sondern grosse Zeitfenster."
+          "Nicht viele kurze Stunden, sondern große Zeitfenster."
         ],
         [
           "Wann endet der Schultag hier?",
-          "Der Tag reicht weit ueber das Mittagessen hinaus."
+          "Der Tag reicht weit über das Mittagessen hinaus."
         ],
         [
           "Wie findet sich ein Kind zurecht, das noch nicht liest?",
@@ -1352,7 +1352,7 @@
           "Der Plan zeigt eine Gruppe, die den ganzen Tag zusammenbleibt."
         ],
         [
-          "Zweimal am Tag wird im Plan gegessen - was heisst das?",
+          "Zweimal am Tag wird im Plan gegessen - was heißt das?",
           "Essen ist hier nicht nur Pause, sondern Programm."
         ]
       ]
@@ -1403,10 +1403,10 @@
       "hinweise": [
         [
           "Der Beruf, der das Unterrichten an genau dieser Schulform meint.",
-          "Ein langes Wort: Schulform plus die Taetigkeit vor der Klasse."
+          "Ein langes Wort: Schulform plus die Tätigkeit vor der Klasse."
         ],
         [
-          "Eine paedagogische Fachkraft, die nicht vom Unterricht her kommt.",
+          "Eine pädagogische Fachkraft, die nicht vom Unterricht her kommt.",
           "Ihr Feld ist das Soziale - an Schulen wie in vielen anderen Einrichtungen."
         ],
         [
@@ -1415,7 +1415,7 @@
         ],
         [
           "Der Beruf aus Kita und Hort, hier im Haus mit dabei.",
-          "Zustaendig fuer Betreuung und Alltag, nicht fuer den Fachunterricht."
+          "Zuständig für Betreuung und Alltag, nicht für den Fachunterricht."
         ]
       ]
     },
@@ -1476,23 +1476,23 @@
       "hinweise": [
         [
           "Ganz unten auf der Altersskala, lange vor der Einschulung.",
-          "Die Foerderung beginnt schon bei den Kleinsten."
+          "Die Förderung beginnt schon bei den Kleinsten."
         ],
         [
-          "Wo sind Kinder zwischen drei und sechs Jahren - regulaer oder gesondert?",
-          "Das Schema stammt aus einem suedlichen Bundesland; dort traegt die vorschulische Form einen eigenen Namen."
+          "Wo sind Kinder zwischen drei und sechs Jahren - regulär oder gesondert?",
+          "Das Schema stammt aus einem südlichen Bundesland; dort trägt die vorschulische Form einen eigenen Namen."
         ],
         [
-          "Betreuung ausserhalb des Unterrichts, im Bild eine eigene senkrechte Spalte.",
-          "Auch dieser Kasten traegt den Zusatz des Bundeslandes, aus dem das Schema stammt."
+          "Betreuung außerhalb des Unterrichts, im Bild eine eigene senkrechte Spalte.",
+          "Auch dieser Kasten trägt den Zusatz des Bundeslandes, aus dem das Schema stammt."
         ],
         [
-          "Fachleute fuer Bewegung, Sprache und Pflege arbeiten im Haus mit.",
-          "Behandlungen finden nicht draussen statt, sie gehoeren dazu."
+          "Fachleute für Bewegung, Sprache und Pflege arbeiten im Haus mit.",
+          "Behandlungen finden nicht draußen statt, sie gehören dazu."
         ],
         [
-          "Bonus: Fachkraefte, die zu anderen Schulen hinausfahren.",
-          "Zusatz: Unterstuetzung, die von aussen an andere Schulen kommt."
+          "Bonus: Fachkräfte, die zu anderen Schulen hinausfahren.",
+          "Zusatz: Unterstützung, die von außen an andere Schulen kommt."
         ]
       ]
     },
@@ -1550,15 +1550,15 @@
       "generiert": true,
       "hinweise": [
         [
-          "Erste Haelfte: Braucht dieser Bereich etwas ganz Eigenes?",
-          "Denk an das Wort speziell - was waere dann anders?"
+          "Erste Hälfte: Braucht dieser Bereich etwas ganz Eigenes?",
+          "Denk an das Wort speziell - was wäre dann anders?"
         ],
         [
-          "Zweite Haelfte: Oder reicht es, Bekanntes anzupassen?",
+          "Zweite Hälfte: Oder reicht es, Bekanntes anzupassen?",
           "Die Gegenposition arbeitet mit dem, was ohnehin gilt."
         ],
         [
-          "Das erste Ziel bleibt beim Wissen ueber Ansaetze und Methoden.",
+          "Das erste Ziel bleibt beim Wissen über Ansätze und Methoden.",
           "Zuerst nur kennen, noch nicht selbst machen."
         ],
         [
@@ -1567,7 +1567,7 @@
         ],
         [
           "Das dritte Ziel meint die Arbeit an der Stunde selbst.",
-          "Zwei Taetigkeiten: ordnen und vorbereiten."
+          "Zwei Tätigkeiten: ordnen und vorbereiten."
         ]
       ]
     },
@@ -1636,14 +1636,14 @@
       "hinweise": [
         [
           "Der schlichteste Titel: Gattung plus Fachgebiet, sonst nichts.",
-          "Das Blatt eines Fachverbands, benannt nach der aelteren Bezeichnung des Gebiets."
+          "Das Blatt eines Fachverbands, benannt nach der älteren Bezeichnung des Gebiets."
         ],
         [
           "Sie erscheint viermal im Jahr, das steckt schon im Namen.",
-          "Sie schaut auch in die angrenzenden Felder; das Kuerzel lautet VHN."
+          "Sie schaut auch in die angrenzenden Felder; das Kürzel lautet VHN."
         ],
         [
-          "Das Fachgebiet im Namen, dahinter ein Wort fuer die Gegenwart.",
+          "Das Fachgebiet im Namen, dahinter ein Wort für die Gegenwart.",
           "Klingt wie ein Programm: was in diesem Feld gerade gilt."
         ],
         [
@@ -1651,11 +1651,11 @@
           "Kein Zusatz, keine Gattung davor: nur der Name der Disziplin."
         ],
         [
-          "Fuer den vollen Ueberblick nennt die Sitzung eine Internetadresse.",
-          "Ein Fachverband pflegt die Liste; sein Kuerzel steckt in der Adresse."
+          "Für den vollen Überblick nennt die Sitzung eine Internetadresse.",
+          "Ein Fachverband pflegt die Liste; sein Kürzel steckt in der Adresse."
         ],
         [
-          "Bonus: drei kurze Titel und ein Magazin mit ungewoehnlichem Namen.",
+          "Bonus: drei kurze Titel und ein Magazin mit ungewöhnlichem Namen.",
           "Zusatz: In der linken Spalte der Folie stehen noch viele weitere."
         ]
       ]
@@ -1712,20 +1712,20 @@
       "generiert": true,
       "hinweise": [
         [
-          "Wer steht im Titel der beiden Merkmals-Folien? Ein Nachname genuegt.",
-          "Sein Buch traegt den Untertitel subjekt- und bedarfsorientierte Didaktik."
+          "Wer steht im Titel der beiden Merkmals-Folien? Ein Nachname genügt.",
+          "Sein Buch trägt den Untertitel subjekt- und bedarfsorientierte Didaktik."
         ],
         [
-          "Ein Lehrbuch, das in das ganze Fachgebiet einfuehrt - Nachname genuegt.",
-          "Das juengere der beiden Buecher, erschienen bei einem Verlag mit UTB-Reihe."
+          "Ein Lehrbuch, das in das ganze Fachgebiet einführt - Nachname genügt.",
+          "Das jüngere der beiden Bücher, erschienen bei einem Verlag mit UTB-Reihe."
         ],
         [
-          "Das gemeinsame Gremium der Bundeslaender fuer Schulfragen.",
-          "Sein Papier heisst nicht Gesetz, sondern spricht nur Ratschlaege aus."
+          "Das gemeinsame Gremium der Bundesländer für Schulfragen.",
+          "Sein Papier heißt nicht Gesetz, sondern spricht nur Ratschläge aus."
         ],
         [
-          "Eine Behoerde, die amtliche Zahlen zu den Schulen zweier Laender fuehrt.",
-          "Woher kommen Schuelerzahlen fuer Brandenburg - nicht aus einem Buch."
+          "Eine Behörde, die amtliche Zahlen zu den Schulen zweier Länder führt.",
+          "Woher kommen Schülerzahlen für Brandenburg - nicht aus einem Buch."
         ]
       ]
     },
@@ -1763,18 +1763,18 @@
       "generiert": true,
       "hinweise": [
         [
-          "Was laeuft am Rand der Abbildung von unten nach oben?",
+          "Was läuft am Rand der Abbildung von unten nach oben?",
           "Sie beginnt bei den ersten Lebensjahren.",
           "Zwei Zahlen begrenzen sie, oben steht die einundzwanzig."
         ],
         [
           "Was fasst die senkrecht gedruckte Klammer zusammen?",
-          "Nur die Ovale gehoeren hinein, die Kaesten darunter nicht.",
+          "Nur die Ovale gehören hinein, die Kästen darunter nicht.",
           "Vier Namen, und der oberste ist gestrichelt abgetrennt."
         ],
         [
           "Welche Angebote sitzen im Bild tiefer als die Klammer?",
-          "Vor der Einschulung stehen dort drei Kaesten und ein Angebot fuer die ersten Jahre.",
+          "Vor der Einschulung stehen dort drei Kästen und ein Angebot für die ersten Jahre.",
           "Bei zweien steht ein Bundesland dabei."
         ],
         [
@@ -1784,12 +1784,12 @@
         ],
         [
           "Vergleich zwei: Wo gehen die Namen auseinander?",
-          "Der Text haengt an drei Stufen einen zweiten Namen an.",
-          "Am Schluss heisst es einmal Abschluss und einmal Berufsschule."
+          "Der Text hängt an drei Stufen einen zweiten Namen an.",
+          "Am Schluss heißt es einmal Abschluss und einmal Berufsschule."
         ],
         [
           "Zusatz: Was steht im Bild sonst noch neben dem Schulteil?",
-          "Bonus: Betreuung, Therapie, ein Dienst von auswaerts und die Leute, die dort arbeiten."
+          "Bonus: Betreuung, Therapie, ein Dienst von auswärts und die Leute, die dort arbeiten."
         ]
       ]
     },
@@ -1827,33 +1827,33 @@
       "generiert": true,
       "hinweise": [
         [
-          "Womit faengt die Antwort an - die Frage selbst, in zwei Teilen.",
+          "Womit fängt die Antwort an - die Frage selbst, in zwei Teilen.",
           "Einmal etwas ganz Eigenes, einmal etwas Angepasstes.",
           "Beide Teile handeln von Didaktik und von Methodik."
         ],
         [
           "Was steht im Modultext hinter dem Wort spezifizieren?",
-          "Es geht um Stoff, den du woanders schon gehoert hast.",
+          "Es geht um Stoff, den du woanders schon gehört hast.",
           "Zuschneiden statt neu erfinden."
         ],
         [
           "Wo setzt der eine Weg an, wo der andere?",
           "Einer nimmt etwas Vorhandenes und passt es an.",
-          "Der andere faengt bei nichts Vorhandenem an."
+          "Der andere fängt bei nichts Vorhandenem an."
         ],
         [
           "Worum geht es im Modul laut eigener Beschreibung?",
-          "Zwei Faecher-Woerter und ein Wort fuer die Unterrichtsform.",
-          "Es ist nicht auf die Foerderschule beschraenkt."
+          "Zwei Fächer-Wörter und ein Wort für die Unterrichtsform.",
+          "Es ist nicht auf die Förderschule beschränkt."
         ],
         [
-          "Schau genau hin, wie die beiden Haelften gefragt sind.",
-          "Zwei kleine Fragewoerter stehen davor, und sie sind verschieden.",
+          "Schau genau hin, wie die beiden Hälften gefragt sind.",
+          "Zwei kleine Fragewörter stehen davor, und sie sind verschieden.",
           "Eines fragt nach dem Ob, das andere nach dem Wie weit."
         ],
         [
           "Zusatz: Welchen Rang hat diese Frage in der Vorlesung?",
-          "Bonus: Sie gilt nicht nur fuer die erste Sitzung."
+          "Bonus: Sie gilt nicht nur für die erste Sitzung."
         ]
       ]
     },
@@ -1892,12 +1892,12 @@
       "generiert": true,
       "hinweise": [
         [
-          "Fang mit den Zahlen an, ueber die gestritten wird.",
+          "Fang mit den Zahlen an, über die gestritten wird.",
           "Wie viele Abschnitte, wie lang jeder, wie lang insgesamt?",
-          "Und eine Tuer fuer Ausnahmen steht auch offen."
+          "Und eine Tür für Ausnahmen steht auch offen."
         ],
         [
-          "Warum braucht der letzte Abschnitt ueberhaupt Zeit?",
+          "Warum braucht der letzte Abschnitt überhaupt Zeit?",
           "Denk an sein Ziel jenseits der allgemeinen Bildung.",
           "Arbeit und das Leben danach stehen im Mittelpunkt."
         ],
@@ -1907,24 +1907,24 @@
           "Anderer Schwerpunkt statt mehr vom Gleichen."
         ],
         [
-          "Welche Ausnahmeregel spricht fuer Individualisierung?",
-          "Der Uebergang muss nicht bei allen am selben Tag enden.",
-          "Die Folie laesst eine Tuer offen, das ist ein Argument."
+          "Welche Ausnahmeregel spricht für Individualisierung?",
+          "Der Übergang muss nicht bei allen am selben Tag enden.",
+          "Die Folie lässt eine Tür offen, das ist ein Argument."
         ],
         [
-          "Wo findet die Vorbereitung statt, und wo spaeter das Leben?",
-          "Uebung im Haus ersetzt die Erfahrung draussen nicht.",
-          "Je laenger drinnen, desto spaeter draussen."
+          "Wo findet die Vorbereitung statt, und wo später das Leben?",
+          "Übung im Haus ersetzt die Erfahrung draußen nicht.",
+          "Je länger drinnen, desto später draußen."
         ],
         [
           "Welche Zahl am Rand des Schaubilds ist unbequem?",
           "Wie alt ist jemand am Ende dieser Schulzeit?",
-          "Erwachsen und trotzdem Schuelerin - das ist der Punkt."
+          "Erwachsen und trotzdem Schülerin - das ist der Punkt."
         ],
         [
           "Jetzt deine Position, mit Grund und mit Bedingung.",
-          "Sag Ja oder Nein und haenge ein Aber daran.",
-          "Kein Sowohl-als-auch - eine Richtung, klar begruendet."
+          "Sag Ja oder Nein und hänge ein Aber daran.",
+          "Kein Sowohl-als-auch - eine Richtung, klar begründet."
         ]
       ]
     },
@@ -1964,43 +1964,43 @@
       "generiert": true,
       "hinweise": [
         [
-          "Zuerst zusammentragen, worueber du urteilen sollst.",
+          "Zuerst zusammentragen, worüber du urteilen sollst.",
           "Sie steht nicht auf einer einzigen Folie.",
-          "Rahmen, Raum, Gruppe, Laufbahn - alles gehoert hinein."
+          "Rahmen, Raum, Gruppe, Laufbahn - alles gehört hinein."
         ],
         [
-          "Was spricht dafuer? Denk an die Bandbreite.",
+          "Was spricht dafür? Denk an die Bandbreite.",
           "Sie deckt sehr unterschiedliche Ebenen ab.",
           "Von der Zeit vor der Einschulung bis zur Arbeit."
         ],
         [
           "Wie viele Ablesungen passen glatt in die Liste?",
           "Es sind weniger, als man beim ersten Lesen denkt.",
-          "Tageslaenge und Gruppengroesse - dafuer gibt es je einen Listenpunkt."
+          "Tageslänge und Gruppengröße - dafür gibt es je einen Listenpunkt."
         ],
         [
           "Und was ist mit dem Essen im Plan?",
-          "Es steht in keinem Punkt, haengt aber am langen Tag.",
+          "Es steht in keinem Punkt, hängt aber am langen Tag.",
           "Erschlossen ist nicht dasselbe wie belegt."
         ],
         [
-          "Welche Ablesungen bleiben nun uebrig?",
-          "Drei Stueck: die Taktung, die Bilder und die besonderen Faecher.",
+          "Welche Ablesungen bleiben nun übrig?",
+          "Drei Stück: die Taktung, die Bilder und die besonderen Fächer.",
           "Gestaltung ist etwas anderes als Rahmenbedingung."
         ],
         [
-          "Was zeigt das grosse Schaubild noch, was in der Liste fehlt?",
+          "Was zeigt das große Schaubild noch, was in der Liste fehlt?",
           "Denk an Menschen und an Angebote neben der Schule.",
-          "Wer arbeitet dort, und was gibt es ausser Unterricht?"
+          "Wer arbeitet dort, und was gibt es außer Unterricht?"
         ],
         [
           "Welche Perspektive nimmt die Liste ein?",
-          "Sie schaut von aussen auf das Haus.",
-          "Ueber Inhalte und Methoden schweigt sie."
+          "Sie schaut von außen auf das Haus.",
+          "Über Inhalte und Methoden schweigt sie."
         ],
         [
           "Jetzt dein Urteil, und zwar zweiteilig.",
-          "Was traegt, und was muss ergaenzt werden?",
+          "Was trägt, und was muss ergänzt werden?",
           "Ein klares Ja mit einer Bedingung ist eine Position."
         ]
       ]

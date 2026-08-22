@@ -38,8 +38,8 @@
    gegen die Antwort, die dort noch aussteht. */
 
 import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile } from "./core.js";
-import { stickerEl, setzeFarbe } from "./ui.js";
-import { afbAnalyse, afbOption, afbKurz, starteOperatoren, starteBegriffe } from "./spiele.js";
+import { stickerEl, setzeFarbe, themenAuswahl, afbAuswahl } from "./ui.js";
+import { afbAnalyse, afbOption, afbKurz } from "./spiele.js";
 
 /* Nur Aufgaben mit gepflegtem afb-Feld: ohne das gaebe es im ersten Schritt
    nichts aufzuloesen. Der Altbestand ohne afb steht als offener Punkt in der
@@ -95,23 +95,21 @@ export function zeigeKlausurfrage(themen, hooks) {
   var pool = aufgabenPool(themen);
   if (!pool.length) return hooks.home();
   var zuletzt = null;
+  /* Was die Auswahl auf Schirm 1 uebrig gelassen hat, plus die Merker dazu.
+     "Noch eine Klausurfrage" auf dem Schreib-Schirm zieht daraus - sonst
+     spraenge die naechste Frage aus der Auswahl heraus, die Rose gerade
+     getroffen hat, und die Einstellung waere nach einer Aufgabe wieder weg. */
+  var gezogenAus = pool;
+  var stufeSelbstGewaehlt = false;
 
-  /* Die Spiele laufen mit denselben Hooks wie sonst — nur ihr Zurueck-Weg
-     zeigt hierher statt auf die Spieleseite. Sonst waere das Aufwaermen eine
-     Einbahnstrasse und Rose muesste sich den Modus wieder zusammensuchen. */
-  function spielHooks() {
-    return Object.assign({}, hooks, { spiele: function () { start(); } });
-  }
-
-  /* Aufwaermen heisst: das Spiel ist eine eigene Runde und gehoert NICHT in die
-     Sitzung der Klausurfrage. Ohne dieses beendeRunde landeten die
-     Signalwort-Antworten unter dem Titel "Eine Klausurfrage" im Verlauf, weil
-     logAntwort die laufende sid anhaengt. Der Router macht dasselbe bei jedem
-     Screenwechsel - nur laeuft der Weg hier nicht durch ihn. */
-  function warmMachen(starter) {
-    beendeRunde();
-    starter(themen, spielHooks());
-  }
+  /* DAS AUFWAERMEN IST AM 23.08.2026 GEFALLEN (Jennifer, 22.08.: "Vorher kurz
+     warm werden und ähnliche Cross-Verlinkungen von anderen Modi auf andere
+     Modi allgemein weg"). Es war gut gemeint - zwei kurze Spiele als
+     Anlaufstrecke -, aber es hat den Modus zu einer Kreuzung gemacht: wer eine
+     Klausurfrage schreiben wollte, stand zuerst vor zwei Knoepfen, die
+     woandershin fuehren. Die Spiele stehen auf der Startseite, dort gehoeren
+     sie hin; hier steht jetzt die Auswahl, die zu DIESEM Modus gehoert.
+     Mit dem Aufwaermen sind spielHooks() und warmMachen() weggefallen. */
 
   /* ---------- Schirm 1: was gleich passiert, plus das Aufwaermen ----------
      Die zwei Spiele stehen hier als ANGEBOT und nicht als Pflichtstrecke. Ein
@@ -132,38 +130,88 @@ export function zeigeKlausurfrage(themen, hooks) {
     var liste = el("ol", "kf-schritte");
     [
       "Du bekommst eine echte Aufgabe aus dem Korpus – meistens eine, die du noch nicht hattest.",
-      "Zuerst nur die Frage: Welche Anforderungsstufe verlangt sie, und was heißt das für deine Antwort?",
+      "Zuerst nur die Frage: Welche Anforderungsstufe verlangt sie, und was heißt das für deine Antwort? (Fällt weg, wenn du unten selbst eine einzige Stufe wählst.)",
       "Dann schreibst du – auf Papier und abfotografiert, mit dem Stift oder getippt. Danach die Musterlösung, und die KI schaut drüber."
     ].forEach(function (s) { liste.appendChild(el("li", null, s)); });
     karte.appendChild(liste);
 
-    var los = el("button", "knopf", "Aufgabe ziehen");
-    los.addEventListener("click", function () { aufdroeseln(ziehen(pool, zuletzt)); });
-    karte.appendChild(los);
     app.appendChild(karte);
 
-    var warm = el("div", "karte");
-    warm.appendChild(el("h2", null, "Vorher kurz warm werden?"));
-    warm.appendChild(el("div", "raster-hinweis",
-      "Muss nicht sein. Beide Runden sind in ein paar Minuten durch und bringen dich in den Blick fürs Aufgabenlesen."));
-    var reihe = el("div", "knopf-reihe");
-    var op = el("button", "knopf sekundaer", "🎯 Signalwörter");
-    op.addEventListener("click", function () { warmMachen(starteOperatoren); });
-    reihe.appendChild(op);
-    var bg = el("button", "knopf sekundaer", "⚡ Begriffe-Blitz");
-    bg.addEventListener("click", function () { warmMachen(starteBegriffe); });
-    reihe.appendChild(bg);
-    warm.appendChild(reihe);
-    app.appendChild(warm);
+    /* ---------- Die Auswahl (Jennifer, 22.08.2026) ----------
+       "dann auswählbar machen, welches Thema und welches AFB, beides jeweils
+       bei Default mit der Option zufällig - wenn zufällig, dann soll sie
+       auswählen können zwischen welchen Themen und/oder welchen AFBs (also
+       soll es AFB I und II sein oder z. B. nur III und II)."
+
+       Umgesetzt als ZWEI Mehrfachauswahlen, beide mit allem angehakt. "Alles
+       an" IST das Zufaellige - eine eigene Zufalls-Option daneben waere ein
+       zweiter Weg zum selben Zustand, und Rose muesste raten, welcher gilt.
+       Das Abwaehlen ist die Einschraenkung, und weil man beliebig kombinieren
+       kann, deckt es beide Faelle ihres Satzes ab: ein einzelnes Thema genauso
+       wie "nur II und III". */
+    var wahlKarte = el("div", "karte");
+    wahlKarte.appendChild(el("h2", null, "Woraus darf gezogen werden?"));
+    wahlKarte.appendChild(el("div", "raster-hinweis",
+      "Alles angehakt heißt: zufällig, wie in der Klausur. Hak ab, was heute nicht drankommen soll."));
+
+    var themaWahl = themenAuswahl(themen, {
+      titel: "Themen",
+      klein: "Die Zahl in Klammern sagt, wie viele offene Aufgaben dort liegen.",
+      zaehle: function (id, unter) {
+        return pool.filter(function (i) {
+          return i.thema.id === id && (unter == null || i.f.unterthema === unter);
+        }).length;
+      }
+    });
+    wahlKarte.appendChild(themaWahl.knoten);
+
+    var stufenWahl = afbAuswahl({
+      titel: "Anforderungsstufen",
+      klein: "Lässt du nur eine stehen, überspringt die Aufgabe den Aufdrösel-Schritt – du hast die Stufe dann ja selbst bestimmt.",
+      zaehle: function (stufe) {
+        return pool.filter(function (i) { return i.f.afb === stufe; }).length;
+      }
+    });
+    wahlKarte.appendChild(stufenWahl.knoten);
+
+    var leerHinweis = el("div", "klein baukasten-leer",
+      "Diese Mischung hat gerade keine Aufgabe – lass ein Thema mehr stehen oder eine Stufe mehr.");
+    leerHinweis.hidden = true;
+    wahlKarte.appendChild(leerHinweis);
+
+    var los = el("button", "knopf", "Aufgabe ziehen");
+    los.style.marginTop = "16px";
+    los.addEventListener("click", function () {
+      var g = themaWahl.gewaehlt();
+      var stufen = stufenWahl.gewaehlt();
+      var erlaubt = {};
+      g.unterthemen.forEach(function (k) { erlaubt[k] = true; });
+      var gefiltert = pool.filter(function (i) {
+        return erlaubt[i.thema.id + "/" + i.f.unterthema] && stufen.indexOf(i.f.afb) >= 0;
+      });
+      if (!gefiltert.length) { leerHinweis.hidden = false; return; }
+      /* Nur EINE Stufe angehakt heisst: Rose hat die Anforderungsstufe selbst
+         bestimmt, und die Frage danach waere ihre eigene Antwort. Genau das
+         steht in Jennifers Satz: "die Frage, welche Anforderungsstufe, kommt
+         natürlich nur, wenn sie die nicht selber mit nur 1 Option gewählt hat". */
+      gezogenAus = gefiltert;
+      aufdroeseln(ziehen(gefiltert, zuletzt), stufen.length === 1);
+    });
+    wahlKarte.appendChild(los);
+    app.appendChild(wahlKarte);
   }
 
   /* ---------- Schirm 2: aufdroeseln ----------
      Bewusst OHNE Musterloesung, Stichpunkte oder Tipp — die stehen im naechsten
      Schritt. Hier geht es nur um die Frage "was will die Aufgabe von mir", und
      genau die beantwortet man in der Klausur auch, bevor man das Blatt sieht. */
-  function aufdroeseln(item) {
+  function aufdroeseln(item, ohneStufenfrage) {
     if (!item) return start();
     zuletzt = item.f.id;
+    if (ohneStufenfrage != null) stufeSelbstGewaehlt = !!ohneStufenfrage;
+    // Hat Rose die Stufe selbst festgelegt, gibt es nichts aufzudroeseln -
+    // dann ist der Weg direkt das Blatt.
+    if (stufeSelbstGewaehlt) return schreiben(item);
     leeren();
     if (item.thema.farbe) setzeFarbe(app, item.thema.farbe);
     kopf("Eine Klausurfrage", item.thema.titel, "← Abbrechen", function () { start(); });
@@ -264,7 +312,7 @@ export function zeigeKlausurfrage(themen, hooks) {
     var reihe = el("div", "knopf-reihe");
     reihe.style.justifyContent = "center";
     var noch = el("button", "knopf", "Noch eine Klausurfrage");
-    noch.addEventListener("click", function () { aufdroeseln(ziehen(pool, zuletzt)); });
+    noch.addEventListener("click", function () { aufdroeseln(ziehen(gezogenAus, zuletzt)); });
     reihe.appendChild(noch);
     var heim = el("button", "knopf sekundaer", "Startseite");
     heim.addEventListener("click", function () { hooks.home(); });

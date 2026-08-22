@@ -246,7 +246,15 @@ export function starteOpZuordnen(themen, hooks, zurueck) {
 
 export function starteModelle(themen, hooks, zurueck) {
   setzeThemenFarben(themen);
-  mdRunde(rueckwegAus(hooks, zurueck));
+  mdRunde(rueckwegAus(hooks, zurueck), {});
+}
+
+/* Die Themenliste des Modell-Steckbriefs, Gegenstueck zu
+   zeigeBegriffKategorien. Zwei Eingaenge zu einem Spiel, wie beim
+   Begriffe-Blitz: die Tageskachel startet sofort, hier waehlt Rose selbst. */
+export function zeigeModellThemen(themen, hooks, zurueck) {
+  setzeThemenFarben(themen);
+  mdHome(themen, hooks, rueckwegAus(hooks, zurueck));
 }
 
 /* Die Kategorienliste als bewusster Eingang von der Startseite (Kachel
@@ -889,12 +897,19 @@ function bgRunde(kat, hooks, zurueck, opts) {
    Rose: "Modelle nicht ausschreiben, sondern nur wissen: dieses Modell ist
    'das und das', damit sie es schnell in der Klausur anwenden kann."
 
-   Eine Karte je Modell, drei kurze Fragen hintereinander im Format der
-   Signalwoerter-Runde: Wer steht dahinter? Was ist der Kern in einem Satz?
-   Woraus besteht es? Die Distraktoren kommen aus ANDEREN echten Modellen -
-   dann uebt das Spiel die Abgrenzung, die in der Klausur Punkte kostet,
-   statt Plausibilitaet. Daten: der modelle-Block in begriffe.json (defensiv
-   gelesen, siehe modelleAusDaten oben). */
+   Eine Karte je Modell mit ALLEN DREI Fragen untereinander (Jennifer,
+   22.08.2026: "du kannst bei dem Modus alle 3 auf einmal anzeigen"). Bis dahin
+   war jede Frage ein eigener Schirm - drei Tipps auf Weiter fuer ein einziges
+   Modell, und der Steckbrief zerfiel dabei in drei Bruchstuecke, statt als
+   Steckbrief lesbar zu sein. Jetzt steht das Modell einmal oben und darunter:
+   Wer steht dahinter? Was ist der Kern? Woraus besteht es? Jeder Block loest
+   fuer sich auf, geloggt wird weiter je Frage (drei Eintraege je Modell) -
+   an der Auswertung aendert die Zusammenlegung nichts.
+
+   Die Distraktoren kommen aus ANDEREN echten Modellen - dann uebt das Spiel die
+   Abgrenzung, die in der Klausur Punkte kostet, statt Plausibilitaet. Daten:
+   der modelle-Block in begriffe.json (defensiv gelesen, siehe modelleAusDaten
+   oben). */
 
 var MD_FRAGEN = [
   { key: "wer", frage: "Wer steht hinter diesem Modell?", praefix: "mdw-" },
@@ -904,13 +919,134 @@ var MD_FRAGEN = [
 
 function mdWert(m, key) { return key === "teile" ? m.teile.join(" · ") : m[key]; }
 
-function mdRunde(raus) {
+/* DER NAME, DER UEBER DER KARTE STEHT - und zwar OHNE die Urheber in Klammern.
+   Jennifer, 22.08.2026: "'Bestandteile des Handelns (Terfloth & Bauersfeld;
+   Pitsch & Thuemmel)', dann wird gefragt 'Wer steht hinter diesem Modell?',
+   aber in der Frage selber steht es ja schon." Die Frage beantwortete sich
+   selbst, und zwar bei den meisten Eintraegen.
+
+   Abgeschnitten wird NUR, wenn der Klammerinhalt wirklich die Urheber nennt -
+   geprueft an m.wer, nicht am blossen Vorhandensein einer Klammer. Sonst
+   verschwaende der Schnitt Inhalt bei einem Eintrag, dessen Klammer etwas
+   anderes sagt ("(dreistufig)"). Verglichen wird ueber Wortstaemme ab drei
+   Buchstaben, damit "KMK 2021" genauso greift wie "Terfloth & Bauersfeld".
+
+   m.modell selbst bleibt unangetastet: die Aufloesung und das von-Feld der
+   Distraktoren nennen weiter den vollen Namen - dort IST die Zuordnung der
+   Punkt. */
+function mdWorte(s) {
+  return String(s || "").toLowerCase()
+    .replace(/[^a-zäöüß0-9]+/g, " ")
+    .split(" ")
+    .filter(function (w) { return w.length >= 3 && !/^\d+$/.test(w); });
+}
+
+function modellTitel(m) {
+  var treffer = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(m.modell || "");
+  if (!treffer || !treffer[1]) return m.modell;
+  var inKlammer = mdWorte(treffer[2]);
+  if (!inKlammer.length) return m.modell;
+  var imWer = mdWorte(m.wer);
+  var ueberschneidung = inKlammer.some(function (w) { return imWer.indexOf(w) >= 0; });
+  return ueberschneidung ? treffer[1] : m.modell;
+}
+
+/* Der Stand je Modell, gerechnet wie begriffStand(): aus dem antwortLog, ueber
+   die drei Frage-Ids eines Modells zusammen. Kein neues Feld. */
+function modellStand() {
+  var s = Object.create(null);
+  state.antwortLog.forEach(function (a) {
+    if (a.modus !== "spiel" || a.spiel !== "modelle") return;
+    var id = String(a.qid).replace(/^md[wkt]-/, "");
+    var e = s[id] || (s[id] = { ok: 0, n: 0 });
+    e.n++;
+    if (a.richtig) e.ok++;
+  });
+  return s;
+}
+
+/* Die Themen mit ihrem Modell-Stand, wackligstes zuerst - dasselbe Muster wie
+   bgKategorien(). Rose lobt am ST-Trainer, dass sie "spezifisch zu jedem Thema
+   und Unterthema" ueben kann; das ist die Entsprechung fuer die Modelle. */
+function mdThemen(themen) {
+  if (!MODELLE.length) return [];
+  var stand = modellStand();
+  return (themen || []).map(function (t) {
+    var liste = MODELLE.filter(function (m) { return m.thema === t.id; });
+    // "Sicher" heisst hier: alle drei Fragen mindestens einmal getroffen.
+    var sicher = liste.filter(function (m) {
+      var e = stand[m.id];
+      return e && e.ok >= MD_FRAGEN.length;
+    }).length;
+    return {
+      t: t, n: liste.length, s: sicher,
+      geuebt: liste.some(function (m) { return !!stand[m.id]; })
+    };
+  }).filter(function (x) { return x.n > 0; })
+    .sort(function (a, b) { return (a.s / a.n) - (b.s / b.n); });
+}
+
+/* Die Themenliste als eigener Eingang ("Modelle nach Thema" unter "Kurz
+   einsteigen"). Gleiche Bauform wie bgHome, damit sich die beiden Listen nicht
+   verschieden anfuehlen - Jennifer, 22.08.: "gleiche Relation wie
+   Begriffe-Blitz (Spiel) und Begriffe nach Thema". */
+function mdHome(themen, hooks, zurueck) {
+  var raus = zurueck;
+  if (!MODELLE.length) return raus();
+  leeren();
+  app.style.removeProperty("--tfarbe-basis");
+  spielKopf("🪪 Modell-Steckbrief", raus);
+
+  var liste = mdThemen(themen);
+  if (!liste.length) return raus();
+
+  var zurListe = function () { mdHome(themen, hooks, raus); };
+
+  var info = el("div", "karte");
+  info.appendChild(el("p", null, "Vier Modelle je Runde, zu jedem drei Fragen auf einer Karte: wer dahintersteht, was der Kern ist, woraus es besteht. Sicher heißt: alle drei schon einmal getroffen. Oben stehen die wackligsten Themen."));
+  app.appendChild(info);
+
+  var alle = el("button", "knopf", "🎲 Quer durch alle Themen");
+  alle.style.width = "100%";
+  alle.addEventListener("click", function () { mdRunde(zurListe, {}); });
+  app.appendChild(alle);
+
+  liste.forEach(function (x) {
+    var karte = el("button", "thema-karte");
+    if (x.t.farbe) setzeFarbe(karte, x.t.farbe);
+    var anteil = Math.round(100 * x.s / x.n);
+    var kz = el("div", "thema-kopfzeile");
+    kz.appendChild(el("span", "thema-titel", x.t.titel));
+    kz.appendChild(el("span", "vl-badge", x.s + "/" + x.n + " sicher"));
+    kz.appendChild(quotePille(x.geuebt ? anteil : null));
+    karte.appendChild(kz);
+    var balken = el("div", "balken");
+    var voll = el("div", "voll " + (x.geuebt ? quoteStufe(anteil) : "q0"));
+    voll.style.width = anteil + "%";
+    balken.appendChild(voll);
+    karte.appendChild(balken);
+    karte.addEventListener("click", function () { mdRunde(zurListe, { thema: x.t.id }); });
+    app.appendChild(karte);
+  });
+}
+
+/* Eine Runde. opts.thema schraenkt auf ein Thema ein (Eingang ueber mdHome);
+   ohne das laeuft sie quer durch alle. Die Distraktoren kommen IMMER aus dem
+   ganzen Bestand: eine Themenwahl soll bestimmen, was geuebt wird, nicht wie
+   leicht es ist - vier Modelle desselben Themas gegeneinander abzugrenzen
+   waere sonst plötzlich die schwerste Uebung der App. */
+function mdRunde(raus, opts) {
+  var o = opts || {};
   var fehler = fehlerZaehler("modelle");
   var gew = function (m) {
     return 1 + Math.min(3, (fehler["mdw-" + m.id] || 0) + (fehler["mdk-" + m.id] || 0) + (fehler["mdt-" + m.id] || 0));
   };
-  var modelle = zieh(MODELLE, Math.min(MD_RUNDE, MODELLE.length), gew);
-  var mIndex = 0, fIndex = 0, richtige = 0, beantwortet = 0;
+  var topf = o.thema
+    ? MODELLE.filter(function (m) { return m.thema === o.thema; })
+    : MODELLE;
+  if (!topf.length) topf = MODELLE;
+  var modelle = zieh(topf, Math.min(MD_RUNDE, topf.length), gew);
+  var mIndex = 0, richtige = 0;
   var gesamt = modelle.length * MD_FRAGEN.length;
   var gepatzt = [];
 
@@ -940,33 +1076,23 @@ function mdRunde(raus) {
     return satz + m.modell + " besteht aus: " + m.teile.join(", ") + ".";
   }
 
-  function schritt() {
-    leeren();
-    app.style.removeProperty("--tfarbe-basis");
-    spielKopf("🪪 Modell-Steckbrief", raus);
-
-    var m = modelle[mIndex];
-    var fr = MD_FRAGEN[fIndex];
-    var farbe = themenFarbe(m.thema);
-    if (farbe) setzeFarbe(app, farbe);
-    var uhr = Date.now();
-    var karte = el("div", "karte");
-    karte.appendChild(el("div", "frage-fortschritt",
-      "Modell " + (mIndex + 1) + " von " + modelle.length + " · Frage " + (fIndex + 1) + " von " + MD_FRAGEN.length));
-    karte.appendChild(el("div", "op-wort", m.modell));
-    karte.appendChild(el("div", "frage-text", fr.frage));
-
+  /* Ein Frage-Block innerhalb der Modell-Karte. Er meldet ueber fertig(), dass
+     er beantwortet ist - erst wenn alle drei durch sind, erscheint der
+     Weiter-Knopf. So bleibt die Karte ein Steckbrief und wird nicht zu drei
+     Fragen, die zufaellig untereinanderstehen. */
+  function frageBlock(m, fr, uhr, aufFertig) {
+    var block = el("div", "md-block");
+    block.appendChild(el("div", "frage-text", fr.frage));
     var optionen = mischen([{ text: mdWert(m, fr.key), korrekt: true, von: m.modell }]
       .concat(distraktoren(m, fr.key)));
-    var fertig = false;
+    var beantwortet = false;
     var knoepfe = [];
     optionen.forEach(function (opt) {
       var knopf = el("button", "option", opt.text);
       knoepfe.push({ knopf: knopf, korrekt: opt.korrekt });
       knopf.addEventListener("click", function () {
-        if (fertig) return;
-        fertig = true;
-        beantwortet++;
+        if (beantwortet) return;
+        beantwortet = true;
         var richtig = opt.korrekt;
         if (richtig) richtige++;
         else if (gepatzt.indexOf(m) < 0) gepatzt.push(m);
@@ -986,22 +1112,48 @@ function mdRunde(raus) {
         text.appendChild(el("div", "titel", richtig ? "Sitzt!" : "Knapp daneben – schau mal:"));
         text.appendChild(el("div", null, aufloesung(m, fr.key, opt, richtig)));
         erk.appendChild(text);
-        karte.appendChild(erk);
-
-        var letzter = mIndex + 1 >= modelle.length && fIndex + 1 >= MD_FRAGEN.length;
-        var weiter = el("button", "knopf", letzter ? "Runde abschließen" : "Weiter");
-        weiter.addEventListener("click", function () {
-          fIndex++;
-          if (fIndex >= MD_FRAGEN.length) { fIndex = 0; mIndex++; }
-          if (mIndex >= modelle.length) return ende();
-          schritt();
-        });
-        karte.appendChild(weiter);
-        weiter.focus();
+        block.appendChild(erk);
+        aufFertig();
       });
-      karte.appendChild(knopf);
+      block.appendChild(knopf);
+    });
+    return block;
+  }
+
+  function schritt() {
+    leeren();
+    app.style.removeProperty("--tfarbe-basis");
+    spielKopf("🪪 Modell-Steckbrief", raus);
+
+    var m = modelle[mIndex];
+    var farbe = themenFarbe(m.thema);
+    if (farbe) setzeFarbe(app, farbe);
+    var uhr = Date.now();
+    var karte = el("div", "karte md-karte");
+    karte.appendChild(el("div", "frage-fortschritt",
+      "Modell " + (mIndex + 1) + " von " + modelle.length));
+    karte.appendChild(el("div", "op-wort", modellTitel(m)));
+
+    var offen = MD_FRAGEN.length;
+    var fuss = el("div", "md-fuss");
+    var letzter = mIndex + 1 >= modelle.length;
+    var weiter = el("button", "knopf", letzter ? "Runde abschließen" : "Nächstes Modell");
+    weiter.addEventListener("click", function () {
+      mIndex++;
+      if (mIndex >= modelle.length) return ende();
+      schritt();
     });
 
+    MD_FRAGEN.forEach(function (fr) {
+      karte.appendChild(frageBlock(m, fr, uhr, function () {
+        offen--;
+        if (offen > 0) return;
+        fuss.appendChild(weiter);
+        weiter.focus();
+        weiter.scrollIntoView({ block: "nearest" });
+      }));
+    });
+    karte.appendChild(fuss);
     app.appendChild(karte);
   }
 
@@ -1023,7 +1175,7 @@ function mdRunde(raus) {
       });
     }
     fazit(karte, richtige, gesamt,
-      function () { mdRunde(raus); },
+      function () { mdRunde(raus, o); },
       raus, extra);
     app.appendChild(karte);
   }

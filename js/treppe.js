@@ -902,8 +902,83 @@ function abschnitteKarte(f, o, ab, gezeigt) {
   var kiUrteile = {};                // ROHER Index -> Urteil
   var kiSlots = [];                  // { kern, box, zeile }
   var alleFelder = [];
+  /* Die Abschnitts-Kaesten, in derselben Reihenfolge wie sie in die Nutzlast
+     gehen. Zugeordnet wird aber NICHT ueber die Position, sondern ueber die
+     roh-Indizes des Abschnitts (siehe fertig()) - die Nutzlast zaehlt parallele
+     Unterabschnitte einzeln, dieser Renderer fasst sie zusammen. */
+  var kiAbschnitte = [];
+  var kiLogik = {};                  // nr -> { logik, satz }
+  var logikSelbst = {};              // nr -> Roses eigene Wahl, ueberschreibt die KI
 
-  function kiSlotFuellen(s) {
+  /* Die vier Logik-Stufen als Wort und Farbe. Bewusst dieselbe Tonlage wie
+     KI_STUFE: kein "falsch", kein Rot als Urteil ueber sie, sondern eine Aussage
+     ueber den TEXT. "Traegt nicht" heisst, der Abschnitt leistet nicht, was seine
+     Rolle verlangt - meistens steht richtiger Inhalt da, nur in der falschen
+     Funktion, und genau das sagt der Satz daneben. */
+  var LOGIK_STUFE = {
+    "traegt": { text: "Trägt", klasse: "gut" },
+    "wackelt": { text: "Wackelt noch", klasse: "halb" },
+    "traegt-nicht": { text: "Trägt so noch nicht", klasse: "offen" },
+    "leer": { text: "Noch nichts da", klasse: "leer" }
+  };
+  // Was Rose selbst setzen kann. Absichtlich DREI statt vier: "leer" ist kein
+  // Urteil, das jemand ueber die eigene Arbeit faellt, das sieht man.
+  var LOGIK_WAHL = [
+    { wert: "traegt", text: "Trägt" },
+    { wert: "wackelt", text: "Wackelt" },
+    { wert: "traegt-nicht", text: "Trägt nicht" }
+  ];
+
+  /* Ein Abschnitts-Kasten. Jennifer, 23.08.2026: "es soll ja nicht nur sagen,
+     sind diese Abschnitte da, sondern auch: sind sie logisch/richtig? (sind
+     jeweils Einschaetzungen, sie soll das selber setzen dann)".
+
+     Zwei Ebenen also, und die Reihenfolge ist der Punkt: die KI beobachtet, Rose
+     entscheidet. Der Satz der KI steht als Beobachtung da, die drei Knoepfe
+     darunter sind IHRE Einschaetzung - vorbelegt mit dem KI-Urteil, jederzeit
+     umstellbar. Dasselbe Verhaeltnis wie beim Vorschlag je Baustein
+     ("Vorschlagen heisst vorschlagen: sie kreuzt selbst an") und beim
+     "Das meinte ich"-Override im Glossar.
+
+     NICHTS DAVON WIRD GELOGGT. Die Treppe schreibt im Between-Step bewusst
+     nichts ins Antwort-Log (Regel aus klausurfrage.js), und eine Selbstauskunft
+     ueber die LOGIK einer Rolle ist erst recht kein Lernstand-Datum - sie ist
+     das Nachdenken selbst. Wer sie spaeter auswerten will, braucht ein Feld in
+     snapshot() UND signatur(), nicht nur hier eine Variable. */
+  function kiAbschnittFuellen(k) {
+    while (k.box.firstChild) k.box.removeChild(k.box.firstChild);
+    if (kiStatus === "laeuft") {
+      k.box.appendChild(el("span", "treppe-ki-laedt", "liest den Abschnitt …"));
+      return;
+    }
+    if (kiStatus !== "da") return;
+    var u = kiLogik[k.nr];
+    if (!u) return;
+    var gesetzt = logikSelbst[k.nr] || u.logik;
+    var st = LOGIK_STUFE[gesetzt] || LOGIK_STUFE.wackelt;
+
+    var kopf = el("div", "treppe-logik-kopf");
+    var marke = el("span", "treppe-logik-marke " + st.klasse, st.text);
+    kopf.appendChild(marke);
+    k.box.appendChild(kopf);
+    if (u.satz) k.box.appendChild(belegZeile("div", u.satz, o.themaId, "treppe-logik-satz"));
+
+    /* Die eigene Einschaetzung. Erst NACH dem Satz: sie soll lesen, was
+       beobachtet wurde, und dann entscheiden - nicht andersherum. */
+    var wahl = el("div", "treppe-logik-wahl");
+    wahl.appendChild(el("span", "treppe-logik-frage", "Wie siehst du es?"));
+    LOGIK_WAHL.forEach(function (w) {
+      var b = el("button", "treppe-logik-knopf" + (gesetzt === w.wert ? " an" : ""), w.text);
+      b.addEventListener("click", function () {
+        logikSelbst[k.nr] = w.wert;
+        kiAbschnittFuellen(k);
+      });
+      wahl.appendChild(b);
+    });
+    k.box.appendChild(wahl);
+  }
+
+function kiSlotFuellen(s) {
     while (s.box.firstChild) s.box.removeChild(s.box.firstChild);
     if (kiStatus === "laeuft") {
       s.box.appendChild(el("span", "treppe-ki-laedt", "prüft deine Notiz …"));
@@ -946,6 +1021,9 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     kiSlots.forEach(function (s) {
       while (s.box.firstChild) s.box.removeChild(s.box.firstChild);
     });
+    kiAbschnitte.forEach(function (k) {
+      while (k.box.firstChild) k.box.removeChild(k.box.firstChild);
+    });
     if (kiKopf) while (kiKopf.firstChild) kiKopf.removeChild(kiKopf.firstChild);
   }
 
@@ -984,6 +1062,7 @@ function abschnitteKarte(f, o, ab, gezeigt) {
     });
 
     kiSlots.forEach(kiSlotFuellen);
+    kiAbschnitte.forEach(kiAbschnittFuellen);
 
     /* 48 s. llm.js bricht bei 45 s ab und macht aus jedem Fehler null - der
        Ladezustand wartet etwas laenger, sonst flackert er gegen sein eigenes
@@ -1007,6 +1086,24 @@ function abschnitteKarte(f, o, ab, gezeigt) {
       if (!erg) { kiStatus = "weg"; return kiAufraeumen(); }
       kiStatus = "da";
       (erg.urteile || []).forEach(function (u) { kiUrteile[u.i] = u; });
+      // Ein Function-Deployment ohne das neue Feld liefert hier nichts - dann
+      // bleiben die Abschnitts-Kaesten leer, und der Rest laeuft wie bisher.
+      /* ZUGEORDNET WIRD UEBER DIE idx-LISTE, NICHT UEBER DIE POSITION.
+         llm.js schickt zu jedem Logik-Urteil die roh-Indizes des Abschnitts
+         mit, den es meint. Der Grund steht dort ausfuehrlich: die Nutzlast
+         zaehlt parallele Unterabschnitte einzeln, dieser Renderer fasst sie mit
+         ihrem Elternabschnitt zu EINEM Block zusammen. Ein Urteil unter dem
+         falschen Abschnitt waere still falsch. Findet sich kein Block, faellt
+         das Urteil weg - lieber kein Kasten als ein falscher. */
+      (erg.logik || []).forEach(function (a) {
+        var ziel = null;
+        kiAbschnitte.forEach(function (k) {
+          if (ziel) return;
+          var treffer = (a.idx || []).some(function (i) { return k.idx.indexOf(i) >= 0; });
+          if (treffer) ziel = k;
+        });
+        if (ziel) kiLogik[ziel.nr] = a;
+      });
       if (kiKopf) {
         while (kiKopf.firstChild) kiKopf.removeChild(kiKopf.firstChild);
         if (erg.gesamt) kiKopf.appendChild(belegZeile("div", erg.gesamt, o.themaId, "treppe-ki-gesamt"));
@@ -1268,6 +1365,25 @@ function abschnitteKarte(f, o, ab, gezeigt) {
       sek.appendChild(zeile);
     });
 
+    /* DER LOGIK-KASTEN, ganz unten im Abschnitt (23.08.2026). Er steht NACH
+       den Zeilen und nicht davor: er urteilt ueber das Zusammenspiel, das man
+       erst gelesen haben muss. Solange die KI nicht geantwortet hat, ist er
+       leer und nimmt keinen Platz - kiAbschnittFuellen fuellt ihn.
+
+       Nur wenn wirklich geschrieben wird (o.felder) und die KI ueberhaupt
+       laeuft: im reinen Aufdeck-Modus gibt es keine Antwort, ueber deren Logik
+       sich urteilen liesse. */
+    if (o.felder && kiAn) {
+      var lbox = el("div", "treppe-logik");
+      sek.appendChild(lbox);
+      kiAbschnitte.push({
+        nr: kiAbschnitte.length + 1,
+        box: lbox,
+        // Die roh-Indizes dieses Blocks, inklusive der des parallelen Kindes -
+        // ueber genau die ordnet fertig() das Urteil zu.
+        idx: b.a.idx.slice().concat(b.kind ? b.kind.idx.slice() : [])
+      });
+    }
     karte.appendChild(sek);
   });
 
