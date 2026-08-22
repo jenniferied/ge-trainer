@@ -2038,6 +2038,26 @@ p { margin: 0 0 var(--sp-3); }
    Weiter-Knopf der Karte konkurrieren. */
 .tl-kopf-reihe { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
 .tl-genug { font-size: .95rem; padding-right: 0; color: var(--ink-soft); }
+/* Die Pause steht LINKS neben "Fuer heute reicht es" (Rose, 19.08.2026). Auf
+   360 px stehen jetzt drei Knoepfe in der Zeile - sie darf also umbrechen,
+   sonst wird einer abgeschnitten. Der Ton ist derselbe: leise danebenstehen,
+   nicht mit dem Weiter-Knopf konkurrieren. */
+.tl-kopf-reihe { flex-wrap: wrap; }
+.tl-pause { font-size: .95rem; color: var(--ink-soft); margin-left: auto; }
+.tl-pause + .tl-genug { margin-left: 0; }
+
+/* Die angefangene Runde auf Schirm 1. Ruhig, kein Mahnwort, keine Farbe der
+   Dringlichkeit - es ist ein Angebot, keine Schuld. */
+.tl-liegt { border-left: 3px solid var(--tfarbe, var(--accent)); }
+.tl-liegt-satz { font-size: 1rem; margin-bottom: var(--sp-2); }
+
+/* "am wenigsten geuebt" auf genau einer Kachel. Eine Einladung, keine Bilanz:
+   deshalb keine Zahl, keine Warnfarbe und nicht das Wort vernachlaessigt. */
+.tl-duenn {
+  display: inline-block; margin-top: 4px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink-soft);
+}
 
 /* ---------- Felder-Modus der Abruf-Treppe (treppe.js opts.felder) ----------
    Das leichte Geruest gegen den 0%-Schock: Chip, Tipp-Feld, Sammelort. Alles
@@ -2074,6 +2094,129 @@ p { margin: 0 0 var(--sp-3); }
   background: var(--paper-2); border-radius: var(--radius);
   padding: 6px 12px; margin-bottom: var(--sp-2); font-size: .92rem;
 }
+
+/* ---------- Abschnitte, Rollen und das KI-Urteil (treppe.js, 22.08.2026) ----------
+   Vertrag 1 (abschnitte) und Vertrag 2 (art "bausteine") werden hier sichtbar.
+   NUR TOKENS, keine Hex-Werte: Nachtmodus ist der Standard, und eine feste
+   Farbe sieht in genau einer der beiden Paletten gut aus. */
+
+/* Ein Abschnitt ist eine eigene Gruppe mit Ueberschrift. Der Abstand traegt die
+   Gliederung - eine Linie mehr waere auf 360 px nur Unruhe. */
+.treppe-abschnitt { margin-bottom: var(--sp-4); }
+.treppe-abschnitt:last-of-type { margin-bottom: 0; }
+.treppe-abschnitt .treppe-punkt:first-of-type { border-top: 0; }
+/* Der auftrag: redaktionell gesetzt, deshalb darf er den Fachbegriff nennen.
+   Er ist eine Ueberschrift, keine Chip-Pille - sonst saehe er aus wie ein
+   Label, das die Antwort verraet. */
+.treppe-auftrag {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 700; font-size: 1rem; line-height: 1.3;
+  color: var(--ink); margin-bottom: var(--sp-2);
+}
+.treppe-auftrag-paar {
+  font-size: .84rem; color: var(--ink-soft);
+  margin: -2px 0 var(--sp-2) var(--sp-3);
+}
+
+/* Gepaarte Abschnitte (parallelZu). Auf 360 px UNTEREINANDER mit sichtbarer
+   Klammer, nicht als zwei Spalten - genau das hat Rose bei Opaschowski
+   gefehlt: das Beispiel gehoert sichtbar zu seiner Zeitart und nicht dreissig
+   Zeilen weiter unten als "Baustein 4". */
+.treppe-paar {
+  display: flex; gap: var(--sp-2); align-items: flex-start;
+  margin-top: var(--sp-2); padding-left: 2px;
+  border-left: 2px solid color-mix(in srgb, var(--tfarbe) 40%, transparent);
+}
+.treppe-paar-pfeil { color: var(--tfarbe); flex: 0 0 auto; font-size: .9rem; line-height: 1.6; }
+.treppe-paar-inhalt { flex: 1; min-width: 0; }
+.treppe-paar-auf { margin-top: var(--sp-2); }
+
+/* Die Rollen-Zeile. Kein Chip, keine Nummer im Feld - der auftrag steht
+   darueber, im Feld steht blass der Satzanfang. */
+.treppe-rolle .treppe-eingabe { margin-top: 0; }
+/* Eine Rollen-Zeile hat KEINEN Chip - die :has(.treppe-label)-Regel oben
+   greift dort also nicht, und das Feld wurde zwischen Nummer und Knoepfen zu
+   einer Spalte von sechs Zeichen Breite zusammengequetscht. Dieselbe Umbruch-
+   Regel, nur an der Rolle festgemacht statt am Chip. */
+.treppe-rolle .treppe-punkt-kopf { flex-wrap: wrap; }
+.treppe-rolle .treppe-punkt-kopf .treppe-inhalt { flex: 1 1 calc(100% - 24px - var(--sp-3)); }
+.treppe-rolle .treppe-punkt-kopf .treppe-werkzeuge {
+  margin-left: calc(24px + var(--sp-3)); margin-top: var(--sp-2);
+}
+.treppe-rolle-kopf { font-weight: 700; font-size: .9rem; margin-bottom: var(--sp-2); }
+/* Der geteilte Vorrat der Rollen-Schablone: die Erwartungsliste steht EINMAL
+   unter den Rollen, nicht dreimal. */
+/* Leer bleibt unsichtbar: die Trennlinie darf erst da sein, wenn wirklich
+   etwas aufgedeckt wurde. */
+.treppe-vorrat:not([data-auf]) { display: none; }
+.treppe-vorrat { margin-top: var(--sp-3); border-top: 1px solid var(--line); padding-top: var(--sp-3); }
+.treppe-vorrat-kopf { font-weight: 700; font-size: .88rem; margin-bottom: var(--sp-2); }
+.treppe-vorrat-punkt { margin-bottom: var(--sp-3); }
+.treppe-vorrat-punkt:last-child { margin-bottom: 0; }
+
+/* Ein Feld, das mitwaechst. rows=1 plus scrollHeight in treppe.js;
+   field-sizing ist die Zugabe fuer Browser, die es koennen - kein Ersatz,
+   Rose uebt am Handy und welches Safari das ist, weiss hier niemand.
+   resize bleibt aus: die Hoehe macht der Text, nicht der Griff. */
+.wachsfeld { field-sizing: content; resize: none; overflow: hidden; }
+.treppe-notizen.wachsfeld { resize: none; }
+/* Eingefroren heisst LESBAR, nicht ausgegraut: ab dem ersten Aufdecken wird
+   verglichen, und dafuer muss Rose ihren eigenen Text noch entziffern koennen. */
+.wachsfeld.eingefroren {
+  background: var(--paper-2); border-style: dashed; color: var(--ink-soft);
+  cursor: default;
+}
+
+/* Das KI-Urteil je Zeile. Klein, ruhig, IMMER ueber der festen Notiz - die
+   feste Notiz ist die Wahrheit, das Urteil ist der Kommentar dazu. */
+.treppe-ki-box { min-height: 0; }
+.treppe-ki {
+  font-size: .84rem; line-height: 1.45; margin-bottom: 4px;
+  border-left: 3px solid var(--line); padding-left: var(--sp-2);
+}
+.treppe-ki.gut { border-left-color: var(--ok); color: var(--ok); }
+.treppe-ki.halb { border-left-color: var(--warn-ink); color: var(--warn-ink); }
+.treppe-ki.schade { border-left-color: var(--accent); color: var(--ink-soft); }
+.treppe-ki.muted { color: var(--ink-soft); }
+/* Der Ladezustand JE ZEILE, nicht ueber der ganzen Karte: Rose soll
+   weiterlesen koennen, waehrend es laeuft. Faellt die KI aus, verschwindet er
+   still - kein Fehlertext, keine Entschuldigung. */
+.treppe-ki-laedt { font-size: .82rem; color: var(--ink-soft); font-style: italic; }
+@media (prefers-reduced-motion: no-preference) {
+  .treppe-ki-laedt { animation: treppe-pulsen 1.6s ease-in-out infinite; }
+}
+@keyframes treppe-pulsen { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+/* Das gesamt-Urteil und der n-von-m-Abgleich stehen OBEN bei Roses Sammelnotiz
+   (Jennifer: "bei ihren Notizen oben und in der Zeile"). Der Abgleich ist
+   NICHT die Fazit-Zeile unten - dort steht Roses eigenes Urteil. */
+.treppe-ki-kopf:not(:empty) { margin-bottom: var(--sp-2); }
+.treppe-ki-gesamt {
+  font-size: .9rem; line-height: 1.5;
+  background: var(--glow); border-radius: var(--radius); padding: 8px 12px;
+}
+.treppe-ki-start { font-size: .82rem; margin-bottom: var(--sp-2); }
+.treppe-ki-zahl:not(:empty) { margin-bottom: var(--sp-3); }
+.treppe-ki-zaehlung { font-size: .86rem; font-weight: 700; color: var(--ink-soft); }
+/* Der Vorschlag markiert, er klickt nicht. Dieselbe Sprache wie .check-knopf:
+   gestrichelt plus Faehnchen, nie eine Ampelfarbe - sonst saehe er aus, als
+   waere er schon angeklickt. */
+.treppe-wert.ki-tipp {
+  border-style: dashed; border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.treppe-wert.ki-tipp::after { content: " ✦"; font-size: .8em; color: var(--accent); }
+
+/* ---------- Die Farbe der Selbsteinschaetzung (Rose, 19.08.2026) ----------
+   Woertlich: "z.B. bei hatte ich gruen hinterlegen beim antippen. Bei halb
+   orange. Bei Fehlte einfach normal hinterlegen muss nicht rot sein." Die
+   ganze Zeile faerbt dezent mit - sie ist danach die Quittung. */
+.treppe-wert.gut.gewaehlt { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.treppe-wert.halb.gewaehlt { background: var(--warn-bg); border-color: var(--warn-ink); color: var(--warn-ink); }
+.treppe-wert.fehlte.gewaehlt { background: var(--paper-2); border-color: var(--line); color: var(--ink-soft); }
+.treppe-punkt.quittiert { border-radius: var(--radius); padding-left: var(--sp-2); padding-right: var(--sp-2); }
+.treppe-punkt.quittiert-gut { background: color-mix(in srgb, var(--ok-bg) 55%, transparent); }
+.treppe-punkt.quittiert-halb { background: color-mix(in srgb, var(--warn-bg) 55%, transparent); }
+.treppe-punkt.quittiert-fehlte { background: color-mix(in srgb, var(--paper-2) 60%, transparent); }
 
 /* ---------- Begriff erklaeren mit KI-Abgleich (glossar.js) ---------- */
 .gl-erklaer-eingabe {

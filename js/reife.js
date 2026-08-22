@@ -235,3 +235,27 @@ export function modusFuer(stufe) {
   if (s === 2) return "frei-hinweise";
   return "frei";
 }
+
+/* Wie viele Zeilen einer Aufgabe hoechstens auf einmal abgefragt werden.
+   null heisst: alles.
+
+   WARUM DAS AN DER REIFE HAENGT UND NICHT AN DER KARTENZAHL: NEU_AUFGABEN in
+   themen-lernen.js deckelt, wie viele KARTEN eine Sitzung zeigt. Bei freien
+   Aufgaben skaliert die Ueberforderung aber mit der Zahl der Felder auf dem
+   Schirm, nicht mit der Zahl der Karten dahinter. Neun Eingabefelder auf einem
+   Handy sind neun Felder, egal wie viele Karten danach noch kommen - und genau
+   das hat Rose am 19.08.2026 zurueckgemeldet.
+
+   Die Zahlen: R0/R1 vier, R2 sechs (das ist der alte LVL1_BAUSTEINE-Wert, der
+   bis zum 22.08. fuer alle galt), ab R3 alles. Vier ist dieselbe Zahl, mit der
+   der KI-Zweig rechnet - stuenden hier "3-4", haetten zwei Stellen der App eine
+   andere Portionsgroesse.
+
+   GEZAEHLT WERDEN ZEILEN, NICHT STICHPUNKTE (treppe.js abschnittZeilen): eine
+   Rolle ist ein Feld, auch wenn fuenf Vorratspunkte hinter ihr liegen. */
+export function bausteinBudget(stufe) {
+  var s = typeof stufe === "number" ? stufe : 0;
+  if (s <= 1) return 4;
+  if (s === 2) return 6;
+  return null;
+}

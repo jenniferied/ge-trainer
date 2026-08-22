@@ -267,7 +267,22 @@ export async function maskottchen(messages, stand) {
   if (!aktiv() || !mkTagFrei()) return null;
   if (!Array.isArray(messages) || !messages.length) return null;
   const steuerung = new AbortController();
-  const wecker = setTimeout(() => steuerung.abort(), 20000);
+  /* 45 Sekunden, seit dem 22.08.2026 (vorher 20). Der vierte der vier Knoepfe,
+     die zusammen bewegt wurden — die drei anderen stehen in der Edge Function
+     (thinking adaptive, effort low, max_tokens 1500).
+
+     Warum es sein musste: der Maskottchen-Zweig kann seit dem 22.08. Folien
+     nachschlagen, und das sind bis zu DREI Aufrufe an Anthropic statt einem,
+     der mittlere davon mit rund 30 kB frischer Eingabe. Dazu kommt beim ersten
+     Aufruf des Tages das kalte 52-kB-Glossar im Prefix. 20 Sekunden reissen
+     dabei zuverlaessig — und ein gerissener Timeout sieht fuer Rose GENAUSO aus
+     wie ein leeres Tagesbudget oder eine tote Function: der Abort wirft, diese
+     Funktion gibt null zurueck, und sie liest "Ich bin gerade ein bisschen
+     verschlafen". Ein stiller Ausfall, kein lauter Fehler.
+
+     Nach oben begrenzt bleibt es trotzdem: nach 45 Sekunden ohne Antwort ist
+     der freundliche Fallback besser als ein Spinner, der nicht aufhoert. */
+  const wecker = setTimeout(() => steuerung.abort(), 45000);
   try {
     const r = await fetch(url(), {
       method: "POST",

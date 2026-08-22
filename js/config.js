@@ -49,8 +49,23 @@ export const CONFIG = {
   // und ein Schalter, den niemand mehr umlegt, ist eine Falle: er hat drueben
   // im ST-Trainer dafuer gesorgt, dass statt eines Eingabefelds "Tipp auf eine
   // Frage." dastand.
-  mkTagKey: "ge-mk-tag",   // EIGENER Key: Geplauder darf das Korrektur-Budget
-  mkTagesLimit: 60,        // (ge-llm-tag, 200) nicht aufessen.
+  // EIGENER Key: Geplauder darf das Korrektur-Budget (ge-llm-tag) nicht
+  // aufessen. Serverseitig steht das Gegenstueck in llm-ge/index.ts
+  // (MK_TAG_LIMIT, 100) — das Client-Limit ist geraetelokal und schuetzt vor
+  // dem Vertippen, das Server-Limit schuetzt die Rechnung.
+  //
+  // Die Zahl 60 zaehlt NACHRICHTEN VON ROSE, nicht Aufrufe an Anthropic. Seit
+  // dem 22.08.2026 koennen es je Nachricht bis zu drei sein (die Kreatur darf
+  // sich Folien nachschlagen, siehe llm-ge/index.ts), eine fachliche Frage ist
+  // also teurer als frueher. Die Zahl bleibt trotzdem stehen: sie war nie in
+  // der Naehe, und ein Limit, das Rose mitten im Gespraech trifft, waere
+  // schlimmer als die Rechnung.
+  //
+  // Der Kommentar hier nannte bis zum 22.08. "ge-llm-tag, 200" — das stimmte
+  // gegen index.ts (TAG_LIMIT = 250) und gegen llm.js (Fallback 100) nicht.
+  // Zahlen aus einem Kommentar zitieren war der Fehler, nicht die Zahl.
+  mkTagKey: "ge-mk-tag",
+  mkTagesLimit: 60,
 
   // ---- Chat an der einzelnen Frage ("Über diese Frage sprechen") ----
   // Dritter Topf, aus demselben Grund wie der zweite: Nachfragen zum Stoff und

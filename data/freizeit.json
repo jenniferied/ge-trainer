@@ -2580,6 +2580,83 @@
           "Recht auf Zugang ist kein Zwang zur Teilnahme"
         ]
       ]
+    },
+    {
+      "id": "fr-afb1-9",
+      "unterthema": "Begriffsverständnis & Zeitmodell",
+      "afb": 1,
+      "frage": "Opaschowski teilt in seinem Modell die gesamte Lebenszeit eines Menschen in drei Arten von Zeit ein. Benennen Sie die drei Zeitarten und geben Sie zu jeder mit wenigen Worten an, wie gebunden oder frei sie ist. Beschreiben Sie außerdem, in welcher Reihenfolge das Modell sie anordnet und was sich dabei von der ersten zur dritten Zeitart verändert. Beispiele sind hier nicht verlangt.",
+      "stichpunkte": [
+        "Zeitart 1: Determinationszeit, fremdbestimmt und festgelegt",
+        "Zeitart 2: Obligationszeit, gebunden an zweckbestimmte Tätigkeiten",
+        "Zeitart 3: Dispositionszeit, frei und selbst bestimmbar",
+        "Fremdbestimmung nimmt ab, Selbstbestimmung zu (Zeitart 1 → 3)"
+      ],
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Zuerst die drei Zeitarten benennen und je mit wenigen Worten sagen, wie gebunden oder frei sie ist",
+          "idx": [
+            0,
+            1,
+            2
+          ],
+          "form": "liste",
+          "chips": [
+            "Zeitart 1",
+            "Zeitart 2",
+            "Zeitart 3"
+          ]
+        },
+        {
+          "operator": "beschreiben",
+          "auftrag": "Dann beschreiben, in welcher Reihenfolge das Modell die drei anordnet und was sich dabei von der ersten zur dritten Zeitart verändert",
+          "idx": [
+            3
+          ],
+          "form": "liste",
+          "chips": [
+            "Anordnung"
+          ]
+        }
+      ],
+      "muster": "Opaschowski unterscheidet in seinem Modell der Lebenszeit drei Zeitarten. Die Determinationszeit ist fremdbestimmt und festgelegt; von ihr ist der Mensch abhängig, er kann über sie nicht verfügen. Die Obligationszeit ist gebundene Zeit: Sie wird für zweckbestimmte Tätigkeiten benötigt, die erledigt werden müssen. Die Dispositionszeit ist freie Zeit, über die ein Mensch selbst bestimmen kann. Die drei Zeitarten stehen in genau dieser Reihenfolge nebeneinander: Von der Determinationszeit über die Obligationszeit zur Dispositionszeit nimmt die Fremdbestimmung ab, während der Anteil wächst, über den der Mensch selbst entscheidet.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Opaschowski teilt die Lebenszeit in drei Arten von Zeit ein. Die erste heißt Determinationszeit. Sie ist fremdbestimmt und festgelegt. Der Mensch kann über sie nicht selbst bestimmen. Die zweite heißt Obligationszeit. Sie ist gebundene Zeit. Man braucht sie für Dinge, die getan werden müssen. Die dritte heißt Dispositionszeit. Sie ist freie Zeit. Über sie bestimmt der Mensch selbst. Die drei stehen in dieser Reihenfolge nebeneinander. Von der ersten zur dritten wird die Fremdbestimmung immer kleiner. Und der Teil, über den der Mensch selbst entscheidet, wird immer größer."
+        },
+        "en": {
+          "klausur": "In his model of lifetime (Modell der Lebenszeit) Opaschowski distinguishes three kinds of time. Determined time (Determinationszeit) is externally determined and fixed; a person depends on it and cannot dispose of it. Obligatory time (Obligationszeit) is bound time: it is needed for purpose-bound activities that have to be done. Disposable time (Dispositionszeit) is free time which a person can determine for themselves. The three kinds of time stand next to each other in exactly this order: from determined time through obligatory time to disposable time, external determination (Fremdbestimmung) decreases while the share a person decides about themselves grows.",
+          "einfach": "Opaschowski divides lifetime into three kinds of time. The first one is called determined time (Determinationszeit). It is fixed by others. A person cannot decide about it. The second one is called obligatory time (Obligationszeit). It is bound time. You need it for things that have to be done. The third one is called disposable time (Dispositionszeit). It is free time. A person decides about it themselves. The three stand next to each other in this order. From the first to the third, external determination (Fremdbestimmung) gets smaller and smaller. And the part a person decides about themselves gets bigger and bigger."
+        },
+        "ar": {
+          "klausur": "Opaschowski بنموذجو عن زمن الحياة (Modell der Lebenszeit) بيميّز تلات أنواع من الوقت. الوقت المحدّد من برّا (Determinationszeit) هو وقت مفروض ومثبّت؛ الإنسان تابع إلو وما بيقدر يتصرّف فيه. الوقت المُلزِم (Obligationszeit) هو وقت مربوط: بينلزم للنشاطات يلي إلها غاية ولازم تنعمل. وقت التصرّف الحر (Dispositionszeit) هو وقت حر، والإنسان بيقرّر فيه لحالو. والتلات أنواع بيجوا جنب بعض بهالترتيب بالزبط: من الوقت المحدّد من برّا (Determinationszeit) مرورًا بالوقت المُلزِم (Obligationszeit) لوقت التصرّف الحر (Dispositionszeit) بيقلّ التحديد من برّا (Fremdbestimmung) وبيزيد الجزء يلي الإنسان بيقرّرو لحالو.",
+          "einfach": "Opaschowski بيقسّم زمن الحياة لتلات أنواع من الوقت. الأول اسمو الوقت المحدّد من برّا (Determinationszeit). هو مفروض ومثبّت. والإنسان ما بيقدر يقرّر فيه. التاني اسمو الوقت المُلزِم (Obligationszeit). هو وقت مربوط. بتحتاجو لأشيا لازم تنعمل. التالت اسمو وقت التصرّف الحر (Dispositionszeit). هو وقت حر. والإنسان بيقرّر فيه لحالو. والتلاتة بيجوا جنب بعض بهالترتيب. ومن الأول للتالت بيصير التحديد من برّا (Fremdbestimmung) أقل وأقل. والجزء يلي الإنسان بيقرّرو لحالو بيصير أكبر وأكبر."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Tabelle steht auf Folie 6; in deinen Notizen findest du auf Notizen S. 05 nur die Quizfrage dazu, das Modell selbst fehlt dort - umso mehr lohnt es, die drei Wörter einmal sauber hinzuschreiben. Merkhilfe: Die Reihenfolge steckt in den Begriffen selbst - Determination heißt Festlegung, Obligation heißt Verpflichtung, Disposition heißt Verfügung, also von der Festlegung über die Verpflichtung zur Verfügung. Hier sind bewusst keine Beispiele verlangt; die übst du in der Erläuterungsaufgabe zum selben Modell. Und wenn dir ein Begriff entfällt, beschreib ihn trotzdem der Sache nach - die Richtung von fremd nach selbst trägt die halbe Antwort.",
+      "quelle": "folie-freizeit-6",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Die erste Art meint Zeit, über die andere oder die Umstände entscheiden.",
+          "Der Mensch ist ihr ausgeliefert und kann über sie nicht verfügen."
+        ],
+        [
+          "Die zweite Art ist weder Zwang noch freie Wahl: Sie geht für das drauf, was erledigt sein muss.",
+          "Sie ist verplant, weil sie einem Zweck dient, den niemand umgehen kann."
+        ],
+        [
+          "Die dritte Art ist die, über die ein Mensch wirklich verfügen kann.",
+          "Hier entscheidet er selbst, was geschieht - das ist der Ort der Freizeit."
+        ],
+        [
+          "Die Reihe ist kein Zufall: Ein Merkmal wird von Art zu Art schwächer, sein Gegenstück stärker.",
+          "Denk an die beiden Pole - wo andere entscheiden und wo der Mensch selbst entscheidet."
+        ]
+      ]
     }
   ]
 }

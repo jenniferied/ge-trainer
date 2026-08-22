@@ -43,13 +43,13 @@
    ABHAENGIGKEITEN: core.js, ui.js, spiele.js (logSpiel), treppe.js,
    glossar.js, stoebern.js (materialKarteFuer), reife.js. Kein main.js. */
 
-import { app, el, leeren, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
+import { app, el, leeren, speichern, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl } from "./ui.js";
 import { logSpiel } from "./spiele.js";
-import { abrufKarte, distraktorenFuer, saeulenIndizes } from "./treppe.js";
+import { abrufKarte, abschnitteFuer, abschnittZeilen, distraktorenFuer, operatorSatz, saeulenIndizes } from "./treppe.js";
 import { begriffeFuerTagesspiel, begriffErklaerKarte, begriffKarte, eintraegeZu, hatGlossar } from "./glossar.js";
 import { materialKarteFuer } from "./stoebern.js";
-import { faellig, modusFuer, reifeStand, STUFEN_MAX } from "./reife.js";
+import { bausteinBudget, faellig, heuteTag, lerntage, modusFuer, reifeStand, STUFEN_MAX } from "./reife.js";
 
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
    Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
@@ -73,12 +73,16 @@ var SITZUNG_MAX = 40;
    haengt, hat sie heute nicht, und das ist eine Auskunft, kein Urteil. */
 var REQUEUE_MAX = 12;
 
-/* Wie viele Bausteine auf Level 1 hoechstens auf einmal abgefragt werden.
-   Der afb-Wert allein reicht als Einstiegs-Mass NICHT: elf Aufgaben im Korpus
-   tragen afb 2 und haben trotzdem 7 bis 12 Kern-Bausteine (eb-fol-f-1 hat
-   zwoelf). Genau so eine Aufgabe hat Rose am 18.08. als allererste Karte
-   bekommen - 0 Prozent, und der Abend war gelaufen. Der Operator sagt eben nur,
-   WIE gedacht werden soll, nicht wie viel auf einmal abzurufen ist.
+/* WIE VIELE ZEILEN AUF EINMAL ABGEFRAGT WERDEN, STEHT SEIT DEM 22.08.2026 IN
+   reife.js (bausteinBudget). Hier stand bis dahin die feste Zahl
+   LVL1_BAUSTEINE = 6, und die galt fuer jede Reifestufe gleich.
+
+   Warum es die Portion ueberhaupt gibt: Der afb-Wert allein reicht als
+   Einstiegs-Mass NICHT: elf Aufgaben im Korpus tragen afb 2 und haben trotzdem
+   7 bis 12 Kern-Bausteine (eb-fol-f-1 hat zwoelf). Genau so eine Aufgabe hat
+   Rose am 18.08. als allererste Karte bekommen - 0 Prozent, und der Abend war
+   gelaufen. Der Operator sagt eben nur, WIE gedacht werden soll, nicht wie viel
+   auf einmal abzurufen ist.
 
    BIS ZUM 19.08.2026 WAR DAS EIN AUSSCHLUSS, JETZT IST ES EINE PORTION.
    Der Ausschluss traf ausgerechnet die Folien-Aufgaben, in denen die Modelle und
@@ -86,7 +90,6 @@ var REQUEUE_MAX = 12;
    Level 1, sieben davon allein wegen ihrer Groesse. Jennifer dazu: beim ersten
    Ueben soll schon etwas mehr Neues rankommen, dafuer nicht die ganze Aufgabe.
    Also kommt die Aufgabe jetzt dran, aber nur ihr Anfang (siehe lvl1Teil). */
-var LVL1_BAUSTEINE = 6;
 
 /* EINMALIGES NACHHOLEN (19.08.2026, Jennifer: "ausnahmsweise"). Diese Themen
    zeigen in der naechsten Sitzung ALLES, was fuer ihr Level offen ist, statt der
@@ -115,6 +118,63 @@ var FREIGEGEBEN = ["prinzipien"].concat(NACHHOLEN.filter(function (id) {
 /* Ab Level 3 macht die Pruefung auch die AFB-III-Aufgaben auf. Level 1 und 2
    bleiben bei AFB I/II - erst die Basis, dann das Diskutieren. */
 var MAX_LEVEL = 3;
+
+/* ---------- Pausieren (Rose, 19.08.2026) ----------
+
+   Woertlich: "Links neben 'fuer heute reicht es', auch das Spiel pausieren
+   koennen: es ist teilweise sehr viel und sehr lange. […] Wenn man gesagt hat
+   es reicht fuer heute landet es in zuletzt geuebt, man kann es aber wenn man
+   keine neue Runde angefangen hat doch noch fortfuehren (es liegt halt nur
+   woanders)."
+
+   ZWEI KNOEPFE, EIN UNTERSCHIED: "Fuer heute reicht es" schreibt das Fazit
+   REGULAER, inklusive Abschluss-Eintrag - das Thema ist durch, Rotation und
+   Level drehen weiter. Die Pause schreibt KEINEN Abschluss-Eintrag: eine halbe
+   Runde soll kein Level heben.
+
+   GERAETELOKAL, mit derselben Begruendung wie merkeOffeneKarte (core.js):
+   "ich war gerade hier" gilt dem Geraet, auf dem sie war. snapshot() in sync.js
+   waehlt gezielt aus, das Feld faehrt also nie mit - und genau deshalb ist
+   diese Bauform gewaehlt und nicht aus Bequemlichkeit: sie kommt ohne eine
+   einzige Zeile in sync.js aus.
+
+   GESPEICHERT WERDEN IDS, KEINE AUFGABEN-OBJEKTE. Beim Fortsetzen werden die
+   Schritte aus den geladenen Themen neu gebaut; ein Schritt, dessen Id es nicht
+   mehr gibt, faellt still weg. Ein Korpus-Umbau kann die Pause damit nie
+   kaputtmachen. */
+var PAUSE_LERNTAGE = 2;
+
+function pauseLoeschen() {
+  if (!state.tlPause) return;
+  state.tlPause = null;
+  speichern();
+}
+
+/* Fuer die Startseite (main.js): liegt eine angefangene Runde, und wenn ja,
+   welches Thema? Gibt { id, titel, offen } oder null. Bewusst dieselbe
+   Verfalls-Pruefung wie drinnen - eine Kachel, die auf ein Angebot zeigt, das
+   der Schirm dahinter schon verworfen hat, waere schlimmer als keine Kachel. */
+export function offeneRunde(themen) {
+  var l = pauseLesen(themen || []);
+  return l ? { id: l.thema.id, titel: l.thema.titel, offen: l.p.rest.length } : null;
+}
+
+/* Liegt eine angefangene Runde? Verfaellt still, wenn der Stempel mehr als zwei
+   LERNTAGE alt ist - verloren geht dabei nichts, die Items sind ueber
+   reife.js faellig ohnehin wieder dran, und genau das darf der Satz auch sagen. */
+function pauseLesen(themen) {
+  var p = state.tlPause;
+  if (!p || !p.thema || !Array.isArray(p.rest) || !p.rest.length) return null;
+  var thema = null;
+  themen.forEach(function (t) { if (t.id === p.thema) thema = t; });
+  if (!thema) { pauseLoeschen(); return null; }
+  var tage = lerntage();
+  var i = tage.indexOf(p.tag);
+  // Kein Lerntag mit diesem Stempel: der Eintrag ist aelter als das Log reicht.
+  var abstand = i < 0 ? 99 : (tage.length - 1) - i;
+  if (abstand > PAUSE_LERNTAGE) { pauseLoeschen(); return null; }
+  return { p: p, thema: thema };
+}
 
 /* ---------- Log-Lesen: alt und neu ---------- */
 
@@ -191,6 +251,24 @@ export function levelVon(thema) {
   return Math.min(n + 1, MAX_LEVEL);
 }
 
+/* Wie viele Antworten je Thema im Log liegen. Gezaehlt wird JEDE Antwort mit
+   Themenbezug - Ankreuzfragen, freie Aufgaben, Spiele -, denn geuebt ist
+   geuebt. Kein neues Sync-Feld: die Zahlen stehen im antwortLog.
+
+   Gemessen am 22.08.2026 ueber Roses Stand: konzeptionen 55, unterrichtsformen
+   50, prinzipien 49, wohnen 48, entwicklungsbereiche 45, mobilitaet 35,
+   freizeit 29, grundlagen 13. Die Rotation sorgt fuer Gleichverteilung der
+   SITZUNGEN; das hier ist die Gleichverteilung der ANTWORTEN, und die beiden
+   sind offensichtlich nicht dasselbe. */
+function antwortenJeThema() {
+  var n = Object.create(null);
+  (state.antwortLog || []).forEach(function (a) {
+    if (!a || !a.thema) return;
+    n[a.thema] = (n[a.thema] || 0) + 1;
+  });
+  return n;
+}
+
 /* ---------- Kleine Bausteine der Pruefungs-Schirme ---------- */
 
 // Die Reife-Leiter als Punktreihe. R0 = kein Punkt gefuellt, R5 = alle fuenf.
@@ -219,14 +297,14 @@ function schrittKopf(s) {
   return reihe;
 }
 
-/* Die Level-1-Portion einer Aufgabe: welche Kern-Bausteine heute drankommen.
-   Geschnitten wird an SAEULENGRENZEN (treppe.js saeulenIndizes), nicht bei einer
-   festen Zahl - "PK 1" halb abzufragen waere schlimmer, als PK 2 und PK 3 auf
-   die spaeteren Level zu vertagen. Von vorn werden ganze Saeulen genommen,
-   solange sie zusammen unter LVL1_BAUSTEINE bleiben; die erste kommt immer mit,
-   auch wenn sie allein schon groesser ist. Nur wenn die Aufgabe ueberhaupt keine
-   Saeulen kennt (keine Label, also kein Geruest, an dem man schneiden koennte),
-   wird doch bei LVL1_BAUSTEINE abgeschnitten.
+/* Die Portion einer Aufgabe: welche Kern-Bausteine heute drankommen.
+   Geschnitten wird an ABSCHNITTSGRENZEN, und nur wo es keine gibt, an
+   SAEULENGRENZEN (treppe.js saeulenIndizes) - nie bei einer festen Zahl. "PK 1"
+   halb abzufragen waere schlimmer, als PK 2 und PK 3 auf die spaeteren Level zu
+   vertagen. Von vorn werden ganze Einheiten genommen, solange sie zusammen unter
+   das Budget passen; die erste kommt immer mit, auch wenn sie allein schon
+   groesser ist. Nur wenn die Aufgabe ueberhaupt kein Geruest kennt, an dem man
+   schneiden koennte, wird doch hart abgeschnitten.
    Rueckgabe null heisst "alles" - der uebliche Fall bei Aufgaben, die ohnehin
    unter die Grenze passen. Die Indizes zaehlen die Kernliste (stichpunkteTeilen),
    aufsteigend, so wie treppe.js sie in o.teil erwartet. */
@@ -241,17 +319,60 @@ function schrittKopf(s) {
    (PK 1 als eigene Aufgabe, PK 2 und PK 3 dahinter); das ist Inhaltsarbeit,
    keine Code-Frage. Hier wird deshalb am Budget geschnitten - aber an
    Saeulengrenzen, damit nie ein Baustein mitten aus einem Modell faellt. */
-function lvl1Teil(f) {
+/* SEIT DEM 22.08.2026 SCHNEIDET DAS ZUERST AN ABSCHNITTSGRENZEN (Vertrag 1).
+   Traegt die Aufgabe abschnitte - deklariert im Korpus oder ueber die
+   Rollen-Schablone abgeleitet -, ist EIN ABSCHNITT DIE KLEINSTE PORTION: nie
+   mitten hinein schneiden. Erst wenn abschnitteFuer null liefert (Aufgabe ohne
+   Feld und ohne erkannten Operator), gilt der alte Saeulen-Weg.
+
+   Gezaehlt wird gegen bausteinBudget(stufe) statt gegen die feste Konstante
+   LVL1_BAUSTEINE, und zwar in ZEILEN: eine Rolle ist ein Feld, auch wenn fuenf
+   Vorratspunkte hinter ihr liegen.
+
+   FALLE, die man sonst entdeckt statt liest: lvl1Teil aendert sich mit, ohne
+   dass jemand diese Datei anfasst. Bekommt fr-fol-f-1 drei Abschnitte statt
+   sieben Einzelgruppen, faellt die Portion anders aus als gestern. Roses Reife
+   haengt an der Item-Id, nicht an der Portion - eine mit 6 von 7 Bausteinen
+   geuebte Aufgabe kann also ueber Nacht eine andere Portion zeigen. Das ist
+   hinnehmbar (es geht nichts verloren, die Reife laeuft weiter), aber es soll
+   niemanden ueberraschen. */
+export function lvl1Teil(f, stufe) {
+  var budget = bausteinBudget(stufe);
+  if (budget === null) return null;                 // ab R3 immer die ganze Aufgabe
+  var kernZahl = stichpunkteTeilen(f).kern.length;
+
+  var ab = abschnitteFuer(f);
+  if (ab) {
+    var teilA = [], zeilen = 0;
+    for (var a = 0; a < ab.liste.length; a++) {
+      var z = abschnittZeilen(ab.liste[a]);
+      // Abbrechen statt ueberspringen: einen spaeteren, kleineren Abschnitt
+      // vorzuziehen wuerde die Reihenfolge der Aufgabe zerreissen. Der erste
+      // kommt immer mit, auch wenn er allein schon ueber dem Budget liegt -
+      // ein halber Abschnitt waere schlimmer als ein zu grosser.
+      if (teilA.length && zeilen + z > budget) break;
+      zeilen += z;
+      teilA = teilA.concat(ab.liste[a].idx);
+    }
+    /* Bei der Rollen-Schablone teilen sich alle Abschnitte denselben Vorrat -
+       der erste bringt schon alle Kern-Indizes mit, und dann ist die Portion
+       die ganze Aufgabe. Genau richtig: portioniert werden dort die ROLLEN,
+       und drei bis vier davon liegen ohnehin unter dem Budget. */
+    var eindeutig = [];
+    var da = Object.create(null);
+    teilA.forEach(function (k) { if (!da[k]) { da[k] = true; eindeutig.push(k); } });
+    if (eindeutig.length >= kernZahl) return null;
+    return eindeutig.sort(function (x, y) { return x - y; });
+  }
+
   var saeulen = saeulenIndizes(f);
   var teil = [];
   for (var i = 0; i < saeulen.length; i++) {
-    // Abbrechen statt ueberspringen: eine spaetere, kleinere Saeule vorzuziehen
-    // wuerde die Reihenfolge der Aufgabe zerreissen.
-    if (teil.length && teil.length + saeulen[i].length > LVL1_BAUSTEINE) break;
+    if (teil.length && teil.length + saeulen[i].length > budget) break;
     teil = teil.concat(saeulen[i]);
   }
-  if (saeulen.length === 1 && teil.length > LVL1_BAUSTEINE) teil = teil.slice(0, LVL1_BAUSTEINE);
-  if (teil.length >= stichpunkteTeilen(f).kern.length) return null;
+  if (saeulen.length === 1 && teil.length > budget) teil = teil.slice(0, budget);
+  if (teil.length >= kernZahl) return null;
   return teil.sort(function (a, b) { return a - b; });
 }
 
@@ -266,16 +387,28 @@ function schrittFuer(art, obj, thema, stand) {
     f: art === "abruf" ? obj : null,
     e: art === "begriff" ? obj : null,
     /* Welche Kern-Bausteine dieser Schritt abfragt; null heisst alle.
-       Die Portion haengt an der REIFE, nicht am Level - und zwar an derselben
-       Schwelle wie modusFuer() direkt darueber: unter R2 wird wiedererkannt und
-       portioniert, ab R2 frei abgerufen und ganz. Waere sie ans Level gebunden,
-       entstuende die Falle, gegen die LVL1_BAUSTEINE ueberhaupt geschrieben
-       wurde: eine Aufgabe mit 6 von 12 Bausteinen geuebt, Reife steigt, und drei
-       Tage spaeter steht sie ueber den Endlos-Stapel mit allen zwoelf im freien
-       Abruf da. So bleibt die Portion, bis das Item sie wirklich traegt.
-       Es haengt am Schritt-Objekt, damit eine Wiederholung in derselben Sitzung
-       dieselbe Portion bekommt und nicht ploetzlich die ganze Aufgabe. */
-    teil: art === "abruf" && stufe < 2 ? lvl1Teil(obj) : null,
+       Die Portion haengt an der REIFE, nicht am Level. Waere sie ans Level
+       gebunden, entstuende die Falle, gegen die die Portionierung ueberhaupt
+       geschrieben wurde: eine Aufgabe mit 6 von 12 Bausteinen geuebt, Reife
+       steigt, und drei Tage spaeter steht sie ueber den Endlos-Stapel mit allen
+       zwoelf im freien Abruf da. So bleibt die Portion, bis das Item sie
+       wirklich traegt. Es haengt am Schritt-Objekt, damit eine Wiederholung in
+       derselben Sitzung dieselbe Portion bekommt.
+
+       DIE SCHWELLE STAND BIS ZUM 22.08.2026 AUF stufe < 2 UND WAR DAMIT TOT.
+       Der alte Kommentar begruendete sie mit "derselben Schwelle wie
+       modusFuer()" - aber modusFuer gibt bei 0 und 1 "ziehen" zurueck, und der
+       Zieh-Modus hat gar keine Eingabefelder. opts.felder (R2) und opts.teil
+       (R0/R1) trafen sich also NIE: die Felder-Karte, genau die mit den
+       Eingabefeldern, zeigte immer ALLE Kern-Bausteine. Bei fr-fol-f-1 waren
+       das neun einzeilige Felder mit der Aufschrift "Baustein 1" bis
+       "Baustein 9" - Roses Beschwerde vom 19.08., woertlich und mechanisch,
+       ohne dass ein Bug im Spiel gewesen waere.
+
+       Jetzt gilt stufe < 3, also auch fuer R2. Wie gross die Portion ist,
+       entscheidet bausteinBudget(stufe) in reife.js: R0/R1 vier Zeilen, R2
+       sechs. Ab R3 gibt lvl1Teil ohnehin null zurueck. */
+    teil: art === "abruf" && stufe < 3 ? lvl1Teil(obj, stufe) : null,
     runde: 0                      // wie oft dieser Schritt heute schon dran war
   };
 }
@@ -319,12 +452,50 @@ export function zeigeThemenLernen(themen, hooks) {
     intro.appendChild(liste);
     app.appendChild(intro);
 
+    /* Eine angefangene Runde wiederfinden. Ruhige Zeile, kein Mahnwort - und
+       sie sagt ausdruecklich dazu, dass nichts verlorengeht, weil das stimmt:
+       die Items sind ueber reife.js faellig ohnehin wieder dran. */
+    var liegt = pauseLesen(themen);
+    if (liegt) {
+      var pk = el("div", "karte tl-liegt");
+      pk.appendChild(reichZeile("div",
+        "**" + liegt.thema.titel + "** liegt angefangen da – " + liegt.p.rest.length
+        + (liegt.p.rest.length === 1 ? " Schritt" : " Schritte") + " offen.", "tl-liegt-satz"));
+      pk.appendChild(el("div", "karten-hinweis",
+        "Du kannst da weitermachen, wo du warst. Oder ein neues Thema anfangen – dann ist das hier weg, "
+        + "und die offenen Sachen kommen von selbst wieder."));
+      var w = el("button", "knopf", "Weitermachen");
+      w.addEventListener("click", function () { pruefung(liegt.thema, liegt.p); });
+      pk.appendChild(w);
+      app.appendChild(pk);
+    }
+
     var offen = themen.filter(function (t) { return !gesperrt[t.id]; }).length;
     var box = el("div", "abschnitt");
     box.appendChild(el("h2", "abschnitt-titel",
       "Dein Thema · noch " + offen + " von " + themen.length + " in dieser Runde"));
     var grid = el("div", "kachel-grid tl-grid");
-    themen.forEach(function (t) {
+    /* DER WEG ZU DEN DUENNEN THEMEN (22.08.2026). Die Rotation sperrt
+       Gespieltes und sorgt damit fuer Gleichverteilung der SITZUNGEN, nicht der
+       ANTWORTEN: gemessen am 22.08. tragen konzeptionen, unterrichtsformen,
+       prinzipien und wohnen zusammen zwei Drittel von Roses Uebung, grundlagen
+       kommt auf 13 Antworten. In der Klausur kommen fuenf von acht Themen dran,
+       welche weiss vorher niemand.
+
+       Geordnet wird INNERHALB der nicht gesperrten Kacheln - die Rotation ist
+       Jennifers Entscheidung und bleibt unangetastet. Und es ist eine
+       REIHENFOLGE, kein Mahnwort: derselbe Ton wie in reife.js, wo es
+       ausdruecklich kein "faellig ueberschritten" gibt. Nie eine Zahl als
+       Vorwurf, nie das Wort vernachlaessigt. */
+    var antworten = antwortenJeThema();
+    var sortiert = themen.slice().sort(function (a, b) {
+      var za = !!gesperrt[a.id], zb = !!gesperrt[b.id];
+      if (za !== zb) return za ? 1 : -1;        // Gesperrtes ans Ende
+      if (za) return 0;                          // untereinander egal
+      return (antworten[a.id] || 0) - (antworten[b.id] || 0);
+    });
+    var duennstes = sortiert.filter(function (t) { return !gesperrt[t.id]; })[0];
+    sortiert.forEach(function (t) {
       var zu = !!gesperrt[t.id];
       var lvl = levelVon(t);
       var b = el("button", "kachel" + (zu ? " tl-gespielt" : " glimmer"));
@@ -333,6 +504,11 @@ export function zeigeThemenLernen(themen, hooks) {
       b.appendChild(el("b", null, t.titel));
       b.appendChild(el("span", "tl-level", "Level " + lvl));
       b.appendChild(el("span", "kachel-klein", zu ? "in dieser Runde schon dran" : t.vorlesung));
+      // Genau EINE Kachel bekommt die Zeile, und sie ist eine Einladung, keine
+      // Bilanz: keine Zahl, kein "vernachlaessigt".
+      if (!zu && duennstes && t.id === duennstes.id && themen.length > 1) {
+        b.appendChild(el("span", "tl-duenn", "am wenigsten geübt"));
+      }
       if (zu) {
         b.disabled = true;
         b.title = t.titel + " war in dieser Runde schon dran – kommt wieder, wenn alle acht durch sind.";
@@ -470,9 +646,42 @@ export function zeigeThemenLernen(themen, hooks) {
   }
 
   /* ---------- Schirm 3: Pruefen ---------- */
-  function pruefung(thema) {
+  /* Einen pausierten Schritt aus seiner Id wieder aufbauen. Gesucht wird ueber
+     ALLE Themen, nicht nur ueber das Tagesthema: der Endlos-Stapel bringt
+     Karten aus frueher begonnenen Themen mit, und die gehoeren beim Fortsetzen
+     genauso zurueck. Findet sich die Id nicht mehr, faellt der Schritt still
+     weg - der Korpus darf sich zwischen zwei Sitzungen aendern. */
+  function schrittAusId(eintrag, stand) {
+    var treffer = null;
+    themen.forEach(function (t) {
+      if (treffer) return;
+      if (eintrag.art === "abruf") {
+        (t.frei || []).forEach(function (f) {
+          if (!treffer && f.id === eintrag.id) treffer = schrittFuer("abruf", f, t, stand);
+        });
+      } else if (hatGlossar()) {
+        eintraegeZu(t.id).forEach(function (e) {
+          if (!treffer && e.id === eintrag.id) treffer = schrittFuer("begriff", e, t, stand);
+        });
+      }
+    });
+    if (treffer && typeof eintrag.runde === "number") treffer.runde = eintrag.runde;
+    return treffer;
+  }
+
+  function pruefung(thema, fortsetzen) {
     var stand = reifeStand();
-    var schritte = schritteBauen(thema, stand);
+    var schritte;
+    if (fortsetzen) {
+      schritte = fortsetzen.rest
+        .map(function (e) { return schrittAusId(e, stand); })
+        .filter(function (s) { return !!s; });
+    } else {
+      // Eine neue Runde ueberschreibt ein liegendes Angebot - so steht es in
+      // Roses Satz ("wenn man keine neue Runde angefangen hat").
+      pauseLoeschen();
+      schritte = schritteBauen(thema, stand);
+    }
     if (!schritte.length) return fazit(thema, 0, 0);
     var index = 0;
     /* GEZAEHLT WIRD JE SACHE, NICHT JE SCHIRM (19.08.2026). Vorher liefen zwei
@@ -486,6 +695,13 @@ export function zeigeThemenLernen(themen, hooks) {
     var versucht = Object.create(null);
     var sass = Object.create(null);
     var wiederholungen = 0;
+    // Beim Fortsetzen zaehlt die alte Sitzung mit - sonst laese das Fazit
+    // "3 von 3 Sachen sassen", waehrend vorgestern zwoelf dran waren.
+    if (fortsetzen) {
+      (fortsetzen.versucht || []).forEach(function (k) { versucht[k] = true; });
+      Object.keys(fortsetzen.sass || {}).forEach(function (k) { sass[k] = fortsetzen.sass[k]; });
+      wiederholungen = fortsetzen.wiederholungen || 0;
+    }
     /* Die Nenner-Zahl wird EINMAL festgehalten und waechst danach nicht mehr.
        Vorher stand hier schritte.length, und das Feld waechst bei jeder
        Wiederholung mit: wer dreimal danebenlag, las "Schritt 6 von 19", wo
@@ -498,7 +714,7 @@ export function zeigeThemenLernen(themen, hooks) {
     // Angezeigt wird der Satz erst auf dem naechsten Schirm - beim Abruf faellt
     // onFertig ja erst NACH dem Weiter-Klick, da ist die Karte schon weg.
     var mitgenommen = null;
-    var mitgenommenZahl = 0;
+    var mitgenommenZahl = fortsetzen ? (fortsetzen.mitgenommenZahl || 0) : 0;
     /* DECKEL FUER DEN WIEDERHOLUNGS-SCHWANZ. REQUEUE_MAX gilt je Schritt; bei
        24 geplanten Schritten waeren das im schlechtesten Fall ueber 300
        Schirme, ohne dass der Nenner noch etwas sagt. Hoechstens so viele
@@ -539,6 +755,18 @@ export function zeigeThemenLernen(themen, hooks) {
          blieb in der Rotation offen, die Zaehl-Blase bewegte sich nicht. Ein
          Ausstieg ohne Abzug ist der Punkt - was heute nicht kam, kommt von
          selbst wieder. */
+      /* PAUSE, links neben "Fuer heute reicht es". Der Ton ist Absicht: kein
+         Panikwort, kein Abbruch - der Rest wandert auf den morgigen Stapel.
+         Ein leerer Rest heisst: kein Angebot. Wer nichts beantwortet hat, hat
+         auch nichts zu pausieren - dieselbe Logik wie bei genug direkt darunter. */
+      var pause = el("button", "zurueck tl-pause", "⏸ Pause – morgen weiter");
+      pause.addEventListener("click", function () {
+        if (!Object.keys(versucht).length) return start();
+        pauseSpeichern();
+        start();
+      });
+      reihe.appendChild(pause);
+
       var genug = el("button", "zurueck tl-genug", "Für heute reicht es ✓");
       genug.addEventListener("click", function () {
         // Wer noch gar nichts beantwortet hat, hat auch nichts abzuschliessen:
@@ -582,8 +810,22 @@ export function zeigeThemenLernen(themen, hooks) {
          Wiederholung wieder einkassiert. Bei den Begriffen entsteht der Knopf
          erst in nachErgebnis, da stimmt die Rechnung. */
       if (s.art === "abruf") {
+        /* Rose, 19.08.2026: "Es sollte noch klarer dargestellt werden bei den
+           Bausteinen was man von ihr eigentlich fundamental will."
+
+           Bis zum 22.08. stand hier fuer JEDE Aufgabe derselbe Satz. Traegt die
+           Aufgabe Abschnitte, sagen deren Ueberschriften es jetzt genauer, als
+           eine Vorspann-Zeile es koennte. Sonst kommt der Operator-Satz hin -
+           was "erlaeutern" verlangt, steht schon in der Tabelle hinter
+           afbAnalyse (spiele.js, Klausurinfo Folie 5). Nicht nachbauen: zwei
+           Tabellen laufen auseinander, sobald eine Folie korrigiert wird.
+           Steht im Stamm kein bekanntes Signalwort, bleibt der alte Satz - dann
+           wird nichts behauptet, was da nicht ist. */
         var vorspann = el("div", "karten-hinweis tl-vorspann");
-        vorspann.textContent = "Die Bausteine dieser Aufgabe – erst abrufen, dann aufdecken:";
+        var opSatz = abschnitteFuer(s.f) ? "" : operatorSatz(s.f);
+        vorspann.textContent = opSatz
+          ? opSatz + " Erst abrufen, dann aufdecken."
+          : "Erst abrufen, dann aufdecken:";
         app.appendChild(vorspann);
         var frage = el("div", "karte");
         frage.appendChild(reichZeile("div", s.f.frage, "frage-text"));
@@ -654,6 +896,31 @@ export function zeigeThemenLernen(themen, hooks) {
       }
     }
 
+    /* Was die Pause ablegt: das Thema, der REST der Schrittliste als reine Ids
+       (plus der Wiederholungs-Zaehler je Schritt), die Zaehler der Sitzung und
+       ein Lerntag-Stempel. Keine Aufgaben-Objekte - siehe der Kommentar oben
+       bei PAUSE_LERNTAGE.
+
+       KEIN Abschluss-Eintrag: eine halbe Runde hebt kein Level und dreht die
+       Rotation nicht weiter. Genau das ist der Unterschied zu "Fuer heute
+       reicht es". */
+    function pauseSpeichern() {
+      var rest = schritte.slice(index).map(function (s) {
+        return { art: s.art, id: s.id, thema: s.thema.id, runde: s.runde };
+      });
+      if (!rest.length) return pauseLoeschen();
+      state.tlPause = {
+        thema: thema.id,
+        rest: rest,
+        versucht: Object.keys(versucht),
+        sass: sass,
+        wiederholungen: wiederholungen,
+        mitgenommenZahl: mitgenommenZahl,
+        tag: heuteTag()
+      };
+      speichern();
+    }
+
     function weiter() {
       index++;
       if (index < schritte.length) schritt();
@@ -686,6 +953,8 @@ export function zeigeThemenLernen(themen, hooks) {
     /* DER Abschluss-Eintrag: markiert das Thema als durch und traegt Rotation
        UND Level (gespielteRunde und levelVon lesen genau diese Eintraege). */
     logSpiel("themenlernen", "tl-" + thema.id, true, { thema: thema.id });
+    // Die Runde ist durch - ein liegendes Angebot waere ab jetzt eine Luege.
+    pauseLoeschen();
 
     var heuteZahl = heuteThemen();
     leeren();

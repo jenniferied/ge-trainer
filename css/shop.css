@@ -1,0 +1,172 @@
+/* ==========================================================================
+   DER SHOP DES MASKOTTCHENS — 22.08.2026
+   ==========================================================================
+   EIGENE DATEI, UND ZWAR MIT ABSICHT. style.css ist rund 2200 Zeilen und wird
+   von mehreren Sessions gleichzeitig bearbeitet; der Shop entstand parallel zum
+   Umbau des Themen-Lernens. Zwei Sessions in einer Datei heisst: Konflikte an
+   Stellen, die nichts miteinander zu tun haben. Der Shop haengt an genau einem
+   Ort (dem Maskottchen) und kann darum sauber fuer sich stehen.
+
+   WAS HIER NICHT HINEINGEHOERT: alles, was nicht mit ".mk-shop-ov", ".shop-"
+   oder ".mk-pet" anfaengt. Der Rest der .mk-*-Familie wohnt in style.css.
+
+   Sie wird als LETZTE Stylesheet-Zeile in index.html geladen, nach style.css —
+   nicht wegen Spezifitaet (jede Regel hier ist ohnehin eigen benannt), sondern
+   damit die Reihenfolge dem entspricht, was sie ist: eine Ergaenzung.
+
+   Zwei Bloecke werden aus geteilt.css MITBENUTZT statt nachgebaut: .chat-grip
+   (der Griff oben am Sheet) und die .knopf-Familie aus style.css. Ein zweiter
+   Griff mit eigenem Namen waere ein zweiter Griff, der irgendwann anders
+   aussieht als der im Chat direkt daneben.
+
+   360 px ist die Messbreite. Rose uebt am Handy.
+   ========================================================================== */
+
+/* ---------- Die Huelle ----------
+   Gleiche Bauart wie .mk-chat-ov in geteilt.css: fest ueber allem, unten
+   angedockt, auf breiten Schirmen mittig. Bewusst NICHT dieselbe Klasse — die
+   gehoert dem geteilten Chat-Baustein und wird von verteilen.sh in beide Apps
+   geschrieben; hier hineinzuschreiben hiesse, in ein fremdes Repo zu greifen.
+
+   z-index 100, also EINS UEBER dem Chat-Sheet (99). Beide gleichzeitig offen
+   zu haben ist kein vorgesehener Zustand — aber wenn es doch passiert, soll
+   das zuletzt geoeffnete oben liegen und nicht halb verdeckt sein. */
+.mk-shop-ov {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(12, 10, 18, .55);
+}
+.mk-shop-ov .shop-blatt {
+  width: 100%; max-width: 560px;
+  max-height: 86dvh; overflow-y: auto;
+  background: var(--card); color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-radius: 18px 18px 0 0;
+  padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, .28);
+}
+@media (min-width: 700px) {
+  .mk-shop-ov { align-items: center; }
+  .mk-shop-ov .shop-blatt { border-radius: 18px; border-top: 0; }
+}
+
+/* ---------- Kopf und Konto ---------- */
+.shop-kopf {
+  font-family: var(--font-titel, inherit);
+  font-weight: 700; font-size: 1.15rem;
+  text-align: center; margin-bottom: 2px;
+}
+/* Das Guthaben ist die wichtigste Zahl im ganzen Sheet: sie entscheidet, was
+   ueberhaupt geht. Darum groesser als der Fliesstext und mittig unter dem
+   Namen, nicht als Zeile am Rand. */
+.shop-konto {
+  margin: 0 0 8px; text-align: center;
+  font-size: 1.02rem; color: var(--ink);
+}
+.shop-konto b { font-weight: 700; }
+.shop-hinweis {
+  margin: 0 auto 16px; max-width: 44ch;
+  text-align: center; font-size: .8rem; color: var(--ink-soft);
+}
+
+/* ---------- Ein Regal ---------- */
+.shop-regal-kopf {
+  margin: 0 0 2px; font-size: .95rem; font-weight: 700;
+}
+.shop-regal-text {
+  margin: 0 0 10px; font-size: .8rem; color: var(--ink-soft);
+}
+
+/* auto-fit statt einer festen Spaltenzahl: bei 360 px passen zwei Kacheln
+   nebeneinander, auf einem Tablet drei bis vier, ohne Media Query. minmax mit
+   150px, weil eine Pet-Grafik 7 Zellen breit ist und der Preis-Knopf darunter
+   nicht umbrechen soll. */
+.shop-regal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.shop-stueck {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  padding: 10px 8px 12px;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: var(--paper-2, transparent);
+  text-align: center;
+}
+/* Was gerade dabei ist, bekommt einen Rand in der Akzentfarbe — dieselbe, die
+   auch der Riss im Ei traegt. Kein Haken, kein Badge: das Pet steht ohnehin
+   sichtbar neben der Figur, die Kachel muss es nur bestaetigen. */
+.shop-stueck.an {
+  border-color: var(--mk-riss);
+  box-shadow: 0 0 0 1px var(--mk-riss) inset;
+}
+/* Wie .mk-ei in style.css, nur kleiner: die Pets sind Beiwerk, nicht die
+   Hauptfigur. white-space: pre ist Pflicht — die Blockgrafik lebt davon, dass
+   jede Zelle steht, wo sie steht. */
+.shop-bild {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px; line-height: 1; white-space: pre;
+  margin: 0; flex-shrink: 0;
+}
+.shop-name { font-weight: 700; font-size: .9rem; }
+.shop-text {
+  margin: 0; font-size: .74rem; color: var(--ink-soft);
+  /* Zwei Kacheln nebeneinander sollen gleich hoch aussehen, auch wenn ein
+     Hinweis eine Zeile laenger ist. flex: 1 schiebt den Knopf nach unten. */
+  flex: 1;
+}
+
+/* Der Kauf-Knopf traegt nur die Zahl. Der Name steht darueber, und ein
+   "Kaufen fuer 4 ♥" waere auf 150 px die dritte Zeile Text auf einer Kachel,
+   die schon zwei hat. */
+.mk-shop-ov .knopf.klein {
+  padding: 5px 14px; font-size: .84rem; box-shadow: none;
+}
+/* Nicht bezahlbar: sichtbar, aber ohne Aufforderung. NICHT ausgeblendet — Rose
+   soll sehen, was es gibt, und der title/aria-label sagt, wie viel noch fehlt.
+   Das ist der Unterschied zwischen "spaeter" und "verpasst". */
+.mk-shop-ov .shop-kauf:disabled {
+  opacity: .4; cursor: default; transform: none;
+}
+.mk-shop-ov .shop-an { margin-top: 2px; }
+
+.shop-spaeter {
+  margin: 0 0 14px; font-size: .78rem; color: var(--ink-soft);
+  text-align: center; max-width: 44ch; margin-left: auto; margin-right: auto;
+}
+.mk-shop-ov .shop-zu { display: block; margin: 0 auto; }
+
+/* ---------- Das Pet neben der Figur ----------
+   Der Hof haelt Kreatur und Pet als EIN Flex-Element in .mk-zeile zusammen.
+   Ohne ihn waere das Pet ein drittes Kind der Zeile, und weil die (style.css)
+   flex-wrap traegt, bricht es bei 360 px um und sitzt allein unter dem Text.
+   align-items: flex-end stellt beide auf dieselbe Standlinie — die Figur ist
+   sechs Zellen hoch, das Pet vier, oben ausgerichtet schwebte es.
+
+   Der Hof existiert nur, wenn Rose wirklich ein Pet traegt (maskottchen.js
+   baut ihn sonst gar nicht), er kann also an keiner anderen Stelle etwas
+   verschieben.
+
+   Der Abstand ist 10 px und nicht 2: der Chat-Knopf traegt seine
+   Sprechblasen-Marke als ::after bei right: -7px (style.css), sie ragt also
+   ueber die Figur hinaus. Bei 2 px sass der Kaefer darunter. */
+.mk-figur-hof {
+  display: flex; align-items: flex-end; gap: 10px;
+  flex-shrink: 0;
+}
+/* Kleiner als die Figur (11px gegen 15px): im Bild muss klar bleiben, wer hier
+   das Haustier ist. */
+.mk-pet {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px; line-height: 1; white-space: pre;
+  margin: 0; flex-shrink: 0;
+}
+/* mk-atmet kommt aus style.css und laeuft dort schon fuer die Figur. Das Pet
+   bekommt dieselbe Animation, aber verzoegert — zwei Wesen, die synchron
+   atmen, sehen aus wie ein Bild, das flackert. */
+.mk-pet.mk-atmet { animation-delay: .9s; }
+@media (prefers-reduced-motion: reduce) {
+  .mk-pet.mk-atmet { animation: none; }
+}

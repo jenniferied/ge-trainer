@@ -539,6 +539,43 @@ export function frageChatSagen(zeile) {
   return m;
 }
 
+/* ---------- Maskottchen-Besitz: Register und Wahlen ----------
+   Ab dem 22.08.2026 haengt unter mk mehr als Ei, Stufe und die Sperrklinken:
+   der Shop. Zwei Dinge mit ZWEI VERSCHIEDENEN Merge-Regeln, und die
+   Unterscheidung ist der ganze Punkt.
+
+   1. mk.kaeufe — eine SAMMLUNG. Vereinigung ueber die Id, wie mkChat. Ein Kauf
+      wird nie zurueckgenommen, also gibt es hier auch keine Grabsteine: die
+      Liste waechst nur.
+   2. mk.pet / mk.getragen / mk.look / mk.tier — WAHLEN, je { wert, ts }. Ein
+      Einzelwert laesst sich nicht vereinigen, man muss sich entscheiden; das
+      Kriterium ist der Zeitpunkt der Wahl, genau wie bei mk.ei.
+
+   Die Feldliste steht HIER und nicht in maskottchen.js, obwohl sie dort
+   benutzt wird: maskottchen.js importiert ohnehin schon aus dieser Datei
+   (syncBald), umgekehrt gaebe es einen Zyklus. Eine zweite Liste drueben waere
+   die Sorte Dopplung, die genau einmal auseinanderlaeuft und dann still eine
+   Wahl verschluckt. */
+export var MK_WAHL_FELDER = ["pet", "getragen", "look", "tier"];
+
+/* Die Kauf-Ids eines mk-Objekts, sortiert und entdoppelt. Reine Funktion —
+   signatur() wird auch auf die SERVER-Antwort angewandt (siehe einSync), und
+   eine dort doppelt liegende Zeile darf nicht dauerhaft als verschieden
+   gelten. */
+function mkKaufIds(mk) {
+  var ids = ((mk && mk.kaeufe) || []).map(function (k) { return k && k.id ? String(k.id) : ""; })
+    .filter(function (id) { return !!id; });
+  return ids.filter(function (id, i) { return ids.indexOf(id) === i; }).sort();
+}
+
+/* Die vier Wahl-Zeitstempel in fester Reihenfolge. */
+function mkWahlStempel(mk) {
+  return MK_WAHL_FELDER.map(function (f) {
+    var w = mk && mk[f];
+    return (w && typeof w === "object" && w.ts) || 0;
+  });
+}
+
 /* ---------- Snapshot + Signatur ---------- */
 
 // Was hochgeladen wird. deviceId/pending/syncCode/theme bleiben geraetelokal -
@@ -618,7 +655,27 @@ export function signatur(d) {
     // normiert, damit eine Server-Zeile aus der Zeit davor nicht dauerhaft als
     // verschieden gilt und jeden Start einen Push ausloest.
     ":" + ((daten.mk && daten.mk.herzenMax) || 0) +
-    ":" + ((daten.mk && daten.mk.sterneMax) || 0);
+    ":" + ((daten.mk && daten.mk.sterneMax) || 0) +
+    // Der Besitz (seit 22.08.2026: Kauf-Register und die getragenen Wahlen).
+    // MUSS hier stehen, aus genau demselben Grund wie stufeMax: ein Kauf
+    // passiert durch einen KNOPFDRUCK, ohne dass eine neue Antwort dazukommt.
+    // Ohne diesen Anteil aendert ein Kauf die Signatur nicht, wird nie
+    // gepusht — und weil der eigene Snapshot danach trotzdem hochgeht,
+    // ueberschreibt Geraet A stillschweigend die Kaeufe von Geraet B.
+    //
+    // Die SORTIERTEN IDS, nicht "Anzahl plus letzte Id". Der kompakte Entwurf
+    // ist hier nicht sicher: Geraet A mit {kaefer, maus} und Geraet B mit
+    // {vogel, maus} haetten dieselbe Anzahl und dieselbe letzte Id (sortiert)
+    // und damit dieselbe Signatur — zwei verschiedene Besitzstaende, die sich
+    // fuer gleich halten und nie abgleichen. Die Ids sind abgeleitet und kurz
+    // ("kf:pet:kaefer"), zwanzig Stueck sind rund 260 Zeichen. Neben den
+    // Antwort-Ids faellt das nicht auf.
+    ":" + mkKaufIds(daten.mk).join(",") +
+    // Die vier Einzelwerte ueber ihren Zeitstempel: sie werden nach ts gemergt
+    // (die zuletzt getroffene Wahl gilt, wie bei mk.ei), also ist der Stempel
+    // genau das, worauf es ankommt. Auf 0 normiert, damit eine Server-Zeile
+    // aus der Zeit davor nicht dauerhaft als verschieden gilt.
+    ":" + mkWahlStempel(daten.mk).join(".");
   // Der Chatverlauf MUSS hier stehen, sonst ist die ganze Uebung umsonst:
   // signatur() entscheidet, OB gepusht wird. Stuende mkChat nur im Snapshot,
   // aendert eine neue Nachricht die Signatur nicht, es geht nie etwas hoch,
@@ -836,6 +893,66 @@ export function mergeIn(st, remote) {
   // damit der Wert stabil bleibt und nicht bei jedem Merge hin und her springt.
   var gs = [st.mk.geschluepft, rMk.geschluepft].filter(Boolean);
   if (gs.length) st.mk.geschluepft = Math.min.apply(null, gs);
+
+  /* ---- Der Shop-Besitz (22.08.2026) ----
+     DIESER BLOCK IST PFLICHT UND NICHT KUER. mergeIn() setzt mk Feld fuer Feld
+     neu zusammen und hat KEIN Object.assign-Auffangnetz: ein neues Unterfeld
+     ohne Regel kommt vom anderen Geraet NIE an. Und weil der eigene Snapshot es
+     danach hochschiebt, ueberschreibt Geraet A stillschweigend die Kaeufe von
+     Geraet B. Das ist der Fehler, der nicht knallt.
+
+     Die Kaeufe sind eine VEREINIGUNG ueber die Id, wie mkChat. Drei
+     Eigenschaften, an denen es haengt:
+       - Ein Snapshot OHNE kaeufe (jede Zeile, die vor dem 22.08. hochging)
+         entwertet nichts: r ist dann leer, und die Vereinigung mit nichts
+         laesst den lokalen Bestand unveraendert stehen.
+       - Keine Grabsteine, anders als bei mkChat: ein Kauf wird nie geloescht.
+         Es gibt in der App keinen Weg dorthin, und es soll auch keinen geben —
+         etwas wieder wegzunehmen ist genau die Bauart, die dieser Shop nicht
+         hat.
+       - Die Id ist ABGELEITET ("kf:pet:kaefer", siehe maskottchen.js kaufId).
+         Kaufen zwei Geraete offline dasselbe Stueck, kollabiert das hier auf
+         EINE Zeile — mit einer Zufalls-Id waeren es zwei und Rose haette
+         doppelt bezahlt, ohne dass irgendwo etwas auffiele. Bei gleicher Id
+         gewinnt der FRUEHESTE Zeitstempel, damit der Merge unabhaengig von der
+         Reihenfolge konvergiert (dieselbe Regel wie bei geschluepft).
+
+     WAS DIESE REGEL BEWUSST NICHT TUT: sie prueft NICHT, ob die Summe der
+     Kaeufe herzenMax uebersteigt. Zwei Geraete koennen offline verschiedene
+     Dinge vom selben Guthaben kaufen, und danach ist mehr ausgegeben als je
+     verdient wurde. Ein Kauf wird trotzdem nicht zurueckgenommen: das
+     abgeleitete Guthaben klemmt in maskottchen.js guthaben() bei 0, Rose
+     besitzt beides und kann nur nichts Neues kaufen, bis herzenMax
+     nachgewachsen ist. Der Grund steht als Regel im Repo (Archiv ST-Trainer,
+     19.08.): "Sinken zu sehen, ohne etwas falsch gemacht zu haben, liest sich
+     als Strafe." Ein eingezogenes Pet waere schlimmer als eine Weile ohne
+     Guthaben. */
+  var kaufMap = {};
+  [(rMk.kaeufe || []), (st.mk.kaeufe || [])].forEach(function (quelle) {
+    (Array.isArray(quelle) ? quelle : []).forEach(function (k) {
+      if (!k || !k.id) return;
+      var alt = kaufMap[k.id];
+      if (!alt || (k.ts || 0) < (alt.ts || 0)) kaufMap[k.id] = k;
+    });
+  });
+  // Nach Id sortiert und nicht nach ts: die Reihenfolge muss auf beiden
+  // Geraeten dieselbe sein, sonst unterscheiden sich die Snapshots als Text und
+  // die beiden schieben sich gegenseitig ewig Pushes zu. ts kann bei zwei
+  // Geraeten fuer dasselbe Stueck verschieden sein, die Id nie.
+  st.mk.kaeufe = Object.keys(kaufMap).sort().map(function (id) { return kaufMap[id]; });
+
+  /* Die vier Wahlen: die ZULETZT getroffene gilt, wie bei mk.ei. Altbestand
+     ohne ts zaehlt als 0 und verliert gegen jede bewusst getroffene Wahl; bei
+     Gleichstand bleibt der lokale Wert stehen. Ein Feld, das der andere gar
+     nicht kennt, wird nicht angefasst — sonst loeschte ein alter Client die
+     Wahl eines neuen. */
+  MK_WAHL_FELDER.forEach(function (f) {
+    var rW = rMk[f];
+    if (!rW || typeof rW !== "object") return;
+    var eigen = st.mk[f];
+    var eigenTs = (eigen && typeof eigen === "object" && eigen.ts) || 0;
+    if ((rW.ts || 0) > eigenTs) st.mk[f] = { wert: rW.wert, ts: rW.ts || 0 };
+  });
 
   // Tagesplan-Archiv: Vereinigung ueber die Tage; legen beide Geraete denselben
   // Tag an, gewinnt der FRUEHESTE Eintrag — das ist der Plan, den Rose an dem

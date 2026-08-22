@@ -45,6 +45,15 @@
 import { el, ohneHilfe, stichpunkteTeilen } from "./core.js";
 import { stickerEl } from "./ui.js";
 import { belegZeile } from "./beleg.js";
+/* afbAnalyse liest die EINE Operatoren-Tabelle der App (spiele.js, Klausurinfo
+   Folie 5). Hier wird nur gelesen - spiele.js gehoert einer anderen Session, und
+   eine zweite Signalwort-Tabelle liefe garantiert von der ersten weg. */
+import { afbAnalyse } from "./spiele.js";
+/* Das KI-Urteil je Baustein (Vertrag 2, Function-Zweig art "bausteine").
+   Zyklusfrei: llm.js zieht nur config.js und core.js. Der Namensraum-Import ist
+   Absicht - er macht die defensive Wache weiter unten moeglich, falls die App
+   einmal vor der Function deployt wird. */
+import * as Llm from "./llm.js";
 
 // Dieselbe Zeile wie in klausur.js/stats.js: wer weniger Bewegung will,
 // bekommt bei jedem JS-Scroll "auto" statt "smooth".
@@ -247,6 +256,231 @@ function saeulenAnsicht(saeulen) {
   return staemme.some(function (st, i) { return staemme.indexOf(st) !== i; });
 }
 
+/* ---------- Abschnitte: die EINE Ableitungsstelle (Vertrag 1) ----------
+
+   Aus einer Aufgabe werden Abschnitte, und zwar nur hier. Drei Quellen in
+   dieser Reihenfolge:
+
+     1. f.abschnitte liegt an  -> uebernehmen und normalisieren
+     2. afb >= 2 und ein erkannter Operator -> die Rollen-Schablone
+     3. sonst -> null, der Aufrufer macht genau das, was er heute macht
+
+   WARUM EIN EIGENER RENDERPFAD UND NICHT VORN IN saeulenBauen(): Der elegante
+   Weg waere, die Abschnitte in saeulenBauen einzuspeisen - saeulenIndizes,
+   lvl1Teil und die Gitter-Darstellung erbten sie dann automatisch. Genau das
+   ist die Falle. saeulenAnsicht() steigt aus, sobald EINE Gruppe kein Label
+   hat; mit Abschnitten hat JEDE eine, und die Gitter-Ansicht kippte bei der
+   ersten migrierten Aufgabe von fuenf auf alle um, ohne dass es jemand
+   entschieden haette. saeulenBauen, saeulenIndizes und saeulenAnsicht bleiben
+   deshalb unveraendert und bleiben der Fallback.
+
+   INDEX-BASEN, die Kopf-Falle des ganzen Bereichs: abschnitte[].idx zaehlt die
+   ROHE stichpunkte-Liste (so wie f.hinweise es auch tut). Alles ab hier zaehlt
+   die KERNLISTE, weil opts.teil, o.auswahl und der ganze Rest der Treppe das
+   tun. Umgerechnet wird genau einmal, unten in ausKorpus(). Rohe Indizes, die
+   im Zusatz liegen, fallen heraus; ein Abschnitt, der danach leer ist, faellt
+   ganz weg - das ist der zusatz-true-Fall und der ist erwuenscht. */
+
+/* Die Satzanfaenge. Das Sprachgeruest fuer eine Nicht-Muttersprachlerin:
+   nicht der Inhalt wird vorgegeben, sondern der Satzanfang. Sie haengen an der
+   ROLLE, nicht an der Aufgabe - deshalb reichen zwoelf Formulierungen fuer den
+   ganzen Korpus, und deshalb stehen sie hier und nicht in den Daten. Ein
+   Satzanfang im Korpus (abschnitte[].satzanfang) gewinnt trotzdem: er ist
+   redaktionell gesetzt und kennt die Aufgabe. */
+var SATZANFANG = {
+  benennen: "Unter … versteht man …",
+  entfalten: "Das bedeutet konkret, dass …",
+  belegen: "Ein Beispiel dafür ist …",
+  these: "Die Frage ist, ob …",
+  dafuer: "Dafür spricht, dass …",
+  dagegen: "Dagegen spricht, dass …",
+  fazit: "Ich halte fest: …",
+  kriterium: "Vergleichen lässt sich das an …",
+  positionA: "Auf der einen Seite …",
+  positionB: "Auf der anderen Seite …",
+  unterschied: "Der Unterschied liegt darin, dass …",
+  fall: "In diesem Fall geht es um …",
+  massnahme: "Eine Maßnahme wäre, …",
+  begruendung: "Das trägt, weil …"
+};
+
+/* Die Rollen-Schablonen. EINE Tabelle im Code, nicht im Korpus - so werden sie
+   an einer Stelle gepflegt (Vertrag 1). Bei AFB I ist eine Baustein-Liste
+   richtig: dort gibt es einen Vorrat, und die Rueckmeldung ist eine Zahl. Bei
+   AFB II/III ist sie falsch, weil die Antwort ein TEXT MIT ROLLEN ist -
+   "Baustein 4 fehlt" ist dort keine sinnvolle Auskunft, "die Rolle Beleg ist
+   noch leer" schon.
+
+   diskutieren/eroertern/bewerten steht bewusst mit diesen vier Rollen da,
+   OBWOHL die fachliche Bestaetigung dafuer noch aussteht (will die Dozentin
+   eine harte Gegenposition oder ein abwaegendes Entfalten?). Ein Umbenennen
+   der Rollen ist danach genau eine Zeile hier - deshalb ist das Bauen
+   billiger als das Warten. */
+var ROLLEN_SCHABLONE = {
+  erlaeutern: ["benennen", "entfalten", "belegen"],
+  erklaeren: ["benennen", "entfalten", "belegen"],
+  analysieren: ["benennen", "entfalten", "belegen"],
+  diskutieren: ["these", "dafuer", "dagegen", "fazit"],
+  eroertern: ["these", "dafuer", "dagegen", "fazit"],
+  bewerten: ["these", "dafuer", "dagegen", "fazit"],
+  vergleichen: ["kriterium", "positionA", "positionB", "unterschied"],
+  zuordnen: ["kriterium", "positionA", "positionB", "unterschied"],
+  entwickeln: ["fall", "massnahme", "begruendung"],
+  anwenden: ["fall", "massnahme", "begruendung"]
+};
+
+/* Was in der Ueberschrift des Abschnitts steht, wenn die Schablone greift.
+   Roses Sprache, nicht die des Korpus: eine Frage, die sie beantworten kann. */
+var ROLLEN_AUFTRAG = {
+  benennen: "Um welchen Begriff geht es?",
+  entfalten: "Was heißt das konkret?",
+  belegen: "Ein Beispiel aus dem Material",
+  these: "Worum wird gestritten?",
+  dafuer: "Was spricht dafür?",
+  dagegen: "Was spricht dagegen?",
+  fazit: "Und was sagst du?",
+  kriterium: "Woran vergleichst du?",
+  positionA: "Die eine Seite",
+  positionB: "Die andere Seite",
+  unterschied: "Was ist der Unterschied?",
+  fall: "Worum geht es in dem Fall?",
+  massnahme: "Was würdest du tun?",
+  begruendung: "Warum trägt das?"
+};
+
+// Wie viele Zeilen ein Abschnitt auf dem Schirm belegt. Der Deckel bei
+// niedriger Reife zaehlt ZEILEN, nicht Stichpunkte: Roses Beschwerde galt der
+// Zahl der Felder auf dem Handy, und eine Rolle ist ein Feld, egal wie viele
+// Vorratspunkte hinter ihr liegen.
+export function abschnittZeilen(a) {
+  if (!a) return 0;
+  if (a.form === "rolle") return 1;
+  return a.waehle && a.waehle < a.idx.length ? a.waehle : a.idx.length;
+}
+
+/* Quelle 1: das Feld liegt an. Rohe Indizes -> Kern-Indizes, Zusatz faellt
+   heraus, chips wandern index-parallel mit. */
+function ausKorpus(roh, kernVon) {
+  var out = [];
+  roh.forEach(function (a, pos) {
+    if (!a || typeof a !== "object") return;
+    var rohIdx = Array.isArray(a.idx) ? a.idx : [];
+    var rohChips = Array.isArray(a.chips) && a.chips.length === rohIdx.length ? a.chips : null;
+    var idx = [], chips = rohChips ? [] : null;
+    rohIdx.forEach(function (r, n) {
+      var k = kernVon[r];
+      if (k === undefined) return;         // Zusatz-Zeile: kein Kern, kein Slot
+      idx.push(k);
+      if (chips) chips.push(rohChips[n]);
+    });
+    if (!idx.length) return;               // ganz im Zusatz -> faellt weg
+    var rolle = typeof a.rolle === "string" && a.rolle ? a.rolle : null;
+    out.push({
+      quelle: "korpus",
+      pos: pos,                            // Position im KORPUS, nur fuer parallelZu
+      operator: typeof a.operator === "string" ? a.operator : null,
+      rolle: rolle,
+      auftrag: typeof a.auftrag === "string" ? a.auftrag.trim() : "",
+      form: a.form === "rolle" ? "rolle" : "liste",
+      idx: idx,
+      chips: chips,
+      waehle: typeof a.waehle === "number" && a.waehle > 0 && a.waehle < idx.length ? Math.floor(a.waehle) : null,
+      satzanfang: (typeof a.satzanfang === "string" && a.satzanfang) || (rolle ? SATZANFANG[rolle] : "") || "",
+      parallelRoh: typeof a.parallelZu === "number" ? a.parallelZu : null,
+      parallelZu: null
+    });
+  });
+
+  /* parallelZu wird ERST JETZT aufgeloest, nachdem leergefallene Abschnitte
+     draussen sind. Es ist ein Positions-Index in die Korpus-Liste, und jeder
+     weggefallene Abschnitt davor verschiebt ihn - bei eb-fol-f-2 faellt der
+     erste (reine Vorbemerkungen) immer weg. Verrutscht stuende das Beispiel
+     neben der falschen Zeitart, und zwar lautlos. Passt die Slot-Zahl danach
+     nicht mehr, gibt es lieber keine Paarung als eine falsche. */
+  var neuePos = {};
+  out.forEach(function (a, i) { neuePos[a.pos] = i; });
+  out.forEach(function (a, i) {
+    if (a.parallelRoh === null) return;
+    var ziel = neuePos[a.parallelRoh];
+    if (ziel === undefined || ziel >= i) return;          // nur auf FRUEHERE zeigen
+    if (out[ziel].idx.length !== a.idx.length) return;    // Paarung stimmt nicht mehr
+    if (out[ziel].form === "rolle" || a.form === "rolle") return;
+    a.parallelZu = ziel;
+  });
+  return out;
+}
+
+/* Quelle 2: keine Abschnitte im Korpus, aber ein erkannter Operator auf
+   AFB II/III. Ein Abschnitt je Rolle, alle Kern-Indizes als GEMEINSAMER Vorrat -
+   nicht aufgeteilt, denn welches Beispiel Rose nimmt, ist offen. Genau deshalb
+   traegt das Ergebnis vorratGeteilt: die Erwartungsliste wird EINMAL aufgedeckt
+   und nicht je Rolle neu. */
+function ausSchablone(f, kern) {
+  if ((f.afb || 2) < 2) return null;
+  var an = afbAnalyse(f.frage, f.afb);
+  // afbAnalyse liefert die Anzeige-Schreibweise ("erläutern"); normalWort macht
+  // daraus den Schluessel des Vertrags-Vokabulars ("erlaeutern").
+  var op = an && an.op ? normalWort(an.op.wort) : null;
+  var rollen = op ? ROLLEN_SCHABLONE[op] : null;
+  if (!rollen) return null;
+  var alle = kern.map(function (_, i) { return i; });
+  return rollen.map(function (rolle) {
+    return {
+      quelle: "schablone",
+      pos: -1,
+      operator: op,
+      rolle: rolle,
+      auftrag: ROLLEN_AUFTRAG[rolle] || "",
+      form: "rolle",
+      idx: alle,
+      chips: null,
+      waehle: null,
+      satzanfang: SATZANFANG[rolle] || "",
+      parallelRoh: null,
+      parallelZu: null
+    };
+  });
+}
+
+/* Die eine Ableitungsstelle. Rueckgabe null heisst "keine Abschnitte" - dann
+   laeuft alles wie vor dem 22.08.2026 weiter.
+
+   Sonst: { quelle, liste, vorratGeteilt }. Die idx in liste[] zaehlen die
+   KERNLISTE. */
+export function abschnitteFuer(f) {
+  if (!f) return null;
+  var teilung = stichpunkteTeilen(f);
+  var kern = teilung.kern;
+  if (!kern.length) return null;
+
+  if (Array.isArray(f.abschnitte) && f.abschnitte.length) {
+    // roh -> kern, die Umkehrung von kernIndex. Genau hier und nirgends sonst.
+    var kernVon = {};
+    teilung.kernIndex.forEach(function (r, k) { kernVon[r] = k; });
+    var liste = ausKorpus(f.abschnitte, kernVon);
+    if (!liste.length) return null;
+    /* Ein Abschnitt allein, der die ganze Kernliste als flache Liste zeigt, ist
+       genau das heutige Verhalten mit einer Ueberschrift davor. Das ist kein
+       Grund, den neuen Pfad zu meiden - die Ueberschrift ist ja der Punkt
+       ("klarer sagen, was verlangt ist"). */
+    return { quelle: "korpus", liste: liste, vorratGeteilt: false };
+  }
+
+  var schab = ausSchablone(f, kern);
+  if (schab) return { quelle: "schablone", liste: schab, vorratGeteilt: true };
+  return null;
+}
+
+/* Ein Satz darueber, was der Operator verlangt - aus derselben Tabelle, aus der
+   das Signalwoerter-Spiel lebt. Leer, wenn im Stamm kein bekanntes Signalwort
+   steht: dann wird nichts behauptet, was da nicht ist. */
+export function operatorSatz(f) {
+  if (!f) return "";
+  var an = afbAnalyse(f.frage, f.afb);
+  if (!an || !an.op) return "";
+  return an.op.wort.charAt(0).toUpperCase() + an.op.wort.slice(1) + " heißt: " + an.op.tipp;
+}
+
 /* Kurzfassung eines Aufgaben-Fragetextes fuer die Begruendung im Zieh-Modus.
    Gleiche Machart wie kurz() im Themen-Lernen (60 Zeichen, dann Auslassung);
    bewusst KOPIERT statt importiert - themen-lernen.js importiert dieses Modul,
@@ -299,6 +533,46 @@ var ABRUF_WERTE = [
   { wert: "fehlte", text: "Fehlte", klasse: "fehlte" }
 ];
 
+/* ---------- Ein Feld, das mitwaechst (Rose, 19.08.2026) ----------
+   "Die freien Felder in denen sie z.B. Bausteine erlaeutern/vornotieren kann
+   sollten groesser sein, damit sie sieht was sie schreibt. Nicht nur eine
+   Zeile, bzw. die '…hier notieren, wenn du magst' Stelle/feld kann ja nach
+   unten wachsen (wuerde ich bevorzugen)."
+
+   Ein <input type="text"> kann das grundsaetzlich nicht - es scrollt seitlich
+   weg. Also textarea mit rows=1, die bei jedem input auf ihre scrollHeight
+   nachzieht. Die Hoehe wird VORHER auf auto gesetzt, sonst waechst sie nur und
+   schrumpft beim Loeschen nie wieder.
+
+   field-sizing: content waere die huebschere Loesung und steht als Zugabe im
+   CSS - aber Rose uebt am Handy, und welches Safari das ist, weiss hier
+   niemand. font-size 16px bleibt Pflicht: darunter zoomt iOS beim Fokus ins
+   Feld hinein und der Rest der Karte rutscht aus dem Bild. */
+function wachsFeld(klasse, platzhalter) {
+  var t = el("textarea", "wachsfeld" + (klasse ? " " + klasse : ""));
+  t.rows = 1;
+  if (platzhalter) t.placeholder = platzhalter;
+  function nachziehen() {
+    t.style.height = "auto";
+    t.style.height = t.scrollHeight + "px";
+  }
+  t.addEventListener("input", nachziehen);
+  // Einmal initial: ein Feld, das schon Text traegt (oder dessen Platzhalter
+  // umbricht), soll nicht erst beim ersten Tastendruck die richtige Hoehe haben.
+  requestAnimationFrame(nachziehen);
+  t.nachziehen = nachziehen;
+  return t;
+}
+
+/* Ein Feld dichtmachen, ohne Roses Text zu verstecken. readOnly statt disabled:
+   disabled blasst den Text in den meisten Browsern so weit aus, dass sie ihre
+   eigene Notiz beim Vergleichen nicht mehr lesen kann. */
+function feldEinfrieren(t) {
+  if (!t) return;
+  t.readOnly = true;
+  t.classList.add("eingefroren");
+}
+
 /* ---------- abrufKarte: die Treppe ueber die Kernliste EINER Aufgabe ----------
 
    opts:
@@ -337,6 +611,10 @@ export function abrufKarte(f, opts) {
   }
 
   o.gesamtKern = kern.length;
+  // Fuer den Abschnitts-Pfad: die VOLLE Kernliste und ihre rohen Positionen
+  // bleiben erreichbar, auch nachdem kern gleich auf die Portion zusammenfaellt.
+  o.kernAlle = kern;
+  o.kernIndexAlle = stichIndex;
   // Welche Kern-Indizes heute wirklich gezeigt werden - die Vorgabe ist alles.
   var auswahl = kern.map(function (_, i) { return i; });
 
@@ -350,6 +628,56 @@ export function abrufKarte(f, opts) {
   if (o.teil && o.teil.length) {
     var teilIdx = o.teil.filter(function (k) { return k >= 0 && k < kern.length; });
     if (teilIdx.length) { auswahl = teilIdx; teilAktiv = true; }
+  }
+
+  /* Traegt die Aufgabe Abschnitte (deklariert oder ueber die Rollen-Schablone),
+     laeuft ab hier ein EIGENER Renderpfad. Er wird nur im Aufdecken-Modus
+     betreten: der Zieh-Modus mischt echte Bausteine mit fremden, und eine
+     Abschnitts-Ueberschrift waere dort eine Verraeterin - genauso, wie die
+     Saeulen-Ansicht dort bewusst nicht gezeichnet wird. */
+  var ab = o.modus === "ziehen" ? null : abschnitteFuer(f);
+  if (ab) {
+    var gezeigteAb = ab.liste;
+    if (teilAktiv) {
+      /* o.teil kommt aus lvl1Teil und ist an ABSCHNITTSGRENZEN geschnitten -
+         ein Abschnitt ist die kleinste Portion. Gezeigt wird deshalb, was
+         VOLLSTAENDIG in der Portion liegt; ein halb getroffener Abschnitt
+         faellt heraus, statt halbiert zu werden. */
+      var drin = {};
+      auswahl.forEach(function (k) { drin[k] = true; });
+      gezeigteAb = ab.liste.filter(function (a) {
+        return a.idx.every(function (k) { return drin[k]; });
+      });
+      // Passt kein einziger ganz hinein, ist die Portion zu klein fuer diese
+      // Aufgabe. Dann lieber der erste Abschnitt ganz als gar keiner.
+      if (!gezeigteAb.length) gezeigteAb = [ab.liste[0]];
+    }
+    /* parallelZu zeigt auf einen frueheren Abschnitt DERSELBEN Liste. Faellt
+       das Ziel durch die Portionierung heraus, verliert das Kind seine
+       Paarung - sonst stuende das Beispiel neben nichts. */
+    var sichtbar = gezeigteAb.map(function (a) { return ab.liste.indexOf(a); });
+    gezeigteAb.forEach(function (a) {
+      if (a.parallelZu === null) return;
+      a.parallelAktiv = sichtbar.indexOf(a.parallelZu) >= 0;
+    });
+    // auswahl = die Kern-Indizes dieser Abschnitte, ohne Dopplung (der geteilte
+    // Vorrat der Schablone nennt denselben Punkt in jeder Rolle).
+    var gesehen = {}, neu = [];
+    gezeigteAb.forEach(function (a) {
+      a.idx.forEach(function (k) { if (!gesehen[k]) { gesehen[k] = true; neu.push(k); } });
+    });
+    auswahl = neu.sort(function (a, b) { return a - b; });
+    o.stichIndex = auswahl.map(function (k) { return stichIndex[k]; });
+    o.auswahl = auswahl;
+    o.teilAktiv = auswahl.length < o.gesamtKern;
+    o.teilName = null;
+    /* f.waehle auf AUFGABEN-Ebene wird hier bewusst nicht mehr angewandt: das
+       speziellere waehle des Abschnitts gewinnt (Vertrag 1), und der
+       Aufgaben-Vorrat steckt ohnehin in der Zusatz-Zeile, die als eigener
+       Abschnitt mit zusatz: true herausfaellt. Nachgemessen am 22.08.2026:
+       in allen 21 Aufgaben mit Abschnitten UND waehle deckt das Feld genau die
+       volle Kernzahl ab, ist also heute wirkungslos. */
+    return abschnitteKarte(f, o, ab, gezeigteAb);
   }
 
   // f.waehle: die Aufgabe verlangt nur n aus m Bausteinen. Dann fragt auch die
@@ -392,6 +720,507 @@ export function abrufKarte(f, opts) {
   return aufdeckenKarte(f, kern, o);
 }
 
+/* ---------- Der Abschnitts-Pfad (Vertrag 1 + Vertrag 2) ----------
+
+   Eine Aufgabe wird abschnittsweise abgefragt: ein auftrag als Ueberschrift,
+   genau so viele Slots wie idx verlangt, gepaarte Abschnitte nebeneinander,
+   und bei form "rolle" eine einzige Zeile mit einem Satzanfang im leeren Feld
+   statt einer Nummer.
+
+   DIE ZEILE IST DIE EINHEIT, nicht der Stichpunkt. Eine Rolle ist eine Zeile,
+   auch wenn hinter ihr fuenf Vorratspunkte liegen; ein gepaartes Slot-Paar
+   (Zeitart + Beispiel) ist EINE Zeile mit zwei Feldern und einer
+   Selbsteinschaetzung. Roses Beschwerde galt der Zahl der Felder auf dem
+   Handy, und genau die zaehlt hier. */
+
+// Welche Slot-Positionen eines Abschnitts heute drankommen. Ohne eigenes
+// waehle sind es alle; sonst n zufaellige, danach wieder aufsteigend - die
+// Reihenfolge der Aufgabe soll erhalten bleiben.
+function slotPositionen(a) {
+  var pos = a.idx.map(function (_, i) { return i; });
+  if (!a.waehle || a.waehle >= pos.length) return pos;
+  for (var i = pos.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = pos[i]; pos[i] = pos[j]; pos[j] = t;
+  }
+  return pos.slice(0, a.waehle).sort(function (x, y) { return x - y; });
+}
+
+/* Wie ein Urteil in Worten heisst. Kein "falsch", kein Ausrufezeichen - der
+   Ton steht in Vertrag 2: eher "das gehoert eine Zeile tiefer" als ein Urteil
+   ueber Rose. "leer" kommt nur, wenn wirklich nichts im Feld stand. */
+var KI_STUFE = {
+  passt: { text: "Passt", klasse: "gut" },
+  halb: { text: "Passt halb", klasse: "halb" },
+  "passt-nicht": { text: "Gehört eher woanders hin", klasse: "schade" },
+  leer: { text: "Hier stand noch nichts", klasse: "muted" }
+};
+
+function abschnitteKarte(f, o, ab, gezeigt) {
+  var karte = el("div", "karte treppe-karte");
+  karte.appendChild(el("h2", null, o.titel || "🧠 Erst abrufen"));
+
+  /* ---- Zeilen bauen ---- */
+
+  // parallelZu: das Kind rendert nicht als eigener Abschnitt, sondern haengt
+  // Slot fuer Slot bei seinem Partner. Genau das haette Roses Verwirrung
+  // verhindert - das Beispiel steht bei seiner Zeitart, nicht dreissig Zeilen
+  // weiter unten als "Baustein 4".
+  var kindVon = {}, istKind = {};
+  gezeigt.forEach(function (a) {
+    if (a.parallelZu === null || !a.parallelAktiv) return;
+    kindVon[a.parallelZu] = a;
+    istKind[ab.liste.indexOf(a)] = true;
+  });
+
+  var bloecke = [], zeilenAlle = [];
+  gezeigt.forEach(function (a) {
+    var eigen = ab.liste.indexOf(a);
+    if (istKind[eigen]) return;
+    var kind = kindVon[eigen] || null;
+    var zeilen = [];
+    if (a.form === "rolle") {
+      // Eine Rollen-Zeile je Abschnitt. Aufgedeckt wird der VORRAT des
+      // Abschnitts, nicht "die Loesung dieser Zeile".
+      zeilen.push({ a: a, form: "rolle", kern: a.idx.slice(), chip: null, partner: null });
+    } else {
+      slotPositionen(a).forEach(function (n) {
+        zeilen.push({
+          a: a, form: "liste", kern: [a.idx[n]],
+          chip: a.chips ? a.chips[n] : null,
+          partner: kind && typeof kind.idx[n] === "number"
+            ? { a: kind, kern: kind.idx[n], chip: kind.chips ? kind.chips[n] : null }
+            : null
+        });
+      });
+    }
+    zeilen.forEach(function (z) { zeilenAlle.push(z); });
+    bloecke.push({ a: a, kind: kind, zeilen: zeilen });
+  });
+
+  if (!zeilenAlle.length) {
+    if (o.onFertig) o.onFertig(null);
+    return el("div");
+  }
+
+  /* o.auswahl und o.stichIndex NACH dem Zeilenbau neu setzen: ein Abschnitt mit
+     eigenem waehle zeigt weniger, als sein idx verspricht, und die Nutzlast an
+     die KI muss genau das treffen, was auf dem Schirm steht. */
+  var gesehenK = {}, auswahl = [];
+  zeilenAlle.forEach(function (z) {
+    z.kern.forEach(function (k) { if (!gesehenK[k]) { gesehenK[k] = true; auswahl.push(k); } });
+    if (z.partner && !gesehenK[z.partner.kern]) { gesehenK[z.partner.kern] = true; auswahl.push(z.partner.kern); }
+  });
+  auswahl.sort(function (x, y) { return x - y; });
+  o.auswahl = auswahl;
+  o.stichIndex = auswahl.map(function (k) { return o.kernIndexAlle[k]; });
+  o.teilAktiv = auswahl.length < o.gesamtKern;
+
+  // roh <-> kern, fuer Hinweise (f.hinweise zaehlt roh) und fuer die Zuordnung
+  // der KI-Urteile (i ist roh, Vertrag 2).
+  function rohVon(k) { return o.kernIndexAlle[k]; }
+  function punktVon(k) { return o.kernAlle[k]; }
+
+  /* ---- Kopfzeile ---- */
+  var nurRollen = zeilenAlle.every(function (z) { return z.form === "rolle"; });
+  var wort = nurRollen
+    ? (zeilenAlle.length === 1 ? "Rolle" : "Rollen")
+    : (zeilenAlle.length === 1 ? "Baustein" : "Bausteine");
+  var kopfSatz = o.teilAktiv
+    ? "Heute nur ein Teil dieser Aufgabe – " + zeilenAlle.length + " " + wort
+      + ". Der Rest kommt in einer späteren Runde. "
+    : "Diese Aufgabe hat " + zeilenAlle.length + " " + wort + ". ";
+  karte.appendChild(el("p", "karten-hinweis",
+    kopfSatz + "Geh sie im Kopf durch – laut sagen hilft. "
+    + "Dann deck einzeln auf und sag ehrlich, was schon da war."));
+
+  /* ---- Sammelnotiz, KI-Kopf und Zaehlung ---- */
+  var notizen = null, kiKopf = null, kiZahl = null;
+  if (o.felder) {
+    notizen = wachsFeld("treppe-notizen", "Sammelort – schreib rein, wie es dir kommt.");
+    notizen.rows = 3;
+    karte.appendChild(notizen);
+    // Der Platz fuer das gesamt-Urteil und den n-von-m-Abgleich. Jennifer
+    // ausdruecklich: "bei ihren Notizen oben UND in der Zeile".
+    kiKopf = el("div", "treppe-ki-kopf");
+    kiZahl = el("div", "treppe-ki-zahl");
+    karte.appendChild(kiKopf);
+    karte.appendChild(kiZahl);
+  }
+
+  /* ---- Der KI-Zweig (Vertrag 2) ---- */
+  var kiAn = !!(o.felder && Llm && typeof Llm.bausteinUrteile === "function"
+    && typeof Llm.aktiv === "function" && Llm.aktiv());
+  var kiStatus = "aus";              // aus | laeuft | da | weg
+  var kiUrteile = {};                // ROHER Index -> Urteil
+  var kiSlots = [];                  // { kern, box, zeile }
+  var alleFelder = [];
+
+  function kiSlotFuellen(s) {
+    while (s.box.firstChild) s.box.removeChild(s.box.firstChild);
+    if (kiStatus === "laeuft") {
+      s.box.appendChild(el("span", "treppe-ki-laedt", "prüft deine Notiz …"));
+      return;
+    }
+    if (kiStatus !== "da") return;   // still nichts: die feste Notiz steht ohnehin da
+    var u = kiUrteile[rohVon(s.kern)];
+    if (!u) return;                  // fehlender i ist kein Fehlerfall
+    var st = KI_STUFE[u.stufe] || KI_STUFE.halb;
+    var text = st.text + (u.tipp ? " – " + u.tipp : "");
+    // belegZeile statt textContent: "Folie 12" im Tipp soll antippbar sein.
+    // Kein innerHTML - das ist der einzige Weg, auf dem Modelltext hier laeuft.
+    s.box.appendChild(belegZeile("div", text, o.themaId, "treppe-ki " + st.klasse));
+    if (s.zeile) vorschlagMarkieren(s.zeile);
+  }
+
+  /* Der Vorschlag markiert, er klickt nicht (Entscheidung 13.08.2026). Und er
+     markiert nur dort, wo die Zeile GENAU EINEN Vorratspunkt traegt: bei einer
+     Rolle mit fuenf Punkten muesste der Client aus fuenf Urteilen eines machen,
+     und das waere der Client, der urteilt - genau die Arbeitsteilung, die
+     Vertrag 2 verbietet. Dort stehen die Urteile einzeln an ihren Punkten. */
+  function vorschlagMarkieren(z) {
+    if (!z.werte) return;
+    var punkte = z.kern.slice();
+    if (z.partner) punkte.push(z.partner.kern);
+    var einig = null;
+    for (var i = 0; i < punkte.length; i++) {
+      var u = kiUrteile[rohVon(punkte[i])];
+      if (!u) return;                       // ein Urteil fehlt: lieber nichts
+      if (einig === null) einig = u.vorschlag;
+      else if (einig !== u.vorschlag) return;
+    }
+    if (!einig || !z.werte[einig]) return;
+    z.werte[einig].classList.add("ki-tipp");
+  }
+
+  function kiAufraeumen() {
+    // Faellt die KI aus, verschwindet der Ladezustand STILL. Kein Fehlertext,
+    // keine Entschuldigung - die feste Notiz ist die Wahrheit und steht da.
+    kiSlots.forEach(function (s) {
+      while (s.box.firstChild) s.box.removeChild(s.box.firstChild);
+    });
+    if (kiKopf) while (kiKopf.firstChild) kiKopf.removeChild(kiKopf.firstChild);
+  }
+
+  function kiStarten() {
+    if (!kiAn || kiStatus !== "aus") return;
+    kiStatus = "laeuft";
+
+    /* Ab jetzt wird verglichen, nicht mehr geschrieben. Vorbild einfrieren()
+       in main.js: readOnly statt disabled, damit Rose ihren eigenen Text beim
+       Vergleichen noch lesen kann. */
+    alleFelder.forEach(feldEinfrieren);
+    feldEinfrieren(notizen);
+    if (kiKopf) kiKopf.appendChild(el("div", "muted treppe-ki-start",
+      "Ab jetzt wird verglichen – deine Notizen bleiben stehen, wie sie sind."));
+
+    /* eingaben ist PORTIONSPARALLEL zu opts.teil (Vertrag 2). Gebaut wird je
+       KERN-Punkt, nicht je Zeile: eine Rolle deckt mehrere Vorratspunkte ab,
+       und bei der Schablone teilen sich sogar alle Rollen denselben Vorrat.
+       Wer denselben Punkt zweimal in teil schriebe, bekaeme von llm.js
+       stillschweigend nur den letzten Text - deshalb hier zusammenfassen. */
+    var proKern = {};
+    function sammeln(k, text) { (proKern[k] = proKern[k] || []).push(text); }
+    zeilenAlle.forEach(function (z) {
+      var t = z.feld ? z.feld.value.trim() : "";
+      z.kern.forEach(function (k) { sammeln(k, t); });
+      if (z.partner) sammeln(z.partner.kern, z.partnerFeld ? z.partnerFeld.value.trim() : "");
+    });
+    var teil = Object.keys(proKern).map(Number).sort(function (a, b) { return a - b; });
+    var eingaben = teil.map(function (k) {
+      return proKern[k].filter(function (s) { return s; }).join(" ").trim();
+    });
+
+    kiSlots.forEach(kiSlotFuellen);
+
+    /* 48 s. llm.js bricht bei 45 s ab und macht aus jedem Fehler null - der
+       Ladezustand wartet etwas laenger, sonst flackert er gegen sein eigenes
+       Ergebnis. Laeuft das Fenster trotzdem ab, verschwindet er still. */
+    var abgelaufen = false;
+    var uhr = setTimeout(function () {
+      if (kiStatus !== "laeuft") return;
+      abgelaufen = true;
+      kiStatus = "weg";
+      kiAufraeumen();
+    }, 48000);
+
+    function fertig(erg) {
+      clearTimeout(uhr);
+      if (abgelaufen) return;
+      /* Kein Netz, Tagesbudget voll, 429 vom Minutenzaehler: llm.js meldet all
+         das ueber onAusfall, behandelt wird es gleich. Der Ladezustand geht
+         weg, die feste Notiz steht da, und die NAECHSTE Karte ruft ganz normal
+         wieder auf - "beim naechsten Baustein" gibt es hier nicht, es ist ein
+         Aufruf je Aufgabe. */
+      if (!erg) { kiStatus = "weg"; return kiAufraeumen(); }
+      kiStatus = "da";
+      (erg.urteile || []).forEach(function (u) { kiUrteile[u.i] = u; });
+      if (kiKopf) {
+        while (kiKopf.firstChild) kiKopf.removeChild(kiKopf.firstChild);
+        if (erg.gesamt) kiKopf.appendChild(belegZeile("div", erg.gesamt, o.themaId, "treppe-ki-gesamt"));
+      }
+      /* Die Zahl wird GEZEIGT, nicht gerechnet (Vertrag 2: der Client zaehlt
+         die Urteile, llm.js hat das schon getan). Und sie ist NICHT die
+         Fazit-Zeile unten: dort steht Roses eigenes Urteil, hier der Abgleich
+         der KI. Zwei Saetze, zwei Bedeutungen. */
+      if (kiZahl && erg.zaehlung) {
+        kiZahl.appendChild(el("div", "treppe-ki-zaehlung",
+          "Abgleich: " + erg.zaehlung.n + " von " + erg.zaehlung.soll + " erkannt."));
+      }
+      kiSlots.forEach(kiSlotFuellen);
+    }
+
+    Llm.bausteinUrteile(o.themaId, f, eingaben, {
+      notiz: notizen ? notizen.value : "",
+      teil: teil,
+      // 429 und "kein Netz" fuehren beide zum selben stillen Rueckfall - die
+      // Unterscheidung nimmt llm.js uns ab, gebraucht wird sie hier (noch) nicht.
+      onAusfall: function () { }
+    }).then(fertig, function () { fertig(null); });
+  }
+
+  /* ---- Die Abschnitte zeichnen ---- */
+  var offen = zeilenAlle.length;
+  var stand = { hatte: 0, halb: 0, fehlte: 0 };
+  var nr = 0;
+  // Bei geteiltem Vorrat (Rollen-Schablone) wird die Erwartungsliste EINMAL
+  // aufgedeckt, nicht je Rolle neu - sonst stuende sie dreimal untereinander.
+  var vorratBox = null;
+  if (ab.vorratGeteilt) vorratBox = el("div", "treppe-vorrat");
+
+  bloecke.forEach(function (b) {
+    var sek = el("div", "treppe-abschnitt");
+    /* Der auftrag geht bewusst AN chipText VORBEI. Die Schutzregel dort ("ein
+       Geruest darf nur wiederholen, was Rose ohnehin im Fragetext liest") ist
+       richtig und bleibt - sie faengt GERATENE Labels ab. Ein auftrag ist
+       redaktionell gesetzt: jemand hat ihn hingeschrieben, damit Rose weiss,
+       was verlangt ist. Das ist keine Aufweichung der Regel, sondern ihre
+       andere Haelfte. Dasselbe gilt unten fuer DEKLARIERTE chips. */
+    if (b.a.auftrag) sek.appendChild(el("div", "treppe-auftrag", b.a.auftrag));
+    if (b.kind && b.kind.auftrag) {
+      sek.appendChild(el("div", "treppe-auftrag-paar", "↳ " + b.kind.auftrag));
+    }
+
+    b.zeilen.forEach(function (z) {
+      nr++;
+      var zeile = el("div", "treppe-punkt" + (z.form === "rolle" ? " treppe-rolle" : ""));
+      var kopf = el("div", "treppe-punkt-kopf");
+      kopf.appendChild(el("span", "treppe-nr", String(nr)));
+      var inhalt = el("div", "treppe-inhalt");
+
+      var verdeckt = el("span", "treppe-verdeckt");
+      if (o.felder) {
+        /* Chip-Regel: ein DEKLARIERTER Chip aus dem Korpus wird gezeigt, wie er
+           dasteht. Ein GERATENER (labelChip aus dem Praefix vor dem Doppelpunkt)
+           laeuft weiter durch chipText und faellt auf "Baustein N" zurueck,
+           wenn er die Antwort verriete. Im Rollen-Zweig gibt es weder das eine
+           noch das andere - dort steht der auftrag darueber. */
+        if (z.form !== "rolle") {
+          var chipT = z.chip || chipText(labelChip(punktVon(z.kern[0]), z.kern[0]), z.kern[0], f);
+          inhalt.appendChild(el("span", "treppe-label", chipT));
+        }
+        inhalt.appendChild(verdeckt);
+        // Der Satzanfang ist ein PLATZHALTER, kein Wert: er verschwindet, sobald
+        // Rose tippt, und wandert nie in den Lernstand.
+        z.feld = wachsFeld("treppe-eingabe",
+          z.form === "rolle" && z.a.satzanfang ? z.a.satzanfang : "…hier notieren, wenn du magst");
+        inhalt.appendChild(z.feld);
+        alleFelder.push(z.feld);
+        if (z.partner) {
+          var paar = el("div", "treppe-paar");
+          paar.appendChild(el("span", "treppe-paar-pfeil", "↳"));
+          var pinhalt = el("div", "treppe-paar-inhalt");
+          if (z.partner.chip) pinhalt.appendChild(el("span", "treppe-label", z.partner.chip));
+          z.partnerVerdeckt = el("span", "treppe-verdeckt");
+          pinhalt.appendChild(z.partnerVerdeckt);
+          z.partnerFeld = wachsFeld("treppe-eingabe", "…und das Beispiel dazu");
+          pinhalt.appendChild(z.partnerFeld);
+          alleFelder.push(z.partnerFeld);
+          paar.appendChild(pinhalt);
+          inhalt.appendChild(paar);
+        }
+      } else {
+        verdeckt.textContent = z.form === "rolle"
+          ? (z.a.auftrag || "Diese Rolle")
+          : (z.chip || "Baustein " + nr);
+        inhalt.appendChild(verdeckt);
+        if (z.partner) {
+          z.partnerVerdeckt = el("span", "treppe-verdeckt", z.partner.chip || "…dazu");
+          var paar2 = el("div", "treppe-paar");
+          paar2.appendChild(el("span", "treppe-paar-pfeil", "↳"));
+          paar2.appendChild(z.partnerVerdeckt);
+          inhalt.appendChild(paar2);
+        }
+      }
+      kopf.appendChild(inhalt);
+
+      var werkzeuge = el("div", "treppe-werkzeuge");
+      var hv = hinweiseFuer(f, rohVon(z.kern[0]), punktVon(z.kern[0]), o.hinweisIndex);
+      var hinweisStufe = 0;
+      var hinweis = el("button", "knopf sekundaer klein-knopf", "💡 Hinweis");
+      hinweis.addEventListener("click", function () {
+        hinweisStufe++;
+        verdeckt.classList.add("mit-hinweis");
+        if (hinweisStufe === 1) {
+          verdeckt.textContent = hv.erste;
+          if (hv.zweite) { hinweis.textContent = "💡 Noch ein Hinweis"; return; }
+          hinweis.disabled = true;
+        } else {
+          verdeckt.textContent = hv.erste + " · " + hv.zweite;
+          hinweis.disabled = true;
+        }
+      });
+      werkzeuge.appendChild(hinweis);
+
+      var auf = el("button", "knopf klein-knopf", "Aufdecken");
+      auf.addEventListener("click", function () {
+        // DER Ausloeser des KI-Aufrufs: der ERSTE Aufdecken-Klick der Karte.
+        // Ein Aufruf je Aufgabe, nicht je Baustein - nur wenn das Modell alle
+        // Felder zusammen sieht, erkennt es richtigen Inhalt im falschen Slot.
+        kiStarten();
+        werkzeuge.remove();
+        var eigenerText = z.feld ? z.feld.value.trim() : "";
+        var partnerText = z.partnerFeld ? z.partnerFeld.value.trim() : "";
+        while (inhalt.firstChild) inhalt.removeChild(inhalt.firstChild);
+
+        // Die Ueberschrift des Abschnitts steht schon ueber der Zeile - sie hier
+        // nach dem Aufdecken zu wiederholen, saehe nur nach doppelt aus.
+        if (z.form === "rolle" && z.a.auftrag && !b.a.auftrag) {
+          inhalt.appendChild(el("div", "treppe-rolle-kopf", z.a.auftrag));
+        } else if (z.chip) {
+          inhalt.appendChild(el("span", "treppe-label", z.chip));
+        }
+        if (eigenerText) {
+          var eigene = el("div", "treppe-eigene");
+          eigene.appendChild(el("span", "muted", "Deine Notiz: "));
+          eigene.appendChild(el("span", null, eigenerText));
+          inhalt.appendChild(eigene);
+        }
+
+        /* Reihenfolge je Vorratspunkt: KI-Zeile, DARUNTER die feste Notiz. Die
+           feste Notiz ist die Wahrheit, das KI-Urteil ist der Kommentar dazu -
+           und sie erscheint immer, mit KI und ohne. */
+        function vorratZeigen(ziel, k, mitEigen) {
+          var box = el("div", "treppe-ki-box");
+          ziel.appendChild(box);
+          kiSlots.push({ kern: k, box: box, zeile: mitEigen ? z : null });
+          kiSlotFuellen(kiSlots[kiSlots.length - 1]);
+          ziel.appendChild(belegZeile("div", punktVon(k), o.themaId, "treppe-text"));
+        }
+
+        if (ab.vorratGeteilt) {
+          // Der geteilte Vorrat haengt EINMAL unter der Karte; diese Zeile
+          // schaltet ihn frei, mehr nicht.
+          if (!vorratBox.dataset.auf) {
+            vorratBox.dataset.auf = "1";
+            vorratBox.appendChild(el("div", "treppe-vorrat-kopf", "Das stand im Erwartungshorizont:"));
+            z.kern.forEach(function (k) {
+              var block = el("div", "treppe-vorrat-punkt");
+              vorratBox.appendChild(block);
+              vorratZeigen(block, k, false);
+            });
+          }
+        } else if (z.form === "rolle") {
+          z.kern.forEach(function (k) {
+            var block = el("div", "treppe-vorrat-punkt");
+            inhalt.appendChild(block);
+            vorratZeigen(block, k, z.kern.length === 1);
+          });
+        } else {
+          vorratZeigen(inhalt, z.kern[0], true);
+          if (z.partner) {
+            var pblock = el("div", "treppe-paar treppe-paar-auf");
+            pblock.appendChild(el("span", "treppe-paar-pfeil", "↳"));
+            var pin = el("div", "treppe-paar-inhalt");
+            if (z.partner.chip) pin.appendChild(el("span", "treppe-label", z.partner.chip));
+            if (partnerText) {
+              var pe = el("div", "treppe-eigene");
+              pe.appendChild(el("span", "muted", "Deine Notiz: "));
+              pe.appendChild(el("span", null, partnerText));
+              pin.appendChild(pe);
+            }
+            vorratZeigen(pin, z.partner.kern, false);
+            pblock.appendChild(pin);
+            inhalt.appendChild(pblock);
+          }
+        }
+
+        var frage = el("div", "treppe-frage");
+        frage.appendChild(el("span", "muted",
+          z.form === "rolle" ? "Hattest du die Rolle?" : "War der bei dir?"));
+        z.werte = {};
+        ABRUF_WERTE.forEach(function (w) {
+          var b = el("button", "treppe-wert " + w.klasse, w.text);
+          z.werte[w.wert] = b;
+          b.addEventListener("click", function () {
+            if (zeile.dataset.fertig) return;
+            zeile.dataset.fertig = "1";
+            stand[w.wert]++;
+            // gewaehlt auf den GEKLICKTEN: die CSS-Regeln dafuer standen seit
+            // Monaten da und waren auf diesem Pfad toter Code. Rose wollte die
+            // Farbe (gruen / orange / ruhig), nicht das Ausblassen der anderen.
+            b.classList.add("gewaehlt");
+            frage.querySelectorAll("button").forEach(function (x) {
+              x.disabled = true;
+              if (x !== b) x.classList.add("blass");
+            });
+            zeile.classList.add("quittiert", "quittiert-" + w.klasse);
+            offen--;
+            if (!offen) fertigZeigen();
+          });
+          frage.appendChild(b);
+        });
+        vorschlagMarkieren(z);
+        inhalt.appendChild(frage);
+      });
+      werkzeuge.appendChild(auf);
+      kopf.appendChild(werkzeuge);
+      zeile.appendChild(kopf);
+      sek.appendChild(zeile);
+    });
+
+    karte.appendChild(sek);
+  });
+
+  if (vorratBox) karte.appendChild(vorratBox);
+
+  function fertigZeigen() {
+    var quote = (stand.hatte + stand.halb * 0.5) / zeilenAlle.length;
+    var fazit = el("div", "treppe-fazit");
+    var stk = stickerEl(quote >= 0.8 ? "good" : quote >= 0.4 ? "part" : "sanft");
+    if (stk) fazit.appendChild(stk);
+    var text = el("div", "text");
+    /* Diese Zeile ist ROSES eigenes Urteil und zaehlt ZEILEN - im Rollen-Zweig
+       also Rollen, nicht Bausteine. Sie hat nichts mit dem KI-Abgleich oben zu
+       tun, und es darf keine Zeile geben, die beides vermischt. */
+    // Ohne Rollen bleibt der Satz woertlich der alte: "Baustein" steht schon in
+    // der Kopfzeile und muss hier nicht noch einmal stehen (und "4 von 4
+    // Bausteine" waere obendrein der falsche Fall).
+    var fazitWort = nurRollen ? (zeilenAlle.length === 1 ? " Rolle" : " Rollen") : "";
+    text.appendChild(el("div", "titel",
+      stand.hatte + " von " + zeilenAlle.length + fazitWort + " kamen aus dem Kopf"
+      + (stand.halb ? ", " + stand.halb + " halb" : "") + "."));
+    text.appendChild(el("div", "muted", fazitSatz(quote, stand)));
+    fazit.appendChild(text);
+    karte.appendChild(fazit);
+
+    var weiter = el("button", "knopf", o.weiterText || "Weiter");
+    weiter.addEventListener("click", function () {
+      /* Unveraendert im Vertrag mit themen-lernen.js: gesamt/hatte/halb/fehlte/
+         quote. Dort rechnet ok = erg.quote >= 0.5 und die Reife weiter - was
+         hier gezaehlt wird, hat sich geaendert, WIE es zurueckkommt nicht. */
+      if (o.onFertig) o.onFertig({
+        gesamt: zeilenAlle.length, hatte: stand.hatte, halb: stand.halb,
+        fehlte: stand.fehlte, quote: quote
+      });
+    });
+    karte.appendChild(weiter);
+    weiter.focus();
+  }
+
+  return karte;
+}
+
 /* ---------- Stufe 1 + 2 + 4: frei abrufen, Hinweis, aufdecken ---------- */
 
 function aufdeckenKarte(f, kern, o) {
@@ -420,9 +1249,8 @@ function aufdeckenKarte(f, kern, o) {
     // Reihenfolge, dann zuordnen - naeher an dem, wie Abruf wirklich ablaeuft.
     // Bewusst sitzungslokal: kein Speichern, kein Log, kein Sync - das Feld
     // ist Schmierzettel, nicht Leistung.
-    var notizen = el("textarea", "treppe-notizen");
+    var notizen = wachsFeld("treppe-notizen", "Sammelort – schreib rein, wie es dir kommt.");
     notizen.rows = 3;
-    notizen.placeholder = "Sammelort – schreib rein, wie es dir kommt.";
     karte.appendChild(notizen);
   }
 
@@ -479,9 +1307,9 @@ function aufdeckenKarte(f, kern, o) {
       // die Rolle des Platzhalters uebernimmt der Chip.
       verdeckt = el("span", "treppe-verdeckt");
       inhalt.appendChild(verdeckt);
-      eingabe = el("input", "treppe-eingabe");
-      eingabe.type = "text";
-      eingabe.placeholder = "…hier notieren, wenn du magst";
+      // Seit dem 22.08. eine mitwachsende textarea statt eines einzeiligen
+      // input: Roses Text soll sichtbar bleiben, nicht seitlich wegscrollen.
+      eingabe = wachsFeld("treppe-eingabe", "…hier notieren, wenn du magst");
       inhalt.appendChild(eingabe);
     } else {
       verdeckt = el("span", "treppe-verdeckt", "Baustein " + (i + 1));
@@ -536,10 +1364,14 @@ function aufdeckenKarte(f, kern, o) {
           if (zeile.dataset.fertig) return;
           zeile.dataset.fertig = "1";
           stand[w.wert]++;
+          // Der geklickte Knopf bekommt seit dem 22.08. gewaehlt - die CSS-Regeln
+          // dafuer standen laengst da und waren auf diesem Pfad toter Code.
+          b.classList.add("gewaehlt");
           frage.querySelectorAll("button").forEach(function (x) {
             x.disabled = true;
             if (x !== b) x.classList.add("blass");
           });
+          zeile.classList.add("quittiert", "quittiert-" + w.klasse);
           offen--;
           if (!offen) fertigZeigen();
         });

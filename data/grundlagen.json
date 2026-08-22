@@ -662,7 +662,7 @@
       "afb": 3,
       "frage": "Beziehen Sie begründet Stellung zu der Fragestellung: Förderschule oder allgemeinbildende Schule - welches ist der bessere Lernort für Schüler:innen im SGE?",
       "stichpunkte": [
-        "Struktur laut Dozentin: zwei Punkte dafür, zwei dagegen, dann eine Bewertung",
+        "Struktur laut Dozentin: 2 Punkte dafür, 2 dagegen, dann Bewertung",
         "Pro Förderschule: kleine Klassenfrequenzen, wohnliche Lernumgebung, Ganztag, spezialisierte Förderung und Stufenmodell mit Werkstufe",
         "Pro allgemeinbildende Schule: Teilhabe und Begegnung, UN-BRK-Perspektive (gleichberechtigter Zugang), soziales Lernen mit Peers, Abbau von Vorurteilen",
         "Contra Förderschule: Gefahr der Isolation/Separation, weniger Kontakt zu Gleichaltrigen ohne Behinderung",
@@ -687,6 +687,55 @@
       "tipp": "Das ist die Original-Beispielaufgabe der Dozentin. Wichtig: 2 Punkte dafür, 2 dagegen, dann eine Bewertung - und in ganzen Sätzen schreiben. Die Frage selbst stellt Folie 21 als Ausblick (Förderschule oder allgemeine Schule - Inklusion im SGE). Die Fakten für die Seite der Förderschule holst du dir von Folie 18 (Merkmale) und Folie 20 (Stufen und Werkstufe), die Beschulungsformen von Folie 17; in deinen Notizen sind das Notizen S. 57 und 58. Ein Hinweis zur Musterlösung: Die UN-Behindertenrechtskonvention kommt in diesem Foliensatz nicht vor - sie stammt aus den Vorlesungen zu Wohnen (Artikel 19) und Freizeit (Artikel 30), als Argument ist sie hier trotzdem stark. Zur Einordnung: Das Thema Inklusion im SGE ist laut Folie 11 als einziges von der Klausur ausgenommen. Diese Aufgabe bleibt trotzdem wertvoll - sie ist die Format-Vorlage der Dozentin, und das Geruest 2 dafuer, 2 dagegen, dann bewerten traegt bei jeder AFB-III-Aufgabe, egal zu welchem Thema.",
       "quelle": "dozentin-beispiel",
       "quelleSicherheit": "geprueft",
+      "abschnitte": [
+        {
+          "operator": "benennen",
+          "auftrag": "Das Antwortgerüst der Dozentin ansagen",
+          "idx": [
+            0
+          ],
+          "form": "liste",
+          "chips": [
+            "Aufbau"
+          ]
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dafuer",
+          "auftrag": "Was für jeden der beiden Lernorte spricht",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Für die eine Seite spricht … / Für die andere Seite spricht …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dagegen",
+          "auftrag": "Was gegen jeden der beiden Lernorte spricht",
+          "idx": [
+            3,
+            4
+          ],
+          "form": "rolle",
+          "parallelZu": 1,
+          "punkte": 2,
+          "satzanfang": "Gegen die eine Seite spricht … / Gegen die andere Seite spricht …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "fazit",
+          "auftrag": "Dein begründetes Urteil am Schluss",
+          "idx": [
+            5
+          ],
+          "form": "rolle",
+          "punkte": 1,
+          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …"
+        }
+      ],
       "hinweise": [
         [
           "Wie ist die Antwort aufgebaut? Denk ans Zahlenschema.",

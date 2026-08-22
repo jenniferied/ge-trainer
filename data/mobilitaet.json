@@ -1467,14 +1467,14 @@
       "afb": 3,
       "frage": "Der Rahmenlehrplan setzt als Ziel, dass alle Schüler:innen, denen es möglich ist, den Schulweg beziehungsweise den Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen. Die Dozentin fragt dazu kritisch: Wird so Teilhabe erzielt? Nehmen Sie begründet Stellung.",
       "stichpunkte": [
-        "Wiedergabe der Zielsetzung: selbstständige Bewältigung von Schulweg und Weg zum Praktikum mit öffentlichen Verkehrsmitteln; der Unterricht geht von Verkehrssituationen aus, die im Alltag zu bewältigen sind",
+        "Wiedergabe der Zielsetzung: selbstständige Bewältigung von Schulweg und Weg zum Praktikum mit öffentlichen Verkehrsmitteln; der Unterricht geht von Verkehrssituationen des Alltags aus",
         "Dafür: Schulweg und Praktikumsweg sind regelmäßige, verlässlich wiederkehrende Wege - ein sinnvoller, gut übbarer Einstieg mit hohem Übertragungswert",
         "Dafür: Die Zielsetzung ist überprüfbar und für die Schule realistisch umsetzbar",
-        "Dagegen: Mobilität wird auf der Definitionsfolie als Überwindung der Distanz zwischen Lebensbereichen gefasst - dazu gehören auch Wohnen, Einkaufen und ausdrücklich Freizeit; zwei feste Wege decken das nicht ab",
-        "Dagegen: Teilhabe zeigt sich in der Optionenvielfalt (Folie 4) - wer nur zwei eingeübte Strecken kann, kann noch nicht spontan entscheiden, wohin er möchte",
+        "Dagegen: Mobilität heißt Überwindung der Distanz zwischen den Lebensbereichen - dazu gehören auch Wohnen, Einkaufen und ausdrücklich Freizeit; zwei feste Wege decken das nicht ab",
+        "Dagegen: Teilhabe zeigt sich in der Optionenvielfalt - wer nur zwei eingeübte Strecken kann, kann noch nicht spontan entscheiden, wohin er möchte",
         "Dagegen: Die Einschränkung denen es möglich ist grenzt einen Teil der Schüler:innen von vornherein aus; für sie stellt sich die Frage nach anderen Wegen zur Teilhabe",
         "Bezug zu den Bausteinen selbstbestimmter Mobilität: tatsächliche Bewegungsmöglichkeit und Wissen um sichere Verkehrsteilnahme - beides muss über den Schulweg hinausreichen",
-        "Bezug zu den Barrierefreiheits-Regeln: Ohne Räder-Füße-, Mehr-Kanal- und KISS-Regel im öffentlichen Raum bleibt die selbstständige Wegbewältigung an Grenzen gebunden, die die Schule allein nicht auflösen kann",
+        "Bezug zu den Barrierefreiheits-Regeln: Ohne Räder-Füße-, Mehr-Kanal- und KISS-Regel im öffentlichen Raum stößt selbstständige Wegbewältigung an Grenzen, die die Schule allein nicht auflöst",
         "Bewertung: Die Zielsetzung ist ein notwendiger, aber kein hinreichender Schritt - sie ist als Mindestziel sinnvoll, greift als Teilhabemaßstab aber zu kurz"
       ],
       "muster": "Der Rahmenlehrplan formuliert als Zielsetzung, dass alle Schülerinnen und Schüler, denen es möglich ist, den Schulweg beziehungsweise den Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen. Für diese Setzung spricht einiges. Schulweg und Praktikumsweg sind regelmäßig wiederkehrende Strecken, sie lassen sich systematisch üben, und die dabei erworbenen Kompetenzen wie Fahrpläne lesen, Umsteigen oder Verhalten im Bus sind auf andere Wege übertragbar. Außerdem ist das Ziel konkret genug, dass eine Schule es tatsächlich verfolgen und überprüfen kann. Trotzdem greift es als Maßstab für Teilhabe zu kurz. Mobilität wird in der Vorlesung als Überwindung der Distanz zwischen den Lebensbereichen verstanden, und zu diesen Bereichen gehören neben Arbeiten auch Wohnen, Einkaufen und Freizeit. Zwei fest eingeübte Strecken decken das nicht ab. Teilhabe zeigt sich gerade in der Optionenvielfalt, also darin, spontan entscheiden zu können, wohin man möchte; wer nur den Weg zur Schule und zum Praktikum sicher beherrscht, ist für alles Weitere nach wie vor auf Begleitung angewiesen. Hinzu kommt die Einschränkung denen es möglich ist, die einen Teil der Schülerinnen und Schüler von diesem Ziel ausnimmt, ohne zu sagen, welche Form von Mobilität für sie angestrebt wird. Schließlich liegt ein Teil der Verantwortung außerhalb der Schule: Solange Räder-Füße-, Mehr-Kanal- und KISS-Regel im öffentlichen Raum nicht umgesetzt sind, stößt auch gut trainierte Selbstständigkeit an Grenzen. Ich bewerte die Zielsetzung deshalb als notwendigen, aber nicht hinreichenden Schritt: Sie taugt als Mindestziel und als Einstieg, nicht aber als Maßstab dafür, ob Teilhabe erreicht ist.",
@@ -1496,51 +1496,98 @@
       "quelle": "folie-mobilitaet-14",
       "quelleSicherheit": "geprueft",
       "generiert": true,
+      "abschnitte": [
+        {
+          "operator": "eroertern",
+          "rolle": "these",
+          "auftrag": "Was setzt der Rahmenlehrplan überhaupt als Ziel?",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "satzanfang": "Der Rahmenlehrplan setzt als Ziel, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dafuer",
+          "auftrag": "Was spricht für diese Setzung?",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "rolle",
+          "satzanfang": "Dafür spricht, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dagegen",
+          "auftrag": "Was spricht dagegen, sie als Maßstab für Teilhabe zu nehmen?",
+          "idx": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "form": "rolle",
+          "satzanfang": "Dagegen lässt sich einwenden, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "fazit",
+          "auftrag": "Dein abgewogenes Urteil zum Schluss.",
+          "idx": [
+            8
+          ],
+          "form": "rolle",
+          "satzanfang": "Ich bewerte die Zielsetzung deshalb als …"
+        }
+      ],
       "hinweise": [
         [
-          "Erst die Zielformulierung sauber wiedergeben",
-          "Was genau steht im Lehrplan?",
-          "Der Ausgangspunkt: das offizielle Ziel"
+          "Erst sauber wiedergeben, was der Lehrplan überhaupt verlangt",
+          "Welche zwei Strecken nennt der Zieltext, und womit?",
+          "Der Ausgangspunkt deiner Erörterung: das offizielle Ziel"
         ],
         [
-          "Warum eignen sich gerade diese Wege zum Üben?",
-          "Das Argument der Wiederholung und Übertragbarkeit",
-          "Was macht feste Strecken didaktisch wertvoll?"
+          "Warum eignen sich feste Strecken zum systematischen Üben?",
+          "Was einmal gelernt ist, hilft auch anderswo - wie heißt das Argument?",
+          "Erstes Pro-Argument: Wiederholung und Übertrag"
         ],
         [
-          "Das Machbarkeits-Argument",
-          "Woran lässt sich der Erfolg messen?",
-          "Realismus als Stärke des Ziels"
+          "Zweites Pro-Argument betrifft die Machbarkeit",
+          "Kann eine Schule das leisten, und lässt sich der Erfolg messen?",
+          "Ein Ziel, das man nachhalten kann"
         ],
         [
-          "Was umfasst Mobilität laut Definition alles?",
-          "Der Abgleich mit dem breiten Mobilitätsbegriff",
-          "Welche Lebensbereiche bleiben außen vor?"
+          "Halte das Ziel gegen die Definition aus der Vorlesung",
+          "Welche Lebensbereiche kommen im Zieltext gar nicht vor?",
+          "Erstes Gegenargument: der Begriff ist breiter als zwei Strecken"
         ],
         [
-          "Teilhabe heißt auswählen können - reichen zwei Strecken?",
-          "Das Argument der Wahlfreiheit",
-          "Spontan entscheiden können - geht das damit?"
+          "Teilhabe heißt auswählen können - reicht ein eingeübter Weg?",
+          "Der Fachbegriff der Vorlesung für die Fülle an Möglichkeiten",
+          "Zweites Gegenargument: Wahlfreiheit statt zwei Routen"
         ],
         [
-          "Wen klammert die Formulierung von Anfang an aus?",
-          "Der Einschub im Zieltext und seine Folge",
-          "Das Exklusions-Argument"
+          "Achte auf den Einschub im Zieltext - wen nimmt er aus?",
+          "Wer bleibt bei dieser Formulierung von Anfang an draußen vor?",
+          "Drittes Gegenargument: das Ziel gilt nicht allen"
         ],
         [
-          "Der Bezug zu den zwei Grundbausteinen",
-          "Können und Wissen - beide reichen weiter",
-          "Welche Bausteine tragen eigenständige Wege?"
+          "Die zwei Säulen aus der Vorlesung: Können und Wissen",
+          "Reicht beides, wenn es nur für eine Strecke gilt?",
+          "Viertes Gegenargument: die zwei Grundpfeiler tragen weiter"
         ],
         [
-          "Die drei Regeln als Grenze schulischer Möglichkeiten",
-          "Woran stößt Schule von außen an Grenzen?",
-          "Der Umwelt-Faktor draußen im Alltag"
+          "Drei Gestaltungsregeln aus der Vorlesung, draußen im Alltag",
+          "Woran stößt Schule, obwohl sie gut ausbildet?",
+          "Fünftes Gegenargument: die Umwelt muss mitspielen"
         ],
         [
-          "Das abgestufte Urteil: nötig, aber nicht genug",
-          "Wie fällt die Gesamtbewertung aus?",
-          "Mindestziel oder Maßstab - deine Einordnung"
+          "Jetzt dein abgestuftes Urteil, nicht nur Widerspruch",
+          "Wofür taugt das Ziel trotzdem, und wofür nicht?",
+          "Zwei Wörter aus der Logik: nötig ja, genug nein"
         ]
       ]
     },

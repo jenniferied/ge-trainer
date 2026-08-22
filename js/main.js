@@ -27,6 +27,10 @@ import * as Glossar from "./glossar.js";
    weglegen und sich selbst pruefen - erst das Neue des Themas, danach der
    Stapel aus allen frueher begonnenen Themen (reife.js). */
 import * as ThemenLernen from "./themen-lernen.js";
+/* Der Reife-Stand je Item (reife.js). Gebraucht in HOOKS.lernKarte: die zweite
+   Tuer soll dieselbe Portion und dasselbe Geruest zeigen wie das Themen-Lernen,
+   und beide lesen dafuer denselben abgeleiteten Stand aus dem antwortLog. */
+import * as Reife from "./reife.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
@@ -157,11 +161,37 @@ var HOOKS = {
   /* Der Between-Step: dieselbe freie Karte, aber mit der Abruf-Treppe davor.
      stats.js waehlt zwischen freiKarte und lernKarte anhand der Runden-Wahl
      (wahl.lernschritt) - die Entscheidung gehoert der Runde, nie global. */
+  /* DIE ZWEITE TUER. Bis zum 22.08.2026 reichte sie weder felder noch teil noch
+     hinweisIndex durch - obwohl Treppe.lernSchritt alle drei laengst
+     weiterleitet. In dieser Tuer stand deshalb IMMER die volle Kernliste ohne
+     Geruest und immer die erste Hinweis-Version, waehrend im Themen-Lernen
+     schon portioniert wurde. Wer nur ueber das Themen-Lernen testete, sah die
+     halbe Wirkung nicht.
+
+     Jennifer am 20.08. ausdruecklich: das Baustein-System soll "auch beim
+     allgemeinen Modus" ankommen, also auf genau diesem Weg. Die Werte kommen
+     aus derselben Quelle wie drueben - dem Reife-Stand des Items -, damit die
+     Aufgabe hier nicht anders aussieht als dort.
+
+     Was NICHT von der Reife kommt: der Zieh-Modus. Den waehlt Rose beim Bauen
+     der Runde (wahl.lernschritt), und eine Reifestufe darf ihre Wahl nicht
+     ueberstimmen. Steht die Runde auf "an", bleibt es beim Schreiben - hoechstens
+     mit Geruest. */
   lernKarte: function (thema, f, art) {
+    var stand = Reife.reifeStand();
+    var st = stand.get(f.id);
+    var stufe = st ? st.stufe : 0;
+    var ziehen = art === "ziehen";
     return Treppe.lernSchritt(thema, f, {
-      // art "ziehen" = die sanfte Stufe (echte Bausteine aus einer Mischliste
-      // antippen), alles andere = frei abrufen. Kommt aus wahl.lernschritt.
-      modus: art === "ziehen" ? "ziehen" : null,
+      modus: ziehen ? "ziehen" : null,
+      // Geruest und Portion gibt es nur beim Schreiben. Wiedererkennen braucht
+      // keine Felder, und eine Portion setzt dort schon o.teil unten.
+      felder: !ziehen && Reife.modusFuer(stufe) === "frei-hinweise",
+      teil: stufe < 3 ? ThemenLernen.lvl1Teil(f, stufe) : null,
+      // Rotation ueber die LERNTAGE statt ueber einen Wiederholungszaehler: den
+      // gibt es auf diesem Weg nicht, und ein Hinweis, der sich taeglich dreht,
+      // ist genau das, wofuer f.hinweise mehrere Versionen traegt.
+      hinweisIndex: Reife.lerntage().length,
       freiKarte: function () { return freiKarte(thema, f, { einzeln: true }); }
     });
   },
@@ -647,16 +677,27 @@ function mkSchnellFragen(s) {
           : "Wenn du magst, fang mit " + s.offen[0] + " an. Wenn nicht, auch gut.",
   });
 
-  // Die Grenze dieser App, in der Rolle gesagt. Fachliches gehoert in die
-  // Uebungen: der Korpus endet bei den acht Vorlesungen, und die Kreatur
-  // erfindet nichts dazu - keine Folienzahl, keine Definition, keine
-  // Klausurinhalte. Auch der Freitext-Zweig sagt spaeter genau das
-  // (SYSTEM_MASKOTTCHEN in supabase/functions/llm-ge).
+  /* Die Grenze dieser App, in der Rolle gesagt - und sie ist seit dem
+     22.08.2026 eine ANDERE. Bis dahin verneinte der Satz hier jedes
+     Stoffwissen und schickte Rose im zweiten Halbsatz zu den Aufgaben weiter.
+     Beides ist ab jetzt falsch: die Kreatur bekommt in
+     derselben Welle das Glossar als eigenen System-Block, sie kennt also die
+     131 Fachbegriffe, weil sie beim Ueben dabei war.
+
+     Die Grenze bleibt trotzdem, sie liegt nur woanders: sie sagt ehrlich, wenn
+     ein Wort nicht im Glossar steht, sie nennt keine Foliennummern, sie
+     erfindet keine Klausurinhalte, und sie urteilt nicht ueber Roses Leistung.
+     Genau so wird der Prompt drueben gehaertet (SYSTEM_MASKOTTCHEN in
+     supabase/functions/llm-ge).
+
+     Der Satz hier setzt bewusst KEIN Versprechen ein. Ein Chip, der
+     Erklaerungen zusagt, bevor der Prompt sie liefert, waere derselbe Fehler
+     mit umgekehrtem Vorzeichen - eine offene Einladung traegt in beide
+     Richtungen. */
   liste.push({
     text: "Kannst du mir was erklären?",
-    antwort: "Fachlich bin ich raus, ich hab die Folien nicht im Kopf. Was ich kann: mit dir hier sitzen "
-      + "und zählen. Zum Erklären nimm eine Aufgabe – da steht die Erklärung direkt drunter, "
-      + "und im Klausurmodus schaut die Korrektur über deine Antwort.",
+    antwort: "Frag einfach, dann schauen wir zusammen drauf. Manches kenne ich vom Zuhören, "
+      + "bei anderem sag ich dir ehrlich, dass ich es nicht sicher weiß.",
   });
 
   // Erst wenn die Kreatur selbst weiss, was sie ist.
@@ -703,11 +744,15 @@ function mkChatAdapter(tz, stufe) {
           return true;
         });
     },
-    // Der ruhige Nebensatz unter den Knoepfen. Er sagt, was die Kreatur kann und
-    // was nicht - sonst probiert Rose Fachfragen an der falschen Stelle. Der
-    // ST-Trainer hat denselben Satz in seiner Fassung (mk-chat.js); die Grenze
-    // ist dort der Chat an der Uebungsfrage, hier sind es die Aufgaben selbst.
-    hinweis: "Ich weiß, wie dein Tag läuft. Vom Stoff versteh ich nichts – dafür steht bei jeder Aufgabe die Erklärung.",
+    /* Der ruhige Nebensatz unter den Knoepfen. Bis zum 22.08.2026 stand hier
+       dieselbe Verneinung wie im Chip oben - Rose haette also eine Erklaerung
+       gelesen und direkt darunter gestanden, dass die Kreatur nichts davon
+       versteht. Seit sie das Glossar als System-Block mitbekommt, ist das
+       schlicht nicht mehr wahr. Der Satz sagt jetzt dasselbe wie der Chip oben: frag ruhig,
+       und was ich nicht sicher weiss, sage ich.
+       Der ST-Zwilling in st-trainer/app/js/mk-chat.js bleibt stehen und bleibt
+       dort WAHR - drueben gibt es dieses Glossar nicht. */
+    hinweis: "Ich weiß, wie dein Tag läuft – und beim Üben hör ich mit. Frag ruhig, und wenn ich etwas nicht sicher weiß, sag ich es dir.",
     stand: function () { return mkStand(tz, stufe); },
     // Dasselbe Bild wie auf der Startseite - der Chat zeichnet nichts Eigenes,
     // also waechst der Avatar automatisch mit und kann nie in einer anderen
@@ -1841,9 +1886,17 @@ function tagesAufgaben() {
      wenn die Kachel laengst abgehakt ist - das zweite und dritte Thema an
      einem Tag ist niemandes Pflicht, aber es soll zu sehen sein. */
   var tlHeute = ThemenLernen.heuteThemen();
+  /* Liegt eine angefangene Runde, sagt es die Kachel schon hier - sonst muesste
+     Rose sie suchen, und "es liegt halt nur woanders" (ihr Satz vom 19.08.)
+     hilft nur, wenn das Woanders von selbst auf sich zeigt. stats.js wird dafuer
+     ausdruecklich NICHT angefasst; der Verlauf fuehrt ueber SPIEL_ROUTE ohnehin
+     schon zum selben Schirm. */
+  var tlOffen = ThemenLernen.offeneRunde(themen);
   var liste = [{
     key: "tl", icon: "📚", titel: "Themen-Lernen", kurz: "Themen-Lernen",
-    klein: "ein Thema · erarbeiten, dann prüfen",
+    klein: tlOffen
+      ? tlOffen.titel + " liegt angefangen da"
+      : "ein Thema · erarbeiten, dann prüfen",
     blase: tlHeute,
     erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
   }, {
@@ -3371,7 +3424,16 @@ function freiKarte(thema, f, opts) {
              der sechs Faelle groesser, als die Kernliste aussieht, weil die
              "Weitere:"-Zeile in den Zusatz gewandert ist. */
           waehle: typeof f.waehle === "number" && f.waehle > 0 && f.waehle <= t.kern.length
-            ? f.waehle : undefined
+            ? f.waehle : undefined,
+          /* Die zwei Zeilen, ohne die A und C im freien Ueben nie ankommen
+             (Vertrag 2, 22.08.2026). abschnitte[].idx zaehlt die ROHE Liste,
+             korrigiere() schickt aber nur den Kern - llm.js rechnet das um
+             (abschnitteAufKern), braucht dafuer aber BEIDES: die Gruppen und
+             die Bruecke zurueck zur Rohposition. Fehlt eine der beiden, faellt
+             das Feld dort still weg, der Korrektur-Zweig sieht die Struktur
+             NIE, und nirgends wird etwas rot. */
+          abschnitte: f.abschnitte,
+          kernIndex: t.kernIndex
         }, antwort, standFuerKi(thema, f));
       })
       .catch(function () { return null; })
