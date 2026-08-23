@@ -812,16 +812,27 @@ function countdownKarte(tz) {
   }));
 
   var tage = tageBisKlausur();
-  var gross, klein;
-  if (tage > 1) { gross = "Noch " + tage + " Tage"; klein = "bis zum " + KLAUSUR_DATUM; }
-  else if (tage === 1) { gross = "Noch 1 Tag"; klein = "bis zum " + KLAUSUR_DATUM; }
-  else if (tage === 0) { gross = "Heute ist der Tag"; klein = "du hast dich vorbereitet"; }
-  else { gross = "Geschafft"; klein = "die Klausur liegt hinter dir"; }
 
-  var zeile = el("div", "countdown-zeile");
-  zeile.appendChild(el("span", "countdown-zahl", gross));
-  zeile.appendChild(el("span", "countdown-datum", klein));
-  karte.appendChild(zeile);
+  /* KEIN HERUNTERZAEHLEN MEHR (Rose ueber Jennifer, 23.08.2026: "kannst du die
+     anzeige 18 tage wegmachen auf der seite, das stresst sie?").
+
+     Hier stand "Noch 18 Tage / bis zum 10.09." als groesste Zeile der
+     Startseite. Die Zahl half niemandem: das Tagespensum darunter sagt schon,
+     was HEUTE dran ist, und es rechnet den Rest ohnehin mit ein. Was die Zahl
+     zusaetzlich lieferte, war nur der Druck.
+
+     Der Tag selbst und der Tag danach bleiben - "Heute ist der Tag" und
+     "Geschafft" zaehlen nichts herunter, sie halten fest, wo Rose steht.
+     tageBisKlausur() bleibt im Code: das Tagespensum rechnet damit, und die
+     Kreatur weiss den Termin weiterhin (sie zaehlt aber von sich aus nicht
+     mehr, siehe SYSTEM_MASKOTTCHEN). */
+  if (tage <= 0) {
+    var zeile = el("div", "countdown-zeile");
+    zeile.appendChild(el("span", "countdown-zahl", tage === 0 ? "Heute ist der Tag" : "Geschafft"));
+    zeile.appendChild(el("span", "countdown-datum",
+      tage === 0 ? "du hast dich vorbereitet" : "die Klausur liegt hinter dir"));
+    karte.appendChild(zeile);
+  }
 
   // Am Klausurtag selbst kein Pensum: da wird nicht mehr aufgeholt, da wird
   // ruhig geatmet. Ein Balken mit einer Zahl waere an dem Morgen genau das
@@ -908,7 +919,9 @@ function wegKarte(tz) {
   var karte = el("div", "karte weg-karte");
   var kopf = el("div", "weg-kopf");
   kopf.appendChild(el("h2", null, "Dein Weg zur Klausur"));
-  kopf.appendChild(el("span", "weg-rest", "noch " + restTage + (restTage === 1 ? " Tag" : " Tage")));
+  // Die Rest-Tage-Pille ist am 23.08.2026 gefallen, gleicher Grund wie oben:
+  // die Karte zeigt darunter, WAS Rose geuebt hat - das ist die hilfreiche
+  // Auskunft. Wie wenig Zeit noch bleibt, ist die andere.
   karte.appendChild(kopf);
 
   var akt = Stats.aktivitaetProTag();
