@@ -3275,6 +3275,97 @@ function standFuerKi(thema, f) {
   return zeilen.join("\n");
 }
 
+/* ---- Wofuer diese Aufgabe steht (24.08.2026) ----
+   Seit der Nacht zum 24.08. traegt jede Frage zwei Felder: `ke` (die
+   Kompetenzerwartungen, auf die sie einzahlt) und `core` (gehoert sie zum
+   Mindestpensum von zwei freien und zwei Ankreuz-Aufgaben je Erwartung).
+   Beides steht ERST NACH DER AUFLOESUNG in der Loesungsbox, nie vorher: wer
+   beim Lesen der Aufgabe schon sieht, dass sie zu "bewerten aktuelle und
+   historische didaktische Ansaetze" gehoert, kennt die verlangte Stufe, bevor
+   er nachgedacht hat.
+
+   Die Texte stehen in data/kompetenzerwartungen.json und wurden bisher von
+   niemandem im Client geladen. Der Loader faengt seine Fehler selbst ab und
+   liefert dann null - genau wie Glossar.ladeOperatoren, denn er haengt im
+   Promise.all des Boots, und daran darf der Start nicht scheitern. Faellt er
+   aus, bleibt die Kernaufgaben-Marke allein stehen; ein Fehler wird nie
+   gezeigt. */
+var KOMPETENZEN = null;
+
+function ladeKompetenzerwartungen() {
+  return fetch("data/kompetenzerwartungen.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+    .then(function (d) {
+      var eintraege = d && Array.isArray(d.eintraege) ? d.eintraege : [];
+      if (!eintraege.length) { KOMPETENZEN = null; return null; }
+      KOMPETENZEN = {};
+      eintraege.forEach(function (e) { if (e && e.id) KOMPETENZEN[e.id] = e; });
+      return KOMPETENZEN;
+    });
+}
+
+/* Der lange Erwartungstext (bis 145 Zeichen) auf Handybreite. Erst ab 120
+   Zeichen gekuerzt und dann an der Wortgrenze: der title-Tooltip existiert auf
+   dem Telefon nicht, was hier steht, ist alles, was Rose je sieht - frueher
+   abschneiden nimmt mehr weg, als es spart. entwicklungsbereiche-ke3 endet in
+   den Daten auf ein Komma, deshalb faellt Schlusszeichensetzung weg. */
+function kompetenzText(text) {
+  var t = String(text || "").trim().replace(/[,;:.\s]+$/, "");
+  if (t.length <= 120) return t;
+  var kurz = t.slice(0, 120);
+  var luecke = kurz.lastIndexOf(" ");
+  if (luecke > 60) kurz = kurz.slice(0, luecke);
+  return kurz.replace(/[,;:]+$/, "") + " …";
+}
+
+/* Die Zeile unter der Fundstelle. Ein leeres `ke` heisst: NICHTS anzeigen -
+   "keine Kompetenzerwartung" waere eine Aussage ueber die Aufgabe, mit der
+   Rose nichts anfangen kann.
+
+   Die AFB-Angabe der Erwartung laeuft bewusst als graue .chip und NICHT als
+   farbige .afb-badge: bei 126 von 200 Zuordnungen weicht sie von der Stufe der
+   Aufgabe ab (am 24.08. nachgemessen), und sie ist laut afbQuelle meist
+   "abgeleitet", also eine Lesart und keine Ansage. Eine gelbe Pille unter
+   einer als AFB I ausgezeichneten Aufgabe laese sich als Korrektur des
+   Aufgaben-Badges - das ist sie nicht. Aus demselben Grund steht das Wort
+   Erwartung mit in der Pille. */
+function kompetenzZeile(f) {
+  var kern = !!f && f.core === true;
+  var ids = f && Array.isArray(f.ke) ? f.ke : [];
+  var treffer = [];
+  if (KOMPETENZEN) ids.forEach(function (id) { if (KOMPETENZEN[id]) treffer.push(KOMPETENZEN[id]); });
+  if (!kern && !treffer.length) return null;
+
+  var zeile = el("div", "fundstelle");
+  if (kern) {
+    var marke = el("span", "chip", "🔑 Kernaufgabe");
+    marke.title = "Gehört zum Mindestpensum: je Kompetenzerwartung zwei freie und zwei Ankreuz-Aufgaben.";
+    zeile.appendChild(marke);
+  }
+  // Loader ausgefallen oder Aufgabe ohne Zuordnung: die Marke steht allein.
+  if (!treffer.length) return zeile;
+
+  var kopf = el("div", null, "🎯 Dafür steht die Aufgabe:");
+  if (kern) kopf.style.marginTop = "6px";
+  zeile.appendChild(kopf);
+
+  // 39 freie Aufgaben zahlen auf ZWEI Erwartungen ein - je eine eigene Zeile,
+  // sonst wird daraus ein Satz, der keiner ist.
+  treffer.forEach(function (e) {
+    var z = el("div", null);
+    z.style.marginTop = "4px";
+    var pille = el("span", "chip", "Erwartung AFB " + e.afb);
+    pille.title = e.afbQuelle === "folie"
+      ? "Diese Stufe steht so auf der Folie der Dozentin."
+      : "Aus dem Operator der Erwartung geschlossen - eine Lesart, keine Ansage der Dozentin.";
+    z.appendChild(pille);
+    z.appendChild(el("span", null, " " + kompetenzText(e.text)));
+    zeile.appendChild(z);
+  });
+  return zeile;
+}
+
 function freiKarte(thema, f, opts) {
   var o = opts || {};
   var karte = el("div", "karte");
@@ -3875,6 +3966,12 @@ function freiKarte(thema, f, opts) {
     var fundstelle = Beleg.quelleZeile(f.quelle, thema.id, "fundstelle", "📍 Steht auf: ");
     if (fundstelle) box.appendChild(fundstelle);
 
+    /* Und wofuer sie steht: Kernaufgaben-Marke und die Kompetenzerwartung(en)
+       im Klartext (kompetenzZeile weiter oben). Bewusst HIER und nicht am Kopf
+       der Karte - vorher wuerde die Erwartung die Antwort faerben. */
+    var kompetenz = kompetenzZeile(f);
+    if (kompetenz) box.appendChild(kompetenz);
+
     /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
        mit - dann kann das Gespraech an dem ansetzen, was sie geschrieben hat.
        Der Text wird HIER eingesammelt und nicht erst beim Oeffnen des Sheets:
@@ -3906,7 +4003,10 @@ themeAnwenden();
 // Startseite zeigt den Begriffe-Blitz, und der wuerde sonst beim ersten Aufbau
 // fehlen und erst nach einem Seitenwechsel auftauchen. ladeBegriffe faengt
 // eigene Fehler ab und liefert dann null - der Boot kann daran nicht scheitern.
-Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren(), Episode.ladeEpisoden()])
+Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren(), Episode.ladeEpisoden(),
+  // Haengt HINTEN dran: der .then liest nur ergebnis[0], und der Loader liefert
+  // im Fehlerfall null statt zu werfen (sonst faende der Boot die Hoppla-Seite).
+  ladeKompetenzerwartungen()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
     // Frage-Id -> Thema. Braucht afbZuFrueh() (Kaltstart-Sperre) und muss stehen,

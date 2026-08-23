@@ -11,7 +11,8 @@
     "Handlungsorientierung",
     "Ganzheitlichkeit & Strukturierung",
     "Was sind didaktische Prinzipien?",
-    "Prinzipien im Rahmenlehrplan"
+    "Prinzipien im Rahmenlehrplan",
+    "Analyse von Lehr-Lernsequenzen"
   ],
   "mc": [
     {
@@ -3004,6 +3005,559 @@
         "prinzipien-ke3"
       ],
       "core": false
+    },
+    {
+      "id": "pr-ke1-2",
+      "unterthema": "Überblick der Prinzipien",
+      "afb": 1,
+      "frage": "Die Vorlesung führt die didaktischen Prinzipien im sonderpädagogischen Schwerpunkt Geistige Entwicklung in einer einzigen Tabellenspalte auf. Nennen Sie alle elf. **Stichpunkte genügen.**",
+      "stichpunkte": [
+        "Lebenspraxis und Lebensnähe",
+        "Individualisierung / Differenzierung",
+        "Ganzheitlichkeit",
+        "Kleine Schritte und/oder Sinnzusammenhang",
+        "Handlungsorientierung",
+        "Elementarisierung",
+        "Strukturierung",
+        "Anschaulichkeit",
+        "Adaptives Lernen",
+        "Anstoß zur Eigenaktivität",
+        "Ermöglichung von Erfahrungen"
+      ],
+      "abschnitte": [
+        {
+          "operator": "nennen",
+          "auftrag": "Die sieben Zeilen, die die Folie aufrecht setzt",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "form": "liste",
+          "punkte": 4,
+          "chips": [
+            "Prinzip 1",
+            "Prinzip 2",
+            "Prinzip 3",
+            "Prinzip 4",
+            "Prinzip 5",
+            "Prinzip 6",
+            "Prinzip 7"
+          ]
+        },
+        {
+          "operator": "nennen",
+          "auftrag": "Die vier Zeilen, die die Folie kursiv setzt",
+          "idx": [
+            7,
+            8,
+            9,
+            10
+          ],
+          "form": "liste",
+          "punkte": 2,
+          "chips": [
+            "Prinzip 8",
+            "Prinzip 9",
+            "Prinzip 10",
+            "Prinzip 11"
+          ]
+        }
+      ],
+      "muster": "Die Vorlesung nennt elf didaktische Prinzipien im SGE. Aufrecht gesetzt sind Lebenspraxis und Lebensnähe, Individualisierung beziehungsweise Differenzierung, Ganzheitlichkeit, kleine Schritte und/oder Sinnzusammenhang, Handlungsorientierung, Elementarisierung und Strukturierung. Kursiv gesetzt sind Anschaulichkeit, adaptives Lernen, der Anstoß zur Eigenaktivität und die Ermöglichung von Erfahrungen.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Die Vorlesung nennt elf didaktische Prinzipien für den Schwerpunkt geistige Entwicklung.\n\nSieben stehen gerade in der Tabelle:\n\n1. Lebenspraxis und Lebensnähe\n2. Individualisierung oder Differenzierung\n3. Ganzheitlichkeit\n4. Kleine Schritte und Sinnzusammenhang\n5. Handlungsorientierung\n6. Elementarisierung\n7. Strukturierung\n\nVier stehen schräg in der Tabelle. Man nennt das kursiv:\n\n8. Anschaulichkeit\n9. Adaptives Lernen\n10. Anstoß zur Eigenaktivität\n11. Ermöglichung von Erfahrungen"
+        },
+        "en": {
+          "klausur": "The lecture names eleven didactic principles for the special educational focus on intellectual development. Set upright are everyday practice and closeness to life (Lebenspraxis und Lebensnähe), individualisation or differentiation (Individualisierung / Differenzierung), holistic learning (Ganzheitlichkeit), small steps and/or overall meaning (kleine Schritte und/oder Sinnzusammenhang), action orientation (Handlungsorientierung), elementarisation (Elementarisierung) and structuring (Strukturierung). Set in italics are vividness (Anschaulichkeit), adaptive learning (adaptives Lernen), the impulse towards self-activity (Anstoß zur Eigenaktivität) and the enabling of experiences (Ermöglichung von Erfahrungen).",
+          "einfach": "The lecture names eleven didactic principles for the focus on intellectual development.\n\nSeven of them are printed upright:\n\n1. Everyday practice and closeness to life\n2. Individualisation or differentiation\n3. Holistic learning\n4. Small steps and overall meaning\n5. Action orientation\n6. Elementarisation\n7. Structuring\n\nFour of them are printed in italics:\n\n8. Vividness\n9. Adaptive learning\n10. Impulse towards self-activity\n11. Enabling of experiences"
+        },
+        "ar": {
+          "klausur": "المحاضرة بتذكر إحدى عشر مبدأ تعليمي بمجال التركيز على التطور الذهني. المكتوبين بخط عادي هنّي: الممارسة الحياتية والقرب من الحياة (Lebenspraxis und Lebensnähe)، التفريد أو التمييز (Individualisierung / Differenzierung)، الشمولية (Ganzheitlichkeit)، الخطوات الصغيرة و/أو الترابط المعنوي (kleine Schritte und/oder Sinnzusammenhang)، التوجّه نحو الفعل (Handlungsorientierung)، التبسيط الجوهري (Elementarisierung)، والبنينة (Strukturierung). والمكتوبين بخط مايل هنّي: الوضوح الحسّي (Anschaulichkeit)، التعلّم التكيّفي (adaptives Lernen)، الحثّ على النشاط الذاتي (Anstoß zur Eigenaktivität)، وإتاحة الخبرات (Ermöglichung von Erfahrungen).",
+          "einfach": "المحاضرة بتذكر إحدى عشر مبدأ تعليمي لمجال التطور الذهني.\n\nسبعة منهن مكتوبين بخط عادي:\n\n1. الممارسة الحياتية والقرب من الحياة\n2. التفريد أو التمييز\n3. الشمولية\n4. الخطوات الصغيرة والترابط المعنوي\n5. التوجّه نحو الفعل\n6. التبسيط الجوهري\n7. البنينة\n\nوأربعة مكتوبين بخط مايل:\n\n8. الوضوح الحسّي\n9. التعلّم التكيّفي\n10. الحثّ على النشاط الذاتي\n11. إتاحة الخبرات"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Elf am Stück sind viel - hilfreich ist die Zweiteilung der Folie: sieben stehen aufrecht, vier stehen kursiv, und genau die vier kursiven bekommen im ganzen Foliensatz keinen eigenen Inhaltsblock. Nennen kann man sie also, erläutern kann sie niemand von dir verlangen. Die vollständige Liste steht auf Folie 5, dieselben elf tauchen auf Folie 33 im Abgleich mit dem Rahmenlehrplan noch einmal auf; in deinen Aufzeichnungen findest du die Liste auf Notizen S. 34. Gut zu wissen: Deine Notizen nummerieren die Prinzipien und weichen dabei von der Folienreihenfolge ab - die Folie nummeriert nicht, also ist deine Nummerierung deine Lesereihenfolge und nichts, was in der Klausur stimmen müsste.",
+      "quelle": "folie-prinzipien-5",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Alltagshandlungen werden zum Unterrichtsinhalt",
+          "Bildungsgut, das nach der Schulzeit gebraucht wird",
+          "Merkbild: der Tafelspruch über das Lernen fürs Leben"
+        ],
+        [
+          "Auf die Verschiedenheit der Gruppe eingehen",
+          "Innere und äußere Form, Kriterienliste auf Folie 10",
+          "Doppelbegriff: einer meint den Einzelnen, einer die Aufgabe"
+        ],
+        [
+          "Kopf, Herz und Hand zusammen (Pestalozzi)",
+          "Vielkanallernen nach Vester",
+          "Merkbild: die Fahrrad-Dynamo-Stunde"
+        ],
+        [
+          "Das Spannungspaar: portionieren, ohne den Sinn zu verlieren",
+          "Merkbild: die Waage auf Folie 28",
+          "Ein Name mit einem Und-Oder darin"
+        ],
+        [
+          "Konfuzius: lass mich tun, und ich behalte es",
+          "Jank und Meyer, vereinbartes Handlungsprodukt",
+          "Merkbild: der Koffer mit dem ferngesteuerten Auto"
+        ],
+        [
+          "Lamers: der gemeinsame Suchprozess mit fünf Sechsecken",
+          "Was ist das Elementare an einem Inhalt?",
+          "Merkbild: das Energie-Beispiel mit der didaktischen Reduktion"
+        ],
+        [
+          "Struktur und Rhythmus geben Sicherheit",
+          "Vier Felder: Abläufe, Verhalten, Zeit, Räume",
+          "Merkbild: der Time-Timer und das Morgenkreis-Piktogramm"
+        ],
+        [
+          "Erste der vier kursiven Zeilen",
+          "Sie folgt in der Tabelle direkt auf die Strukturierung",
+          "Kein eigener Inhaltsblock im Foliensatz - nennen ja, erläutern nicht"
+        ],
+        [
+          "Zweite der vier kursiven Zeilen",
+          "Zwei Wörter; das Hauptwort heißt Lernen",
+          "Kein eigener Inhaltsblock im Foliensatz - nennen ja, erläutern nicht"
+        ],
+        [
+          "Dritte der vier kursiven - im Rahmenlehrplan heißt es Selbstständigkeit und Eigenverantwortung",
+          "Es geht um den Anstoß zu etwas Eigenem",
+          "Kein eigener Inhaltsblock im Foliensatz"
+        ],
+        [
+          "Vierte der vier kursiven - im Rahmenlehrplan heißt es Fehler als Lernchance",
+          "Es geht darum, etwas erleben zu dürfen",
+          "Kein eigener Inhaltsblock im Foliensatz"
+        ]
+      ],
+      "ke": [
+        "prinzipien-ke1"
+      ],
+      "core": true
+    },
+    {
+      "id": "pr-ke2-2",
+      "unterthema": "Was sind didaktische Prinzipien?",
+      "afb": 2,
+      "frage": "Die Vorlesung stellt am Ende die didaktisch-methodischen Prinzipien im SGE den Qualitätsmerkmalen des Rahmenlehrplans Berlin/Brandenburg gegenüber und überschreibt die Tabelle mit: Didaktische Prinzipien - leitgebende Orientierung auch im Rahmenlehrplan. Erklären Sie an dieser Gegenüberstellung, um was es sich bei didaktischen Prinzipien handelt, und erörtern Sie ihre Relevanz für die Unterrichtsplanung. **Erklären heißt hier: benennen, beschreiben und an einem Beispiel aus der Tabelle erläutern.**",
+      "stichpunkte": [
+        "Benennung: Didaktische Prinzipien sind grundlegende Regeln, Grundsätze bzw. Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation (vgl. Weber 2008, 263 ff.)",
+        "Benennung: Sie sind nicht immer wissenschaftlich fundiert, haben aber eine große Relevanz für die Arbeit von Lehrkräften (vgl. Arndt 2020, 340)",
+        "Beschreibung: Die Gegenüberstellung zeigt, dass dieselben Grundsätze im Rahmenlehrplan als Qualitätsmerkmale wiederkehren - die Prinzipien sind damit nicht Privatsache einzelner Lehrkräfte, sondern durch das Curriculum gedeckt",
+        "Beschreibung: Vier der sieben aufrecht gesetzten Prinzipien haben eine unmittelbare Entsprechung - Lebenspraxis und Lebensnähe / lebensweltliche und lebenspraktische Orientierung, Individualisierung / Differenzierung / Differenzierung und Individualisierung, Ganzheitlichkeit / Ganzheitlichkeit, Handlungsorientierung / handlungs- und situationsbezogenes Lernen",
+        "Beschreibung: Die Tabelle deckt sich nicht Zeile für Zeile - zu kleinen Schritten, Elementarisierung und Strukturierung steht rechts nichts, ebenso wenig zu der kursiv gesetzten Anschaulichkeit, und mit dem kooperativen Lernen bringt der Rahmenlehrplan ein Merkmal ohne Gegenüber",
+        "Beschreibung: Das passt zu Folie 3 - in den einzelnen (Fach)Didaktiken und von einzelnen Vertreter:innen werden unterschiedliche Prinzipien für mehr oder weniger bedeutsam angesehen; eine verbindliche Einheitsliste gibt es nicht",
+        "Erläuterung am Beispiel: Wer eine Stunde nach dem Prinzip der Handlungsorientierung plant, erfüllt zugleich das Qualitätsmerkmal handlungs- und situationsbezogenes Lernen - das Prinzip trägt die Planungsentscheidung, der Rahmenlehrplan liefert die Begründung nach außen",
+        "Relevanz: Prinzipien wirken über alle drei Phasen - Planung, Durchführung und Evaluation - und dienen nach der Stunde als Maßstab dafür, ob der Unterricht getragen hat",
+        "Weitere: Auch zwei der vier kursiv gesetzten Prinzipien finden im Rahmenlehrplan eine Entsprechung - Anstoß zur Eigenaktivität / Selbstständigkeit und Eigenverantwortung sowie Ermöglichung von Erfahrungen / Fehler als Lernchance"
+      ],
+      "abschnitte": [
+        {
+          "operator": "erklaeren",
+          "rolle": "benennen",
+          "auftrag": "Zuerst: was didaktische Prinzipien überhaupt sind",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Didaktische Prinzipien sind …",
+          "beispiel": "Didaktische Prinzipien sind grundlegende Regeln, Grundsätze beziehungsweise Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation."
+        },
+        {
+          "operator": "erklaeren",
+          "rolle": "beschreiben",
+          "auftrag": "Dann: was die Gegenüberstellung mit dem Rahmenlehrplan zeigt - und wo sie nicht aufgeht",
+          "idx": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Die Gegenüberstellung mit dem Rahmenlehrplan zeigt, dass …",
+          "beispiel": "Die Tabelle deckt sich aber nicht Zeile für Zeile: Zu kleinen Schritten, Elementarisierung und Strukturierung steht rechts nichts, ebenso wenig zu der kursiv gesetzten Anschaulichkeit, und der Rahmenlehrplan bringt mit dem kooperativen Lernen ein Merkmal, dem links kein Prinzip gegenübersteht."
+        },
+        {
+          "operator": "erklaeren",
+          "rolle": "erlaeutern",
+          "auftrag": "Zuletzt: die Relevanz für die Unterrichtsplanung, an einem Beispiel aus der Tabelle",
+          "idx": [
+            6,
+            7
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Für die Unterrichtsplanung heißt das zum Beispiel, dass …",
+          "beispiel": "Was die Relevanz praktisch bedeutet, zeigt ein Beispiel aus der Tabelle: Wer eine Stunde nach dem Prinzip der Handlungsorientierung plant, erfüllt damit zugleich das Qualitätsmerkmal handlungs- und situationsbezogenes Lernen - das Prinzip trägt die Planungsentscheidung, der Rahmenlehrplan liefert die Begründung dafür nach außen."
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Wenn du magst: die beiden kursiven Prinzipien mit Entsprechung",
+          "idx": [
+            8
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Didaktische Prinzipien sind grundlegende Regeln, Grundsätze beziehungsweise Orientierungen für die Unterrichtsplanung, -durchführung und -evaluation. Sie sind nicht immer wissenschaftlich fundiert, haben aber eine große Relevanz für die Arbeit von Lehrkräften. Genau das macht die Gegenüberstellung mit dem Rahmenlehrplan sichtbar: Dieselben Grundsätze kehren dort als Qualitätsmerkmale wieder, die Prinzipien sind also nicht Privatsache einzelner Lehrkräfte, sondern durch das Curriculum gedeckt. Vier der sieben aufrecht gesetzten Prinzipien haben im Rahmenlehrplan eine unmittelbare Entsprechung: Lebenspraxis und Lebensnähe steht dort als lebensweltliche und lebenspraktische Orientierung, Individualisierung / Differenzierung als Differenzierung und Individualisierung, Ganzheitlichkeit unter demselben Wort und Handlungsorientierung als handlungs- und situationsbezogenes Lernen. Die Tabelle deckt sich aber nicht Zeile für Zeile: Zu kleinen Schritten, Elementarisierung und Strukturierung steht rechts nichts, ebenso wenig zu der kursiv gesetzten Anschaulichkeit, und der Rahmenlehrplan bringt mit dem kooperativen Lernen ein Merkmal, dem links kein Prinzip gegenübersteht. Das passt zu dem, was die Vorlesung eingangs sagt: In den einzelnen Fachdidaktiken und von einzelnen Vertreter:innen werden unterschiedliche Prinzipien für mehr oder weniger bedeutsam angesehen, eine verbindliche Einheitsliste gibt es nicht. Was die Relevanz praktisch bedeutet, zeigt ein Beispiel aus der Tabelle: Wer eine Stunde nach dem Prinzip der Handlungsorientierung plant, erfüllt damit zugleich das Qualitätsmerkmal handlungs- und situationsbezogenes Lernen - das Prinzip trägt die Planungsentscheidung, der Rahmenlehrplan liefert die Begründung dafür nach außen. Dazu kommt die zeitliche Reichweite: Prinzipien wirken über alle drei Phasen, also über Planung, Durchführung und Evaluation, und dienen nach der Stunde als Maßstab dafür, ob der Unterricht getragen hat.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Didaktische Prinzipien sind Grundsätze für den Unterricht. Sie geben Orientierung. Und zwar bei drei Dingen: beim Planen, beim Unterrichten und beim Auswerten.\n\nDiese Grundsätze sind nicht immer wissenschaftlich bewiesen. Trotzdem sind sie für Lehrkräfte sehr wichtig.\n\nDas sieht man gut an der Tabelle aus der Vorlesung. Links stehen die Prinzipien. Rechts stehen die Qualitätsmerkmale aus dem Rahmenlehrplan. Viele Zeilen passen zusammen.\n\nVier von den sieben geraden Prinzipien haben eine direkte Entsprechung:\n\n- Lebenspraxis und Lebensnähe heißt dort: lebensweltliche und lebenspraktische Orientierung.\n- Individualisierung und Differenzierung heißt dort: Differenzierung und Individualisierung.\n- Ganzheitlichkeit heißt dort auch Ganzheitlichkeit.\n- Handlungsorientierung heißt dort: handlungs- und situationsbezogenes Lernen.\n\nAber die Tabelle passt nicht überall. Zu drei geraden Prinzipien steht rechts nichts: kleine Schritte, Elementarisierung und Strukturierung. Und auch zur schrägen Anschaulichkeit steht rechts nichts. Und der Rahmenlehrplan hat ein Merkmal, das links fehlt: kooperatives Lernen.\n\nDas ist normal. Die Vorlesung sagt am Anfang: Verschiedene Fachdidaktiken finden verschiedene Prinzipien wichtig. Es gibt keine feste Liste für alle.\n\nWarum sind Prinzipien für die Planung wichtig? Ein Beispiel: Eine Lehrkraft plant eine Stunde nach dem Prinzip Handlungsorientierung. Damit erfüllt sie gleichzeitig das Qualitätsmerkmal aus dem Rahmenlehrplan. Das Prinzip trägt also die Entscheidung. Und der Rahmenlehrplan liefert die Begründung nach außen.\n\nUnd noch etwas: Prinzipien gelten nicht nur beim Planen. Sie gelten auch beim Unterrichten und danach. Nach der Stunde kann man mit ihnen prüfen: Hat der Unterricht getragen?"
+        },
+        "en": {
+          "klausur": "Didactic principles are basic rules, maxims or orientations for the planning, conduct and evaluation of teaching. They are not always scientifically grounded, yet they have great relevance for the work of teachers. This is exactly what the comparison with the framework curriculum makes visible: the same maxims reappear there as quality features, so the principles are not the private business of individual teachers but are covered by the curriculum. Four of the seven principles set upright have a direct equivalent in the framework curriculum: everyday practice and closeness to life appears there as orientation towards the life-world and everyday practice, individualisation/differentiation as differentiation and individualisation, holistic learning under the same word, and action orientation as action- and situation-related learning. The table does not match line by line, however: nothing is listed opposite small steps, elementarisation and structuring, nor opposite vividness, which is one of the italicised four, and the framework curriculum contributes cooperative learning, a feature with no principle opposite it. This fits what the lecture says at the outset: within the individual subject didactics and by individual authors, different principles are regarded as more or less significant, and there is no binding single list. What relevance means in practice is shown by an example from the table: whoever plans a lesson according to the principle of action orientation thereby also fulfils the quality feature of action- and situation-related learning - the principle carries the planning decision, while the framework curriculum supplies the justification towards the outside. There is also the temporal reach: principles operate across all three phases, that is, planning, conduct and evaluation, and after the lesson they serve as a yardstick for whether the teaching held up.",
+          "einfach": "Didactic principles are basic maxims for teaching. They give orientation. In three things: in planning, in teaching and in evaluating.\n\nThese maxims are not always scientifically proven. Even so they are very important for teachers.\n\nYou can see this well in the table from the lecture. On the left are the principles. On the right are the quality features from the framework curriculum. Many rows match.\n\nFour of the seven upright principles have a direct equivalent:\n\n- Everyday practice and closeness to life is called orientation towards the life-world and everyday practice there.\n- Individualisation and differentiation is called differentiation and individualisation there.\n- Holistic learning is called holistic learning there too.\n- Action orientation is called action- and situation-related learning there.\n\nBut the table does not match everywhere. For three of the upright principles there is nothing on the right: small steps, elementarisation and structuring. The same goes for vividness, one of the italicised ones. And the framework curriculum has one feature that is missing on the left: cooperative learning.\n\nThat is normal. The lecture says at the start: different subject didactics consider different principles important. There is no fixed list for everyone.\n\nWhy are principles important for planning? An example: a teacher plans a lesson according to the principle of action orientation. In doing so she also fulfils the quality feature from the framework curriculum. So the principle carries the decision. And the framework curriculum supplies the justification towards the outside.\n\nAnd one more thing: principles do not only apply when planning. They also apply during and after the lesson. Afterwards you can use them to check: did the teaching hold up?"
+        },
+        "ar": {
+          "klausur": "المبادئ التعليمية هي قواعد أساسية أو مبادئ توجيهية لتخطيط الدرس وتنفيذو وتقييمو. مو دايماً مؤسّسة علمياً، بس إلها أهمية كبيرة بشغل المعلّمين. وهاد بالضبط شو بتبيّنو المقارنة مع المنهاج الإطاري: نفس المبادئ بترجع تظهر هناك كمعايير جودة، يعني المبادئ مو شغلة شخصية لكل معلّم، هي مغطّاة بالمنهاج. أربعة من المبادئ السبعة المكتوبة بخط عادي إلها مقابل مباشر بالمنهاج الإطاري: الممارسة الحياتية والقرب من الحياة اسمها هناك التوجّه نحو عالم الحياة والممارسة اليومية، والتفريد/التمييز اسمو هناك التمييز والتفريد، والشمولية بنفس الكلمة، والتوجّه نحو الفعل اسمو هناك التعلّم المرتبط بالفعل والموقف. بس الجدول ما بيتطابق سطر بسطر: مقابل الخطوات الصغيرة والتبسيط الجوهري والبنينة ما في شي عاليمين، ولا كمان مقابل الوضوح الحسّي يلي هو من الأربعة المكتوبين بخط مايل، والمنهاج الإطاري بيجيب التعلّم التعاوني كمعيار ما إلو مقابل عاليسار. وهاد بينطبق مع شو بتقولو المحاضرة بالبداية: بكل فرع من فروع التعليم وعند كل باحث بينحسبوا مبادئ مختلفة أكتر أو أقل أهمية، وما في قائمة موحّدة ملزمة. وشو معنى الأهمية عملياً بيبيّنو مثال من الجدول: يلي بيخطّط درس حسب مبدأ التوجّه نحو الفعل بيحقّق بنفس الوقت معيار الجودة «التعلّم المرتبط بالفعل والموقف» - يعني المبدأ بيحمل قرار التخطيط، والمنهاج الإطاري بيعطي التبرير للبرّا. وكمان في المدى الزمني: المبادئ بتشتغل عبر المراحل التلاتة، يعني التخطيط والتنفيذ والتقييم، وبعد الدرس بتصير مقياس لهل الدرس نجح ولا لأ.",
+          "einfach": "المبادئ التعليمية هي قواعد أساسية للدرس. بتعطي توجيه. بتلات أشياء: بالتخطيط، وبالتدريس، وبالتقييم.\n\nهالقواعد مو دايماً مثبتة علمياً. بس مع هيك هي مهمة كتير للمعلّمين.\n\nومنشوف هاد منيح بالجدول يلي بالمحاضرة. عاليسار المبادئ. وعاليمين معايير الجودة من المنهاج الإطاري. وكتير سطور بتتطابق.\n\nأربعة من المبادئ السبعة المكتوبة بخط عادي إلها مقابل مباشر:\n\n- الممارسة الحياتية والقرب من الحياة اسمها هناك: التوجّه نحو عالم الحياة والممارسة اليومية.\n- التفريد والتمييز اسمو هناك: التمييز والتفريد.\n- الشمولية اسمها هناك كمان الشمولية.\n- التوجّه نحو الفعل اسمو هناك: التعلّم المرتبط بالفعل والموقف.\n\nبس الجدول ما بيتطابق بكل مكان. تلات مبادئ من المكتوبين بخط عادي ما إلهن شي عاليمين: الخطوات الصغيرة، والتبسيط الجوهري، والبنينة. وكمان الوضوح الحسّي يلي مكتوب بخط مايل. والمنهاج الإطاري عندو معيار ناقص عاليسار: التعلّم التعاوني.\n\nوهاد شي عادي. المحاضرة بتقول بالبداية: كل فرع تعليمي بيشوف مبادئ مختلفة مهمة. وما في قائمة ثابتة للكل.\n\nليش المبادئ مهمة للتخطيط؟ مثال: معلّمة بتخطّط درس حسب مبدأ التوجّه نحو الفعل. وهيك بنفس الوقت بتحقّق معيار الجودة من المنهاج الإطاري. يعني المبدأ بيحمل القرار. والمنهاج بيعطي التبرير للبرّا.\n\nوكمان شي: المبادئ ما بتنطبق بس وقت التخطيط. بتنطبق كمان وقت الدرس وبعدو. بعد الدرس فينا نفحص فيهن: هل الدرس نجح؟"
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Aufgabe hat zwei Hälften: erst sagen, WAS Prinzipien sind, dann zeigen, WARUM sie für die Planung zählen. Für den zweiten Teil ist die Tabelle dein bester Beleg - sie beantwortet den naheliegenden Einwand, Prinzipien seien nur Meinung, mit dem Rahmenlehrplan. Die Definition steht auf Folie 3 (dort auch die Rangfolge Prinzipien, Methoden, Techniken, Sozialformen, Medien), die Tabelle auf Folie 33; in deinen Aufzeichnungen findest du die Tabelle auf Notizen S. 42, die Definition von Folie 3 fehlt dort ganz. Gut zu wissen: Der Titel der Folie - leitgebende Orientierung auch im Rahmenlehrplan - fehlt in deinen Notizen ebenfalls, und genau er trägt das Argument.",
+      "quelle": "folie-prinzipien-33",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Drei Wörter mit demselben Sinn: Regeln, Grundsätze, ...",
+          "Wofür geben sie Orientierung? Drei Phasen",
+          "Weber 2008 - die Definition der Vorlesung"
+        ],
+        [
+          "Der Einwand und die Antwort darauf in einem Satz",
+          "Wissenschaftlich fundiert? Nicht immer. Und trotzdem?",
+          "Arndt 2020 nennt die Relevanz für Lehrkräfte"
+        ],
+        [
+          "Was beweist die zweite Spalte über die erste?",
+          "Privatsache oder curricular gedeckt?",
+          "Der Titel der Folie sagt es: leitgebende Orientierung AUCH im ..."
+        ],
+        [
+          "Zähl die Zeilen, die links UND rechts gefüllt sind",
+          "Lebensnähe, Differenzierung, Ganzheitlichkeit und noch eines",
+          "Bei zweien heißt es fast gleich, bei zweien anders"
+        ],
+        [
+          "Wo bleibt die rechte Spalte leer?",
+          "Welches Merkmal steht rechts ohne Partner links?",
+          "Vier ohne Entsprechung, eines ohne Gegenüber"
+        ],
+        [
+          "Warum ist eine unvollständige Deckung kein Fehler?",
+          "Folie 3: wer gewichtet Prinzipien unterschiedlich?",
+          "Es gibt keine verbindliche Einheitsliste"
+        ],
+        [
+          "Nimm eine Zeile und denk sie in eine Planung hinein",
+          "Handlungsorientierung links, was steht rechts?",
+          "Das Prinzip entscheidet, der Lehrplan begründet"
+        ],
+        [
+          "Prinzipien gelten nicht nur vorher - wann noch?",
+          "Drei Phasen, die schon in der Definition stehen",
+          "Nach der Stunde werden sie zum Maßstab"
+        ],
+        [
+          "Zwei der kursiven haben doch eine Entsprechung",
+          "Selbstständigkeit und Eigenverantwortung gehört zu welchem?",
+          "Fehler als Lernchance gehört zu welchem?"
+        ]
+      ],
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": true
+    },
+    {
+      "id": "pr-ke4-1",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 2,
+      "frage": "Die Vorlesung beschreibt folgende Sequenz: Jede Lerngruppe erhält einen attraktiven Koffer. Die Schüler:innen sind motiviert herauszufinden, was sich darin befindet: ein ferngesteuertes Auto samt Batterien. Autos und Fernbedienungen sind aber noch nicht angeschaltet. Die Gruppe ist sich einig, dass das Auto in Betrieb genommen werden soll, doch niemand weiß, wie es gehen kann. Sie erhalten hierzu von der Lehrperson keine Unterstützung, sondern müssen in Zusammenarbeit herausfinden, dass es Schalter an Auto und Fernbedienung zum Anschalten gibt und dass beide Elemente angeschaltet werden müssen. Im weiteren Verlauf beschäftigen sich die Schüler:innen mit den Autos und wechseln sich untereinander ab. Mark und Pia wird motorische Unterstützung angeboten. Es wird bewusst darauf geachtet, dass Tom versucht, die Fernbedienung in die Hand zu nehmen und diese zu bedienen. Bei Eva muss gegebenenfalls darauf geachtet werden, dass sie die Aktivität auch an Mitschülerinnen und Mitschüler weitergibt. Analysieren Sie diese Lehr-Lernsequenz nach ihren didaktischen Prinzipien: Benennen Sie die Prinzipien, die hier zusammenwirken, beschreiben Sie, woran im Text Sie sie festmachen, und erläutern Sie an einer Stelle genauer, wie das Prinzip das Handeln der Lehrperson steuert. **Belegen Sie am Material.**",
+      "stichpunkte": [
+        "Benennung 1: Die Sequenz ist die Beispielfolie der Vorlesung zur Handlungsorientierung - sie steht dort unter der Überschrift Beispiel Berücksichtigung der Handlungsorientierung",
+        "Benennung 2: Daneben wirkt das Prinzip der Individualisierung / Differenzierung - für Mark, Pia, Tom und Eva ist jeweils etwas anderes vorgesehen",
+        "Beleg Handlungsorientierung 1: Ausgangspunkt sind die subjektiven Interessen der Schüler:innen - der attraktive Koffer macht neugierig, die Gruppe will das Auto selbst in Betrieb nehmen (vgl. Jank & Meyer 2014, 316 ff.)",
+        "Beleg Handlungsorientierung 2: selbsttätiges Handeln - die Lehrperson gibt bewusst keine Unterstützung, die Gruppe muss die beiden Schalter selbst finden",
+        "Beleg Handlungsorientierung 3: Einübung solidarischen Handelns - herausgefunden wird in Zusammenarbeit, danach wechseln sich die Schüler:innen ab",
+        "Beleg Handlungsorientierung 4: ein vereinbartes Handlungsprodukt leitet den Prozess - die Gruppe ist sich einig, dass das Auto fahren soll, und daran richtet sich alles Weitere aus (vgl. Jank & Meyer 2014, 315)",
+        "Beleg Differenzierung: Mark und Pia wird motorische Unterstützung angeboten, bei Tom wird auf das eigene Bedienen der Fernbedienung geachtet, bei Eva auf das Weitergeben an Mitschüler:innen - differenziert wird über die Notwendigkeit direkter Hilfe bzw. den Grad der Selbständigkeit, und zwar innerhalb derselben Lerngruppe (innere Differenzierung)",
+        "Erläuterung: Die Lehrperson hält ihre Hilfe bewusst zurück - deshalb müssen die Schüler:innen die Handlungsmöglichkeiten selbst wahrnehmen, planen, ausführen und am fahrenden oder nicht fahrenden Auto kontrollieren; die Zurückhaltung ist keine Untätigkeit, sondern die didaktische Entscheidung, die das Prinzip verlangt",
+        "Weitere: Wer die Vorlesung weiterdenkt, kann die angebotene motorische Unterstützung dem Hilfeniveau Mithilfe zuordnen (teilweise Übernahme und Anleitung lebenspraktischer Fertigkeiten) - die Folie selbst nimmt diese Zuordnung nicht vor"
+      ],
+      "abschnitte": [
+        {
+          "operator": "analysieren",
+          "rolle": "benennen",
+          "auftrag": "Zuerst: welche didaktischen Prinzipien in dieser Sequenz zusammenwirken",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "In dieser Sequenz wirken vor allem … zusammen.",
+          "beispiel": "Daneben wirkt das Prinzip der Individualisierung beziehungsweise Differenzierung, denn für Mark, Pia, Tom und Eva ist jeweils etwas anderes vorgesehen."
+        },
+        {
+          "operator": "analysieren",
+          "rolle": "beschreiben",
+          "auftrag": "Dann: woran im Text du jedes Prinzip festmachst - Stelle für Stelle",
+          "idx": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Im Text lässt sich das an folgenden Stellen festmachen: …",
+          "beispiel": "Gehandelt wird selbsttätig, denn die Lehrperson gibt bewusst keine Unterstützung; die Gruppe muss selbst darauf kommen, dass es an Auto und Fernbedienung je einen Schalter gibt und dass beide angeschaltet sein müssen."
+        },
+        {
+          "operator": "analysieren",
+          "rolle": "erlaeutern",
+          "auftrag": "Zuletzt: an einer Stelle genauer zeigen, wie das Prinzip das Handeln der Lehrperson steuert",
+          "idx": [
+            7
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Besonders deutlich steuert das Prinzip die Lehrperson dort, wo …",
+          "beispiel": "Wie stark das Prinzip die Lehrperson steuert, zeigt sich am deutlichsten daran, dass sie ihre Hilfe zurückhält: Weil sie nicht erklärt, müssen die Schüler:innen die Handlungsmöglichkeiten selbst wahrnehmen, ihr Vorgehen planen, es ausführen und am Ende am fahrenden oder eben nicht fahrenden Auto kontrollieren."
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Wenn du magst: die Verbindung zu den Hilfeniveaus der Vorlesung",
+          "idx": [
+            8
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Sequenz steht in der Vorlesung unter der Überschrift Beispiel Berücksichtigung der Handlungsorientierung, und genau dieses Prinzip trägt sie auch. Daneben wirkt das Prinzip der Individualisierung beziehungsweise Differenzierung, denn für Mark, Pia, Tom und Eva ist jeweils etwas anderes vorgesehen. Für die Handlungsorientierung sprechen mehrere Stellen des Textes. Ausgangspunkt sind die subjektiven Interessen der Schüler:innen: Der attraktive Koffer macht neugierig, und die Gruppe will von sich aus herausfinden, was darin ist und wie das Auto in Betrieb geht. Gehandelt wird selbsttätig, denn die Lehrperson gibt bewusst keine Unterstützung; die Gruppe muss selbst darauf kommen, dass es an Auto und Fernbedienung je einen Schalter gibt und dass beide angeschaltet sein müssen. Eingeübt wird dabei solidarisches Handeln: Herausgefunden wird in Zusammenarbeit, und im weiteren Verlauf wechseln sich die Schüler:innen untereinander ab. Den Prozess leitet ein vereinbartes Handlungsprodukt, denn die Gruppe ist sich einig, dass das Auto in Betrieb genommen werden soll, und daran richtet sich alles Weitere aus. Für die Differenzierung sprechen die vier namentlich genannten Schüler:innen: Mark und Pia wird motorische Unterstützung angeboten, bei Tom wird darauf geachtet, dass er die Fernbedienung selbst in die Hand nimmt und bedient, und bei Eva darauf, dass sie die Aktivität an Mitschüler:innen weitergibt. Differenziert wird hier also über die Notwendigkeit direkter Hilfe beziehungsweise den Grad der Selbständigkeit, und zwar innerhalb derselben Lerngruppe. Wie stark das Prinzip die Lehrperson steuert, zeigt sich am deutlichsten daran, dass sie ihre Hilfe zurückhält: Weil sie nicht erklärt, müssen die Schüler:innen die Handlungsmöglichkeiten selbst wahrnehmen, ihr Vorgehen planen, es ausführen und am Ende am fahrenden oder eben nicht fahrenden Auto kontrollieren. Die Zurückhaltung ist damit keine Untätigkeit, sondern die didaktische Entscheidung, die das Prinzip verlangt.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In dieser Unterrichtsstunde wirken zwei didaktische Prinzipien zusammen.\n\nDas erste Prinzip heißt Handlungsorientierung. Die Vorlesung nennt diese Stunde selbst ein Beispiel dafür.\n\nMan erkennt es an mehreren Stellen. Die Kinder bekommen einen schönen Koffer. Sie sind neugierig. Sie wollen selbst wissen, was darin ist. Das ist der Anfang: das eigene Interesse.\n\nDann wollen sie das Auto fahren lassen. Aber die Lehrerin hilft nicht. Die Kinder müssen selbst herausfinden: Es gibt zwei Schalter. Einer ist am Auto. Einer ist an der Fernbedienung. Beide müssen an sein.\n\nDie Kinder arbeiten dabei zusammen. Später wechseln sie sich ab. So lernen sie auch Rücksicht.\n\nDas Ziel ist vorher klar: Das Auto soll fahren. Alles andere richtet sich nach diesem Ziel.\n\nDas zweite Prinzip heißt Differenzierung. Das heißt: Jedes Kind bekommt etwas anderes. Mark und Pia bekommen Hilfe bei der Bewegung. Bei Tom achtet man darauf: Er soll die Fernbedienung selbst halten. Bei Eva achtet man darauf: Sie soll auch die anderen Kinder mitmachen lassen.\n\nDie Kinder bleiben dabei in einer Gruppe. Nur die Hilfe ist verschieden. Das nennt man innere Differenzierung.\n\nAm wichtigsten ist: Die Lehrerin hilft mit Absicht nicht. Deshalb müssen die Kinder selbst überlegen. Sie müssen planen. Sie müssen es tun. Und am Ende sehen sie: Fährt das Auto oder nicht? Das Nicht-Helfen ist also keine Faulheit. Es gehört zum Prinzip dazu."
+        },
+        "en": {
+          "klausur": "The sequence appears in the lecture under the heading Beispiel Berücksichtigung der Handlungsorientierung, and it is indeed the principle of action orientation (Handlungsorientierung) that carries it. Alongside it, the principle of individualisation or differentiation (Individualisierung / Differenzierung) is at work, since something different is planned for Mark, Pia, Tom and Eva. Several passages of the text speak for action orientation. The starting point is the pupils' subjective interests: the attractive suitcase makes them curious, and the group wants to find out for itself what is inside and how to get the car running. The activity is self-directed, because the teacher deliberately gives no support; the group has to work out for itself that there is a switch on the car and one on the remote control, and that both must be switched on. In doing so they practise acting in solidarity: they find the answer in cooperation, and later they take turns with the cars. The process is guided by an agreed product of action, since the group agrees that the car is to be put into operation, and everything else is directed towards that. Differentiation is evident in the four pupils mentioned by name: Mark and Pia are offered motor support, Tom is encouraged to pick up and operate the remote control himself, and Eva is encouraged to pass the activity on to her classmates. Differentiation here works through the need for direct help, that is, through the degree of independence, and it happens within the same learning group. How strongly the principle steers the teacher becomes clearest in the fact that she holds her help back: because she does not explain, the pupils have to perceive the options for action themselves, plan their approach, carry it out and finally check it against the car that either drives or does not. Holding back is therefore not inactivity but the didactic decision that the principle demands.",
+          "einfach": "Two teaching principles work together in this lesson.\n\nThe first is called action orientation. The lecture itself calls this lesson an example of it.\n\nYou can see it in several places. The children get an attractive suitcase. They are curious. They want to find out what is inside. That is the starting point: their own interest.\n\nThen they want the car to drive. But the teacher does not help. The children have to find out for themselves: there are two switches. One is on the car. One is on the remote control. Both must be on.\n\nThe children work together. Later they take turns. So they also learn to share.\n\nThe goal is clear from the start: the car should drive. Everything else follows this goal.\n\nThe second principle is called differentiation. It means: every child gets something different. Mark and Pia get help with movement. With Tom, the teacher makes sure that he holds the remote control himself. With Eva, the teacher makes sure that she lets the other children join in.\n\nThe children stay in one group. Only the help is different. This is called internal differentiation.\n\nThe most important point is this: the teacher does not help on purpose. So the children have to think for themselves. They have to plan. They have to act. And in the end they see: does the car drive or not? Not helping is not laziness. It belongs to the principle."
+        },
+        "ar": {
+          "klausur": "هالمشهد موجود بالمحاضرة تحت عنوان «مثال على مراعاة التوجّه نحو الفعل» (Beispiel Berücksichtigung der Handlungsorientierung)، وفعلاً هالمبدأ، يعني التوجّه نحو الفعل (Handlungsorientierung)، هو يلي بيحمل المشهد. وجنبو عم يشتغل مبدأ التفريد أو التمييز (Individualisierung / Differenzierung)، لأنو في شي مختلف مخطّط لكل واحد من Mark وPia وTom وEva. في كذا موضع بالنص بيدلّوا على التوجّه نحو الفعل. نقطة البداية هي اهتمامات التلاميذ نفسهن: الشنطة الجذّابة بتخلّيهن فضوليين، والمجموعة بدها تكتشف لحالها شو جوّاتها وكيف بتشتغل السيارة. والفعل ذاتي، لأنو المعلّمة بقصد ما بتعطي أي مساعدة؛ لازم المجموعة تكتشف لحالها إنو في مفتاح عالسيارة ومفتاح عالريموت، ولازم التنين يكونوا مفتوحين. وهيك بيتمرّنوا على الفعل التضامني: بيلاقوا الحل بالتعاون، وبعدين بيتناوبوا على السيارات. والعملية بيقودها منتَج فعل متّفق عليه، لأنو المجموعة متّفقة إنو السيارة لازم تشتغل، وكل شي تاني بينظّم حوالين هالهدف. أما التمييز فبيبيّن بالأربع تلاميذ المذكورين بالاسم: Mark وPia بينعرض عليهن دعم حركي، وTom بينتبهوا إنو يمسك الريموت بإيدو ويشغّلو لحالو، وEva بينتبهوا إنها تمرّر النشاط لرفقاتها. يعني التمييز هون بيشتغل عبر الحاجة للمساعدة المباشرة، يعني عبر درجة الاستقلالية، وبيصير جوّا نفس المجموعة. وأكتر شي بيبيّن قدّيش المبدأ بيوجّه المعلّمة هو إنها بتمسك مساعدتها: لأنها ما بتشرح، لازم التلاميذ يلاحظوا إمكانيات الفعل لحالهن، ويخطّطوا، وينفّذوا، وبالآخر يراقبوا النتيجة عالسيارة يلي بتمشي أو ما بتمشي. فمسك المساعدة مو خمول، هو القرار التعليمي يلي بيطلبو المبدأ.",
+          "einfach": "بهالدرس في مبدأين تعليميين عم يشتغلوا سوا.\n\nالمبدأ الأول اسمو التوجّه نحو الفعل. المحاضرة نفسها بتسمّي هالدرس مثال عليه.\n\nمنشوفو بكذا مكان. الولاد بياخدوا شنطة حلوة. بيصيروا فضوليين. بدهن يعرفوا شو جوّاتها. هاد هو البداية: اهتمامهن هنّي.\n\nبعدين بدهن السيارة تمشي. بس المعلّمة ما بتساعد. الولاد لازم يكتشفوا لحالهن: في مفتاحين. واحد عالسيارة. وواحد عالريموت. ولازم التنين يكونوا مفتوحين.\n\nالولاد بيشتغلوا سوا. وبعدين بيتناوبوا. هيك كمان بيتعلّموا يراعوا بعض.\n\nالهدف واضح من الأول: السيارة لازم تمشي. وكل شي تاني بيمشي وراء هالهدف.\n\nالمبدأ التاني اسمو التمييز. يعني: كل ولد بياخد شي مختلف. Mark وPia بياخدوا مساعدة بالحركة. وTom بينتبهوا إنو يمسك الريموت لحالو. وEva بينتبهوا إنها تخلّي باقي الولاد يشاركوا.\n\nالولاد بيضلّوا بمجموعة وحدة. بس المساعدة مختلفة. هاد اسمو تمييز داخلي.\n\nوأهم شي: المعلّمة ما بتساعد بقصد. مشان هيك الولاد لازم يفكّروا لحالهن. لازم يخطّطوا. لازم يعملوا. وبالآخر بيشوفوا: مشيت السيارة أو لأ؟ فعدم المساعدة مو كسل. هو جزء من المبدأ."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Frage heißt PrinzipiEN, im Plural - such also nicht nach dem einen richtigen, sondern nach den zwei bis drei, die zusammenwirken. Der Trick bei so einer Analyse: erst benennen, dann zu jedem Prinzip eine Textstelle zitieren, und erst am Ende deuten. Die Sequenz steht wörtlich auf Folie 23, die Merkmale des handlungsorientierten Unterrichts auf Folie 20, die vier Bestandteile des Handelns auf Folie 22 und die Kriterien der inneren Differenzierung auf Folie 10; in deinen Aufzeichnungen findest du die Sequenz auf Notizen S. 39. Gut zu wissen: Die Folie ordnet die motorische Unterstützung selbst keinem Hilfeniveau zu - wenn du Folie 26 dazunimmst, sag dazu, dass das deine Zuordnung ist.",
+      "quelle": "folie-prinzipien-23",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie überschreibt die Vorlesung diesen Kasten selbst?",
+          "Konfuzius stand ein paar Folien vorher - welches Prinzip war das?",
+          "Selbst tun statt erklärt bekommen"
+        ],
+        [
+          "Vier Namen, vier verschiedene Maßnahmen - welches Prinzip?",
+          "Die Gruppe bleibt zusammen, die Hilfe ist verschieden",
+          "Doppelbegriff: einer meint den Einzelnen, einer die Aufgabe"
+        ],
+        [
+          "Womit fängt handlungsorientierter Unterricht laut Jank und Meyer an?",
+          "Warum ist der Koffer attraktiv und nicht einfach eine Kiste?",
+          "Der Antrieb kommt von den Schüler:innen selbst"
+        ],
+        [
+          "Was tut die Lehrperson auffällig NICHT?",
+          "Wer findet die beiden Schalter?",
+          "Merkmal: die Dialektik aus Führung und Selbsttätigkeit"
+        ],
+        [
+          "Herausgefunden wird nicht allein - wie?",
+          "Später wechseln sie sich ab: welches Merkmal ist das?",
+          "Ein Merkmal, das mit Solidarität zu tun hat"
+        ],
+        [
+          "Worüber ist sich die Gruppe vorher einig?",
+          "Jank und Meyer sprechen von etwas Vereinbartem, das den Prozess leitet",
+          "Kopf- und Handarbeit richten sich auf ein Ergebnis aus"
+        ],
+        [
+          "Vier Namen, vier Sätze - was steht bei jedem?",
+          "Welches Kriterium der inneren Differenzierung passt auf alle vier?",
+          "Es geht um Hilfe und Selbständigkeit, nicht um Stoffmenge"
+        ],
+        [
+          "Warum ist Nichthelfen hier eine Entscheidung und kein Versäumnis?",
+          "Die vier Bestandteile des Handelns - wer durchläuft sie?",
+          "Am Ende steht die Kontrolle: fährt das Auto?"
+        ],
+        [
+          "Die fünf Stufen von stellvertretender Ausführung bis Begleitung",
+          "Motorische Unterstützung anbieten - welche Stufe wäre das?",
+          "Vorsicht: das ist deine Zuordnung, nicht die der Folie"
+        ]
+      ],
+      "ke": [
+        "prinzipien-ke4"
+      ],
+      "core": true
+    },
+    {
+      "id": "pr-ke4-2",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 2,
+      "frage": "Die Vorlesung beschreibt folgende Sequenz: Die in dem fächerübergreifenden Unterrichtsprojekt Energie ausgewählten Materialien haben neben der inhaltlichen Wissenserweiterung auch die Festigung und Erweiterung von lebensweltbezogenen Kompetenzen zur Folge. Hierzu sind Materialien und Handlungsschritte ausgewählt worden, die aktuell wie auch zukünftig bedeutsam im Leben der Schüler:innen sind: das Bedienen von Mehrfachsteckerleisten, das Wechseln von Batterien in ferngesteuerten Autos, Taschenlampen, CD-Playern, elektronischen UK-Medien und das Reparieren von defekten Isolierungen an Stromkabeln. Hierbei sind die Handlungsschritte bewusst und sukzessiv erweitert worden. Das Bedienen der Mehrfachsteckerleiste kann z. B. folgende Handlungsschritte implizieren: Stecker in die Steckerleiste, Stecker der Steckerleiste in die Wandsteckdose, Kippschalter der Steckerleiste umlegen, Bedienen des elektronischen Gerätes möglich. Analysieren Sie diese Lehr-Lernsequenz nach ihren didaktischen Prinzipien: Benennen Sie die Prinzipien, die hier zusammenwirken, beschreiben Sie, woran im Text Sie sie festmachen, und erläutern Sie an einer Stelle genauer, was das für die Planung bedeutet. **Belegen Sie am Material.**",
+      "stichpunkte": [
+        "Benennung 1: Die Vorlesung führt das Energieprojekt als Beispiel für Lebenspraxis und Lebensnähe an",
+        "Benennung 2: Zugleich zeigt die Sequenz das Prinzip der kleinen Schritte und/oder des Sinnzusammenhangs",
+        "Beleg Lebensnähe 1: Ausgewählt sind Materialien und Handlungsschritte, die aktuell wie auch zukünftig bedeutsam im Leben der Schüler:innen sind - das ist das Bildungsgut, das für das spätere Leben benötigt wird (Pitsch 2002, 229)",
+        "Beleg Lebensnähe 2: Die Inhalte sind Alltagshandlungen - Steckerleisten bedienen, Batterien wechseln, defekte Isolierungen reparieren; die Vorlesung formuliert das als Alltagshandlungen werden als Unterrichtsinhalte tituliert",
+        "Beleg kleine Schritte: Die Handlungsschritte sind bewusst und sukzessiv erweitert worden, und das Steckerleisten-Beispiel ist in vier Teilschritte zerlegt (Stecker in die Steckerleiste, Stecker in die Wandsteckdose, Kippschalter umlegen, Gerät bedienen)",
+        "Beleg Sinnzusammenhang: Am Ende der Kette steht kein Teilschritt, sondern das benutzbare Gerät - die Waage der Vorlesung zwischen kleinen Schritten und Gesamtzusammenhang hält hier (Folie 28)",
+        "Erläuterung: Lebensnähe heißt nicht bloß, ein lebensnahes Thema zu wählen, sondern den Weg dorthin gemäß den Aneignungsmöglichkeiten zu gestalten - die Pfeilkette der Vorlesung führt von Aufgaben erkennen über das Bringen in eine Reihenfolge und das Entwickeln von Handlungsplanungen und -strategien bis zum eigenständigen Durchführen, und genau sie liegt der sukzessiven Erweiterung zugrunde",
+        "Weitere: Das Projekt ist ausdrücklich fächerübergreifend angelegt - die Folie nennt das, ordnet es aber keinem der elf Prinzipien zu"
+      ],
+      "abschnitte": [
+        {
+          "operator": "analysieren",
+          "rolle": "benennen",
+          "auftrag": "Zuerst: welche didaktischen Prinzipien diese Sequenz trägt",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Die Sequenz trägt vor allem …",
+          "beispiel": "Die Vorlesung führt das Energieprojekt als Beispiel für das Prinzip Lebenspraxis und Lebensnähe an."
+        },
+        {
+          "operator": "analysieren",
+          "rolle": "beschreiben",
+          "auftrag": "Dann: die Textstellen, an denen du jedes Prinzip festmachst",
+          "idx": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Im Text lässt sich das an folgenden Stellen festmachen: …",
+          "beispiel": "Für die kleinen Schritte spricht der Satz, dass die Handlungsschritte bewusst und sukzessiv erweitert worden sind, und die Zerlegung des Steckerleisten-Beispiels: Stecker in die Steckerleiste, Stecker der Steckerleiste in die Wandsteckdose, Kippschalter der Steckerleiste umlegen, Bedienen des elektronischen Gerätes möglich."
+        },
+        {
+          "operator": "analysieren",
+          "rolle": "erlaeutern",
+          "auftrag": "Zuletzt: was das für die Planung bedeutet - eine Stelle genauer",
+          "idx": [
+            6
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Für die Planung bedeutet das, dass …",
+          "beispiel": "Lebensnähe heißt in dieser Sequenz also nicht bloß, ein lebensnahes Thema zu wählen, sondern den Weg dorthin gemäß den Aneignungsmöglichkeiten der Schüler:innen zu gestalten."
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Wenn du magst: was die Folie noch nennt, aber keinem Prinzip zuordnet",
+          "idx": [
+            7
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Die Vorlesung führt das Energieprojekt als Beispiel für das Prinzip Lebenspraxis und Lebensnähe an. Zugleich zeigt die Sequenz das Prinzip der kleinen Schritte und/oder des Sinnzusammenhangs. Für die Lebensnähe spricht zuerst die Begründung der Auswahl: Ausgewählt sind Materialien und Handlungsschritte, die aktuell wie auch zukünftig bedeutsam im Leben der Schüler:innen sind - genau das meint Pitsch mit dem Bildungsgut, das für das spätere Leben benötigt wird. Dazu passen die Inhalte selbst, denn sie sind Alltagshandlungen: das Bedienen von Mehrfachsteckerleisten, das Wechseln von Batterien in ferngesteuerten Autos, Taschenlampen, CD-Playern und elektronischen UK-Medien und das Reparieren defekter Isolierungen an Stromkabeln. Für die kleinen Schritte spricht der Satz, dass die Handlungsschritte bewusst und sukzessiv erweitert worden sind, und die Zerlegung des Steckerleisten-Beispiels: Stecker in die Steckerleiste, Stecker der Steckerleiste in die Wandsteckdose, Kippschalter der Steckerleiste umlegen, Bedienen des elektronischen Gerätes möglich. Der Sinnzusammenhang bleibt dabei erhalten, denn am Ende der Kette steht kein Teilschritt, sondern das benutzbare Gerät; die Vorlesung stellt kleine Schritte und Gesamtzusammenhang als Waage gegenüber, und hier hält die Waage. Lebensnähe heißt in dieser Sequenz also nicht bloß, ein lebensnahes Thema zu wählen, sondern den Weg dorthin gemäß den Aneignungsmöglichkeiten der Schüler:innen zu gestalten. Die Vorlesung beschreibt diesen Weg als Kette: Aufgaben erkennen, sie in eine bestimmte Reihenfolge bringen, Handlungsplanungen und -strategien entwickeln und die Handlungsplanung eigenständig durchführen. Genau diese Kette liegt der sukzessiven Erweiterung der Handlungsschritte zugrunde.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "In dieser Sequenz wirken zwei didaktische Prinzipien zusammen.\n\nDas erste heißt Lebenspraxis und Lebensnähe. Die Vorlesung nennt das Energieprojekt selbst ein Beispiel dafür.\n\nMan erkennt es an zwei Dingen. Erstens: Die Lehrkraft wählt Material aus, das für das Leben der Schüler wichtig ist. Heute und später. Zweitens: Die Inhalte sind Handlungen aus dem Alltag. Zum Beispiel eine Steckerleiste bedienen. Oder Batterien wechseln. Oder ein kaputtes Kabel reparieren.\n\nDas zweite Prinzip heißt: kleine Schritte und Sinnzusammenhang.\n\nMan erkennt es auch an zwei Dingen. Erstens: Die Handlungsschritte werden mit Absicht nach und nach mehr. Zweitens: Das Bedienen der Steckerleiste wird in vier kleine Schritte geteilt. Stecker in die Steckerleiste. Stecker in die Steckdose. Kippschalter umlegen. Gerät benutzen.\n\nWichtig ist: Am Ende steht kein einzelner Schritt. Am Ende steht ein Gerät, das man benutzen kann. Der Sinn bleibt also sichtbar. Die Vorlesung zeigt das als Waage: kleine Schritte auf der einen Seite, das große Ganze auf der anderen. Hier ist die Waage im Gleichgewicht.\n\nDas heißt für die Planung: Lebensnähe ist nicht nur ein schönes Thema. Man muss auch den Weg dorthin planen. Die Vorlesung beschreibt diesen Weg so: Aufgaben erkennen. Sie in eine Reihenfolge bringen. Einen Plan entwickeln. Und den Plan allein durchführen."
+        },
+        "en": {
+          "klausur": "The lecture presents the energy project as an example of the principle of everyday practice and closeness to life (Lebenspraxis und Lebensnähe). At the same time the sequence shows the principle of small steps and/or overall meaning (kleine Schritte und/oder Sinnzusammenhang). Closeness to life is supported first of all by the reason given for the selection: the materials and steps chosen are those that are significant in the pupils' lives now and in the future - which is exactly what Pitsch means by the educational content needed for later life. The content itself fits this too, since these are everyday activities: operating multiple socket strips, changing batteries in remote-controlled cars, torches, CD players and electronic AAC devices, and repairing damaged insulation on power cables. The principle of small steps is supported by the statement that the steps of action were deliberately and successively extended, and by the way the socket-strip example is broken down: plug into the socket strip, plug of the socket strip into the wall socket, flick the switch of the socket strip, and the electronic device can be operated. The overall meaning is nevertheless preserved, because what stands at the end of the chain is not a partial step but a usable device; the lecture presents small steps and overall context as a pair of scales, and here the scales are balanced. In this sequence, closeness to life therefore does not merely mean choosing a topic close to life, but designing the path towards it in line with the pupils' possibilities of appropriation. The lecture describes this path as a chain: recognising tasks, putting them into a particular order, developing plans and strategies for action, and carrying the plan out independently. It is precisely this chain that underlies the successive extension of the steps of action.",
+          "einfach": "Two teaching principles work together in this sequence.\n\nThe first is called closeness to life. The lecture itself calls the energy project an example of it.\n\nYou can see it in two things. First: the teacher chooses material that matters in the pupils' lives. Now and later. Second: the content consists of everyday actions. For example using a socket strip. Or changing batteries. Or repairing a broken cable.\n\nThe second principle is called small steps and overall meaning.\n\nYou can see it in two things as well. First: the steps of action are deliberately increased little by little. Second: using the socket strip is split into four small steps. Plug into the socket strip. Plug into the wall socket. Flick the switch. Use the device.\n\nThis is important: at the end there is not a single step. At the end there is a device you can use. So the meaning stays visible. The lecture shows this as a pair of scales: small steps on one side, the whole picture on the other. Here the scales are balanced.\n\nFor planning this means: closeness to life is not just a nice topic. You also have to plan the path towards it. The lecture describes that path like this: recognise the tasks. Put them in an order. Develop a plan. And carry the plan out on your own."
+        },
+        "ar": {
+          "klausur": "المحاضرة بتقدّم مشروع الطاقة كمثال على مبدأ الممارسة الحياتية والقرب من الحياة (Lebenspraxis und Lebensnähe). وبنفس الوقت المشهد بيبيّن مبدأ الخطوات الصغيرة و/أو الترابط المعنوي (kleine Schritte und/oder Sinnzusammenhang). أول شي بيدعم القرب من الحياة هو سبب الاختيار نفسو: المواد والخطوات المختارة هي يلي إلها معنى بحياة التلاميذ هلق وبالمستقبل كمان - وهاد بالضبط شو قصدو Pitsch بالمحتوى التربوي يلي بينلزم للحياة بعدين. والمضامين نفسها بتنطبق كمان، لأنها أفعال يومية: تشغيل مشترك كهربا، تبديل بطاريات بسيارات ريموت وكشافات ومشغّلات CD وأجهزة تواصل بديل إلكترونية، وتصليح عزل خربان بكابلات الكهربا. أما الخطوات الصغيرة فبيدعمها الجملة يلي بتقول إنو خطوات الفعل انوسّعت بقصد وبالتدريج، وكمان تقسيم مثال المشترك: القابس بالمشترك، قابس المشترك بمأخذ الحيط، كبس مفتاح المشترك، وبعدها بيصير ممكن تشغيل الجهاز. ومع هيك الترابط المعنوي بيضل محفوظ، لأنو بآخر السلسلة ما في خطوة جزئية بل جهاز بينستعمل؛ المحاضرة بتحطّ الخطوات الصغيرة والسياق الكامل متل ميزان، وهون الميزان متوازن. يعني القرب من الحياة بهالمشهد مو بس اختيار موضوع قريب من الحياة، بل تصميم الطريق لعندو حسب إمكانيات التملّك عند التلاميذ. والمحاضرة بتوصف هالطريق كسلسلة: التعرّف على المهام، ترتيبها بتسلسل معيّن، تطوير خطط واستراتيجيات للفعل، وتنفيذ الخطة باستقلالية. وهي هالسلسلة بالضبط يلي وراء التوسيع التدريجي لخطوات الفعل.",
+          "einfach": "بهالمشهد في مبدأين تعليميين عم يشتغلوا سوا.\n\nالأول اسمو القرب من الحياة. المحاضرة نفسها بتسمّي مشروع الطاقة مثال عليه.\n\nمنشوفو بشغلتين. أول شي: المعلّمة بتختار مواد مهمة بحياة التلاميذ. هلق وبعدين. تاني شي: المضامين أفعال من الحياة اليومية. متلاً تشغيل مشترك كهربا. أو تبديل بطاريات. أو تصليح كابل خربان.\n\nالمبدأ التاني اسمو الخطوات الصغيرة والترابط المعنوي.\n\nمنشوفو كمان بشغلتين. أول شي: خطوات الفعل بتزيد شوي شوي وبقصد. تاني شي: تشغيل المشترك متقسّم لأربع خطوات صغيرة. القابس بالمشترك. القابس بمأخذ الحيط. كبس المفتاح. استعمال الجهاز.\n\nوالمهم: بالآخر ما في خطوة لحالها. بالآخر في جهاز فينا نستعملو. يعني المعنى بيضل واضح. المحاضرة بتبيّن هاد متل ميزان: الخطوات الصغيرة بجهة، والصورة الكاملة بالجهة التانية. وهون الميزان متوازن.\n\nيعني للتخطيط: القرب من الحياة مو بس موضوع حلو. لازم كمان تخطّط الطريق لعندو. والمحاضرة بتوصف الطريق هيك: تعرّف عالمهام. رتّبهن. طوّر خطة. ونفّذ الخطة لحالك."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Auch hier gilt der Plural: Die Folie ist mit Beispiel Lebensnähe überschrieben, aber der Satz über die bewusst und sukzessiv erweiterten Handlungsschritte gehört schon zum nächsten Prinzip. Zwei Prinzipien sauber belegt sind mehr wert als fünf behauptete. Der Kasten steht auf Folie 8, die Definition der Lebensnähe und die Pfeilkette auf Folie 6, die Waage aus kleinen Schritten und Gesamtzusammenhang auf Folie 28; in deinen Aufzeichnungen findest du den Kasten auf Notizen S. 35. Vorsicht bei Ganzheitlichkeit: fächerübergreifend ist nicht dasselbe wie ganzheitlich - Ganzheitlichkeit meint bei Fröhlich und Haupt die sieben Entwicklungsbereiche, nicht die Zahl der beteiligten Fächer.",
+      "quelle": "folie-prinzipien-8",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wie ist die Folie überschrieben?",
+          "Es geht um das, was im Leben gebraucht wird - heute und später",
+          "Pitsch spricht vom Bildungsgut für das spätere Leben"
+        ],
+        [
+          "Der Satz über die sukzessiv erweiterten Handlungsschritte - welches Prinzip?",
+          "Vier Teilschritte für eine Steckerleiste",
+          "Ein Prinzip mit einem Und-Oder im Namen"
+        ],
+        [
+          "Warum wurden gerade diese Materialien ausgewählt?",
+          "Zwei Zeitangaben stehen im Satz: aktuell und ...",
+          "Pitsch 2002 - was ist Lebensnähe?"
+        ],
+        [
+          "Zähl die genannten Tätigkeiten auf - was haben sie gemeinsam?",
+          "Steckerleiste, Batterien, Isolierung: wo kommt das vor?",
+          "Alltagshandlungen werden zu ..."
+        ],
+        [
+          "Ein Adverbpaar im Text verrät die Absicht: bewusst und ...",
+          "Zähl die Teilschritte der Steckerleiste",
+          "Vom Stecker bis zum benutzbaren Gerät"
+        ],
+        [
+          "Was steht am ENDE der vier Schritte?",
+          "Die Waage auf Folie 28 - was liegt auf der anderen Seite?",
+          "Warum das Zerlegen hier nicht rigide wird"
+        ],
+        [
+          "Lebensnähe betrifft nicht nur das Thema, sondern auch den ...",
+          "Die vier Chevrons auf Folie 6",
+          "Erkennen, ordnen, planen, selbst durchführen"
+        ],
+        [
+          "Wie ist das Projekt organisatorisch angelegt?",
+          "Ein Wort im ersten Satz beschreibt die Fächer",
+          "Achtung: das ist kein Prinzip aus der Elferliste"
+        ]
+      ],
+      "ke": [
+        "prinzipien-ke4"
+      ],
+      "core": true
     }
   ]
 }

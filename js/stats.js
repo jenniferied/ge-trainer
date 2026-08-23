@@ -775,6 +775,153 @@ export function statistik(themen) {
   };
 }
 
+/* ---------- Kompetenz-Abdeckung ----------
+   Portiert aus scripts/audit-kompetenzen.py (sitztMap und die proKE/proAFB-
+   Schleifen), damit App und Audit dieselbe Rechnung fahren. Zwei Unterschiede,
+   beide mit Absicht:
+
+   1. QUELLE. Das Skript liest Roses Log aus Supabase und die Zuordnung
+      Unterthema -> Kompetenzerwartung aus fragen/begriffe/. Hier kommt das Log
+      aus state.antwortLog und die Zuordnung aus dem Feld `ke`, das seit dem
+      24.08.2026 an jeder Frage steht. Nachgerechnet: beide Wege ergeben
+      dieselben Zahlen (6 von 32 nie beruehrt, 62/35/2 beruehrt je AFB-Stufe).
+
+   2. WAS "SITZT" HEISST. Das Skript wertet `quote >= 0.75`, sonst `richtig` -
+      und die freien Aufgaben im GE-Log tragen WEDER quote NOCH richtig, sie
+      tragen Roses Selbsteinschaetzung. Der frei-Zweig laeuft dort also ins
+      Leere, und alle 87 "sitzt" des Audits sind in Wahrheit angekreuzte
+      MC-Fragen. Das ist genau die Verwechslung, die diese Ansicht nicht machen
+      darf: die Klausur ist handschriftlicher Freitext. Richtig angekreuzt zu
+      haben belegt, dass die Schublade da ist - nicht, dass Rose den Satz
+      schreiben kann.
+
+      Deshalb: MC zaehlt als BERUEHRT, nie als SITZT. Fuer freie Aufgaben gilt
+      dieselbe Schwelle 0.75 wie im Skript, nur auf den Wert angewandt, den es
+      hier wirklich gibt (wertVon: sass gut = 1, teilweise = 0.5, nochmal = 0).
+      Also: "sass gut" sitzt, "teilweise" noch nicht. Dieselbe Unterscheidung
+      faehrt reife.js schon (stark = produziert, schwach = wiedererkannt).
+
+   NICHT MITGEZAEHLT werden Abrufe aus dem Themen-Lernen (qids "tlab-"/"tsab-").
+   Das Skript kennt sie auch nicht, und sie sind ueberwiegend Ziehen, also
+   Wiedererkennen. Wer sie dazunimmt, macht aus den sechs unberuehrten
+   Kompetenzen vier - das waere eine andere Rechnung, keine genauere. */
+
+var SITZT_AB = 0.75;
+var AFB_ROEMISCH = { 1: "I", 2: "II", 3: "III" };
+
+// kompetenzerwartungen.json, einmal geladen und dann behalten (Muster wie
+// ladeGlossar/ladeOperatoren in glossar.js). hooks.stats() rendert nach jeder
+// Runde neu - ohne Cache waere das jedes Mal ein Netzweg.
+var KOMPETENZEN = null;
+
+export function ladeKompetenzen() {
+  if (KOMPETENZEN) return Promise.resolve(KOMPETENZEN);
+  return fetch("data/kompetenzerwartungen.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+    .then(function (d) {
+      KOMPETENZEN = d && Array.isArray(d.eintraege) && d.eintraege.length ? d : null;
+      return KOMPETENZEN;
+    });
+}
+
+/* qid -> { beruehrt, sitzt }. Der LETZTE Versuch gewinnt, das Log ist
+   chronologisch. MC bekommt nie sitzt (siehe oben); alles ohne auswertbaren
+   Wert (Spiele, Klausurfrage-Schritte) zaehlt immerhin als beruehrt. */
+function standJeFrage(idx) {
+  var out = Object.create(null);
+  state.antwortLog.forEach(function (a) {
+    // Spiele bleiben draussen, gleiche Regel wie in zeilen(). Ihre qids tragen
+    // eigene Praefixe und treffen den Korpus heute gar nicht - der Riegel steht
+    // trotzdem hier und nicht nur in den Daten: sonst haengt die Rechnung daran,
+    // dass kein kuenftiges Spiel jemals eine nackte Frage-Id loggt.
+    if (a.modus === "spiel") return;
+    var m = idx[a.qid];
+    if (!m) return;
+    var e = out[a.qid] || (out[a.qid] = { beruehrt: true, sitzt: false });
+    e.beruehrt = true;
+    if (m.typ === "mc") { e.sitzt = false; return; }
+    var w = wertVon(a);
+    if (w === undefined) return;          // kein Urteil -> alten Stand behalten
+    e.sitzt = w >= SITZT_AB;
+  });
+  return out;
+}
+
+/* Die ganze Rechnung an einer Stelle. Rueckgabe:
+     keZeilen     je Kompetenzerwartung mit Fragen - das Ungetane zuerst
+     ohneFragen   Kompetenzerwartungen, zu denen der Korpus (noch) nichts hat
+     afbZeilen    eine Zeile je AFB-Stufe
+     nieBeruehrt  Teilmenge von keZeilen, gesamtMitFragen die Bezugsgroesse */
+export function kompetenzAbdeckung(themen, daten) {
+  var eintraege = (daten && daten.eintraege) || [];
+  var keL = Object.create(null);
+  eintraege.forEach(function (e) { keL[e.id] = e; });
+  var titel = Object.create(null);
+  themen.forEach(function (t) { titel[t.id] = t; });
+
+  // Alle Fragen der acht Vorlesungsthemen, flach, mit ihrer Kompetenz-Liste.
+  var idx = Object.create(null);
+  alleItems(themen).forEach(function (i) {
+    idx[i.f.id] = { typ: i.typ, f: i.f, thema: i.thema, ke: i.f.ke || [], afb: i.f.afb || null };
+  });
+  var stand = standJeFrage(idx);
+
+  var proKE = Object.create(null);
+  var proAFB = Object.create(null);
+  AFB_STUFEN.forEach(function (a) {
+    proAFB[a] = { afb: a, gesamt: 0, beruehrt: 0, freiGesamt: 0, freiSitzt: 0 };
+  });
+
+  Object.keys(idx).forEach(function (qid) {
+    var m = idx[qid];
+    var s = stand[qid];
+    var b = !!s, si = !!(s && s.sitzt);
+    m.ke.forEach(function (kid) {
+      var v = proKE[kid] || (proKE[kid] = {
+        id: kid, eintrag: keL[kid] || null, thema: titel[keL[kid] && keL[kid].thema] || null,
+        gesamt: 0, beruehrt: 0, mcGesamt: 0, mcBeruehrt: 0,
+        freiGesamt: 0, freiBeruehrt: 0, freiSitzt: 0, fragen: []
+      });
+      v.gesamt++; v.beruehrt += b ? 1 : 0;
+      if (m.typ === "mc") { v.mcGesamt++; v.mcBeruehrt += b ? 1 : 0; }
+      else { v.freiGesamt++; v.freiBeruehrt += b ? 1 : 0; v.freiSitzt += si ? 1 : 0; }
+      v.fragen.push({ typ: m.typ, f: m.f, thema: m.thema, beruehrt: b, sitzt: si });
+    });
+    var a = proAFB[m.afb];
+    if (a) {
+      a.gesamt++; a.beruehrt += b ? 1 : 0;
+      if (m.typ === "frei") { a.freiGesamt++; a.freiSitzt += si ? 1 : 0; }
+    }
+  });
+
+  var zeilenKE = Object.keys(proKE).map(function (k) { return proKE[k]; });
+  /* Sortierung: das Ungetane zuerst. Danach der Anteil der freien Aufgaben, die
+     sitzen (aufsteigend) - und bei Gleichstand, den es hier oft gibt, weil
+     fast ueberall noch nichts sitzt, die groessere freie Auswahl zuerst: dort
+     wartet am meisten. Bewusst NICHT die Gesamtzahl der Fragen, sonst
+     schoeben MC-lastige Kompetenzen sich nach vorn, obwohl sie fuer die
+     Klausur am wenigsten beweisen. */
+  zeilenKE.sort(function (x, y) {
+    if (!x.beruehrt !== !y.beruehrt) return x.beruehrt ? 1 : -1;
+    var ax = x.freiGesamt ? x.freiSitzt / x.freiGesamt : 0;
+    var ay = y.freiGesamt ? y.freiSitzt / y.freiGesamt : 0;
+    if (ax !== ay) return ax - ay;
+    return y.freiGesamt - x.freiGesamt;
+  });
+
+  var ohneFragen = eintraege.filter(function (e) { return !proKE[e.id]; })
+    .map(function (e) { return { id: e.id, eintrag: e, thema: titel[e.thema] || null }; });
+
+  return {
+    keZeilen: zeilenKE,
+    nieBeruehrt: zeilenKE.filter(function (v) { return !v.beruehrt; }),
+    gesamtMitFragen: zeilenKE.length,
+    ohneFragen: ohneFragen,
+    afbZeilen: AFB_STUFEN.map(function (a) { return proAFB[a]; })
+  };
+}
+
 /* ---------- Fragen einer Zelle ---------- */
 
 function fragenFuerZelle(thema, afb) {
@@ -889,6 +1036,7 @@ export function zeigeStats(themen, hooks) {
 
   wurzel.appendChild(kachelKarte(st));
   wurzel.appendChild(chipKarte(st, themen, hooks));
+  wurzel.appendChild(kompetenzKarte(themen));
   wurzel.appendChild(rasterKarte(st, hooks));
   wurzel.appendChild(fussnote(st));
 
@@ -1034,6 +1182,188 @@ function fussnote(st) {
     "Spiele zählen bei Antworten und Übungstagen mit, nicht im Thema-×-AFB-Raster."));
   return box;
 }
+
+/* ---------- Kompetenz-Abdeckung: die Karte ----------
+   Die Vorlesung sagt auf Folie 11 ausdruecklich, woran Rose sich orientieren
+   soll - an den Kompetenzerwartungen, nicht an unseren Themen-Kacheln. Diese
+   Karte ist die Uebersetzung: was verlangt die Vorlesung, und wo war Rose
+   schon.
+
+   TON: eine unberuehrte Kompetenz ist ein ANGEBOT. Sie heisst hier "noch nicht
+   dran gewesen", nie "fehlt" und schon gar nicht "offen" im Sinne von Schuld.
+   Rose hat gestern nach einer zu schweren Aufgabe abgebrochen; diese Karte
+   darf sie nicht ein zweites Mal treffen.
+
+   KEIN EINSTIEG IN EINE RUNDE. Jennifer: "kompetenzen aufzaehlen und
+   verknuepfte fragen anzeigen lassen" - eine Uebersicht, kein Modus. Wer von
+   hier aus ueben will, nimmt die Chips oder das Raster darueber; ein dritter
+   Rundenstart an derselben Seite waere eine Entscheidung mehr, nicht eine
+   weniger.
+
+   ASYNCHRON: kompetenzerwartungen.json wird sonst nirgends geladen, und
+   zeigeStats() ist synchron. Deshalb steht die Karte zuerst als Platzhalter da
+   und fuellt sich, wenn die Datei da ist. */
+
+function kompetenzKarte(themen) {
+  var karte = el("div", "karte ke-karte");
+  karte.appendChild(el("p", "ke-laedt", "Die Kompetenzerwartungen werden geladen …"));
+  ladeKompetenzen().then(function (d) {
+    // Zwischendurch weggeklickt? leeren() hat die Karte dann schon abgehaengt -
+    // in einen losgeloesten Knoten zu schreiben waere Arbeit fuer den Papierkorb.
+    if (!karte.isConnected) return;
+    if (!d) { karte.remove(); return; }
+    fuelleKompetenzKarte(karte, kompetenzAbdeckung(themen, d));
+    belebeStats(karte);
+  });
+  return karte;
+}
+
+// Fragetexte sind lang und tragen Markdown-Sternchen. Fuer eine Uebersicht
+// reicht der Anfang; die ganze Aufgabe steht beim Ueben.
+function kurz(text, max) {
+  var s = String(text || "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  return s.length > max ? s.slice(0, max - 1).trim() + "…" : s;
+}
+
+// Die AFB-Stufe als Pille, in denselben Farben wie an den Aufgaben (afb-1/2/3).
+// Kompetenzerwartungen tragen die Stufe roemisch ("II"), Fragen als Zahl.
+function kePille(afb) {
+  var roh = String(afb || "");
+  var stufe = roh.indexOf("III") === 0 ? 3 : roh.indexOf("II") === 0 ? 2 : roh ? 1 : 0;
+  if (!stufe) return el("span", "ke-afb", "ohne Stufe");
+  return el("span", "ke-afb afb-" + stufe, "AFB " + AFB_ROEMISCH[stufe]);
+}
+
+function fuelleKompetenzKarte(karte, ab) {
+  leereKnoten(karte);
+  karte.appendChild(el("h2", null, "Die Kompetenzen der Vorlesung"));
+  karte.appendChild(el("p", "raster-hinweis",
+    "Was die acht Vorlesungen von dir erwarten – und wo du schon warst. Antippen klappt die Aufgaben auf, die dazugehören."));
+
+  // 1. Ganz oben das Angebot: was noch nicht dran war.
+  var nie = ab.nieBeruehrt;
+  var kasten = el("div", "ke-angebot");
+  if (nie.length) {
+    var zahl = el("div", "ke-angebot-zahl");
+    zahl.appendChild(el("b", "js-count", String(nie.length)));
+    zahl.appendChild(el("span", null, " von " + ab.gesamtMitFragen +
+      (nie.length === 1 ? " Kompetenzen war noch nicht dran" : " Kompetenzen waren noch nicht dran")));
+    kasten.appendChild(zahl);
+    kasten.appendChild(el("p", "ke-angebot-text",
+      "Hier liegt am meisten bereit. Kein Vorwurf – nur die Stelle, an der eine Runde am meisten Neues bringt."));
+    nie.forEach(function (v) { kasten.appendChild(keZeile(v, true)); });
+  } else {
+    kasten.appendChild(el("div", "ke-angebot-zahl",
+      "Jede Kompetenz war schon einmal dran."));
+    kasten.appendChild(el("p", "ke-angebot-text",
+      "Alle " + ab.gesamtMitFragen + " Kompetenzerwartungen haben mindestens eine Aufgabe hinter sich. Weiter geht es unten, sortiert nach dem, was noch am wenigsten sitzt."));
+  }
+  karte.appendChild(kasten);
+
+  // 2. Je AFB-Stufe eine Zeile.
+  karte.appendChild(el("div", "chip-ueberschrift", "Nach Anforderungsbereich"));
+  var afbBox = el("div", "ke-afb-liste");
+  ab.afbZeilen.forEach(function (a) {
+    var z = el("div", "ke-afb-zeile");
+    var kopf = el("div", "ke-afb-kopf");
+    kopf.appendChild(kePille(AFB_ROEMISCH[a.afb]));
+    kopf.appendChild(el("span", "ke-afb-lang", AFB_LANG[a.afb].split("–")[1].trim()));
+    z.appendChild(kopf);
+    /* AFB III besteht ausschliesslich aus freien Aufgaben - dort stuende sonst
+       zweimal dieselbe Bezugsgroesse ("2 von 41 berührt · 1 von 41 sitzen"),
+       und zwei gleiche Nenner lesen sich wie zwei unabhaengige Zaehlungen.
+       Deshalb in dem Fall ein Satz statt zwei. */
+    var vollFrei = a.freiGesamt === a.gesamt && a.gesamt > 0;
+    z.appendChild(el("div", "ke-afb-zahlen",
+      vollFrei
+        ? a.beruehrt + " von " + a.gesamt + " Aufgaben berührt, " +
+          (a.freiSitzt === 1 ? "eine sitzt" : a.freiSitzt + " sitzen") +
+          " – hier ist alles frei zu schreiben"
+        : a.beruehrt + " von " + a.gesamt + " Aufgaben berührt · " +
+          (a.freiGesamt
+            ? a.freiSitzt + " von " + a.freiGesamt + " freien Aufgaben sitzen"
+            : "keine freie Aufgabe auf dieser Stufe")));
+    afbBox.appendChild(z);
+  });
+  karte.appendChild(afbBox);
+  karte.appendChild(el("p", "ke-fussnote",
+    "„Sitzt“ zählt nur die frei geschriebenen Aufgaben, die du selbst mit „saß gut“ eingeschätzt hast. Angekreuzte Konzept-Checks zählen als berührt: in der Klausur schreibst du mit der Hand, und Wiedererkennen ist noch kein Satz auf dem Papier."));
+
+  // 3. Alle Kompetenzen, das Ungetane zuerst, jede aufklappbar.
+  karte.appendChild(el("div", "chip-ueberschrift", "Alle Kompetenzerwartungen"));
+  var liste = el("div", "ke-liste");
+  ab.keZeilen.forEach(function (v) { liste.appendChild(keZeile(v, false)); });
+  karte.appendChild(liste);
+
+  // Kompetenzen ohne eine einzige Aufgabe sind KEIN Rueckstand von Rose,
+  // sondern eine Luecke im Korpus - deshalb ausserhalb der Zaehlung oben und
+  // im Ton des grauen Rasterfelds ("hier gibt es noch keine Aufgabe").
+  if (ab.ohneFragen.length) {
+    karte.appendChild(el("div", "chip-ueberschrift", "Dazu gibt es noch keine Aufgabe"));
+    var rest = el("div", "ke-liste");
+    ab.ohneFragen.forEach(function (o) {
+      var z = el("div", "ke-eintrag leer");
+      var kopf = el("div", "ke-kopf");
+      kopf.appendChild(el("span", "ke-thema", o.thema ? o.thema.titel : o.eintrag.thema));
+      kopf.appendChild(kePille(o.eintrag.afb));
+      z.appendChild(kopf);
+      z.appendChild(el("div", "ke-text", kurz(o.eintrag.text, 140)));
+      rest.appendChild(z);
+    });
+    karte.appendChild(rest);
+  }
+}
+
+/* Eine Kompetenzerwartung als aufklappbare Zeile. `hervor` markiert die noch
+   nicht beruehrten oben im Angebots-Kasten - dieselbe Zeile, nur anders
+   gerahmt, damit man sie unten in der Vollstaendigkeit wiedererkennt. */
+function keZeile(v, hervor) {
+  var e = v.eintrag || {};
+  var falt = el("details", "ke-eintrag" + (hervor ? " hervor" : "") + (v.beruehrt ? "" : " frisch"));
+  var kopf = el("summary", "ke-summary");
+  var innen = el("div", "ke-summary-innen");
+
+  var zeile1 = el("div", "ke-kopf");
+  var thema = el("span", "ke-thema", v.thema ? v.thema.titel : (e.thema || ""));
+  if (v.thema) setzeFarbe(thema, v.thema.farbe);
+  zeile1.appendChild(thema);
+  zeile1.appendChild(kePille(e.afb));
+  innen.appendChild(zeile1);
+  innen.appendChild(el("div", "ke-text", kurz(e.text, 130)));
+  innen.appendChild(el("div", "ke-stand", standSatz(v)));
+
+  kopf.appendChild(innen);
+  falt.appendChild(kopf);
+
+  var box = el("div", "ke-fragen");
+  v.fragen.forEach(function (q) {
+    var z = el("div", "ke-frage");
+    var marke = el("span", "ke-marke " + (q.typ === "mc" ? "mc" : "frei"),
+      q.typ === "mc" ? "Check" : "frei");
+    z.appendChild(marke);
+    z.appendChild(el("span", "ke-frage-text", kurz(q.f.frage, 110)));
+    z.appendChild(el("span", "ke-frage-stand",
+      q.sitzt ? "saß gut" : q.beruehrt ? "schon dran gewesen" : "noch nicht dran gewesen"));
+    box.appendChild(z);
+  });
+  falt.appendChild(box);
+  return falt;
+}
+
+/* Der Satz unter dem Kompetenz-Text. Beide Zahlen stehen GETRENNT da: eine
+   Kompetenz mit fuenf richtigen Konzept-Checks und keiner freien Aufgabe darf
+   nicht aussehen wie erledigt. */
+function standSatz(v) {
+  var teile = [];
+  if (v.mcGesamt) teile.push(v.mcBeruehrt + " von " + v.mcGesamt + " Checks berührt");
+  if (v.freiGesamt) teile.push(v.freiSitzt + " von " + v.freiGesamt + " frei sitzen");
+  if (!teile.length) return "keine Aufgabe hinterlegt";
+  if (!v.beruehrt) return "noch nicht dran gewesen · " + teile.join(" · ");
+  return teile.join(" · ");
+}
+
+// Kleiner Helfer, damit der Platzhalter verschwindet, ohne innerHTML zu setzen.
+function leereKnoten(n) { while (n.firstChild) n.removeChild(n.firstChild); }
 
 /* ---------- Uebungs-Runde ----------
    Bewusst dieselben Karten wie im normalen Uebungsmodus (hooks.mcKarte /

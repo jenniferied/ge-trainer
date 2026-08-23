@@ -3215,6 +3215,145 @@
         "freizeit-ke1"
       ],
       "core": true
+    },
+    {
+      "id": "fr-ke3-2",
+      "unterthema": "Bildungsauftrag & Recht",
+      "afb": 2,
+      "frage": "Erläutern Sie die Bedeutung von Freizeit als Bildungsauftrag und übertragen Sie sie auf einen schulischen Kontext. **Erläutern heißt hier: benennen, beschreiben und an einem Beispiel aus der Vorlesung zeigen.**",
+      "stichpunkte": [
+        "Benennung: Freizeit ist curricular verankert - im Rahmenlehrplan von 2011 gehört das Handlungsfeld Freizeit zum Leitthema L1 Der Mensch im Alltag, neben Selbstversorgung, Wohnen, Zusammenleben und Mediennutzung (RLP 2011, 23)",
+        "Benennung: Rechtlich getragen wird der Auftrag von Artikel 30 der UN-Behindertenrechtskonvention - gleichberechtigte Teilhabe am kulturellen Leben, Zugang zu Freizeit-, Sport- und Erholungsangeboten, barrierefreie Angebote und Orte, Teilnahme an Spiel-, Freizeit- und Sportaktivitäten, Unterstützung der kulturellen und sprachlichen Identität",
+        "Beschreibung: Freizeit prägt Lebensstile, bietet Raum für Selbstverwirklichung und soziale Anerkennung, wirkt identitätsbildend und kann soziale Integration und Autonomie fördern (Markowetz 2026, 1029)",
+        "Beschreibung: Fehlende Freizeitteilhabe begünstigt umgekehrt soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion - Freizeit ist kein Rest, sondern ein Teilhabefeld mit eigenen Risiken",
+        "Beschreibung: Der Rahmenlehrplan sagt auch, was gelernt werden soll - grundlegende Fähigkeiten und Strategien zur Wahrnehmung bzw. Planung von Freizeitaktivitäten, die den individuellen Möglichkeiten, Interessen und Wünschen entsprechen; das Lernen zielt außerdem auf soziale Integration",
+        "Beschreibung: Warum die Schule zuständig ist - Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006, 242), Freizeitkompetenz stellt sich nach dem Abschluss nicht von allein ein",
+        "Übertragung: Der Rahmenlehrplan nennt selbst den Weg - besonders bei älteren Schüler:innen wird die Freizeitgestaltung als spezielles Unterrichtsangebot unter Berücksichtigung der zukünftigen Lebenssituation in den Unterricht einbezogen",
+        "Beispiel aus der Vorlesung: die Freizeitwoche (Dworschak/Kragl 2011, 424 f.) - vielfältiges Programm mit Angeboten für alle, individuelle Auswahl durch die Schüler:innen, häufig klassenübergreifende Durchführung, und als wichtiger Baustein die Nachbereitung mit Besprechung und Reflexion, damit die Erkenntnisse über die eigenen Freizeitpräferenzen beim nächsten Mal anwendbar sind",
+        "Weitere: Schuck erinnert daran, dass es nicht bei der Förderung des Einzelnen bleiben darf - auch die Gesellschaft muss sich öffnen und für Zugänglichkeit und Barrierefreiheit sorgen (Schuck 2019, 644)"
+      ],
+      "abschnitte": [
+        {
+          "operator": "erlaeutern",
+          "rolle": "benennen",
+          "auftrag": "Zuerst: worauf der Bildungsauftrag überhaupt beruht",
+          "idx": [
+            0,
+            1
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Der Bildungsauftrag Freizeit beruht auf …",
+          "beispiel": "Dass Freizeit ein Bildungsauftrag ist, steht nicht im Belieben einzelner Schulen: Im Rahmenlehrplan von 2011 gehört das Handlungsfeld Freizeit zum Leitthema L1 Der Mensch im Alltag, neben Selbstversorgung, Wohnen, Zusammenleben und Mediennutzung."
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "beschreiben",
+          "auftrag": "Dann: warum Freizeit so viel Bedeutung hat, dass Schule dafür zuständig ist",
+          "idx": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Diese Bedeutung hat Freizeit, weil …",
+          "beispiel": "Umgekehrt begünstigt fehlende Freizeitteilhabe soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion - Freizeit ist damit kein Rest, der nach der Arbeit übrig bleibt, sondern ein Teilhabefeld mit eigenen Risiken."
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "erlaeutern",
+          "auftrag": "Zuletzt: die Übertragung auf einen schulischen Kontext, an einem Beispiel aus der Vorlesung",
+          "idx": [
+            6,
+            7
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Auf die Schule übertragen heißt das, dass …",
+          "beispiel": "Wie das aussehen kann, zeigt die Freizeitwoche nach Dworschak und Kragl: Das Programm soll möglichst vielfältig sein und Angebote für alle enthalten, die Schülerinnen und Schüler stellen sich ihr Angebot individuell zusammen, die Durchführung ist häufig klassenübergreifend, und als wichtiger Baustein schließt sich die Nachbereitung mit Besprechung und Reflexion an, damit die Erkenntnisse über die eigenen Freizeitpräferenzen beim nächsten Mal anwendbar sind."
+        },
+        {
+          "operator": "zusatz",
+          "zusatz": true,
+          "auftrag": "Wenn du magst: der Einwand, dass Förderung allein nicht reicht",
+          "idx": [
+            8
+          ],
+          "form": "liste"
+        }
+      ],
+      "muster": "Dass Freizeit ein Bildungsauftrag ist, steht nicht im Belieben einzelner Schulen: Im Rahmenlehrplan von 2011 gehört das Handlungsfeld Freizeit zum Leitthema L1 Der Mensch im Alltag, neben Selbstversorgung, Wohnen, Zusammenleben und Mediennutzung. Rechtlich getragen wird der Auftrag von Artikel 30 der UN-Behindertenrechtskonvention, der die gleichberechtigte Teilhabe am kulturellen Leben, den Zugang zu Freizeit-, Sport- und Erholungsangeboten, barrierefreie kulturelle Angebote und Freizeitorte, die Teilnahme an Spiel-, Freizeit- und Sportaktivitäten und die Unterstützung der kulturellen und sprachlichen Identität festhält. Warum das ein Bildungsauftrag ist und nicht bloß ein freundliches Zusatzangebot, macht die Bedeutung von Freizeit deutlich: Sie prägt Lebensstile, bietet Raum für Selbstverwirklichung und soziale Anerkennung, wirkt identitätsbildend und kann soziale Integration und Autonomie fördern. Umgekehrt begünstigt fehlende Freizeitteilhabe soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion - Freizeit ist damit kein Rest, der nach der Arbeit übrig bleibt, sondern ein Teilhabefeld mit eigenen Risiken. Der Rahmenlehrplan sagt auch, was gelernt werden soll: grundlegende Fähigkeiten und Strategien zur Wahrnehmung beziehungsweise Planung von Freizeitaktivitäten, die den individuellen Möglichkeiten, Interessen und Wünschen der Schülerinnen und Schüler entsprechen; das Lernen im Handlungsfeld zielt außerdem auf soziale Integration. Dass die Schule dafür zuständig ist, folgt aus dem Zeitpunkt: Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden, weil Freizeitkompetenz sich nach dem Schulabschluss nicht von allein einstellt. Auf den schulischen Kontext übertragen nennt der Rahmenlehrplan selbst den Weg: Besonders bei älteren Schülerinnen und Schülern wird die Freizeitgestaltung als spezielles Unterrichtsangebot unter Berücksichtigung der zukünftigen Lebenssituation in den Unterricht einbezogen. Wie das aussehen kann, zeigt die Freizeitwoche nach Dworschak und Kragl: Das Programm soll möglichst vielfältig sein und Angebote für alle enthalten, die Schülerinnen und Schüler stellen sich ihr Angebot individuell zusammen, die Durchführung ist häufig klassenübergreifend, und als wichtiger Baustein schließt sich die Nachbereitung mit Besprechung und Reflexion an, damit die Erkenntnisse über die eigenen Freizeitpräferenzen beim nächsten Mal anwendbar sind. An diesem Beispiel wird beides sichtbar: Die Schule schafft Gelegenheiten, und die Schülerinnen und Schüler entscheiden darin selbst.",
+      "musterVarianten": {
+        "de": {
+          "einfach": "Freizeit ist ein Bildungsauftrag. Das ist keine Idee von einzelnen Schulen.\n\nEs steht im Rahmenlehrplan von 2011. Dort gehört das Handlungsfeld Freizeit zum Leitthema: Der Mensch im Alltag. Dazu gehören auch Wohnen, Selbstversorgung, Zusammenleben und Medien.\n\nEs steht auch im Recht. In Artikel 30 der UN-Behindertenrechtskonvention. Dort steht: Alle Menschen sollen gleichberechtigt am kulturellen Leben teilnehmen. Alle sollen Zugang zu Sport und Erholung haben. Die Orte sollen barrierefrei sein.\n\nWarum ist Freizeit so wichtig? Freizeit prägt den Lebensstil. In der Freizeit kann man sich selbst verwirklichen. Man bekommt Anerkennung von anderen. Freizeit macht mit, wer man ist. Und Freizeit kann helfen, dazuzugehören.\n\nUmgekehrt gilt: Wer keine Freizeit-Teilhabe hat, wird oft einsam. Er verliert Selbstständigkeit. Und er wird aus der Gesellschaft ausgeschlossen.\n\nDer Rahmenlehrplan sagt auch, was gelernt werden soll. Die Schüler sollen Angebote wahrnehmen und ihre Freizeit planen. Und zwar so, dass es zu ihren Möglichkeiten, Interessen und Wünschen passt. Ein weiteres Ziel ist: dazugehören.\n\nWarum macht die Schule das? Weil Selbstbestimmung schon in der Schulzeit gefördert werden muss. Nach der Schule kommt sie nicht von allein.\n\nWie geht das in der Schule? Der Rahmenlehrplan sagt: Bei älteren Schülern gibt es dafür eigenen Unterricht. Dabei denkt man an das Leben nach der Schule.\n\nEin Beispiel ist die Freizeitwoche von Dworschak und Kragl. Das Programm soll vielfältig sein. Es soll Angebote für alle geben. Die Schüler wählen selbst aus. Oft sind die Gruppen klassenübergreifend. Danach kommt ein wichtiger Schritt: die Nachbereitung. Man bespricht die Woche. Man denkt darüber nach. So lernen die Schüler, was ihnen gefällt. Und beim nächsten Mal wissen sie es schon."
+        },
+        "en": {
+          "klausur": "That leisure is an educational mandate is not left to individual schools: in the framework curriculum of 2011 the field of action leisure (Handlungsfeld Freizeit) belongs to the guiding theme L1 The human being in everyday life, alongside self-care, living, living together and the use of media. The mandate is legally supported by Article 30 of the UN Convention on the Rights of Persons with Disabilities, which sets out equal participation in cultural life, access to leisure, sporting and recreational facilities, accessible cultural offerings and leisure venues, participation in play, recreation and sporting activities, and support for cultural and linguistic identity. Why this is an educational mandate and not merely a friendly extra becomes clear from the significance of leisure: it shapes lifestyles, offers space for self-realisation and social recognition, forms identity, and can promote social integration and autonomy. Conversely, a lack of participation in leisure encourages social isolation, loss of autonomy and social exclusion - leisure is therefore not a remainder left over after work, but a field of participation with risks of its own. The framework curriculum also says what is to be learned: basic abilities and strategies for perceiving and planning leisure activities that correspond to the pupils' individual possibilities, interests and wishes; learning in this field of action also aims at social integration. That the school is responsible follows from the timing: self-determination must already be fostered deliberately during the school years, because leisure competence does not appear by itself after leaving school. Transferred to the school context, the framework curriculum itself names the way: especially with older pupils, the shaping of leisure is included in lessons as a specific teaching offer, taking their future life situation into account. What that can look like is shown by the leisure week described by Dworschak and Kragl: the programme should be as varied as possible and contain offers for everyone, the pupils put together their own selection, the activities are often carried out across classes, and an important building block is the follow-up with discussion and reflection, so that insights into their own leisure preferences can be applied the next time. Both sides become visible in this example: the school creates opportunities, and the pupils decide within them for themselves.",
+          "einfach": "Leisure is an educational mandate. It is not an idea of single schools.\n\nIt is written in the framework curriculum of 2011. There the field of action leisure belongs to the guiding theme: the human being in everyday life. Living, self-care, living together and media belong there too.\n\nIt is also written in law. In Article 30 of the UN Convention on the Rights of Persons with Disabilities. It says: all people should take part in cultural life on equal terms. All should have access to sport and recreation. The places should be accessible.\n\nWhy is leisure so important? Leisure shapes the way you live. In your leisure time you can realise yourself. You get recognition from others. Leisure is part of who you are. And leisure can help you belong.\n\nThe other way round: people without leisure participation often become lonely. They lose independence. And they are shut out of society.\n\nThe framework curriculum also says what should be learned. Pupils should notice offers and plan their leisure. And it should fit their possibilities, interests and wishes. Another aim is: belonging.\n\nWhy does the school do this? Because self-determination has to be fostered during the school years. After school it does not come by itself.\n\nHow does it work at school? The framework curriculum says: older pupils get their own lessons for it. There you think about life after school.\n\nOne example is the leisure week by Dworschak and Kragl. The programme should be varied. There should be offers for everyone. The pupils choose for themselves. The groups often mix classes. Afterwards comes an important step: the follow-up. You talk about the week. You think about it. So the pupils learn what they like. And next time they already know."
+        },
+        "ar": {
+          "klausur": "كون وقت الفراغ مهمّة تربوية مو متروك لكل مدرسة لحالها: بالمنهاج الإطاري لسنة 2011 مجال العمل «وقت الفراغ» (Handlungsfeld Freizeit) تابع للموضوع الرئيسي L1 الإنسان بالحياة اليومية، مع العناية بالذات والسكن والعيش المشترك واستخدام الإعلام. وقانونياً المهمّة محمولة بالمادة 30 من اتفاقية الأمم المتحدة لحقوق الأشخاص ذوي الإعاقة، يلي بتنصّ على المشاركة المتساوية بالحياة الثقافية، والوصول لعروض الفراغ والرياضة والاستجمام، وعروض وأماكن ثقافية بدون حواجز، والمشاركة بنشاطات اللعب والفراغ والرياضة، ودعم الهوية الثقافية واللغوية. وليش هي مهمّة تربوية مو بس عرض لطيف زيادة؟ لأنو أهمية وقت الفراغ كبيرة: بيشكّل أنماط الحياة، وبيعطي مساحة لتحقيق الذات وللاعتراف الاجتماعي، وبيبني الهوية، وفيه يعزّز الاندماج الاجتماعي والاستقلالية. وبالعكس، غياب المشاركة بوقت الفراغ بيشجّع العزلة الاجتماعية وفقدان الاستقلالية والإقصاء المجتمعي - يعني وقت الفراغ مو بقية بتفضل بعد الشغل، هو مجال مشاركة إلو مخاطرو الخاصة. والمنهاج الإطاري كمان بيقول شو لازم يتعلّموا: قدرات واستراتيجيات أساسية للانتباه لنشاطات الفراغ وتخطيطها، بحيث تناسب إمكانيات التلاميذ واهتماماتهن ورغباتهن الفردية؛ والتعلّم بهالمجال بيهدف كمان للاندماج الاجتماعي. وكون المدرسة هي المسؤولة بيجي من التوقيت: تقرير المصير لازم يتعزّز بشكل مقصود من أيام المدرسة، لأنو كفاءة وقت الفراغ ما بتجي لحالها بعد التخرّج. وبالنقل عالسياق المدرسي، المنهاج الإطاري بيسمّي الطريق بنفسو: خصوصاً عند التلاميذ الأكبر بينضمّ تنظيم وقت الفراغ للدرس كعرض تعليمي خاص، مع مراعاة وضع حياتهن المستقبلي. وشكل هالشي بيبيّنو أسبوع الفراغ عند Dworschak وKragl: البرنامج لازم يكون متنوّع قد ما بيقدر ويحتوي عروض للكل، والتلاميذ بيركّبوا اختيارهن بشكل فردي، والتنفيذ غالباً بيكون بين الصفوف، وكبنية مهمّة بيجي بعدها التقييم اللاحق مع النقاش والتأمّل، مشان تصير المعرفة عن تفضيلاتهن قابلة للاستخدام المرة الجاي. وبهالمثال بيبيّن الشغلتين: المدرسة بتخلق الفرص، والتلاميذ بيقرّروا جوّاتها لحالهن.",
+          "einfach": "وقت الفراغ مهمّة تربوية. مو فكرة من مدارس لحالها.\n\nمكتوبة بالمنهاج الإطاري لسنة 2011. وهناك مجال «وقت الفراغ» تابع للموضوع الرئيسي: الإنسان بالحياة اليومية. ومعو كمان السكن والعناية بالذات والعيش المشترك والإعلام.\n\nومكتوبة كمان بالقانون. بالمادة 30 من اتفاقية الأمم المتحدة لحقوق الأشخاص ذوي الإعاقة. وهناك مكتوب: كل الناس لازم يشاركوا بالحياة الثقافية بالتساوي. وكلهن لازم يوصلوا للرياضة والاستجمام. والأماكن لازم تكون بدون حواجز.\n\nليش وقت الفراغ مهم هالقد؟ لأنو بيشكّل أسلوب الحياة. وبوقت الفراغ فينا نحقّق حالنا. ومنستلم اعتراف من الناس. ووقت الفراغ جزء من هويتنا. وفيه يساعدنا ننتمي.\n\nوبالعكس: يلي ما عندو مشاركة بوقت الفراغ غالباً بيصير وحيد. وبيخسر استقلاليتو. وبينقصى من المجتمع.\n\nوالمنهاج الإطاري كمان بيقول شو لازم يتعلّموا. التلاميذ لازم ينتبهوا للعروض ويخطّطوا وقت فراغهن. وبشكل بيناسب إمكانياتهن واهتماماتهن ورغباتهن. وفي هدف تاني: الانتماء.\n\nليش المدرسة بتعمل هيك؟ لأنو تقرير المصير لازم يتعزّز من أيام المدرسة. بعد المدرسة ما بيجي لحالو.\n\nوكيف بيصير بالمدرسة؟ المنهاج بيقول: التلاميذ الأكبر بياخدوا درس خاص لهالشي. وبيفكّروا فيه بالحياة بعد المدرسة.\n\nومثال عليه أسبوع الفراغ عند Dworschak وKragl. البرنامج لازم يكون متنوّع. ولازم يكون في عروض للكل. والتلاميذ بيختاروا لحالهن. وغالباً المجموعات بتخلط صفوف. وبعدها بتجي خطوة مهمة: التقييم اللاحق. منحكي عن الأسبوع. ومنفكّر فيه. وهيك التلاميذ بيتعلّموا شو بيعجبهن. والمرة الجاي بيكونوا عارفين."
+        }
+      },
+      "musterVariantenGeprueft": false,
+      "tipp": "Die Aufgabe hat zwei Aufträge, und der zweite wird gern vergessen: erläutern UND auf schulische Kontexte übertragen. Plan dir für die Übertragung ein Drittel deiner Zeit ein. Die Beleg-Folie für den Bildungsauftrag ist Folie 20 mit dem Zitat aus dem Rahmenlehrplan, Artikel 30 UN-BRK steht auf Folie 28, die Bedeutung von Freizeit auf Folie 12, die Fünfer-Kette zur Selbstbestimmung auf Folie 21 und die Freizeitwoche auf Folie 31. In deinen Aufzeichnungen findest du die Selbstbestimmungs-Kette auf Notizen S. 03; Folie 20 und Artikel 30 fehlen dort beide, hier lohnt der Blick auf die Folien. Für das Beispiel reicht eines - Freizeitwoche oder Freizeitführer -, aber sag dazu, was daran gelernt wird, sonst bleibt es eine Aufzählung.",
+      "quelle": "folie-freizeit-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "hinweise": [
+        [
+          "Wo ist Freizeit curricular verankert, und unter welchem Leitthema?",
+          "L1 heißt: Der Mensch im ...",
+          "Daneben stehen Wohnen, Selbstversorgung, Zusammenleben, Mediennutzung"
+        ],
+        [
+          "Die rechtliche Grundlage - ein Artikel einer Konvention",
+          "UN-BRK, Artikel 30: worum geht es dort?",
+          "Kulturelles Leben, Sport, Erholung, Barrierefreiheit"
+        ],
+        [
+          "Markowetz: was macht Freizeit mit dem Menschen?",
+          "Lebensstil, Selbstverwirklichung, Anerkennung ...",
+          "Ein Wort mit Identität darin"
+        ],
+        [
+          "Die Kehrseite: was passiert ohne Freizeitteilhabe?",
+          "Drei Folgen, eine davon heißt Isolation",
+          "Autonomieverlust und ein Wort mit Ex- am Anfang"
+        ],
+        [
+          "Was sollen die Schüler:innen laut Rahmenlehrplan können?",
+          "Drei Wörter geben den Maßstab: Möglichkeiten, Interessen, ...",
+          "Ein zweites Ziel steht dabei: soziale ..."
+        ],
+        [
+          "Warum die Schulzeit und nicht später?",
+          "Kulig und Theunissen ziehen die Folgerung",
+          "Selbstbestimmung kommt nach dem Abschluss nicht von allein"
+        ],
+        [
+          "Der Rahmenlehrplan sagt selbst, wie Schule das aufgreift",
+          "Eine Altersgruppe bekommt ein eigenes Unterrichtsangebot",
+          "Mit Blick auf die zukünftige Lebenssituation"
+        ],
+        [
+          "Ein Projektformat über mehrere Tage, klassenübergreifend",
+          "Dworschak und Kragl - vier Bausteine von Planung bis Reflexion",
+          "Der wichtigste Baustein kommt NACH der Woche"
+        ],
+        [
+          "Schuck: reicht es, den Einzelnen zu fördern?",
+          "Wer muss sich außerdem öffnen?",
+          "Zugänglichkeit und Barrierefreiheit als Aufgabe der Gesellschaft"
+        ]
+      ],
+      "ke": [
+        "freizeit-ke3"
+      ],
+      "core": true
     }
   ]
 }
