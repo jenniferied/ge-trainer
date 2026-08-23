@@ -42,7 +42,11 @@
       ],
       "erklaerung": "Menschen mit SGE haben ein deutlich geringeres Mobilitätsniveau als andere Bevölkerungsgruppen und sind bereits von Kita über Schule bis zum Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Das erzeugt Abhängigkeit - im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Mobilität ist dafür Grundvoraussetzung.",
       "quelle": "notizen-s16",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": true
     },
     {
       "id": "mo-mc-2",
@@ -73,7 +77,11 @@
       ],
       "erklaerung": "Zu den Mobilitätsbehinderungen zählen u. a.: Reisebehinderung, Alter, Blindheit, Gehörlosigkeit, Körperbehinderung, fehlende Ortskenntnis, Lernschwierigkeiten, psychische Behinderung, vorübergehende Unfallfolgen, Einstellung/Verhalten Anderer und fehlende Mobilitätsbildung.",
       "quelle": "notizen-s16",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": true
     },
     {
       "id": "mo-mc-3",
@@ -104,7 +112,12 @@
       ],
       "erklaerung": "Die Mobilitäts- und Verkehrserziehung umfasst Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung - sie ist also weit mehr als reines Verkehrsregeltraining.",
       "quelle": "notizen-s17",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-4",
@@ -135,7 +148,12 @@
       ],
       "erklaerung": "Das Lernfeld L5 Der mobile Mensch enthält das Handlungsfeld Verkehr und Verkehrserziehung. Zielsetzung: dass alle Schüler:innen, denen es möglich ist, den Schulweg bzw. Weg zum Praktikum selbstständig mit öffentlichen Verkehrsmitteln bewältigen und situationsentsprechend handeln können - zu Fuß, mit Fahrrad oder Rollstuhl, im Auto und Bus, in öffentlichen Verkehrsmitteln.",
       "quelle": "notizen-s17",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-5",
@@ -166,7 +184,12 @@
       ],
       "erklaerung": "Mobilitätskompetenzen nach Stöppler: visuelle Wahrnehmung, auditive Wahrnehmung, Motorik, Reaktion, Aufmerksamkeit, Gedächtnis, Kommunikation, soziale Kompetenzen, Kognition und Interaktion. Fünf davon nennen zu können war eine Original-Beispielaufgabe.",
       "quelle": "notizen-s18",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-6",
@@ -197,7 +220,12 @@
       ],
       "erklaerung": "Ziele im Bereich auditive Wahrnehmung: Erkennen, Zuordnen, Differenzieren von Verkehrsgeräuschen, Lokalisieren von Verkehrsgeräuschen, auditive Diskriminierung und Entfernungshören. Visuell wären z. B. Farbensehen (Rot-Grün), Verständnis des Blinkens, Symbole und Raumbewusstsein.",
       "quelle": "notizen-s19",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-7",
@@ -228,7 +256,11 @@
       ],
       "erklaerung": "Die Methoden: praktische Übungen/Spiel, Übungen in Schonräumen, Übungen in Ernstsituationen und pädagogisches Puppenspiel - dazu Kooperationen (z. B. mit der Polizei). Didaktische Prinzipien dabei: Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität, Kontinuität.",
       "quelle": "notizen-s20",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-8",
@@ -259,7 +291,11 @@
       ],
       "erklaerung": "Zu wissen ist: Mit Rollstühlen (Höchstgeschwindigkeit max. 30 km/h) darf auf dem Gehweg nur mit Schrittgeschwindigkeit gefahren werden; Radwege dürfen nicht benutzt werden; für manuell und maschinell angetriebene Rollstühle gibt es genaue Ausführungsvorschriften in der Straßenverkehrs-Zulassungs-Ordnung. Geübt werden u. a. Ausweich-, Dreh- und Wendebewegungen, Bordsteine und das Ein- und Aussteigen.",
       "quelle": "notizen-s21",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-9",
@@ -290,7 +326,11 @@
       ],
       "erklaerung": "Verkehrsbeteiligung zum Unfallzeitpunkt: zu Fuß 35,7 %, Beförderung mit BTW 27,4 %, Rad 22,8 %, Pkw/motorisiertes Zweirad 6,6 %, öffentliche Verkehrsmittel 6,6 %, Rollstuhl 1,0 %. Das Zufußgehen ist also der unfallträchtigste Bereich - ein Argument für gezielte Fußgängerschulung.",
       "quelle": "notizen-s20",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-10",
@@ -321,7 +361,11 @@
       ],
       "erklaerung": "ÖPNV-Gefahren: Anfahren und Abbremsen der Busse/Bahnen (Festhalten üben), eiliges zum Bus Laufen ohne auf den Straßenverkehr zu achten, Missachtung des Verkehrs beim Warten bzw. zu dichtes Stehen an der Straße. Lernziele: Orientierung an der Haltestelle, Bezahlen/Lösen der Fahrkarte, Verhalten während der Fahrt, Orientierung und Ausstieg.",
       "quelle": "notizen-s21",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-mc-11",
@@ -352,7 +396,11 @@
       ],
       "erklaerung": "Rahmenbedingungen: Bewusstsein in der Öffentlichkeit schaffen, Barrieren erkennen und Barrierefreiheit mitdenken, klare Hinweise, einfache Schriftzüge, aktuelle/dynamische Informationen, Bildzeichen, Symbole, Farben, ein individueller Netzplan (verschiedene Komplexitätsgrade) und die allgemeine Erreichbarkeit verschiedener Orte erhöhen.",
       "quelle": "notizen-s22",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": true
     },
     {
       "id": "mo-gen-mc-1",
@@ -384,7 +432,12 @@
       "erklaerung": "An bestimmten Stellen anhalten (z. B. vor dem Bordstein) und die Bewegungs- und Handlungsunterbrechung sind Ziele des motorischen Bereichs - genau wie Gleichgewicht halten, Geschwindigkeiten wechseln und Hindernissen ausweichen. Der Decoy visuelle Wahrnehmung liegt nahe, weil man den Bordstein ja sehen muss - das Ziel hier ist aber das Stoppen der Bewegung selbst. (Notizen S. 19)",
       "quelle": "notizen-s19",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-2",
@@ -416,7 +469,12 @@
       "erklaerung": "Das Handlungsfeld im Rahmenlehrplan versteht Mobilität als Überwindung der Distanz zwischen den Lebensbereichen Wohnen, Arbeiten und Einkaufen. Der Decoy Kita-Schule-Arbeitsleben stammt aus einer anderen Kernaussage der Vorlesung: Dort geht es um die Abhängigkeit von Fahrdiensten über die Lebensspanne, nicht um die Lebensbereiche des Handlungsfelds. (Notizen S. 17)",
       "quelle": "notizen-s17",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": true
     },
     {
       "id": "mo-gen-mc-3",
@@ -448,7 +506,12 @@
       "erklaerung": "Im Kompetenzmodell stehen um den Kreis 'Sicher und umweltbewusst mobil sein' die drei Kompetenzen Erkennen, Beurteilen sowie Handeln und Kommunizieren. Der Decoy Sicherheits-, Umwelt- und Sozialerziehung greift drei der vier Teilbereiche der schulischen Mobilitäts- und Verkehrserziehung auf (der vierte ist die Gesundheitserziehung) - das ist aber das andere Schaubild; Wahrnehmung, Motorik und Reaktion gehören zu den Mobilitätskompetenzen nach Stöppler. (Notizen S. 18)",
       "quelle": "notizen-s18",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": true
     },
     {
       "id": "mo-gen-mc-4",
@@ -480,7 +543,12 @@
       "erklaerung": "Rücksicht, Kooperation und der Blick auf den Verkehr als soziales System kennzeichnen die Kernkompetenz 'Verantwortungsbewusst mobil sein'. Der Decoy 'Sicher mobil sein' zielt dagegen auf risikobewusstes, gefahrenvermeidendes Verhalten unter Beachtung der eigenen sensomotorischen Entwicklung - also auf den Schutz der eigenen Person, nicht auf das Miteinander. (Notizen S. 18)",
       "quelle": "notizen-s18",
       "quelleSicherheit": "unsicher",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-5",
@@ -512,7 +580,11 @@
       "erklaerung": "Die unklare Interaktion am Zebrastreifen zählt zu den Gefahren beim Zu-Fuß-Gehen - dazu kommen das falsche Einschätzen der Fahrzeuggeschwindigkeit, das Überqueren an unsicheren Stellen, die Ablenkung durch die Ampel und die Benutzung des Smartphones. Die Decoys stammen aus den Nachbarbereichen: zu geringer Abstand und Vorfahrtsverletzungen sind klassische Fahrrad-Gefahren, die nicht abgeflachten Bordsteine eine Schwierigkeit beim Rollstuhlfahren. (Notizen S. 21, Bordsteine S. 22)",
       "quelle": "notizen-s21",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-6",
@@ -544,7 +616,11 @@
       "erklaerung": "Zur Fahrrad-Vorbereitung gehören u. a. das verkehrssichere Fahrrad und der Helm, Übungen im Schonraum, Verkehrszeichen für Radfahrer, das Fahrrad-Turnier und die Fahrrad-Prüfung sowie Wissen über Umwelt und Nachhaltigkeit. Die Decoys sind Lernziele der anderen Bereiche: Fahrkarte lösen (ÖPNV), Gehweg erkennen (zu Fuß gehen), um Hilfe bitten (Rollstuhl fahren). (Notizen S. 21)",
       "quelle": "notizen-s21",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-7",
@@ -576,7 +652,12 @@
       "erklaerung": "Für das soziale Verständnis und Verhalten im Straßenverkehr sind u. a. das Erschließen von Handlungsabsichten und -motiven, das Vorhersehen von Folgen, die emotionale Perspektivenübernahme, die Verantwortlichkeitsattribution, das moralische Urteil und das Regelverständnis bedeutsam - alles Komponenten der Sozialkompetenz. Die visuelle Wahrnehmung als Decoy umfasst dagegen z. B. Farbensehen und Raumbewusstsein. (Notizen S. 19)",
       "quelle": "notizen-s19",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-8",
@@ -608,7 +689,11 @@
       "erklaerung": "Das Autofahrspiel ist in der Tabelle als unpassend markiert. Feuer-Wasser-Luft, das Gleichgewichtsspiel und Pappdeckel passen dagegen, weil sie motorische Ziele wie Gleichgewicht halten, Geschwindigkeiten wechseln und Bewegungsunterbrechung üben. Merkhilfe: Nicht alles, was nach Verkehr klingt, trainiert auch die Kompetenz - entscheidend ist das Ziel der Übung. (Notizen S. 20)",
       "quelle": "notizen-s20",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-mc-9",
@@ -640,7 +725,11 @@
       "erklaerung": "Die didaktischen Prinzipien der Mobilitätsförderung sind Sicherheit, Lebensnähe, Anschaulichkeit, Strukturierung, Individualisierung/personenzentrierte Mobilität und Kontinuität. Die Decoys Elementarisierung, Ganzheitlichkeit und kleine Schritte sind echte didaktische Prinzipien aus V4 - sie stehen aber nicht in diesem Schaubild. (Notizen S. 20)",
       "quelle": "notizen-s20",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": true
     },
     {
       "id": "mo-gen-mc-10",
@@ -672,7 +761,12 @@
       "erklaerung": "Verkehrserziehung und Mobilitätsbildung sind für fachübergreifenden und fächerverbindenden Unterricht gedacht; die Bedeutung des Themas soll als Aufgabe für die gesamte Schule herausgestellt werden. Angeknüpft wird dabei an den Rahmenlehrplan der Jahrgangsstufen 1-10 in Berlin und Brandenburg. Der Polizei-Decoy greift die Kooperationen aus dem Methoden-Schaubild auf - die ergänzen den Unterricht, ersetzen ihn aber nicht. (Notizen S. 17)",
       "quelle": "notizen-s17",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-mc-1",
@@ -704,7 +798,11 @@
       "erklaerung": "Die Mehr-Kanal-Regel verlangt, dass Informationen über mindestens zwei Sinne erfahrbar sind - genau die Kombination aus optischer Anzeige und akustischer Durchsage nennt die Folie als Beispiel. Die Räder-Füße-Regel zielt aufs Hinkommen, die KISS-Regel auf die Verständlichkeit; beide sind hier nicht der Punkt. (Folie 35, Stöppler 2018, 627)",
       "quelle": "folie-mobilitaet-35",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-mc-2",
@@ -736,7 +834,11 @@
       "erklaerung": "KISS steht für keep it short and simple, also für Informationen, die kurz und einfach gestaltet sind. Die Mehr-Kanal-Regel würde einen zweiten Sinneskanal verlangen, nicht kürzere Texte. Der vierte Decoy ist mit Absicht verlockend: Elementarisierung gibt es wirklich, aber als didaktisches Prinzip aus einer anderen Vorlesung, nicht als eine der drei Barrierefreiheits-Regeln. (Folie 35, Stöppler 2018, 627)",
       "quelle": "folie-mobilitaet-35",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-mc-3",
@@ -768,7 +870,9 @@
       "erklaerung": "Die Zahlen der Modal-Split-Folie: zu Fuß 24 auf 26 Prozent, Fahrrad 9 auf 11, öffentlicher Verkehr 9 auf 11, selbst gefahrener Pkw 41 auf 40, Mitfahrt 17 auf 13 Prozent. Die Bewegung ist also real, aber klein - und die Dominanz des Autos bleibt. Achtung bei der Verwechslungsgefahr: Diese Folie zeigt die Verkehrsmittel, die Folie davor die Wegzwecke. (Folie 6, Follmer 2025, S. 15)",
       "quelle": "folie-mobilitaet-6",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "mo-fol-mc-4",
@@ -800,7 +904,11 @@
       "erklaerung": "Die beiden Säulen sind das tatsächliche Bewegen-Können auf der einen und Verkehrserziehung und Mobilitätstraining auf der anderen Seite - Können und Wissen also, nicht das eine ohne das andere. Alle drei Decoys stammen aus benachbarten Folien: die vier Aufgabenbereiche der Mobilitäts- und Verkehrserziehung, die Abhängigkeit von Fahrdiensten und die zehn Mobilitätskompetenzen nach Stöppler. (Folien 11 und 12)",
       "quelle": "folie-mobilitaet-11",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke1"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-mc-5",
@@ -832,7 +940,11 @@
       "erklaerung": "Die Folie stellt Mobilität in die Mitte eines Kreises mit zehn Partizipationsfeldern - Arbeit, Freizeit, Bildung, Sport, Politik, Gesundheit, Wirtschaft, Kunst, Recht und soziale Beziehungen. Genau darüber wird sie zum Grundbedürfnis. Der dritte Decoy klingt plausibel, stimmt aber nicht: Im Rahmenlehrplan ist Mobilität ein Lernfeld (L5 Der mobile Mensch), kein Fach. (Folie 4, vgl. Stöppler 2015, 16; 2019, 620)",
       "quelle": "folie-mobilitaet-4",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     }
   ],
   "frei": [
@@ -929,7 +1041,12 @@
           "Erst mit diesen beiden ist die Zehnerliste voll"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-f-2",
@@ -1009,7 +1126,11 @@
           "Wer bringt die Person hin, wenn sie nicht allein hinkommt?"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     },
     {
       "id": "mo-f-3",
@@ -1092,7 +1213,11 @@
           "Woran hängt die Qualität der Zuordnung?"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-f-4",
@@ -1225,7 +1350,9 @@
           "Das Gerüst: gleich, anders, und dann?"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "mo-f-5",
@@ -1352,7 +1479,11 @@
           "Was sagt der Exkurs zur Selbstbestimmung über Hilfe?",
           "Ein Trainingsangebot rechnet Begleitung ausdrücklich mit ein"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-f-1",
@@ -1458,7 +1589,12 @@
           "Welche Fortbewegungsart übt Schutz, Fitness, Ökologie und Miteinander zugleich?",
           "Zeig an einem Alltagsbeispiel, warum reine Regelkunde zu kurz greift"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-f-2",
@@ -1576,7 +1712,11 @@
           "Worauf läuft die ganze Sequenz hinaus?",
           "Der Anker im Rahmenlehrplan"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-gen-f-3",
@@ -1689,7 +1829,11 @@
           "Drei weitere didaktische Prinzipien sprechen ebenfalls dafür",
           "Rampe, Kartons, Seile: warum gerade dort üben?"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-f-1",
@@ -1788,7 +1932,11 @@
           "Eine Karten-Plattform als möglicher Zusatz",
           "Wie macht man Zugänglichkeit sichtbar?"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": false
     },
     {
       "id": "mo-fol-f-2",
@@ -1919,7 +2067,12 @@
           "Wofür taugt das Ziel trotzdem, und wofür nicht?",
           "Zwei Wörter aus der Logik: nötig ja, genug nein"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": false
     },
     {
       "id": "mo-afb1-1",
@@ -1983,7 +2136,12 @@
           "Verkehr ist ein Miteinander: Rücksicht nehmen, Absichten anderer lesen.",
           "Der Bereich, in dem Empathie und Regelverständnis zu Hause sind."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-2",
@@ -2042,7 +2200,11 @@
           "Diese Regel zielt auf Verständlichkeit, nicht auf Technik.",
           "Sie verlangt nichts Bauliches, sondern etwas an der Sprache."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-3",
@@ -2104,7 +2266,11 @@
           "Mit Figuren und kleiner Bühne wird eine Verkehrsszene gespielt.",
           "Ein Zugang, der aus dem Theater kommt und Kinder besonders anspricht."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-4",
@@ -2178,7 +2344,11 @@
           "Einmal üben reicht nicht, es muss immer wieder stattfinden.",
           "Das Prinzip, das auf Dauer und Regelmäßigkeit zielt."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-5",
@@ -2252,7 +2422,9 @@
           "Man ist nur unterwegs, um jemanden zu bringen oder zu holen.",
           "Der Zweck, bei dem der Weg nicht einem selbst gilt."
         ]
-      ]
+      ],
+      "ke": [],
+      "core": false
     },
     {
       "id": "mo-afb1-6",
@@ -2347,7 +2519,11 @@
           "Zwei Zahlen entscheiden: wie viel geht höchstens, und wie viel muss sein.",
           "Etwas mehr als die Hälfte genügt zum Bestehen."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-afb1-7",
@@ -2421,7 +2597,12 @@
           "Die einzige, die nicht auf mobil sein endet - sie blickt nach vorn.",
           "Teilhabe an technischen, ökologischen und sozialen Entwicklungen."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-8",
@@ -2503,7 +2684,11 @@
           "Ein Kreis mit zehn Feldern rund um das Wort in der Mitte.",
           "Jedes dieser Felder ist ein Lebensbereich, zu dem man erst einmal hinkommen muss."
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb2-1",
@@ -2609,7 +2794,11 @@
           "Drei Tätigkeiten und ein Fachwort - und alle vier drehen sich um Töne des Verkehrs",
           "Womit die Aufzählung endet: unterscheiden können, mit dem Fremdwort dafür"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke4"
+      ],
+      "core": false
     },
     {
       "id": "mo-afb3-1",
@@ -2722,7 +2911,11 @@
           "Technik allein oder Technik plus Bildung?",
           "Was gehört ans Ende jeder Erörterung?"
         ]
-      ]
+      ],
+      "ke": [
+        "mobilitaet-ke1"
+      ],
+      "core": false
     }
   ]
 }

@@ -39,7 +39,11 @@
           "erklaerung": "Falsch: Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen sind der erste Punkt der Liste. (Folie 18, Notizen S. 57)"
         }
       ],
-      "erklaerung": "Förderschulen kennzeichnen: Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen."
+      "erklaerung": "Förderschulen kennzeichnen: Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen.",
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-mc-2",
@@ -70,7 +74,11 @@
           "erklaerung": "Falsch: Auch hier sind beide Zahlen vertauscht. Merkhilfe: 4 mal 3 ergibt die 12 Jahre, auf die der Schulbesuch verlängert werden kann. (Folie 20, Notizen S. 58)"
         }
       ],
-      "erklaerung": "Es gibt eine Unterteilung in 4 Stufen, die jeweils 3 Jahre besucht werden: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe und Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106)."
+      "erklaerung": "Es gibt eine Unterteilung in 4 Stufen, die jeweils 3 Jahre besucht werden: Vor-/Unter- bzw. Grundstufe, Mittelstufe, Ober- bzw. Hauptstufe und Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004, 106).",
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-mc-3",
@@ -101,7 +109,11 @@
           "erklaerung": "Falsch: Die Vorstufe gehört mit Unter- und Grundstufe zur ersten Stufe - also zum Schulanfang, nicht zum Übergang. (Folie 20, Notizen S. 58)"
         }
       ],
-      "erklaerung": "Die relativ eigenständige Werkstufe hat die besondere Zielsetzung, über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten."
+      "erklaerung": "Die relativ eigenständige Werkstufe hat die besondere Zielsetzung, über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten.",
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-mc-4",
@@ -132,7 +144,11 @@
           "erklaerung": "Falsch: Frei wählbar ist die Dauer nicht - die 12 Jahre sind der Rahmen, alles darüber braucht eine Begründung. (Folie 20, Notizen S. 58)"
         }
       ],
-      "erklaerung": "Der Schulbesuch verlängert sich von 9 auf 12 Jahre im Werkstufenbereich - mit der Option auf Verlängerung in begründeten Fällen."
+      "erklaerung": "Der Schulbesuch verlängert sich von 9 auf 12 Jahre im Werkstufenbereich - mit der Option auf Verlängerung in begründeten Fällen.",
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-mc-5",
@@ -163,7 +179,11 @@
           "erklaerung": "Falsch: Auch die Einzelintegration gehört zum Regelschul-Ast. Nur eine der vier Formen hängt an der Förderschule. (Folie 17, Notizen S. 57)"
         }
       ],
-      "erklaerung": "Bei der Kooperationsklasse bleiben die Schüler:innen schulrechtlich der Förderschule zugeordnet. Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur schulrechtlichen Zuordnung an die Regelschule."
+      "erklaerung": "Bei der Kooperationsklasse bleiben die Schüler:innen schulrechtlich der Förderschule zugeordnet. Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur schulrechtlichen Zuordnung an die Regelschule.",
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "gr-mc-6",
@@ -194,7 +214,11 @@
           "erklaerung": "Falsch: Frühförderung und Ganztag sind Merkmale der Förderschule, kein gemeinsamer Unterricht; der Hort kommt in beiden Quellen nicht vor. (Folien 17 und 18, Notizen S. 57)"
         }
       ],
-      "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule."
+      "erklaerung": "Sind die Schüler:innen schulrechtlich der Regelschule zugeordnet, gibt es Integrationsklasse, integrative Regelklasse und Einzelintegration. Die Kooperationsklasse gehört zur Zuordnung an die Förderschule.",
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "gr-gen-mc-1",
@@ -226,7 +250,11 @@
       "erklaerung": "Das Ordnungsprinzip ist die schulrechtliche Zuordnung: Integrationsklasse, integrative Regelklasse und Einzelintegration gehören zur Regelschule, die Kooperationsklasse zur Förderschule. Der Unterrichtsort klingt plausibel, ist aber nicht das Kriterium - es geht um den rechtlichen Status. (Notizen S. 57)",
       "quelle": "notizen-s57",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-mc-3",
@@ -258,7 +286,11 @@
       "erklaerung": "Bei 4 Stufen zu je 3 Jahren in der genannten Reihenfolge ergibt sich: Jahre 1-3 Vor-/Unter-/Grundstufe, 4-6 Mittelstufe, 7-9 Ober-/Hauptstufe, 10-12 Werk-/Abschlussstufe - das 8. Jahr liegt also in der Ober- bzw. Hauptstufe. Die Mittelstufe ist der naheliegende Verrechner, sie endet aber schon nach Jahr 6. (Notizen S. 58)",
       "quelle": "notizen-s58",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-mc-5",
@@ -290,7 +322,11 @@
       "erklaerung": "Zu den strukturellen Merkmalen gehören Angebote im Bereich der Frühförderung und schulvorbereitende Gruppen - beides greift vor Schulbeginn. Die Werkstufe ist das Gegenstück am anderen Ende: Sie bereitet auf die Zeit nach der Schule vor. (Notizen S. 57)",
       "quelle": "notizen-s57",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "gr-gen-mc-6",
@@ -322,7 +358,11 @@
       "erklaerung": "Ein Tagesablauf bis in den Nachmittag mit Mahlzeiten und Pausen zeigt die Ganztagsbeschulung. Die Distraktoren sind alle echte Merkmale von Förderschulen - aber aus einem Stundenplan lassen sich Klassengröße, Frühförderung oder Schulbesuchsdauer nicht ablesen. (Notizen S. 57)",
       "quelle": "notizen-s57",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-mc-7",
@@ -354,7 +394,11 @@
       "erklaerung": "Die wohnliche Gestaltung macht Klassenzimmer zu Orten zum Lernen und Leben - das ist die Formulierung aus den Merkmalen der Förderschule. Die Therapie-Option klingt nah dran, ist aber nicht die genannte Doppelfunktion. (Notizen S. 57)",
       "quelle": "notizen-s57",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-mc-8",
@@ -386,7 +430,11 @@
       "erklaerung": "Das Schaubild führt integrierte therapeutische Angebote auf, darunter Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst. Der Trick liegt in der Integration: Die Angebote gehören zur Schule, nicht in externe Praxen. (Notizen S. 58, Bayern-Übersicht - das Schaubild ist sehr klein gedruckt, die Beschriftungen sind sinngemäß und nicht wortgenau.)",
       "quelle": "notizen-s58",
       "quelleSicherheit": "unsicher",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-fol-mc-1",
@@ -418,7 +466,11 @@
       "erklaerung": "Die Rahmenfrage des Moduls dreht sich um das Verhältnis von spezieller und spezifizierter allgemeiner Didaktik - sie spannt sich über alle Sitzungen. Der erste Decoy ist die Leitfrage genau dieser einen Sitzung, der zweite die Ausblick-Frage auf die nächste (und damit das von der Klausur ausgenommene Thema Inklusion im SGE). Beide sind richtig formuliert, nur eben nicht die Rahmenfrage. (Folie 5)",
       "quelle": "folie-grundlagen-5",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "gr-fol-mc-2",
@@ -450,7 +502,11 @@
       "erklaerung": "Die drei Qualifikationsziele lauten: didaktische Ansätze und methodische Aspekte kennen, eine Förderung mit akademischen und kulturellen Lerninhalten planen und Unterricht strukturieren und planen können. Die Decoys sind lauter Dinge, die zum Beruf gehören, in diesem Modul aber nicht als Ziel stehen - Diagnostik und Beratung sind eigene Felder. (Folie 5)",
       "quelle": "folie-grundlagen-5",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "gr-fol-mc-3",
@@ -482,7 +538,11 @@
       "erklaerung": "Beide Merkmals-Folien tragen die Quellenangabe Fischer 2008, 30 im Titel. Der stärkste Decoy ist Fornefeld 2004 - der taucht auf derselben Folie wirklich auf, aber nur als Beleg für die vier Stufen der Schule. Eine korrekte Quellenangabe bringt in einer AFB-I-Aufgabe leicht einen zusätzlichen Punkt. (Folien 18 und 20, Fischer 2008, 30)",
       "quelle": "folie-grundlagen-18",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "gr-fol-mc-4",
@@ -514,7 +574,11 @@
       "erklaerung": "Die sechs Beschriftungen der Folie lauten: Unterricht in Blöcken, Ganztagsschule, der Stundenplan ist mit Symbolen visualisiert, spezifische Lernfelder, kleine Lerngruppen und gemeinsame Mahlzeiten gehören zum Schulalltag. Die Decoys beschreiben jeweils das Gegenteil eines dieser Merkmale - das lohnt sich zu üben, weil die Blockstruktur und die Symbolvisualisierung leicht als bloße Layoutdetails übersehen werden. (Folie 19 zu Folie 18)",
       "quelle": "folie-grundlagen-19",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     }
   ],
   "frei": [
@@ -608,7 +672,11 @@
           "Bonus: Zwei Zahlen - die Schulzeit darf länger dauern.",
           "Bonus: Um wie viel darf man über das Übliche hinaus bleiben?"
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-f-2",
@@ -692,7 +760,11 @@
           "Zwei Jahreszahlen: übliche Dauer und mögliche Dauer.",
           "Denk auch an die Ausnahme für besondere Fälle."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-f-3",
@@ -807,7 +879,11 @@
           "Am Schluss zählt deine klare Haltung.",
           "Der letzte Schritt: selbst Farbe bekennen."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-f-1",
@@ -910,7 +986,11 @@
           "Der Unterschied ist nur juristisch - was bleibt gleich?",
           "Zum Vergleich gehört auch das Verbindende."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "gr-gen-f-2",
@@ -1014,7 +1094,11 @@
           "Bonus: Welches Merkmal betrifft den Raum, nicht die Zeit?",
           "Ein Merkmal fehlt im Raster - ehrlich benennen."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-gen-f-3",
@@ -1128,7 +1212,11 @@
           "Drei zu eins - was heißt das für dieses Modell?",
           "Gibt es die Doppelrolle überall dort, wo im SGE beschult wird?"
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-fol-f-1",
@@ -1263,7 +1351,11 @@
           "Beides können: das Allgemeine kennen, fürs Kind zuschneiden.",
           "Dein Fazit in einem Satz - welche Formel trägt es?"
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb1-1",
@@ -1339,7 +1431,11 @@
           "Zwei Schulen arbeiten zusammen, das Kind zählt zur anderen Seite.",
           "Die einzige Form am zweiten Ast, ihr Name meint Zusammenarbeit."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "gr-afb1-2",
@@ -1415,7 +1511,11 @@
           "Der letzte Abschnitt, benannt nach Arbeit und nach dem Ende.",
           "Hier geht der Blick schon Richtung Zeit nach der Schule."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "gr-afb1-3",
@@ -1503,7 +1603,11 @@
           "Es gibt eine Ausnahme, wenn es gute Gründe gibt.",
           "Die Obergrenze ist nicht in Stein gemeißelt."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "gr-afb1-4",
@@ -1591,7 +1695,11 @@
           "Zweimal am Tag wird im Plan gegessen - was heißt das?",
           "Essen ist hier nicht nur Pause, sondern Programm."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb1-5",
@@ -1653,7 +1761,11 @@
           "Der Beruf aus Kita und Hort, hier im Haus mit dabei.",
           "Zuständig für Betreuung und Alltag, nicht für den Fachunterricht."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb1-6",
@@ -1730,7 +1842,11 @@
           "Bonus: Fachkräfte, die zu anderen Schulen hinausfahren.",
           "Zusatz: Unterstützung, die von außen an andere Schulen kommt."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb1-7",
@@ -1805,7 +1921,11 @@
           "Das dritte Ziel meint die Arbeit an der Stunde selbst.",
           "Zwei Tätigkeiten: ordnen und vorbereiten."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "gr-afb1-8",
@@ -1894,7 +2014,11 @@
           "Bonus: drei kurze Titel und ein Magazin mit ungewöhnlichem Namen.",
           "Zusatz: In der linken Spalte der Folie stehen noch viele weitere."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "gr-afb1-9",
@@ -1963,7 +2087,11 @@
           "Eine Behörde, die amtliche Zahlen zu den Schulen zweier Länder führt.",
           "Woher kommen Schülerzahlen für Brandenburg - nicht aus einem Buch."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb2-1",
@@ -2087,7 +2215,11 @@
           "Zusatz: Was steht im Bild sonst noch neben dem Schulteil?",
           "Bonus: Betreuung, Therapie, ein Dienst von auswärts und die Leute, die dort arbeiten."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb2-2",
@@ -2200,7 +2332,11 @@
           "Zusatz: Welchen Rang hat diese Frage in der Vorlesung?",
           "Bonus: Sie gilt nicht nur für die erste Sitzung."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb3-1",
@@ -2321,7 +2457,11 @@
           "Sag Ja oder Nein und hänge ein Aber daran.",
           "Kein Sowohl-als-auch - eine Richtung, klar begründet."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "gr-afb3-2",
@@ -2449,7 +2589,11 @@
           "Was trägt, und was muss ergänzt werden?",
           "Ein klares Ja mit einer Bedingung ist eine Position."
         ]
-      ]
+      ],
+      "ke": [
+        "grundlagen-ke3"
+      ],
+      "core": false
     }
   ]
 }

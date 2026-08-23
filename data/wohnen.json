@@ -39,7 +39,11 @@
           "erklaerung": "Falsch: Diese drei Gesetze kommen im Foliensatz gar nicht vor. (Folie 7, Notizen S. 08)"
         }
       ],
-      "erklaerung": "Die Reihenfolge: das Normalisierungsprinzip (1950-1971) - das Leben von behinderten Menschen so normal wie möglich gestalten -, der Selbstbestimmungsbegriff (1980-1994) und die UN-Behindertenrechtskonvention (2008)."
+      "erklaerung": "Die Reihenfolge: das Normalisierungsprinzip (1950-1971) - das Leben von behinderten Menschen so normal wie möglich gestalten -, der Selbstbestimmungsbegriff (1980-1994) und die UN-Behindertenrechtskonvention (2008).",
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "wo-mc-2",
@@ -70,7 +74,11 @@
           "erklaerung": "Falsch: Pflegefamilien kommen im Foliensatz nicht vor; die Folie spricht von Anstalten. (Folie 6, Notizen S. 08)"
         }
       ],
-      "erklaerung": "Bis 1971 lebten Menschen mit geistiger Beeinträchtigung in Landeskrankenhäusern bzw. Anstalten: gleichförmiger Tagesablauf, nur ein Mindestmaß an Förderung und individueller Ansprache, Schlafsäle ohne Privatsphäre. Folgen: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme. Vor allem Eltern wünschten sich familiennahe und humane Lebensräume."
+      "erklaerung": "Bis 1971 lebten Menschen mit geistiger Beeinträchtigung in Landeskrankenhäusern bzw. Anstalten: gleichförmiger Tagesablauf, nur ein Mindestmaß an Förderung und individueller Ansprache, Schlafsäle ohne Privatsphäre. Folgen: Isolation, Rückgang erworbener Fähigkeiten, Verhaltensprobleme. Vor allem Eltern wünschten sich familiennahe und humane Lebensräume.",
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-3",
@@ -101,7 +109,11 @@
           "erklaerung": "Falsch: Kommt in der Grafik nicht vor. (Folie 7, Notizen S. 08)"
         }
       ],
-      "erklaerung": "Das Wohnrecht ist verankert im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention. Wohnen ist ein Menschenrecht - im GG u. a. über die Unversehrtheit der Wohnung, die Freizügigkeit im Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG)."
+      "erklaerung": "Das Wohnrecht ist verankert im Sozialgesetzbuch, im Grundgesetz und in der UN-Behindertenrechtskonvention. Wohnen ist ein Menschenrecht - im GG u. a. über die Unversehrtheit der Wohnung, die Freizügigkeit im Bundesgebiet (Art. 11 Abs. 1 GG), die freie Entfaltung der Persönlichkeit (Art. 2 Abs. 1 GG) sowie Leben, körperliche Unversehrtheit und Freiheit der Person (Art. 2 Abs. 2 GG).",
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "wo-mc-4",
@@ -132,7 +144,11 @@
           "erklaerung": "Falsch: Artikel 19 fordert im Gegenteil Zugang zu Unterstützungsdiensten zu Hause, also gerade ambulante Formen. (Folie 9, Notizen S. 09)"
         }
       ],
-      "erklaerung": "UN-BRK Art. 19: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben, und sind nicht verpflichtet, in besonderen Wohnformen zu leben. Dazu: gleichberechtigter Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz (zur Verhinderung von Isolation) und gemeindenahe Dienstleistungen, die ihren Bedürfnissen angepasst werden."
+      "erklaerung": "UN-BRK Art. 19: Menschen mit Behinderungen haben gleichberechtigt die Möglichkeit, ihren Aufenthaltsort zu wählen und zu entscheiden, wo und mit wem sie leben, und sind nicht verpflichtet, in besonderen Wohnformen zu leben. Dazu: gleichberechtigter Zugang zu Unterstützungsdiensten einschließlich persönlicher Assistenz (zur Verhinderung von Isolation) und gemeindenahe Dienstleistungen, die ihren Bedürfnissen angepasst werden.",
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "wo-mc-5",
@@ -163,7 +179,12 @@
           "erklaerung": "Falsch: Die Statistik zeigt gut 190.000 Menschen in besonderen Wohnformen im Jahr 2023. (Folien 11 und 17, Notizen S. 10 und 12)"
         }
       ],
-      "erklaerung": "Wohnen im Heim: 56 % der Menschen in Heimen teilen ihren Wohnraum mit 100-500 Bewohnern; es ist organisiertes, kein natürliches Wohnen; Wohnraum, Mitarbeiter und Tagesablauf können nicht gewählt werden; es gilt das Primat der Gruppe vor Individualbedürfnissen; Konfliktpotential, da der Privatort der Bewohner auf den Arbeitsort der Mitarbeiter trifft."
+      "erklaerung": "Wohnen im Heim: 56 % der Menschen in Heimen teilen ihren Wohnraum mit 100-500 Bewohnern; es ist organisiertes, kein natürliches Wohnen; Wohnraum, Mitarbeiter und Tagesablauf können nicht gewählt werden; es gilt das Primat der Gruppe vor Individualbedürfnissen; Konfliktpotential, da der Privatort der Bewohner auf den Arbeitsort der Mitarbeiter trifft.",
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-6",
@@ -194,7 +215,12 @@
           "erklaerung": "Falsch: Es geht ausdrücklich um Erwachsene. (Folie 15, Notizen S. 12)"
         }
       ],
-      "erklaerung": "Beschützende Elternschaft: Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien - einem wichtigen Wohn- und Lebensraum. Die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung (Beispiel Herr M., der mit 53 Jahren in eine Wohngruppe kommt)."
+      "erklaerung": "Beschützende Elternschaft: Viele Erwachsene mit geistiger Beeinträchtigung leben in ihren Herkunftsfamilien - einem wichtigen Wohn- und Lebensraum. Die Ablösung erfolgt oft erst nach unvorhergesehenen Ereignissen wie Tod, Krankheit oder Überlastung (Beispiel Herr M., der mit 53 Jahren in eine Wohngruppe kommt).",
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-7",
@@ -225,7 +251,12 @@
           "erklaerung": "Falsch: Der Balken über den vier Stufen heißt wörtlich gewünschte Entwicklungsrichtung. (Folie 21, Notizen S. 13)"
         }
       ],
-      "erklaerung": "Die gewünschte Entwicklungsrichtung führt von der vollstationären Heimwohngruppe über die Trainingswohnung und die Außenwohngruppe oder offene Wohngemeinschaft zum betreuten Einzelwohnen - also hin zu mehr Selbstbestimmung und gemeindenahem Wohnen. Die Statistik zeigt passend: Die Zahl der Menschen außerhalb besonderer Wohnformen wächst seit 2010 deutlich."
+      "erklaerung": "Die gewünschte Entwicklungsrichtung führt von der vollstationären Heimwohngruppe über die Trainingswohnung und die Außenwohngruppe oder offene Wohngemeinschaft zum betreuten Einzelwohnen - also hin zu mehr Selbstbestimmung und gemeindenahem Wohnen. Die Statistik zeigt passend: Die Zahl der Menschen außerhalb besonderer Wohnformen wächst seit 2010 deutlich.",
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-8",
@@ -256,7 +287,12 @@
           "erklaerung": "Falsch: Eine Altersgrenze nennt die Folie nicht. (Folie 19, Notizen S. 13)"
         }
       ],
-      "erklaerung": "Das Leben in Wohngemeinschaften oder in eigener Wohnung bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ermöglicht ein hohes Maß an kultureller Teilnahme. Es werden aber alltagspraktische Fähigkeiten benötigt, damit stundenweise Betreuung möglich ist - genau hier setzt Wohnen als Bildungsaufgabe an."
+      "erklaerung": "Das Leben in Wohngemeinschaften oder in eigener Wohnung bietet die größten Freiräume zur Gestaltung des eigenen Lebensalltags und ermöglicht ein hohes Maß an kultureller Teilnahme. Es werden aber alltagspraktische Fähigkeiten benötigt, damit stundenweise Betreuung möglich ist - genau hier setzt Wohnen als Bildungsaufgabe an.",
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-9",
@@ -287,7 +323,11 @@
           "erklaerung": "Falsch: Realitätsnahes Üben in der Lehrwohnung ist das Gegenteil eines Online-Kurses. (Folie 31, Notizen S. 15)"
         }
       ],
-      "erklaerung": "Ein Wohntraining ist eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag, die sowohl die hauswirtschaftlichen Aufgaben als auch die sozial-emotionalen Lerninhalte des Wohnens verfolgt und der Vorbereitung auf ein selbstständiges Wohnen dient. Adäquater Lernort: die Lehrerwohnung (Dworschak). Synonyme: Wohnvorbereitungskurs, Probewohnen, Trainingswohnen."
+      "erklaerung": "Ein Wohntraining ist eine längere, zumeist mehrtägige Unterrichtssequenz zum Lernen im Wohnalltag, die sowohl die hauswirtschaftlichen Aufgaben als auch die sozial-emotionalen Lerninhalte des Wohnens verfolgt und der Vorbereitung auf ein selbstständiges Wohnen dient. Adäquater Lernort: die Lehrerwohnung (Dworschak). Synonyme: Wohnvorbereitungskurs, Probewohnen, Trainingswohnen.",
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-mc-10",
@@ -318,7 +358,11 @@
           "erklaerung": "Falsch: Sie steht ausdrücklich im Handlungsfeld Wohnen des Rahmenlehrplans. (Folie 28, Notizen S. 14)"
         }
       ],
-      "erklaerung": "Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren: Nahrungszubereitung und Ernährungslehre, Wirtschaftlichkeit eines Haushaltes, Hygiene, Arbeitssicherheit und -organisation, umweltbewusstes Handeln, Pflege und Wartung von Möbeln und Wohnräumen, Körperpflege, Wäschepflege sowie Bedienung und Wartung elektrischer Klein- und Großgeräte."
+      "erklaerung": "Hauswirtschaft hat die Aufgabe, auf ein möglichst selbstbestimmtes Wohnen vorzubereiten und zu trainieren: Nahrungszubereitung und Ernährungslehre, Wirtschaftlichkeit eines Haushaltes, Hygiene, Arbeitssicherheit und -organisation, umweltbewusstes Handeln, Pflege und Wartung von Möbeln und Wohnräumen, Körperpflege, Wäschepflege sowie Bedienung und Wartung elektrischer Klein- und Großgeräte.",
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-1",
@@ -350,7 +394,11 @@
       "erklaerung": "Die Mindmap zur Bedeutung des Wohnens (vgl. Bundesvereinigung Lebenshilfe) nennt Versorgung, Unterkunft, Verpflegung, Geborgenheit, Eigenständigkeit, Privatheit und Offenheit nach außen - alle drei falschen Antworten stehen also vollständig darin. Der Decoy 'Ausgleich, Ablenkung und Vergnügen' stammt aus dem Nachbarthema Freizeit, dort ist es das Bedürfnis hinter der Zielfunktion Kompensation. (Notizen S. 07)",
       "quelle": "notizen-s07",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "wo-gen-mc-2",
@@ -382,7 +430,11 @@
       "erklaerung": "Den Ortswechsel innerhalb Deutschlands deckt die Freizügigkeit im gesamten Bundesgebiet (Art. 11 Abs. 1 GG). Der Decoy 'Unversehrtheit der Wohnung' schützt die bestehende Wohnung vor Eingriffen, nicht den Umzug - und das Sozialgesetzbuch ist eine der drei Rechtsquellen des Wohnrechts, aber kein Grundrecht. (Notizen S. 09)",
       "quelle": "notizen-s09",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-3",
@@ -414,7 +466,11 @@
       "erklaerung": "Genau diesen Fall regelt Artikel 19 der UN-BRK: gleichberechtigte Wahl von Aufenthaltsort und Mitbewohnern, keine Verpflichtung, in besonderen Wohnformen zu leben, dazu Zugang zu Unterstützungsdiensten inklusive persönlicher Assistenz. Der Decoy Freizügigkeit (Art. 11 Abs. 1 GG) betrifft die Bewegungsfreiheit im Bundesgebiet und sagt nichts über die Zuweisung in eine bestimmte Wohnform, und die Unversehrtheit der Wohnung schützt die bestehende Wohnung vor Eingriffen. (Notizen S. 09)",
       "quelle": "notizen-s09",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-4",
@@ -446,7 +502,12 @@
       "erklaerung": "Die Außenwohngruppe steht in der Übersicht zusammen mit Wohnheim und eigenständiger Wohngruppe bei den teilstationären Wohnformen (die zugleich zu den gemeindenahen zählen). Der Decoy 'vollstationär' meint Komplexeinrichtung und Dorfgemeinschaft, 'ambulant' das ambulant betreute Wohnen. (Notizen S. 10)",
       "quelle": "notizen-s10",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-5",
@@ -478,7 +539,12 @@
       "erklaerung": "Ambulant wächst stark, stationär stagniert: außerhalb besonderer Wohnformen von rund 125.000 (2010) auf rund 278.000 (2023), in besonderen Wohnformen fast unverändert um 190.000. Der Decoy dreht die Entwicklung genau um - wer nur 'irgendwas ist gestiegen' erinnert, fällt darauf herein. (Notizen S. 10)",
       "quelle": "notizen-s10",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-6",
@@ -510,7 +576,12 @@
       "erklaerung": "Außerhalb besonderer Wohnformen dominieren Menschen mit seelischer Behinderung mit 70,7 %. Der Decoy 'geistig behindert' gilt für die andere Seite: In besonderen Wohnformen stellen Menschen mit geistiger Behinderung mit 64 % die Mehrheit - die Verteilung dreht sich also je nach Wohnform um. (Notizen S. 11)",
       "quelle": "notizen-s11",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "wo-gen-mc-7",
@@ -542,7 +613,11 @@
       "erklaerung": "Wege im Wohnumfeld gehören zur Orientierung in der Nachbarschaft. Der Decoy 'Orientierung im eigenen Zuhause' meint das Zurechtfinden innerhalb der Wohnung selbst - beide Orientierungs-Fähigkeiten stehen in der Mindmap direkt nebeneinander und werden deshalb leicht verwechselt. (Notizen S. 14)",
       "quelle": "notizen-s14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-8",
@@ -574,7 +649,11 @@
       "erklaerung": "Probewohnen, Trainingswohnen und Wohn-Vorbereitungskurs sind Synonyme für das Wohntraining, also für eine Unterrichtsmethode. Betreutes Einzelwohnen ist dagegen eine echte Wohnform, der Endpunkt der gewünschten Entwicklungsrichtung - der Decoy klingt nach Üben, meint aber tatsächliches Wohnen. Nicht verwechseln: Trainingswohnen ist die Methode, die Trainingswohnung dagegen eine Stufe der Wohnformen zwischen Heimwohngruppe und Außenwohngruppe. (Notizen S. 15, Entwicklungsrichtung S. 13)",
       "quelle": "notizen-s15",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-mc-10",
@@ -606,7 +685,11 @@
       "erklaerung": "Im Schaubild steht 'Der Mensch im Alltag' in der Mitte, umgeben von Selbstversorgung, Freizeit, Wohnen, Zusammenleben und Mediennutzung. Die Decoys Selbstversorgung und Zusammenleben stehen also auf derselben Ebene wie Wohnen selbst und sind ihm nicht übergeordnet - und Hauswirtschaft ist der Unterrichtsbereich, der auf ein möglichst selbstbestimmtes Wohnen vorbereitet. (Notizen S. 13, Hauswirtschaft S. 14)",
       "quelle": "notizen-s13",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "wo-fol-mc-1",
@@ -638,7 +721,11 @@
       "erklaerung": "Die elfte Leitkompetenz lautet wörtlich, dass die Schülerinnen und Schüler Wohnformen erkunden und ihre Selbstversorgung erweitern. Die Decoys sind alle echte Inhalte des Themas, gehören aber woanders hin: das Probewohnen zur Methode Wohntraining, die Rechtsgrundlagen zu einer anderen Kompetenzerwartung und die Hauswirtschaft zum Handlungsfeld Wohnen in den Klassen 1 bis 10. (Folie 29, SenBildWiss Berlin & LISUM 2013, 49)",
       "quelle": "folie-wohnen-29",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "wo-fol-mc-2",
@@ -670,7 +757,11 @@
       "erklaerung": "Neu in der Abschlussstufe ist die biografische Perspektive: die eigene Wohnsituation darstellen, Visionen entwickeln, Wohnbedürfnisse und -wünsche mit den realen Möglichkeiten abwägen und im Rahmen der individuellen Lebensplanung eigene Vorstellungen von Wohnformen entwickeln. Die drei Decoys stammen alle aus der Hauswirtschaftsliste des Handlungsfelds für die Klassen 1 bis 10 - praktische Fertigkeiten, die dort schon stehen. (Folie 29 gegenüber Folie 28)",
       "quelle": "folie-wohnen-29",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-fol-mc-3",
@@ -702,7 +793,11 @@
       "erklaerung": "Klauß argumentiert über Individualität und Privatheit: In den eigenen vier Wänden kann man sein privates Leben führen, sich so verhalten, wie es einem entspricht, und es sich bequem machen. Der erste Decoy ist besonders naheliegend, weil Versorgung, Unterkunft und Verpflegung wirklich zum Thema gehören - sie stehen aber in der Mindmap der Lebenshilfe, nicht in diesem Zitat. (Folie 4, Klauß 2008, 119)",
       "quelle": "folie-wohnen-4",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "wo-fol-mc-4",
@@ -734,7 +829,12 @@
       "erklaerung": "Münzinghof beschreibt sich als Dorf, in dem Menschen mit und ohne Unterstützungsbedarf unter einem Dach Gemeinschaft gestalten, für Kinder bis ältere Menschen, mit den Werkstätten als Teil des Dorfalltags. Die Decoys sind je ein Merkmal einer anderen Wohnform: Rund-um-die-Uhr-Betreuung und Wohnbeirat gehören zum vollstationären Beispiel, die stundenweise Unterstützung zum ambulanten Wohnen und die Stufenfolge zum teilstationären Dazwischen. (Folie 14)",
       "quelle": "folie-wohnen-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-fol-mc-5",
@@ -766,7 +866,12 @@
       "erklaerung": "Die fünfte Kompetenzerwartung nennt Wohnsinn ausdrücklich beim Namen, und der zugehörige Arbeitsauftrag fragt nach Problemen und Vorteilen des Konzepts. Der schwierigste Decoy ist Münzinghof - das ist ebenfalls ein inklusives Wohnkonzept aus der Vorlesung, nur eben nicht das in der Kompetenzerwartung genannte. Die anderen beiden stehen für eine vollstationäre Wohnform beziehungsweise für die Methode Wohntraining. (Folien 2 und 32)",
       "quelle": "folie-wohnen-32",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -880,7 +985,11 @@
           "Der zweite Absatz schützt noch etwas Drittes am Menschen selbst.",
           "Nicht die Wohnung, sondern der Körper - was steht da noch?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "wo-f-2",
@@ -978,7 +1087,11 @@
           "Vielfalt plus Trend: Was zeigt die Statistik seit 2010?",
           "Wohin bewegt sich das Ganze aktuell?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "wo-f-3",
@@ -1095,7 +1208,12 @@
           "Von ganz betreut zu fast allein: die Treppe. Geht sie nur nach oben?",
           "Welche Abfolge gilt als Ziel?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-f-4",
@@ -1208,7 +1326,11 @@
           "Zwei Zahlen: wie viele einen Wohnraum mit Hunderten teilen, und wie sich die Gesamtzahl seit 2010 entwickelt hat.",
           "Der Einwand über den Ort: Wozu üben, wenn der Alltag es nicht zulässt?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-f-1",
@@ -1307,7 +1429,12 @@
           "Der überraschende Ausgang - und was er zeigt.",
           "Aus dem Bruch wird eine Chance: welche?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-f-2",
@@ -1406,7 +1533,12 @@
           "Zwei Prozentwerte für die Gruppe GE - drinnen und draußen.",
           "Warum trifft der allgemeine Trend auf unsere Zielgruppe nur begrenzt zu?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-gen-f-3",
@@ -1516,7 +1648,11 @@
           "Dein Schluss: Grenzen der kurzen Sequenz benennen.",
           "Abwägung zum Ende - Zeitrahmen gegen Anspruch."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-fol-f-1",
@@ -1723,7 +1859,11 @@
           "Vier Stufen von ganz betreut zu fast allein: Wer hat die festgelegt?",
           "Der Einwand gegen das Wort selbstbestimmt: Wessen Ziel ist hier das Ziel?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-fol-f-2",
@@ -1861,7 +2001,12 @@
           "Wo werden genau diese Anteile eingeübt?",
           "Zieh die Schlussfolgerung für den Unterricht."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-afb1-1",
@@ -1948,7 +2093,11 @@
           "Ein Zuhause ist keine Insel - Kontakt zur Umwelt.",
           "Das Gegenstück zum Rückzug."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-2",
@@ -2042,7 +2191,11 @@
           "Jahreszahl 2008 - welches Dokument ist gemeint?",
           "Das völkerrechtliche Papier, in dem Artikel 19 steht."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-3",
@@ -2122,7 +2275,12 @@
           "Das Merkmal mitten im Ort statt am Stadtrand.",
           "Es verbindet die dritte und die vierte Gruppe."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-4",
@@ -2224,7 +2382,12 @@
           "Die Station, die zwischen Elternhaus und Erwachsenengruppe liegt.",
           "Dein Heft schreibt eine 3 dahinter, die Folie nicht."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-5",
@@ -2313,7 +2476,12 @@
           "Zwei Stichworte zum Miteinander, über die Organisation hinaus.",
           "Warum das Dorf mehr sein will als eine Wohnform."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-afb1-6",
@@ -2402,7 +2570,12 @@
           "Was das Haus außer Wohnen und Pflege noch anbietet.",
           "Die Zeile mit den Besonderheiten des Hauses."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-afb1-7",
@@ -2489,7 +2662,11 @@
           "Womit man heute Kontakt hält und sich informiert.",
           "Ein Feld, das es vor dreißig Jahren so nicht gab."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-8",
@@ -2569,7 +2746,11 @@
           "Was man gelernt hat, im Alltag auch wirklich einsetzen.",
           "Das Gegenstück zum praktischen Können."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb1-9",
@@ -2672,7 +2853,11 @@
           "Was die Liste außer Essen und Sauberkeit noch aufzählt.",
           "Haushaltsführung im weiteren Sinn."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "wo-afb3-1",
@@ -2778,7 +2963,12 @@
           "Für wen passt so ein Ort, für wen nicht? Entscheide dich.",
           "Zum Schluss dein Urteil - mit Begründung, nicht nur Meinung."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "wo-afb3-2",
@@ -2891,7 +3081,11 @@
           "Papier und Alltag - wie weit liegen sie auseinander?",
           "Nenne trotzdem die Bewegung und den Spielraum, den sie eröffnet."
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "wo-afb3-3",
@@ -2990,7 +3184,12 @@
           "Woran willst du messen, ob das Projekt hält, was sein Name verspricht?",
           "Nimm den Einwand von vorhin: Was müsste sich ändern - vorher, am Eingang und danach?"
         ]
-      ]
+      ],
+      "ke": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "core": false
     }
   ]
 }

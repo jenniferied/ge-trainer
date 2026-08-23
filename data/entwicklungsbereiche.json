@@ -40,7 +40,11 @@
       ],
       "erklaerung": "Die vier Entwicklungsbereiche nach KMK (2021, 6 ff.) sind Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung. Diese vier solltest du auswendig können - das war eine der Beispielaufgaben.",
       "quelle": "notizen-s44",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": true
     },
     {
       "id": "eb-mc-2",
@@ -71,7 +75,11 @@
       ],
       "erklaerung": "Zum Bereich Kognition gehören: Unterstützung der Merkfähigkeit, Entwicklung des handlungsplanenden Denkens, Erkennen und Bewerten von Analogien und Zusammenhängen, Problemlösen und Entfaltung von Kreativität.",
       "quelle": "notizen-s44",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": false
     },
     {
       "id": "eb-mc-3",
@@ -102,7 +110,11 @@
       ],
       "erklaerung": "Zum Bereich Kommunikation gehören: Erweiterung der individuellen Sprechfähigkeit, des Wortschatzes einschließlich Begriffsbildung, des Sprachverständnisses und die Entwicklung eines sprachlichen Selbstkonzeptes. Kommunikationsformen: basal, nonverbal, mündlich, schriftlich.",
       "quelle": "notizen-s44",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": false
     },
     {
       "id": "eb-mc-4",
@@ -133,7 +145,11 @@
       ],
       "erklaerung": "Der Bereich emotionale und soziale Entwicklung umfasst die Förderung der emotionalen Stabilität, des Sozialverhaltens, der Lern- und Arbeitsbereitschaft sowie die Befähigung, soziale Beziehungen einzugehen und zu gestalten.",
       "quelle": "notizen-s44",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": false
     },
     {
       "id": "eb-mc-5",
@@ -164,7 +180,12 @@
       ],
       "erklaerung": "Ab den Anfängen dominierte eine entwicklungsbezogene und lebenspraktische Ausrichtung (Lindmeier/Lindmeier 2019), erst in den letzten Jahren kam eine zunehmende Fachorientierung dazu (Ratz 2010, Musberg 2019). Bei beidem besteht die Gefahr der Überbetonung - gefragt ist eine individuell angemessene Balance (Jöhnck 2024).",
       "quelle": "notizen-s46",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": true
     },
     {
       "id": "eb-mc-6",
@@ -195,7 +216,11 @@
       ],
       "erklaerung": "Im dualen Unterricht wird das unterrichtsfachliche Lernen unterrichtsimmanent sowie systematisch mit einer Förderung von Kompetenzen aus ausgewählten Entwicklungsbereichen verknüpft, verschränkt oder ergänzt (Jöhnck/Baumann 2023, 65). Der Name hat nichts mit der dualen Berufsausbildung zu tun - beliebter Verwechslungs-Trick.",
       "quelle": "notizen-s47",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-mc-7",
@@ -226,7 +251,11 @@
       ],
       "erklaerung": "Die fünf Grundformen: solitäre individuelle Entwicklungsförderung im lerngruppenbezogenen Unterricht, lerngruppenbezogene Umsetzung individueller Entwicklungsziele, (nahezu) Deckungsgleichheit von Fach- und Entwicklungsanliegen, intermittierend temporäre Konzentration auf Fach- oder Entwicklungsaspekt, parallele Verwirklichung mehrerer (verwandter) Entwicklungsschwerpunkte.",
       "quelle": "notizen-s48",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-mc-8",
@@ -257,7 +286,12 @@
       ],
       "erklaerung": "Entwicklung kann u. a. über gute pädagogische Beziehungen, Elternarbeit, Schüler:innenpatenschaften, in Essenszeiten und Pausen, in Pflegesituationen, über Therapien und wissenschaftlich evaluierte Trainingsprogramme gefördert werden. Zentraler Fokus sollte aber auch der reguläre (Fach-)Unterricht sein.",
       "quelle": "notizen-s46",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-1",
@@ -289,7 +323,11 @@
       "erklaerung": "Leben in der Demokratie steht in der NRW-Übersicht unter Sozialisation, und zwar im Strang Soziabilität - dort geht es um soziales Handeln, interpersonale Kompetenzen, Gemeinschaftsleben und eben das Leben in der Demokratie. Der Decoy Kommunikation ist verlockend, weil demokratisches Handeln viel mit Aushandeln zu tun hat; der NRW-Bereich Kommunikation umfasst aber nur Stimme und Sprechen, Äußerungen produzieren und aufnehmen sowie das Miteinander-Kommunizieren. Kognition und Wahrnehmung führen diesen Schwerpunkt gar nicht. (Notizen S. 45)",
       "quelle": "notizen-s45",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-2",
@@ -321,7 +359,11 @@
       "erklaerung": "Der RLP für Berlin und Brandenburg spricht von der Entwicklung von Wahrnehmung, Sprache, Denken und Handeln - dazu Unterstützung zur selbstständigen und selbstbestimmten Lebensführung und zur Entfaltung der Persönlichkeit. Der Decoy ist die KMK-Viererliste: richtig wichtig, aber eine andere Systematik aus einem anderen Dokument. (Notizen S. 45)",
       "quelle": "notizen-s45",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": true
     },
     {
       "id": "eb-gen-mc-3",
@@ -353,7 +395,12 @@
       "erklaerung": "Gemeint ist die Begriffsvielfalt in der Fachliteratur: überfachliche Kompetenzen, formale Kompetenzen, adaptive Kompetenzen, Lebenskompetenzen, Befähigungsbereiche und mehr - alles Begriffe mit deutlichen Bezügen zu den Entwicklungsbereichen. Der Decoy zur Begriffsbildung der Schüler:innen verwechselt die Ebene: Dort geht es um einen Förderschwerpunkt im Bereich Kommunikation, nicht um die Fachterminologie. (Notizen S. 46 - dort ist der rechte Rand der Folie angeschnitten, die Aufzählung selbst ist aber vollständig lesbar.)",
       "quelle": "notizen-s46",
       "quelleSicherheit": "unsicher",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-4",
@@ -385,7 +432,12 @@
       "erklaerung": "Das Vorlesungsbeispiel: Kommunikative Fähigkeiten bilden zugleich den Zielfokus des Kompetenzbereichs Sprechen und Zuhören im Fach Deutsch (Jöhnck 2020). Die Decoys klingen nach demselben Muster, kombinieren aber Bereich und Fach falsch bzw. behaupten Exklusivität oder Deckungsgleichheit, die so nirgends steht. (Notizen S. 46)",
       "quelle": "notizen-s46",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-5",
@@ -417,7 +469,11 @@
       "erklaerung": "Propagiert wird das Konzept vor allem in sprachheilpädagogischen Kontexten (z. B. Berg 2018) und aus der Fachrichtung Emotionale und soziale Entwicklung (z. B. Urban/Leidig 2017), zudem fachrichtungsübergreifend. Der Decoy berufliche Bildung spielt mit der Namensverwechslung - dualer Unterricht hat nichts mit der dualen Ausbildung zu tun. (Notizen S. 47)",
       "quelle": "notizen-s47",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-6",
@@ -449,7 +505,11 @@
       "erklaerung": "Kennzeichen dieser Grundform: Individuelle Entwicklungsbedarfe einzelner münden in eine (teil-)gruppenbezogene Förderung, alle arbeiten im selben Entwicklungsschwerpunkt, fachliche und entwicklungsbezogene Ziele sind getrennt. Der Decoy solitäre Förderung beschreibt das Gegenteil auf der Gruppenebene: Dort verfolgt nur ein Kind allein sein individuelles Ziel. (Notizen S. 49)",
       "quelle": "notizen-s49",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-7",
@@ -481,7 +541,11 @@
       "erklaerung": "Die Kommunikationstafel im Kunstunterricht (Scholz/Stegkemper 2022) ist ein Vorlesungsbeispiel für die solitäre individuelle Entwicklungsförderung: unterrichtsintegriert werden allein individuell bestimmte Ziele angegangen. Der Decoy lerngruppenbezogene Umsetzung würde bedeuten, dass die ganze (Teil-)Gruppe im selben Entwicklungsschwerpunkt gefördert wird - hier ist es nur das eine Kind. (Notizen S. 48)",
       "quelle": "notizen-s48",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-8",
@@ -513,7 +577,11 @@
       "erklaerung": "Das Fazit stellt ausdrücklich klar: Desiderat ist nicht die Vielzahl an Publikationen, sondern die systematische, empirisch fundierte Konzeptualisierung - insbesondere im SGE. Der Decoy mit den fehlenden Veröffentlichungen dreht genau diese Klarstellung um; auch Praxisbeispiele gibt es reichlich (Jöhnck 2024 beschreibt die Grundformen anhand vielfältiger Beispiele). (Notizen S. 49)",
       "quelle": "notizen-s49",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-9",
@@ -545,7 +613,11 @@
       "erklaerung": "Das Fazit fordert vielfältige wissenschaftliche Perspektiven: insbesondere Kooperation mit den Fachdidaktiken und eine stärkere Vernetzung der sonderpädagogischen Fachrichtungen untereinander (Jöhnck/Berg 2026). Der Decoy zur Förderung nur außerhalb des Unterrichts widerspricht der Kernaussage, dass gerade der reguläre Fachunterricht zentraler Fokus der Entwicklungsförderung sein sollte. (Notizen S. 49)",
       "quelle": "notizen-s49",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-mc-10",
@@ -577,7 +649,11 @@
       "erklaerung": "Das Zitat nennt Angebote, die kognitive, kommunikative, emotionale, soziale und motorische Fähigkeiten stärken - und hebt dann hervor: Hierzu gehört insbesondere die Fähigkeit, sich und die Umwelt wahrnehmen zu können. Der Decoy sprachliche Mitteilung gehört zwar zu den gestärkten Fähigkeiten, ist aber nicht die besonders hervorgehobene. (Notizen S. 43)",
       "quelle": "notizen-s43",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": true
     },
     {
       "id": "eb-fol-mc-1",
@@ -609,7 +685,11 @@
       "erklaerung": "Die Folie nennt genau dieses Beispiel: Unsere fünf Sinne im Sachunterricht fällt zugleich in den Entwicklungsbereich Wahrnehmung - Fachanliegen und Entwicklungsanliegen decken sich nahezu. Der letzte Decoy ist der verlockendste, weil das Wort parallel und die fünf Sinne gut zusammenzupassen scheinen; gemeint ist dort aber die Arbeit an mehreren Entwicklungsschwerpunkten, nicht an mehreren Sinnen innerhalb eines Bereichs. (Folie 25, vgl. Jöhnck 2024, S. 55 ff.)",
       "quelle": "folie-entwicklungsbereiche-25",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-fol-mc-2",
@@ -641,7 +721,11 @@
       "erklaerung": "Die Begründung ist eine Zumutungsfrage, keine Verwaltungsfrage: Zu viel auf einmal überfrachtet den Unterricht und überfordert beide Seiten. Deshalb variiert die Gewichtung zwischen Fachziel und Entwicklungsziel zeitweise. Der zweite Decoy klingt professionell, spielt aber auf Leistungsbewertung an, die hier gar nicht der Punkt ist, und der dritte dreht die Balance in eine Rangordnung um, die die Vorlesung gerade nicht behauptet. (Folie 27, vgl. Jöhnck 2024, 59 ff.)",
       "quelle": "folie-entwicklungsbereiche-27",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-fol-mc-3",
@@ -673,7 +757,11 @@
       "erklaerung": "Der Unterschied liegt im Verhältnis der beiden Anliegen zueinander: einmal Inhaltsgleichheit, einmal bewusst wechselnde Gewichtung bei bleibender Verschiedenheit. Der zweite Decoy beschreibt in Wahrheit den Unterschied zwischen den Grundformen 1 und 2, der dritte macht aus der zeitweisen Gewichtung eine feste Richtung, und der vierte erfindet eine Fächerzuordnung, die es nicht gibt - die Beispiele stammen aus Sachunterricht, Ethik, Geschichte, Deutsch und Kunst. (Folien 25 und 27)",
       "quelle": "folie-entwicklungsbereiche-27",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-fol-mc-4",
@@ -705,7 +793,11 @@
       "erklaerung": "Die Folie zerlegt das Beispiel Sich waschen quer über die Spalten Motorik, Wahrnehmung, Kognition, Sozialisation und Kommunikation - lebenspraktisch und entwicklungsbezogen sind also keine Gegensätze, sondern zwei Blickwinkel auf dieselbe Sache. Der erste Decoy erfindet einen zusätzlichen Bereich, die beiden anderen verteilen die Aufgabe auf Stufen oder auf Zuständigkeiten und weichen der eigentlichen Frage damit aus. Achtung bei den Namen: Diese Tabelle stammt aus NRW und teilt anders auf als die KMK-Vierteilung Kognition, Kommunikation, emotionale und soziale Entwicklung sowie Motorik und Wahrnehmung. (Folie 14, QUA-LiS NRW 2022; KMK-Systematik auf Folie 10)",
       "quelle": "folie-entwicklungsbereiche-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": true
     },
     {
       "id": "eb-fol-mc-5",
@@ -737,7 +829,12 @@
       "erklaerung": "Die Bildunterschrift sagt es ausdrücklich: erst gemeinsam im Rollenspiel erproben, dann als sichtbare Erinnerung aufhängen. Die drei Decoys sind lauter Wege, die es in Schulen wirklich gibt, hier aber nicht beschrieben werden - der Unterschied zwischen abgeleitet, beschlossen und selbst erprobt ist genau der Punkt. (Folie 6, aus Schäpers/Storcks-Kemming 2024, S. 174)",
       "quelle": "folie-entwicklungsbereiche-6",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -805,7 +902,11 @@
           "Grob, fein, Mund und Gesicht - und dazu die Sinne"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": true
     },
     {
       "id": "eb-f-2",
@@ -911,7 +1012,11 @@
           "Was fehlt dem Konzept noch, gerade im SGE?"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-f-3",
@@ -1017,7 +1122,12 @@
           "Abschlussgedanke: zu viel des Guten, beidseitig"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": false
     },
     {
       "id": "eb-f-4",
@@ -1092,7 +1202,11 @@
           "Von grob bis fein, vom Körpererleben bis zum Gesicht",
           "Auch Mund und Gesicht bewegen sich hier"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-f-1",
@@ -1191,7 +1305,11 @@
           "Albers u. a.: was lief neben den Wortarten?",
           "Zweites Beispiel: Organisation üben, während Sprache dran ist"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-f-2",
@@ -1297,7 +1415,11 @@
           "Feingliederung mit Nummern - denk an die Sinne",
           "Wie tief gliedert NRW weiter?"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     },
     {
       "id": "eb-gen-f-3",
@@ -1396,7 +1518,12 @@
           "Abwägen und begründen: beides ja, aber gewichtet",
           "Fazit mit Begründung über Zeit und Auftrag"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": false
     },
     {
       "id": "eb-fol-f-1",
@@ -1573,7 +1700,11 @@
           "Welches Unterrichtsmodell schließt hier an?",
           "Der Übergang zum Verschränkungs-Konzept"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     },
     {
       "id": "eb-fol-f-2",
@@ -1727,7 +1858,11 @@
           "Neben Stärken gibt es auch die bekannten Fallen",
           "Was gilt für alle fünf Formen gleichermaßen?"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb1-1",
@@ -1800,7 +1935,11 @@
           "Nicht einer, sondern gleich mehrere Ziele auf einmal",
           "Aus einem oder auch aus mehreren Bereichen zugleich"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-2",
@@ -1910,7 +2049,12 @@
           "Nicht was jemand kann, sondern wozu jemand in die Lage versetzt wird",
           "Auch Lernen konkret 2/2024 nutzt diesen Namen"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-3",
@@ -1983,7 +2127,11 @@
           "Der letzte Kasten, mit nur vier Unterpunkten",
           "Wie ein Kind sich mitteilt und andere versteht"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-4",
@@ -2077,7 +2225,11 @@
           "Der Sinn fürs Auge",
           "Vom lateinischen Wort fürs Schauen"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-5",
@@ -2143,7 +2295,11 @@
           "Der Weg über Buchstaben und Zeichen",
           "Die vierte und letzte Form der Reihe"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-6",
@@ -2232,7 +2388,12 @@
           "Denk an Logopädie und an ein Programm für soziale Kompetenzen",
           "Fachleute von außen und ein erprobtes Programm"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "core": true
     },
     {
       "id": "eb-afb1-7",
@@ -2312,7 +2473,11 @@
           "Nicht abschweifen, während gearbeitet wird",
           "Das vierte Beispiel zielt auf Ausdauer beim Arbeiten"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb1-8",
@@ -2399,7 +2564,11 @@
           "Hier geht es ums Ich, nicht um einzelne Fähigkeiten",
           "Zwei Schritte stecken darin: erst suchen, dann wachsen lassen"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb1-9",
@@ -2479,7 +2648,11 @@
           "Der letzte Schwerpunkt, ein einziges Wort",
           "Wie man sich etwas merkt, ist selbst lernbar"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb3-1",
@@ -2599,7 +2772,11 @@
           "Ein Plan hilft nur, wenn er wie eingesetzt wird?",
           "Grenzen benennen gehört zur Bewertung dazu"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb3-2",
@@ -2705,7 +2882,11 @@
           "Zum Schluss: wer soll künftig stärker zusammenarbeiten?",
           "Orientierung ja, fertige Didaktik nein"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke3"
+      ],
+      "core": false
     },
     {
       "id": "eb-afb3-3",
@@ -2826,7 +3007,11 @@
           "Ordnen statt klagen - welche Rangfolge schlägst du vor?",
           "Zum Schluss: wie gehst du mit den fremden Wörtern um?"
         ]
-      ]
+      ],
+      "ke": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "core": false
     }
   ]
 }

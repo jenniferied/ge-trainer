@@ -40,7 +40,11 @@
       ],
       "erklaerung": "Peschel (2002) unterscheidet die organisatorische, methodische, inhaltliche, soziale und persönliche Dimension der Öffnung. Lernende bestimmen dabei selbst, wann, wo, mit wem, wie und woran sie arbeiten.",
       "quelle": "notizen-s23",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-2",
@@ -71,7 +75,11 @@
       ],
       "erklaerung": "Der Grad der Mit- bzw. Selbstbestimmung wird zum entscheidenden Kriterium: Je freier die Schüler entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden (Fischer 2008, 155).",
       "quelle": "notizen-s24",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-3",
@@ -102,7 +110,12 @@
       ],
       "erklaerung": "Lernen an Stationen ist auf ein im Lehrplan festgelegtes Thema konzentriert, in Teilthemen gegliedert, und ein Laufzettel dient als Orientierung. Synonyme: Lernstraße, Übungszirkel, Lernparcours, Lernzirkel.",
       "quelle": "notizen-s25",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-4",
@@ -133,7 +146,12 @@
       ],
       "erklaerung": "Das Alleinstellungsmerkmal: Ein:e Schüler:in ist für ein Angebot Expert:in und kann bei Schwierigkeiten helfen, nimmt Ergebnisse entgegen und korrigiert bei Bedarf, mahnt bei obligatorischen Angeboten und beschafft und verwaltet das Material. Lerntheoretisch basiert Werkstattarbeit auf einem konstruktivistischen Verständnis von Lernen.",
       "quelle": "notizen-s27",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-5",
@@ -164,7 +182,12 @@
       ],
       "erklaerung": "Die Abfolge steigert die Anforderungen an Selbststeuerung schrittweise: Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit. Die erhöhte Aufgabenzahl beim Wochenplan stellt höhere Anforderungen an die Zeiteinteilung.",
       "quelle": "notizen-s29",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-6",
@@ -195,7 +218,11 @@
       ],
       "erklaerung": "Kritikpunkte: weiterhin viele Vorgaben durch die Lehrperson, methodische Bausteine als maskierte Übungsphasen, Schüler:innen im FSgE werden den Anforderungen nur schwer gerecht, Vermeidung schwieriger Aufgaben und Überschätzung eigener Fähigkeiten bei freier Wahl, mäßige Effektstärke (d = 0.45), offene Materialangebote können ablenken.",
       "quelle": "notizen-s29",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "uf-mc-7",
@@ -226,7 +253,11 @@
       ],
       "erklaerung": "Geschlossene Lehr-Lernformen kennzeichnen Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. In der Gegenüberstellung: frontal, formell, lehrerzentriert, rezeptiv, kleinschrittig - während offener Unterricht differenzierend, informell, schülerzentriert, aktiv und ganzheitlich ist.",
       "quelle": "notizen-s29",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-8",
@@ -257,7 +288,11 @@
       ],
       "erklaerung": "Grundregeln: Üben muss zur Gewohnheit werden; täglich 20-30 Minuten ist effektiver als geblockt; Üben ist keine Frage des Interesses, sondern eine Notwendigkeit; was sitzen soll, muss überlernt werden; was geübt wird, muss vorher verstanden sein; Fehler sofort erkennen und beheben.",
       "quelle": "notizen-s30",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-9",
@@ -288,7 +323,11 @@
       ],
       "erklaerung": "Ein Lehrgang läuft ab in: 1. Eröffnungs- und Informationsphase (Ziele, Inhalte, Vorgehen vorstellen), 2. Demonstrationsphase (Lösungshandlung wird vorgemacht), 3. Übungsphase (schrittweises Nachvollziehen und Vertiefen) und 4. Anwendungsphase (Anwendung unter neuen Bedingungen, eigenständige Reflexion).",
       "quelle": "notizen-s31",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-10",
@@ -319,7 +358,11 @@
       ],
       "erklaerung": "Beim Spiralcurriculum kehrt ein Stoffelement in ausgefalteten Stufen wieder (z. B. Fertigungstechniken auf zunehmend komplexerem Niveau). Additiv = Stoffe geordnet aneinandergereiht; genetisch = chronologisch-entwickelnde Darstellung; konzentrisch-erweiternd = vom Nahen zum Ferneren.",
       "quelle": "notizen-s33",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-mc-11",
@@ -350,7 +393,11 @@
       ],
       "erklaerung": "Trainingsprogramme und Übungseinheiten sind Ansätze mit therapeutischer Ausrichtung, geprägt durch starke Strukturierung und Lernzielorientierung - strukturierte, programmartige Ansätze u. a. für Schüler:innen mit autistischem Verhalten. Sie sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen aber in der Schule eine relevante Rolle.",
       "quelle": "notizen-s30",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-1",
@@ -382,7 +429,11 @@
       "erklaerung": "Der Lehrgang steht im Schaubild beim gemeinsamen Unterricht, neben Klassenunterricht, Kursarbeit, Präsentation und IT-Arbeit. Der naheliegende Fehlgriff ist der individualisierte Unterricht - dort stehen aber Freiarbeit, Werkstatt-, Stationen- und Planarbeit. Und Vorsicht: 'Offener Unterricht' ist gar keine der drei Grundformen (individualisiert, kooperativ, gemeinsam). (Notizen S. 24) Achtung, bei Meyer sieht die Einteilung anders aus: Dort ist lehrgangsförmiger Unterricht eine eigene Grundform neben individualisierendem und kooperativem Unterricht. Die Frage muss also immer sagen, wessen Einteilung gemeint ist.",
       "quelle": "notizen-s24",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-2",
@@ -414,7 +465,12 @@
       "erklaerung": "Auch Freiarbeit hat Grenzen, und zwar vier: vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebots und die Zielsetzungen der Schüler:innen selbst. Der Laufzettel mit Pflichtstationen gehört zum Stationenlernen, die feste Phasenfolge zum Lehrgang - beides sind Nachbar-Decoys, keine Freiarbeit. (Notizen S. 28)",
       "quelle": "notizen-s28",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-3",
@@ -446,7 +502,11 @@
       "erklaerung": "Alle vier Merkmale stehen in der Gegenüberstellungstabelle auf der offenen Seite. Die geschlossene Seite hält jeweils das Gegenstück bereit: lernzielorientiert, Feinstrukturierung, Kleinschrittigkeit, einseitig kognitiv. Lehrgang und Training sind Vertreter der geschlossenen Seite - wer sie wählt, liegt also gleich doppelt daneben. (Notizen S. 30)",
       "quelle": "notizen-s30",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-4",
@@ -478,7 +538,12 @@
       "erklaerung": "Zentrales Merkmal des Werkstattunterrichts ist neben der gestalteten Lernumgebung die Einbindung der Lernenden schon bei der Planung (Wiater 2008): Lernaspekte, Lernchancen, Lernweg, Material, Zeitablauf, Partnerwahl, Kontrolle. Der Fallstrick ist die Benotung: Chef:innen helfen, nehmen Ergebnisse entgegen und korrigieren - Noten vergeben sie nicht. (Notizen S. 27)",
       "quelle": "notizen-s27",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-5",
@@ -510,7 +575,12 @@
       "erklaerung": "Beim Wochenplan wächst die Aufgabenzahl - und damit die Anforderung, sich die Zeit über mehrere Tage selbst einzuteilen. Deshalb kommt er nach dem Tagesplan. Volle Wahlfreiheit über Ziele, Inhalte, Partner und Zeit bietet erst die Freiarbeit, die darum am Ende der Folge steht - das ist der Decoy. (Begründung Notizen S. 25, die Stufenfolge Einführung - Tagesplan - Stationenarbeit - Wochenplan - Freiarbeit steht auf S. 29)",
       "quelle": "notizen-s25",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-6",
@@ -542,7 +612,11 @@
       "erklaerung": "Die chronologisch-entwickelnde Darstellung eines Stoffes ist die genetische Form - typisch für geschichtliche Themen. Der Verwechsler ist das Spiralcurriculum: Dort kehrt derselbe Stoff auf zunehmend komplexerem Niveau wieder, es geht aber nicht um eine historische Abfolge. (Notizen S. 32)",
       "quelle": "notizen-s32",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-7",
@@ -574,7 +648,11 @@
       "erklaerung": "Vom Nahen zum Ferneren - das ist die konzentrisch-erweiternde Form. Der engste Verwechsler ist der Aufbau vom Elementaren her: Auch dort taucht Elektrizität als Beispiel auf, aber es wird aus einem Element (dem Stromkreis) das Ganze verdeutlicht, statt räumlich immer weitere Kreise zu ziehen. (Notizen S. 33)",
       "quelle": "notizen-s33",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-8",
@@ -606,7 +684,11 @@
       "erklaerung": "Im Rahmen eines Lehrgangs erwerben Schüler:innen Fertigkeiten, die ihnen die Bewältigung des Alltags und den Erwerb neuer Kompetenzen ermöglichen - deshalb zählt das ISB Lehrgänge zum handlungsorientierten Unterricht. Der Gesamtunterricht ist ein Decoy aus dem Nachbarthema Konzeptionen: die Methode der frühen didaktischen Konzeptionen. (Notizen S. 31)",
       "quelle": "notizen-s31",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-9",
@@ -638,7 +720,11 @@
       "erklaerung": "Trainings und Übungseinheiten sind vom Begriff der Bildung und Erziehung abzugrenzen, spielen in der Schule aber eine relevante Rolle. Der Decoy 'therapeutische Ansätze' führt in die Irre: Gerade die therapeutische Ausrichtung mit starker Strukturierung und Lernzielorientierung prägt sie - sie beschreibt sie also, statt sie abzugrenzen. (Notizen S. 30)",
       "quelle": "notizen-s30",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-mc-10",
@@ -670,7 +756,11 @@
       "erklaerung": "Das Argument ist begrifflich, nicht empirisch: Offen für Offenen Unterricht heißt laut Knauf (2001, 102) auch offen für Veränderungen und für verschiedene Interpretationen des Unterrichts - wer Offenheit eindeutig festlegt, hat sie schon wieder geschlossen. Der Decoy mit Wallrabenstein und Fischer zieht nicht - die beiden ergänzen sich: Wallrabenstein liefert den Sammelbegriff für Reformansätze, Fischer das Kriterium des Grades der Mit- bzw. Selbstbestimmung. (Notizen S. 23)",
       "quelle": "notizen-s23",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-fol-mc-1",
@@ -702,7 +792,11 @@
       "erklaerung": "Meyer macht aus dem Lehrgang eine eigene der drei Säulen; ihr Kernkasten heißt direkte Instruktion beziehungsweise Lehrgänge. Genau darin unterscheiden sich die beiden Schaubilder, und genau das ist die Verwechslungsfalle: Für Klausurantworten ist die Trias von Terfloth und Bauersfeld die sichere Referenz, Meyers Trias sollte man kennen, aber nicht mit ihr vermischen. (Folie 7 gegenüber Folie 6)",
       "quelle": "folie-unterrichtsformen-7",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "uf-fol-mc-2",
@@ -734,7 +828,11 @@
       "erklaerung": "Bei Meyer läuft der gemeinsame Unterricht als Bogen über alle drei Säulen, mit Beispielen wie Klassenkonferenz und Morgenkreis; die dritte Säule ist stattdessen der lehrgangsförmige Unterricht. Der erste Decoy beschreibt die Einordnung bei Terfloth und Bauersfeld, wo der gemeinsame Unterricht wirklich eine der drei Grundformen ist - das ist der Kern der Verwechslungsgefahr. Der letzte Decoy meint den unteren Bogen desselben Schaubilds, also Feste und Feiern, Projektpräsentationen, Wettbewerbe und Internet. (Folie 7)",
       "quelle": "folie-unterrichtsformen-7",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "uf-fol-mc-3",
@@ -766,7 +864,12 @@
       "erklaerung": "Entscheidend sind die drei Bausteine: Aufgaben für einen Tag, selbst gewählte Reihenfolge, Pflicht- und Wahlaufgaben. Die Decoys markieren die Nachbarn: eine feste Reihenfolge wäre kein offener Unterricht mehr, die völlig freie Zielwahl wäre schon Freiarbeit, und der letzte Punkt beschreibt das Lernen an Stationen. (Folie 10, Pitsch & Thümmel 2019, 126)",
       "quelle": "folie-unterrichtsformen-10",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "uf-fol-mc-4",
@@ -798,7 +901,12 @@
       "erklaerung": "Die Folie zeigt zwei Pfeile auf den Tagesplan mit den Beschriftungen plus Kontrollspalte und plus Fertigspalte. Der erste Decoy ist der stärkste, weil Pflicht- und Wahlaufgaben wirklich zur Tagesplanarbeit gehören - sie sind aber die Aufgabenarten, nicht die beiden zusätzlichen Spalten. (Folie 10, Pitsch & Thümmel 2019, 126)",
       "quelle": "folie-unterrichtsformen-10",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "uf-fol-mc-5",
@@ -830,7 +938,12 @@
       "erklaerung": "Beide Pläne setzen ein lineares Zeitverständnis voraus, arbeiten aber mit verschiedenen Hilfsmitteln: der Tagesplan mit Uhr, Klingelzeichen, Sanduhr oder einem Uhr-Ersatz, der Wochenplan mit Kalender und Wochenstundenplan. Daraus folgt der Unterschied im Zeitmanagement, kurzfristig gegenüber flexibel mittelfristig. Der Laufzettel im dritten Decoy gehört zum Lernen an Stationen. (Folie 14 gegenüber Folie 11, Pitsch & Thümmel 2019, 128 und 130)",
       "quelle": "folie-unterrichtsformen-14",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     }
   ],
   "frei": [
@@ -926,7 +1039,11 @@
           "Worüber entscheiden die Lernenden hinter all diesen Kästen?",
           "Die Fragen, die zusammen die fünf Kästen füllen"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-f-2",
@@ -1031,7 +1148,11 @@
           "Denk an das Hygiene-Training von Richter",
           "Welche Alltagshandlung wurde beispielhaft trainiert?"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-f-3",
@@ -1129,7 +1250,11 @@
           "Abwägung: Wie lassen sich beide Seiten verbinden?",
           "Schlussgedanke: allmähliche Öffnung, passend zur Gruppe"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "uf-f-4",
@@ -1213,7 +1338,12 @@
           "Womit behalten alle den Überblick? Und der Stundenverlauf",
           "Denk an die Gesprächsklammer um die Arbeitsphase"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-f-1",
@@ -1278,7 +1408,11 @@
           "Hier arbeitet die ganze Klasse am selben Gegenstand",
           "Dritte Grundform: Welche zwei Methoden plus Extra?"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-f-2",
@@ -1384,7 +1518,12 @@
           "Denk an das herbstliche Stationenthema von Folie 16",
           "Welches konkrete Beispiel zeigte die Vorlesung?"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-gen-f-3",
@@ -1483,7 +1622,11 @@
           "Abwägung: Abgrenzung bedeutet keinen Rauswurf",
           "Eigene begründete Position ans Ende setzen"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-fol-f-1",
@@ -1639,7 +1782,11 @@
           "Zwei der drei Formen tauchen in beiden Bildern auf",
           "Beide sortieren Methoden unter Oberbegriffe, statt bloß aufzulisten"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb1-1",
@@ -1705,7 +1852,11 @@
           "Am Ende soll es sich biegen lassen, nicht nur einmal klappen.",
           "Der letzte Schritt zielt auf Beweglichkeit im Können."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-2",
@@ -1794,7 +1945,11 @@
           "Die andere beginnt beim kleinsten Baustein, etwa dem Stromkreis.",
           "Küche und Garten stehen für die eine, ein Bauteil für die andere."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-3",
@@ -1874,7 +2029,12 @@
           "Die dritte Tätigkeit setzt bei einer Schwierigkeit an.",
           "Hier steht am Anfang nicht die Neugier, sondern ein Hindernis."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-4",
@@ -1963,7 +2123,12 @@
           "Auch die Partnerwahl und das Prüfen am Schluss liegen mit bei ihnen.",
           "Denk an Tischnachbarn und an den letzten Schritt jeder Arbeit."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-5",
@@ -2052,7 +2217,11 @@
           "Eine sagt, es gehe nicht um Lust, sondern um Müssen.",
           "Zwei drehen sich um Gliederung des Stoffes und Abwechslung der Aufgaben."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb1-6",
@@ -2146,7 +2315,12 @@
           "Der Kreis schließt sich dort, wo er begonnen hat.",
           "Zum Abschluss wird noch einmal miteinander gesprochen."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb1-7",
@@ -2235,7 +2409,11 @@
           "Denk an die Bereiche, die ein Kind insgesamt ausmachen.",
           "Auch das Einteilen der Zeit und das innere Differenzieren zählen."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-8",
@@ -2324,7 +2502,11 @@
           "Denk an Steifheit gegen Lockerheit und an Aufnehmen gegen Handeln.",
           "Am Ende der Tabelle steht das, was am Schluss herauskommt."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke3"
+      ],
+      "core": true
     },
     {
       "id": "uf-afb1-9",
@@ -2404,7 +2586,12 @@
           "Der Gegenstand, der in der Hand liegt.",
           "Denk an Karten, Kästen und Spiele im offenen Angebot."
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb2-1",
@@ -2532,7 +2719,12 @@
           "Das Zeitfenster wird länger, die Steuerung schwieriger",
           "Auch die Schwere der Aufgaben wählen sie nun mit"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb3-1",
@@ -2653,7 +2845,12 @@
           "Denk an ein Gerüst, das später wieder wegkommt",
           "Unterscheide zwei Arten von Einschränkung"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb3-2",
@@ -2767,7 +2964,11 @@
           "Am Schluss geben die Lernenden sich selbst Rückmeldung",
           "Frag, was eine Freiheit an Können vorher braucht"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     },
     {
       "id": "uf-afb2-2",
@@ -2873,7 +3074,11 @@
           "Kein Entweder-oder, sondern mehr oder weniger davon",
           "Eine Methode sitzt sogar in beiden Schubladen zugleich"
         ]
-      ]
+      ],
+      "ke": [
+        "unterrichtsformen-ke1"
+      ],
+      "core": false
     }
   ]
 }

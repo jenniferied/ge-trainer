@@ -43,7 +43,11 @@
       ],
       "erklaerung": "Die Prinzipien im SGE: Lebenspraxis und Lebensnähe, Individualisierung/Differenzierung, Ganzheitlichkeit, kleine Schritte und/oder Sinnzusammenhang, Handlungsorientierung, Elementarisierung, Strukturierung, Anschaulichkeit, adaptives Lernen, Anstoß zur Eigenaktivität, Ermöglichung von Erfahrungen. Notenorientierung gehört nicht dazu.",
       "quelle": "notizen-s34",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke1"
+      ],
+      "core": true
     },
     {
       "id": "pr-mc-2",
@@ -74,7 +78,11 @@
       ],
       "erklaerung": "Lebensnähe kennzeichnet jenes Bildungsgut, das für das spätere Leben benötigt wird (Pitsch 2002, 229). Alltagshandlungen werden als Unterrichtsinhalte tituliert und komplexe Inhalte unter Beachtung der Alltagsrelevanz gemäß den Aneignungsmöglichkeiten gestaltet.",
       "quelle": "notizen-s34",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-3",
@@ -105,7 +113,11 @@
       ],
       "erklaerung": "Konkret-gegenständlich heißt: handelnd Gegenstände nutzen oder Vorgänge nachvollziehen, die Welt durch Entdeckung von Wirkungen erforschen. Basal-perzeptiv wäre Wahrnehmung mit dem eigenen Körper (z. B. mit Handführung ein Gerät anschalten), anschaulich das Erschließen über Bilder/Modelle, abstrakt-begrifflich die Auseinandersetzung über Sprache und Gedanken.",
       "quelle": "notizen-s35",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-4",
@@ -136,7 +148,11 @@
       ],
       "erklaerung": "Die Ebenen: basal-perzeptiv (über Wahrnehmung und Bewegung des eigenen Körpers), konkret-gegenständlich (handelnd), anschaulich (über Bilder, Fotos, Modelle) und abstrakt-begrifflich (über Sprache und Gedanken, ohne direkte Anschauung).",
       "quelle": "notizen-s35",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-5",
@@ -167,7 +183,11 @@
       ],
       "erklaerung": "Äußere Differenzierung versucht, weitestgehend homogene Lerngruppen zu bilden und über längere Zeit aufrechtzuerhalten (Schulform, Schulprofil, Jahrgangsklasse). Innere Differenzierung reagiert zeitlich flexibel auf die Heterogenität innerhalb der Lerngruppe.",
       "quelle": "notizen-s35",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-6",
@@ -198,7 +218,11 @@
       ],
       "erklaerung": "Quantitative Differenzierung passt die Menge an (weniger Aufgaben), qualitative Differenzierung den Schwierigkeitsgrad. Wichtig laut Vorlesung: Komplexität so anpassen, dass auch die begabten Schüler:innen in ihrer Leistung gefördert werden.",
       "quelle": "notizen-s36",
-      "quelleSicherheit": "unsicher"
+      "quelleSicherheit": "unsicher",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-7",
@@ -229,7 +253,11 @@
       ],
       "erklaerung": "Handlungsorientierter Unterricht ist ein ganzheitlicher und schüleraktiver Unterricht, in dem die zwischen Lehrer und Schülern vereinbarten Handlungsprodukte die Gestaltung des Unterrichtsprozesses leiten, sodass Kopf- und Handarbeit in ein ausgewogenes Verhältnis gebracht werden (Jank & Meyer 2014, 315). Merkmale: subjektive Interessen als Ausgangspunkt, selbsttätiges Handeln, solidarisches Handeln, Produktorientierung.",
       "quelle": "notizen-s37",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-8",
@@ -260,7 +288,11 @@
       ],
       "erklaerung": "Die Bestandteile des Handelns: 1. Handlungsorientierung (Handlungsmöglichkeiten wahrnehmen, abwägen), 2. Handlungsplanung (vorausschauendes Denken), 3. Handlungsausführung (Zielverfolgung im Auge behalten) und 4. Handlungskontrolle (Vergleich zwischen Ziel, Umsetzung, Ergebnis).",
       "quelle": "notizen-s38",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-9",
@@ -291,7 +323,11 @@
       ],
       "erklaerung": "Nach Fröhlich/Haupt stehen 7 Entwicklungsbereiche (u. a. Wahrnehmung, Kognition, Bewegung, Körpererfahrung, Gefühle, Sozialerfahrung, Kommunikation) in permanenter Wechselwirkung zueinander - ohne hierarchische Ordnung. Ganzheitlichkeit ist charakterisiert durch Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit (Fröhlich 2008, 182). Stichwort: Lernen mit Kopf, Herz und Hand (Pestalozzi), Vielkanallernen (Vester).",
       "quelle": "notizen-s41",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-10",
@@ -322,7 +358,11 @@
       ],
       "erklaerung": "Strukturierung wirkt über: 1. Verdeutlichung von Abläufen, 2. Verhalten steuern und Konsequenzen vorhersehbar machen, 3. Zeit (z. B. Time-Timer) und 4. Räume. Struktur und Rhythmus geben Schüler:innen die notwendige Sicherheit, um sich der Umwelt zu öffnen.",
       "quelle": "notizen-s42",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-mc-11",
@@ -353,7 +393,11 @@
       ],
       "erklaerung": "Elementarisierung fragt nach dem Elementaren im Bildungsprozess und verschränkt Lerninhalt und Lernsubjekt. Sie ist sowohl fachdidaktisches Prinzip (Wachsmuth & Stöppler) als auch didaktisches Vorgehen bei der Unterrichtsplanung (Terfloth & Bauersfeld 2024) - u. a. mit didaktischer Reduktion (Stoffreduktion, Inhalts- und Komplexitätsreduktion).",
       "quelle": "notizen-s36",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-1",
@@ -385,7 +429,11 @@
       "erklaerung": "Zusammenhänge erschließen, indem man sich ein Bild davon macht (Fotos, Abbildungen, Modelle), ohne dass der konkret handelnde Vollzug noch nötig ist - das ist die anschauliche Ebene. Konkret-gegenständlich ist der naheliegende Decoy, weil es um ein Gerät geht; die Ebene würde aber erst greifen, wenn die Schüler:innen die Maschine selbst handelnd bedienen. (Notizen S. 35)",
       "quelle": "notizen-s35",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-2",
@@ -417,7 +465,11 @@
       "erklaerung": "Hier läuft die Auseinandersetzung über Wahrnehmung und Bewegung des eigenen Körpers - Fühlen, Sehen, Hören mit Handführung. Genau das beschreibt die basal-perzeptive Ebene, das Folienbeispiel ist das An- und Ausschalten eines elektrischen Geräts mit Handführung. Konkret-gegenständlich als Decoy meint dagegen das eigenständig handelnde Nutzen von Gegenständen und Entdecken von Wirkungen. (Notizen S. 35)",
       "quelle": "notizen-s35",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-3",
@@ -449,7 +501,11 @@
       "erklaerung": "Differenzierte und geöffnete Unterrichtsformen bedürfen einer Einführung und Sicherung; Transparenz des Unterrichtsablaufs wirkt Überforderung entgegen. Der Decoy mit dem generellen Absenken der Komplexität widerspricht Roses Vorlesungsnotiz, die Komplexität so anzupassen, dass auch die begabten Schüler:innen gefördert werden - und jede Klasse ist laut Vorlesung eine heterogene Lerngruppe. (Notizen S. 36)",
       "quelle": "notizen-s36",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-4",
@@ -481,7 +537,11 @@
       "erklaerung": "Das sach- und schülergemäße Vereinfachen des Unterrichtsgegenstands aus sachorientiertem Blickwinkel sind die elementaren Strukturen. Der Decoy elementare Aneignungswege klingt ähnlich, meint aber das Gestalten sach- und schülergerechter Lernwege aus methodisch-medialem Blickwinkel; elementare Zugänge sind entwicklungspsychologisch, elementare Erfahrungen anthropologisch gedacht. (Notizen S. 36)",
       "quelle": "notizen-s36",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-5",
@@ -513,7 +573,11 @@
       "erklaerung": "Zur didaktischen Reduktion gehören Stoffreduktion, Inhalts- und Komplexitätsreduktion sowie das Reduzieren als Lernhandlung. Der Decoy quantitative/qualitative Differenzierung gehört zum Prinzip Differenzierung (Menge bzw. Schwierigkeitsgrad anpassen), die dritte Option stammt aus dem Unterrichtsplanungsraster von Terfloth und Bauersfeld, die vierte aus der Ganzheitlichkeit nach Fröhlich. (Notizen S. 37)",
       "quelle": "notizen-s37",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": true
     },
     {
       "id": "pr-gen-mc-6",
@@ -545,7 +609,11 @@
       "erklaerung": "Gelingt die Ausführung schon, aber noch nicht sachgerecht, sind Beobachtung und Korrektur dran, damit die Fertigkeiten zur Routine werden. Der Decoy Mithilfe gehört eine Stufe früher hin: Er greift, wenn eine Person erst Ansätze zur selbstständigen Ausführung zeigt. (Notizen S. 40)",
       "quelle": "notizen-s40",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-7",
@@ -577,7 +645,11 @@
       "erklaerung": "Die Tätigkeit wird ausgeführt, aber noch nicht in den Lebenszusammenhang eingeordnet - dann braucht es laut Tabelle Begründung (Erklärungen) und/oder Aufforderung, um das Ausüben in Eigenregie zu ermöglichen. Der Decoy Begleitung ist die letzte Stufe und käme erst infrage, wenn die Schülerin die Handlung selbstständig und im richtigen Zusammenhang zeigt. (Notizen S. 40)",
       "quelle": "notizen-s40",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-8",
@@ -609,7 +681,11 @@
       "erklaerung": "Fröhlich charakterisiert Ganzheitlichkeit durch Gleichzeitigkeit, Gleichwirklichkeit und Gleichgewichtigkeit. Kopf, Herz und Hand ist der Pestalozzi-Decoy: Die Formel gehört auch zur Ganzheitlichkeit, ist aber das Lernprinzip, nicht Fröhlichs Charakterisierung. Wahrnehmung, Kognition und Bewegung sind drei der sieben Entwicklungsbereiche nach Fröhlich/Haupt. (Notizen S. 41)",
       "quelle": "notizen-s41",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": true
     },
     {
       "id": "pr-gen-mc-9",
@@ -641,7 +717,11 @@
       "erklaerung": "Die Stunde spricht viele Sinne an - Tasten, Bewegung, Hören, Sehen - und ist in der Vorlesung das Beispiel für Ganzheitlichkeit im Sinne des Vielkanallernens. Der Decoy kleine Schritte liegt nahe, weil die Stunde gestuft aufgebaut ist; der Kern des Beispiels ist aber die Einbeziehung mehrerer Sinneskanäle. (Notizen S. 41)",
       "quelle": "notizen-s41",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-mc-10",
@@ -673,7 +753,11 @@
       "erklaerung": "Ohne Entsprechung im RLP bleiben laut Abgleich-Tabelle Elementarisierung, Strukturierung, kleine Schritte und/oder Sinnzusammenhang, Anschaulichkeit und adaptives Lernen. Ganzheitlichkeit ist der Decoy mit wörtlicher Eins-zu-eins-Entsprechung; Handlungsorientierung entspricht dem handlungs- und situationsbezogenen Lernen, Lebenspraxis und Lebensnähe der lebensweltlichen und lebenspraktischen Orientierung. Umgekehrt steht kooperatives Lernen nur auf der RLP-Seite. (Notizen S. 42)",
       "quelle": "notizen-s42",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke1"
+      ],
+      "core": true
     },
     {
       "id": "pr-fol-mc-1",
@@ -705,7 +789,11 @@
       "erklaerung": "Prinzipien sind Orientierungen, keine Verfahren - sie sagen, woran man sich hält, nicht, was man konkret tut. Die drei Decoys sind genau die Ebenen, die in der Rangfolge unter den Prinzipien liegen: Methoden, Techniken und Sozialformen; das Lernziel wiederum ist eine ganz andere Kategorie. (Folie 3, vgl. Weber 2008, 263 ff.)",
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": true
     },
     {
       "id": "pr-fol-mc-2",
@@ -737,7 +825,11 @@
       "erklaerung": "Das Schaubild läuft vom Allgemeinen zum Konkreten: Die Prinzipien stehen ganz oben und geben Orientierung, darunter folgen Methoden, Techniken, Sozialformen und zuletzt Medien. Die Decoys tauschen jeweils zwei Ebenen oder drehen die Richtung um - wenn du dir merkst, dass die Prinzipien den Rahmen setzen und die Medien das letzte, konkreteste Glied sind, fällt die Antwort leicht. (Folie 3, vgl. Weber 2008, 263 ff.)",
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": false
     },
     {
       "id": "pr-fol-mc-3",
@@ -769,7 +861,11 @@
       "erklaerung": "Die Folie räumt die fehlende durchgängige Fundierung ausdrücklich ein und hält trotzdem an der großen Relevanz für die Praxis fest. Der Decoy mit dem Rahmenlehrplan ist besonders reizvoll, weil die Prinzipien dort tatsächlich als Qualitätsmerkmale wiederkehren - das macht sie aber nicht zu verbindlichen Standards. (Folie 3, vgl. Arndt 2020, 340)",
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": false
     },
     {
       "id": "pr-fol-mc-4",
@@ -801,7 +897,11 @@
       "erklaerung": "Neben der Feststellung, dass verschiedene Fachdidaktiken und Vertreter:innen unterschiedliche Prinzipien für bedeutsam halten, unterscheidet die Folie fachspezifische und fächerübergreifende Prinzipien. Die beiden ersten Decoys sind echte Begriffspaare, gehören aber zur Differenzierung: quantitativ und qualitativ, innere und äußere Differenzierung. (Folie 3, vgl. Weber 2008, 263 ff.)",
       "quelle": "folie-prinzipien-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": true
     },
     {
       "id": "pr-fol-mc-5",
@@ -833,7 +933,9 @@
       "erklaerung": "Die Abgleichtabelle ordnet der Handlungsorientierung das handlungs- und situationsbezogene Lernen zu. Die Decoys stehen alle wirklich in derselben Tabelle, aber in anderen Zeilen: Selbstständigkeit und Eigenverantwortung neben dem Anstoß zur Eigenaktivität, Fehler als Lernchance neben der Ermöglichung von Erfahrungen, und für das kooperative Lernen gibt es auf der linken Seite gar kein Gegenstück. Der Titel der Folie ist der eigentliche Punkt: Die Prinzipien geben auch im Rahmenlehrplan die Orientierung. (Folie 33)",
       "quelle": "folie-prinzipien-33",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     }
   ],
   "frei": [
@@ -950,7 +1052,11 @@
           "Eines stupst zum Selbermachen an, eines schafft Gelegenheiten",
           "Beide kehren im Rahmenlehrplan wieder (Folie 33)"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke1"
+      ],
+      "core": true
     },
     {
       "id": "pr-f-2",
@@ -1055,7 +1161,11 @@
           "Alltagsgerät, in Einzelschritte zerlegt",
           "Zweites Beispiel: es geht um Wäsche"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-f-3",
@@ -1121,7 +1231,11 @@
           "Unsichtbares sprachlich fassen - Merkbild Kochvorgänge",
           "Ganz ohne Anschauung, rein gedanklich"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-f-4",
@@ -1234,7 +1348,11 @@
           "Womit vergleicht man am Ende das Ergebnis?",
           "Zwei der vier Bestandteile des Handelns setzen ein Ziel voraus - welche?"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-f-1",
@@ -1340,7 +1458,11 @@
           "Kürzen auf drei Ebenen",
           "Was folgt im Kreislauf nach der vereinfachten Aussage?"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-f-2",
@@ -1431,7 +1553,11 @@
           "Wovon hängt die Wahl der Stufe ab?",
           "Roter Faden: je mehr selbst geht, desto weniger Unterstützung"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-gen-f-3",
@@ -1530,7 +1656,11 @@
           "Schlussgedanke: alles greift in einem einzigen Tun",
           "Wertung mit Begründung, kein bloßes Aufzählen"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-fol-f-1",
@@ -1664,7 +1794,11 @@
           "Was steht ganz oben, was ganz unten?",
           "Vom Grundsatz über Verfahren und Handgriff bis zum Material"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke2"
+      ],
+      "core": true
     },
     {
       "id": "pr-afb1-1",
@@ -1730,7 +1864,11 @@
           "Ohne Anschauung, rein auf gedanklichem Weg",
           "Merkbild: das Garverfahren, das niemand sehen kann"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": true
     },
     {
       "id": "pr-afb1-2",
@@ -1796,7 +1934,11 @@
           "Vierter Teil: prüfen, was herausgekommen ist",
           "Die Schleife schließt sich am Ende"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": true
     },
     {
       "id": "pr-afb1-3",
@@ -1869,7 +2011,11 @@
           "Merkposten fünf: das Ergebnis leitet den Prozess",
           "Merkbild: die Plakate an der Wäscheleine"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-4",
@@ -1942,7 +2088,11 @@
           "Lernwege gestalten, sach- und schülergerecht",
           "Die Straße, auf der das Wissen ankommt"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-5",
@@ -2024,7 +2174,11 @@
           "Wachsein, Spüren, Kontakt - die Ebene noch vor dem Denken",
           "Zusatz: was zählt, wenn Sprache und Planung nicht tragen"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-6",
@@ -2120,7 +2274,11 @@
           "Zusatz: Material, Neigung, Aufgaben für zu Hause, zwei Lehrkräfte",
           "Es geht weiter mit dem, was hinzukommt statt am Kind liegt"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-7",
@@ -2227,7 +2385,11 @@
           "Zusatz: was fühlt, was verbindet, was sich mitteilt",
           "Es fehlen noch drei der sieben Blüten"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-8",
@@ -2293,7 +2455,11 @@
           "Merkbild: das Schild an der Tür, das Bällebad-Symbol",
           "Der vierte Quadrant ist das, was einen umgibt"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb1-9",
@@ -2359,7 +2525,11 @@
           "Der vierte Pfeil ist das Ziel des Prinzips",
           "Der Plan wird selbst in die Tat gebracht"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb3-1",
@@ -2473,7 +2643,11 @@
           "Zwei Pole in Balance - welche beiden?",
           "Nicht wenig oder viel, sondern richtig dosiert"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb3-2",
@@ -2593,7 +2767,11 @@
           "Wohin wandert der Ansatzpunkt in deinem Schluss?",
           "Nicht ja oder nein, sondern verschoben - wohin?"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb2-1",
@@ -2689,7 +2867,11 @@
           "Zwei Kriterien stehen schon im Titel des Beispiels",
           "Menge und Anspruch als Überschrift gedacht"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     },
     {
       "id": "pr-afb3-4",
@@ -2817,7 +2999,11 @@
           "Vielleicht trägt die eine Hälfte und die andere nicht - welche?",
           "Woran hängt dein Ja oder Nein? An dem Maßstab vom Anfang"
         ]
-      ]
+      ],
+      "ke": [
+        "prinzipien-ke3"
+      ],
+      "core": false
     }
   ]
 }

@@ -41,7 +41,12 @@
       ],
       "erklaerung": "Die Funktionsfähigkeit wie auch die Behinderung eines Menschen wird in der ICF als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren dargestellt (vgl. Terfloth & Bauersfeld 2015, 34 f.). Weder rein medizinisch noch rein gesellschaftlich - das ist das biopsychosoziale Modell.",
       "quelle": "notizen-s51",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "ko-mc-2",
@@ -72,7 +77,12 @@
       ],
       "erklaerung": "Das ICF-Modell verbindet das Gesundheitsproblem mit Körperfunktionen und -strukturen, Aktivitäten und Partizipation (Teilhabe) sowie den Kontextfaktoren: Umweltfaktoren und personenbezogene Faktoren.",
       "quelle": "notizen-s51",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "ko-mc-3",
@@ -103,7 +113,12 @@
       ],
       "erklaerung": "Die Sichtweise der ICF prägt sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung: Potentielle Barrieren für Aktivität und Partizipation können differenziert erfasst werden, und über Unterrichtsumfeld, Hilfsmittel und personelle Hilfe wird größtmögliche Aktivität und Partizipation angestrebt. Für Kinder und Jugendliche gibt es die ICF-CY.",
       "quelle": "notizen-s51",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": false
     },
     {
       "id": "ko-mc-4",
@@ -134,7 +149,11 @@
       ],
       "erklaerung": "Die defizitäre/reduktionistische Konzeption zielte auf Brauchbarmachung und den Nutzen für die Allgemeinheit - mit Sinnes- und Funktionsschulung als Inhalten und Gesamtunterricht als Methode. Autonomie, Sinnstiftung und Selbstbestimmung sind Ziele der späteren Konzeptionen.",
       "quelle": "notizen-s52",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-mc-5",
@@ -165,7 +184,11 @@
       ],
       "erklaerung": "Die kompetenz-/entwicklungsorientierte Konzeption zielt auf Autonomie, arbeitet mit allgemeinen Bildungsinhalten und setzt auf handlungsorientierten Unterricht. Selbstständigkeit ohne Selbstbestimmung war das Ziel der defizitorientierten Konzeption.",
       "quelle": "notizen-s52",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-mc-6",
@@ -196,7 +219,12 @@
       ],
       "erklaerung": "Feusers entwicklungslogische Didaktik zielt auf Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, arbeitet mit allgemeinen Bildungsinhalten und offenem Unterricht. Sein Leitsatz: Egal, wie ein Kind beschaffen ist, es hat das Recht, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt (Feuser 1999).",
       "quelle": "notizen-s52",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-mc-7",
@@ -227,7 +255,12 @@
       ],
       "erklaerung": "Feuser verschränkt Sachstrukturanalyse (Objektseite: der Inhalt), Tätigkeitsstrukturanalyse (Subjektseite: Entwicklung, u. a. Zone der aktuellen und der nächsten Entwicklung) und Handlungsstrukturanalyse. Pitsch erweitert das später zu einer vierdimensionalen Didaktik (1999).",
       "quelle": "notizen-s53",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-mc-8",
@@ -258,7 +291,12 @@
       ],
       "erklaerung": "Kategoriale Bildung verbindet objektive Welt (kulturelle Zeugnisse kennen) und subjektive Welt (eigene Fähigkeiten entfalten) im Doppelsinn: Wirklichkeit erschließt sich dem Menschen, und der Mensch wird für die Wirklichkeit erschlossen. Einseitig wäre bildungstheoretischer Enzyklopädismus bzw. Formalismus.",
       "quelle": "notizen-s52",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-mc-9",
@@ -289,7 +327,12 @@
       ],
       "erklaerung": "Klafkis Schlüsselprobleme: Friedensfrage, Problematik des Nationalitätsprinzips, Umweltfrage, wachsende Weltbevölkerung, gesellschaftlich bedingte Ungleichheit, Verhältnis Industrie-/Entwicklungsländer, Gefahren und Möglichkeiten neuer Technologien, menschliche Sexualität und Geschlechterbeziehung.",
       "quelle": "notizen-s52",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-1",
@@ -321,7 +364,11 @@
       "erklaerung": "Die subjekt- und bedarfsorientierte Konzeption mit dem Ziel der persönlichen Sinnstiftung gehört zu Fischer. Feuser ist der naheliegende Verwechsler - er steht aber für die entwicklungslogische Konzeption, die direkt davor kommt. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-gen-mc-2",
@@ -353,7 +400,11 @@
       "erklaerung": "Bach steht mit Moor, Vetter, Bernart und anderen in der Spalte der defizitorientierten Konzeption. Der Decoy ist die defizitäre/reduktionistische Konzeption - die klingt fast gleich, gehört aber zu Saegert und Fuchs. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-gen-mc-3",
@@ -385,7 +436,11 @@
       "erklaerung": "Gesamtunterricht ist die Methode der beiden frühen Konzeptionen. Danach wandelt sich die Methodik: erst zum handlungsorientierten Unterricht (kompetenz-/entwicklungsorientiert), dann zum offenen Unterricht (entwicklungslogisch, subjekt- und bedarfsorientiert). Die beiden späten Konzeptionen sind der Decoy - sie teilen sich zwar auch eine Methode, aber eben den offenen Unterricht. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-4",
@@ -417,7 +472,11 @@
       "erklaerung": "Der Wechsel zu allgemeinen Bildungsinhalten passiert bei der kompetenz- und entwicklungsorientierten Konzeption. Feuser und Fischer arbeiten zwar auch mit allgemeinen Bildungsinhalten - der Umbruch liegt aber schon eine Konzeption früher. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-5",
@@ -449,7 +508,11 @@
       "erklaerung": "Selbstständigkeit ohne Selbstbestimmung ist das Zielprofil der defizitorientierten Konzeption - daneben Selbsterkenntnis und Selbstverwirklichung in sozialer Integration. Bei Feuser ist Selbstbestimmung dagegen ausdrücklich das Ziel, das ist der Kontrast zum Merken. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-6",
@@ -481,7 +544,12 @@
       "erklaerung": "Die einseitige Betonung der objektiven Welt (Kulturgüter kennen) ist der bildungstheoretische Enzyklopädismus. Der Formalismus ist die spiegelbildliche Einseitigkeit auf der subjektiven Seite (nur die eigenen Fähigkeiten entfalten) - genau diese beiden werden gern vertauscht. (Notizen S. 52)",
       "quelle": "notizen-s52",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-7",
@@ -513,7 +581,12 @@
       "erklaerung": "Die ICF-CY ist die Version der ICF speziell für Kinder und Jugendliche von der Geburt bis zu 18 Jahren (WHO 2013). Das CY steht für Children and Youth - die Spanne beginnt also schon bei der Geburt, nicht erst mit der Schulzeit. (Notizen S. 51)",
       "quelle": "notizen-s51",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "ko-gen-mc-8",
@@ -545,7 +618,12 @@
       "erklaerung": "Pitschs Schema umfasst Steuerungsform, Objektseite, Subjektseite und Handlungsstruktur - Objekt- und Subjektseite sowie Handlungsstruktur gibt es sinngemäß schon bei Feuser, neu ist die Steuerungsform: Sie führt von interindividueller (Fremd-)Steuerung zu intraindividueller (Selbst-)Steuerung, mit Stufen von vollständiger körperlicher Hilfe bis ohne Hilfsmittel. Die Distraktoren sind also alle Teil beider Modelle. Suchen bringt hier wenig: Das Wort steht in keinem Satz, sondern nur als oberste Zeile im Pitsch-Schaubild - auf der Folie deutlich besser zu lesen als im Notizen-Scan. (Folie 17, Notizen S. 55)",
       "quelle": "folie-konzeptionen-17",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-mc-9",
@@ -577,7 +655,11 @@
       "erklaerung": "Die drei Säulen des RLP sind die individuellen Bedürfnisse und Voraussetzungen der Lernenden, die für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfelder sowie die Inhalte und Kompetenzen der Fachdidaktiken. Die Distraktoren stammen aus Nachbarthemen: Entwicklungsbereiche, Konzeptionstabelle und Feuser. (Notizen S. 56)",
       "quelle": "notizen-s56",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "ko-gen-mc-10",
@@ -609,7 +691,11 @@
       "erklaerung": "Wirtschaft-Arbeit-Technik steht in der Fachdidaktik-Säule, zusammen mit Kommunikation/Deutsch, Sachunterricht, Mathematik, Musik, Kunst und Sport. Die drei anderen Optionen sind Leitthemen aus der Reihe L1 bis L6. Der Decoy ist 'Der Mensch und die Arbeit' - inhaltlich dicht an Wirtschaft-Arbeit-Technik, im Rahmenlehrplan aber auf der anderen Säule. (Notizen S. 56)",
       "quelle": "notizen-s56",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "ko-fol-mc-1",
@@ -641,7 +727,9 @@
       "erklaerung": "Die Frage, was überhaupt als Bildungsinhalt zählt, ist genau das vierte Spannungsfeld. Die drei Decoys sind die anderen drei Spannungsfelder derselben Folie - sie klingen alle plausibel, betreffen aber den Behinderungsbegriff, die Geschichte der Disziplin und das Verhältnis zur allgemeinen Didaktik. (Folie 3, Terfloth & Bauersfeld 2015, 33)",
       "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "ko-fol-mc-2",
@@ -673,7 +761,9 @@
       "erklaerung": "Das zweite Spannungsfeld beschreibt die historische und aktuelle Ausgestaltung des Förderschwerpunkts zwischen Bewahrung und Bildungsanspruch - also zwischen Verwahren und Fördern. Alle drei Decoys sind echte Begriffspaare aus dem Studium, nur eben aus anderen Zusammenhängen: Selbstbestimmung und Fürsorge ist ein Spannungsfeld der Freizeitbildung, Inklusion und Exklusion ein allgemeines Begriffspaar, und Förderschule gegenüber allgemeiner Schule ist die Ausblick-Frage der ersten Vorlesung. (Folie 3, Terfloth & Bauersfeld 2015, 33)",
       "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "ko-fol-mc-3",
@@ -705,7 +795,9 @@
       "erklaerung": "Die ICF verbindet das Gesundheitsproblem mit Aktivitäten, Partizipation sowie Umwelt- und personenbezogenen Faktoren - sie hält also medizinische und soziale Aspekte zusammen, statt sich für eine Seite zu entscheiden. Damit liegt sie genau auf dem ersten Spannungsfeld. Die anderen drei Optionen sind die übrigen Spannungsfelder; sie werden von der ICF nicht direkt bearbeitet. (Folie 3 mit Folien 4 und 7)",
       "quelle": "folie-konzeptionen-3",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "ko-fol-mc-4",
@@ -737,7 +829,12 @@
       "erklaerung": "Monokausal heißt eine Ursache, eindimensional eine Betrachtungsebene - die Abkehr davon führt zur Beschreibung von Funktionsfähigkeit und Behinderung als dynamischer Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Der erste Decoy überdreht das in ein rein soziales Modell; das wäre wieder eindimensional, nur mit umgekehrtem Vorzeichen. (Folie 7, vgl. Terfloth & Bauersfeld 2015, 34 f.)",
       "quelle": "folie-konzeptionen-7",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": false
     }
   ],
   "frei": [
@@ -832,7 +929,11 @@
           "Auch diese Zeile ist eine gültige der drei Nennungen"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-f-2",
@@ -938,7 +1039,11 @@
           "Mach den Wandel an zwei Namen fest, statt ihn nur zu behaupten"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-f-3",
@@ -1059,7 +1164,11 @@
           "Das Spannungsfeld Verwahren oder Bilden hilft dir hier weiter"
         ]
       ],
-      "original": true
+      "original": true,
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-f-4",
@@ -1157,7 +1266,12 @@
           "Was tut die Schule damit? Erfassen, dann drei Unterstützungswege",
           "Vom Modell zur Praxis: Womit wird Teilhabe konkret ermöglicht?"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "ko-gen-f-1",
@@ -1252,7 +1366,11 @@
           "Merk dir die Bewegung: erst alle gemeinsam, dann das Tun, dann frei",
           "Fünf Zeilen, aber nur drei Unterrichtsformen - wie ist ihre Reihenfolge?"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-f-2",
@@ -1344,7 +1462,12 @@
           "Warum braucht es beide Hälften zugleich?",
           "Fazit: keine Seite darf allein regieren"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-gen-f-3",
@@ -1465,7 +1588,12 @@
           "Alltag oder Fach - wovon geht Zeit ab, wenn alles für alle gelten soll?",
           "Was passiert mit dem, was ein Kind für sein eigenes Leben dringend braucht?"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-fol-f-1",
@@ -1628,7 +1756,9 @@
           "Keine einmalige Festlegung, sondern etwas, das an jedem Kind neu austariert wird",
           "Wäge ab: entschieden ja - aber von wem, für wen und wie dauerhaft?"
         ]
-      ]
+      ],
+      "ke": [],
+      "core": false
     },
     {
       "id": "ko-afb1-1",
@@ -1703,7 +1833,12 @@
           "Nicht die Umgebung, sondern was der Mensch selbst mitbringt.",
           "Der zweite Kasten der unteren Ebene."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": true
     },
     {
       "id": "ko-afb1-2",
@@ -1792,7 +1927,12 @@
           "Die zwei, die man leicht vergisst - Völker und Nord-Süd.",
           "Eines fragt nach Staaten, eines nach reichen und armen Ländern."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-afb1-3",
@@ -1868,7 +2008,12 @@
           "Der Mann mit dem Satz vom Recht auf die ganze Welt.",
           "In dieser Tabellenzeile steht nur ein einziger Name."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": true
     },
     {
       "id": "ko-afb1-4",
@@ -1949,7 +2094,12 @@
           "Das Ziel ganz oben, Gegenstück zum Ausgangspunkt.",
           "Was nach dem Lernen dazugekommen ist."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb1-5",
@@ -2044,7 +2194,12 @@
           "Erst noch hörbar zu sich selbst, dann nur noch gedacht.",
           "Die beiden obersten Schritte, ganz am Ende der Reihe."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb1-6",
@@ -2132,7 +2287,12 @@
           "Oben viele Zweige, für jedes Kind einer.",
           "Was sich unterscheidet, obwohl der Rest derselbe bleibt."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb1-7",
@@ -2207,7 +2367,11 @@
           "Der Kreis, der von den Schulfächern her denkt.",
           "Deutsch, Mathe, Sport - woher kommen deren Inhalte?"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "ko-afb1-8",
@@ -2281,7 +2445,11 @@
           "Nummer L6, das letzte der sechs - draußen, jenseits von Haus und Stadt.",
           "Zwei Wörter am Schluss: das Gewachsene und alles ringsum."
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke5"
+      ],
+      "core": true
     },
     {
       "id": "ko-afb2-1",
@@ -2380,7 +2548,11 @@
           "Mach es anschaulich - ein Thema und passende Fächer dazu",
           "Ein Beispiel bindet die drei Kreise sichtbar zusammen"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke5"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb2-2",
@@ -2479,7 +2651,12 @@
           "Was macht die Lehrkraft praktisch mit dieser Leiter?",
           "Nicht alles oder nichts, sondern in kleinen Schritten weniger"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb3-1",
@@ -2593,7 +2770,12 @@
           "Ein Fazit, das keine der beiden Seiten einfach streicht",
           "Wie stehst du dazu, und womit begründest du das?"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "core": false
     },
     {
       "id": "ko-afb3-2",
@@ -2707,7 +2889,12 @@
           "Fazit ziehen - Reichweite und Grenze benennen",
           "Position beziehen, statt beide Seiten stehen zu lassen"
         ]
-      ]
+      ],
+      "ke": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "core": false
     }
   ]
 }

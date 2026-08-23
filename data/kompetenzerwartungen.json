@@ -1,0 +1,542 @@
+{
+  "version": 1,
+  "hinweis": "Die Kompetenzerwartungen der acht Vorlesungen - was Rose nach jeder Sitzung koennen soll. Folie 11 sagt ausdruecklich, sie soll sich daran orientieren. afbQuelle sagt, WOHER die Stufe kommt: 'folie' heisst, die Dozentin hat sie selbst danebengeschrieben (nur im Thema freizeit); 'abgeleitet' heisst, wir haben sie aus dem Operator geschlossen - das ist eine LESART, keine Ansage. Wichtig und am 23.08. nachgemessen: der Operator einer Kompetenzerwartung sagt NICHT verlaesslich voraus, mit welchem Operator eine Klausuraufgabe zum selben Inhalt gestellt wird (Mobilitaet listet benennen/erlaeutern/analysieren/formulieren, die echten Aufgaben benutzen vergleichen, diskutieren und zuordnen). Als INHALTS-Landkarte tragfaehig, als Stufen-Vorhersage nicht. Die Zuordnung Unterthema -> Kompetenzerwartung steht in `zuordnung`; sie ist eine BEURTEILUNG (Stand 23.08.2026) und keine Ansage der Dozentin - wer sie aendert, aendert, was die App als Prioritaet zieht. Unterthemen mit leerer Liste deckt KEINE Kompetenzerwartung ab.",
+  "eintraege": [
+    {
+      "thema": "entwicklungsbereiche",
+      "folie": 3,
+      "text": "nennen maßgebliche Entwicklungsbereiche im sonderpädagogischen Schwerpunkt Geistige Entwicklung (SGE)",
+      "operatoren": [
+        "nennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "entwicklungsbereiche-ke1"
+    },
+    {
+      "thema": "entwicklungsbereiche",
+      "folie": 3,
+      "text": "erklären, um was es sich bei den Entwicklungsbereichen handelt und erörtern deren Relevanz für die Lernenden",
+      "operatoren": [
+        "erklären",
+        "erörtern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "entwicklungsbereiche-ke2"
+    },
+    {
+      "thema": "entwicklungsbereiche",
+      "folie": 3,
+      "text": "kennen idealtypische Wege der Unterstützung und Förderung in den Entwicklungsbereichen im Unterricht,",
+      "operatoren": [
+        "kennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "entwicklungsbereiche-ke3"
+    },
+    {
+      "thema": "entwicklungsbereiche",
+      "folie": 3,
+      "text": "nennen eigene Ideen zur unterrichtlichen Entwicklungsförderung anhand von Fallbeschreibungen.",
+      "operatoren": [
+        "nennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "entwicklungsbereiche-ke4"
+    },
+    {
+      "thema": "freizeit",
+      "folie": 2,
+      "text": "zentrale Begriffe und Konzepte der Freizeitbildung unter Verwendung der Fachsprache beschreiben.",
+      "operatoren": [
+        "beschreiben"
+      ],
+      "afb": "I",
+      "afbQuelle": "folie",
+      "id": "freizeit-ke1"
+    },
+    {
+      "thema": "freizeit",
+      "folie": 2,
+      "text": "Teilhaberisiken von Menschen mit Behinderung sowie Barrieren im Freizeitbereich benennen.",
+      "operatoren": [
+        "benennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "folie",
+      "id": "freizeit-ke2"
+    },
+    {
+      "thema": "freizeit",
+      "folie": 2,
+      "text": "die Bedeutung von Freizeit als Bildungsauftrag erläutern und auf schulische Kontexte übertragen.",
+      "operatoren": [
+        "erläutern",
+        "übertragen"
+      ],
+      "afb": "II",
+      "afbQuelle": "folie",
+      "id": "freizeit-ke3"
+    },
+    {
+      "thema": "freizeit",
+      "folie": 2,
+      "text": "praktische Konzepte zur Förderung selbstbestimmter Freizeitgestaltung in Schule und Unterricht entwickeln.",
+      "operatoren": [
+        "entwickeln"
+      ],
+      "afb": "III",
+      "afbQuelle": "folie",
+      "id": "freizeit-ke4"
+    },
+    {
+      "thema": "freizeit",
+      "folie": 2,
+      "text": "Spannungsfelder der Freizeitbildung beurteilen und daraus pädagogische Handlungsoptionen ableiten.",
+      "operatoren": [
+        "beurteilen",
+        "ableiten"
+      ],
+      "afb": "III",
+      "afbQuelle": "folie",
+      "id": "freizeit-ke5"
+    },
+    {
+      "thema": "grundlagen",
+      "folie": 11,
+      "text": "kennen aktuelle Literatur und Recherche- und Informationsmöglichkeiten zur Didaktik und Methodik im Förderschwerpunkt Geistige Entwicklung",
+      "operatoren": [
+        "kennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "grundlagen-ke1"
+    },
+    {
+      "thema": "grundlagen",
+      "folie": 11,
+      "text": "erläutern Ablauf, organisatorische Rahmenbedingungen und Leistungsanforderungen des Moduls.",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "grundlagen-ke2"
+    },
+    {
+      "thema": "grundlagen",
+      "folie": 11,
+      "text": "beschreiben spezifische Merkmale von Förderschulen",
+      "operatoren": [
+        "beschreiben"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "grundlagen-ke3"
+    },
+    {
+      "thema": "grundlagen",
+      "folie": 11,
+      "text": "vergleichen Beschulungsmöglichkeiten im sonderpädagogischen Schwerpunkt geistige Entwicklung",
+      "operatoren": [
+        "vergleichen"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "grundlagen-ke4"
+    },
+    {
+      "thema": "konzeptionen",
+      "folie": 2,
+      "text": "benennen die Bestandteile des ICF Modells",
+      "operatoren": [
+        "benennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "konzeptionen-ke1"
+    },
+    {
+      "thema": "konzeptionen",
+      "folie": 2,
+      "text": "erläutern die Bedeutung des Modells für die schulische Bildung",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "konzeptionen-ke2"
+    },
+    {
+      "thema": "konzeptionen",
+      "folie": 2,
+      "text": "beschreiben bekannte didaktische Ansätze",
+      "operatoren": [
+        "beschreiben"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "konzeptionen-ke3"
+    },
+    {
+      "thema": "konzeptionen",
+      "folie": 2,
+      "text": "bewerten aktuelle und historische didaktische Ansätze im SGE und ihre Implikationen in Bezug auf die Inhalts- und Methodenwahl",
+      "operatoren": [
+        "bewerten"
+      ],
+      "afb": "III",
+      "afbQuelle": "abgeleitet",
+      "id": "konzeptionen-ke4"
+    },
+    {
+      "thema": "konzeptionen",
+      "folie": 2,
+      "text": "Erläutern landesspezifische Vorgaben zur schulischen Bildung im SGE",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "konzeptionen-ke5"
+    },
+    {
+      "thema": "mobilitaet",
+      "folie": 2,
+      "text": "benennen Kompetenzen, die für eine eigenständige Mobilität benötigt werden",
+      "operatoren": [
+        "benennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "mobilitaet-ke1"
+    },
+    {
+      "thema": "mobilitaet",
+      "folie": 2,
+      "text": "erläutern den Stellenwert von Mobilität im Leben von Menschen (im SGE)",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "mobilitaet-ke2"
+    },
+    {
+      "thema": "mobilitaet",
+      "folie": 2,
+      "text": "analysieren die curricularen Vorgaben zur Mobilitäts- und Verkehrserziehung",
+      "operatoren": [
+        "analysieren"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "mobilitaet-ke3"
+    },
+    {
+      "thema": "mobilitaet",
+      "folie": 2,
+      "text": "formulieren konkrete Beispiele für Maßnahmen zur Mobilitäts- und Verkehrsbildung",
+      "operatoren": [
+        "formulieren"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "mobilitaet-ke4"
+    },
+    {
+      "thema": "prinzipien",
+      "folie": 2,
+      "text": "nennen didaktische Prinzipien im sonderpädagogischen Schwerpunkt Geistige Entwicklung (SGE)",
+      "operatoren": [
+        "nennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "prinzipien-ke1"
+    },
+    {
+      "thema": "prinzipien",
+      "folie": 2,
+      "text": "erklären, um was es sich bei didaktischen Prinzipien handelt und erörtern deren Relevanz für die Unterrichtsplanung",
+      "operatoren": [
+        "erklären",
+        "erörtern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "prinzipien-ke2"
+    },
+    {
+      "thema": "prinzipien",
+      "folie": 2,
+      "text": "erläutern die in der Vorlesung behandelten didaktischen Prinzipien",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "prinzipien-ke3"
+    },
+    {
+      "thema": "prinzipien",
+      "folie": 2,
+      "text": "analysieren Lehr-Lernsequenzen nach ihren didaktischen Prinzipien",
+      "operatoren": [
+        "analysieren"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "prinzipien-ke4"
+    },
+    {
+      "thema": "unterrichtsformen",
+      "folie": 2,
+      "text": "beschreiben wesentliche Merkmale von Unterrichtsmethoden, die offenen Unterrichtsformen und geschlossenen Unterrichtsformen zugeordnet werden",
+      "operatoren": [
+        "beschreiben"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "unterrichtsformen-ke1"
+    },
+    {
+      "thema": "unterrichtsformen",
+      "folie": 2,
+      "text": "erläutern den Zusammenhang der Unterrichtsformen, den didaktischen Prinzipien und Unterrichtsmethoden",
+      "operatoren": [
+        "erläutern"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "unterrichtsformen-ke2"
+    },
+    {
+      "thema": "unterrichtsformen",
+      "folie": 2,
+      "text": "bewerten die Potentiale der drei grundlegenden Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung",
+      "operatoren": [
+        "bewerten"
+      ],
+      "afb": "III",
+      "afbQuelle": "abgeleitet",
+      "id": "unterrichtsformen-ke3"
+    },
+    {
+      "thema": "wohnen",
+      "folie": 2,
+      "text": "beschreiben die Bedeutung von Wohnen für Menschen mit geistiger Beeinträchtigung im Kontext der geschichtlichen Entwicklung der letzten 70 Jahre.",
+      "operatoren": [
+        "beschreiben"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "wohnen-ke1"
+    },
+    {
+      "thema": "wohnen",
+      "folie": 2,
+      "text": "benennen die rechtlichen Grundlagen für die Wohnsituation von Menschen mit Behinderungen",
+      "operatoren": [
+        "benennen"
+      ],
+      "afb": "I",
+      "afbQuelle": "abgeleitet",
+      "id": "wohnen-ke2"
+    },
+    {
+      "thema": "wohnen",
+      "folie": 2,
+      "text": "vergleichen Wohnformen in Hinblick auf die Umsetzung zentraler Leitlinien der Geistigbehindertenpädagogik",
+      "operatoren": [
+        "vergleichen"
+      ],
+      "afb": "II",
+      "afbQuelle": "abgeleitet",
+      "id": "wohnen-ke3"
+    },
+    {
+      "thema": "wohnen",
+      "folie": 2,
+      "text": "erörtern zentrale Bildungsziele im Themenfeld Wohnen unter Bezugnahme curricularer Vorgaben",
+      "operatoren": [
+        "erörtern"
+      ],
+      "afb": "III",
+      "afbQuelle": "abgeleitet",
+      "id": "wohnen-ke4"
+    },
+    {
+      "thema": "wohnen",
+      "folie": 2,
+      "text": "diskutieren die Vor- und Nachteile von inklusiven Wohnkonzepten am Beispiel von „Wohnsinn\".",
+      "operatoren": [
+        "diskutieren"
+      ],
+      "afb": "III",
+      "afbQuelle": "abgeleitet",
+      "id": "wohnen-ke5"
+    }
+  ],
+  "zuordnung": {
+    "entwicklungsbereiche": {
+      "Die 4 Entwicklungsbereiche (KMK)": [
+        "entwicklungsbereiche-ke1"
+      ],
+      "Entwicklungsbereiche & lebenspraktische Kompetenzen": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "Entwicklungsbereiche in den Lehrplänen": [
+        "entwicklungsbereiche-ke2"
+      ],
+      "Entwicklungsförderung in der Schule": [
+        "entwicklungsbereiche-ke3",
+        "entwicklungsbereiche-ke4"
+      ],
+      "Dualer Unterricht": [
+        "entwicklungsbereiche-ke3"
+      ]
+    },
+    "freizeit": {
+      "Begriffsverständnis & Zeitmodell": [
+        "freizeit-ke1"
+      ],
+      "Teilhabe & Barrieren": [
+        "freizeit-ke2"
+      ],
+      "Bildungsauftrag & Recht": [
+        "freizeit-ke3"
+      ],
+      "Praktische Umsetzung": [
+        "freizeit-ke4"
+      ],
+      "Spannungsfelder": [
+        "freizeit-ke5"
+      ],
+      "Selbstbestimmung & Kompetenzmodell": [
+        "freizeit-ke4"
+      ],
+      "Freizeitbedürfnisse": [
+        "freizeit-ke1"
+      ],
+      "Freizeitteilhabe in Zahlen": []
+    },
+    "grundlagen": {
+      "Merkmale der Förderschule": [
+        "grundlagen-ke3"
+      ],
+      "Gemeinsamer Unterricht": [
+        "grundlagen-ke4"
+      ],
+      "Stufenmodell": [
+        "grundlagen-ke3"
+      ],
+      "Rahmenfrage & Qualifikationsziele": [
+        "grundlagen-ke2"
+      ]
+    },
+    "konzeptionen": {
+      "ICF-Modell": [
+        "konzeptionen-ke1",
+        "konzeptionen-ke2"
+      ],
+      "Feuser & Pitsch": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "Klafki": [
+        "konzeptionen-ke3",
+        "konzeptionen-ke4"
+      ],
+      "Wandel der Konzeptionen": [
+        "konzeptionen-ke4"
+      ],
+      "Bildungsinhalte & RLP": [
+        "konzeptionen-ke5"
+      ],
+      "Spannungsfelder der Disziplin": []
+    },
+    "mobilitaet": {
+      "Bedeutung & Mobilitätsbehinderungen": [
+        "mobilitaet-ke2"
+      ],
+      "Curriculum & Kompetenzen": [
+        "mobilitaet-ke1",
+        "mobilitaet-ke3"
+      ],
+      "Methoden der Mobilitätsförderung": [
+        "mobilitaet-ke4"
+      ],
+      "Verkehrsteilnahme konkret": [
+        "mobilitaet-ke4"
+      ],
+      "Bausteine selbstbestimmter Mobilität": [
+        "mobilitaet-ke1"
+      ],
+      "Barrierefreiheit & Rahmenbedingungen": [
+        "mobilitaet-ke2"
+      ],
+      "Alltagsmobilität in Zahlen": []
+    },
+    "prinzipien": {
+      "Was sind didaktische Prinzipien?": [
+        "prinzipien-ke2"
+      ],
+      "Überblick der Prinzipien": [
+        "prinzipien-ke1"
+      ],
+      "Handlungsorientierung": [
+        "prinzipien-ke3"
+      ],
+      "Lebensnähe & Aneignungsebenen": [
+        "prinzipien-ke3"
+      ],
+      "Ganzheitlichkeit & Strukturierung": [
+        "prinzipien-ke3"
+      ],
+      "Differenzierung": [
+        "prinzipien-ke3"
+      ],
+      "Elementarisierung": [
+        "prinzipien-ke3"
+      ],
+      "Prinzipien im Rahmenlehrplan": []
+    },
+    "unterrichtsformen": {
+      "Offener Unterricht & Dimensionen": [
+        "unterrichtsformen-ke1"
+      ],
+      "Geschlossener Unterricht & Lehrgang": [
+        "unterrichtsformen-ke1"
+      ],
+      "Methoden offenen Unterrichts": [
+        "unterrichtsformen-ke1",
+        "unterrichtsformen-ke2"
+      ],
+      "Grundformen nach Meyer": [
+        "unterrichtsformen-ke3"
+      ],
+      "Kritik & Vorteile": [
+        "unterrichtsformen-ke3"
+      ]
+    },
+    "wohnen": {
+      "Bedeutung & Geschichte": [
+        "wohnen-ke1"
+      ],
+      "Rechtliche Grundlagen": [
+        "wohnen-ke2"
+      ],
+      "Wohnformen": [
+        "wohnen-ke3",
+        "wohnen-ke5"
+      ],
+      "Wohnen als Bildungsaufgabe": [
+        "wohnen-ke4"
+      ]
+    }
+  }
+}

@@ -43,7 +43,11 @@
       ],
       "erklaerung": "Rekreation (Erholung) meint das Bedürfnis nach Erholung, Ruhe, Wohlbefinden und angenehmem Körpergefühl. Kreative Entfaltung wäre Enkulturation, Beteiligung wäre Partizipation, Weiterlernen wäre Edukation.",
       "quelle": "notizen-s01",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": true
     },
     {
       "id": "fr-mc-2",
@@ -74,7 +78,11 @@
       ],
       "erklaerung": "Kontemplation (Besinnlichkeit) = Selbsterfahrung und Selbstfindung. Ausgleich/Ablenkung/Vergnügen wäre Kompensation, Mitteilung/Geselligkeit wäre Kommunikation, Zusammensein/Gemeinschaftsbezug wäre Integration/Inklusion.",
       "quelle": "notizen-s01",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": true
     },
     {
       "id": "fr-mc-3",
@@ -105,7 +113,11 @@
       ],
       "erklaerung": "Die Frage, warum wir manche Freizeitaktivitäten als sinnvoller bewerten als andere (Sport = gute Freizeit? Fernsehen = schlechte? Darf Nichtstun Freizeit sein?), löst die Vorlesung so auf: Freizeit muss nicht produktiv sein, Freizeit ist subjektiv und bedürfnisorientiert.",
       "quelle": "notizen-s01",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-mc-4",
@@ -136,7 +148,11 @@
       ],
       "erklaerung": "Soziale Barrieren: Unsicherheiten im Umgang mit Behinderung, zu wenig Betreuungspersonal, defizitorientierte Sichtweisen. Strukturelle Barrieren: schlechte Erreichbarkeit von Angeboten, fehlende Barrierefreiheit, bauliche Hindernisse, fehlende Unterstützungssysteme. Ressourcenprobleme: fehlende Assistenz, Sicherheitsbedenken, zu wenig Betreuungspersonal.",
       "quelle": "notizen-s02",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": true
     },
     {
       "id": "fr-mc-5",
@@ -167,7 +183,11 @@
       ],
       "erklaerung": "Barrieren beim Sport: geringe Beteiligung im Vereinssport (2,4 % statt 9,6 %), nur 35 % inklusiv arbeitende Vereine, 55 % der Menschen mit Behinderung treiben keinen Sport, nur 4 % inklusive öffentliche Freizeitflächen, hoher Sanierungsbedarf (31 Mrd. Euro). Chancen: Teilhabe und Selbstbestimmung, Begegnung, Abbau von Vorurteilen, soziale Netzwerke, Stärkung von Kompetenzen und Lebensqualität.",
       "quelle": "notizen-s02",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": false
     },
     {
       "id": "fr-mc-6",
@@ -198,7 +218,11 @@
       ],
       "erklaerung": "Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.). Da Fremdbestimmung die Entwicklung erschwert (Hahn 1994), muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006).",
       "quelle": "notizen-s03",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": true
     },
     {
       "id": "fr-mc-7",
@@ -229,7 +253,11 @@
       ],
       "erklaerung": "Wissen (Kenntnisse über Freizeitmöglichkeiten, Bedeutung und Nutzen verstehen), Können (praktische Fertigkeiten erwerben, z. B. sportliche, kreative, musische, organisatorische Kompetenzen) und Wollen (Interesse und Motivation entwickeln, positive Erfahrungen sammeln, Vorlieben reflektieren).",
       "quelle": "notizen-s03",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": true
     },
     {
       "id": "fr-mc-8",
@@ -260,7 +288,11 @@
       ],
       "erklaerung": "Die prozessbezogenen Kompetenzen: PK 1 informieren und ordnen (Angebote recherchieren, Informationen sammeln, vergleichen, als Entscheidungsgrundlage ordnen), PK 2 bewerten und entscheiden (Möglichkeiten reflektieren, Vor- und Nachteile abwägen, eigene Interessen berücksichtigen, Kompromisse), PK 3 anwenden und handeln (Aktivitäten planen und umsetzen, Anreise/Kosten/Material organisieren, Hilfen gezielt nutzen). Laut Notizen wichtig für die Klausur!",
       "quelle": "notizen-s04",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-mc-9",
@@ -291,7 +323,11 @@
       ],
       "erklaerung": "Das Modell (Thümmel & Stöppler 2025, in Anlehnung an ISB 2022): zwei domänenspezifische Kompetenzbereiche - DK 1 Aneignung und Vertiefung von Planungs- und Gestaltungswissen, DK 2 Aneignung und Vertiefung von Wissen über Freizeitaktivitäten - verbunden mit den prozessbezogenen Kompetenzen PK 1-3, auf der Basis der Entwicklungsbereiche (Motorik und Wahrnehmung, Denken und Lernstrategien, Kommunikation und Sprache, Emotionen und soziales Handeln).",
       "quelle": "notizen-s04",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-mc-10",
@@ -322,7 +358,11 @@
       ],
       "erklaerung": "Die Spannungsfelder: a) Selbstbestimmung versus Fürsorge (eigenständige Entscheidungen vs. Unterstützung und stellvertretende Entscheidungen), b) Pädagogisierung von Freizeit versus Zweckfreiheit (Freizeit wird funktionalisiert vs. Raum für freie Entfaltung) und c) Struktur versus Offenheit (Orientierung und Sicherheit vs. Raum für eigene Ideen). Ziel: ausgewogene Balance.",
       "quelle": "notizen-s05",
-      "quelleSicherheit": "geprueft"
+      "quelleSicherheit": "geprueft",
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": true
     },
     {
       "id": "fr-gen-mc-1",
@@ -354,7 +394,11 @@
       "erklaerung": "Enkulturation meint das Bedürfnis nach kreativer Entfaltung, produktiver Betätigung und Teilnahme am kulturellen Leben - genau das beschreibt die Kunstwerkstatt samt Ausstellung. Der naheliegende Decoy ist Edukation: Beim Gestalten lernt man zwar auch dazu, Edukation zielt aber auf Kennenlernen, Weiter- und Umlernen in sachlichen und sozialen Handlungsebenen, nicht auf die kulturelle Teilhabe. Kontemplation wäre Selbsterfahrung und Selbstfindung, Kommunikation die Geselligkeit. (Notizen S. 01)",
       "quelle": "notizen-s01",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-2",
@@ -386,7 +430,11 @@
       "erklaerung": "Partizipation ist das Bedürfnis nach Beteiligung, Mitbestimmung und Engagement - das Mitplanen und Abstimmen trifft es genau. Der Decoy ist Integration/Inklusion: Auch dort geht es um die Gruppe, aber um Zusammensein, Gemeinschaftsbezug und soziale Stabilität, nicht um Mitentscheiden. Kommunikation wäre Mitteilung und Geselligkeit, Kompensation Ausgleich, Ablenkung und Vergnügen. (Notizen S. 01)",
       "quelle": "notizen-s01",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-3",
@@ -418,7 +466,11 @@
       "erklaerung": "Als Chancen nennt die Vorlesung die Förderung von Teilhabe und Selbstbestimmung, die Begegnung zwischen Menschen mit und ohne Behinderung, den Abbau von Vorurteilen, den Aufbau sozialer Netzwerke sowie die Stärkung von Kompetenzen und Lebensqualität. Die drei Zahlenangaben - nur 35 Prozent inklusiv arbeitende Vereine, 31 Milliarden Euro Sanierungsbedarf und nur 4 Prozent inklusive öffentliche Freizeitflächen - gehören dagegen zu den Barrieren: Sie beschreiben, woran Teilhabe im Sport scheitert, nicht was sie bewirkt. (Notizen S. 02)",
       "quelle": "notizen-s02",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": true
     },
     {
       "id": "fr-gen-mc-4",
@@ -450,7 +502,11 @@
       "erklaerung": "Erreichbarkeit, fehlende Barrierefreiheit, bauliche Hindernisse und fehlende Unterstützungssysteme stehen in der Spalte der strukturellen Barrieren. Der interessanteste Decoy ist das Spannungsfeld zwischen Struktur und Offenheit: Struktur meint dort verlässliche Rahmenbedingungen im pädagogischen Handeln, nicht Gebäude und Busverbindungen. Soziale Barrieren betreffen Einstellungen, Ressourcenprobleme die fehlende Assistenz. (Notizen S. 02)",
       "quelle": "notizen-s02",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-5",
@@ -482,7 +538,11 @@
       "erklaerung": "Der Einwand stammt von Hähn (1994): Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen, deshalb muss Selbstbestimmung schon in der Schulzeit gefördert werden (Kulig/Theunissen 2006). Die Aussage, Selbstbestimmung heiße die Unterstützung abzubauen, dreht Niehoff um - dort heißt es ausdrücklich, Selbstbestimmung bedeute nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Der Satz, Freizeit müsse produktiv genutzt werden, widerspricht dem Grundsatz, dass Freizeit nicht produktiv sein muss. Die Überforderung durch zu viel Offenheit ist zwar belegt, gehört aber zum Spannungsfeld Struktur und Offenheit und ist gerade kein Einwand gegen stellvertretende Entscheidungen. (Notizen S. 03)",
       "quelle": "notizen-s03",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-6",
@@ -514,7 +574,11 @@
       "erklaerung": "Wollen umfasst Interesse und Motivation für Freizeitaktivitäten, positive Erfahrungen und das Reflektieren eigener Vorlieben - genau das fehlt hier. Wissen (Kenntnis der Möglichkeiten) und Können (praktische Fertigkeiten) bringt er bereits mit, deshalb scheiden sie aus. Der Decoy PK 1 informieren und ordnen stammt aus dem Kompetenzstrukturmodell und beschreibt das Recherchieren und Ordnen von Informationen, also eher die Wissensseite. (Notizen S. 03)",
       "quelle": "notizen-s03",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-7",
@@ -546,7 +610,11 @@
       "erklaerung": "Die beiden domänenspezifischen Bereiche unterscheiden sich nach dem Gegenstand des Wissens: DK 1 ist das Planungs- und Gestaltungswissen, DK 2 das Wissen über die Freizeitaktivitäten selbst. Der Decoy PK 3 ist deshalb reizvoll, weil dort ebenfalls geplant wird - PK 3 meint aber das tatsächliche Umsetzen samt Anreise, Kosten und Material, also den Prozess, nicht den Wissensaufbau. Die Entwicklungsbereiche liegen im Modell quer darunter und sind mit allen Kompetenzbereichen verknüpft. (Notizen S. 04)",
       "quelle": "notizen-s04",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-8",
@@ -578,7 +646,11 @@
       "erklaerung": "PK 3 umfasst das Planen und Umsetzen von Aktivitäten samt Organisation von Anreise, Kosten und Material, das Einschätzen des eigenen Unterstützungsbedarfs und das gezielte Nutzen von Hilfen. Der Decoy PK 2 wäre der Schritt davor: Möglichkeiten abwägen und sich entscheiden - die Entscheidung ist hier schon gefallen. PK 1 wäre das Recherchieren und Ordnen der Angebote, DK 1 das dahinterliegende Planungswissen statt des Handelns. (Notizen S. 04)",
       "quelle": "notizen-s04",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-9",
@@ -610,7 +682,11 @@
       "erklaerung": "Struktur gibt Orientierung, Sicherheit und verlässliche Rahmenbedingungen, Offenheit lässt Raum für eigene Ideen - mit dem ausdrücklich genannten Risiko der Überforderung durch zu viel Offenheit. Genau das passiert hier. Der Decoy Selbstbestimmung und Fürsorge liegt nahe, weil auch dort Unterstützung fehlt, dieses Spannungsfeld dreht sich aber um stellvertretende Entscheidungen. Unterstützung und Kontrolle stammt aus der Abschlussfolie und beschreibt das Grenzensetzen, nicht die fehlende Rahmung. (Notizen S. 05)",
       "quelle": "notizen-s05",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-mc-10",
@@ -642,7 +718,11 @@
       "erklaerung": "Das Ziel heißt ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit - Freizeit braucht Unterstützung, die stärkt, und Freiheit, die wachsen lässt. Alle drei Decoys benennen je ein Risiko, das die Notizen selbst markieren: jede Aktivität mit einem Förderziel zu versehen ist die Pädagogisierung, also der Verlust von Zweckfreiheit durch Instrumentalisierung; alle Vorgaben zu streichen führt zur Überforderung durch zu viel Offenheit; stellvertretend festzulegen, was einer Schülerin guttut, ist die Gefahr im Spannungsfeld Selbstbestimmung und Fürsorge. Jede Variante klingt für sich vernünftig, nur eine hält die Balance. (Notizen S. 05, mit S. 01)",
       "quelle": "notizen-s05",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": true
     },
     {
       "id": "fr-fol-mc-1",
@@ -674,7 +754,11 @@
       "erklaerung": "Vereinsarbeit steht auf der Folie ausdrücklich als Beispiel für Dispositionszeit. Die Decoys sind die Nachbarbegriffe: Obligationszeit meint gebundene Zwecktätigkeiten wie Schlafen und Essen, Determinationszeit fremdbestimmte Zeit wie Arbeit oder Krankheit - und Rekreation gehört gar nicht ins Zeitmodell, sondern zu den acht Freizeitbedürfnissen. (Folie 6, Opaschowski 1990)",
       "quelle": "folie-freizeit-6",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-mc-2",
@@ -706,7 +790,11 @@
       "erklaerung": "Der Balken ist als Kontinuum von Fremdbestimmung zu Selbstbestimmung beschriftet - es geht um den Grad der Verfügung über die eigene Zeit, nicht um Uhrzeiten oder Wichtigkeit. Der Decoy mit dem historischen Wandel ist besonders verlockend, weil es diesen Wandel wirklich gibt, aber auf einer anderen Folie. (Folie 6, Opaschowski 1990; Wandel siehe Folie 5)",
       "quelle": "folie-freizeit-6",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-mc-3",
@@ -738,7 +826,11 @@
       "erklaerung": "Freizeit als Nicht-Arbeit mit dem Fokus auf Erholung ist genau die traditionelle Lesart; das moderne Verständnis fasst Freizeit als Teil der gesamten Lebenszeit und rückt Selbstbestimmung, Teilhabe und Lebensqualität nach vorn. Zwei Decoys drehen die beiden Spalten einfach um, einer verwechselt die Richtung: modern werden die Übergänge zwischen Lebensbereichen betont, nicht die schärfere Trennung. (Folie 5, Thümmel & Stöppler 2025, S. 6)",
       "quelle": "folie-freizeit-5",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-mc-4",
@@ -770,7 +862,9 @@
       "erklaerung": "Die Zahlen der Folie: Teilnahme an Freizeitangeboten 52 auf 82 Prozent, vollständige Ablehnung von Inklusion 17 auf 7 Prozent. Der schwierigste Decoy ist der dritte - die Teilnahme von Menschen mit kognitiven Beeinträchtigungen wächst zwar stark von 19 auf 47 Prozent, bleibt damit aber weit unter den 82 Prozent der Gesamtgruppe. Positive Entwicklung heißt hier nicht Gleichstand. (Folie 15, Trescher & Weidmann 2025)",
       "quelle": "folie-freizeit-15",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [],
+      "core": false
     },
     {
       "id": "fr-fol-mc-5",
@@ -802,7 +896,11 @@
       "erklaerung": "Kooperationen mit Vereinen und das Kennenlernen lokaler Angebote stehen auf der Folie zur gesellschaftsbezogenen Förderung; die individuumsbezogene Seite arbeitet dagegen an der Person - eigene Interessen formulieren, Wahlmöglichkeiten schaffen, wohlwollende Zurückhaltung der Lehrkräfte. Zwei Decoys vertauschen das Paar, zwei schieben ein anderes Modell unter (Kompetenzstrukturmodell bzw. Barrieren). (Folien 25 und 27, Schluck/Schuck 2019, S. 644 f.)",
       "quelle": "folie-freizeit-27",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-mc-6",
@@ -834,7 +932,11 @@
       "erklaerung": "Artikel 30 der UN-BRK schreibt die gleichberechtigte Teilhabe am kulturellen Leben und den Zugang zu Freizeit-, Sport- und Erholungsangeboten fest - das ist die Rechtsgrundlage. Alle drei Decoys gibt es wirklich, sie begründen aber etwas anderes: L1 den schulischen Bildungsauftrag, das Kompetenzstrukturmodell die Kompetenzsystematik, die Stigma-Identitäts-These die gesellschaftliche Bedeutung von Freizeit. (Folie 28; L1 auf Folie 20, RLP 2011, S. 23)",
       "quelle": "folie-freizeit-28",
       "quelleSicherheit": "geprueft",
-      "generiert": true
+      "generiert": true,
+      "ke": [
+        "freizeit-ke3"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -942,7 +1044,11 @@
           "Das Kreative und das Kulturelle",
           "Fachwort mit E: selbst gestalten und am Kulturleben teilhaben"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-f-2",
@@ -1022,7 +1128,11 @@
           "Denk an die zwei DK-Bereiche und das Fundament darunter",
           "Der Rahmen: Wissensbereiche plus Entwicklungsbasis, mit Quelle"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-f-3",
@@ -1141,7 +1251,11 @@
           "Mitplanen lassen, wählen lassen, sich selbst zurücknehmen",
           "Was tut eine Lehrkraft, damit die Entscheidung bei den Schüler:innen bleibt?"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-f-4",
@@ -1272,7 +1386,11 @@
           "Rahmenlehrplan und Menschenrechte - was steht dort zur Freizeit?",
           "Ein Auftrag von außen, nicht nur eine gute Idee"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": true
     },
     {
       "id": "fr-f-5",
@@ -1444,7 +1562,11 @@
           "Zwei weitere Prozentwerte: Vereine und Flächen",
           "Wie viele Vereine arbeiten inklusiv, und wie viel Platz gibt es draußen?"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": true
     },
     {
       "id": "fr-gen-f-1",
@@ -1532,7 +1654,11 @@
           "Die Autorinnen samt Jahr gehören dazu",
           "Kurz die Herkunft des Modells angeben"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-f-2",
@@ -1638,7 +1764,11 @@
           "Balance-Paare ansprechen - und Muße erlauben",
           "Wo könnte das Vorhaben kippen? Gegensatzpaare prüfen"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-gen-f-3",
@@ -1744,7 +1874,11 @@
           "Wie fällt die Abwägung aus? Denk an die Balance",
           "Schluss: weder raushalten noch verplanen"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-f-1",
@@ -1867,7 +2001,11 @@
           "punkte": 2,
           "satzanfang": "Das Modell zeigt, dass …"
         }
-      ]
+      ],
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-fol-f-2",
@@ -2047,7 +2185,11 @@
           "Das Ergebnis bleibt nicht bei denen, die es gemacht haben",
           "Andere haben etwas davon"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-afb1-1",
@@ -2139,7 +2281,11 @@
           "Lust, gute Erlebnisse und der Blick auf die eigenen Neigungen.",
           "Was hier zählt, kann man niemandem beibringen, nur ermöglichen."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb1-2",
@@ -2213,7 +2359,11 @@
           "Auf der Waage soll keine Seite ganz nach unten gehen.",
           "Kein Entweder-oder, sondern ein Mittelweg."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke5"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb1-3",
@@ -2296,7 +2446,11 @@
           "Zwei fehlen noch: einer beruhigt, der andere hilft anderen.",
           "Denk an Atemübungen und an einen freiwilligen Dienst."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb1-4",
@@ -2364,7 +2518,11 @@
           "Hier geht es ums Runterkommen, mit Techniken für Körper und Seele.",
           "Zwei Orte in einem Kasten: einer im Stundenplan, einer freiwillig danach."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke4"
+      ],
+      "core": false
     },
     {
       "id": "fr-afb1-5",
@@ -2445,7 +2603,9 @@
           "Der Vergleich zum Schluss: eine Gruppe ganz oben, eine ganz unten.",
           "Die längsten Balken laufen über Geräte, die kürzesten verlangen Bewegung."
         ]
-      ]
+      ],
+      "ke": [],
+      "core": false
     },
     {
       "id": "fr-afb1-6",
@@ -2520,7 +2680,11 @@
           "Je näher der Schulabschluss, desto eigenständiger wird das Thema.",
           "Eine Altersgruppe bekommt es extra - wegen dem, was danach kommt."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke3"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb1-7",
@@ -2608,7 +2772,11 @@
           "Drei Folgen, wenn Freizeit ausfällt: allein, unselbstständig, draußen.",
           "Der Pfeil am Ende der Folie zieht die Bilanz."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb1-8",
@@ -2701,7 +2869,11 @@
           "Die Grenze am Ende: Wer Freizeit nur als Ausruhen versteht, sieht zu wenig.",
           "Genau diesen engen Blick weist die Definition zurück."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": true
     },
     {
       "id": "fr-afb3-1",
@@ -2807,7 +2979,11 @@
           "Worin unterscheiden sich Gefäß und Füllung?",
           "Welche Haltung der Lehrkräfte macht es tragbar - und das Zielwort zum Schluss"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": false
     },
     {
       "id": "fr-afb3-2",
@@ -2953,7 +3129,11 @@
           "Gut gemeint, aber was ist es in der Sache?",
           "Recht auf Zugang ist kein Zwang zur Teilnahme"
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke2"
+      ],
+      "core": false
     },
     {
       "id": "fr-afb1-9",
@@ -3030,7 +3210,11 @@
           "Die Reihe ist kein Zufall: Ein Merkmal wird von Art zu Art schwächer, sein Gegenstück stärker.",
           "Denk an die beiden Pole - wo andere entscheiden und wo der Mensch selbst entscheidet."
         ]
-      ]
+      ],
+      "ke": [
+        "freizeit-ke1"
+      ],
+      "core": true
     }
   ]
 }
