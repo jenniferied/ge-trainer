@@ -928,7 +928,8 @@
           "Zwei fehlen noch, einer fürs Denken, einer fürs Zusammenspiel",
           "Erst mit diesen beiden ist die Zehnerliste voll"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "mo-f-2",
@@ -1007,7 +1008,8 @@
           "Der gelbe Kleinbus auf der Folie steht dafür",
           "Wer bringt die Person hin, wenn sie nicht allein hinkommt?"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "mo-f-3",
@@ -1019,7 +1021,7 @@
         "Motorik & Reaktion: Feuer-Wasser-Luft, Gleichgewichtsspiel, Pappdeckel (Ziele: Gleichgewicht, Geschwindigkeiten wechseln, Bewegungs- und Handlungsunterbrechung, an bestimmten Stellen anhalten)",
         "Kommunikation & soziale Kompetenz: Pantomime der Gefühle, Was fühlst du?, Zublinzeln (Ziele: Gefühle erkennen, Handlungsabsichten erschließen, Perspektivenübernahme und Empathie)",
         "Visuelle Wahrnehmung: Wer fehlt?, Laufen-Stoppen, Verkehrszeichen-Puzzle, Zuzwinkern (Ziele: Farbensehen, Symbole unterscheiden, Raumbewusstsein, Geschwindigkeitswahrnehmung)",
-        "Wichtig: Maßnahme immer mit dem Ziel der Kompetenz begründen, nicht nur nennen"
+        "Merkhilfe: Maßnahme immer mit dem Ziel der Kompetenz begründen, nicht nur nennen"
       ],
       "abschnitte": [
         {
@@ -1032,22 +1034,17 @@
             3
           ],
           "form": "liste",
-          "chips": [
-            "Auditive Wahrnehmung",
-            "Motorik & Reaktion",
-            "Kommunikation & soziale Kompetenz",
-            "Visuelle Wahrnehmung"
-          ],
           "punkte": 4
         },
         {
           "operator": "zusatz",
-          "auftrag": "Und die Regel für die Zuordnung selbst",
+          "auftrag": "Wenn du magst: die Regel für die Zuordnung selbst",
           "idx": [
             4
           ],
           "form": "liste",
-          "punkte": 1
+          "punkte": 0,
+          "zusatz": true
         }
       ],
       "muster": "Der auditiven Wahrnehmung lassen sich Spiele wie Geräuscheraten oder Schiffe im Nebel zuordnen, denn sie üben das Erkennen, Differenzieren und Lokalisieren von Geräuschen sowie das Entfernungshören. Der Motorik und Reaktion dienen Bewegungsspiele wie Feuer-Wasser-Luft oder Gleichgewichtsspiele, weil sie Gleichgewicht halten, Geschwindigkeiten wechseln und das Unterbrechen von Bewegungen trainieren - alles nötig, um etwa am Bordstein anzuhalten. Der Kommunikation und sozialen Kompetenz sind Übungen wie die Pantomime der Gefühle zuzuordnen, da sie das Erkennen eigener und fremder Gefühle, das Erschließen von Handlungsabsichten und die Perspektivenübernahme im Straßenverkehr fördern. Der visuellen Wahrnehmung dienen Spiele wie Wer fehlt?, Laufen-Stoppen oder ein Verkehrszeichen-Puzzle, die Formen- und Symbolunterscheidung, Raumbewusstsein und Geschwindigkeitswahrnehmung üben.",
@@ -1094,7 +1091,8 @@
           "Der Unterschied zwischen Aufzählen und Verknüpfen",
           "Woran hängt die Qualität der Zuordnung?"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "mo-f-4",
@@ -1108,12 +1106,12 @@
         "Unterschiede: zu Fuß, Fahrrad und ÖV legen jeweils leicht zu, deutlich zurück geht nur die MIV-Mitfahrt (17 auf 13)",
         "Nach Personenkilometern verschiebt sich das Bild: Der ÖV wächst von 14 auf 19, die MIV-Mitfahrt fällt von 25 auf 19 - lange Strecken laufen zunehmend über den ÖV",
         "Deutung für Menschen im SGE: Der Rückgang der Mitfahrten und der wachsende ÖV-Anteil betreffen genau die Verkehrsmittel, über die eigenständige Teilhabe läuft - Mitfahren heißt Abhängigkeit von anderen, der ÖV ist erlernbar",
-        "Sprachmuster für Vergleichen-Aufgaben: erst Gemeinsamkeiten, dann Unterschiede, dann kurze Deutung"
+        "Hinweis: Sprachmuster für Vergleichen-Aufgaben - erst Gemeinsamkeiten, dann Unterschiede, dann kurze Deutung"
       ],
       "abschnitte": [
         {
           "operator": "vergleichen",
-          "rolle": "kriterium",
+          "rolle": "benennen",
           "auftrag": "Woran du vergleichst: die Datengrundlage und die Anteile 2002 und 2023",
           "idx": [
             0,
@@ -1121,22 +1119,24 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Verglichen wird der Modal Split (Follmer 2025); die Anteile an allen Wegen sind …"
+          "satzanfang": "Verglichen wird der Modal Split (Follmer 2025); die Anteile an allen Wegen sind …",
+          "beispiel": "Grundlage des Vergleichs ist der Modal Split der Verkehrsmittelwahl (Follmer 2025, S. 15), der angibt, welchen Anteil die einzelnen Verkehrsmittel an allen zurückgelegten Wegen haben."
         },
         {
           "operator": "vergleichen",
-          "rolle": "gemeinsamkeit",
+          "rolle": "beschreiben",
           "auftrag": "Was in beiden Jahren gleich geblieben ist",
           "idx": [
             2
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Gemeinsam ist beiden Jahren, dass …"
+          "satzanfang": "Gemeinsam ist beiden Jahren, dass …",
+          "beispiel": "Gemeinsam ist beiden Jahren, dass das Auto das meistgenutzte Verkehrsmittel bleibt: Die MIV-Fahrt liegt 2002 bei 41 Prozent und 2023 bei 40 Prozent."
         },
         {
           "operator": "vergleichen",
-          "rolle": "unterschied",
+          "rolle": "beschreiben",
           "auftrag": "Was sich verändert hat – bei den Wegen und bei den Personenkilometern",
           "idx": [
             3,
@@ -1144,16 +1144,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Der Unterschied liegt darin, dass …"
+          "satzanfang": "Der Unterschied liegt darin, dass …",
+          "beispiel": "Unterschiede zeigen sich in der Bewegung der übrigen Verkehrsmittel: Zu Fuß steigt von 24 auf 26 Prozent, Fahrrad von 9 auf 11 Prozent und der öffentliche Verkehr ebenfalls von 9 auf 11 Prozent. Deutlich zurück geht allein die MIV-Mitfahrt, von 17 auf 13 Prozent."
         },
         {
           "operator": "vergleichen",
+          "rolle": "erlaeutern",
           "auftrag": "Zum Schluss die kurze Deutung für Menschen im SGE",
           "idx": [
             5
           ],
-          "form": "liste",
-          "punkte": 2
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Für Menschen im SGE heißt das, dass …",
+          "beispiel": "Für Menschen im Förderschwerpunkt geistige Entwicklung ist gerade diese Verschiebung bedeutsam. Mitgenommen zu werden bedeutet Abhängigkeit von anderen Personen, während der öffentliche Verkehr erlernbar ist und damit selbstständige Wege ermöglicht."
         },
         {
           "operator": "zusatz",
@@ -1162,7 +1166,8 @@
             6
           ],
           "form": "liste",
-          "punkte": 1
+          "punkte": 0,
+          "zusatz": true
         }
       ],
       "muster": "Grundlage des Vergleichs ist der Modal Split der Verkehrsmittelwahl (Follmer 2025, S. 15), der angibt, welchen Anteil die einzelnen Verkehrsmittel an allen zurückgelegten Wegen haben. Gemeinsam ist beiden Jahren, dass das Auto das meistgenutzte Verkehrsmittel bleibt: Die MIV-Fahrt liegt 2002 bei 41 Prozent und 2023 bei 40 Prozent. Unterschiede zeigen sich in der Bewegung der übrigen Verkehrsmittel: Zu Fuß steigt von 24 auf 26 Prozent, Fahrrad von 9 auf 11 Prozent und der öffentliche Verkehr ebenfalls von 9 auf 11 Prozent. Deutlich zurück geht allein die MIV-Mitfahrt, von 17 auf 13 Prozent. Betrachtet man statt der Wege die Personenkilometer, verschiebt sich das Bild noch stärker: Der öffentliche Verkehr wächst von 14 auf 19 Prozent, während die Mitfahrt von 25 auf 19 Prozent fällt. Für Menschen im Förderschwerpunkt geistige Entwicklung ist gerade diese Verschiebung bedeutsam. Mitgenommen zu werden bedeutet Abhängigkeit von anderen Personen, während der öffentliche Verkehr erlernbar ist und damit selbstständige Wege ermöglicht. Der Bedeutungszuwachs des ÖV eröffnet also Chancen für Teilhabe, setzt aber voraus, dass Mobilitätskompetenzen gezielt im Unterricht aufgebaut werden.",
@@ -1219,7 +1224,8 @@
           "In welcher Reihenfolge baut man den Vergleich auf?",
           "Das Gerüst: gleich, anders, und dann?"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "mo-f-5",
@@ -1232,45 +1238,49 @@
         "Gegenperspektive: Fahrdienste bieten Sicherheit und ermöglichen überhaupt Wege - sie sind nicht per se schlecht",
         "Pädagogische Konsequenz: Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule (RLP: Schulweg selbstständig bewältigen); Methoden vom Schonraum bis zur Ernstsituation",
         "Strukturelle Konsequenz: Rahmenbedingungen verbessern (Barrierefreiheit, einfache Symbole, individueller Netzplan, Bewusstsein in der Öffentlichkeit)",
-        "Fazit: Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und barrierefreie Umwelt veränderbar"
+        "Fazit: Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und barrierefreie Umwelt veränderbar",
+        "Verfestigung: Fehlende Mobilitätsbildung und die Einstellung und das Verhalten Anderer zählen selbst zu den elf Mobilitätsbehinderungen - wer kaum üben darf und dem wenig zugetraut wird, bleibt angewiesen, obwohl uneingeschränkte Beweglichkeit ein Grundbedürfnis und Ausdruck selbstständiger Lebensführung ist",
+        "Auch Unterstützung kann selbstbestimmt sein: Selbstbestimmung heißt nach Klaus (2019), gehört zu werden und mitentscheiden zu können - auch darüber, wie man bei Bedarf Hilfe bekommt; das BVG-Mobilitätstraining richtet sich ausdrücklich auch an Menschen samt ihren Begleitpersonen"
       ],
       "abschnitte": [
         {
-          "operator": "diskutieren",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: wie das eigenständige Mobilitätsniveau im SGE aussieht",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Menschen im Förderschwerpunkt geistige Entwicklung haben …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "diskutieren",
           "rolle": "dafuer",
-          "auftrag": "Was das für Teilhabe und Selbstbestimmung bedeutet",
+          "auftrag": "Zwei Punkte dafür: was das für Teilhabe und Selbstbestimmung bedeutet",
           "idx": [
-            1
+            1,
+            6
           ],
           "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Das bedeutet konkret, dass …"
+          "punkte": 4,
+          "satzanfang": "Das bedeutet konkret, dass …",
+          "beispiel": "Da Mobilität Grundvoraussetzung für Teilhabe ist, schränkt das den Zugang zu Arbeit, Freizeit und sozialen Kontakten ein und steht im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe."
         },
         {
           "operator": "diskutieren",
           "rolle": "dagegen",
-          "auftrag": "Die Gegenperspektive: was sich für Fahrdienste und Begleitung sagen lässt",
+          "auftrag": "Zwei Punkte dagegen: was sich für Fahrdienste, Begleitung und Assistenz sagen lässt",
           "idx": [
-            2
+            2,
+            7
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dagegen lässt sich halten, dass …"
+          "punkte": 3,
+          "satzanfang": "Dagegen lässt sich halten, dass …",
+          "beispiel": "Andererseits bieten Fahrdienste Sicherheit und ermöglichen überhaupt erst viele Wege - sie pauschal abzuschaffen wäre keine Lösung."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Was daraus folgt – für die Schule, für die Rahmenbedingungen, und dein Schluss",
           "idx": [
             3,
@@ -1279,10 +1289,11 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Daraus folgt, dass …"
+          "satzanfang": "Daraus folgt, dass …",
+          "beispiel": "Insgesamt gilt: Die Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und eine zugängliche Umwelt veränderbar."
         }
       ],
-      "muster": "Ein geringes eigenständiges Mobilitätsniveau bedeutet für Personen im GE vor allem Abhängigkeit: Bereits von der Kita über die Schule bis ins Arbeitsleben sind sie auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Da Mobilität Grundvoraussetzung für Teilhabe ist, schränkt das den Zugang zu Arbeit, Freizeit und sozialen Kontakten ein und steht im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Andererseits bieten Fahrdienste Sicherheit und ermöglichen überhaupt erst viele Wege - sie pauschal abzuschaffen wäre keine Lösung. Die pädagogische Konsequenz ist eine systematische Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule, die vom Schonraum bis zur Ernstsituation schrittweise eigenständige Mobilität aufbaut, wie es der Rahmenlehrplan mit dem selbstständig bewältigten Schulweg anstrebt. Ergänzend müssen die Rahmenbedingungen barrierefreier werden - einfache Schriftzüge, Symbole, individuelle Netzpläne und ein öffentliches Bewusstsein. Insgesamt gilt: Die Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und eine zugängliche Umwelt veränderbar.",
+      "muster": "Ein geringes eigenständiges Mobilitätsniveau bedeutet für Personen im GE vor allem Abhängigkeit: Bereits von der Kita über die Schule bis ins Arbeitsleben sind sie auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen. Da Mobilität Grundvoraussetzung für Teilhabe ist, schränkt das den Zugang zu Arbeit, Freizeit und sozialen Kontakten ein und steht im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe. Hinzu kommt, dass sich diese Abhängigkeit selbst verfestigt: Fehlende Mobilitätsbildung sowie die Einstellung und das Verhalten Anderer zählen selbst zu den elf Mobilitätsbehinderungen - wer kaum üben darf und dem wenig zugetraut wird, bleibt angewiesen, obwohl uneingeschränkte Beweglichkeit ein Grundbedürfnis und Ausdruck selbstständiger Lebensführung ist. Andererseits bieten Fahrdienste Sicherheit und ermöglichen überhaupt erst viele Wege - sie pauschal abzuschaffen wäre keine Lösung. Auch Unterstützung kann selbstbestimmt sein: Selbstbestimmung bedeutet nach Klaus (2019), gehört zu werden und mitentscheiden zu können, auch über die Art und Weise, wie man bei Bedarf Unterstützung erhält; entsprechend richtet sich das Mobilitätstraining der BVG ausdrücklich auch an Menschen samt ihren Begleitpersonen. Die pädagogische Konsequenz ist eine systematische Mobilitäts- und Verkehrserziehung als Aufgabe der gesamten Schule, die vom Schonraum bis zur Ernstsituation schrittweise eigenständige Mobilität aufbaut, wie es der Rahmenlehrplan mit dem selbstständig bewältigten Schulweg anstrebt. Ergänzend müssen die Rahmenbedingungen barrierefreier werden - einfache Schriftzüge, Symbole, individuelle Netzpläne und ein öffentliches Bewusstsein. Insgesamt gilt: Die Abhängigkeit ist nicht naturgegeben, sondern durch Bildung und eine zugängliche Umwelt veränderbar.",
       "musterVarianten": {
         "de": {
           "einfach": "Ein geringes eigenständiges Mobilitätsniveau bedeutet für Personen im Bereich GE vor allem Abhängigkeit. Mobilitätsniveau heißt: wie viel und wie selbstständig ein Mensch unterwegs ist. Schon von der Kita an sind sie auf spezielle Fahrdienste angewiesen. Das gilt auch in der Schule. Und es gilt später im Arbeitsleben. Sie brauchen außerdem Begleitung und Assistenz. Mobilität ist die Grundvoraussetzung für Teilhabe. Teilhabe heißt: Ein Mensch nimmt am Leben in der Gesellschaft teil. Wer sich nicht selbst fortbewegen kann, hat also weniger Zugang zur Arbeit. Er hat auch weniger Zugang zur Freizeit. Und er hat weniger soziale Kontakte. Das steht im Widerspruch zur Forderung nach Selbstbestimmung. Selbstbestimmung heißt: Ein Mensch entscheidet über sein eigenes Leben. Man muss aber auch die andere Seite sehen. Fahrdienste bieten Sicherheit. Und sie ermöglichen überhaupt erst viele Wege. Man sollte sie deshalb nicht einfach abschaffen. Daraus folgt eine pädagogische Konsequenz. Die Schule braucht eine systematische Mobilitäts- und Verkehrserziehung. Diese Erziehung ist eine Aufgabe der gesamten Schule. Sie baut die eigenständige Mobilität schrittweise auf. Sie beginnt im Schonraum. Ein Schonraum ist ein geschützter Ort ohne echte Gefahr, zum Beispiel der Schulhof. Danach folgt die Ernstsituation. Ernstsituation heißt: Geübt wird im echten Straßenverkehr. Der Rahmenlehrplan nennt dafür ein klares Ziel. Die Schülerinnen und Schüler sollen den Schulweg selbstständig bewältigen. Dazu kommt eine strukturelle Konsequenz. Auch die Rahmenbedingungen müssen sich ändern. Nötig sind einfache Schriftzüge und klare Symbole. Nötig ist auch ein individueller Netzplan. Ein Netzplan zeigt die Linien von Bus und Bahn. Und nötig ist ein Bewusstsein in der Öffentlichkeit. Insgesamt gilt also: Die Abhängigkeit ist nicht naturgegeben. Sie lässt sich durch Bildung verändern. Und sie lässt sich durch eine zugängliche Umwelt verändern."
@@ -1330,6 +1341,16 @@
           "Der Schlussgedanke: ist das unveränderlich?",
           "Die hoffnungsvolle Pointe zum Abschluss",
           "Worauf läuft die Diskussion hinaus?"
+        ],
+        [
+          "Warum bleibt der Zustand, wie er ist?",
+          "Zwei der elf Hindernisse liegen gar nicht in der Person",
+          "Was passiert, wenn niemand etwas zutraut?"
+        ],
+        [
+          "Ist Hilfe automatisch Fremdbestimmung?",
+          "Was sagt der Exkurs zur Selbstbestimmung über Hilfe?",
+          "Ein Trainingsangebot rechnet Begleitung ausdrücklich mit ein"
         ]
       ]
     },
@@ -1344,7 +1365,7 @@
         "Gesundheitserziehung: eigene Bewegung und körperliche Leistungsfähigkeit, z. B. zu Fuß gehen und Fahrrad fahren statt gefahren zu werden",
         "Umwelterziehung: umweltbewusste Verkehrsmittelwahl, beim Fahrrad gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen",
         "Sozialerziehung: Verkehr als soziales Miteinander, Rücksicht, Gefühle und Handlungsabsichten anderer erkennen (Sozialkompetenz)",
-        "Fazit: Verkehrsregeln sind nur ein Ausschnitt - es geht um umfassende Mobilitätsbildung als Aufgabe der gesamten Schule"
+        "Beispiel Fahrradfahren, an dem alle vier Bereiche zugleich hängen: verkehrssicheres Rad und Helm kennenlernen und Gefahrensituationen erkennen (Sicherheit), selbst fahren statt gefahren zu werden (Gesundheit), Wissen über Umwelt und Nachhaltigkeit als ausdrückliches Lernziel (Umwelt), Abstand halten und die Absichten anderer erkennen (Sozial) - Verkehrsregeln sind darin nur ein Ausschnitt einer umfassenden Mobilitätsbildung, die die ganze Schule angeht"
       ],
       "abschnitte": [
         {
@@ -1356,12 +1377,13 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die schulische Mobilitäts- und Verkehrserziehung umfasst vier Teilbereiche: …"
+          "satzanfang": "Die schulische Mobilitäts- und Verkehrserziehung umfasst vier Teilbereiche: …",
+          "beispiel": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Teilbereichen zusammen: Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Was jeder der vier Teilbereiche konkret meint – je mit einem Beispiel",
+          "rolle": "beschreiben",
+          "auftrag": "Was jeder der vier Teilbereiche konkret meint",
           "idx": [
             1,
             2,
@@ -1370,21 +1392,23 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Die Sicherheitserziehung meint … , die Gesundheitserziehung …"
+          "satzanfang": "Die Sicherheitserziehung meint … , die Gesundheitserziehung …",
+          "beispiel": "Die Sicherheitserziehung zielt darauf, Gefahren zu erkennen und zu vermeiden, etwa beim Überqueren der Straße oder beim Warten an der Haltestelle."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
-          "auftrag": "Warum das mehr ist als das Einüben von Verkehrsregeln",
+          "rolle": "erlaeutern",
+          "auftrag": "An einem Beispiel zeigen, warum das mehr ist als das Einüben von Verkehrsregeln",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Verkehrsregeln sind damit nur …"
+          "satzanfang": "Am Beispiel des Fahrradfahrens zeigt sich, dass …",
+          "beispiel": "Am Beispiel des Fahrradfahrens zeigt sich, dass alle vier Bereiche zugleich angesprochen sind: Die Schülerinnen und Schüler lernen das verkehrssichere Fahrrad und den Fahrradhelm kennen und erkennen Gefahrensituationen (Sicherheit), sie fahren selbst, statt gefahren zu werden (Gesundheit), sie setzen sich mit Umwelt und Nachhaltigkeit auseinander (Umwelt), und sie halten Abstand und erschließen die Absichten der anderen Verkehrsteilnehmenden (Sozial)."
         }
       ],
-      "muster": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Teilbereichen zusammen: Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung. Schon diese Breite zeigt, dass es um mehr geht als um Verkehrsregeln. Die Sicherheitserziehung zielt darauf, Gefahren zu erkennen und zu vermeiden, etwa beim Überqueren der Straße oder beim Warten an der Haltestelle. Die Gesundheitserziehung nimmt die eigene Bewegung in den Blick, denn wer zu Fuß geht oder Fahrrad fährt, statt gefahren zu werden, stärkt seine körperliche Leistungsfähigkeit. Die Umwelterziehung fördert eine umweltbewusste Verkehrsmittelwahl; beim Fahrradfahren gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen. Die Sozialerziehung schließlich versteht den Verkehr als soziales Miteinander, in dem Rücksicht, das Erkennen von Gefühlen und das Erschließen von Handlungsabsichten anderer wichtig sind. Verkehrsregeln zu beherrschen ist damit nur ein Ausschnitt einer umfassenden Mobilitätsbildung, die als Aufgabe der gesamten Schule verstanden wird.",
+      "muster": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Teilbereichen zusammen: Sicherheitserziehung, Gesundheitserziehung, Umwelterziehung und Sozialerziehung. Schon diese Breite zeigt, dass es um mehr geht als um Verkehrsregeln. Die Sicherheitserziehung zielt darauf, Gefahren zu erkennen und zu vermeiden, etwa beim Überqueren der Straße oder beim Warten an der Haltestelle. Die Gesundheitserziehung nimmt die eigene Bewegung in den Blick, denn wer zu Fuß geht oder Fahrrad fährt, statt gefahren zu werden, stärkt seine körperliche Leistungsfähigkeit. Die Umwelterziehung fördert eine umweltbewusste Verkehrsmittelwahl; beim Fahrradfahren gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen. Die Sozialerziehung schließlich versteht den Verkehr als soziales Miteinander, in dem Rücksicht, das Erkennen von Gefühlen und das Erschließen von Handlungsabsichten anderer wichtig sind. Am Beispiel des Fahrradfahrens zeigt sich, dass alle vier Bereiche zugleich angesprochen sind: Die Schülerinnen und Schüler lernen das verkehrssichere Fahrrad und den Fahrradhelm kennen und erkennen Gefahrensituationen (Sicherheit), sie fahren selbst, statt gefahren zu werden (Gesundheit), sie setzen sich mit Umwelt und Nachhaltigkeit auseinander (Umwelt), und sie halten Abstand und erschließen die Absichten der anderen Verkehrsteilnehmenden (Sozial). Verkehrsregeln zu beherrschen ist damit nur ein Ausschnitt einer umfassenden Mobilitätsbildung, die als Aufgabe der gesamten Schule verstanden wird.",
       "musterVarianten": {
         "de": {
           "einfach": "Die schulische Mobilitäts- und Verkehrserziehung setzt sich aus vier Teilbereichen zusammen. Das sind die Sicherheitserziehung, die Gesundheitserziehung, die Umwelterziehung und die Sozialerziehung. Schon diese Breite zeigt etwas Wichtiges. Es geht um mehr als um Verkehrsregeln. Der erste Teilbereich ist die Sicherheitserziehung. Sie hat das Ziel, Gefahren zu erkennen und zu vermeiden. Ein Beispiel ist das Überqueren der Straße. Ein weiteres Beispiel ist das Warten an der Haltestelle. Der zweite Teilbereich ist die Gesundheitserziehung. Sie nimmt die eigene Bewegung in den Blick. Wer zu Fuß geht, stärkt seine körperliche Leistungsfähigkeit. Das gilt auch für das Fahrradfahren. Wer dagegen immer gefahren wird, bewegt sich selbst nicht. Der dritte Teilbereich ist die Umwelterziehung. Sie fördert eine umweltbewusste Wahl des Verkehrsmittels. Beim Fahrradfahren gehört Wissen über Umwelt und Nachhaltigkeit ausdrücklich zu den Lernzielen. Nachhaltigkeit heißt: Wir leben so, dass auch spätere Generationen gut leben können. Der vierte Teilbereich ist die Sozialerziehung. Sie versteht den Verkehr als ein soziales Miteinander. Im Verkehr ist Rücksicht wichtig. Wichtig ist auch, die Gefühle anderer Menschen zu erkennen. Und wichtig ist, ihre Handlungsabsichten zu erschließen. Handlungsabsicht heißt: was eine Person als Nächstes vorhat. Die Verkehrsregeln zu beherrschen ist also nur ein Ausschnitt. Insgesamt geht es um eine umfassende Mobilitätsbildung. Und diese Bildung wird als Aufgabe der gesamten Schule verstanden."
@@ -1430,9 +1454,9 @@
           "Miteinander unterwegs: welche Kompetenz?"
         ],
         [
-          "Die Pointe: Regeln allein greifen zu kurz",
-          "Warum das Ganze mehr ist als Regelkunde",
-          "Der Schluss: wessen Aufgabe ist das alles?"
+          "Ein einziges Beispiel, das alle vier Felder auf einmal zeigt",
+          "Welche Fortbewegungsart übt Schutz, Fitness, Ökologie und Miteinander zugleich?",
+          "Zeig an einem Alltagsbeispiel, warum reine Regelkunde zu kurz greift"
         ]
       ]
     },
@@ -1459,7 +1483,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die Sequenz führt von … über … bis …"
+          "satzanfang": "Die Sequenz führt von … über … bis …",
+          "beispiel": "Eine Unterrichtssequenz zur ÖPNV-Vorbereitung kann dem Methodenaufbau der Mobilitätsförderung folgen: von praktischen Übungen und Spiel über Übungen im Schonraum bis zu Übungen in der Ernstsituation."
         },
         {
           "operator": "entwickeln",
@@ -1469,11 +1494,11 @@
             2
           ],
           "form": "liste",
+          "punkte": 4,
           "chips": [
             "Lernziele für die ÖPNV-Nutzung",
             "Gefahren, die du thematisierst"
-          ],
-          "punkte": 4
+          ]
         },
         {
           "operator": "entwickeln",
@@ -1484,7 +1509,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Im ersten Schritt … , danach …"
+          "satzanfang": "Im ersten Schritt … , danach …",
+          "beispiel": "Den Einstieg bildet eine spielerische Phase im Klassenraum, in der eine Haltestelle nachgestellt wird und der Kauf einer Fahrkarte im Rollenspiel geübt wird; hier lassen sich auch Gefahren wie das eilige Laufen zum Bus mit einem pädagogischen Puppenspiel anschaulich machen."
         },
         {
           "operator": "entwickeln",
@@ -1496,7 +1522,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Das trägt, weil …"
+          "satzanfang": "Das trägt, weil …",
+          "beispiel": "Die Sequenz folgt damit den Prinzipien Sicherheit, Lebensnähe, Strukturierung, Individualisierung und Kontinuität und arbeitet auf das Ziel des Rahmenlehrplans hin, den Schulweg selbstständig mit öffentlichen Verkehrsmitteln zu bewältigen."
         }
       ],
       "muster": "Eine Unterrichtssequenz zur ÖPNV-Vorbereitung kann dem Methodenaufbau der Mobilitätsförderung folgen: von praktischen Übungen und Spiel über Übungen im Schonraum bis zu Übungen in der Ernstsituation. Den Einstieg bildet eine spielerische Phase im Klassenraum, in der eine Haltestelle nachgestellt wird und der Kauf einer Fahrkarte im Rollenspiel geübt wird; hier lassen sich auch Gefahren wie das eilige Laufen zum Bus mit einem pädagogischen Puppenspiel anschaulich machen. Im Schonraum, etwa auf dem Schulhof, werden anschließend das Ein- und Aussteigen, das Festhalten beim Anfahren und Abbremsen sowie das Warten mit ausreichendem Abstand zur Straße geübt. Danach folgt die Ernstsituation: eine begleitete Busfahrt, bei der die Orientierung an der Haltestelle, das Lösen der Fahrkarte, das Verhalten während der Fahrt sowie Orientierung und Ausstieg erprobt werden - beim Bahnfahren zusätzlich das sichere Verhalten an den Gleisen. Schritt für Schritt wird die Begleitung zurückgenommen, bis die Fahrt selbstständig gelingt. Die Sequenz folgt damit den Prinzipien Sicherheit, Lebensnähe, Strukturierung, Individualisierung und Kontinuität und arbeitet auf das Ziel des Rahmenlehrplans hin, den Schulweg selbstständig mit öffentlichen Verkehrsmitteln zu bewältigen.",
@@ -1562,19 +1589,22 @@
         "Contra: Übungen in Ernstsituationen sind eine eigene Methode der Mobilitätsförderung; das Prinzip Lebensnähe verlangt echte Verkehrssituationen, der RLP will den selbstständig bewältigten Schulweg",
         "Contra: Wer nur im Schonraum übt, bleibt abhängig - das widerspricht dem Ziel von Selbstbestimmung und Teilhabe",
         "Synthese: Schonraum als Durchgangsstadium, nicht als Dauerlösung - gestufter Aufbau von Spiel über Schonraum zur Ernstsituation, mit Sicherheit als Begleitprinzip",
-        "Eigene begründete Position am Ende"
+        "Eigene begründete Position am Ende",
+        "Pro: Im geschützten Raum lässt sich eine Fertigkeit einzeln, wiederholt und im eigenen Tempo üben - das entspricht den Prinzipien Strukturierung, Individualisierung und Kontinuität; Ausweich-, Dreh- und Wendebewegungen mit dem Rollstuhl an der MOBI-AKTIV-Rampe oder das Abstecken von breit und schmal mit Kartons und Seilen sind auf der Straße so nicht wiederholbar"
       ],
       "abschnitte": [
         {
           "operator": "diskutieren",
           "rolle": "dafuer",
-          "auftrag": "Was für den Schonraum spricht",
+          "auftrag": "Zwei Punkte dafür: was für den Schonraum spricht",
           "idx": [
-            0
+            0,
+            6
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Für den Schonraum spricht, dass …"
+          "punkte": 3,
+          "satzanfang": "Für den Schonraum spricht, dass …",
+          "beispiel": "Für die These spricht, dass Sicherheit bei den didaktischen Prinzipien der Mobilitätsförderung an erster Stelle genannt wird: Im Schonraum können Kinder Fertigkeiten wie das Fahrradfahren ohne reale Gefahr aufbauen, entsprechend sind Übungen im Schonraum ein ausdrückliches Lernziel der Fahrrad-Vorbereitung."
         },
         {
           "operator": "diskutieren",
@@ -1587,11 +1617,12 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Erstens zeigt die Statistik zur Verkehrsbeteiligung zum Unfallzeitpunkt, dass 35,7 Prozent der Verunglückten zu Fuß unterwegs waren, der größte Anteil aller Beteiligungsarten. Das Zufußgehen lässt sich aber gerade nicht in den Schonraum verlagern, weil es zu fast jedem Weg gehört - geübt werden muss es deshalb dort, wo es tatsächlich stattfindet."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine Synthese und deine begründete Position",
           "idx": [
             4,
@@ -1599,10 +1630,11 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "Als Synthese lässt sich festhalten: Der Schonraum ist ein wichtiges Durchgangsstadium, aber keine Dauerlösung."
         }
       ],
-      "muster": "Für die These spricht, dass Sicherheit bei den didaktischen Prinzipien der Mobilitätsförderung an erster Stelle genannt wird: Im Schonraum können Kinder Fertigkeiten wie das Fahrradfahren ohne reale Gefahr aufbauen, entsprechend sind Übungen im Schonraum ein ausdrückliches Lernziel der Fahrrad-Vorbereitung. Gegen die These spricht jedoch mehreres. Erstens zeigt die Statistik zur Verkehrsbeteiligung zum Unfallzeitpunkt, dass 35,7 Prozent der Verunglückten zu Fuß unterwegs waren, der größte Anteil aller Beteiligungsarten. Das Zufußgehen lässt sich aber gerade nicht in den Schonraum verlagern, weil es zu fast jedem Weg gehört - geübt werden muss es deshalb dort, wo es tatsächlich stattfindet. Zweitens nennt die Vorlesung Übungen in Ernstsituationen als eigene Methode der Mobilitätsförderung, und das Prinzip der Lebensnähe verlangt, von echten Verkehrssituationen des Alltags auszugehen; auch der Rahmenlehrplan zielt auf den selbstständig bewältigten Schulweg. Drittens bliebe, wer nur im Schonraum übt, dauerhaft auf Begleitung angewiesen - das verschärft die Abhängigkeit, die im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe steht. Als Synthese lässt sich festhalten: Der Schonraum ist ein wichtiges Durchgangsstadium, aber keine Dauerlösung. Ein gestufter Aufbau von spielerischen Übungen über den Schonraum bis zur begleiteten und schließlich selbstständigen Ernstsituation verbindet Sicherheit mit dem Ziel eigenständiger Mobilität - dieser Position schließe ich mich an.",
+      "muster": "Für die These spricht, dass Sicherheit bei den didaktischen Prinzipien der Mobilitätsförderung an erster Stelle genannt wird: Im Schonraum können Kinder Fertigkeiten wie das Fahrradfahren ohne reale Gefahr aufbauen, entsprechend sind Übungen im Schonraum ein ausdrückliches Lernziel der Fahrrad-Vorbereitung. Hinzu kommt, dass sich eine Fertigkeit im geschützten Raum einzeln, wiederholt und im eigenen Tempo üben lässt, was den Prinzipien Strukturierung, Individualisierung und Kontinuität entspricht: Ausweich-, Dreh- und Wendebewegungen mit dem Rollstuhl an der MOBI-AKTIV-Rampe oder das Abstecken von breit und schmal mit Kartons und Seilen lassen sich auf der Straße so nicht wiederholen. Gegen die These spricht jedoch mehreres. Erstens zeigt die Statistik zur Verkehrsbeteiligung zum Unfallzeitpunkt, dass 35,7 Prozent der Verunglückten zu Fuß unterwegs waren, der größte Anteil aller Beteiligungsarten. Das Zufußgehen lässt sich aber gerade nicht in den Schonraum verlagern, weil es zu fast jedem Weg gehört - geübt werden muss es deshalb dort, wo es tatsächlich stattfindet. Zweitens nennt die Vorlesung Übungen in Ernstsituationen als eigene Methode der Mobilitätsförderung, und das Prinzip der Lebensnähe verlangt, von echten Verkehrssituationen des Alltags auszugehen; auch der Rahmenlehrplan zielt auf den selbstständig bewältigten Schulweg. Drittens bliebe, wer nur im Schonraum übt, dauerhaft auf Begleitung angewiesen - das verschärft die Abhängigkeit, die im Spannungsfeld zur Forderung nach Selbstbestimmung und Teilhabe steht. Als Synthese lässt sich festhalten: Der Schonraum ist ein wichtiges Durchgangsstadium, aber keine Dauerlösung. Ein gestufter Aufbau von spielerischen Übungen über den Schonraum bis zur begleiteten und schließlich selbstständigen Ernstsituation verbindet Sicherheit mit dem Ziel eigenständiger Mobilität - dieser Position schließe ich mich an.",
       "musterVarianten": {
         "de": {
           "einfach": "Für die These spricht zunächst ein Punkt. Die Sicherheit wird bei den didaktischen Prinzipien der Mobilitätsförderung an erster Stelle genannt. Ein Schonraum ist ein geschützter Ort ohne echte Gefahr. Dort können Kinder Fertigkeiten ohne Risiko aufbauen. Ein Beispiel ist das Fahrradfahren. Übungen im Schonraum sind bei der Fahrrad-Vorbereitung ein ausdrückliches Lernziel. Gegen die These spricht jedoch mehreres. Das erste Gegenargument kommt aus der Statistik. Diese Statistik zeigt die Verkehrsbeteiligung zum Unfallzeitpunkt. Verkehrsbeteiligung heißt: in welcher Rolle ein Mensch unterwegs war. 35,7 Prozent der Verunglückten waren zu Fuß unterwegs. Das ist der größte Anteil aller Beteiligungsarten. Das Zufußgehen kann man aber nicht in den Schonraum verlagern. Es gehört nämlich zu fast jedem Weg. Deshalb muss man es dort üben, wo es tatsächlich stattfindet. Das zweite Gegenargument kommt aus der Methodik. Die Vorlesung nennt Übungen in Ernstsituationen als eine eigene Methode der Mobilitätsförderung. Ernstsituation heißt: Geübt wird im echten Verkehr. Dazu kommt das Prinzip der Lebensnähe. Lebensnähe heißt: Der Unterricht geht von echten Situationen des Alltags aus. Auch der Rahmenlehrplan zielt auf den selbstständig bewältigten Schulweg. Das dritte Gegenargument betrifft die Folgen. Wer nur im Schonraum übt, bleibt dauerhaft auf Begleitung angewiesen. Das verschärft die Abhängigkeit. Und diese Abhängigkeit steht im Widerspruch zur Forderung nach Selbstbestimmung und Teilhabe. Daraus ergibt sich eine Synthese. Der Schonraum ist ein wichtiges Durchgangsstadium. Er ist aber keine Dauerlösung. Sinnvoll ist ein gestufter Aufbau. Er beginnt mit spielerischen Übungen. Danach folgt der Schonraum. Danach folgt die begleitete Ernstsituation. Und am Ende steht die selbstständige Fahrt. So verbindet man die Sicherheit mit dem Ziel eigenständiger Mobilität. Dieser Position schließe ich mich an."
@@ -1651,6 +1683,11 @@
           "Zum Schluss selbst Stellung beziehen",
           "Dein eigenes Urteil, kurz begründet",
           "Was gehört ans Ende jeder Diskussion?"
+        ],
+        [
+          "Was geht drinnen, was draußen nie möglich wäre?",
+          "Drei weitere didaktische Prinzipien sprechen ebenfalls dafür",
+          "Rampe, Kartons, Seile: warum gerade dort üben?"
         ]
       ]
     },
@@ -1681,7 +1718,7 @@
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was die Regeln zusammen abdecken – und warum sie im SGE besonders zählen",
           "idx": [
             3,
@@ -1790,14 +1827,12 @@
       "generiert": true,
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Was setzt der Rahmenlehrplan überhaupt als Ziel?",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "satzanfang": "Der Rahmenlehrplan setzt als Ziel, dass …"
+          "form": "liste"
         },
         {
           "operator": "eroertern",
@@ -1808,7 +1843,8 @@
             2
           ],
           "form": "rolle",
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Schulweg und Praktikumsweg sind regelmäßig wiederkehrende Strecken, sie lassen sich systematisch üben, und die dabei erworbenen Kompetenzen wie Fahrpläne lesen, Umsteigen oder Verhalten im Bus sind auf andere Wege übertragbar."
         },
         {
           "operator": "eroertern",
@@ -1822,17 +1858,19 @@
             7
           ],
           "form": "rolle",
-          "satzanfang": "Dagegen lässt sich einwenden, dass …"
+          "satzanfang": "Dagegen lässt sich einwenden, dass …",
+          "beispiel": "Mobilität wird in der Vorlesung als Überwindung der Distanz zwischen den Lebensbereichen verstanden, und zu diesen Bereichen gehören neben Arbeiten auch Wohnen, Einkaufen und Freizeit. Zwei fest eingeübte Strecken decken das nicht ab."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein abgewogenes Urteil zum Schluss.",
           "idx": [
             8
           ],
           "form": "rolle",
-          "satzanfang": "Ich bewerte die Zielsetzung deshalb als …"
+          "satzanfang": "Ich bewerte die Zielsetzung deshalb als …",
+          "beispiel": "Ich bewerte die Zielsetzung deshalb als notwendigen, aber nicht hinreichenden Schritt: Sie taugt als Mindestziel und als Einstieg, nicht aber als Maßstab dafür, ob Teilhabe erreicht ist."
         }
       ],
       "hinweise": [
@@ -2491,11 +2529,12 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Betroffen ist der Bereich … ; dazu passt die Methodenkarte …"
+          "satzanfang": "Betroffen ist der Bereich … ; dazu passt die Methodenkarte …",
+          "beispiel": "Betroffen ist die auditive Wahrnehmung. Sie zählt zu den zehn Mobilitätskompetenzen nach Stöppler, und für sie ist ein eigener Katalog mobilitätsspezifischer Förderziele formuliert."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Ablauf, Variation und der methodische Hinweis davor",
           "idx": [
             2,
@@ -2504,18 +2543,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Im Ablauf …"
+          "satzanfang": "Im Ablauf …",
+          "beispiel": "Im Ablauf erzeugt die Lehrkraft mit diesen Quellen nacheinander Klingelgeräusche, während die Teilnehmenden mit dem Rücken zu ihr stehen oder sitzen; ihre Aufgabe ist es, die einzelnen Geräuschquellen zu benennen."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Welche Förderziele des Bereichs dabei getroffen werden",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Getroffen werden damit die Ziele …"
+          "satzanfang": "Getroffen werden damit die Ziele …",
+          "beispiel": "Damit trifft die Übung genau die Ziele, die für den auditiven Bereich formuliert sind: das Erkennen, das Zuordnen und das Differenzieren von Verkehrsgeräuschen sowie die auditive Diskriminierung, die die Variation mit dem abweichenden Geräusch besonders fordert."
         }
       ],
       "muster": "Betroffen ist die auditive Wahrnehmung. Sie zählt zu den zehn Mobilitätskompetenzen nach Stöppler, und für sie ist ein eigener Katalog mobilitätsspezifischer Förderziele formuliert. Fördern lässt sie sich mit der Übung Geräuscheraten. Dafür braucht es verschiedene Geräuschquellen, etwa eine Fahrradklingel, eine Schiffsglocke, eine Triangel, einen Wecker oder eine Zimbel. Im Ablauf erzeugt die Lehrkraft mit diesen Quellen nacheinander Klingelgeräusche, während die Teilnehmenden mit dem Rücken zu ihr stehen oder sitzen; ihre Aufgabe ist es, die einzelnen Geräuschquellen zu benennen. Steigern lässt sich die Übung, indem zwei Quellen gleichzeitig angeschlagen werden oder indem ein Geräusch herausgefunden werden soll, das ganz anders klingt als die übrigen, zum Beispiel eine Hupe oder eine Flöte. Methodisch wichtig ist der Schritt davor: Die Teilnehmenden betrachten die Geräte, probieren sie aus und benennen sie, damit das spätere Heraushören auf bekanntem Material aufsetzt. Damit trifft die Übung genau die Ziele, die für den auditiven Bereich formuliert sind: das Erkennen, das Zuordnen und das Differenzieren von Verkehrsgeräuschen sowie die auditive Diskriminierung, die die Variation mit dem abweichenden Geräusch besonders fordert. Die Geräuschquellen selbst sind überwiegend keine Verkehrsgeräusche; trainiert wird aber genau die Fähigkeit, die im Straßenverkehr gebraucht wird, und Fahrradklingel und Hupe stellen den Bezug ausdrücklich her.",
@@ -2596,7 +2637,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht erstens, dass …"
+          "satzanfang": "Dafür spricht erstens, dass …",
+          "beispiel": "Menschen im Förderschwerpunkt geistige Entwicklung sind von der Kita über die Schule bis ins Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen, und genau daraus entsteht Abhängigkeit. Ein Fahrzeug, das ohne fremde Fahrperson auskommt, könnte diese Abhängigkeit an einer entscheidenden Stelle verringern."
         },
         {
           "operator": "eroertern",
@@ -2609,18 +2651,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht erstens, dass …"
+          "satzanfang": "Dagegen spricht erstens, dass …",
+          "beispiel": "Dagegen spricht erstens, dass selbstbestimmte Mobilität auf zwei Bausteinen ruht: auf der tatsächlichen Möglichkeit, sich in der Umgebung zu bewegen, und auf dem Wissen darüber, sich sicher und eigenständig im Verkehr zu bewegen. Ein autonomes Fahrzeug liefert nur den ersten Baustein."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein begründetes Fazit",
           "idx": [
             6
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "Als Fazit lässt sich festhalten, dass die Technik die Möglichkeit erweitert, die Mobilitätsbildung aber nicht ersetzt."
         }
       ],
       "muster": "Für ein Mehr an Teilhabe spricht zunächst die Ausgangslage. Menschen im Förderschwerpunkt geistige Entwicklung sind von der Kita über die Schule bis ins Arbeitsleben auf spezielle Fahrdienste, Begleitungen und Assistenzen angewiesen, und genau daraus entsteht Abhängigkeit. Ein Fahrzeug, das ohne fremde Fahrperson auskommt, könnte diese Abhängigkeit an einer entscheidenden Stelle verringern. Zweitens gilt uneingeschränkte Mobilität als Grundbedürfnis und als Ausdruck einer selbstständigen Lebensführung; sie öffnet Felder wie Arbeit, Bildung, Freizeit, Gesundheit und soziale Beziehungen. Wer mehr Ziele erreichen kann, erreicht damit auch mehr dieser Felder. Drittens ist das Mitgestalten einer zukunftsfähigen Mobilität selbst als Kernkompetenz formuliert, also als Teilhabe an den sozialen, technischen, ökologischen und ökonomischen Entwicklungsprozessen in der Gesellschaft für die Mobilität der Zukunft. Eine neue Mobilitätstechnik ist damit nicht bloß ein Angebot, das man nutzt oder liegen lässt; sie ist selbst eines der Felder, an denen teilzuhaben ist, und wer an ihrer Gestaltung beteiligt wird, gewinnt genau die Teilhabe, die diese Kernkompetenz beschreibt. Dagegen spricht erstens, dass selbstbestimmte Mobilität auf zwei Bausteinen ruht: auf der tatsächlichen Möglichkeit, sich in der Umgebung zu bewegen, und auf dem Wissen darüber, sich sicher und eigenständig im Verkehr zu bewegen. Ein autonomes Fahrzeug liefert nur den ersten Baustein. Zweitens stehen fehlende Mobilitätsbildung sowie die Einstellung und das Verhalten anderer selbst in der Reihe der Mobilitätsbehinderungen; beide verschwinden nicht dadurch, dass ein Fahrzeug selbst lenkt. Drittens gelten für alle Maßnahmen der Barrierefreiheit weiterhin drei Regeln: Alle Ziele sollen zu Fuß wie mit dem Rollstuhl erreichbar sein, alle Informationen über mindestens zwei Sinne erfahrbar sein und kurz und einfach gestaltet werden. Ein Shuttle, das sich nur über einen Bildschirm in Schriftsprache bedienen lässt, verfehlt diese Regeln und schafft neue Barrieren, statt alte abzubauen. Als Fazit lässt sich festhalten, dass die Technik die Möglichkeit erweitert, die Mobilitätsbildung aber nicht ersetzt. Mehr Teilhabe entsteht erst, wenn beide Bausteine zusammenkommen und die Regeln der Barrierefreiheit von Anfang an mitgedacht werden; dieser Position schließe ich mich an.",

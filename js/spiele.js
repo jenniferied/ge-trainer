@@ -51,6 +51,16 @@ var OPERATOREN = [
   { wort: "analysieren", afb: 2, tipp: "Etwas in seine Teile zerlegen und zeigen, wie sie zusammenhängen." },
   { wort: "erlaeutern", afb: 2, tipp: "Erklären UND mit einem Beispiel oder Beleg verständlich machen." },
   { wort: "anwenden", afb: 2, tipp: "Gelerntes auf einen neuen Fall übertragen – der Fall gehört in die Antwort." },
+  /* vergleichen und zuordnen, seit 23.08.2026 abends. Am Mittag standen sie
+     bewusst DRAUSSEN, weil die AFB-Pyramide auf Folie 5 sie nicht listet und ein
+     Spiel, das Rose Signalwoerter beibringt, die auf ihrer Liste fehlen,
+     falscher Stoff waere. Zurueckgenommen mit Beleg: die Dozentin fragt beide
+     woertlich in ihren eigenen Beispielaufgaben ("Vergleichen Sie die
+     Verkehrsmittel in der Alltagsmobilitaet 2002 und 2023", "Ordnen Sie
+     verschiedene Unterrichtsmassnahmen den Mobilitaetskompetenzen zu").
+     Was sie TATSAECHLICH FRAGT, schlaegt die Liste, die sie als Stoff ausgibt. */
+  { wort: "vergleichen", afb: 2, tipp: "Zwei Sachen nebeneinanderlegen: was ist gleich, was ist anders – und was folgt daraus." },
+  { wort: "zuordnen", afb: 2, tipp: "Sagen, was zu was gehört – und woran man das erkennt." },
   { wort: "bewerten", afb: 3, tipp: "Ein begründetes Urteil fällen, Kriterien nennen." },
   { wort: "eroertern", afb: 3, tipp: "Pro und Contra abwägen und am Ende Stellung beziehen." },
   { wort: "entwickeln", afb: 3, tipp: "Etwas Eigenes vorschlagen, z. B. eine Maßnahme oder ein Konzept." },
@@ -67,7 +77,7 @@ var AFB_OPTION = {
 var AFB_KURZ = { 1: "AFB I", 2: "AFB II", 3: "AFB III" };
 var AFB_WOERTER = {
   1: "beschreiben, (be)nennen",
-  2: "analysieren, erläutern, anwenden",
+  2: "analysieren, erläutern, anwenden, vergleichen, zuordnen",
   3: "bewerten, erörtern, entwickeln, diskutieren"
 };
 
@@ -77,7 +87,7 @@ function anzeige(wort) { return SCHREIBWEISE[wort] || wort; }
 
 /* Verdoppelt am 22.08.2026 (Rose: "Die totale Anzahl der Wiederholungen in
    den Spielen sollte gedoppelt werden in GE"). Traegt: 6 Signalwoerter aus der
-   Zehnerliste plus 6 Aufgaben-Karten aus 143 nutzbaren (aufgabenPool,
+   Zwoelferliste plus 6 Aufgaben-Karten aus 143 nutzbaren (aufgabenPool,
    nachgemessen am 22.08. nach Prompt A). Nach Karte 6 steht der
    Halbzeit-Ausstieg. */
 var OP_RUNDE = 12;
@@ -85,7 +95,10 @@ var OP_RUNDE = 12;
    Runde (bgRunde, opts.teil2): 14 der 15 Kategorien hatten nur 4-8 Paare,
    Math.min(BG_RUNDE, alle.length) haette eine groessere Zahl still gekappt. */
 var BG_RUNDE = 5;
-// Zuordnen zieht wie drueben (st opZuordnen) hart 5 aus der Zehnerliste.
+/* Zuordnen zieht wie drueben (st opZuordnen) 5 Woerter. Seit dem 23.08.2026
+   sind es 5 aus ZWOELF statt aus zehn - die Ziehstelle unten deckelt ohnehin
+   mit Math.min(OPZ_RUNDE, kandidaten.length), die Zahl hier bleibt also
+   die Rundengroesse und nicht die Listenlaenge. */
 var OPZ_RUNDE = 5;
 // Modell-Steckbrief: 4 Modelle je Runde, je drei Fragen = 12 Antworten.
 var MD_RUNDE = 4;
@@ -198,6 +211,8 @@ export function heuteGespielt() {
      die zwei Neuen vom 22.08. */
   var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0, opzuordnen: 0, modelle: 0 };
   state.antwortLog.forEach(function (a) {
+    // teilschritt: Unterschritt einer Frage, zaehlt nicht als eigene (core.js).
+    if (a.teilschritt === true) return;
     if (a.modus === "spiel" && a.ts >= t0 && s[a.spiel] !== undefined) s[a.spiel]++;
   });
   return s;
@@ -343,6 +358,8 @@ function spickzettel() {
       d.appendChild(s);
       var kette = kettenText(o.wort);
       if (kette) d.appendChild(el("div", "op-kette", kette));
+      // Die Zahl kommt von ihr, nicht von uns - deshalb steht sie mit Absender da.
+      if (hatAnzahl(o.wort)) d.appendChild(el("div", "op-tipp muted", ANZAHL_HINWEIS));
       d.appendChild(el("div", "op-tipp", o.tipp));
       liste.appendChild(d);
     });
@@ -595,44 +612,17 @@ export function afbAnalyse(frage, afb) {
   };
 }
 
-/* ---------- Erkennung fuer die ROLLEN-Ableitung (23.08.2026) ----------
-   Entschieden von Jennifer am 23.08.: die OPERATOREN-Tabelle bleibt bei zehn
-   Woertern, weil sie SELBST Klausurstoff ist - sie steht im Spickzettel, sie
-   ist der Kartensatz des Signalwoerter-Spiels und die Vorlage des Zuordnens,
-   und die Klausur-Info der Dozentin nennt "vergleichen" und "zuordnen" nicht.
-   Ein Spiel, das Rose Signalwoerter beibringt, die auf ihrer Liste fehlen,
-   waere falscher Stoff.
+/* Hier standen bis zum 23.08.2026 abends ROLLEN_ZUSATZ und rollenOperator():
+   eine zweite, kleine Wortliste nur fuer die Rollen-Ableitung, damit Aufgaben
+   mit "Vergleichen Sie" im Stamm ueberhaupt eine Kette bekamen, ohne dass die
+   Woerter im Spickzettel auftauchten.
 
-   Fuenf Korpus-Aufgaben stellen aber woertlich "Vergleichen Sie …", und ohne
-   Erkennung faellt ihre Rollen-Schablone (treppe.js ROLLEN_SCHABLONE) stumm
-   auf die flache Liste zurueck. Deshalb genau eine zusaetzliche Liste, die
-   NUR die Rollen ableitet und in keinem Spiel vorkommt.
-
-   Der tipp fehlt hier bewusst: er wird nirgends gelesen: ROLLEN_ZUSATZ geht
-   nur in rollenOperator(), und das gibt allein das normalisierte Wort zurueck.
-   Stuende hier einer, waere er ein Erklaertext, den niemand je zu sehen
-   bekommt - und beim naechsten Lesen sicher der Anlass, das Wort doch in den
-   Spickzettel zu heben. */
-var ROLLEN_ZUSATZ = [{ wort: "vergleichen", afb: 2 }, { wort: "zuordnen", afb: 2 }];
-
-/* Welcher Operator bestimmt den AUFBAU der Antwort? Gibt das normalisierte
-   Wort zurueck ("erlaeutern", nicht "erläutern") oder null.
-
-   BEWUSST NICHT afbAnalyse: das hier ist die breitere Frage. afbAnalyse
-   beantwortet "welches Klausur-Signalwort steht im Stamm" und muss deshalb bei
-   den zehn bleiben - klausurfrage.js sagt ihre Antwort woertlich auf dem Schirm
-   an ("Das Signalwort ist …"). Ein Satz, der Rose ein Wort als Signalwort
-   verkauft, das nicht auf ihrer Liste steht, waere genau der Schaden, den die
-   Trennung verhindern soll. */
-export function rollenOperator(frage) {
-  var klein = String(frage || "").toLowerCase();
-  var treffer = null, pos = Infinity;
-  OPERATOREN.concat(ROLLEN_ZUSATZ).forEach(function (o) {
-    var i = klein.indexOf(anzeige(o.wort).toLowerCase());
-    if (i >= 0 && i < pos) { pos = i; treffer = o.wort; }
-  });
-  return treffer;
-}
+   BEIDE SIND WEG, weil ihr Grund weg ist: vergleichen und zuordnen stehen jetzt
+   selbst in OPERATOREN (die Dozentin fragt sie in ihren Beispielaufgaben), und
+   seit A0 fuehren sie ohnehin auf dieselbe AFB-II-Kette wie erlaeutern. Damit
+   findet afbAnalyse() sie von allein, und treppe.js ausSchablone() nutzt wieder
+   sie statt einer Sonderliste. Eine Tabelle weniger, die auseinanderlaufen
+   kann - genau der Fehler, den dieses Projekt schon zweimal hatte. */
 
 /* ---------- Die Rollenketten: EINE Quelle fuer drei Verwendungen ----------
    Bis zum 23.08.2026 stand diese Tabelle als ROLLEN_SCHABLONE in treppe.js
@@ -653,39 +643,95 @@ export function rollenOperator(frage) {
    SATZANFANG und ROLLEN_AUFTRAG bleiben in treppe.js: das sind Rendering-
    Fragen der Treppe, die sonst niemand stellt. */
 export var ROLLEN_KETTE = {
-  erlaeutern: ["benennen", "entfalten", "belegen"],
-  erklaeren: ["benennen", "entfalten", "belegen"],
-  analysieren: ["gegenstand", "zerlegung", "zusammenhang", "folgerung"],
-  diskutieren: ["these", "dafuer", "dagegen", "fazit"],
-  eroertern: ["these", "dafuer", "dagegen", "fazit"],
-  bewerten: ["these", "dafuer", "dagegen", "fazit"],
-  vergleichen: ["kriterium", "positionA", "positionB", "unterschied", "gemeinsamkeit"],
-  zuordnen: ["kriterium", "positionA", "positionB", "unterschied", "gemeinsamkeit"],
+  /* AFB II - IHRE Worte. Die Klausur-Info sagt woertlich, wie eine Antwort auf
+     Teilaufgabe b) aussieht: "Benennung, beschreibung + erlaeuterung anhand ein
+     Beispiel". Genau das steht hier.
+
+     erlaeutern ist absichtlich zugleich OPERATOR und ROLLE - ihr Wort fuer den
+     dritten Schritt. Die beiden Namensraeume beruehren sich nicht.
+
+     analysieren, vergleichen und zuordnen behalten einen EIGENEN Eintrag, weil
+     der Aufgabentext sie so stellt, zeigen aber auf dieselbe Kette. Ihre eigene
+     Vergleichsaufgabe ("Vergleichen Sie die Verkehrsmittel 2002 und 2023") ist
+     AFB II, und die Antwort ist genau: benennen, welche - beschreiben, wie sie
+     sich unterscheiden - am Beispiel erlaeutern. */
+  erlaeutern: ["benennen", "beschreiben", "erlaeutern"],
+  erklaeren: ["benennen", "beschreiben", "erlaeutern"],
+  analysieren: ["benennen", "beschreiben", "erlaeutern"],
+  vergleichen: ["benennen", "beschreiben", "erlaeutern"],
+  zuordnen: ["benennen", "beschreiben", "erlaeutern"],
+  /* AFB III - ebenfalls ihre Worte, und die Ausrufezeichen sind ihre:
+     "zwei punkte dafuer und zwei dagegen und dann eine bewertung - Wichtig!!!"
+     these steht NICHT darin und ist deshalb am 23.08.2026 aus der Wertung
+     gefallen: schreibt Rose eine, wird sie positiv angemerkt, nicht verlangt. */
+  diskutieren: ["dafuer", "dagegen", "bewertung"],
+  eroertern: ["dafuer", "dagegen", "bewertung"],
+  bewerten: ["dafuer", "dagegen", "bewertung"],
+  /* Die einzige Kette, die UNSERE bleibt - gelesen aus dem Aufgabentext, nicht
+     erfunden: "Entwickeln Sie ein mehrtaegiges Wohntraining ... und begruenden
+     Sie", "Ein Schueler meldet sich nie ...". Acht Aufgaben sagen es woertlich.
+     In Dafuer/Dagegen gepresst waere genau der Fehler, den diese Runde
+     abstellt. */
   entwickeln: ["fall", "massnahme", "begruendung"],
   anwenden: ["fall", "massnahme", "begruendung"]
 };
+
+/* WIE VIELE Punkte eine Rolle verlangt. Es gibt genau eine Zahl im ganzen
+   Klausurmaterial, und sie steht mit drei Ausrufezeichen da (Klausur-Info der
+   Dozentin): "zwei punkte dafuer und zwei dagegen und dann eine bewertung -
+   Wichtig!!!". Bis zum 23.08.2026 stand sie NIRGENDS in der App.
+
+   Bevorzugt zwei, akzeptabel ein bis zwei - die KI wertet nach Logik und nicht
+   nach Formel (siehe DISKUTIEREN_REGEL im Edge-Prompt). Die Zahl hier ist die
+   ANSAGE an Rose, keine Bewertungsschwelle.
+
+   Sie steht als Tabelle und nicht als Text in drei Views, weil genau das der
+   Fehler waere, den dieses Projekt schon zweimal hatte: eine Bedingung an
+   mehreren Orten, die auseinanderlaeuft. rollenName() unten haengt sie an, und
+   damit erscheint sie automatisch im Zuordnen-Spiel, im Spickzettel und in der
+   Aufloesung der Teile-Frage. Eine Rolle ohne Eintrag verlangt keine bestimmte
+   Anzahl - das ist der Normalfall und kein Mangel. */
+export var ROLLEN_ANZAHL = { dafuer: 2, dagegen: 2 };
+
+/* Der Satz dazu, woertlich gleich in Spickzettel und Aufloesung. Er nennt die
+   Quelle, weil "zwei" ohne Absender wie unsere Erfindung aussieht - und Rose
+   soll wissen, dass das die Dozentin ist und nicht der Trainer. */
+export var ANZAHL_HINWEIS = "Zwei dafür und zwei dagegen – so verlangt es die Dozentin ausdrücklich.";
+
+/* Ob eine Kette ueberhaupt eine Anzahl-Ansage traegt. */
+export function hatAnzahl(wort) {
+  var k = ROLLEN_KETTE[wort];
+  return !!k && k.some(function (r) { return ROLLEN_ANZAHL[r]; });
+}
 
 /* Wie eine Rolle HEISST, wenn sie in einer Kette steht. Bewusst Substantive
    und nicht die Fragen aus ROLLEN_AUFTRAG ("Was spricht dafuer?"): eine Reihe
    von Fragen nebeneinander liest sich wie ein Fragebogen, eine Reihe von
    Substantiven wie ein Bauplan. Genau der soll es sein. */
 export var ROLLEN_NAME = {
-  benennen: "Benennen", entfalten: "Entfalten", belegen: "Belegen",
-  these: "These", dafuer: "Dafür", dagegen: "Dagegen", fazit: "Fazit",
-  kriterium: "Kriterium", positionA: "Position A", positionB: "Position B",
-  unterschied: "Unterschied", gemeinsamkeit: "Gemeinsamkeit",
-  fall: "Fall", massnahme: "Maßnahme", begruendung: "Begründung",
-  gegenstand: "Gegenstand", zerlegung: "Zerlegung",
-  zusammenhang: "Zusammenhang", folgerung: "Folgerung"
+  benennen: "Benennen", beschreiben: "Beschreiben",
+  erlaeutern: "Erläutern am Beispiel",
+  dafuer: "Dafür", dagegen: "Dagegen", bewertung: "Bewertung",
+  fall: "Fall", massnahme: "Maßnahme", begruendung: "Begründung"
 };
 
-/* "These · Dafür · Dagegen · Fazit" - oder "" fuer die AFB-I-Woerter, die
+/* Wie eine Rolle auf dem Schirm steht, Anzahl inklusive: "Dafür (2×)".
+   DIE EINE STELLE, an der beides zusammenkommt - klausurfrage.js benutzt sie
+   ebenfalls, damit die Aufloesung der Teile-Frage nicht "Dafür" sagt, wo das
+   Zuordnen-Spiel "Dafür (2×)" sagt. */
+export function rollenName(rolle) {
+  var name = ROLLEN_NAME[rolle] || rolle;
+  var n = ROLLEN_ANZAHL[rolle];
+  return n ? name + " (" + n + "×)" : name;
+}
+
+/* "Dafür (2×) · Dagegen (2×) · Bewertung" - oder "" fuer die AFB-I-Woerter, die
    keine Kette haben. Der leere String ist kein Mangel: eine Nennaufgabe hat
    eine Liste und keinen Aufbau, und etwas anderes zu behaupten waere falsch. */
 export function kettenText(wort) {
   var kette = ROLLEN_KETTE[wort];
   if (!kette) return "";
-  return kette.map(function (r) { return ROLLEN_NAME[r] || r; }).join(" · ");
+  return kette.map(rollenName).join(" · ");
 }
 
 export function afbOption(afb) { return AFB_OPTION[afb] || ""; }

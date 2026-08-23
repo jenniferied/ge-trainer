@@ -315,6 +315,11 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
     dauerMin: dauerMin,
     feedback: feedback,       // "sofort" | "ende"
     phase: "lauf",            // "lauf" | "korrektur"
+    // Die getroffene Wahl, nicht die spaeter erratene: beim Sync stand hier
+    // frueher nur themen.length, und bei fuenf oder weniger Themen im Manifest
+    // meldete sich der Alle-Modus als "fuenf". Eine Angabe, die man hat, wird
+    // nicht rekonstruiert.
+    umfang: alleThemen ? "alle" : "fuenf",
     ueberzogen: false,
     warnung10: false,
     blattZaehler: bz,
@@ -418,13 +423,24 @@ function einstellungen() {
   return {
     dauerMin: e.dauerMin === 90 ? 90 : 120,          // Nachteilsausgleich ist Default
     feedback: e.feedback === "sofort" ? "sofort" : "ende",
-    blatt: e.blatt === "hell" ? "hell" : "dunkel",
-    umfang: e.umfang === "fuenf" ? "fuenf" : "alle"  // alle Themen ist Default
+    blatt: e.blatt === "hell" ? "hell" : "dunkel"
+    // umfang fehlt hier mit Absicht - siehe einstellungenMerken(). Der Wert wird
+    // auch dann nicht mehr gelesen, wenn er aus frueheren Laeufen noch im
+    // gespeicherten klausurEinst steht; sonst haette sich fuer Rose nichts
+    // geaendert. Der Default steht stattdessen in zeigeSetup().
   };
 }
 
+/* umfang wird bewusst NICHT gemerkt (23.08.2026): wer einmal "5 wie in echt"
+   antippt, bekaeme es danach jedes Mal vorausgewaehlt und uebte dauerhaft zu
+   wenig Themen. Die Wahl soll bei jedem Bogen neu getroffen werden, alles
+   andere (Zeit, Feedback, Blatt) bleibt gemerkt. Weil einstellungen() den
+   Schluessel nicht mehr liefert, faellt der alte Wert beim naechsten Speichern
+   von selbst aus dem Lernstand - es braucht keine Aufraeum-Runde. */
 function einstellungenMerken(neu) {
-  state.klausurEinst = Object.assign(einstellungen(), neu);
+  var merken = Object.assign({}, neu);
+  delete merken.umfang;
+  state.klausurEinst = Object.assign(einstellungen(), merken);
   speichernJetzt();
 }
 
@@ -484,7 +500,10 @@ function zeigeSetup() {
   kopfLeiste("Klausur-Simulation", "Wie am 10.09.: Papier, Stift, offene Aufgaben. Nur ohne Ernstfall.");
 
   var e = einstellungen();
-  var wahl = { dauerMin: e.dauerMin, feedback: e.feedback, blatt: e.blatt, umfang: e.umfang };
+  // umfang kommt nicht aus einstellungen() (wird nicht gemerkt), sondern faengt
+  // jedes Mal bei "alle" an. Der Wert muss hier wirklich stehen: segmentWahl
+  // vergleicht mit ===, ein undefined liesse beide Knoepfe unmarkiert.
+  var wahl = { dauerMin: e.dauerMin, feedback: e.feedback, blatt: e.blatt, umfang: "alle" };
 
   var info = el("div", "karte info-karte");
   var ul = document.createElement("ul");
@@ -499,9 +518,14 @@ function zeigeSetup() {
 
   var z0 = el("div", "zeile");
   var l0 = el("div", "label", "Umfang");
-  l0.appendChild(el("div", "klein", "Alle 8 mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben."));
+  /* Die Zahl kommt aus THEMEN, also aus data/manifest.json (core.js ladeThemen) -
+     dieselbe Liste, aus der waehleThemen() zieht. Faellt ein Thema weg oder kommt
+     eines dazu, aendert sich der Text mit; eine hartkodierte 8 wuerde dann luegen.
+     Die 5 daneben bleibt fest: das ist die echte Klausur, nicht unser Korpus. */
+  var alleN = THEMEN.length;
+  l0.appendChild(el("div", "klein", "Alle " + alleN + " mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben."));
   z0.appendChild(l0);
-  z0.appendChild(segment([{ wert: "alle", text: "Alle 8 Themen" }, { wert: "fuenf", text: "5 wie in echt" }], wahl.umfang, function (v) { wahl.umfang = v; }));
+  z0.appendChild(segment([{ wert: "alle", text: "Alle " + alleN + " Themen" }, { wert: "fuenf", text: "5 wie in echt" }], wahl.umfang, function (v) { wahl.umfang = v; }));
   setup.appendChild(z0);
 
   var z1 = el("div", "zeile");
@@ -1922,7 +1946,15 @@ function abschliessen() {
     max: maxP,
     bestanden: maxP ? hatP >= bestehensGrenze(k) : null,
     detail: {
-      themen: k.themen, umfang: k.themen.length > 5 ? "alle" : "fuenf", feedback: k.feedback,
+      // Der Bogen traegt umfang seit dem 23.08.2026 selbst. Die alte Heuristik
+      // bleibt als Fallback stehen und ist kein toter Code: state.klausur steht
+      // absichtlich nicht in snapshot() (sync.js), kommt also nie von einem
+      // anderen Geraet - aber er bleibt nach dem Ablegen hier liegen, und ein
+      // Bogen von vor der Aenderung kann heute noch abgeschlossen werden. Dann
+      // fehlt das Feld, und geraten ist besser als leer.
+      themen: k.themen,
+      umfang: k.umfang || (k.themen.length > 5 ? "alle" : "fuenf"),
+      feedback: k.feedback,
       // proFrage wie im ST-Trainer: ohne das steht in der Datenbank von einer
       // ganzen Klausur nur eine Gesamtpunktzahl, und "welche Themen kosten
       // Punkte?" laesst sich ueber mehrere Laeufe hinweg nie beantworten.

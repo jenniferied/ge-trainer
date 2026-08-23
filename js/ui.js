@@ -2,7 +2,7 @@
    Sticker wie im ST-Trainer: Roses & Jennifers meistgenutzte WhatsApp-Sticker,
    Kategorien good/part/sanft - nie haemisch. */
 
-import { state, speichern, el } from "./core.js";
+import { state, speichern, el, themenStand } from "./core.js";
 
 /* ---------- Theme (Standard: dunkel) ---------- */
 
@@ -319,6 +319,24 @@ export function themenAuswahl(themen, cfg) {
     var ktext = el("span");
     ktext.appendChild(el("b", null, t.titel));
     ktext.appendChild(el("span", "muted", " (" + gesamt + ")"));
+    /* Seit dem 23.08.2026 steht hier, wie es um das Thema steht - sonst waehlt
+       Rose blind und nimmt das, was oben liegt. ZWEI Zahlen, weil sie
+       Verschiedenes sagen: "x von n gesehen" ist Fortschritt, die Pille ist
+       Beherrschung. Ein Thema mit 100 % bei zwei von zwanzig Aufgaben ist nicht
+       durch, und eine gemittelte Zahl wuerde genau das verwischen.
+
+       Gerechnet wird NICHT hier: themenStand() steht in core.js und ist
+       dieselbe Rechnung, die die Themen-Karten der Startseite zeigen. Ein
+       zweiter Weg zur selben Zahl waere irgendwann eine zweite Antwort.
+
+       Unberuehrte Themen bekommen bewusst keine 0-%-Pille: ungeuebt ist nicht
+       dasselbe wie schwach, und eine rote Null neben acht Themen liest sich wie
+       eine Mahnliste. */
+    var st = themenStand(t);
+    if (st.gesamt) {
+      ktext.appendChild(el("span", "muted", " · " + st.angeschaut + " von " + st.gesamt + " gesehen"));
+      if (st.beruehrt) ktext.appendChild(quotePille(st.anteil));
+    }
     kopf.appendChild(ktext);
     liste.appendChild(kopf);
 

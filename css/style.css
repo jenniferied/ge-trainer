@@ -1296,11 +1296,18 @@ p { margin: 0 0 var(--sp-3); }
   font-size: .86rem; margin-top: var(--sp-3);
   padding: 8px 12px; border-radius: var(--radius); background: var(--glow);
 }
-.heute-liegt .text-knopf {
-  font: inherit; font-weight: 700; cursor: pointer;
+/* .text-knopf hatte bis zum 23.08.2026 KEINE Basisregel - es gab nur die
+   Variante unten in .heute-liegt. Die "Alle"/"Keine"-Knoepfe der Themenauswahl
+   (ui.js) trugen die Klasse trotzdem und wurden deshalb als graue
+   Browser-Knoepfe gerendert. Die Basis steht jetzt hier, die .heute-liegt-Regel
+   darunter aendert nur noch, was dort wirklich anders ist (fett). */
+.text-knopf {
+  font: inherit; cursor: pointer;
   background: none; border: 0; padding: 0;
   color: var(--accent); text-decoration: underline;
 }
+.text-knopf:hover { text-decoration-thickness: 2px; }
+.heute-liegt .text-knopf { font-weight: 700; }
 
 /* ---------- Uebungsmodi als Icon-Kacheln ---------- */
 .abschnitt { margin-bottom: var(--sp-4); }
@@ -2101,6 +2108,36 @@ p { margin: 0 0 var(--sp-3); }
 .treppe-eingabe:focus, .treppe-notizen:focus { outline: 2px solid var(--tfarbe); border-color: transparent; }
 /* Roses eigener Wortlaut neben der Loesung. Bewertet wird er nicht - deshalb
    keine Ampelfarbe, nur ein ruhiger Kasten. */
+/* ---------- "So klingt das" je Rolle (23.08.2026, A7) ----------
+   ZUGEKLAPPT und leise. Die Treppe ist mit Absicht keine Hilfe - Rose soll
+   abrufen und nicht ablesen. Ein Beispielsatz, der offen ueber dem leeren Feld
+   steht, waere die Antwort. Aufklappen ist deshalb eine eigene Geste, und der
+   Aufklapper darf optisch nicht lauter sein als das Schreibfeld daneben.
+
+   Eigenes Dreieck statt des Browser-Markers, aus demselben Grund wie bei
+   .wahl-summary weiter unten: list-style traegt nur bei display: list-item, und
+   Safari zeigt den nativen Marker ohnehin nur ueber ::-webkit-details-marker. */
+.rolle-beispiel { margin-top: 6px; }
+.rolle-beispiel > summary {
+  cursor: pointer; list-style: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .82rem; color: var(--ink-soft);
+}
+.rolle-beispiel > summary::-webkit-details-marker { display: none; }
+.rolle-beispiel > summary::before {
+  content: "▸"; font-size: .9em; transition: transform .15s ease;
+}
+.rolle-beispiel[open] > summary::before { transform: rotate(90deg); }
+.rolle-beispiel-text {
+  margin-top: 4px; padding: 8px 12px;
+  background: var(--paper-2); border-radius: var(--radius);
+  border-left: 3px solid var(--line);
+  font-size: .9rem; line-height: 1.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rolle-beispiel > summary::before { transition: none; }
+}
+
 .treppe-eigene {
   background: var(--paper-2); border-radius: var(--radius);
   padding: 6px 12px; margin-bottom: var(--sp-2); font-size: .92rem;
@@ -2499,10 +2536,39 @@ p { margin: 0 0 var(--sp-3); }
 /* Die Kopfzeile einer zugeklappten Auswahl. Kein eigenes Dreieck-Zeichen:
    das setzt der Browser, und ein zweites danebenzumalen hiesse, den Zustand
    zweimal zu behaupten. */
+/* ---------- Das Aufklapp-Dreieck der Auswahl (repariert 23.08.2026) ----------
+   Hier stand `list-style: revert` NEBEN `display: flex`, und das kann nicht
+   funktionieren: einen Marker gibt es nur bei `display: list-item`. Ein <summary>
+   ist von Haus aus genau das - die flex-Zeile hat ihn also ueberschrieben, und
+   `list-style` war seitdem eine Angabe an eine Box, die keine Liste mehr ist.
+   Ergebnis: die Themen- und AFB-Auswahl sahen aus wie eine Ueberschrift und
+   nicht wie etwas, das man antippen kann. Zwei Nutzer haben es gesucht.
+
+   Deshalb ein EIGENES Dreieck per ::before statt des Browser-Markers. Das ist
+   nicht nur die Reparatur, sondern auch die bessere Loesung: der native Marker
+   sieht in jedem Browser anders aus, und Safari zeigt ihn ueberhaupt nur ueber
+   ::-webkit-details-marker. Ein gedrehtes ▸ sieht ueberall gleich aus und
+   animiert mit. */
 .wahl-summary {
-  cursor: pointer; list-style: revert;
+  cursor: pointer;
   display: flex; align-items: baseline; gap: var(--sp-3);
   padding: var(--sp-2) 0;
+  list-style: none;
+}
+/* Safari zeigt den Marker sonst zusaetzlich zum eigenen Dreieck. */
+.wahl-summary::-webkit-details-marker { display: none; }
+.wahl-summary::before {
+  content: "▸";
+  color: var(--ink-soft);
+  font-size: .9em; line-height: 1;
+  transition: transform .15s ease;
+  /* Das Dreieck sitzt an der Schriftlinie des Labels, nicht am Kastenrand -
+     align-items: baseline gilt fuer die Kinder, ::before zaehlt dazu. */
+  transform-origin: 45% 55%;
+}
+details[open] > .wahl-summary::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .wahl-summary::before { transition: none; }
 }
 .wahl-summary .label { flex: 1; min-width: 0; }
 .wahl-stand {

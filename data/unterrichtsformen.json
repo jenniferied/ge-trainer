@@ -951,11 +951,12 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ein Lehrgang ist ein Unterrichtsverfahren, das …"
+          "satzanfang": "Ein Lehrgang ist ein Unterrichtsverfahren, das …",
+          "beispiel": "Ein Lehrgang ist ein Unterrichtsverfahren, bei dem die Vermittlung fachspezifischer Kenntnisse und Fertigkeiten im Vordergrund steht; der Aufbau orientiert sich an der Fachsystematik und wird meist in kleine Schritte untergliedert."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Die vier Phasen der Reihe nach",
           "idx": [
             1,
@@ -965,18 +966,20 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Der Ablauf hat vier Phasen: zuerst …, dann …, danach …, zuletzt …"
+          "satzanfang": "Der Ablauf hat vier Phasen: zuerst …, dann …, danach …, zuletzt …",
+          "beispiel": "In der Übungsphase vollziehen die Schüler:innen die Handlung schrittweise nach, zunächst eng begleitet, dann zunehmend selbstständig. In der Anwendungsphase wird das Gelernte unter neuen Bedingungen angewendet, etwa im Wohntraining, und die Lernenden reflektieren die Qualität ihrer Ausführung selbst, ergänzt durch Rückmeldung der Lehrkraft."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Ein Beispiel dazu",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Ein Beispiel dafür ist …"
+          "satzanfang": "Ein Beispiel dafür ist …",
+          "beispiel": "In der Demonstrationsphase macht die Lehrperson das Zähneputzen Schritt für Schritt vor - denkbar sind auch Video-Tutorials."
         }
       ],
       "muster": "Ein Lehrgang ist ein Unterrichtsverfahren, bei dem die Vermittlung fachspezifischer Kenntnisse und Fertigkeiten im Vordergrund steht; der Aufbau orientiert sich an der Fachsystematik und wird meist in kleine Schritte untergliedert. Er verläuft in vier Phasen, zum Beispiel beim Erlernen des Zähneputzens: In der Eröffnungs- und Informationsphase werden Ziel und Ablauf besprochen, sodass die Lernenden wissen, worum es geht. In der Demonstrationsphase macht die Lehrperson das Zähneputzen Schritt für Schritt vor - denkbar sind auch Video-Tutorials. In der Übungsphase vollziehen die Schüler:innen die Handlung schrittweise nach, zunächst eng begleitet, dann zunehmend selbstständig. In der Anwendungsphase wird das Gelernte unter neuen Bedingungen angewendet, etwa im Wohntraining, und die Lernenden reflektieren die Qualität ihrer Ausführung selbst, ergänzt durch Rückmeldung der Lehrkraft.",
@@ -1036,70 +1039,53 @@
       "afb": 3,
       "frage": "Bewerten Sie die Potentiale offener und geschlossener Unterrichtsformen für den Förderschwerpunkt geistige Entwicklung. **Bewerten heißt hier: abwägen und am Ende ein eigenes begründetes Urteil formulieren.**",
       "stichpunkte": [
-        "Potentiale offen: Entscheidungsprozesse und Wahlmöglichkeiten, Transfer des Auswahlverhaltens, alle Entwicklungsbereiche ansprechbar, Selbstkontrolle, Zeitplanung, Selbstvertrauen und Selbstwert, innere Differenzierung",
-        "Grenzen offen: viele Vorgaben bleiben, maskierte Übungsphasen, Schüler:innen im FSgE werden Anforderungen schwer gerecht, Vermeidung schwieriger Aufgaben, Überschätzung, mäßige Effektstärke d = 0.45, Ablenkung durch Materialangebote",
-        "Potentiale geschlossen: Lernzielorientierung, Elementarisierung/Reduktion, Strukturierung, Instruktion; effektiv beim Aufbau lebenspraktischer Kompetenzen (Training, Lehrgang); Lehrgang hocheffizient (Pitsch & Thümmel)",
-        "Grenzen geschlossen: lehrerzentriert, rezeptiv, einseitig kognitiv bzw. kleinschrittig; wenig Selbstbestimmung",
-        "Bewertung: kein Entweder-oder - schrittweise Öffnung (Tagesplan vor Wochenplan vor Freiarbeit), geschlossene Formen für Fertigkeitsaufbau, offene für Selbstbestimmung; Mischung je nach Lerngruppe und Ziel"
+        "Für eine Öffnung spricht, was sie den Lernenden eröffnet: Heranführung an Entscheidungsprozesse und Wahlmöglichkeiten bei Material, Herangehensweise, Arbeitspartner und Reihenfolge; das Auswahlverhalten lässt sich auf ähnliche Situationen übertragen; alle Entwicklungsbereiche von Wahrnehmung und Motorik über Kognition und Emotionalität bis Sozialverhalten und Kommunikation können angesprochen werden; Selbstkontrolle der Arbeitsergebnisse, bessere Zeitplanung, Stärkung von Selbstvertrauen und Selbstwert, Umsetzung innerer Differenzierung",
+        "Gegen eine weitgehende Öffnung spricht die Kritik an den offenen Formen selbst: Es bleiben viele Vorgaben der Lehrperson, methodische Bausteine können sich als maskierte Übungsphasen erweisen, Schüler:innen im FSgE werden den Anforderungen nur schwer oder gar nicht gerecht (Vermeidung schwieriger Aufgaben, Überschätzung der eigenen Fähigkeiten), die Effektivität des kognitiven Lernens gilt mit d = 0.45 als mäßig, und offene Materialangebote in Regalen können ablenken",
+        "Gegen eine weitgehende Öffnung spricht außerdem, was die geschlossene Seite leistet: Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion; strukturierte, lernzielorientierte Ansätze tragen den Aufbau lebenspraktischer Kompetenzen (Training, Lehrgang), und der Lehrgang gilt im Verhältnis von Aufwand und Lernertrag als hocheffizient",
+        "Für eine Öffnung spricht umgekehrt, was der geschlossenen Seite fehlt: frontal, lehrerzentriert, rezeptiv, feinstrukturiert und kleinschrittig, einseitig kognitiv und auf Qualifizierung statt Sozialisierung gerichtet - die Lernenden entscheiden hier kaum etwas selbst",
+        "Bewertung: kein Entweder-oder - schrittweise Öffnung entlang der Reihenfolge der Vorlesung (Einführung zur Freiarbeit, Tagesplan, Stationenarbeit, Wochenplan, Freiarbeit), geschlossene Formen für den Fertigkeitsaufbau, offene für Selbstbestimmung; entscheidend ist der Grad der Mit- und Selbstbestimmung, den eine Lerngruppe und ein Ziel gerade tragen"
       ],
       "abschnitte": [
         {
           "operator": "bewerten",
           "rolle": "dafuer",
-          "auftrag": "Was für offene Formen spricht",
+          "auftrag": "Zwei Punkte für die offene Seite: was sie den Lernenden eröffnet - und was der geschlossenen Seite fehlt",
           "idx": [
-            0
-          ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Für offene Formen spricht, dass …"
-        },
-        {
-          "operator": "bewerten",
-          "rolle": "dagegen",
-          "auftrag": "Wo offene Formen an ihre Grenzen kommen",
-          "idx": [
-            1
-          ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Gegen offene Formen spricht, dass …"
-        },
-        {
-          "operator": "bewerten",
-          "rolle": "dafuer",
-          "auftrag": "Was für geschlossene Formen spricht",
-          "idx": [
-            2
-          ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Für geschlossene Formen spricht, dass …"
-        },
-        {
-          "operator": "bewerten",
-          "rolle": "dagegen",
-          "auftrag": "Wo geschlossene Formen an ihre Grenzen kommen",
-          "idx": [
+            0,
             3
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Gegen geschlossene Formen spricht, dass …"
+          "punkte": 4,
+          "satzanfang": "Für offene Formen spricht erstens, dass … Zweitens spricht dafür, dass geschlossene Formen …",
+          "beispiel": "Für offene Unterrichtsformen spricht erstens, dass sie Entscheidungsprozesse und Wahlmöglichkeiten ermöglichen, alle Entwicklungsbereiche ansprechen, Selbstkontrolle, Zeitplanung sowie Selbstvertrauen fördern und innere Differenzierung umsetzen."
         },
         {
           "operator": "bewerten",
-          "rolle": "fazit",
-          "auftrag": "Dein eigenes Urteil – wofür, wann und warum",
+          "rolle": "dagegen",
+          "auftrag": "Zwei Punkte dagegen: die Kritik an den offenen Formen - und was die geschlossene Seite leistet",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Gegen offene Formen spricht erstens, dass … Zweitens spricht dagegen, dass geschlossene Formen …",
+          "beispiel": "Gegen eine weitgehende Öffnung spricht erstens die Kritik an den offenen Formen selbst: Schüler:innen im FSgE werden den hohen Anforderungen an Selbststeuerung teils nur schwer gerecht, wählen eher leichte Aufgaben oder überschätzen sich, offene Materialangebote in Regalen können ablenken, und die Effektivität des kognitiven Lernens gilt mit einer Effektstärke von d = 0.45 als mäßig."
+        },
+        {
+          "operator": "bewerten",
+          "rolle": "bewertung",
+          "auftrag": "Dein eigenes Urteil - wofür, wann und warum",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "In der Bewertung schließen sich beide nicht aus: Sinnvoll ist eine schrittweise Öffnung - von der Einführung zur Freiarbeit über Tagesplan, Stationenarbeit und Wochenplan bis zur Freiarbeit - kombiniert mit geschlossenen Phasen für den Fertigkeitsaufbau."
         }
       ],
-      "muster": "Offene Unterrichtsformen ermöglichen Entscheidungsprozesse und Wahlmöglichkeiten, sprechen alle Entwicklungsbereiche an, fördern Selbstkontrolle, Zeitplanung sowie Selbstvertrauen und setzen innere Differenzierung um. Ihre Grenzen im FSgE: Schüler:innen werden den hohen Anforderungen an Selbststeuerung teils nur schwer gerecht, wählen eher leichte Aufgaben oder überschätzen sich, und die Effektivität des kognitiven Lernens gilt mit einer Effektstärke von d = 0.45 als mäßig. Geschlossene Formen punkten mit Lernzielorientierung, Elementarisierung, Strukturierung und Instruktion; gerade beim Aufbau lebenspraktischer Fertigkeiten sind Trainings und Lehrgänge hocheffizient. Dafür bieten sie wenig Raum für Selbstbestimmung. In der Bewertung schließen sich beide nicht aus: Sinnvoll ist eine schrittweise Öffnung - vom Tagesplan über Stationenarbeit und Wochenplan zur Freiarbeit - kombiniert mit geschlossenen Phasen für den Fertigkeitsaufbau. Die Wahl hängt vom Ziel und von der Lerngruppe ab, nicht von einer grundsätzlichen Überlegenheit einer Form.",
+      "muster": "Für offene Unterrichtsformen spricht erstens, dass sie Entscheidungsprozesse und Wahlmöglichkeiten ermöglichen, alle Entwicklungsbereiche ansprechen, Selbstkontrolle, Zeitplanung sowie Selbstvertrauen fördern und innere Differenzierung umsetzen. Zweitens spricht dafür, was der geschlossenen Seite fehlt: Sie ist frontal, lehrerzentriert und rezeptiv, feinstrukturiert und kleinschrittig, einseitig kognitiv und auf Qualifizierung statt Sozialisierung gerichtet, sodass die Lernenden kaum etwas selbst entscheiden. Gegen eine weitgehende Öffnung spricht erstens die Kritik an den offenen Formen selbst: Schüler:innen im FSgE werden den hohen Anforderungen an Selbststeuerung teils nur schwer gerecht, wählen eher leichte Aufgaben oder überschätzen sich, offene Materialangebote in Regalen können ablenken, und die Effektivität des kognitiven Lernens gilt mit einer Effektstärke von d = 0.45 als mäßig. Zweitens spricht dagegen, was die geschlossenen Formen leisten: Lernzielorientierung, Elementarisierung, Strukturierung und Instruktion; gerade beim Aufbau lebenspraktischer Fertigkeiten sind Trainings und Lehrgänge hocheffizient. In der Bewertung schließen sich beide nicht aus: Sinnvoll ist eine schrittweise Öffnung - von der Einführung zur Freiarbeit über Tagesplan, Stationenarbeit und Wochenplan bis zur Freiarbeit - kombiniert mit geschlossenen Phasen für den Fertigkeitsaufbau. Die Wahl hängt vom Ziel und von der Lerngruppe ab, nicht von einer grundsätzlichen Überlegenheit einer Form.",
       "musterVarianten": {
         "de": {
           "einfach": "Offene Unterrichtsformen haben mehrere Stärken. Sie ermöglichen Entscheidungsprozesse und Wahlmöglichkeiten. Die Schülerinnen und Schüler entscheiden also selbst mit. Offene Formen sprechen alle Entwicklungsbereiche an. Sie fördern die Selbstkontrolle und die Zeitplanung. Selbstkontrolle heißt: Die Lernenden prüfen ihre Arbeit selbst. Offene Formen stärken außerdem das Selbstvertrauen. Und sie setzen die innere Differenzierung um. Innere Differenzierung heißt: Innerhalb einer Lerngruppe wird unterschieden, zum Beispiel nach Niveau, Aufgabe oder Hilfestellung. Offene Formen haben aber auch Grenzen im Förderschwerpunkt geistige Entwicklung. Offener Unterricht verlangt viel Selbststeuerung. Selbststeuerung heißt: Die Lernenden planen und steuern ihre Arbeit selbst. Manche Schülerinnen und Schüler werden diesen hohen Anforderungen nur schwer gerecht. Manche wählen eher die leichten Aufgaben. Andere überschätzen sich. Für das kognitive Lernen gilt die Wirksamkeit außerdem als mäßig. Die Effektstärke liegt bei d = 0.45. Die Effektstärke ist ein Maß dafür, wie stark eine Maßnahme wirkt. Geschlossene Unterrichtsformen haben andere Stärken. Sie sind lernzielorientiert. Lernzielorientiert heißt: Das Ziel der Stunde steht vorher fest. Sie arbeiten mit Elementarisierung. Elementarisierung heißt: Ein Inhalt wird auf seinen Kern zurückgeführt. Sie arbeiten außerdem mit Strukturierung und mit Instruktion. Instruktion heißt: Die Lehrperson erklärt und leitet an. Gerade beim Aufbau lebenspraktischer Fertigkeiten sind Trainings und Lehrgänge hocheffizient. Dafür bieten geschlossene Formen wenig Raum für Selbstbestimmung. In der Bewertung schließen sich die beiden Formen nicht aus. Sinnvoll ist eine schrittweise Öffnung. Man beginnt mit dem Tagesplan. Danach folgt die Stationenarbeit. Danach folgt der Wochenplan. Am Ende steht die Freiarbeit. Dazu kommen geschlossene Phasen für den Aufbau von Fertigkeiten. Die Wahl hängt vom Ziel und von der Lerngruppe ab. Keine der beiden Formen ist grundsätzlich besser als die andere."
@@ -1165,29 +1151,32 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die Lehrperson übernimmt …"
+          "satzanfang": "Die Lehrperson übernimmt …",
+          "beispiel": "Beim Stationenlernen wählt die Lehrperson in Orientierung am Lehrplan und am Förderbedarf das Thema, zergliedert es in Teilthemen, legt Zeitrahmen und Anzahl der Stationen fest - unterteilt in Pflicht- und freiwillige Stationen -, erstellt die Materialien, achtet auf eine Ausgewogenheit von Einzel-, Partner- und Gruppenarbeit und schafft möglichst Möglichkeiten der Eigenkontrolle."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was die Schüler:innen selbst entscheiden",
           "idx": [
             1
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die Schüler:innen entscheiden dagegen selbst …"
+          "satzanfang": "Die Schüler:innen entscheiden dagegen selbst …",
+          "beispiel": "Die Schüler:innen werden im Rahmen ihrer Möglichkeiten an der Themenwahl beteiligt, bestimmen selbst, wie lange sie an den einzelnen Stationen arbeiten, legen die Reihenfolge der Bearbeitung fest, wählen Material und Sozialform und beurteilen ihr Ergebnis selbst."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Woran sich das im Ablauf zeigt",
           "idx": [
             2
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Im Ablauf zeigt sich das daran, dass …"
+          "satzanfang": "Im Ablauf zeigt sich das daran, dass …",
+          "beispiel": "Der Ablauf gliedert sich in Anfangsgespräch, Rundgang, die eigentliche Arbeit an den Stationen und ein Schlussgespräch; ein Laufzettel dient als Orientierung."
         }
       ],
       "muster": "Beim Stationenlernen wählt die Lehrperson in Orientierung am Lehrplan und am Förderbedarf das Thema, zergliedert es in Teilthemen, legt Zeitrahmen und Anzahl der Stationen fest - unterteilt in Pflicht- und freiwillige Stationen -, erstellt die Materialien, achtet auf eine Ausgewogenheit von Einzel-, Partner- und Gruppenarbeit und schafft möglichst Möglichkeiten der Eigenkontrolle. Die Schüler:innen werden im Rahmen ihrer Möglichkeiten an der Themenwahl beteiligt, bestimmen selbst, wie lange sie an den einzelnen Stationen arbeiten, legen die Reihenfolge der Bearbeitung fest, wählen Material und Sozialform und beurteilen ihr Ergebnis selbst. Der Ablauf gliedert sich in Anfangsgespräch, Rundgang, die eigentliche Arbeit an den Stationen und ein Schlussgespräch; ein Laufzettel dient als Orientierung.",
@@ -1315,7 +1304,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ich wähle das Thema … , weil …"
+          "satzanfang": "Ich wähle das Thema … , weil …",
+          "beispiel": "Als Thema wähle ich, orientiert am Lehrplan und am Förderbedarf der Klasse, 'Herbstfrüchte'."
         },
         {
           "operator": "entwickeln",
@@ -1328,7 +1318,8 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Ich plane die Stationen so, dass …"
+          "satzanfang": "Ich plane die Stationen so, dass …",
+          "beispiel": "Ich zergliedere das Thema in Stationen: Obstsorten verdeckt ertasten, riechen und schmecken, einen Obstsalat zubereiten, Kompott herstellen, Wörter zum Thema legen und ein Zuordnungs-Arbeitsblatt bearbeiten. Die Praxis-Stationen erkläre ich zu Pflichtstationen, die übrigen sind freiwillig - so setze ich Neigungs- und Leistungsdifferenzierung um."
         },
         {
           "operator": "entwickeln",
@@ -1339,7 +1330,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Das trägt, weil die Schüler:innen dabei selbst …"
+          "satzanfang": "Das trägt, weil die Schüler:innen dabei selbst …",
+          "beispiel": "Die Schüler:innen wählen selbst Reihenfolge, Sozialform und Material, teilen sich ihre Zeit an den Stationen ein und beurteilen ihr Ergebnis zunächst selbst; ein Laufzettel gibt Orientierung."
         }
       ],
       "muster": "Als Thema wähle ich, orientiert am Lehrplan und am Förderbedarf der Klasse, 'Herbstfrüchte'. Ich zergliedere das Thema in Stationen: Obstsorten verdeckt ertasten, riechen und schmecken, einen Obstsalat zubereiten, Kompott herstellen, Wörter zum Thema legen und ein Zuordnungs-Arbeitsblatt bearbeiten. Die Praxis-Stationen erkläre ich zu Pflichtstationen, die übrigen sind freiwillig - so setze ich Neigungs- und Leistungsdifferenzierung um. Ich stelle die Materialien bereit, plane bewusst eine Mischung aus Einzel-, Partner- und Gruppenstationen und schaffe wo möglich Eigenkontrolle, etwa Lösungskarten am Arbeitsblatt. Die Schüler:innen wählen selbst Reihenfolge, Sozialform und Material, teilen sich ihre Zeit an den Stationen ein und beurteilen ihr Ergebnis zunächst selbst; ein Laufzettel gibt Orientierung. Der Ablauf folgt der Phasenkette: Anfangsgespräch, Rundgang, Arbeit an den Stationen, Schlussgespräch im Plenum. So strukturiere ich als Lehrperson den Rahmen, während die Schüler:innen innerhalb des Rahmens selbstbestimmt arbeiten.",
@@ -1417,7 +1409,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Für die These spricht, dass …"
+          "satzanfang": "Für die These spricht, dass …",
+          "beispiel": "Für die These spricht, dass Trainingsprogramme und Übungseinheiten laut Vorlesung tatsächlich vom Begriff der Bildung und Erziehung abzugrenzen sind: Sie sind therapeutisch ausgerichtet und durch starke Strukturierung und Lernzielorientierung geprägt."
         },
         {
           "operator": "diskutieren",
@@ -1429,18 +1422,20 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Gegen die These spricht, dass …"
+          "satzanfang": "Gegen die These spricht, dass …",
+          "beispiel": "Gegen die These spricht erstens, dass die Vorlesung ihnen ausdrücklich eine relevante Rolle in der Schule zuschreibt, und zweitens ihre Wirksamkeit beim Aufbau lebenspraktischer Kompetenzen - etwa beim kleinschrittigen Training des Zähneputzens nach Richter (1980); gerade für Schüler:innen mit autistischem Verhalten sind strukturierte, programmartige Ansätze bedeutsam."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein eigenes Urteil zur These",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "In der Bewertung überzeugt die These daher nicht: Ihr erster Teil ist richtig, die Schlussfolgerung aber falsch."
         }
       ],
       "muster": "Für die These spricht, dass Trainingsprogramme und Übungseinheiten laut Vorlesung tatsächlich vom Begriff der Bildung und Erziehung abzugrenzen sind: Sie sind therapeutisch ausgerichtet und durch starke Strukturierung und Lernzielorientierung geprägt. Zudem stehen sie klar auf der geschlossenen Seite des Unterrichts und lassen den Schüler:innen wenig Raum für Selbstbestimmung. Gegen die These spricht erstens, dass die Vorlesung ihnen ausdrücklich eine relevante Rolle in der Schule zuschreibt, und zweitens ihre Wirksamkeit beim Aufbau lebenspraktischer Kompetenzen - etwa beim kleinschrittigen Training des Zähneputzens nach Richter (1980); gerade für Schüler:innen mit autistischem Verhalten sind strukturierte, programmartige Ansätze bedeutsam. In der Bewertung überzeugt die These daher nicht: Ihr erster Teil ist richtig, die Schlussfolgerung aber falsch. Dass Trainings keine Bildung im engeren Sinn sind, schließt sie nicht aus der Schule aus - sie ergänzen Bildung und Erziehung dort, wo lebenspraktische Fertigkeiten systematisch aufgebaut werden müssen.",
@@ -1505,10 +1500,10 @@
         "Unterschied 1: Der Lehrgang ist bei Terfloth & Bauersfeld eine Variation des gemeinsamen Unterrichts, bei Meyer dagegen eine eigene Säule",
         "Unterschied 2: Gemeinsamer Unterricht ist bei Terfloth & Bauersfeld eine der drei Grundformen, bei Meyer dagegen der Rahmen über allen drei Säulen (Klassenkonferenz, Morgenkreis)",
         "Unterschied 3: Nur bei Meyer kommt das Lernen auf den Marktplätzen der Schule hinzu (Feste und Feiern, Projektpräsentationen, Wettbewerbe, Internet)",
-        "Einordnung: Folie 6 ist die sichere Klausur-Referenz, weil die Kompetenzerwartung von den drei grundlegenden Unterrichtsformen spricht; Meyer kennen, aber nicht vermischen",
-        "Gemeinsamkeit: Beide sehen Individualisierung und Kooperation als eigenständige Grundformen und ordnen Methoden einer übergeordneten Form zu, statt sie nur aufzuzählen"
+        "Hinweis: In der Klausur ist die Trias von Terfloth & Bauersfeld (Folie 6) die sichere Bezugsgröße, weil die Kompetenzerwartung von den drei grundlegenden Unterrichtsformen spricht - Meyers Schaubild kennen, aber nicht mit ihr vermischen",
+        "Beide Schaubilder führen Individualisierung und Kooperation als eigenständige Grundformen und ordnen die einzelnen Methoden jeweils einer übergeordneten Form zu, statt sie nur aufzuzählen; verschieden ist nur, wo Lehrgang und Gemeinsames ihren Platz bekommen"
       ],
-      "muster": "Die Vorlesung stellt zwei Schaubilder nebeneinander, die beide drei grundlegende Unterrichtsformen unterscheiden, dies aber unterschiedlich zuschneiden. Terfloth und Bauersfeld nennen den individualisierten, den kooperativen und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem Freiarbeit, Werkstattarbeit, Stationenarbeit und Planarbeit, zum kooperativen Unterricht Projektarbeit, Theaterarbeit, Zukunftswerkstatt sowie Feste und Feiern, und zum gemeinsamen Unterricht Klassenunterricht, Kursarbeit, Präsentation, Lehrgang und IT-Arbeit. Hilbert Meyer setzt in seinem Schaubild ebenfalls drei Säulen an, ersetzt aber eine davon. Bei ihm stehen der individualisierende Unterricht mit der Freiarbeit im Kern, der lehrgangsförmige Unterricht mit der direkten Instruktion im Kern und der kooperative Unterricht mit der Projektarbeit im Kern. Er charakterisiert sie zusätzlich über die Anteile: der individualisierende Unterricht mit hohen Anteilen selbstorganisierten Lernens und überwiegend Einzel- und Partnerarbeit, der lehrgangsförmige mit einem hohen Ausmaß an Lehrerlenkung und überwiegend Frontalunterricht, der kooperative mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit. Daraus ergeben sich zwei wesentliche Unterschiede. Erstens ist der Lehrgang bei Terfloth und Bauersfeld nur eine Variation innerhalb des gemeinsamen Unterrichts, während er bei Meyer zu einer eigenen Säule aufgewertet wird. Zweitens ist der gemeinsame Unterricht bei Terfloth und Bauersfeld selbst eine der drei Grundformen, bei Meyer dagegen der Rahmen, der sich als Bogen über alle drei Säulen legt und Formen wie Klassenkonferenz und Morgenkreis umfasst. Hinzu kommt bei Meyer ein Element, das im ersten Schaubild fehlt: das Lernen auf den Marktplätzen der Schule mit Festen und Feiern, Projektpräsentationen, Wettbewerben und Internet. Für die Klausur ist die Trias von Terfloth und Bauersfeld die sichere Bezugsgröße, denn die Kompetenzerwartung spricht von den drei grundlegenden Unterrichtsformen. Meyers Schaubild lohnt sich trotzdem, weil es sichtbar macht, dass die Zuordnung des Lehrgangs eine Entscheidung und keine Selbstverständlichkeit ist.",
+      "muster": "Die Vorlesung stellt zwei Schaubilder nebeneinander, die beide drei grundlegende Unterrichtsformen unterscheiden, dies aber unterschiedlich zuschneiden. Terfloth und Bauersfeld nennen den individualisierten, den kooperativen und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem Freiarbeit, Werkstattarbeit, Stationenarbeit und Planarbeit, zum kooperativen Unterricht Projektarbeit, Theaterarbeit, Zukunftswerkstatt sowie Feste und Feiern, und zum gemeinsamen Unterricht Klassenunterricht, Kursarbeit, Präsentation, Lehrgang und IT-Arbeit. Hilbert Meyer setzt in seinem Schaubild ebenfalls drei Säulen an, ersetzt aber eine davon. Bei ihm stehen der individualisierende Unterricht mit der Freiarbeit im Kern, der lehrgangsförmige Unterricht mit der direkten Instruktion im Kern und der kooperative Unterricht mit der Projektarbeit im Kern. Er charakterisiert sie zusätzlich über die Anteile: der individualisierende Unterricht mit hohen Anteilen selbstorganisierten Lernens und überwiegend Einzel- und Partnerarbeit, der lehrgangsförmige mit einem hohen Ausmaß an Lehrerlenkung und überwiegend Frontalunterricht, der kooperative mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit. Daraus ergeben sich drei Unterschiede. Erstens ist der Lehrgang bei Terfloth und Bauersfeld nur eine Variation innerhalb des gemeinsamen Unterrichts, während er bei Meyer zu einer eigenen Säule aufgewertet wird. Zweitens ist der gemeinsame Unterricht bei Terfloth und Bauersfeld selbst eine der drei Grundformen, bei Meyer dagegen der Rahmen, der sich als Bogen über alle drei Säulen legt und Formen wie Klassenkonferenz und Morgenkreis umfasst. Drittens kommt bei Meyer ein Element hinzu, das im ersten Schaubild fehlt: das Lernen auf den Marktplätzen der Schule mit Festen und Feiern, Projektpräsentationen, Wettbewerben und Internet. Für die Klausur ist die Trias von Terfloth und Bauersfeld die sichere Bezugsgröße, denn die Kompetenzerwartung spricht von den drei grundlegenden Unterrichtsformen. Meyers Schaubild lohnt sich trotzdem, weil es sichtbar macht, dass die Zuordnung des Lehrgangs eine Entscheidung und keine Selbstverständlichkeit ist. Gemeinsam ist beiden Modellen, dass sie Individualisierung und Kooperation als eigenständige Grundformen führen und die einzelnen Methoden jeweils einer übergeordneten Form zuordnen, statt sie nur aufzuzählen; verschieden ist nur, wo der Lehrgang und der gemeinsame Unterricht ihren Platz bekommen.",
       "musterVarianten": {
         "de": {
           "einfach": "Die Vorlesung stellt zwei Schaubilder nebeneinander. Beide Schaubilder unterscheiden drei grundlegende Unterrichtsformen. Sie schneiden diese Formen aber unterschiedlich zu. Das erste Schaubild stammt von Terfloth und Bauersfeld. Sie nennen den individualisierten Unterricht, den kooperativen Unterricht und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem die Freiarbeit, die Werkstattarbeit, die Stationenarbeit und die Planarbeit. Zum kooperativen Unterricht gehören die Projektarbeit, die Theaterarbeit, die Zukunftswerkstatt sowie Feste und Feiern. Zum gemeinsamen Unterricht gehören der Klassenunterricht, die Kursarbeit, die Präsentation, der Lehrgang und die IT-Arbeit. Das zweite Schaubild stammt von Hilbert Meyer. Auch er setzt drei Säulen an. Eine der drei Säulen ist bei ihm aber eine andere. Die erste Säule ist der individualisierende Unterricht. In seinem Kern steht die Freiarbeit. Die zweite Säule ist der lehrgangsförmige Unterricht. In seinem Kern steht die direkte Instruktion. Die dritte Säule ist der kooperative Unterricht. In seinem Kern steht die Projektarbeit. Meyer beschreibt die drei Säulen zusätzlich über ihre Anteile. Der individualisierende Unterricht hat hohe Anteile selbstorganisierten Lernens. Es überwiegen Einzelarbeit und Partnerarbeit. Der lehrgangsförmige Unterricht hat ein hohes Ausmaß an Lehrerlenkung. Es überwiegt der Frontalunterricht. Der kooperative Unterricht arbeitet mit gemeinsamen Zielabsprachen. Es überwiegen Gruppenarbeit und Teamarbeit. Aus dem Vergleich ergeben sich zwei wesentliche Unterschiede. Der erste Unterschied betrifft den Lehrgang. Bei Terfloth und Bauersfeld ist der Lehrgang nur eine Variation innerhalb des gemeinsamen Unterrichts. Bei Meyer wird er dagegen zu einer eigenen Säule aufgewertet. Der zweite Unterschied betrifft den gemeinsamen Unterricht. Bei Terfloth und Bauersfeld ist er selbst eine der drei Grundformen. Bei Meyer ist er dagegen der Rahmen über allen drei Säulen. Dazu gehören bei ihm zum Beispiel die Klassenkonferenz und der Morgenkreis. Bei Meyer kommt außerdem ein Element hinzu, das im ersten Schaubild fehlt. Es heißt Lernen auf den Marktplätzen der Schule. Dazu gehören Feste und Feiern, Projektpräsentationen, Wettbewerbe und das Internet. Für die Klausur ist die Einteilung von Terfloth und Bauersfeld die sichere Bezugsgröße. Denn die Kompetenzerwartung spricht von den drei grundlegenden Unterrichtsformen. Das Schaubild von Meyer lohnt sich trotzdem. Es macht sichtbar, dass die Zuordnung des Lehrgangs eine Entscheidung ist. Sie ist keine Selbstverständlichkeit."
@@ -1530,7 +1525,7 @@
       "abschnitte": [
         {
           "operator": "vergleichen",
-          "rolle": "positionA",
+          "rolle": "benennen",
           "auftrag": "Welche drei Grundformen Terfloth und Bauersfeld nennen, mit ihren Variationen",
           "idx": [
             0,
@@ -1538,11 +1533,12 @@
             2
           ],
           "form": "rolle",
-          "satzanfang": "Terfloth und Bauersfeld unterscheiden …"
+          "satzanfang": "Terfloth und Bauersfeld unterscheiden …",
+          "beispiel": "Terfloth und Bauersfeld nennen den individualisierten, den kooperativen und den gemeinsamen Unterricht. Zum individualisierten Unterricht gehören als Variationen unter anderem Freiarbeit, Werkstattarbeit, Stationenarbeit und Planarbeit, zum kooperativen Unterricht Projektarbeit, Theaterarbeit, Zukunftswerkstatt sowie Feste und Feiern, und zum gemeinsamen Unterricht Klassenunterricht, Kursarbeit, Präsentation, Lehrgang und IT-Arbeit."
         },
         {
           "operator": "vergleichen",
-          "rolle": "positionB",
+          "rolle": "beschreiben",
           "auftrag": "Welche drei Säulen Hilbert Meyer dagegen ansetzt und wie er sie charakterisiert",
           "idx": [
             3,
@@ -1550,39 +1546,41 @@
             5
           ],
           "form": "rolle",
-          "satzanfang": "Hilbert Meyer setzt dagegen …"
+          "satzanfang": "Hilbert Meyer setzt dagegen …",
+          "beispiel": "Bei ihm stehen der individualisierende Unterricht mit der Freiarbeit im Kern, der lehrgangsförmige Unterricht mit der direkten Instruktion im Kern und der kooperative Unterricht mit der Projektarbeit im Kern. Er charakterisiert sie zusätzlich über die Anteile: der individualisierende Unterricht mit hohen Anteilen selbstorganisierten Lernens und überwiegend Einzel- und Partnerarbeit, der lehrgangsförmige mit einem hohen Ausmaß an Lehrerlenkung und überwiegend Frontalunterricht, der kooperative mit gemeinsamen Zielabsprachen und hohen Anteilen von Gruppen- beziehungsweise Teamarbeit."
         },
         {
           "operator": "vergleichen",
-          "rolle": "unterschied",
-          "auftrag": "Die drei Unterschiede zwischen den beiden Schaubildern benennen",
+          "rolle": "beschreiben",
+          "auftrag": "Worin sich die beiden Schaubilder in drei Punkten unterscheiden",
           "idx": [
             6,
             7,
             8
           ],
           "form": "rolle",
-          "satzanfang": "Die beiden Schaubilder unterscheiden sich darin, dass …"
+          "satzanfang": "Die beiden Schaubilder unterscheiden sich darin, dass …",
+          "beispiel": "Erstens ist der Lehrgang bei Terfloth und Bauersfeld nur eine Variation innerhalb des gemeinsamen Unterrichts, während er bei Meyer zu einer eigenen Säule aufgewertet wird."
         },
         {
-          "operator": "erlaeutern",
-          "rolle": "belegen",
-          "auftrag": "Welches der beiden Schaubilder in der Klausur die sichere Referenz ist",
+          "operator": "zusatz",
+          "auftrag": "Wenn du magst: welches der beiden Schaubilder in der Klausur die sichere Referenz ist",
           "idx": [
             9
           ],
-          "form": "rolle",
-          "satzanfang": "Für die Klausur heißt das, dass …"
+          "form": "liste",
+          "zusatz": true
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "erlaeutern",
           "auftrag": "Was beide Modelle trotz der Unterschiede teilen",
           "idx": [
             10
           ],
           "form": "rolle",
-          "satzanfang": "Gemeinsam ist beiden Modellen, dass …"
+          "satzanfang": "Gemeinsam ist beiden Modellen, dass …",
+          "beispiel": "Gemeinsam ist beiden Modellen, dass sie Individualisierung und Kooperation als eigenständige Grundformen führen und die einzelnen Methoden jeweils einer übergeordneten Form zuordnen, statt sie nur aufzuzählen; verschieden ist nur, wo der Lehrgang und der gemeinsame Unterricht ihren Platz bekommen."
         }
       ],
       "hinweise": [
@@ -2424,29 +2422,31 @@
       "abschnitte": [
         {
           "operator": "vergleichen",
-          "rolle": "positionA",
+          "rolle": "benennen",
           "auftrag": "Wodurch die Tagesplanarbeit gekennzeichnet ist",
           "idx": [
             0
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die Tagesplanarbeit ist dadurch gekennzeichnet, dass …"
+          "satzanfang": "Die Tagesplanarbeit ist dadurch gekennzeichnet, dass …",
+          "beispiel": "Bei der Tagesplanarbeit erhalten die Schüler:innen Aufgaben, die sie innerhalb eines Tages selbstständig bearbeiten sollen. Die Reihenfolge legen sie selbst fest, und die Aufgaben sind in Pflicht- und Wahlaufgaben unterteilt; der Plan lässt sich um eine Kontrollspalte und eine Fertigspalte ergänzen."
         },
         {
           "operator": "vergleichen",
-          "rolle": "positionB",
+          "rolle": "benennen",
           "auftrag": "Wodurch die Wochenplanarbeit gekennzeichnet ist",
           "idx": [
             1
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die Wochenplanarbeit ist dadurch gekennzeichnet, dass …"
+          "satzanfang": "Die Wochenplanarbeit ist dadurch gekennzeichnet, dass …",
+          "beispiel": "Die Wochenplanarbeit verteilt eine deutlich höhere Zahl von Aufgaben über die Woche, und mit der erhöhten Aufgabenzahl steigen die Anforderungen an die Zeiteinteilung."
         },
         {
           "operator": "vergleichen",
-          "rolle": "unterschied",
+          "rolle": "beschreiben",
           "auftrag": "Was sich beim Übergang ändert – in Orientierung und Planung",
           "idx": [
             2,
@@ -2454,29 +2454,32 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Beim Übergang ändert sich zuerst die Orientierung: … Und die Planung: …"
+          "satzanfang": "Beim Übergang ändert sich zuerst die Orientierung: … Und die Planung: …",
+          "beispiel": "In der Orientierung richtet sich der Tagesplan auf eine einzelne Lern- oder Übungsaufgabe und auf kürzere Zeitabläufe, die über Uhr, Klingelzeichen oder Sanduhr fassbar werden; der Wochenplan orientiert an mehreren Aufgaben und an längeren Zeitabläufen, also an Kalender und Wochenstundenplan."
         },
         {
           "operator": "vergleichen",
-          "rolle": "gemeinsamkeit",
+          "rolle": "beschreiben",
           "auftrag": "Was gleich bleibt – und was in der Kontrolle hinzukommt",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Gemeinsam ist beiden, dass …"
+          "satzanfang": "Gemeinsam ist beiden, dass …",
+          "beispiel": "Die Ausführung ist in beiden Fällen dieselbe, nämlich die Anwendung bekannter und beherrschter Verfahren. In der Kontrolle steht beiderseits die Fremdkontrolle durch die Lehrperson neben der Selbstkontrolle am Arbeitsmittel; beim Wochenplan kommt der fixierte Arbeitsplan als zusätzliches Prüfmittel hinzu, an dem sich ablesen lässt, ob eine Aufgabe zur vorgesehenen Zeit bearbeitet wurde."
         },
         {
           "operator": "vergleichen",
-          "rolle": "kriterium",
+          "rolle": "erlaeutern",
           "auftrag": "Woran der Vergleich am Ende hängt – und warum der Wochenplan erst danach kommt",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Vergleichen lässt sich beides letztlich daran, wie weit …"
+          "satzanfang": "Vergleichen lässt sich beides letztlich daran, wie weit …",
+          "beispiel": "Insgesamt wächst damit das Zeitmanagement vom kurzfristigen zum flexiblen mittelfristigen, und die Komplexität wird selbst gewählt. Genau deshalb steht die Wochenplanarbeit in der Einführungsreihenfolge offener Formen erst nach der Tagesplanarbeit."
         }
       ],
       "muster": "Bei der Tagesplanarbeit erhalten die Schüler:innen Aufgaben, die sie innerhalb eines Tages selbstständig bearbeiten sollen. Die Reihenfolge legen sie selbst fest, und die Aufgaben sind in Pflicht- und Wahlaufgaben unterteilt; der Plan lässt sich um eine Kontrollspalte und eine Fertigspalte ergänzen. Die Wochenplanarbeit verteilt eine deutlich höhere Zahl von Aufgaben über die Woche, und mit der erhöhten Aufgabenzahl steigen die Anforderungen an die Zeiteinteilung. Der Vergleich der Lernmöglichkeiten macht den Unterschied genauer sichtbar. In der Orientierung richtet sich der Tagesplan auf eine einzelne Lern- oder Übungsaufgabe und auf kürzere Zeitabläufe, die über Uhr, Klingelzeichen oder Sanduhr fassbar werden; der Wochenplan orientiert an mehreren Aufgaben und an längeren Zeitabläufen, also an Kalender und Wochenstundenplan. In der Planung wählen die Schüler:innen beim Tagesplan einen Arbeitsinhalt samt Arbeitsmittel aus und legen die Arbeitszeit fest, beim Wochenplan wählen sie mehrere Arbeitsinhalte und ordnen sie Bearbeitungszeiten zu. Die Ausführung ist in beiden Fällen dieselbe, nämlich die Anwendung bekannter und beherrschter Verfahren. In der Kontrolle steht beiderseits die Fremdkontrolle durch die Lehrperson neben der Selbstkontrolle am Arbeitsmittel; beim Wochenplan kommt der fixierte Arbeitsplan als zusätzliches Prüfmittel hinzu, an dem sich ablesen lässt, ob eine Aufgabe zur vorgesehenen Zeit bearbeitet wurde. Insgesamt wächst damit das Zeitmanagement vom kurzfristigen zum flexiblen mittelfristigen, und die Komplexität wird selbst gewählt. Genau deshalb steht die Wochenplanarbeit in der Einführungsreihenfolge offener Formen erst nach der Tagesplanarbeit.",
@@ -2547,16 +2550,14 @@
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: was Freiarbeit meint und wodurch sie begrenzt wird",
           "idx": [
             0,
             1
           ],
-          "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Freiarbeit meint … , begrenzt wird sie durch … Die Frage ist, ob …"
+          "form": "liste",
+          "punkte": 3
         },
         {
           "operator": "eroertern",
@@ -2568,7 +2569,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Für die Begrenzungen spricht erstens, dass die Vorlesung die Risiken einer ganz freien Wahl selbst benennt: Wählen die Schüler:innen den Schwierigkeitsgrad, kann es zur Vermeidung schwieriger Aufgaben und zur Überschätzung der eigenen Fähigkeiten kommen, und offene Materialangebote in Regalen können ablenkend wirken."
         },
         {
           "operator": "eroertern",
@@ -2580,18 +2582,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Gegen die Begrenzungen spricht erstens das Kriterium von Fischer: Je freier die Schüler:innen entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener ist der Unterricht zu beurteilen. Jede Begrenzung senkt damit messbar den Grad der Selbstbestimmung."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein eigenes Urteil – Gerüst oder Ersatz?",
           "idx": [
             6
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "Ich halte die Begrenzungen deshalb nicht für einen Widerspruch, wohl aber für begründungspflichtig. Zu unterscheiden ist zwischen Begrenzungen, die eine Entscheidung überhaupt erst überschaubar machen, und Vorgaben, die sie ersetzen."
         }
       ],
       "muster": "Die Freiarbeit ist als möglichst umfassend selbstbestimmter Lernprozess angelegt: Die Schüler:innen entscheiden über Ziele, Inhalte, methodische Arbeitsformen, mögliche Partner, Arbeitszeit und Arbeitsmittel. Zugleich nennt die Vorlesung vier Begrenzungen, nämlich vereinbarte Verhaltens- und Umgangsregeln, die in der Logik der Sache enthaltenen Anforderungen, eine Begrenzung des Materialangebotes und die Zielsetzungen der Schüler:innen selbst. Für die Begrenzungen spricht erstens, dass die Vorlesung die Risiken einer ganz freien Wahl selbst benennt: Wählen die Schüler:innen den Schwierigkeitsgrad, kann es zur Vermeidung schwieriger Aufgaben und zur Überschätzung der eigenen Fähigkeiten kommen, und offene Materialangebote in Regalen können ablenkend wirken. Ein begrenztes Angebot und verabredete Regeln nehmen genau diesen Druck heraus. Zweitens hält die Vorlesung fest, dass Schüler:innen im Förderschwerpunkt geistige Entwicklung den Anforderungen offener Formen nur schwer oder gar nicht gerecht werden; folgerichtig wird Offenheit in Stufen eingeführt, von der Einführung zur Freiarbeit über Tagesplan, Stationenarbeit und Wochenplan bis zur Freiarbeit. Begrenzungen sind in dieser Logik Zwischenstufen, keine Rücknahme. Gegen die Begrenzungen spricht erstens das Kriterium von Fischer: Je freier die Schüler:innen entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener ist der Unterricht zu beurteilen. Jede Begrenzung senkt damit messbar den Grad der Selbstbestimmung. Zweitens gehört zur Kritik am offenen Unterricht gerade, dass weiterhin viele Vorgaben durch die Lehrperson bestehen und methodische Bausteine sich als maskierte Übungsphasen erweisen können - Freiarbeit hieße dann nur noch so. Und die Vorteile, die die Vorlesung aufzählt, entstehen an echten Entscheidungen: die Heranführung an Entscheidungsprozesse, der Transfer des Auswahlverhaltens auf ähnliche Situationen sowie Selbstvertrauen und Selbstwert. Ich halte die Begrenzungen deshalb nicht für einen Widerspruch, wohl aber für begründungspflichtig. Zu unterscheiden ist zwischen Begrenzungen, die eine Entscheidung überhaupt erst überschaubar machen, und Vorgaben, die sie ersetzen. Die ersten wirken wie ein Gerüst, das mit wachsender Sicherheit Stück für Stück zurückgenommen wird; die zweiten machen aus offener Arbeit eine maskierte Übungsphase. Entscheidend ist also nicht, ob begrenzt wird, sondern ob am Ende noch etwas zu entscheiden bleibt.",
@@ -2666,15 +2670,13 @@
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: was den Lehrgang ausmacht",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Der Lehrgang … Die Frage ist, ob …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "eroertern",
@@ -2686,7 +2688,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Für seinen Platz im Unterricht spricht erstens seine Effizienz: Das Verhältnis von Zeit-, Material- und Personalaufwand zum Lernertrag gilt als hoch, der Lehrgang ist also eine sparsame Methode, wenn Fertigkeiten aufgebaut werden sollen."
         },
         {
           "operator": "eroertern",
@@ -2698,18 +2701,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Gegen den Lehrgang spricht erstens, dass seine Merkmale in der Gegenüberstellung von geschlossenem und offenem Unterricht auf der geschlossenen Seite liegen: Der lehrgangsförmige Unterricht wird mit einem hohen Ausmaß an Lehrerlenkung und überwiegend als Frontalunterricht geführt, sein Aufbau folgt der Systematik der Sache und ist feinstrukturiert und kleinschrittig angelegt."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein eigenes Urteil",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "Ich halte den Lehrgang deshalb nicht für einen Fremdkörper. Sein Gewicht liegt auf dem sicheren Aufbau von Fertigkeiten, und genau diese Fertigkeiten sind oft die Voraussetzung dafür, dass offene Arbeit überhaupt gelingt: Wer ein Werkzeug nicht sicher bedienen kann, kann in der Werkstattarbeit nicht frei entscheiden."
         }
       ],
       "muster": "Ein Lehrgang ist ein Unterrichtsverfahren, bei dem die Vermittlung fachspezifischer Kenntnisse und Fertigkeiten im Vordergrund steht; der Aufbau orientiert sich an der Fachsystematik des Inhalts, der meist in kleine Schritte untergliedert und für den Lehr-Lern-Prozess rekonstruiert wird. Für seinen Platz im Unterricht spricht erstens seine Effizienz: Das Verhältnis von Zeit-, Material- und Personalaufwand zum Lernertrag gilt als hoch, der Lehrgang ist also eine sparsame Methode, wenn Fertigkeiten aufgebaut werden sollen. Zweitens gilt er ausdrücklich als Teil des handlungsorientierten Unterrichts: Im Rahmen eines Lehrgangs erwerben die Schüler:innen Fertigkeiten, die ihnen die Bewältigung des Alltags und den Erwerb neuer Kompetenzen ermöglichen. Dazu passt, dass die Anwendungsphase mehr verlangt als Nachmachen - die Lernenden wenden das Gelernte unter neuen Bedingungen an und sollen Ausführung und Ergebnis eigenständig reflektieren und bewerten. Gegen den Lehrgang spricht erstens, dass seine Merkmale in der Gegenüberstellung von geschlossenem und offenem Unterricht auf der geschlossenen Seite liegen: Der lehrgangsförmige Unterricht wird mit einem hohen Ausmaß an Lehrerlenkung und überwiegend als Frontalunterricht geführt, sein Aufbau folgt der Systematik der Sache und ist feinstrukturiert und kleinschrittig angelegt. Zweitens liegen alle vier zentralen Momente geschlossener Lehr-Lernformen bei der Lehrperson: Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. Damit bleibt genau das gering, was nach Fischer über die Offenheit eines Unterrichts entscheidet, nämlich der Grad der Mit- und Selbstbestimmung; keine der Dimensionen offenen Unterrichts wird nennenswert geöffnet. Ich halte den Lehrgang deshalb nicht für einen Fremdkörper. Sein Gewicht liegt auf dem sicheren Aufbau von Fertigkeiten, und genau diese Fertigkeiten sind oft die Voraussetzung dafür, dass offene Arbeit überhaupt gelingt: Wer ein Werkzeug nicht sicher bedienen kann, kann in der Werkstattarbeit nicht frei entscheiden. Bemerkenswert ist außerdem, dass die Führung schon innerhalb des Verfahrens nachlässt: Was in der Demonstrationsphase noch vorgemacht wird, sollen die Lernenden in der Anwendungsphase eigenständig reflektieren und bewerten. Meine Prüffrage an die Methode lautet deshalb nicht, wie offen sie insgesamt ist, sondern welche Fertigkeit eine Wahlfreiheit voraussetzt, die ich den Schüler:innen eröffnen möchte - und ob der Lehrgang genau diese Fertigkeit aufbaut.",
@@ -2788,41 +2793,34 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Der offenen Seite ordnet die Vorlesung … zu, der geschlossenen …"
+          "satzanfang": "Der offenen Seite ordnet die Vorlesung … zu, der geschlossenen …",
+          "beispiel": "Die Vorlesung ordnet der offenen Seite die Tagesplanarbeit, die Wochenplanarbeit, das Lernen an Stationen, die Werkstattarbeit und die Freiarbeit zu. Der geschlossenen Seite lassen sich der Lehrgang sowie Trainingsprogramme und Übungseinheiten zuordnen; dazu gehört das frontale, lehrerzentrierte Vorgehen, das die Gegenüberstellung als Merkmal geschlossenen Unterrichts führt."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Welche leitenden Gedanken jeweils dahinterstehen",
+          "rolle": "beschreiben",
+          "auftrag": "Welche leitenden Gedanken jeweils dahinterstehen - und wo die Vorlesung so einen Gedanken ausdrücklich an eine Methode heftet",
           "idx": [
             2,
-            3
-          ],
-          "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Dahinter steht auf der offenen Seite … , auf der geschlossenen …"
-        },
-        {
-          "operator": "erlaeutern",
-          "rolle": "belegen",
-          "auftrag": "Wo die Vorlesung so einen Gedanken ausdrücklich an eine Methode heftet",
-          "idx": [
+            3,
             4
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Ausdrücklich zeigt sich das an …"
+          "punkte": 5,
+          "satzanfang": "Dahinter steht auf der offenen Seite … , auf der geschlossenen … Ausdrücklich zeigt sich das an …",
+          "beispiel": "Hinter den offenen Formen steht als entscheidendes Kriterium der Grad der Mit- bzw. Selbstbestimmung: Je freier die Schüler:innen entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Wie Unterrichtsform, didaktisches Prinzip und Methode zusammenhängen – und warum das keine zwei Kisten sind",
+          "rolle": "erlaeutern",
+          "auftrag": "Wie Unterrichtsform, didaktisches Prinzip und Methode zusammenhängen - und warum das keine zwei Kisten sind",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die Unterrichtsform ist dabei … , das Prinzip … , die Methode … Deshalb …"
+          "satzanfang": "Die Unterrichtsform ist dabei … , das Prinzip … , die Methode … Deshalb …",
+          "beispiel": "Einen zusammenfassenden Satz spricht die Vorlesung selbst nicht aus; ziehen lässt er sich aber: Die Unterrichtsform ist die Oberkategorie, das didaktische Prinzip begründet, warum eine Form so gestaltet wird, und die Methode setzt beides im Unterricht um."
         }
       ],
       "muster": "Die Vorlesung ordnet der offenen Seite die Tagesplanarbeit, die Wochenplanarbeit, das Lernen an Stationen, die Werkstattarbeit und die Freiarbeit zu. Der geschlossenen Seite lassen sich der Lehrgang sowie Trainingsprogramme und Übungseinheiten zuordnen; dazu gehört das frontale, lehrerzentrierte Vorgehen, das die Gegenüberstellung als Merkmal geschlossenen Unterrichts führt.\n\nHinter den offenen Formen steht als entscheidendes Kriterium der Grad der Mit- bzw. Selbstbestimmung: Je freier die Schüler:innen entscheiden dürfen, wann sie was und wie sie lernen möchten, umso offener kann ein Unterricht beurteilt werden. Dieses Kriterium fächert sich in fünf Dimensionen der Öffnung auf, nämlich organisatorisch, methodisch, inhaltlich, sozial und persönlich. Dazu kommen die Umsetzung innerer Differenzierung, die die Vorlesung als Vorteil offenen Unterrichts führt, und ein konstruktivistisches Verständnis von Lernen, das den Schüler:innen den selbstständigen Kenntniserwerb durch eigene Forschungstätigkeit zutraut - im Experimentieren, im freien Explorieren und im Problemlösen der Werkstattarbeit.\n\nDie geschlossene Seite tragen vier andere Momente: Lernzielorientierung, Elementarisierung und Reduktion, Strukturierung und Instruktion. Der Stoff wird also auf ein Ziel hin verkleinert, geordnet, in kleine Schritte zerlegt und von der Lehrperson vermittelt.\n\nDass ein solcher Gedanke eine Methode prägt, sagt die Vorlesung an zwei Stellen ausdrücklich. Ansätze und Programme mit therapeutischer Ausrichtung sind durch starke Strukturierung und Lernzielorientierung geprägt. Und beim Lehrgang orientiert sich der Aufbau an der Fachsystematik des Inhalts, der meist in kleine Schritte untergliedert und für den Lehr-Lern-Prozess rekonstruiert wird.\n\nEinen zusammenfassenden Satz spricht die Vorlesung selbst nicht aus; ziehen lässt er sich aber: Die Unterrichtsform ist die Oberkategorie, das didaktische Prinzip begründet, warum eine Form so gestaltet wird, und die Methode setzt beides im Unterricht um. Dass damit keine Einteilung in zwei getrennte Fächer gemeint ist, zeigt sich zweifach. Das entscheidende Kriterium ist ein Grad und kein Gegensatz. Und derselbe Lehrgang, der kleinschrittig und stark gelenkt bleibt, wird zugleich als Teil des handlungsorientierten Unterrichts betrachtet. Offen und geschlossen sind deshalb Pole einer Skala und nicht zwei Kisten.",

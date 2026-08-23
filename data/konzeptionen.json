@@ -831,7 +831,8 @@
           "Fischers Konzeption; das Ziel fragt nach eigenem Sinn",
           "Auch diese Zeile ist eine gültige der drei Nennungen"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "ko-f-2",
@@ -843,7 +844,8 @@
         "Ziele wandeln sich: Brauchbarmachung -> Selbstständigkeit ohne Selbstbestimmung -> Autonomie -> Selbst-/Mitbestimmung und Solidaritätsfähigkeit -> persönliche Sinnstiftung",
         "Inhalte wandeln sich: Sinnes-/Funktionsschulung und partikulare, lebenspraktische Inhalte -> allgemeine Bildungsinhalte für alle",
         "Methoden wandeln sich: Gesamtunterricht -> handlungsorientierter Unterricht -> offener Unterricht",
-        "Menschenbild dahinter: vom Objekt der Fürsorge zum Subjekt mit Bildungsrecht (Feuser: jedes Kind hat das Recht, alles Wichtige über die Welt zu erfahren)"
+        "Menschenbild dahinter: vom Objekt der Fürsorge zum Subjekt mit Bildungsrecht (Feuser: jedes Kind hat das Recht, alles Wichtige über die Welt zu erfahren)",
+        "Beispiel, das Ziel, Inhalt und Methode an einem Punkt zusammenhält: Bei Saegert greifen sie als Brauchbarmachung durch Sinnesschulung im Gesamtunterricht ineinander, bei Fischer als persönliche Sinnstiftung durch allgemeine Bildungsinhalte im offenen Unterricht - dieselbe Schülerin bekommt je nach Konzeption ein völlig anderes Unterrichtsangebot"
       ],
       "abschnitte": [
         {
@@ -855,34 +857,38 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Insgesamt verläuft der Wandel von … hin zu …"
+          "satzanfang": "Insgesamt verläuft der Wandel von … hin zu …",
+          "beispiel": "Der Wandel verläuft von der Defizit- zur Kompetenz- und Subjektorientierung."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Woran der Wandel sichtbar wird",
+          "rolle": "beschreiben",
+          "auftrag": "Woran der Wandel sichtbar wird - und welches Menschenbild dahintersteht",
           "idx": [
             1,
             2,
-            3
-          ],
-          "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Sichtbar wird das daran, dass sich … wandeln:"
-        },
-        {
-          "operator": "erlaeutern",
-          "rolle": "belegen",
-          "auftrag": "Das Menschenbild, das dahintersteht",
-          "idx": [
+            3,
             4
           ],
           "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Sichtbar wird das daran, dass sich … wandeln:",
+          "beispiel": "Über die Zeit wandeln sich also Ziele, Inhalte, Methoden und vor allem das Menschenbild: vom Objekt der Brauchbarmachung zum Subjekt mit eigenem Bildungsrecht."
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "erlaeutern",
+          "auftrag": "Ein Beispiel, das den Wandel greifbar macht",
+          "idx": [
+            5
+          ],
+          "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Dahinter steht ein verändertes Menschenbild: …"
+          "satzanfang": "Das lässt sich an einem Beispiel zeigen: …",
+          "beispiel": "Das lässt sich an einem Punkt zeigen, an dem Ziel, Inhalt und Methode zusammenlaufen: Bei Saegert greifen sie als Brauchbarmachung durch Sinnesschulung im Gesamtunterricht ineinander, bei Fischer als persönliche Sinnstiftung durch allgemeine Bildungsinhalte im offenen Unterricht - dieselbe Schülerin bekommt je nach Konzeption ein völlig anderes Unterrichtsangebot."
         }
       ],
-      "muster": "Der Wandel verläuft von der Defizit- zur Kompetenz- und Subjektorientierung. Frühe Konzeptionen (Saegert, Fuchs) sahen den Menschen mit geistiger Beeinträchtigung als defizitär und wollten ihn durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Die defizitorientierte Konzeption zielte immerhin auf Selbstständigkeit, jedoch ohne Selbstbestimmung, mit lebenspraktischen und partikularen Inhalten. Mit der kompetenz- und entwicklungsorientierten Konzeption (Speck, Mühl, John) wurde Autonomie zum Ziel und allgemeine Bildungsinhalte mit handlungsorientiertem Unterricht zum Standard. Die entwicklungslogische Didaktik Feusers betont Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit im offenen Unterricht, und die subjekt- und bedarfsorientierte Konzeption (Fischer) stellt die persönliche Sinnstiftung ins Zentrum. Über die Zeit wandeln sich also Ziele, Inhalte, Methoden und vor allem das Menschenbild: vom Objekt der Brauchbarmachung zum Subjekt mit eigenem Bildungsrecht.",
+      "muster": "Der Wandel verläuft von der Defizit- zur Kompetenz- und Subjektorientierung. Frühe Konzeptionen (Saegert, Fuchs) sahen den Menschen mit geistiger Beeinträchtigung als defizitär und wollten ihn durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Die defizitorientierte Konzeption zielte immerhin auf Selbstständigkeit, jedoch ohne Selbstbestimmung, mit lebenspraktischen und partikularen Inhalten. Mit der kompetenz- und entwicklungsorientierten Konzeption (Speck, Mühl, John) wurde Autonomie zum Ziel und allgemeine Bildungsinhalte mit handlungsorientiertem Unterricht zum Standard. Die entwicklungslogische Didaktik Feusers betont Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit im offenen Unterricht, und die subjekt- und bedarfsorientierte Konzeption (Fischer) stellt die persönliche Sinnstiftung ins Zentrum. Über die Zeit wandeln sich also Ziele, Inhalte, Methoden und vor allem das Menschenbild: vom Objekt der Brauchbarmachung zum Subjekt mit eigenem Bildungsrecht. Das lässt sich an einem Punkt zeigen, an dem Ziel, Inhalt und Methode zusammenlaufen: Bei Saegert greifen sie als Brauchbarmachung durch Sinnesschulung im Gesamtunterricht ineinander, bei Fischer als persönliche Sinnstiftung durch allgemeine Bildungsinhalte im offenen Unterricht - dieselbe Schülerin bekommt je nach Konzeption ein völlig anderes Unterrichtsangebot.",
       "musterVarianten": {
         "de": {
           "einfach": "Der Wandel verläuft von der Defizitorientierung zur Kompetenz- und Subjektorientierung. Defizitorientierung heißt: Man schaut vor allem darauf, was ein Mensch nicht kann. Kompetenz- und Subjektorientierung heißt: Man schaut auf seine Fähigkeiten und auf ihn als eigenständige Person. Die frühen Konzeptionen stammen von Saegert und Fuchs. Sie sahen den Menschen mit geistiger Beeinträchtigung als defizitär an. Sie wollten ihn für die Allgemeinheit brauchbar machen. Dafür nutzten sie die Sinnes- und Funktionsschulung. Sinnes- und Funktionsschulung heißt: Einzelne Sinne und einzelne Funktionen werden geübt. Danach kam die defizitorientierte Konzeption. Sie zielte immerhin auf Selbstständigkeit. Die Selbstbestimmung gehörte aber noch nicht dazu. Der Mensch sollte also vieles allein können, jedoch nicht selbst über sein Leben entscheiden. Die Inhalte waren lebenspraktisch und partikular. Partikular heißt: Es werden nur einzelne Ausschnitte der Welt unterrichtet. Dann folgte die kompetenz- und entwicklungsorientierte Konzeption von Speck, Mühl und John. Mit ihr wurde die Autonomie zum Ziel. Autonomie bedeutet, dass ein Mensch sein Leben selbst führt. Jetzt wurden allgemeine Bildungsinhalte zum Standard. Die Methode war der handlungsorientierte Unterricht. Handlungsorientiert heißt: Die Schülerinnen und Schüler lernen, indem sie selbst handeln. Die entwicklungslogische Didaktik von Feuser betont die Selbstbestimmung, die Mitbestimmung und die Solidaritätsfähigkeit. Ihre Methode ist der offene Unterricht. Offener Unterricht heißt: Die Schülerinnen und Schüler bestimmen mit, woran und wie sie arbeiten. Die subjekt- und bedarfsorientierte Konzeption von Fischer stellt die persönliche Sinnstiftung ins Zentrum. Persönliche Sinnstiftung heißt: Das Lernen muss für die einzelne Person einen Sinn ergeben. Über die Zeit wandeln sich also die Ziele, die Inhalte, die Methoden und vor allem das Menschenbild. Am Anfang war der Mensch ein Objekt der Brauchbarmachung. Am Ende ist er ein Subjekt mit einem eigenen Recht auf Bildung."
@@ -925,8 +931,14 @@
           "Die Ebene dahinter: Wie wird der Mensch gesehen? Plus Feusers Leitsatz",
           "Vom Versorgt-Werden zum eigenen Anspruch auf Bildung",
           "Menschenbild-Frage: erst Objekt, dann was? Ein Zitat passt dazu"
+        ],
+        [
+          "Jetzt ein Beispiel: zwei Vertreter aus der Tabelle, der erste und der letzte",
+          "Nimm eine einzelne Zeile und lies sie quer - was gehört bei ihr zusammen?",
+          "Mach den Wandel an zwei Namen fest, statt ihn nur zu behaupten"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "ko-f-3",
@@ -939,19 +951,18 @@
         "Kritik 2: widerspricht der ICF-Sicht - Behinderung entsteht in Interaktion mit Kontextfaktoren, ist kein reines Personendefizit",
         "Kritik 3: reduziert Bildung auf Training einzelner Funktionen statt allgemeiner Bildungsinhalte (vgl. Feuser: Recht auf alles Wichtige über die Welt)",
         "Differenzierung: strukturierte Übung und Funktionsförderung haben weiterhin ihren Platz (z. B. Trainingsprogramme), aber eingebettet, nicht als Gesamtkonzept",
-        "Fazit formulieren: als Gesamtkonzept überholt, historisch einordnen"
+        "Bewertung: Als Gesamtkonzept ist die defizitäre Didaktik überholt - sie bleibt als erste Stufe des Wandels historisch bedeutsam, taugt aber nicht als Leitbild für heutigen Unterricht",
+        "Historische Würdigung: Sie steht als erste der fünf Konzeptionen für einen didaktischen Zugriff überhaupt - die Tabelle weist ihr eigene Ziele, Inhalte und Methoden zu; im Spannungsfeld zwischen Bewahrung und Bildungsanspruch (Terfloth und Bauersfeld) steht sie damit auf der Seite des Unterrichtens und nicht der bloßen Verwahrung"
       ],
       "abschnitte": [
         {
-          "operator": "diskutieren",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: der Kern der defizitären Konzeption",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Die defizitäre Konzeption wollte … Zu fragen ist, ob das heute noch trägt."
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "diskutieren",
@@ -964,32 +975,36 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht aus heutiger Sicht, dass …"
+          "satzanfang": "Dagegen spricht aus heutiger Sicht, dass …",
+          "beispiel": "Aus heutiger Sicht ist diese Konzeption mehrfach kritikwürdig: Sie widerspricht dem Menschenbild der UN-Behindertenrechtskonvention, die Selbstbestimmung und gleichberechtigte Teilhabe fordert, und der ICF, die Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren versteht statt als reines Personendefizit."
         },
         {
           "operator": "diskutieren",
           "rolle": "dafuer",
-          "auftrag": "Was sich trotzdem halten lässt",
+          "auftrag": "Was sich trotzdem halten lässt - zwei Punkte",
           "idx": [
-            4
+            4,
+            6
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dafür spricht allerdings, dass …"
+          "punkte": 3,
+          "satzanfang": "Dafür spricht allerdings, dass …",
+          "beispiel": "Differenzierend lässt sich festhalten, dass strukturierte Übungs- und Trainingselemente weiterhin sinnvoll sein können, jedoch als Baustein in einem kompetenz- und subjektorientierten Unterricht."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein Urteil aus heutiger Sicht",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ich halte fest: …"
+          "satzanfang": "Ich halte fest: …",
+          "beispiel": "Als Gesamtkonzept ist die defizitäre Didaktik damit überholt: Sie bleibt als erste Stufe des Wandels historisch bedeutsam, taugt aber nicht als Leitbild für heutigen Unterricht."
         }
       ],
-      "muster": "Die defizitäre Konzeption betrachtete Menschen mit geistiger Beeinträchtigung als Mängelwesen und wollte sie durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Aus heutiger Sicht ist das mehrfach kritikwürdig: Es widerspricht dem Menschenbild der UN-Behindertenrechtskonvention, die Selbstbestimmung und gleichberechtigte Teilhabe fordert, und der ICF, die Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren versteht statt als reines Personendefizit. Zudem verkürzt die Konzeption Bildung auf das Training einzelner Funktionen, während heute allgemeine Bildungsinhalte für alle gelten - mit Feuser gesprochen hat jedes Kind das Recht, alles Wichtige über die Welt zu erfahren. Differenzierend lässt sich festhalten, dass strukturierte Übungs- und Trainingselemente weiterhin sinnvoll sein können, jedoch als Baustein in einem kompetenz- und subjektorientierten Unterricht. Als Gesamtkonzept ist die defizitäre Didaktik damit überholt und nur noch historisch von Bedeutung.",
+      "muster": "Die defizitäre Konzeption betrachtete Menschen mit geistiger Beeinträchtigung als Mängelwesen und wollte sie durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Aus heutiger Sicht ist diese Konzeption mehrfach kritikwürdig: Sie widerspricht dem Menschenbild der UN-Behindertenrechtskonvention, die Selbstbestimmung und gleichberechtigte Teilhabe fordert, und der ICF, die Behinderung als dynamische Interaktion zwischen Gesundheitsproblem und Kontextfaktoren versteht statt als reines Personendefizit. Zudem verkürzt die Konzeption Bildung auf das Training einzelner Funktionen, während heute allgemeine Bildungsinhalte für alle gelten - mit Feuser gesprochen hat jedes Kind das Recht, alles Wichtige über die Welt zu erfahren. Differenzierend lässt sich festhalten, dass strukturierte Übungs- und Trainingselemente weiterhin sinnvoll sein können, jedoch als Baustein in einem kompetenz- und subjektorientierten Unterricht. Dafür spricht außerdem ihre historische Stellung: Sie steht als erste der fünf Konzeptionen dafür, dass es überhaupt einen didaktischen Zugriff gab - die Tabelle von Stöppler und Wachsmuth weist ihr eigene Ziele, Inhalte und Methoden zu, und im Spannungsfeld zwischen Bewahrung und Bildungsanspruch (Terfloth und Bauersfeld) steht sie damit auf der Seite des Unterrichtens und nicht der bloßen Verwahrung. Als Gesamtkonzept ist die defizitäre Didaktik damit überholt: Sie bleibt als erste Stufe des Wandels historisch bedeutsam, taugt aber nicht als Leitbild für heutigen Unterricht.",
       "musterVarianten": {
         "de": {
           "einfach": "Die defizitäre Konzeption betrachtete Menschen mit geistiger Beeinträchtigung als Mängelwesen. Mängelwesen heißt: Der Mensch wird vor allem über das gesehen, was ihm fehlt. Diese Konzeption wollte die Menschen durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Sinnes- und Funktionsschulung heißt: Einzelne Sinne und einzelne Funktionen werden geübt. Aus heutiger Sicht ist das an mehreren Stellen kritikwürdig. Der erste Kritikpunkt betrifft das Menschenbild. Die UN-Behindertenrechtskonvention fordert Selbstbestimmung und gleichberechtigte Teilhabe. Die defizitäre Konzeption widerspricht diesem Menschenbild. Der zweite Kritikpunkt betrifft die ICF. Die ICF versteht Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Dynamische Interaktion heißt: Beide Seiten wirken aufeinander ein. Behinderung ist also kein reines Defizit der Person. Auch dieser Sichtweise widerspricht die defizitäre Konzeption. Der dritte Kritikpunkt betrifft den Bildungsbegriff. Die defizitäre Konzeption verkürzt Bildung auf das Training einzelner Funktionen. Heute gelten dagegen allgemeine Bildungsinhalte für alle. Mit Feuser gesprochen hat jedes Kind das Recht, alles Wichtige über die Welt zu erfahren. Differenzierend lässt sich aber Folgendes festhalten. Strukturierte Übungs- und Trainingselemente können weiterhin sinnvoll sein. Sie sollten jedoch ein Baustein in einem kompetenz- und subjektorientierten Unterricht sein. Als Gesamtkonzept ist die defizitäre Didaktik damit überholt. Sie ist heute nur noch historisch von Bedeutung."
@@ -1037,8 +1052,14 @@
           "Zum Schluss: eigenes Urteil mit zeitlicher Einordnung",
           "Rundes Ende: Gesamturteil plus Blick auf die Epoche",
           "Wie schließt eine Erörterung? Position beziehen"
+        ],
+        [
+          "Ein zweiter Punkt dafür: Wo steht sie in der Reihe der fünf Konzeptionen?",
+          "Sie bekommt in der Tabelle eigene Spalten - was heißt das für ihre Würdigung?",
+          "Das Spannungsfeld Verwahren oder Bilden hilft dir hier weiter"
         ]
-      ]
+      ],
+      "original": true
     },
     {
       "id": "ko-f-4",
@@ -1063,22 +1084,24 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die ICF ist …, sie besteht aus …"
+          "satzanfang": "Die ICF ist …, sie besteht aus …",
+          "beispiel": "Die ICF ist die International Classification of Functioning, Disability and Health der WHO (2001); für Kinder und Jugendliche von der Geburt bis zum 18. Lebensjahr gibt es die ICF-CY (WHO 2013). Sie besteht aus dem Gesundheitsproblem, den Körperfunktionen und -strukturen, den Aktivitäten und der Partizipation (Teilhabe) sowie den Kontextfaktoren, also den Umweltfaktoren und den personenbezogenen Faktoren."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Wie das Modell Behinderung fasst",
           "idx": [
             2
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Behinderung erscheint darin als …"
+          "satzanfang": "Behinderung erscheint darin als …",
+          "beispiel": "Funktionsfähigkeit und Behinderung erscheinen darin nicht als reines Personendefizit, sondern als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren; deshalb heißt das Modell biopsychosozial."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Was das für die schulische Bildung bedeutet – konkret",
           "idx": [
             3,
@@ -1086,10 +1109,11 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für die schulische Bildung bedeutet das, dass …"
+          "satzanfang": "Für die schulische Bildung bedeutet das, dass …",
+          "beispiel": "Für die Schule ist das Modell zentral, weil seine Sichtweise die deutsche Sozialgesetzgebung und die sonderpädagogische Förderung prägt: Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt."
         }
       ],
-      "muster": "Die ICF (WHO 2001; für Kinder und Jugendliche die ICF-CY) beschreibt Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Ihre Bestandteile sind Körperfunktionen und -strukturen, Aktivitäten und Partizipation (Teilhabe) sowie als Kontextfaktoren Umweltfaktoren und personenbezogene Faktoren. Für die Schule ist das Modell zentral, weil seine Sichtweise die deutsche Sozialgesetzgebung und die sonderpädagogische Förderung prägt: Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt.",
+      "muster": "Die ICF ist die International Classification of Functioning, Disability and Health der WHO (2001); für Kinder und Jugendliche von der Geburt bis zum 18. Lebensjahr gibt es die ICF-CY (WHO 2013). Sie besteht aus dem Gesundheitsproblem, den Körperfunktionen und -strukturen, den Aktivitäten und der Partizipation (Teilhabe) sowie den Kontextfaktoren, also den Umweltfaktoren und den personenbezogenen Faktoren. Funktionsfähigkeit und Behinderung erscheinen darin nicht als reines Personendefizit, sondern als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren; deshalb heißt das Modell biopsychosozial. Für die Schule ist das Modell zentral, weil seine Sichtweise die deutsche Sozialgesetzgebung und die sonderpädagogische Förderung prägt: Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt.",
       "musterVarianten": {
         "de": {
           "einfach": "Die ICF wurde 2001 von der WHO herausgegeben. Für Kinder und Jugendliche gibt es die ICF-CY. Die ICF beschreibt die Funktionsfähigkeit und die Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Dynamische Interaktion heißt: Beide Seiten wirken aufeinander ein und verändern sich dabei. Die ICF hat mehrere Bestandteile. Der erste Bestandteil sind die Körperfunktionen und die Körperstrukturen. Der zweite Bestandteil sind die Aktivitäten. Aktivität heißt: das, was ein Mensch tut. Der dritte Bestandteil ist die Partizipation, also die Teilhabe. Teilhabe heißt: dass ein Mensch am Leben in der Gemeinschaft beteiligt ist. Dazu kommen die Kontextfaktoren. Die Kontextfaktoren bestehen aus den Umweltfaktoren und den personenbezogenen Faktoren. Umweltfaktoren sind die Bedingungen der Umgebung. Personenbezogene Faktoren gehören zur Person selbst. Für die Schule ist dieses Modell zentral. Seine Sichtweise prägt nämlich die deutsche Sozialgesetzgebung und die sonderpädagogische Förderung. In der Praxis hat das zwei Folgen. Erstens lassen sich mögliche Barrieren für Aktivität und Partizipation differenziert erfassen. Barriere heißt: ein Hindernis, das die Teilhabe erschwert. Zweitens wird eine größtmögliche Aktivität und Partizipation angestrebt. Dafür wird das Unterrichtsumfeld gestaltet, es werden Hilfsmittel bereitgestellt und es wird personelle Hilfe gegeben."
@@ -1251,11 +1275,12 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Kategoriale Bildung im Doppelsinn heißt, dass …"
+          "satzanfang": "Kategoriale Bildung im Doppelsinn heißt, dass …",
+          "beispiel": "Kategoriale Bildung nach Klafki verbindet zwei Seiten von Bildung in einem Doppelsinn: Dem Menschen erschließt sich eine Wirklichkeit kategorial, und zugleich ist der Mensch für diese Wirklichkeit erschlossen."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Die beiden Seiten – und die Einseitigkeit, die zu jeder gehört (Klafkis Fachbegriffe!)",
           "idx": [
             1,
@@ -1263,18 +1288,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die eine Seite ist …, einseitig wird sie als … Die andere Seite ist …, einseitig wird sie als …"
+          "satzanfang": "Die eine Seite ist …, einseitig wird sie als … Die andere Seite ist …, einseitig wird sie als …",
+          "beispiel": "Wer Bildung allein als Aneignung der objektiven Welt versteht, also als Kennen und Verfügen über die kulturellen Zeugnisse der Vergangenheit, verfällt dem bildungstheoretischen Enzyklopädismus. Wer Bildung umgekehrt nur als optimale und harmonische Entfaltung der eigenen Fähigkeiten und Fertigkeiten fasst, landet beim bildungstheoretischen Formalismus."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Die Pointe: was die kategoriale Bildung daraus macht",
           "idx": [
             3
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Der Gewinn liegt darin, dass …"
+          "satzanfang": "Der Gewinn liegt darin, dass …",
+          "beispiel": "Kategoriale Bildung hält beide Seiten zusammen: Weltinhalte und Subjektentwicklung erschließen sich wechselseitig."
         }
       ],
       "muster": "Kategoriale Bildung nach Klafki verbindet zwei Seiten von Bildung in einem Doppelsinn: Dem Menschen erschließt sich eine Wirklichkeit kategorial, und zugleich ist der Mensch für diese Wirklichkeit erschlossen. Damit überwindet Klafki zwei Einseitigkeiten. Wer Bildung allein als Aneignung der objektiven Welt versteht, also als Kennen und Verfügen über die kulturellen Zeugnisse der Vergangenheit, verfällt dem bildungstheoretischen Enzyklopädismus. Wer Bildung umgekehrt nur als optimale und harmonische Entfaltung der eigenen Fähigkeiten und Fertigkeiten fasst, landet beim bildungstheoretischen Formalismus. Kategoriale Bildung hält beide Seiten zusammen: Weltinhalte und Subjektentwicklung erschließen sich wechselseitig.",
@@ -1329,56 +1356,61 @@
         "Kontrast zu früheren Konzeptionen: defizitär/reduktionistisch (Brauchbarmachung, Sinnes- und Funktionsschulung) und defizitorientiert (partikulare, lebenspraktische Inhalte, Selbstständigkeit ohne Selbstbestimmung) sprachen nicht allen Kindern die gleichen Bildungsinhalte zu",
         "Argument für die These: Bildungsrecht wird nicht von der Beschaffenheit des Kindes abhängig gemacht - der Zugang wird über die didaktische Aufbereitung gesichert (Sach-, Tätigkeits- und Handlungsstrukturanalyse, individualisierte Lernziele)",
         "Mögliche Gegenposition bzw. Spannungsfeld: der Anspruch, alles Wichtige für alle zugänglich zu machen, stellt hohe Anforderungen an Elementarisierung und Unterrichtsgestaltung",
-        "Bewertung am Ende: eigene Position beziehen und begründen"
+        "Bewertung: Die These überzeugt, weil sie Bildung zum Recht macht statt zur Belohnung für Lernvoraussetzungen; die Einwände bleiben Arbeitsauftrag an die Didaktik und sind kein Grund, Inhalte zu streichen",
+        "Zweites Argument für die These: Nach der ICF ist Behinderung keine feste Eigenschaft der Person, sondern eine dynamische Interaktion von Gesundheitsproblem und Kontextfaktoren (Terfloth und Bauersfeld 2015) - wie ein Kind beschaffen ist, taugt deshalb gar nicht als Maßstab dafür, welche Inhalte man ihm zutraut; abzubauen sind die Barrieren, nicht die Inhalte",
+        "Zweiter Einwand: Das vierte Spannungsfeld nach Terfloth und Bauersfeld bleibt bestehen - zwischen Lebenspraxis und fachbezogenen Bildungsinhalten; wer allen alles Wichtige zugänglich machen will, muss trotzdem entscheiden, wie viel Unterrichtszeit die lebenspraktischen Inhalte bekommen, auf die einzelne Schülerinnen und Schüler im Alltag angewiesen sind"
       ],
       "abschnitte": [
         {
-          "operator": "diskutieren",
-          "rolle": "these",
+          "operator": "beschreiben",
           "auftrag": "Was die These sagt – und wogegen sie sich richtet",
           "idx": [
             0,
             1
           ],
-          "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Feusers These gehört zu … und richtet sich gegen …"
+          "form": "liste",
+          "punkte": 3
         },
         {
           "operator": "diskutieren",
           "rolle": "dafuer",
-          "auftrag": "Was für die These spricht",
+          "auftrag": "Was für die These spricht - zwei Punkte",
           "idx": [
-            2
+            2,
+            5
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dafür spricht, dass …"
+          "punkte": 3,
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Dafür spricht, dass Feuser das Bildungsrecht nicht an die Beschaffenheit des Kindes bindet: Alle Kinder erhalten allgemeine Bildungsinhalte, und der Zugang wird didaktisch gesichert, etwa über die Verschränkung von Sachstruktur-, Tätigkeitsstruktur- und Handlungsstrukturanalyse mit individualisierten Lernzielen im offenen Unterricht."
         },
         {
           "operator": "diskutieren",
           "rolle": "dagegen",
-          "auftrag": "Wo die These an ihre Grenze kommt",
+          "auftrag": "Wo die These an ihre Grenze kommt - zwei Punkte",
           "idx": [
-            3
+            3,
+            6
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dagegen lässt sich einwenden, dass …"
+          "punkte": 3,
+          "satzanfang": "Dagegen lässt sich einwenden, dass …",
+          "beispiel": "Dagegen lässt sich einwenden, dass der Anspruch, allen Kindern alles Wichtige zugänglich zu machen, sehr hohe Anforderungen an die Aufbereitung der Inhalte und die Unterrichtsgestaltung stellt."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine eigene Position, begründet",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ich halte fest: …"
+          "satzanfang": "Ich halte fest: …",
+          "beispiel": "In der Bewertung überzeugt die These dennoch: Sie macht Bildung zum Recht statt zur Belohnung für Lernvoraussetzungen und markiert damit den entscheidenden Fortschritt gegenüber den defizitorientierten Konzeptionen."
         }
       ],
-      "muster": "Feusers These ist der Kern seiner entwicklungslogischen Didaktik: Das Bildungsrecht eines Kindes hängt nicht von seiner Beschaffenheit ab, sondern folgt daraus, dass es in dieser Welt lebt. Vor dem Hintergrund des Wandels der Konzeptionen ist das eine deutliche Absage an die früheren Ansätze. Die defizitäre Konzeption wollte Kinder durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen, und auch die defizitorientierte Konzeption beschränkte sich auf partikulare, lebenspraktische Inhalte und auf Selbstständigkeit ohne Selbstbestimmung - beide machten die Inhalte also von der zugeschriebenen Beschaffenheit des Kindes abhängig. Feuser dreht das um: Alle Kinder erhalten allgemeine Bildungsinhalte, und der Zugang wird didaktisch gesichert, etwa über die Verschränkung von Sachstruktur-, Tätigkeitsstruktur- und Handlungsstrukturanalyse mit individualisierten Lernzielen im offenen Unterricht. Einwenden lässt sich, dass dieser Anspruch sehr hohe Anforderungen an die Aufbereitung der Inhalte und die Unterrichtsgestaltung stellt. In der Bewertung überzeugt die These dennoch: Sie macht Bildung zum Recht statt zur Belohnung für Lernvoraussetzungen und markiert damit den entscheidenden Fortschritt gegenüber den defizitorientierten Konzeptionen.",
+      "muster": "Feusers These ist der Kern seiner entwicklungslogischen Didaktik: Das Bildungsrecht eines Kindes hängt nicht von seiner Beschaffenheit ab, sondern folgt daraus, dass es in dieser Welt lebt. Vor dem Hintergrund des Wandels der Konzeptionen ist das eine deutliche Absage an die früheren Ansätze. Die defizitäre Konzeption wollte Kinder durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen, und auch die defizitorientierte Konzeption beschränkte sich auf partikulare, lebenspraktische Inhalte und auf Selbstständigkeit ohne Selbstbestimmung - beide machten die Inhalte also von der zugeschriebenen Beschaffenheit des Kindes abhängig. Dafür spricht, dass Feuser das Bildungsrecht nicht an die Beschaffenheit des Kindes bindet: Alle Kinder erhalten allgemeine Bildungsinhalte, und der Zugang wird didaktisch gesichert, etwa über die Verschränkung von Sachstruktur-, Tätigkeitsstruktur- und Handlungsstrukturanalyse mit individualisierten Lernzielen im offenen Unterricht. Dafür spricht zweitens die ICF: Behinderung ist nach ihr keine feste Eigenschaft der Person, sondern eine dynamische Interaktion von Gesundheitsproblem und Kontextfaktoren (Terfloth und Bauersfeld 2015); wie ein Kind beschaffen ist, taugt deshalb gar nicht als Maßstab dafür, welche Inhalte man ihm zutraut - abzubauen sind die Barrieren und nicht die Inhalte. Dagegen lässt sich einwenden, dass der Anspruch, allen Kindern alles Wichtige zugänglich zu machen, sehr hohe Anforderungen an die Aufbereitung der Inhalte und die Unterrichtsgestaltung stellt. Dagegen steht zweitens das vierte Spannungsfeld nach Terfloth und Bauersfeld, das zwischen Lebenspraxis und fachbezogenen Bildungsinhalten: Wer allen alles Wichtige zugänglich machen will, muss trotzdem entscheiden, wie viel Unterrichtszeit die lebenspraktischen Inhalte bekommen, auf die einzelne Schülerinnen und Schüler im Alltag angewiesen sind. In der Bewertung überzeugt die These dennoch: Sie macht Bildung zum Recht statt zur Belohnung für Lernvoraussetzungen und markiert damit den entscheidenden Fortschritt gegenüber den defizitorientierten Konzeptionen.",
       "musterVarianten": {
         "de": {
           "einfach": "Feusers These ist der Kern seiner entwicklungslogischen Didaktik. Sie besagt: Das Bildungsrecht eines Kindes hängt nicht von seiner Beschaffenheit ab. Es folgt allein daraus, dass das Kind in dieser Welt lebt. Vor dem Hintergrund des Wandels der Konzeptionen ist das eine deutliche Absage an die früheren Ansätze. Die defizitäre Konzeption wollte Kinder durch Sinnes- und Funktionsschulung für die Allgemeinheit brauchbar machen. Sinnes- und Funktionsschulung heißt: Einzelne Sinne und einzelne Funktionen werden geübt. Die defizitorientierte Konzeption beschränkte sich auf partikulare und lebenspraktische Inhalte. Partikular heißt: Es werden nur einzelne Ausschnitte der Welt unterrichtet. Ihr Ziel war die Selbstständigkeit ohne Selbstbestimmung. Beide Konzeptionen machten die Inhalte also von der zugeschriebenen Beschaffenheit des Kindes abhängig. Feuser dreht das um. Bei ihm erhalten alle Kinder allgemeine Bildungsinhalte. Der Zugang zu diesen Inhalten wird didaktisch gesichert. Dafür verschränkt Feuser drei Analysen miteinander: die Sachstrukturanalyse, die Tätigkeitsstrukturanalyse und die Handlungsstrukturanalyse. Dazu kommen individualisierte Lernziele im offenen Unterricht. Einwenden lässt sich gegen die These, dass dieser Anspruch sehr hohe Anforderungen stellt. Die Inhalte müssen aufwendig aufbereitet und der Unterricht muss sorgfältig gestaltet werden. In der Bewertung überzeugt die These dennoch. Sie macht Bildung zu einem Recht und nicht zu einer Belohnung für gute Lernvoraussetzungen. Damit markiert sie den entscheidenden Fortschritt gegenüber den defizitorientierten Konzeptionen."
@@ -1421,7 +1453,17 @@
         [
           "Am Ende gehört dein eigenes Urteil hin, mit Begründung",
           "Der Abschluss einer Erörterung: selbst Stellung nehmen",
-          "Letzter Baustein: Wie stehst du dazu?"
+          "Letzter Baustein: Wie stehst du dazu? Recht oder Belohnung?"
+        ],
+        [
+          "Zweites Pro-Argument: Was sagt das WHO-Modell dazu, wo Behinderung entsteht?",
+          "Wenn Behinderung im Zusammenspiel mit der Umwelt entsteht - was folgt für die Inhaltsfrage?",
+          "Ein Modell aus dem ersten Teil der Vorlesung stützt die These zusätzlich"
+        ],
+        [
+          "Ein zweiter Einwand: Terfloth und Bauersfeld nennen ein Spannungsfeld, das genau hier liegt",
+          "Alltag oder Fach - wovon geht Zeit ab, wenn alles für alle gelten soll?",
+          "Was passiert mit dem, was ein Kind für sein eigenes Leben dringend braucht?"
         ]
       ]
     },
@@ -1439,9 +1481,11 @@
         "Zu 1: Die ICF hält beide Seiten zusammen - Funktionsfähigkeit und Behinderung als dynamische Interaktion von Gesundheitsproblem und Kontextfaktoren; klinisch übersieht man Barrieren, sozial den Bedarf",
         "Zu 4: Der Wandel der Konzeptionen zeigt eine Pendelbewegung von der Sinnesschulung über die lebenspraktische Ausrichtung bis zu Ansätzen mit fachlichen Bildungsinhalten; beide Pole haben gute Gründe",
         "Alternativ zu 3: Eigene Didaktik für den Förderschwerpunkt oder Spezifizierung allgemeiner Modelle - beide Antworten haben Kosten, entweder Sonderwissen ohne Anschluss oder Anschluss ohne Passung",
-        "Konsequenz für die Praxis: Statt einer Grundsatzentscheidung braucht es eine begründete, immer wieder neu justierte Balance an der einzelnen Schülerin und dem einzelnen Schüler"
+        "Dagegen 1: Beim ersten Feld ist die Entscheidung faktisch gefallen - die ICF vollzieht die Abkehr von einem monokausalen und eindimensionalen Begründungszusammenhang und prägt heute sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung",
+        "Dagegen 2: Auch das vierte Feld ist praktisch entschieden - der Rahmenlehrplan stellt die Bildungsinhalte auf drei Säulen (individuelle Bedürfnisse, Leitthemen und Handlungsfelder, Inhalte und Kompetenzen der Fachdidaktiken) und verknüpft die Leitthemen ausdrücklich mit den Unterrichtsfächern; Lebenspraxis und Fachinhalte stehen dort nebeneinander statt gegeneinander",
+        "Bewertung: Einzelne Felder sind zeitweise entschieden, aber keine dieser Antworten hält von allein - statt einer Grundsatzentscheidung braucht es eine begründete Balance, die an der einzelnen Schülerin und dem einzelnen Schüler immer wieder neu justiert wird"
       ],
-      "muster": "Terfloth und Bauersfeld benennen vier zentrale Spannungsfelder der Disziplin. Das erste betrifft die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten. Das zweite betrifft die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch. Das dritte betrifft die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion, und zwar zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik. Das vierte betrifft das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten. Am ersten und am vierten Spannungsfeld lässt sich zeigen, warum solche Felder sich nicht endgültig auflösen lassen. Beim Behinderungsbegriff wäre die einfache Lösung, sich für eine Seite zu entscheiden. Wer Behinderung rein medizinisch fasst, übersieht jedoch, dass Barrieren in der Umwelt Teilhabe verhindern; wer sie rein sozial fasst, übersieht den individuellen Unterstützungsbedarf. Die ICF entscheidet den Streit deshalb nicht, sondern hält beide Seiten zusammen, indem sie Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren beschreibt. Ähnlich verhält es sich beim Verständnis von Bildung. Der Wandel der didaktischen Konzeptionen zeigt eine Pendelbewegung: von der Sinnesschulung über eine stark lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte ausdrücklich einfordern. Beide Pole haben gute Gründe. Wer nur lebenspraktisch unterrichtet, hält Bildungsinhalte vor, auf die alle anderen ein Recht haben; wer nur fachlich unterrichtet, verliert die Anschlussfähigkeit an den Alltag. Genau daran zeigt sich, dass es sich um Spannungsfelder und nicht um Fehler handelt: Jeder Pol benennt ein berechtigtes Anliegen, und jede Entscheidung für eine Seite gibt etwas auf. Für die Praxis folgt daraus keine Grundsatzentscheidung, sondern eine begründete Balance, die an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden muss.",
+      "muster": "Terfloth und Bauersfeld benennen vier zentrale Spannungsfelder der Disziplin. Das erste betrifft die Sichtweise auf Behinderung zwischen sozialen und medizinischen Aspekten. Das zweite betrifft die historische und aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung zwischen Bewahrung und Bildungsanspruch. Das dritte betrifft die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion, und zwar zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik. Das vierte betrifft das Verständnis von Bildung und Lernen zwischen Lebenspraxis und fachbezogenen Bildungsinhalten. Am ersten und am vierten Spannungsfeld lässt sich zeigen, warum solche Felder sich nicht endgültig auflösen lassen. Beim Behinderungsbegriff wäre die einfache Lösung, sich für eine Seite zu entscheiden. Wer Behinderung rein medizinisch fasst, übersieht jedoch, dass Barrieren in der Umwelt Teilhabe verhindern; wer sie rein sozial fasst, übersieht den individuellen Unterstützungsbedarf. Die ICF entscheidet den Streit deshalb nicht, sondern hält beide Seiten zusammen, indem sie Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren beschreibt. Ähnlich verhält es sich beim Verständnis von Bildung. Der Wandel der didaktischen Konzeptionen zeigt eine Pendelbewegung: von der Sinnesschulung über eine stark lebenspraktische Ausrichtung bis zu heutigen Ansätzen, die fachliche Bildungsinhalte ausdrücklich einfordern. Beide Pole haben gute Gründe. Wer nur lebenspraktisch unterrichtet, hält Bildungsinhalte vor, auf die alle anderen ein Recht haben; wer nur fachlich unterrichtet, verliert die Anschlussfähigkeit an den Alltag. Diese Felder bleiben bestehen, weil es sich um Spannungsfelder und nicht um Fehler handelt: Jeder Pol benennt ein berechtigtes Anliegen, und jede Entscheidung für eine Seite gibt etwas auf. Dagegen lässt sich einwenden, dass beim ersten Feld die Entscheidung faktisch längst gefallen ist: Die ICF vollzieht die Abkehr von einem monokausalen und eindimensionalen Begründungszusammenhang und prägt heute sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung. Auch das vierte Feld ist praktisch entschieden, denn der Rahmenlehrplan stellt die Bildungsinhalte auf drei Säulen - individuelle Bedürfnisse und Voraussetzungen, Leitthemen und Handlungsfelder sowie Inhalte und Kompetenzen der Fachdidaktiken - und verknüpft die Leitthemen ausdrücklich mit den Unterrichtsfächern; Lebenspraxis und Fachinhalte stehen dort nebeneinander statt gegeneinander. Einzelne Felder sind damit zeitweise entschieden, doch keine dieser Antworten hält von allein. Für die Praxis folgt daraus keine Grundsatzentscheidung, sondern eine begründete Balance, die an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden muss.",
       "musterVarianten": {
         "de": {
           "einfach": "Terfloth und Bauersfeld benennen vier zentrale Spannungsfelder der Disziplin. Ein Spannungsfeld hat zwei Pole, und beide Pole haben gute Gründe. Das erste Spannungsfeld betrifft die Sichtweise auf Behinderung. Es liegt zwischen sozialen und medizinischen Aspekten. Das zweite Spannungsfeld betrifft die historische und die aktuelle Entwicklung und Ausgestaltung des Förderschwerpunkts geistige Entwicklung. Es liegt zwischen Bewahrung und Bildungsanspruch. Das dritte Spannungsfeld betrifft die Öffnung des Förderschwerpunkts mit Blick auf den gemeinsamen Unterricht in Integration und Inklusion. Es liegt zwischen sonderpädagogischer Spezifikation und allgemeiner Didaktik. Das vierte Spannungsfeld betrifft das Verständnis von Bildung und Lernen. Es liegt zwischen Lebenspraxis und fachbezogenen Bildungsinhalten. Am ersten und am vierten Spannungsfeld lässt sich zeigen, warum solche Felder sich nicht endgültig auflösen lassen. Beim Behinderungsbegriff wäre die einfache Lösung, sich für eine Seite zu entscheiden. Wer Behinderung rein medizinisch fasst, übersieht jedoch die Barrieren in der Umwelt. Diese Barrieren verhindern Teilhabe. Wer Behinderung rein sozial fasst, übersieht dagegen den individuellen Unterstützungsbedarf. Die ICF entscheidet diesen Streit deshalb nicht. Sie hält beide Seiten zusammen. Sie beschreibt Funktionsfähigkeit und Behinderung als dynamische Interaktion zwischen dem Gesundheitsproblem und den Kontextfaktoren. Beim Verständnis von Bildung verhält es sich ähnlich. Der Wandel der didaktischen Konzeptionen zeigt eine Pendelbewegung. Sie führt von der Sinnesschulung über eine stark lebenspraktische Ausrichtung bis zu heutigen Ansätzen. Diese heutigen Ansätze fordern fachliche Bildungsinhalte ausdrücklich ein. Beide Pole haben gute Gründe. Wer nur lebenspraktisch unterrichtet, hält Bildungsinhalte vor, auf die alle anderen ein Recht haben. Wer nur fachlich unterrichtet, verliert die Anschlussfähigkeit an den Alltag. Genau daran zeigt sich: Es handelt sich um Spannungsfelder und nicht um Fehler. Jeder Pol benennt ein berechtigtes Anliegen. Jede Entscheidung für eine Seite gibt deshalb etwas auf. Für die Praxis folgt daraus keine Grundsatzentscheidung. Es braucht vielmehr eine begründete Balance. Diese Balance muss an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden."
@@ -1471,24 +1515,25 @@
             3
           ],
           "form": "liste",
+          "punkte": 2,
           "chips": [
             "Spannungsfeld 1",
             "Spannungsfeld 2",
             "Spannungsfeld 3",
             "Spannungsfeld 4"
-          ],
-          "punkte": 2
+          ]
         },
         {
           "operator": "eroertern",
-          "rolle": "these",
-          "auftrag": "Die Grundthese: warum ein Spannungsfeld kein Fehler ist",
+          "rolle": "dafuer",
+          "auftrag": "Warum ein Spannungsfeld kein Fehler ist",
           "idx": [
             4
           ],
           "form": "rolle",
+          "punkte": 1,
           "satzanfang": "Diese Felder bleiben bestehen, weil …",
-          "punkte": 1
+          "beispiel": "Diese Felder bleiben bestehen, weil es sich um Spannungsfelder und nicht um Fehler handelt: Jeder Pol benennt ein berechtigtes Anliegen, und jede Entscheidung für eine Seite gibt etwas auf."
         },
         {
           "operator": "eroertern",
@@ -1500,20 +1545,35 @@
             7
           ],
           "form": "rolle",
-          "waehle": 2,
+          "punkte": 1,
           "satzanfang": "Dafür spricht das erste Feld, denn …",
-          "punkte": 1
+          "beispiel": "Wer Behinderung rein medizinisch fasst, übersieht jedoch, dass Barrieren in der Umwelt Teilhabe verhindern; wer sie rein sozial fasst, übersieht den individuellen Unterstützungsbedarf.",
+          "waehle": 2
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
-          "auftrag": "Was daraus für die Praxis folgt",
+          "rolle": "dagegen",
+          "auftrag": "Die Gegenseite: wo eine Antwort längst gefallen ist",
           "idx": [
-            8
+            8,
+            9
           ],
           "form": "rolle",
-          "satzanfang": "Für die Praxis folgt daraus, dass …",
-          "punkte": 1
+          "punkte": 2,
+          "satzanfang": "Dagegen lässt sich einwenden, dass …",
+          "beispiel": "Dagegen lässt sich einwenden, dass beim ersten Feld die Entscheidung faktisch längst gefallen ist: Die ICF vollzieht die Abkehr von einem monokausalen und eindimensionalen Begründungszusammenhang und prägt heute sowohl die deutsche Sozialgesetzgebung als auch die schulische sonderpädagogische Förderung."
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "bewertung",
+          "auftrag": "Dein Urteil - und was daraus für die Praxis folgt",
+          "idx": [
+            10
+          ],
+          "form": "rolle",
+          "punkte": 1,
+          "satzanfang": "Ich halte fest: …",
+          "beispiel": "Einzelne Felder sind damit zeitweise entschieden, doch keine dieser Antworten hält von allein. Für die Praxis folgt daraus keine Grundsatzentscheidung, sondern eine begründete Balance, die an der einzelnen Schülerin und am einzelnen Schüler immer wieder neu justiert werden muss."
         }
       ],
       "hinweise": [
@@ -1554,8 +1614,19 @@
           "Sonderwissen oder Anpassung des Allgemeinen - was kostet welche Antwort?"
         ],
         [
-          "Zum Schluss: was folgt daraus für den Unterrichtsalltag?",
-          "Keine einmalige Festlegung, sondern etwas, das an jedem Kind neu austariert wird"
+          "Jetzt die Gegenseite: Beim ersten Feld hat sich eine Antwort durchgesetzt - welche?",
+          "Wovon hat sich die WHO-Klassifikation ausdrücklich abgewandt?",
+          "Wo wirkt dieses Modell inzwischen überall? Zwei Bereiche nennt Folie 7"
+        ],
+        [
+          "Zweiter Einwand: ein Rahmenlehrplan hat das vierte Feld längst sortiert",
+          "Drei Kreise, die sich überschneiden - was steht in ihnen?",
+          "Wo stehen Alltagsthemen und Schulfächer friedlich nebeneinander?"
+        ],
+        [
+          "Zum Schluss dein Urteil: Wie lange hält so eine Entscheidung?",
+          "Keine einmalige Festlegung, sondern etwas, das an jedem Kind neu austariert wird",
+          "Wäge ab: entschieden ja - aber von wem, für wen und wie dauerhaft?"
         ]
       ]
     },
@@ -2234,11 +2305,12 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Der Rahmenlehrplan leitet die Bildungsinhalte aus drei Bereichen zugleich ab: …"
+          "satzanfang": "Der Rahmenlehrplan leitet die Bildungsinhalte aus drei Bereichen zugleich ab: …",
+          "beispiel": "Der Rahmenlehrplan für den Förderschwerpunkt geistige Entwicklung gewinnt seine Bildungsinhalte aus dem Zusammenspiel dreier Bereiche: aus den individuellen Bedürfnissen und Voraussetzungen der Lernenden, aus den für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfeldern und aus den Inhalten und Kompetenzen der Fachdidaktiken."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Wie die drei zusammenspielen – und was daraus für die Auswahl folgt",
           "idx": [
             1,
@@ -2247,18 +2319,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die drei Bereiche verhalten sich so zueinander, dass … Für die Auswahl folgt daraus, dass …"
+          "satzanfang": "Die drei Bereiche verhalten sich so zueinander, dass … Für die Auswahl folgt daraus, dass …",
+          "beispiel": "Dargestellt sind diese Bereiche als drei sich überschneidende Kreise, und genau die Überschneidung ist der Kern der Aussage: Ein Inhalt trägt erst dann, wenn er sich aus allen drei Bereichen zugleich begründen lässt."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Ein Beispiel dafür",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ein Beispiel dafür ist …"
+          "satzanfang": "Ein Beispiel dafür ist …",
+          "beispiel": "So wird etwa das Leitthema Der Mensch und die Gesundheit über Fächer wie Sachunterricht oder Sport zugänglich gemacht und zugleich auf den Bedarf der einzelnen Lernenden zugeschnitten."
         }
       ],
       "muster": "Der Rahmenlehrplan für den Förderschwerpunkt geistige Entwicklung gewinnt seine Bildungsinhalte aus dem Zusammenspiel dreier Bereiche: aus den individuellen Bedürfnissen und Voraussetzungen der Lernenden, aus den für ihre Lebenswirklichkeit bedeutsamen Leitthemen und Handlungsfeldern und aus den Inhalten und Kompetenzen der Fachdidaktiken. Dargestellt sind diese Bereiche als drei sich überschneidende Kreise, und genau die Überschneidung ist der Kern der Aussage: Ein Inhalt trägt erst dann, wenn er sich aus allen drei Bereichen zugleich begründen lässt. Daraus folgt für die Auswahl zweierlei. Ein Fachinhalt ist nicht schon deshalb im Unterricht am Platz, weil er im Fachplan vorgesehen ist - er muss auch für die Lebenswirklichkeit der Lernenden bedeutsam sein und zu ihren Voraussetzungen passen. Umgekehrt genügt Lebensbedeutsamkeit allein ebenso wenig: Ein Leitthema bleibt eine Überschrift, solange es nicht über die Fachdidaktiken fachlich erschlossen wird. So wird etwa das Leitthema Der Mensch und die Gesundheit über Fächer wie Sachunterricht oder Sport zugänglich gemacht und zugleich auf den Bedarf der einzelnen Lernenden zugeschnitten. Die Auswahl eines Inhalts ist damit immer eine begründete Entscheidung aus drei Blickrichtungen, nicht das Abarbeiten einer Fachliste.",
@@ -2330,11 +2404,12 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Pitsch übernimmt von Feuser …"
+          "satzanfang": "Pitsch übernimmt von Feuser …",
+          "beispiel": "Pitsch setzt bei Feuser an und übernimmt dessen drei Dimensionen: die Objektseite im Sinne der Sachstrukturanalyse von Vorhaben, Inhalten, Gegenständen und Sachzusammenhängen, die Subjektseite mit der Analyse des Tätigkeits-, Entwicklungs- beziehungsweise Abbildungsniveaus und die Handlungsstruktur mit den Stufen I bis VI, die jeweils noch einmal unterteilt sind."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was die vierte Dimension beschreibt und wie sie verläuft",
           "idx": [
             1,
@@ -2343,18 +2418,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die vierte Dimension ist …, sie verläuft von … zu …, und zwar über die Stufen …"
+          "satzanfang": "Die vierte Dimension ist …, sie verläuft von … zu …, und zwar über die Stufen …",
+          "beispiel": "Hinzu kommt bei ihm eine vierte Dimension, die Steuerungsform. Sie beantwortet die Frage, wie viel Lenkung von außen eine Handlung im Moment noch braucht, und sie verläuft von der interindividuellen Steuerung, also der Fremdsteuerung, zur intraindividuellen Steuerung, also der Selbststeuerung."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Was die Stufenfolge für die Unterstützung im Unterricht bedeutet",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Für die Planung bedeutet das, dass …"
+          "satzanfang": "Für die Planung bedeutet das, dass …",
+          "beispiel": "Unterstützung ist keine Entscheidung zwischen Alles und Nichts, sondern eine Abfolge: Die Lehrkraft beginnt auf der Stufe, die eine Schülerin oder ein Schüler gerade braucht, und nimmt die Hilfe Stufe für Stufe zurück, bis die Handlung selbst gesteuert wird."
         }
       ],
       "muster": "Pitsch setzt bei Feuser an und übernimmt dessen drei Dimensionen: die Objektseite im Sinne der Sachstrukturanalyse von Vorhaben, Inhalten, Gegenständen und Sachzusammenhängen, die Subjektseite mit der Analyse des Tätigkeits-, Entwicklungs- beziehungsweise Abbildungsniveaus und die Handlungsstruktur mit den Stufen I bis VI, die jeweils noch einmal unterteilt sind. Hinzu kommt bei ihm eine vierte Dimension, die Steuerungsform. Sie beantwortet die Frage, wie viel Lenkung von außen eine Handlung im Moment noch braucht, und sie verläuft von der interindividuellen Steuerung, also der Fremdsteuerung, zur intraindividuellen Steuerung, also der Selbststeuerung. Diesen Weg gliedert Pitsch in sieben Stufen: körperlich vollständige Unterstützung, körperlich teilweise Unterstützung, Modell, ikonische Hilfe, lautsprachliche Hilfe, Schrift und schließlich die Handlung ohne Hilfsmittel. Für die Unterrichtsplanung liegt darin der eigentliche Ertrag. Unterstützung ist keine Entscheidung zwischen Alles und Nichts, sondern eine Abfolge: Die Lehrkraft beginnt auf der Stufe, die eine Schülerin oder ein Schüler gerade braucht, und nimmt die Hilfe Stufe für Stufe zurück, bis die Handlung selbst gesteuert wird. Damit wird die Unterstützung planbar und ihr Abbau beschreibbar.",
@@ -2419,15 +2496,13 @@
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: woran Klafki Bildung bindet",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Klafki bindet Bildung an … Die Frage ist, ob das auch im Förderschwerpunkt leiten sollte."
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "eroertern",
@@ -2439,7 +2514,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Für den Förderschwerpunkt geistige Entwicklung spricht zunächst, dass diese Zielrichtung dort nicht fremd ist: Die entwicklungslogische Didaktik nennt als ihre Ziele Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, also dieselben drei Fähigkeiten."
         },
         {
           "operator": "eroertern",
@@ -2451,18 +2527,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Dagegen lässt sich das Spannungsfeld zwischen Lebenspraxis und fachbezogenen Bildungsinhalten anführen: Wer den Unterricht an großen Weltproblemen ausrichtet, kann den Bezug zum Alltag der Lernenden verlieren."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein Urteil, das beide Seiten aufnimmt",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "In der Abwägung überzeugt mich die mittlere Position: Die Schlüsselprobleme taugen als Themenrahmen auch hier, aber nicht als fertige Unterrichtsinhalte. Sie müssen über die Leitthemen an die Lebenswirklichkeit gebunden und über zugängliche Aneignungsniveaus erschlossen werden."
         }
       ],
       "muster": "Klafki bindet Bildung an acht epochaltypische Schlüsselprobleme - unter anderem die Friedensfrage, die Umweltfrage, die gesellschaftlich bedingte Ungleichheit und die menschliche Sexualität - und an eine Trias von Selbstbestimmungsfähigkeit, Mitbestimmungsfähigkeit und Solidaritätsfähigkeit. Für den Förderschwerpunkt geistige Entwicklung spricht zunächst, dass diese Zielrichtung dort nicht fremd ist: Die entwicklungslogische Didaktik nennt als ihre Ziele Selbstbestimmung, Mitbestimmung und Solidaritätsfähigkeit, also dieselben drei Fähigkeiten. Dafür spricht zweitens Feusers Satz, jedes Kind habe ein Recht darauf, alles Wichtige über die Welt zu erfahren, weil es in dieser Welt lebt; und auch der Rahmenlehrplan des Landes führt Leitthemen, die Gesellschaft, Gesundheit sowie Natur und Umwelt berühren. Dagegen lässt sich das Spannungsfeld zwischen Lebenspraxis und fachbezogenen Bildungsinhalten anführen: Wer den Unterricht an großen Weltproblemen ausrichtet, kann den Bezug zum Alltag der Lernenden verlieren. Dagegen spricht zweitens die erste Säule des Rahmenlehrplans, nach der Inhalte zu den individuellen Bedürfnissen und Voraussetzungen passen müssen - ein abstraktes Thema erreicht die Lernenden nur, wenn es bis auf sinnlich-konkrete Zugänge aufbereitet wird. In der Abwägung überzeugt mich die mittlere Position: Die Schlüsselprobleme taugen als Themenrahmen auch hier, aber nicht als fertige Unterrichtsinhalte. Sie müssen über die Leitthemen an die Lebenswirklichkeit gebunden und über zugängliche Aneignungsniveaus erschlossen werden. Sie einfach auszusparen hieße dagegen, den Lernenden die Welt vorzuenthalten - genau das, wovon sich die Didaktik im Förderschwerpunkt seit den defizitorientierten Konzeptionen gelöst hat.",
@@ -2532,15 +2610,13 @@
       ],
       "abschnitte": [
         {
-          "operator": "bewerten",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Worum es geht: was das Modell zusammenbringt",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Das biopsychosoziale Modell verbindet … Zu bewerten ist, wie weit die Abkehr trägt."
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "bewerten",
@@ -2552,7 +2628,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Für die Abkehr von einer einseitigen Sicht spricht zunächst, dass sie ausdrücklich benannt wird: Der monokausale und eindimensionale Begründungszusammenhang von Behinderung wird aufgegeben, Behinderung ist damit nicht mehr allein eine Eigenschaft der Person."
         },
         {
           "operator": "bewerten",
@@ -2564,18 +2641,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Dagegen spricht, dass das Schaubild oben beim Gesundheitsproblem ansetzt, also bei einer Gesundheitsstörung oder Krankheit; der medizinische Ausgangspunkt bleibt im Modell erhalten, auch wenn er nicht mehr allein erklärt."
         },
         {
           "operator": "bewerten",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine Bewertung",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ich halte fest: …"
+          "satzanfang": "Ich halte fest: …",
+          "beispiel": "In der Bewertung trägt die Abkehr weit, aber nicht vollständig. Sie verändert die Frage, die eine Lehrkraft stellt, von Was fehlt diesem Kind zu Was hindert dieses Kind hier und jetzt an Teilhabe."
         }
       ],
       "muster": "Das biopsychosoziale Modell stellt Körperfunktionen und -strukturen, Aktivitäten und Partizipation nebeneinander und koppelt sie mit den Kontextfaktoren, also mit Umweltfaktoren und personenbezogenen Faktoren zurück; Funktionsfähigkeit wie Behinderung erscheinen darin als dynamische Interaktion. Für die Abkehr von einer einseitigen Sicht spricht zunächst, dass sie ausdrücklich benannt wird: Der monokausale und eindimensionale Begründungszusammenhang von Behinderung wird aufgegeben, Behinderung ist damit nicht mehr allein eine Eigenschaft der Person. Dafür spricht zweitens der praktische Ertrag für die Schule. Potentielle Barrieren für Aktivität und Partizipation lassen sich differenziert erfassen, und über die Gestaltung des Unterrichtsumfeldes, die Bereitstellung von Hilfsmitteln und personelle Hilfe wird eine größtmögliche Aktivität und Partizipation angestrebt - der Blick geht also auf die Bedingungen und nicht nur auf das Kind. Dagegen spricht, dass das Schaubild oben beim Gesundheitsproblem ansetzt, also bei einer Gesundheitsstörung oder Krankheit; der medizinische Ausgangspunkt bleibt im Modell erhalten, auch wenn er nicht mehr allein erklärt. Dagegen spricht zweitens, dass das Modell beschreibt und ordnet, aber nicht entscheidet: Es sagt nicht, welche Barriere zuerst abgebaut wird und wie viel Förderung an der Person selbst ansetzen soll. In der Bewertung trägt die Abkehr weit, aber nicht vollständig. Sie verändert die Frage, die eine Lehrkraft stellt, von Was fehlt diesem Kind zu Was hindert dieses Kind hier und jetzt an Teilhabe. Die Antwort auf diese Frage muss sie weiterhin selbst begründen - das Modell liefert ihr dafür die Ordnung, nicht die Entscheidung.",

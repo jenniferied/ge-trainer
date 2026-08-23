@@ -2,7 +2,7 @@
    Konzept-Check (MC), Frei ueben (AFB). Importiert core.js (State/Daten/Helfer)
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
-import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
+import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, themenStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
   starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, standPille, rundenPille, punkteText, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
@@ -244,11 +244,6 @@ function tageBisKlausur() {
 
 // Wurde in dem Thema ueberhaupt schon etwas beantwortet? Trennt "noch nicht
 // angefangen" von "laeuft noch nicht gut" - das eine ist kein Befund.
-function beruehrt(thema) {
-  return (thema.mc || []).some(function (f) { return !!state.mc[f.id]; }) ||
-    (thema.frei || []).some(function (f) { return !!state.frei[f.id]; });
-}
-
 /* ---------- Zustand einer Themen-Karte (Jennifer, 12.08.) ----------
    "Wenn die noch nicht geuebt wurden, dann soll das richtig auffaellig sein.
    Wenn das abgearbeitet wurde, dann soll das richtig satisfying sein."
@@ -2124,7 +2119,14 @@ function uebenKacheln() {
       ["🧩", "Klausurfrage", "Eine echte Klausuraufgabe – Thema und Anforderungsstufe wählbar · erst aufdröseln, dann schreiben · 10–20 min", function () { zeige("klausurfrage"); }],
       ["✍️", "Frei", "Offene Aufgaben eines Themas, mit Musterlösung und KI-Rückmeldung · du bestimmst, wie viele es werden", function () { zeige("freiwahl"); }],
       ["🎲", "Eigene Runde", "Themen, Anzahl, Aufgabentyp, Lernschritt – alles frei wählbar · von fünf Minuten bis zum ganzen Abend", function () { zeige("mix"); }],
-      ["📄", "Klausur", "Papier & Stift wie am 10.09.: 5 zufällige Themen, Punkte je Aufgabe, KI-Korrektur · 90 min, für dich 120", function () { zeige("klausur"); }]
+      /* Der Text sagt seit dem 23.08.2026 das, was der Bogen wirklich austeilt:
+         alle Themen (Default seit dem Umbau des Setups) und Roses 120 Minuten.
+         Vorher standen hier 5 zufaellige Themen und "90 min, fuer dich 120" -
+         beides von vor dem Alle-Modus, und die Zeitangabe beschrieb die echte
+         Klausur statt der eingestellten Dauer, die der Bogen wirklich austeilt.
+         Die Begruendung ist dieselbe wie in der Klausur-Infokarte weiter unten,
+         nur kurz: wer die Auswahl nicht kennt, uebt alles. */
+      ["📄", "Klausur", "Papier & Stift wie am 10.09.: alle Themen, weil die 5 echten vorher niemand kennt · Umfang und Zeit wählbar · 120 min", function () { zeige("klausur"); }]
     ] },
     { titel: "Nachschauen", kacheln: [
       ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
@@ -2231,16 +2233,19 @@ function zeigeStart() {
 
   themen.forEach(function (thema) {
     var mc = mcStand(thema), fr = freiStand(thema);
-    // "Angeschaut" ist bei MC jede Frage mit gespeichertem Stand, bei den
-    // offenen Aufgaben jede mit Selbsteinschaetzung - dieselbe Zaehlung, die
-    // schon in der Meta-Zeile steht.
-    var angeschaut = (thema.mc || []).filter(function (f) { return !!state.mc[f.id]; }).length + fr.bearbeitet;
-    var zustand = kartenZustand(angeschaut, mc.gesamt + fr.gesamt);
+    /* Die Rechnung steht seit dem 23.08.2026 als themenStand() in core.js -
+       die Themen-Auswahl (ui.js) zeigt dieselben Zahlen, und zwei Rechnungen
+       nebeneinander waeren irgendwann zwei verschiedene Antworten auf dieselbe
+       Frage. mcStand/freiStand bleiben hier, weil die Meta-Zeile unten die
+       Einzelteile ausschreibt ("3 von 12 sitzen"). */
+    var st = themenStand(thema);
+    var angeschaut = st.angeschaut;
+    var zustand = kartenZustand(angeschaut, st.gesamt);
 
     var k = el("button", "thema-karte " + zustand);
     setzeFarbe(k, thema.farbe);
 
-    var anteil = (mc.gesamt + fr.gesamt) ? Math.round(100 * (mc.richtig + fr.gut) / (mc.gesamt + fr.gesamt)) : 0;
+    var anteil = st.anteil;
 
     var kz = el("div", "thema-kopfzeile");
     kz.appendChild(el("span", "thema-titel", thema.titel));
@@ -2252,7 +2257,7 @@ function zeigeStart() {
     // sitzt, ohne die Prozentzahl erst lesen zu muessen. Ein noch gar nicht
     // angefasstes Thema bekommt bewusst KEINE 0-%-Warnfarbe, sondern eine
     // neutrale Pille - unbearbeitet ist nicht dasselbe wie schwach.
-    kz.appendChild(quotePille(beruehrt(thema) ? anteil : null));
+    kz.appendChild(quotePille(st.beruehrt ? anteil : null));
     k.appendChild(kz);
 
     var meta = "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: " + fr.bearbeitet + " von " + fr.gesamt + " angeschaut";
@@ -2262,7 +2267,7 @@ function zeigeStart() {
     // und nicht mehr nach dem Thema. Die Themen-Identitaet steckt weiter im
     // farbigen linken Rand der Karte und im Vorlesungs-Badge.
     var balken = el("div", "balken");
-    var voll = el("div", "voll " + (beruehrt(thema) ? quoteStufe(anteil) : "q0"));
+    var voll = el("div", "voll " + (st.beruehrt ? quoteStufe(anteil) : "q0"));
     voll.style.width = anteil + "%";
     balken.appendChild(voll);
     k.appendChild(balken);
@@ -2472,7 +2477,11 @@ function zeigeThema(thema) {
         var reihe = el("div", "fragen-zeile");
         var knopf = el("button", "fragen-knopf");
         var oben = el("span", "fragen-marken");
-        oben.appendChild(el("span", "fragen-typ", e.typ === "mc" ? "Ankreuzen" : "AFB " + ["", "I", "II", "III"][e.f.afb || 2]));
+        // Kein "|| 2" mehr (23.08.2026): das defaultete ein fehlendes afb still
+        // auf AFB II und zeigte Rose damit eine Stufe an, die niemand gepflegt
+        // hat. afb ist seit heute Pflichtfeld (sync-fragen.py) - fehlt es
+        // trotzdem, ist ein leeres Feld ehrlicher als eine geratene Zahl.
+        oben.appendChild(el("span", "fragen-typ", e.typ === "mc" ? "Ankreuzen" : "AFB " + (["", "I", "II", "III"][e.f.afb] || "?")));
         var m = standMarke(e);
         oben.appendChild(el("span", "q-pille " + m.klasse, m.text));
         knopf.appendChild(oben);

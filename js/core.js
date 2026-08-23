@@ -396,6 +396,22 @@ export function sitzungenNachziehen(st) {
   return st.sitzungen || [];
 }
 
+/* teilschritt: true heisst "geloggt, aber zaehlt NICHT als eigene Frage".
+   Roses Zaehlregel vom 23.08.2026, woertlich: "eine Frage geuebt = 1 Frage
+   geuebt. Dieselbe Frage neu 3x geuebt = 3 Fragen geuebt. 3 Unterschritte zur
+   selben Frage = 1 Frage geuebt."
+
+   Es soll ALLES ins Log - spaeter soll analysierbar sein, was getragen hat -,
+   aber das Tagespensum zaehlt FRAGEN und nicht Log-Zeilen. Das Feld wird hier
+   nur durchgereicht (Object.assign nimmt es mit); auswerten muessen es die
+   ZAEHLER, und das sind genau zwei: aktivitaetProTag() in stats.js (daran
+   haengen heuteAntworten, der Tagesblock und die Maskottchen-Kurve) und
+   heuteGespielt() in spiele.js. Wer einen dritten Zaehler baut, muss ihn
+   ebenfalls ueberspringen lassen - sonst zaehlt ein Aufdroesel-Schritt wieder
+   als eigene Frage.
+
+   Auf die aid hat das Feld KEINEN Einfluss: antwortId() ist ts + "-" + qid.
+   Ein Teilschritt-Eintrag merged sich also wie jeder andere. */
 export function logAntwort(eintrag) {
   var e = Object.assign({ afb: null, ts: Date.now() }, eintrag);
   var runde = aktiveRunde();
@@ -463,6 +479,34 @@ export function freiStand(thema) {
     if (r) { bearbeitet++; if (r === "gut") gut++; }
   });
   return { gut: gut, bearbeitet: bearbeitet, gesamt: thema.frei.length };
+}
+
+/* Der Stand EINES Themas in einer Zahlenreihe - Beherrschung und Fortschritt.
+   Stand bis zum 23.08.2026 ausgerechnet mitten im Rendering der Themen-Karten
+   (main.js, "Nach Thema"). Dort war sie richtig und trotzdem am falschen Ort:
+   die Themen-Auswahl in ui.js braucht dieselben Zahlen, und eine zweite
+   Rechnung daneben haette irgendwann etwas anderes gesagt als die Karte.
+
+   ZWEI VERSCHIEDENE DINGE, die man leicht verwechselt:
+     anteil    - wie viel von dem, was angefasst wurde, SITZT (Beherrschung)
+     angeschaut - wie viel ueberhaupt schon dran war (Fortschritt)
+   Ein Thema mit 100 % bei zwei von zwanzig Aufgaben ist nicht "durch".
+   Deshalb gehen beide Zahlen raus und nicht eine gemittelte.
+
+   beruehrt ist NICHT "angeschaut > 0" und muss es auch nicht sein: es fragt,
+   ob ueberhaupt ein Eintrag existiert, waehrend angeschaut die Eintraege
+   ZAEHLT. Getrennt, weil die Karte bei unberuehrt bewusst KEINE 0-%-Warnfarbe
+   zeigt - unbearbeitet ist nicht dasselbe wie schwach. */
+export function themenStand(thema) {
+  var mc = mcStand(thema), fr = freiStand(thema);
+  var gesamt = mc.gesamt + fr.gesamt;
+  var mcAn = (thema.mc || []).filter(function (f) { return !!state.mc[f.id]; }).length;
+  return {
+    angeschaut: mcAn + fr.bearbeitet,
+    gesamt: gesamt,
+    anteil: gesamt ? Math.round(100 * (mc.richtig + fr.gut) / gesamt) : 0,
+    beruehrt: mcAn > 0 || (thema.frei || []).some(function (f) { return !!state.frei[f.id]; })
+  };
 }
 
 /* ---------- DOM-Helfer ---------- */

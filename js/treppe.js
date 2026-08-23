@@ -48,7 +48,7 @@ import { belegZeile } from "./beleg.js";
 /* afbAnalyse liest die EINE Operatoren-Tabelle der App (spiele.js, Klausurinfo
    Folie 5). Hier wird nur gelesen - spiele.js gehoert einer anderen Session, und
    eine zweite Signalwort-Tabelle liefe garantiert von der ersten weg. */
-import { afbAnalyse, rollenOperator, ROLLEN_KETTE } from "./spiele.js";
+import { afbAnalyse, ROLLEN_KETTE } from "./spiele.js";
 /* Das KI-Urteil je Baustein (Vertrag 2, Function-Zweig art "bausteine").
    Zyklusfrei: llm.js zieht nur config.js und core.js. Der Namensraum-Import ist
    Absicht - er macht die defensive Wache weiter unten moeglich, falls die App
@@ -283,34 +283,27 @@ function saeulenAnsicht(saeulen) {
 
 /* Die Satzanfaenge. Das Sprachgeruest fuer eine Nicht-Muttersprachlerin:
    nicht der Inhalt wird vorgegeben, sondern der Satzanfang. Sie haengen an der
-   ROLLE, nicht an der Aufgabe - deshalb reichen zwoelf Formulierungen fuer den
+   ROLLE, nicht an der Aufgabe - deshalb reichen neun Formulierungen fuer den
    ganzen Korpus, und deshalb stehen sie hier und nicht in den Daten. Ein
    Satzanfang im Korpus (abschnitte[].satzanfang) gewinnt trotzdem: er ist
    redaktionell gesetzt und kennt die Aufgabe. */
 var SATZANFANG = {
+  /* AFB II, in den Worten der Dozentin: "Benennung, beschreibung +
+     erlaeuterung anhand ein Beispiel". beschreiben und erlaeutern erben die
+     Saetze der am 23.08.2026 verworfenen Rollen entfalten und belegen - der
+     Text war richtig, nur der Name war unserer. */
   benennen: "Unter … versteht man …",
-  entfalten: "Das bedeutet konkret, dass …",
-  belegen: "Ein Beispiel dafür ist …",
-  these: "Die Frage ist, ob …",
+  beschreiben: "Das bedeutet konkret, dass …",
+  erlaeutern: "Ein Beispiel dafür ist …",
+  /* AFB III: "zwei punkte dafuer und zwei dagegen und dann eine bewertung".
+     bewertung erbt den Satz des verworfenen fazit. Fuer these gibt es keinen
+     Eintrag mehr: die Rolle ist aus der Wertung gefallen. */
   dafuer: "Dafür spricht, dass …",
   dagegen: "Dagegen spricht, dass …",
-  fazit: "Ich halte fest: …",
-  kriterium: "Vergleichen lässt sich das an …",
-  positionA: "Auf der einen Seite …",
-  positionB: "Auf der anderen Seite …",
-  unterschied: "Der Unterschied liegt darin, dass …",
-  gemeinsamkeit: "Gemeinsam ist beiden, dass …",
+  bewertung: "Ich halte fest: …",
   fall: "In diesem Fall geht es um …",
   massnahme: "Eine Maßnahme wäre, …",
-  begruendung: "Das trägt, weil …",
-  /* analysieren, seit 23.08.2026 (Jennifer). Vorher lief der Operator auf der
-     Erlaeutern-Kette mit - das war eine stille Notloesung: Erlaeutern erklaert
-     eine Sache, Analysieren zerlegt sie und fragt nach dem Zusammenhang der
-     Teile. Vier eigene Rollen, damit der Unterschied auch im Feld steht. */
-  gegenstand: "Betrachtet wird …",
-  zerlegung: "Das lässt sich zerlegen in …",
-  zusammenhang: "Die Teile hängen so zusammen, dass …",
-  folgerung: "Daraus folgt, dass …"
+  begruendung: "Das trägt, weil …"
 };
 
 /* Die Rollen-Schablonen liegen seit dem 23.08.2026 als ROLLEN_KETTE in
@@ -322,30 +315,20 @@ var SATZANFANG = {
    Baustein-Liste richtig - dort gibt es einen Vorrat, und die Rueckmeldung ist
    eine Zahl. Bei AFB II/III ist sie falsch, weil die Antwort ein TEXT MIT
    ROLLEN ist: "Baustein 4 fehlt" ist dort keine sinnvolle Auskunft, "die Rolle
-   Beleg ist noch leer" schon. */
+   Beispiel ist noch leer" schon. */
 
 /* Was in der Ueberschrift des Abschnitts steht, wenn die Schablone greift.
    Roses Sprache, nicht die des Korpus: eine Frage, die sie beantworten kann. */
 export var ROLLEN_AUFTRAG = {
   benennen: "Um welchen Begriff geht es?",
-  entfalten: "Was heißt das konkret?",
-  belegen: "Ein Beispiel aus dem Material",
-  these: "Worum wird gestritten?",
+  beschreiben: "Was heißt das konkret?",
+  erlaeutern: "Ein Beispiel aus dem Material",
   dafuer: "Was spricht dafür?",
   dagegen: "Was spricht dagegen?",
-  fazit: "Und was sagst du?",
-  kriterium: "Woran vergleichst du?",
-  positionA: "Die eine Seite",
-  positionB: "Die andere Seite",
-  unterschied: "Was ist der Unterschied?",
-  gemeinsamkeit: "Was haben beide gemeinsam?",
+  bewertung: "Und was sagst du?",
   fall: "Worum geht es in dem Fall?",
   massnahme: "Was würdest du tun?",
-  begruendung: "Warum trägt das?",
-  gegenstand: "Was schaust du dir an?",
-  zerlegung: "Aus welchen Teilen besteht das?",
-  zusammenhang: "Wie hängen die Teile zusammen?",
-  folgerung: "Was folgt daraus?"
+  begruendung: "Warum trägt das?"
 };
 
 /* Welche ROLLEN verlangt diese Aufgabe? Genau die Liste, die der
@@ -412,6 +395,10 @@ function ausKorpus(roh, kernVon) {
       chips: chips,
       waehle: typeof a.waehle === "number" && a.waehle > 0 && a.waehle < idx.length ? Math.floor(a.waehle) : null,
       satzanfang: (typeof a.satzanfang === "string" && a.satzanfang) || (rolle ? SATZANFANG[rolle] : "") || "",
+      /* beispiel (23.08.2026, A7): eine WOERTLICHE Satzspanne aus der
+         Musterloesung dieser Aufgabe - kein zweiter, leicht anderer Wortlaut.
+         Beim Einspielen maschinell als Teilstring von muster geprueft. */
+      beispiel: typeof a.beispiel === "string" && a.beispiel ? a.beispiel : "",
       parallelRoh: typeof a.parallelZu === "number" ? a.parallelZu : null,
       parallelZu: null
     });
@@ -443,12 +430,17 @@ function ausKorpus(roh, kernVon) {
    und nicht je Rolle neu. */
 function ausSchablone(f, kern) {
   if ((f.afb || 2) < 2) return null;
-  /* rollenOperator statt afbAnalyse (23.08.2026): die Rollen-Ableitung kennt
-     zwei Woerter mehr als die Klausur-Tabelle ("vergleichen", "zuordnen"), weil
-     fuenf Aufgaben sie im Stamm tragen. Begruendung steht bei ROLLEN_ZUSATZ in
-     spiele.js. operatorSatz() unten bleibt bewusst bei afbAnalyse: der Satz
-     geht woertlich auf den Schirm und darf nur Klausurstoff behaupten. */
-  var op = normalWort(rollenOperator(f.frage));
+  /* Wieder afbAnalyse (23.08.2026 abends). Dazwischen stand hier rollenOperator()
+     aus spiele.js - eine zweite Wortliste, die "vergleichen" und "zuordnen"
+     kannte, weil die Klausur-Tabelle sie nicht kannte. Beides ist erledigt: die
+     zwei Woerter stehen jetzt selbst in OPERATOREN, also findet afbAnalyse sie.
+
+     op bleibt null, wenn im Stamm kein bekanntes Signalwort steht - dann gibt es
+     keine Schablone und die Aufgabe faellt auf die flache Liste. Das ist
+     richtig so: eine Kette zu behaupten, die aus nichts abgeleitet ist, waere
+     eine Struktur, die es nicht gibt. */
+  var a = afbAnalyse(f.frage, f.afb);
+  var op = a.op ? normalWort(a.op.wort) : null;
   var rollen = op ? ROLLEN_KETTE[op] : null;
   if (!rollen) return null;
   var alle = kern.map(function (_, i) { return i; });
@@ -1218,6 +1210,28 @@ function kiSlotFuellen(s) {
           z.form === "rolle" && z.a.satzanfang ? z.a.satzanfang : "…hier notieren, wenn du magst");
         inhalt.appendChild(z.feld);
         alleFelder.push(z.feld);
+        /* "So klingt das" - der Beispielsatz zu dieser Rolle, ZUGEKLAPPT.
+           Offen danebenstehen darf er nicht: die Treppe ist mit Absicht keine
+           Hilfe, Rose soll abrufen und nicht ablesen (siehe Kopf dieser Datei).
+           Ein sichtbarer Mustersatz ueber dem leeren Feld waere die Antwort.
+
+           Aufklappen ist deshalb eine EIGENE Geste: wer nicht weiterkommt, darf
+           nachsehen, und wer es zumacht, hat nichts verschenkt. Dasselbe Prinzip
+           wie beim Spickzettel im Signalwoerter-Spiel.
+
+           Der Satz stammt woertlich aus der Musterloesung, die Rose gleich
+           danach liest - deshalb steht das auch dran. Ein eigens formulierter
+           Beispielsatz waere ein zweiter Wortlaut fuer dieselbe Sache. */
+        if (z.form === "rolle" && z.a.beispiel) {
+          var bsp = document.createElement("details");
+          bsp.className = "rolle-beispiel";
+          var bk = document.createElement("summary");
+          bk.textContent = "So klingt das";
+          bsp.appendChild(bk);
+          bsp.appendChild(el("div", "rolle-beispiel-text", z.a.beispiel));
+          bsp.appendChild(el("div", "klein muted", "Aus der Musterlösung dieser Aufgabe."));
+          inhalt.appendChild(bsp);
+        }
         if (z.partner) {
           var paar = el("div", "treppe-paar");
           paar.appendChild(el("span", "treppe-paar-pfeil", "↳"));

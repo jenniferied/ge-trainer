@@ -958,7 +958,7 @@
       "abschnitte": [
         {
           "operator": "analysieren",
-          "rolle": "zerlegung",
+          "rolle": "beschreiben",
           "auftrag": "Aus welchen Teilen der prozessbezogene Kompetenzbereich besteht – und was zu jedem Teil gehört",
           "idx": [
             0,
@@ -967,18 +967,20 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Die prozessbezogenen Kompetenzen gliedern sich in … Dazu gehört jeweils …"
+          "satzanfang": "Die prozessbezogenen Kompetenzen gliedern sich in … Dazu gehört jeweils …",
+          "beispiel": "PK 1, informieren und ordnen, umfasst das Recherchieren von Freizeitangeboten - analog wie digital -, das Sammeln und Vergleichen von Informationen und deren Ordnung als Entscheidungsgrundlage."
         },
         {
           "operator": "analysieren",
-          "rolle": "zusammenhang",
+          "rolle": "erlaeutern",
           "auftrag": "Wie die drei im Kompetenzstrukturmodell mit dem Rest zusammenhängen",
           "idx": [
             3
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Im Kompetenzstrukturmodell hängen sie so zusammen, dass …"
+          "satzanfang": "Im Kompetenzstrukturmodell hängen sie so zusammen, dass …",
+          "beispiel": "Die drei Prozesse sind mit den domänenspezifischen Wissensbereichen verschränkt und bauen auf den Entwicklungsbereichen auf."
         }
       ],
       "muster": "Das Kompetenzstrukturmodell Freizeitgestaltung (Thümmel & Stöppler 2025) beschreibt drei prozessbezogene Kompetenzen. PK 1, informieren und ordnen, umfasst das Recherchieren von Freizeitangeboten - analog wie digital -, das Sammeln und Vergleichen von Informationen und deren Ordnung als Entscheidungsgrundlage. PK 2, bewerten und entscheiden, meint das Reflektieren und Vergleichen von Freizeitmöglichkeiten, das Abwägen von Vor- und Nachteilen unter Berücksichtigung eigener Interessen und Bedürfnisse sowie die Fähigkeit, Kompromisse einzugehen. PK 3, anwenden und handeln, schließlich umfasst das Planen und Umsetzen von Freizeitaktivitäten samt Organisation von Anreise, Kosten und Material, das Einschätzen des eigenen Unterstützungsbedarfs, das gezielte Nutzen von Hilfen und den Aufbau von Handlungskompetenz durch Wiederholung. Die drei Prozesse sind mit den domänenspezifischen Wissensbereichen verschränkt und bauen auf den Entwicklungsbereichen auf.",
@@ -1026,54 +1028,61 @@
       "id": "fr-f-3",
       "unterthema": "Selbstbestimmung & Kompetenzmodell",
       "afb": 2,
-      "frage": "Erläutern Sie Selbstbestimmung als Ziel der Freizeitbildung. **Erläutern heißt hier: den Begriff nicht nur definieren, sondern mit Begründungen und Belegen aus der Vorlesung entfalten.**",
+      "frage": "Erläutern Sie Selbstbestimmung als Ziel der Freizeitbildung. **Erläutern heißt hier: benennen, beschreiben und an einem Beispiel aus der Vorlesung zeigen.**",
       "stichpunkte": [
-        "Ausgangslage: Menschen mit geistiger Behinderung erleben häufig Abhängigkeit von Betreuung und Unterstützung (Niehoff 1994)",
-        "Problem: Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen (Hahn 1994)",
+        "Benennung: Selbstbestimmung heißt nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.)",
+        "Ausgangslage und Problem: Menschen mit geistiger Behinderung erleben häufig Abhängigkeit von Betreuung und Unterstützung (Niehoff 1994); Fremdbestimmung erschwert dann das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen (Hahn 1994)",
         "Konsequenz: Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden (Kulig/Theunissen 2006, 242)",
         "Selbstbestimmt handeln lernen: eigene Bedürfnisse erkennen, Entscheidungen treffen, Verantwortung übernehmen",
-        "Kernsatz: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können (Niehoff 1994, 191 f.)",
-        "Ziel: selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen (Kulig/Theunissen 2006, 237); Komponenten Wissen, Können, Wollen"
+        "Voraussetzungen: Wissen (Kenntnisse über Freizeitmöglichkeiten), Können (praktische Fertigkeiten) und Wollen (Interesse und Motivation) (Thümmel/Stöppler 2025)",
+        "Ziel: selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen (Kulig/Theunissen 2006, 237)",
+        "Beispiel Lea: Sie lebt in einer Wohngruppe und möchte nach der Schule Musik hören und allein sein; die Betreuungspersonen motivieren sie aber regelmäßig zu Gruppenaktivitäten, weil die als sinnvoller gelten - über ihre Freizeit entscheiden also andere",
+        "Beispiel Unterricht: Schüler:innen an der Planung der Freizeitangebote beteiligen, offene Unterrichtsformen mit echten Wahlmöglichkeiten eröffnen und sich als Lehrkraft wohlwollend zurückhalten, damit keine Fremdbestimmung entsteht (Schuck 2019, 644)"
       ],
       "abschnitte": [
-        {
-          "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Warum das gerade in der Schulzeit gefördert werden muss",
-          "idx": [
-            0,
-            1,
-            2
-          ],
-          "form": "rolle",
-          "punkte": 3,
-          "satzanfang": "Das ist deshalb ein Ziel der Freizeitbildung, weil …"
-        },
-        {
-          "operator": "erlaeutern",
-          "rolle": "belegen",
-          "auftrag": "Woran sich selbstbestimmtes Handeln konkret zeigt",
-          "idx": [
-            3
-          ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Konkret zeigt sich das daran, dass …"
-        },
         {
           "operator": "erlaeutern",
           "rolle": "benennen",
           "auftrag": "Was Selbstbestimmung heißt – und was damit als Ziel gemeint ist",
           "idx": [
-            4,
+            0,
             5
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Selbstbestimmung bedeutet … Ziel ist deshalb, dass …"
+          "satzanfang": "Selbstbestimmung bedeutet … Ziel der Freizeitbildung ist deshalb, dass …",
+          "beispiel": "Zentral ist dabei der Grundsatz von Niehoff: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können."
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "beschreiben",
+          "auftrag": "Warum das gerade in der Schulzeit gefördert werden muss – und was Schüler:innen dafür lernen",
+          "idx": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Das ist deshalb ein Ziel der Freizeitbildung, weil …",
+          "beispiel": "Deshalb muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden: Schüler:innen lernen, eigene Bedürfnisse zu erkennen, Entscheidungen zu treffen und Verantwortung zu übernehmen."
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "erlaeutern",
+          "auftrag": "Ein Beispiel aus der Vorlesung, an dem man sieht, wie das gelingt – und wie nicht",
+          "idx": [
+            6,
+            7
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "An einem Beispiel aus der Vorlesung zeigt sich das so: …",
+          "beispiel": "An einem Beispiel aus der Vorlesung wird beides sichtbar: Lea lebt in einer Wohngruppe und möchte nach der Schule Musik hören und allein sein, doch die Betreuungspersonen motivieren sie regelmäßig zu Gruppenaktivitäten, weil diese als sinnvoller gelten - über ihre Freizeit entscheiden damit andere."
         }
       ],
-      "muster": "Menschen mit geistiger Behinderung erleben häufig Abhängigkeit von Betreuung und Unterstützung, und diese Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen. Deshalb muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden: Schüler:innen lernen, eigene Bedürfnisse zu erkennen, Entscheidungen zu treffen und Verantwortung zu übernehmen. Zentral ist dabei der Grundsatz von Niehoff: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Ziel der Freizeitbildung ist die selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen - dafür braucht es Wissen über Freizeitmöglichkeiten, Können im Sinne praktischer Fertigkeiten und Wollen im Sinne von Interesse und Motivation.",
+      "muster": "Menschen mit geistiger Behinderung erleben häufig Abhängigkeit von Betreuung und Unterstützung, und diese Fremdbestimmung erschwert das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen. Deshalb muss Selbstbestimmung bereits in der Schulzeit gezielt gefördert werden: Schüler:innen lernen, eigene Bedürfnisse zu erkennen, Entscheidungen zu treffen und Verantwortung zu übernehmen. Zentral ist dabei der Grundsatz von Niehoff: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Ziel der Freizeitbildung ist die selbstbestimmte Gestaltung des eigenen Lebens und der Freizeit nach individuellen Bedürfnissen - dafür braucht es Wissen über Freizeitmöglichkeiten, Können im Sinne praktischer Fertigkeiten und Wollen im Sinne von Interesse und Motivation. An einem Beispiel aus der Vorlesung wird beides sichtbar: Lea lebt in einer Wohngruppe und möchte nach der Schule Musik hören und allein sein, doch die Betreuungspersonen motivieren sie regelmäßig zu Gruppenaktivitäten, weil diese als sinnvoller gelten - über ihre Freizeit entscheiden damit andere. Im Unterricht gelingt Selbstbestimmung dagegen dort, wo Schüler:innen an der Planung der Freizeitangebote beteiligt werden, offene Unterrichtsformen echte Wahlmöglichkeiten eröffnen und die Lehrkraft sich wohlwollend zurückhält, damit keine Fremdbestimmung entsteht.",
       "musterVarianten": {
         "de": {
           "einfach": "Menschen mit geistiger Behinderung sind oft von Betreuung und Unterstützung abhängig. Dann bestimmen andere Menschen über sie. Das nennt man Fremdbestimmung. Fremdbestimmung erschwert es, Selbstverantwortung zu lernen. Sie erschwert es auch, eigenständige Entscheidungen zu treffen. Deshalb muss man Selbstbestimmung schon in der Schulzeit gezielt fördern. Die Schüler:innen lernen dort drei Dinge. Sie lernen, ihre eigenen Bedürfnisse zu erkennen. Sie lernen, Entscheidungen zu treffen. Und sie lernen, Verantwortung zu übernehmen. Wichtig ist dabei ein Grundsatz von Niehoff. Er sagt: Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben. Selbstbestimmung bedeutet, Unterstützung selbstbestimmt nutzen zu können. Die Person entscheidet also selbst, welche Hilfe sie annimmt. Das Ziel der Freizeitbildung ist die selbstbestimmte Gestaltung des eigenen Lebens und der eigenen Freizeit. Jede Person soll das nach ihren individuellen Bedürfnissen tun können. Dafür braucht sie drei Dinge. Sie braucht Wissen über die Freizeitmöglichkeiten. Sie braucht Können, also praktische Fertigkeiten. Und sie braucht Wollen, also Interesse und Motivation."
@@ -1093,14 +1102,14 @@
       "quelleSicherheit": "geprueft",
       "hinweise": [
         [
-          "Womit startet die Argumentation? Die Lebensrealität vieler Betroffener",
-          "Denk an das Angewiesensein auf andere im Alltag",
-          "Der Ist-Zustand: wenig eigener Spielraum"
+          "Das berühmte Zitat: Hilfe nicht abschaffen, sondern selbst steuern",
+          "Niehoffs Definition - worum geht es wirklich bei Unterstützung?",
+          "Der Merksatz gegen das Missverständnis vom Alleine-Schaffen"
         ],
         [
-          "Was folgt daraus fürs Lernen? Hahn beschreibt die Hürde",
-          "Wenn andere entscheiden - was wird dann schwer?",
-          "Die Kehrseite ständiger Entscheidungen durch Dritte"
+          "Womit startet die Argumentation? Die Lebensrealität vieler Betroffener - und die Hürde, die daraus folgt",
+          "Denk an das Angewiesensein auf andere im Alltag: Was wird dadurch schwer zu lernen?",
+          "Der Ist-Zustand, und was Hahn dazu sagt"
         ],
         [
           "Wann muss Förderung ansetzen? Früh!",
@@ -1113,14 +1122,24 @@
           "Eigene Wünsche, eigene Wahl, eigenes Einstehen - als Lernziele"
         ],
         [
-          "Das berühmte Zitat: Hilfe nicht abschaffen, sondern selbst steuern",
-          "Niehoffs Definition - worum geht es wirklich bei Unterstützung?",
-          "Der Merksatz gegen das Missverständnis vom Alleine-Schaffen"
+          "Die Trias aus Kopf, Hand und Motivation",
+          "Drei Wörter mit W - was braucht man, damit es klappt?",
+          "Thümmel und Stöppler nennen die drei Komponenten"
         ],
         [
           "Wohin führt alles? Eigenes Leben nach eigenen Maßstäben",
-          "Das Fernziel plus die drei W-Komponenten",
-          "Denk an die Trias aus Kopf, Hand und Motivation"
+          "Das Fernziel auf dem Zielstern der Folie",
+          "Kulig und Theunissen formulieren, worauf alles hinausläuft"
+        ],
+        [
+          "Das Mädchen aus der Wohngruppe, das seine Ruhe haben will",
+          "Welches Fallbeispiel zeigt gut gemeinte Fremdbestimmung?",
+          "Wer entscheidet dort, was ein sinnvoller Nachmittag ist?"
+        ],
+        [
+          "Und wie sieht es aus, wenn Schule es richtig macht?",
+          "Mitplanen lassen, wählen lassen, sich selbst zurücknehmen",
+          "Was tut eine Lehrkraft, damit die Entscheidung bei den Schüler:innen bleibt?"
         ]
       ]
     },
@@ -1131,44 +1150,48 @@
       "frage": "Beurteilen Sie ein Spannungsfeld der Freizeitbildung und leiten Sie pädagogische Handlungsoptionen ab.",
       "stichpunkte": [
         "Drei Spannungsfelder zur Auswahl: a) Selbstbestimmung vs. Fürsorge, b) Pädagogisierung von Freizeit vs. Zweckfreiheit, c) Struktur vs. Offenheit",
-        "Beispiel b: Freizeit wird funktionalisiert (wir fördern jetzt ...) - dabei geht die Zweckfreiheit verloren, die Freizeit gerade ausmacht; zu starke Instrumentalisierung nimmt den Raum für freie Entfaltung",
-        "Gegenposition: ganz ohne pädagogische Anregung fehlen vielen Schüler:innen Wissen, Können und Wollen für selbstbestimmte Freizeit",
+        "Dagegen 1: Freizeit wird funktionalisiert (wir fördern jetzt ...) - dabei geht die Zweckfreiheit verloren, die Freizeit gerade ausmacht; zu starke Instrumentalisierung nimmt den Raum für freie Entfaltung",
+        "Dafür 1: Ganz ohne pädagogische Anregung fehlen vielen Schüler:innen Wissen, Können und Wollen für selbstbestimmte Freizeit",
         "Handlungsoptionen: Balance anstreben - Angebote machen statt verordnen, Wahlmöglichkeiten eröffnen, auch Nichtstun zulassen (Freizeit muss nicht produktiv sein), Unterstützung anbieten, die stärkt, und Freiheit lassen, die wachsen lässt",
-        "Fazit: Ziel ist die ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit"
+        "Fazit: Ziel ist die ausgewogene Balance zwischen Unterstützung und Freiheit, Förderung und Freiraum, Struktur und Offenheit",
+        "Dagegen 2: Was die Schule verpflichtend ansetzt, ist keine selbstbestimmbare Zeit mehr - nach Opaschowski lebt Dispositionszeit gerade davon, dass man sie selbst wählt; die Vorlesung fragt deshalb, ob eine verpflichtende Freizeit-AG überhaupt Freizeit ist",
+        "Dafür 2: Freizeitgestaltung ist ein ausdrücklicher Bildungsauftrag - der Rahmenlehrplan führt Freizeit als Handlungsfeld im Leitthema Der Mensch im Alltag (RLP 2011, 23), und Artikel 30 der UN-Behindertenrechtskonvention sichert die Teilhabe an Kultur, Sport und Freizeit"
       ],
       "abschnitte": [
         {
-          "operator": "bewerten",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Welches Spannungsfeld du dir vornimmst – die Stichpunkte führen b) aus, Pädagogisierung gegen Zweckfreiheit",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Ich beurteile das Spannungsfeld … Die Frage ist, ob …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "bewerten",
           "rolle": "dagegen",
-          "auftrag": "Was dagegen spricht – die Zweckfreiheit der Freizeit",
+          "auftrag": "Zwei Punkte, die dagegen sprechen – die Zweckfreiheit der Freizeit",
           "idx": [
-            1
+            1,
+            5
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dagegen spricht, dass …"
+          "punkte": 3,
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Andererseits droht die Freizeit funktionalisiert zu werden - wenn jede Aktivität einem Förderziel dient, geht genau die Zweckfreiheit verloren, die Freizeit als Raum für freie Entfaltung auszeichnet."
         },
         {
           "operator": "bewerten",
           "rolle": "dafuer",
-          "auftrag": "Was für pädagogische Anregung in der Freizeit spricht",
+          "auftrag": "Zwei Punkte, die für pädagogische Anregung in der Freizeit sprechen",
           "idx": [
-            2
+            2,
+            6
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dafür spricht, dass …"
+          "punkte": 3,
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Einerseits ist Freizeitbildung notwendig: Ohne pädagogische Anregung fehlen vielen Schüler:innen im SGE das Wissen, Können und Wollen, um ihre Freizeit selbstbestimmt zu gestalten."
         },
         {
           "operator": "entwickeln",
@@ -1179,21 +1202,23 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Daraus folgt für die Praxis, dass …"
+          "satzanfang": "Daraus folgt für die Praxis, dass …",
+          "beispiel": "Als Handlungsoptionen leite ich ab: Freizeitangebote als echte Wahlmöglichkeiten gestalten statt sie zu verordnen, dabei auch das Nichtstun zulassen - denn Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert -, und Unterstützung so anbieten, dass sie stärkt, ohne zu bevormunden."
         },
         {
           "operator": "bewerten",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein Urteil",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Ich halte fest: …"
+          "satzanfang": "Ich halte fest: …",
+          "beispiel": "In der Beurteilung ist keine Seite allein tragfähig: Weder darf Schule Freizeit vollständig durchpädagogisieren, noch darf sie Schüler:innen ohne Anregung lassen."
         }
       ],
-      "muster": "Ich wähle das Spannungsfeld zwischen Pädagogisierung von Freizeit und Zweckfreiheit. Einerseits ist Freizeitbildung notwendig: Ohne pädagogische Anregung fehlen vielen Schüler:innen im SGE das Wissen, Können und Wollen, um ihre Freizeit selbstbestimmt zu gestalten. Andererseits droht die Freizeit funktionalisiert zu werden - wenn jede Aktivität einem Förderziel dient, geht genau die Zweckfreiheit verloren, die Freizeit als Raum für freie Entfaltung auszeichnet. In der Beurteilung ist keine Seite allein tragfähig: Weder darf Schule Freizeit vollständig durchpädagogisieren, noch darf sie Schüler:innen ohne Anregung lassen. Als Handlungsoptionen leite ich ab: Freizeitangebote als echte Wahlmöglichkeiten gestalten statt sie zu verordnen, dabei auch das Nichtstun zulassen - denn Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert -, und Unterstützung so anbieten, dass sie stärkt, ohne zu bevormunden. Ziel ist die ausgewogene Balance zwischen Förderung und Freiraum.",
+      "muster": "Ich wähle das Spannungsfeld zwischen Pädagogisierung von Freizeit und Zweckfreiheit. Einerseits ist Freizeitbildung notwendig: Ohne pädagogische Anregung fehlen vielen Schüler:innen im SGE das Wissen, Können und Wollen, um ihre Freizeit selbstbestimmt zu gestalten. Dazu kommt, dass Freizeitgestaltung ein ausdrücklicher Bildungsauftrag ist: Der Rahmenlehrplan führt Freizeit als Handlungsfeld im Leitthema Der Mensch im Alltag, und Artikel 30 der UN-Behindertenrechtskonvention sichert die Teilhabe an Kultur, Sport und Freizeit. Andererseits droht die Freizeit funktionalisiert zu werden - wenn jede Aktivität einem Förderziel dient, geht genau die Zweckfreiheit verloren, die Freizeit als Raum für freie Entfaltung auszeichnet. Hinzu kommt, dass verpflichtend angesetzte Angebote keine selbstbestimmbare Zeit mehr sind: Nach Opaschowski lebt Dispositionszeit gerade davon, dass man sie selbst wählt, und die Vorlesung fragt deshalb ausdrücklich, ob eine verpflichtende Freizeit-AG überhaupt noch Freizeit ist. In der Beurteilung ist keine Seite allein tragfähig: Weder darf Schule Freizeit vollständig durchpädagogisieren, noch darf sie Schüler:innen ohne Anregung lassen. Als Handlungsoptionen leite ich ab: Freizeitangebote als echte Wahlmöglichkeiten gestalten statt sie zu verordnen, dabei auch das Nichtstun zulassen - denn Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert -, und Unterstützung so anbieten, dass sie stärkt, ohne zu bevormunden. Ziel ist die ausgewogene Balance zwischen Förderung und Freiraum.",
       "musterVarianten": {
         "de": {
           "einfach": "Ich wähle das Spannungsfeld zwischen Pädagogisierung von Freizeit und Zweckfreiheit. Pädagogisierung heißt: Die Schule macht aus der Freizeit eine Lernaufgabe. Zweckfreiheit heißt: Die Freizeit dient keinem Zweck außer sich selbst. Auf der einen Seite ist Freizeitbildung notwendig. Vielen Schüler:innen im Förderschwerpunkt geistige Entwicklung fehlen ohne pädagogische Anregung das Wissen, das Können und das Wollen. Dann können sie ihre Freizeit nicht selbstbestimmt gestalten. Auf der anderen Seite droht die Freizeit funktionalisiert zu werden. Funktionalisiert heißt: Sie wird für einen anderen Zweck benutzt. Wenn jede Aktivität einem Förderziel dient, geht die Zweckfreiheit verloren. Dann fehlt der Raum für freie Entfaltung. Genau dieser Raum macht die Freizeit aber aus. In meiner Beurteilung ist keine Seite allein tragfähig. Die Schule darf die Freizeit nicht vollständig durchpädagogisieren. Sie darf die Schüler:innen aber auch nicht ohne Anregung lassen. Daraus leite ich drei Handlungsoptionen ab. Erstens gestaltet die Schule Freizeitangebote als echte Wahlmöglichkeiten. Sie verordnet die Angebote nicht. Zweitens lässt sie auch das Nichtstun zu. Denn Freizeit muss nicht produktiv sein. Freizeit ist subjektiv und bedürfnisorientiert. Subjektiv heißt: Jede Person erlebt sie anders. Drittens bietet die Schule Unterstützung so an, dass sie stärkt. Sie bevormundet dabei niemanden. Das Ziel ist eine ausgewogene Balance zwischen Förderung und Freiraum."
@@ -1236,6 +1261,16 @@
           "Der Schlussgedanke: das Gleichgewicht benennen",
           "Womit rundest du ab? Die Mitte zwischen den Polen",
           "Kein Entweder-oder, sondern ein Sowohl-als-auch"
+        ],
+        [
+          "Was passiert mit dem Zeitmodell, wenn Teilnahme Pflicht wird?",
+          "Was fragt die Folie über eine Pflicht-AG?",
+          "Opaschowski: Was macht die freie Zeit eigentlich frei?"
+        ],
+        [
+          "Wer trägt der Schule das auf? Zwei Papiere",
+          "Rahmenlehrplan und Menschenrechte - was steht dort zur Freizeit?",
+          "Ein Auftrag von außen, nicht nur eine gute Idee"
         ]
       ]
     },
@@ -1435,7 +1470,8 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Am Beispiel des Nachmittags heißt das: zuerst … dann … und schließlich …"
+          "satzanfang": "Am Beispiel des Nachmittags heißt das: zuerst … dann … und schließlich …",
+          "beispiel": "In PK 1, informieren und ordnen, recherchiert die Gruppe zunächst analog und digital, welche Angebote es im Umfeld gibt, sammelt Informationen zu Öffnungszeiten, Preisen und Erreichbarkeit und ordnet sie nach zuvor vereinbarten Auswahlkriterien, sodass eine Entscheidungsgrundlage entsteht."
         },
         {
           "operator": "anwenden",
@@ -1447,7 +1483,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Fachlich stützt sich das auf …"
+          "satzanfang": "Fachlich stützt sich das auf …",
+          "beispiel": "Die drei Prozesse greifen dabei auf das Wissen der domänenspezifischen Bereiche zurück, also auf Planungs- und Gestaltungswissen sowie Wissen über Freizeitaktivitäten, und sind mit den Entwicklungsbereichen verknüpft."
         }
       ],
       "muster": "Der geplante Nachmittag lässt sich entlang der drei prozessbezogenen Kompetenzen des Kompetenzstrukturmodells Freizeitgestaltung (Thümmel und Stöppler 2025) aufbauen. In PK 1, informieren und ordnen, recherchiert die Gruppe zunächst analog und digital, welche Angebote es im Umfeld gibt, sammelt Informationen zu Öffnungszeiten, Preisen und Erreichbarkeit und ordnet sie nach zuvor vereinbarten Auswahlkriterien, sodass eine Entscheidungsgrundlage entsteht. In PK 2, bewerten und entscheiden, vergleicht die Gruppe die Möglichkeiten, wägt Vor- und Nachteile ab und bringt die eigenen Interessen ein; weil nicht alle dasselbe wollen, gehört das Eingehen von Kompromissen ausdrücklich dazu. In PK 3, anwenden und handeln, wird der Nachmittag dann tatsächlich umgesetzt: Anreise, Kosten und Material werden organisiert, jede und jeder schätzt den eigenen Unterstützungsbedarf ein und nutzt Hilfen gezielt, und durch Wiederholung solcher Vorhaben wächst die Handlungskompetenz. Die drei Prozesse greifen dabei auf das Wissen der domänenspezifischen Bereiche zurück, also auf Planungs- und Gestaltungswissen sowie Wissen über Freizeitaktivitäten, und sind mit den Entwicklungsbereichen verknüpft.",
@@ -1520,7 +1557,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Mein Vorhaben zielt darauf, dass …"
+          "satzanfang": "Mein Vorhaben zielt darauf, dass …",
+          "beispiel": "Ich entwickle ein Vorhaben, in dem eine Klasse über mehrere Wochen hinweg eigene Freizeitnachmittage plant und durchführt. Ziel ist die selbstbestimmte Gestaltung der eigenen Freizeit nach individuellen Bedürfnissen; weil Fremdbestimmung das Erlernen von Selbstverantwortung erschwert, muss diese Fähigkeit bereits in der Schulzeit gezielt gefördert werden."
         },
         {
           "operator": "entwickeln",
@@ -1533,7 +1571,8 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Konkret plane ich, dass …"
+          "satzanfang": "Konkret plane ich, dass …",
+          "beispiel": "Als Gerüst nutze ich die prozessbezogenen Kompetenzen: In PK 1 recherchieren und ordnen die Schüler:innen Angebote, in PK 2 wägen sie ab und entscheiden gemeinsam, in PK 3 setzen sie ihre Planung um und schätzen dabei ein, wo sie Unterstützung brauchen."
         },
         {
           "operator": "entwickeln",
@@ -1545,7 +1584,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Fachlich trägt das, weil …"
+          "satzanfang": "Fachlich trägt das, weil …",
+          "beispiel": "Entscheidend ist die Haltung der Lehrkraft: Unterstützung ja, stellvertretende Entscheidungen nein, denn Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können."
         }
       ],
       "muster": "Ich entwickle ein Vorhaben, in dem eine Klasse über mehrere Wochen hinweg eigene Freizeitnachmittage plant und durchführt. Ziel ist die selbstbestimmte Gestaltung der eigenen Freizeit nach individuellen Bedürfnissen; weil Fremdbestimmung das Erlernen von Selbstverantwortung erschwert, muss diese Fähigkeit bereits in der Schulzeit gezielt gefördert werden. Inhaltlich decke ich die drei Komponenten selbstbestimmter Freizeitgestaltung ab: Wissen, indem die Schüler:innen Angebote im Stadtteil kennenlernen und deren Nutzen einschätzen; Können, indem sie praktische Fertigkeiten erwerben, also sportliche, kreative, musische und organisatorische Kompetenzen, etwa ein Spiel anleiten oder eine Verabredung selbst organisieren; und Wollen, indem sie eigene Vorlieben ausprobieren, positive Erfahrungen sammeln und darüber sprechen, was ihnen gefallen hat. Als Gerüst nutze ich die prozessbezogenen Kompetenzen: In PK 1 recherchieren und ordnen die Schüler:innen Angebote, in PK 2 wägen sie ab und entscheiden gemeinsam, in PK 3 setzen sie ihre Planung um und schätzen dabei ein, wo sie Unterstützung brauchen. Barrieren denke ich von Anfang an mit, also Erreichbarkeit und Barrierefreiheit der Ziele ebenso wie die Frage, wer begleitet, damit das Vorhaben nicht an fehlender Assistenz scheitert. Entscheidend ist die Haltung der Lehrkraft: Unterstützung ja, stellvertretende Entscheidungen nein, denn Selbstbestimmung bedeutet nicht, ohne Hilfe zu leben, sondern Unterstützung selbstbestimmt nutzen zu können. Deshalb halte ich die Spannungsfelder bewusst in Balance, gebe genug Struktur zur Orientierung, lasse aber Offenheit für eigene Ideen und verzichte darauf, jede Aktivität mit einem Förderziel zu belegen. Auch ein Nachmittag, an dem jemand einfach nichts tut, ist in diesem Vorhaben zulässig, weil Freizeit nicht produktiv sein muss, sondern subjektiv und bedürfnisorientiert ist.",
@@ -1624,7 +1664,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für die These spricht, dass …"
+          "satzanfang": "Für die These spricht, dass …",
+          "beispiel": "Erstens lebt Freizeit von ihrer Zweckfreiheit: Sobald jede Aktivität einem Förderziel dient, wird sie instrumentalisiert und verliert den Raum für freie Entfaltung, den sie eigentlich bietet."
         },
         {
           "operator": "diskutieren",
@@ -1636,11 +1677,12 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Zum einen setzt selbstbestimmte Freizeitgestaltung Wissen über Möglichkeiten, praktisches Können und das Wollen im Sinne von Interesse und Motivation voraus - das entsteht nicht von allein, und deshalb muss Selbstbestimmung schon in der Schulzeit gezielt gefördert werden."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine begründete Bewertung – mit dem Kompetenzstrukturmodell im Rücken",
           "idx": [
             4,
@@ -1648,7 +1690,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "In der Bewertung folge ich der These deshalb nicht: Freizeit ist kein Nebenbereich, sondern zentral für Lebensqualität, Teilhabe, Selbstbestimmung und Identitätsentwicklung."
         }
       ],
       "muster": "Für die These spricht zweierlei. Erstens lebt Freizeit von ihrer Zweckfreiheit: Sobald jede Aktivität einem Förderziel dient, wird sie instrumentalisiert und verliert den Raum für freie Entfaltung, den sie eigentlich bietet. Zweitens ist Freizeit subjektiv und bedürfnisorientiert und muss nicht produktiv sein; wenn Schule bewertet, ob Sport gute und Fernsehen schlechte Freizeit ist, maßt sie sich ein Urteil an, das den Betroffenen zusteht. Dagegen sprechen aber gewichtige Gründe. Zum einen setzt selbstbestimmte Freizeitgestaltung Wissen über Möglichkeiten, praktisches Können und das Wollen im Sinne von Interesse und Motivation voraus - das entsteht nicht von allein, und deshalb muss Selbstbestimmung schon in der Schulzeit gezielt gefördert werden. Zum anderen ist die Wahlfreiheit für Menschen mit Behinderung real eingeschränkt: Strukturelle Barrieren wie fehlende Barrierefreiheit, soziale Barrieren wie defizitorientierte Sichtweisen und Ressourcenprobleme wie fehlende Assistenz führen dazu, dass die angebliche Privatsache ohne Unterstützung häufig gar nicht stattfindet. Dass die Freizeitgestaltung im Kompetenzstrukturmodell als eigener Kompetenzbereich ausgewiesen ist, zeigt zudem, dass sie fachlich als Bildungsauftrag verstanden wird. In der Bewertung folge ich der These deshalb nicht: Freizeit ist kein Nebenbereich, sondern zentral für Lebensqualität, Teilhabe, Selbstbestimmung und Identitätsentwicklung. Der berechtigte Kern der These liegt allerdings in der Warnung vor Pädagogisierung. Die Aufgabe der Schule ist damit nicht das Heraushalten, sondern das Halten der Balance: Unterstützung, die stärkt, und Freiheit, die wachsen lässt.",
@@ -1813,7 +1856,7 @@
         },
         {
           "operator": "erklaeren",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was das Modell über Zeit und Selbstbestimmung sagt",
           "idx": [
             6,
@@ -1912,27 +1955,30 @@
             10
           ],
           "form": "rolle",
-          "satzanfang": "Beide Konzepte fördern Selbstbestimmung, weil …"
+          "satzanfang": "Beide Konzepte fördern Selbstbestimmung, weil …",
+          "beispiel": "Beide Konzepte fördern Selbstbestimmung auf ähnliche Weise: Sie stellen echte Wahlmöglichkeiten her, statt über Freizeit nur zu sprechen, und sie lassen die Schülerinnen und Schüler Erfahrungen machen, auf die sie später zurückgreifen können."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was das für die Schüler:innen konkret heißt",
           "idx": [
             11
           ],
           "form": "rolle",
-          "satzanfang": "Konkret heißt das, dass …"
+          "satzanfang": "Konkret heißt das, dass …",
+          "beispiel": "Damit bearbeiten sie genau die Komponenten, die selbstbestimmte Freizeitgestaltung voraussetzt: Wissen über die eigenen Möglichkeiten, praktisches Können und das Wollen im Sinne eigener Interessen."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Woran man das am Freizeitführer besonders deutlich sieht",
           "idx": [
             12
           ],
           "form": "rolle",
-          "satzanfang": "Besonders deutlich wird das daran, dass …"
+          "satzanfang": "Besonders deutlich wird das daran, dass …",
+          "beispiel": "Der Freizeitführer geht noch einen Schritt weiter, weil sein Ergebnis über die Klasse hinaus wirkt."
         }
       ],
       "hinweise": [
@@ -2681,7 +2727,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Dagegen spricht zweitens das moderne Freizeitverständnis. Es begreift Freizeit nicht mehr als Restzeit nach der Arbeit, sondern als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung, und es denkt sie bedürfnis- und handlungsorientiert statt zeitorientiert."
         },
         {
           "operator": "eroertern",
@@ -2693,11 +2740,12 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für das Pflichtangebot spricht, dass …"
+          "satzanfang": "Für das Pflichtangebot spricht, dass …",
+          "beispiel": "Für die AG spricht dagegen das Spannungsfeld von Struktur und Offenheit. Eine verlässliche Struktur gibt Orientierung und Sicherheit, während zu viel Offenheit Schülerinnen und Schüler auch überfordern kann."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein Urteil – und der Weg aus dem Widerspruch",
           "idx": [
             4,
@@ -2705,7 +2753,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Abwägend halte ich fest: …"
+          "satzanfang": "Abwägend halte ich fest: …",
+          "beispiel": "Ich bewerte deshalb so: Als Zeitform ist eine Pflicht-AG streng genommen keine freie Zeit, sie bleibt gebundene Zeit. Als Unterrichtsangebot ist sie trotzdem vertretbar, denn Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden; sie stellt sich nicht von allein ein."
         }
       ],
       "muster": "Ob eine verpflichtende Freizeit-AG noch Freizeit ist, hängt davon ab, woran man Freizeit misst. Gegen die AG spricht zunächst das Zeitmodell von Opaschowski. Es ordnet die Lebenszeit auf einer Achse von Fremdbestimmung zu Selbstbestimmung: Festgelegte, abhängige Zeit ist Determinationszeit, gebundene Zeit für zweckbestimmte Tätigkeiten ist Obligationszeit, und nur die frei verfügbare, selbstbestimmbare Zeit ist Dispositionszeit. Eine Veranstaltung mit Teilnahmepflicht ist gesetzt und gebunden und liegt damit auf der falschen Seite dieser Achse. Dagegen spricht zweitens das moderne Freizeitverständnis. Es begreift Freizeit nicht mehr als Restzeit nach der Arbeit, sondern als Teil der gesamten Lebenszeit und als Raum für Selbstbestimmung, und es denkt sie bedürfnis- und handlungsorientiert statt zeitorientiert. Eine Aktivität, die für alle gleich verordnet wird, stellt die Vorgabe wieder über das Bedürfnis. Für die AG spricht dagegen das Spannungsfeld von Struktur und Offenheit. Eine verlässliche Struktur gibt Orientierung und Sicherheit, während zu viel Offenheit Schülerinnen und Schüler auch überfordern kann. Zweitens ist Freizeitbildung in der Oberstufe kein freiwilliges Zusatzangebot, sondern Auftrag: Der Rahmenlehrplan führt Freizeit als Handlungsfeld des Leitthemas Der Mensch im Alltag und sieht vor, dass die Freizeitgestaltung besonders bei älteren Schülerinnen und Schülern als spezielles Unterrichtsangebot unter Berücksichtigung der zukünftigen Lebenssituation in den Unterricht einbezogen wird. Wer sie setzt, handelt also nicht willkürlich, sondern erfüllt einen Auftrag. Einen Weg aus dem Widerspruch zeigt die Freizeitwoche: Die Schule setzt den Rahmen und sorgt dafür, dass das Programm vielfältig ist und Angebote für alle Schülerinnen und Schüler enthält; ausgewählt und zusammengestellt wird individuell, die Durchführung ist häufig klassenübergreifend, und in der Nachbereitung besprechen und reflektieren die Schülerinnen und Schüler, was sie für ihre eigenen Freizeitvorlieben mitnehmen. Ich bewerte deshalb so: Als Zeitform ist eine Pflicht-AG streng genommen keine freie Zeit, sie bleibt gebundene Zeit. Als Unterrichtsangebot ist sie trotzdem vertretbar, denn Selbstbestimmung muss bereits in der Schulzeit gezielt gefördert werden; sie stellt sich nicht von allein ein. Voraussetzung ist, dass die AG offene Formen mit echten Wahl- und Entscheidungsmöglichkeiten nutzt und die Lehrkräfte sich wohlwollend zurückhalten, statt eine bestimmte Aktivität vorzuschreiben. Entscheidend ist der Unterschied zwischen dem Rahmen und dem Inhalt, und das Ziel bleibt die ausgewogene Balance zwischen Unterstützung und Freiheit.",
@@ -2787,7 +2836,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für das Vorgehen des Teams spricht, dass …"
+          "satzanfang": "Für das Vorgehen des Teams spricht, dass …",
+          "beispiel": "Dafür spricht, dass Freizeit auch soziale Zielfunktionen hat: Sie erfüllt Bedürfnisse nach Mitteilung und Geselligkeit, nach Zusammensein und Gemeinschaftsbezug sowie nach Beteiligung und Mitbestimmung."
         },
         {
           "operator": "bewerten",
@@ -2800,18 +2850,17 @@
           ],
           "form": "rolle",
           "punkte": 4,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Erstens sind Erholung, Ruhe und Wohlbefinden ebenso Zielfunktionen von Freizeit wie Selbsterfahrung und Selbstfindung; Musik hören und allein sein bedienen genau diese Bedürfnisse."
         },
         {
-          "operator": "bewerten",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "In welchem Spannungsfeld der Fall liegt",
           "idx": [
             5
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Der Fall liegt im Spannungsfeld von …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "entwickeln",
@@ -2823,18 +2872,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Daraus folgt für die Praxis, dass …"
+          "satzanfang": "Daraus folgt für die Praxis, dass …",
+          "beispiel": "Als Handlungsoptionen leite ich daraus zweierlei ab. Zur Haltung: wohlwollende Zurückhaltung statt beständigem Motivieren und Unterstützung dabei, eigene Interessen zu formulieren."
         },
         {
           "operator": "bewerten",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine fachliche Bewertung",
           "idx": [
             8
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Fachlich bewerte ich das Vorgehen so: …"
+          "satzanfang": "Fachlich bewerte ich das Vorgehen so: …",
+          "beispiel": "In der Bewertung heißt das: Das Vorgehen ist als Fürsorge nachvollziehbar, in der Sache aber Fremdbestimmung."
         }
       ],
       "muster": "Das Vorgehen des Teams lässt sich in beide Richtungen begründen. Dafür spricht, dass Freizeit auch soziale Zielfunktionen hat: Sie erfüllt Bedürfnisse nach Mitteilung und Geselligkeit, nach Zusammensein und Gemeinschaftsbezug sowie nach Beteiligung und Mitbestimmung. Dazu kommt, dass fehlende Freizeitteilhabe soziale Isolation, Autonomieverlust und gesellschaftliche Exklusion begünstigt. Die Sorge, eine Schülerin könnte sich dauerhaft zurückziehen, ist fachlich also nicht unbegründet. Dagegen spricht dreierlei. Erstens sind Erholung, Ruhe und Wohlbefinden ebenso Zielfunktionen von Freizeit wie Selbsterfahrung und Selbstfindung; Musik hören und allein sein bedienen genau diese Bedürfnisse. Zweitens benennt die Vorlesung als typische Benachteiligungen ausgerechnet in diesen beiden Bereichen eine fremdbestimmte Tagesstruktur und fehlende Rückzugsmöglichkeiten sowie Bevormundung und Isolation. Das Team wiederholt damit genau das Teilhaberisiko, das es eigentlich abbauen möchte. Drittens ist der Maßstab, Gruppenangebote seien sinnvoller, selbst der strittige Punkt: Freizeit muss nicht produktiv sein, sie ist subjektiv und bedürfnisorientiert, und auch Nichtstun darf Freizeit sein. Der Fall gehört damit in das Spannungsfeld von Selbstbestimmung und Fürsorge. Unterstützung droht hier in stellvertretende Entscheidungen zu kippen, und Fremdbestimmung erschwert gerade das Erlernen von Selbstverantwortung und eigenständigen Entscheidungen. Als Handlungsoptionen leite ich daraus zweierlei ab. Zur Haltung: wohlwollende Zurückhaltung statt beständigem Motivieren und Unterstützung dabei, eigene Interessen zu formulieren. Zu den Angeboten: Beteiligung der Schülerin an deren Planung, offene Formen, die echte Wahl- und Entscheidungsmöglichkeiten lassen, und das Aufzeigen der Breite möglicher Gegenstandsbereiche, etwa Entspannung oder Medien, statt eine Gruppenaktivität zu setzen. In der Bewertung heißt das: Das Vorgehen ist als Fürsorge nachvollziehbar, in der Sache aber Fremdbestimmung. Der Anspruch der Behindertenrechtskonvention richtet sich auf gleichberechtigte Teilhabe am kulturellen Leben und auf Zugang zu Freizeit-, Sport- und Erholungsangeboten, also auf das Eröffnen von Möglichkeiten und nicht auf eine Pflicht zur Teilnahme. Das Ziel bleibt die Balance: Unterstützung, die stärkt, und Freiheit, die wachsen lässt.",

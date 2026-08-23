@@ -630,29 +630,32 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Das Stufenmodell gliedert die Schulzeit in …"
+          "satzanfang": "Das Stufenmodell gliedert die Schulzeit in …",
+          "beispiel": "Die Förderschule im SGE gliedert sich in vier Stufen, die jeweils drei Jahre besucht werden: die Vor-, Unter- bzw. Grundstufe, die Mittelstufe, die Ober- bzw. Hauptstufe und die Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004)."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was die Werkstufe von den anderen Stufen unterscheidet",
           "idx": [
             1
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die Werkstufe ist dabei …"
+          "satzanfang": "Die Werkstufe ist dabei …",
+          "beispiel": "Die Werkstufe ist dabei relativ eigenständig: Sie soll über allgemeine Bildungsangebote hinaus gezielt auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "belegen",
+          "rolle": "erlaeutern",
           "auftrag": "Woran sich das an der Dauer des Schulbesuchs zeigt",
           "idx": [
             2
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Konkret zeigt sich das daran, dass …"
+          "satzanfang": "Konkret zeigt sich das daran, dass …",
+          "beispiel": "Dafür verlängert sich der Schulbesuch von 9 auf 12 Jahre im Werkstufenbereich, in begründeten Fällen ist eine weitere Verlängerung möglich."
         }
       ],
       "muster": "Die Förderschule im SGE gliedert sich in vier Stufen, die jeweils drei Jahre besucht werden: die Vor-, Unter- bzw. Grundstufe, die Mittelstufe, die Ober- bzw. Hauptstufe und die Werk- bzw. Abschlussstufe (vgl. Fornefeld 2004). Die Werkstufe ist dabei relativ eigenständig: Sie soll über allgemeine Bildungsangebote hinaus gezielt auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten. Dafür verlängert sich der Schulbesuch von 9 auf 12 Jahre im Werkstufenbereich, in begründeten Fällen ist eine weitere Verlängerung möglich.",
@@ -726,7 +729,8 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Für die eine Seite spricht … / Für die andere Seite spricht …"
+          "satzanfang": "Für die eine Seite spricht … / Für die andere Seite spricht …",
+          "beispiel": "Für die Förderschule sprechen die spezialisierten Rahmenbedingungen: kleine Klassenfrequenzen, wohnlich gestaltete Lernorte, Ganztagsstruktur und ein Stufenmodell mit eigener Werkstufe, das gezielt auf das nachschulische Leben vorbereitet. Für die allgemeinbildende Schule sprechen Teilhabe und Begegnung: Gemeinsamer Unterricht ermöglicht soziales Lernen mit Gleichaltrigen und entspricht dem Anspruch der UN-Behindertenrechtskonvention auf gleichberechtigten Zugang."
         },
         {
           "operator": "eroertern",
@@ -738,18 +742,20 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Gegen die eine Seite spricht … / Gegen die andere Seite spricht …"
+          "satzanfang": "Gegen die eine Seite spricht … / Gegen die andere Seite spricht …",
+          "beispiel": "Gegen die Förderschule spricht die Gefahr der Separation, gegen die Regelschule, dass Schüler:innen im FSgE den Anforderungen ohne ausreichende Ressourcen und Differenzierung nur schwer gerecht werden."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Dein begründetes Urteil am Schluss",
           "idx": [
             5
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …"
+          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …",
+          "beispiel": "In der Bewertung kommt es auf das einzelne Kind an: Entscheidend ist nicht der Ort an sich, sondern ob dort Entwicklungsförderung, Differenzierung und soziale Teilhabe tatsächlich umgesetzt werden."
         }
       ],
       "muster": "Für die Förderschule sprechen die spezialisierten Rahmenbedingungen: kleine Klassenfrequenzen, wohnlich gestaltete Lernorte, Ganztagsstruktur und ein Stufenmodell mit eigener Werkstufe, das gezielt auf das nachschulische Leben vorbereitet. Für die allgemeinbildende Schule sprechen Teilhabe und Begegnung: Gemeinsamer Unterricht ermöglicht soziales Lernen mit Gleichaltrigen und entspricht dem Anspruch der UN-Behindertenrechtskonvention auf gleichberechtigten Zugang. Gegen die Förderschule spricht die Gefahr der Separation, gegen die Regelschule, dass Schüler:innen im FSgE den Anforderungen ohne ausreichende Ressourcen und Differenzierung nur schwer gerecht werden. In der Bewertung kommt es auf das einzelne Kind an: Entscheidend ist nicht der Ort an sich, sondern ob dort Entwicklungsförderung, Differenzierung und soziale Teilhabe tatsächlich umgesetzt werden.",
@@ -817,50 +823,54 @@
       "abschnitte": [
         {
           "operator": "vergleichen",
-          "rolle": "kriterium",
+          "rolle": "benennen",
           "auftrag": "Nach welchem Kriterium du vergleichst",
           "idx": [
             0
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Verglichen wird hier nach …"
+          "satzanfang": "Verglichen wird hier nach …",
+          "beispiel": "Alle vier Formen gehören zum gemeinsamen Unterricht, unterscheiden sich aber in der schulrechtlichen Zuordnung der Schüler:innen."
         },
         {
           "operator": "vergleichen",
-          "rolle": "positionA",
+          "rolle": "beschreiben",
           "auftrag": "Welche Formen der Regelschule zugeordnet sind",
           "idx": [
             1
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Schulrechtlich der Regelschule zugeordnet sind …"
+          "satzanfang": "Schulrechtlich der Regelschule zugeordnet sind …",
+          "beispiel": "Bei der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration sind die Schüler:innen schulrechtlich der Regelschule zugeordnet."
         },
         {
           "operator": "vergleichen",
-          "rolle": "positionB",
-          "auftrag": "Welche Form der Förderschule zugeordnet ist",
+          "rolle": "beschreiben",
+          "auftrag": "Welche Form der Foerderschule zugeordnet ist",
           "idx": [
             2
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Schulrechtlich der Förderschule zugeordnet ist dagegen …"
+          "satzanfang": "Schulrechtlich der Förderschule zugeordnet ist dagegen …",
+          "beispiel": "Bei der Kooperationsklasse bleiben sie dagegen schulrechtlich der Förderschule zugeordnet."
         },
         {
           "operator": "vergleichen",
-          "rolle": "gemeinsamkeit",
+          "rolle": "erlaeutern",
           "auftrag": "Was alle vier Formen trotzdem gemeinsam haben",
           "idx": [
             3
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Gemeinsam ist allen vier Formen, dass …"
+          "satzanfang": "Gemeinsam ist allen vier Formen, dass …",
+          "beispiel": "Gemeinsam ist allen vier Formen, dass sie gemeinsamen Unterricht organisieren; der entscheidende Unterschied liegt somit nicht darin, wo der Unterricht stattfindet, sondern welcher Schulform die Schüler:innen rechtlich angehören."
         }
       ],
-      "muster": "Alle vier Formen gehören zum gemeinsamen Unterricht, unterscheiden sich aber in der schulrechtlichen Zuordnung der Schüler:innen. Bei der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration sind die Schüler:innen schulrechtlich der Regelschule zugeordnet. Bei der Kooperationsklasse bleiben sie dagegen schulrechtlich der Förderschule zugeordnet. Der entscheidende Unterschied liegt somit nicht darin, wo der Unterricht stattfindet, sondern welcher Schulform die Schüler:innen rechtlich angehören.",
+      "muster": "Alle vier Formen gehören zum gemeinsamen Unterricht, unterscheiden sich aber in der schulrechtlichen Zuordnung der Schüler:innen. Bei der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration sind die Schüler:innen schulrechtlich der Regelschule zugeordnet. Bei der Kooperationsklasse bleiben sie dagegen schulrechtlich der Förderschule zugeordnet. Gemeinsam ist allen vier Formen, dass sie gemeinsamen Unterricht organisieren; der entscheidende Unterschied liegt somit nicht darin, wo der Unterricht stattfindet, sondern welcher Schulform die Schüler:innen rechtlich angehören.",
       "musterVarianten": {
         "de": {
           "einfach": "Es gibt vier Formen des gemeinsamen Unterrichts. Gemeinsamer Unterricht heißt: Schülerinnen und Schüler mit und ohne sonderpädagogischen Förderbedarf lernen zusammen. Alle vier Formen gehören zum gemeinsamen Unterricht. Sie unterscheiden sich aber in der schulrechtlichen Zuordnung der Schülerinnen und Schüler. Die schulrechtliche Zuordnung sagt, zu welcher Schulform ein Kind rechtlich gehört. Drei Formen ordnen die Schülerinnen und Schüler der Regelschule zu. Das sind die Integrationsklasse, die integrative Regelklasse und die Einzelintegration. Eine Form ordnet sie dagegen der Förderschule zu. Das ist die Kooperationsklasse. Der entscheidende Unterschied liegt also nicht darin, wo der Unterricht stattfindet. Er liegt darin, welcher Schulform die Schülerinnen und Schüler rechtlich angehören."
@@ -1013,57 +1023,62 @@
       "frage": "Erörtern Sie, warum die Förderschule im SGE als Ort zum Lernen und Leben gestaltet ist, und bewerten Sie diese Doppelrolle.",
       "stichpunkte": [
         "Befund benennen: wohnlich gestaltete Klassenzimmer, Ganztagsbeschulung, Mahlzeiten im Stundenplan, Schulbesuch bis zu 12 Jahre - die Schule ist weit mehr als ein Unterrichtsort",
-        "Argumente dafür: viel Lebenszeit findet in der Schule statt, lebenspraktisches und soziales Lernen brauchen echte Alltagssituationen, eine wohnliche Umgebung gibt Sicherheit und Struktur",
-        "Argumente dagegen bzw. Grenzen: je mehr Leben in der Schule stattfindet, desto wichtiger wird die Frage nach Kontakten und Lebenserfahrungen außerhalb dieses Schonraums",
-        "Eigene Bewertung am Ende - Struktur der Dozentin: Punkte dafür, Punkte dagegen, dann Position beziehen"
+        "Dafür 1: Die Schüler:innen verbringen einen großen Teil ihrer Lebenszeit hier, und lebenspraktisches wie soziales Lernen braucht echte Alltagssituationen - Mahlzeiten, Routinen und eine wohnliche, verlässliche Umgebung sind dann selbst Lerngelegenheiten",
+        "Dagegen 1: Je mehr Leben in der Schule stattfindet, desto wichtiger wird die Frage nach Kontakten und Lebenserfahrungen außerhalb dieses Schonraums",
+        "Bewertung: Die Doppelrolle ist für diese Schülerschaft ein Gewinn, weil Lernen und Alltag hier zusammenfallen und der ganze Bedarf eines Tages an einem Ort aufgehoben ist - sie trägt aber unter zwei Bedingungen: Die Schule muss den Blick über sich hinaus offenhalten, etwa über die Werkstufe mit ihrer Vorbereitung auf die nachschulischen Lebenswelten und vor allem auf das Berufsleben, und sie bleibt eine Form der Beschulung neben anderen, nicht der einzige Weg",
+        "Dafür 2: Der Bedarf dieser Schüler:innen hört am Unterricht nicht auf - Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst gehören zum Schultag dazu, und dafür arbeiten Sonderpädagog:innen, Sozialpädagog:innen, Werklehrer:innen und Erzieher:innen unter einem Dach; eine Schule, die nur Unterrichtsort wäre, müsste all das an die Familien zurückgeben und würde den Tag des Kindes zerstückeln",
+        "Dagegen 2: Dieses Modell deckt nur einen Teil der Beschulung im SGE ab - beim gemeinsamen Unterricht sind die Schüler:innen in drei von vier Organisationsformen schulrechtlich der Regelschule zugeordnet (Integrationsklasse, integrative Regelklasse, Einzelintegration), nur die Kooperationsklasse gehört zur Förderschule; der Ort zum Lernen und Leben ist also nicht der Regelfall, sondern eine Option unter mehreren"
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
-          "auftrag": "Der Befund: was die Förderschule zu einem Ort zum Lernen und Leben macht",
+          "operator": "benennen",
+          "auftrag": "Der Befund: was die Foerderschule zu einem Ort zum Lernen und Leben macht",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Die Förderschule im SGE ist weit mehr als ein Unterrichtsort, denn …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "eroertern",
           "rolle": "dafuer",
-          "auftrag": "Was für diese Doppelrolle spricht",
+          "auftrag": "Zwei Gruende, die fuer diese Doppelrolle sprechen",
           "idx": [
-            1
+            1,
+            4
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dafür spricht, dass …"
+          "punkte": 3,
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Dafür spricht, dass die Schüler:innen einen großen Teil ihrer Lebenszeit in der Schule verbringen und lebenspraktisches wie soziales Lernen echte Alltagssituationen braucht - Mahlzeiten, Routinen und eine verlässliche, wohnliche Umgebung sind dann selbst Lerngelegenheiten."
         },
         {
           "operator": "eroertern",
           "rolle": "dagegen",
-          "auftrag": "Wo die Grenzen dieser Doppelrolle liegen",
+          "auftrag": "Zwei Grenzen dieser Doppelrolle",
           "idx": [
-            2
+            2,
+            5
           ],
           "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Dagegen ist einzuwenden, dass …"
+          "punkte": 3,
+          "satzanfang": "Dagegen ist einzuwenden, dass …",
+          "beispiel": "Kritisch lässt sich einwenden, dass eine Schule, die so viel Lebensraum bereitstellt, auch zum Schonraum werden kann, sodass Erfahrungen und Kontakte außerhalb der Schule bewusst mitgedacht werden müssen."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
+          "rolle": "bewertung",
           "auftrag": "Deine eigene Bewertung am Ende",
           "idx": [
             3
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …"
+          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …",
+          "beispiel": "In der Bewertung überwiegt für mich der Gewinn: Die Doppelrolle ist für diese Schülerschaft sinnvoll, weil Lernen und Alltag hier zusammenfallen und der ganze Bedarf eines Tages an einem Ort aufgehoben ist. Sie trägt allerdings nur unter zwei Bedingungen: Die Schule muss den Blick über sich hinaus offenhalten, etwa über die Werkstufe mit ihrer Vorbereitung auf die nachschulischen Lebenswelten und vor allem auf das Berufsleben, und sie bleibt eine Form der Beschulung neben anderen, nicht der einzige Weg."
         }
       ],
-      "muster": "Die Förderschule im SGE ist erkennbar als Ort zum Lernen und Leben angelegt: Die Klassenzimmer sind wohnlich gestaltet, es gibt eine Ganztagsbeschulung mit Frühstück und Mittagessen im Stundenplan, und der Schulbesuch kann sich auf bis zu zwölf Jahre erstrecken. Dafür spricht, dass die Schüler:innen einen großen Teil ihrer Lebenszeit in der Schule verbringen und lebenspraktisches wie soziales Lernen echte Alltagssituationen braucht - Mahlzeiten, Routinen und eine verlässliche, wohnliche Umgebung sind dann selbst Lerngelegenheiten. Kritisch lässt sich einwenden, dass eine Schule, die so viel Lebensraum bereitstellt, auch zum Schonraum werden kann, sodass Erfahrungen und Kontakte außerhalb der Schule bewusst mitgedacht werden müssen. In der Bewertung überwiegt für mich der Gewinn: Die Doppelrolle ist für diese Schülerschaft sinnvoll, solange die Schule den Blick über sich hinaus - etwa durch die Werkstufe auf das nachschulische Leben - nicht verliert.",
+      "muster": "Die Förderschule im SGE ist erkennbar als Ort zum Lernen und Leben angelegt: Die Klassenzimmer sind wohnlich gestaltet, es gibt eine Ganztagsbeschulung mit Frühstück und Mittagessen im Stundenplan, und der Schulbesuch kann sich auf bis zu zwölf Jahre erstrecken. Dafür spricht, dass die Schüler:innen einen großen Teil ihrer Lebenszeit in der Schule verbringen und lebenspraktisches wie soziales Lernen echte Alltagssituationen braucht - Mahlzeiten, Routinen und eine verlässliche, wohnliche Umgebung sind dann selbst Lerngelegenheiten. Dafür spricht zweitens, dass der Bedarf dieser Schüler:innen am Unterricht nicht aufhört: Physiotherapie, Ergotherapie, Logopädie, Krankenpflege und psychologischer Dienst gehören zum Schultag dazu, und Sonderpädagog:innen, Sozialpädagog:innen, Werklehrer:innen und Erzieher:innen arbeiten unter einem Dach zusammen; eine Schule, die nur Unterrichtsort wäre, müsste all das an die Familien zurückgeben und würde den Tag des Kindes zerstückeln. Kritisch lässt sich einwenden, dass eine Schule, die so viel Lebensraum bereitstellt, auch zum Schonraum werden kann, sodass Erfahrungen und Kontakte außerhalb der Schule bewusst mitgedacht werden müssen. Zweitens deckt dieses Modell nur einen Teil der Beschulung im SGE ab: Beim gemeinsamen Unterricht sind die Schüler:innen in drei von vier Organisationsformen schulrechtlich der Regelschule zugeordnet - in der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration -, allein die Kooperationsklasse gehört zur Förderschule; der Ort zum Lernen und Leben ist also nicht der Regelfall, sondern eine Option unter mehreren. In der Bewertung überwiegt für mich der Gewinn: Die Doppelrolle ist für diese Schülerschaft sinnvoll, weil Lernen und Alltag hier zusammenfallen und der ganze Bedarf eines Tages an einem Ort aufgehoben ist. Sie trägt allerdings nur unter zwei Bedingungen: Die Schule muss den Blick über sich hinaus offenhalten, etwa über die Werkstufe mit ihrer Vorbereitung auf die nachschulischen Lebenswelten und vor allem auf das Berufsleben, und sie bleibt eine Form der Beschulung neben anderen, nicht der einzige Weg.",
       "musterVarianten": {
         "de": {
           "einfach": "Die Förderschule im Förderschwerpunkt geistige Entwicklung ist erkennbar als Ort zum Lernen und Leben angelegt. Dafür gibt es mehrere Belege. Die Klassenzimmer sind wohnlich gestaltet. Es gibt eine Ganztagsbeschulung. Das Frühstück und das Mittagessen stehen im Stundenplan. Und der Schulbesuch kann sich auf bis zu zwölf Jahre erstrecken. Dafür spricht zunächst die Lebenszeit. Die Schülerinnen und Schüler verbringen einen großen Teil ihrer Lebenszeit in der Schule. Dafür spricht außerdem die Art des Lernens. Lebenspraktisches und soziales Lernen braucht echte Alltagssituationen. Lebenspraktisch heißt: Es wird gelernt, was im Alltag gebraucht wird. Die Mahlzeiten, die Routinen und eine verlässliche, wohnliche Umgebung sind dann selbst Lerngelegenheiten. Kritisch lässt sich einwenden, dass eine Schule mit so viel Lebensraum auch zum Schonraum werden kann. Ein Schonraum ist ein geschützter Bereich, in dem wenig Anforderungen von außen ankommen. Deshalb müssen Erfahrungen und Kontakte außerhalb der Schule bewusst mitgedacht werden. In meiner Bewertung überwiegt der Gewinn. Die Doppelrolle ist für diese Schülerschaft sinnvoll. Sie ist aber an eine Bedingung geknüpft. Die Schule darf den Blick über sich hinaus nicht verlieren. Ein Beispiel dafür ist die Werkstufe. Sie richtet den Blick auf das nachschulische Leben."
@@ -1089,19 +1104,29 @@
           "Was macht diese Schule zu mehr als Unterricht?"
         ],
         [
-          "Warum ist das sinnvoll? Denk an Alltag als Lernfeld.",
+          "Erstes Dafür: Warum ist das sinnvoll? Denk an Alltag als Lernfeld.",
           "Echte Situationen, Sicherheit, Struktur - welche Seite ist das?",
-          "Was gewinnt jemand, der hier viel Zeit verbringt?"
+          "Was gewinnt jemand, der hier einen großen Teil seiner Zeit verbringt?"
         ],
         [
-          "Wo liegt die Kehrseite? Denk an die Welt draußen.",
+          "Erstes Dagegen: Wo liegt die Kehrseite? Denk an die Welt draußen.",
           "Was fehlt, wenn alles drinnen stattfindet?",
           "Denk an das Risiko eines geschützten Raums."
         ],
         [
-          "Zum Schluss das bekannte Antwortgerüst mit eigenem Urteil.",
-          "Beide Seiten wägen, dann klar Position beziehen.",
-          "Wie schließt eine Erörterung? Mit deiner Haltung."
+          "Jetzt dein Urteil - und die zwei Bedingungen dazu.",
+          "Was überwiegt, wenn Lernen und Alltag an einem Ort zusammenfallen?",
+          "Welche Stufe hält den Blick nach draußen offen - und ist dieser Ort der einzige Weg?"
+        ],
+        [
+          "Zweites Dafür: Was brauchen diese Schüler:innen außer Unterricht - und wann?",
+          "Denk an Physio, Logo, Pflege und daran, wer außer Lehrkräften da ist.",
+          "Wer müsste das alles auffangen, wenn die Schule nur Unterrichtsort wäre?"
+        ],
+        [
+          "Zweites Dagegen: Denk ans Baumdiagramm - wo sind die meisten schulrechtlich zugeordnet?",
+          "Drei zu eins - was heißt das für dieses Modell?",
+          "Gibt es die Doppelrolle überall dort, wo im SGE beschult wird?"
         ]
       ]
     },
@@ -1123,20 +1148,18 @@
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Die Rahmenfrage in eigenen Worten wiedergeben",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 1,
-          "satzanfang": "Die Vorlesung fragt, ob …"
+          "form": "liste",
+          "punkte": 1
         },
         {
           "operator": "eroertern",
           "rolle": "dafuer",
-          "auftrag": "Was für eine eigene, spezielle Didaktik spricht",
+          "auftrag": "Was fuer eine eigene, spezielle Didaktik spricht",
           "idx": [
             1,
             2,
@@ -1144,12 +1167,13 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für eine eigene Didaktik spricht, dass …"
+          "satzanfang": "Für eine eigene Didaktik spricht, dass …",
+          "beispiel": "Für eine eigenständige Didaktik spricht zunächst, wie eigen die Förderschule strukturiert ist. Nach Fischer gehören dazu Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen."
         },
         {
           "operator": "eroertern",
           "rolle": "dagegen",
-          "auftrag": "Was dagegen spricht – also für das Spezifizieren allgemeiner Modelle",
+          "auftrag": "Was dagegen spricht – also fuer das Spezifizieren allgemeiner Modelle",
           "idx": [
             4,
             5,
@@ -1157,19 +1181,21 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Dagegen spricht allerdings, dass die Beschulung längst nicht mehr nur an der Förderschule stattfindet. Von den vier Organisationsformen des gemeinsamen Unterrichts sind die Schülerinnen und Schüler in dreien schulrechtlich der Regelschule zugeordnet, nämlich in der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration; allein die Kooperationsklasse ist der Förderschule zugeordnet."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
-          "auftrag": "Deine begründete Position",
+          "rolle": "bewertung",
+          "auftrag": "Deine begruendete Position",
           "idx": [
             7,
             8
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Ich beziehe begründet Position: …"
+          "satzanfang": "Ich beziehe begründet Position: …",
+          "beispiel": "Ich komme deshalb zu dem Schluss, dass die zweite Lesart trägt: Allgemeine Modelle werden für den Förderschwerpunkt spezifiziert, nicht durch ein eigenes System ersetzt."
         }
       ],
       "muster": "Die Modulbeschreibung stellt die Frage, ob es eine spezielle Didaktik und Methodik für den Förderschwerpunkt Geistige Entwicklung geben kann und inwiefern allgemeine Modelle und Theorien für den Förderschwerpunkt spezifiziert werden müssen. Für eine eigenständige Didaktik spricht zunächst, wie eigen die Förderschule strukturiert ist. Nach Fischer gehören dazu Angebote der Frühförderung und schulvorbereitende Gruppen, eine Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer als Orte zum Lernen und Leben sowie relativ kleine Klassenfrequenzen. Hinzu kommen die Unterteilung in vier Stufen zu je drei Jahren, eine relativ eigenständige Werkstufe mit der Zielsetzung, auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorzubereiten, und die Verlängerung des Schulbesuchs von neun auf zwölf Jahre. Auch der exemplarische Stundenplan zeigt Eigenes: Unterricht in Blöcken, spezifische Lernfelder, symbolvisualisierte Pläne und gemeinsame Mahlzeiten als Teil des Schulalltags. Wer so viel Besonderes vorfindet, kann mit gutem Grund nach einer eigenen Didaktik fragen. Dagegen spricht allerdings, dass die Beschulung längst nicht mehr nur an der Förderschule stattfindet. Von den vier Organisationsformen des gemeinsamen Unterrichts sind die Schülerinnen und Schüler in dreien schulrechtlich der Regelschule zugeordnet, nämlich in der Integrationsklasse, der integrativen Regelklasse und der Einzelintegration; allein die Kooperationsklasse ist der Förderschule zugeordnet. Eine Sonderdidaktik, die neben der allgemeinen Didaktik steht, würde die Zusammenarbeit gerade dort erschweren, wo sie am nötigsten ist. Auch die Qualifikationsziele des Moduls weisen in diese Richtung, denn sie sprechen von einer Förderung mit akademischen und kulturellen Lerninhalten, also von denselben Bildungsinhalten wie in der allgemeinen Schule. Ich komme deshalb zu dem Schluss, dass die zweite Lesart trägt: Allgemeine Modelle werden für den Förderschwerpunkt spezifiziert, nicht durch ein eigenes System ersetzt. Das Besondere liegt in der Passung, in der Elementarisierung, in der Strukturierung und in der Zeit, die zur Verfügung gestellt wird, nicht in einem eigenen Bildungsbegriff. Für die Praxis heißt das, allgemeine didaktische Modelle gut zu kennen und sie konsequent an den Bedarfen der einzelnen Schülerinnen und Schüler auszurichten.",
@@ -1956,51 +1982,55 @@
         {
           "operator": "erlaeutern",
           "rolle": "benennen",
-          "auftrag": "Was die Abbildung überhaupt abträgt",
+          "auftrag": "Was die Abbildung ueberhaupt abtraegt",
           "idx": [
             0
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Die Abbildung trägt … ab"
+          "satzanfang": "Die Abbildung trägt … ab",
+          "beispiel": "Die Übersichtsabbildung trägt eine senkrechte Alters-Skala von null bis etwa einundzwanzig Jahren ab und ordnet alle Angebote daran ein."
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
-          "auftrag": "Was die senkrechte Klammer Schule umfasst – und was darunter außerhalb bleibt",
+          "rolle": "beschreiben",
+          "auftrag": "Was die senkrechte Klammer Schule umfasst – und was darunter ausserhalb bleibt",
           "idx": [
             1,
             2
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Die Beschriftung Schule umfasst … Außerhalb bleiben dagegen …"
+          "satzanfang": "Die Beschriftung Schule umfasst … Außerhalb bleiben dagegen …",
+          "beispiel": "Entscheidend ist die senkrechte Beschriftung Schule: Sie umfasst genau vier Ovale, nämlich Unterstufe, Mittelstufe, Oberstufe und darüber, durch eine gestrichelte Linie abgesetzt, die Werk- beziehungsweise Berufsschulstufe. Unterhalb dieser Klammer liegen die Früherziehung sowie Regelkindergarten, Sonderkindergarten und schulvorbereitende Einrichtung; sie gehören damit nicht zu dem, was die Abbildung als Schule bezeichnet."
         },
         {
           "operator": "vergleichen",
-          "rolle": "gemeinsamkeit",
-          "auftrag": "Worin Fließtext und Abbildung übereinstimmen",
+          "rolle": "beschreiben",
+          "auftrag": "Worin Fliesstext und Abbildung uebereinstimmen",
           "idx": [
             3
           ],
           "form": "rolle",
           "punkte": 1,
-          "satzanfang": "Beide Darstellungen stimmen darin überein, dass …"
+          "satzanfang": "Beide Darstellungen stimmen darin überein, dass …",
+          "beispiel": "In der Zahl stimmt das Bild mit dem Fließtext überein: vier Stufen, die jeweils drei Jahre besucht werden."
         },
         {
           "operator": "vergleichen",
-          "rolle": "unterschied",
+          "rolle": "erlaeutern",
           "auftrag": "Worin die Stufenbezeichnungen der beiden Darstellungen abweichen",
           "idx": [
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "In den Bezeichnungen weichen beide darin ab, dass …"
+          "satzanfang": "In den Bezeichnungen weichen beide darin ab, dass …",
+          "beispiel": "In den Bezeichnungen unterscheiden sich beide leicht. Der Fließtext spricht von der Vor-, Unter- beziehungsweise Grundstufe, von der Ober- beziehungsweise Hauptstufe und von der Werk- beziehungsweise Abschlussstufe; die Abbildung nennt kürzer Unterstufe und Oberstufe und am Ende die Werk- beziehungsweise Berufsschulstufe."
         },
         {
           "operator": "zusatz",
-          "auftrag": "Wenn du magst: was neben der Klammer über die ganze Skala läuft",
+          "auftrag": "Wenn du magst: was neben der Klammer ueber die ganze Skala laeuft",
           "idx": [
             5
           ],
@@ -2076,17 +2106,18 @@
         {
           "operator": "erlaeutern",
           "rolle": "benennen",
-          "auftrag": "Die Grundsatzfrage in eigenen Worten – beide Hälften",
+          "auftrag": "Die Grundsatzfrage in eigenen Worten – beide Haelften",
           "idx": [
             0
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die Frage hat zwei Hälften: …"
+          "satzanfang": "Die Frage hat zwei Hälften: …",
+          "beispiel": "Die Vorlesung stellt eine Grundsatzfrage in den Mittelpunkt, und diese Frage hat zwei Hälften: Kann es für den Förderschwerpunkt Geistige Entwicklung eine eigene, spezielle Didaktik und Methodik geben - und inwiefern müssen allgemeine Modelle und Theorien für diesen Förderschwerpunkt spezifiziert werden?"
         },
         {
           "operator": "erlaeutern",
-          "rolle": "entfalten",
+          "rolle": "beschreiben",
           "auftrag": "Was Spezifizieren im Modultext meint – und worauf es sich bezieht",
           "idx": [
             1,
@@ -2094,23 +2125,25 @@
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Spezifizieren meint hier, dass …"
+          "satzanfang": "Spezifizieren meint hier, dass …",
+          "beispiel": "Was Spezifizieren heißt, sagt die Modulbeschreibung selbst: Inhalte, die in anderen Veranstaltungen bereits vermittelt wurden, werden für diesen Förderschwerpunkt zugeschnitten."
         },
         {
           "operator": "vergleichen",
-          "rolle": "unterschied",
-          "auftrag": "Worin sich die beiden Möglichkeiten unterscheiden",
+          "rolle": "erlaeutern",
+          "auftrag": "Worin sich die beiden Moeglichkeiten unterscheiden",
           "idx": [
             2,
             4
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Die beiden Möglichkeiten unterscheiden sich darin, dass …"
+          "satzanfang": "Die beiden Möglichkeiten unterscheiden sich darin, dass …",
+          "beispiel": "Der zweite Weg beginnt also nicht bei null. Das allgemeine Modell bleibt bestehen und wird zugeschnitten, während der erste Weg gerade nicht an bereits Vermitteltem ansetzen würde, sondern nach etwas Eigenem für diesen Förderschwerpunkt fragt."
         },
         {
           "operator": "zusatz",
-          "auftrag": "Wenn du magst: warum diese Frage die Klammer über alle Sitzungen ist",
+          "auftrag": "Wenn du magst: warum diese Frage die Klammer ueber alle Sitzungen ist",
           "idx": [
             5
           ],
@@ -2185,20 +2218,18 @@
       ],
       "abschnitte": [
         {
-          "operator": "diskutieren",
-          "rolle": "these",
+          "operator": "benennen",
           "auftrag": "Der Befund: wie lange der Schulbesuch dauert",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 1,
-          "satzanfang": "Im Schwerpunkt geistige Entwicklung …"
+          "form": "liste",
+          "punkte": 1
         },
         {
           "operator": "diskutieren",
           "rolle": "dafuer",
-          "auftrag": "Was für die Verlängerung spricht",
+          "auftrag": "Was fuer die Verlaengerung spricht",
           "idx": [
             1,
             2,
@@ -2206,30 +2237,33 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Für die Verlängerung spricht, dass …"
+          "satzanfang": "Für die Verlängerung spricht, dass …",
+          "beispiel": "Für diese Verlängerung spricht zunächst, dass die Werkstufe einen eigenen Auftrag hat: Sie soll über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten, und ein solcher Auftrag braucht Zeit."
         },
         {
           "operator": "diskutieren",
           "rolle": "dagegen",
-          "auftrag": "Was gegen die Verlängerung spricht",
+          "auftrag": "Was gegen die Verlaengerung spricht",
           "idx": [
             4,
             5
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Gegen die Verlängerung spricht, dass …"
+          "satzanfang": "Gegen die Verlängerung spricht, dass …",
+          "beispiel": "Dagegen lässt sich einwenden, dass die Vorbereitung auf das Leben nach der Schule weiterhin in der Schule stattfindet: Je länger sie dauert, desto später beginnt die Erfahrung an genau den Orten, auf die sie vorbereiten soll."
         },
         {
           "operator": "diskutieren",
-          "rolle": "fazit",
-          "auftrag": "Deine begründete Position am Ende",
+          "rolle": "bewertung",
+          "auftrag": "Deine begruendete Position am Ende",
           "idx": [
             6
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …"
+          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …",
+          "beispiel": "Ich halte die Verlängerung dennoch für gerechtfertigt, weil die Werkstufe ein eigener Bildungsabschnitt mit eigenem Ziel und keine bloß angehängte Schulzeit ist."
         }
       ],
       "muster": "Die Schulzeit im Schwerpunkt geistige Entwicklung gliedert sich in vier Stufen zu je drei Jahren; im Werkstufenbereich verlängert sich der Schulbesuch von neun auf zwölf Jahre, in begründeten Fällen auch darüber hinaus. Für diese Verlängerung spricht zunächst, dass die Werkstufe einen eigenen Auftrag hat: Sie soll über allgemeine Bildungsangebote hinaus auf nachschulische Lebenswelten und vor allem auf das Berufsleben vorbereiten, und ein solcher Auftrag braucht Zeit. Hinzu kommt, dass sie als relativ eigenständige Stufe gilt; sie verlängert also nicht einfach das Bisherige, sondern setzt einen anderen Schwerpunkt. Auch die Möglichkeit, in begründeten Fällen weiter zu verlängern, spricht dafür, weil sich der Übergang so an einzelnen Jugendlichen ausrichten lässt statt an einem festen Datum. Dagegen lässt sich einwenden, dass die Vorbereitung auf das Leben nach der Schule weiterhin in der Schule stattfindet: Je länger sie dauert, desto später beginnt die Erfahrung an genau den Orten, auf die sie vorbereiten soll. Das Übersichtsschaubild reicht bis etwa zum einundzwanzigsten Lebensjahr, junge Erwachsene bleiben also lange im Status von Schülerinnen und Schülern. Offen bleibt außerdem, nach welchen Kriterien eine weitere Verlängerung begründet wird und wer darüber entscheidet. Ich halte die Verlängerung dennoch für gerechtfertigt, weil die Werkstufe ein eigener Bildungsabschnitt mit eigenem Ziel und keine bloß angehängte Schulzeit ist. Ihr Gewinn hängt allerdings daran, dass sie sich in diesen Jahren nach außen öffnet und die Vorbereitung nicht im geschützten Rahmen belässt.",
@@ -2306,20 +2340,18 @@
       ],
       "abschnitte": [
         {
-          "operator": "eroertern",
-          "rolle": "these",
-          "auftrag": "Der Befund: was die Merkmalsliste nach Fischer 2008 enthält",
+          "operator": "benennen",
+          "auftrag": "Der Befund: was die Merkmalsliste nach Fischer 2008 enthaelt",
           "idx": [
             0
           ],
-          "form": "rolle",
-          "punkte": 2,
-          "satzanfang": "Die Merkmalsliste nach Fischer (2008) nennt …"
+          "form": "liste",
+          "punkte": 2
         },
         {
           "operator": "eroertern",
           "rolle": "dafuer",
-          "auftrag": "Was dafür spricht, dass die Liste trägt – mit der Einschränkung bei den Mahlzeiten",
+          "auftrag": "Was dafuer spricht, dass die Liste traegt – mit der Einschraenkung bei den Mahlzeiten",
           "idx": [
             1,
             2,
@@ -2327,7 +2359,8 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dafür spricht, dass …"
+          "satzanfang": "Dafür spricht, dass …",
+          "beispiel": "Für ihre Tragfähigkeit spricht, dass sie sehr verschiedene Ebenen abdeckt: den Rand der Schulzeit, den Tagesrahmen, den Raum, die Gruppengröße und die gesamte Laufbahn bis hin zum Berufsleben."
         },
         {
           "operator": "eroertern",
@@ -2340,18 +2373,20 @@
           ],
           "form": "rolle",
           "punkte": 3,
-          "satzanfang": "Dagegen spricht, dass …"
+          "satzanfang": "Dagegen spricht, dass …",
+          "beispiel": "Dagegen spricht, dass drei Beschriftungen unter keinen Punkt der Liste passen: der Unterricht in Blöcken, die Visualisierung des Stundenplans mit Symbolen und die spezifischen Lernfelder."
         },
         {
           "operator": "eroertern",
-          "rolle": "fazit",
-          "auftrag": "Deine begründete Position zur Leitfrage",
+          "rolle": "bewertung",
+          "auftrag": "Deine begruendete Position zur Leitfrage",
           "idx": [
             7
           ],
           "form": "rolle",
           "punkte": 2,
-          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …"
+          "satzanfang": "Abwägend komme ich zu dem Urteil, dass …",
+          "beispiel": "Ich halte sie deshalb für einen richtigen, aber unvollständigen Einstieg: Als Beschreibung der Rahmenbedingungen trägt sie, als vollständige Antwort auf die Leitfrage muss sie um die Merkmale der Unterrichtsgestaltung und um die Professionen ergänzt werden, die an dieser Schule zusammenarbeiten."
         }
       ],
       "muster": "Die Sitzung beantwortet ihre Leitfrage zweimal. Die Merkmalsliste nach Fischer nennt über beide Folien hinweg Angebote der Frühförderung und schulvorbereitende Gruppen, die Ganztagsbeschulung, wohnlich gestaltete Klassenzimmer, relativ kleine Klassenfrequenzen sowie die Vierteilung der Schulzeit, die eigenständige Werkstufe und die Verlängerung des Schulbesuchs von neun auf zwölf Jahre. Für ihre Tragfähigkeit spricht, dass sie sehr verschiedene Ebenen abdeckt: den Rand der Schulzeit, den Tagesrahmen, den Raum, die Gruppengröße und die gesamte Laufbahn bis hin zum Berufsleben. Hinzu kommt, dass sich zwei Beschriftungen am exemplarischen Stundenplan unmittelbar zuordnen lassen: die Ganztagsschule der Ganztagsbeschulung und die kleinen Lerngruppen den relativ kleinen Klassenfrequenzen. Die gemeinsamen Mahlzeiten stehen dagegen in keinem Punkt der Liste; sie lassen sich nur mittelbar über den Ganztag anschließen, und diesen Schluss sollte man als solchen kennzeichnen. Dagegen spricht, dass drei Beschriftungen unter keinen Punkt der Liste passen: der Unterricht in Blöcken, die Visualisierung des Stundenplans mit Symbolen und die spezifischen Lernfelder. Alle drei betreffen die Gestaltung des Unterrichts und nicht seinen Rahmen. Auch das Übersichtsschaubild zeigt Merkmale, die in der Liste fehlen, nämlich mehrere Berufsgruppen unter einem Dach sowie Tagesstätte und therapeutische Angebote. Insgesamt beschreibt die Liste die Schulform von außen und sagt wenig darüber, wie und was dort gelernt wird. Ich halte sie deshalb für einen richtigen, aber unvollständigen Einstieg: Als Beschreibung der Rahmenbedingungen trägt sie, als vollständige Antwort auf die Leitfrage muss sie um die Merkmale der Unterrichtsgestaltung und um die Professionen ergänzt werden, die an dieser Schule zusammenarbeiten.",

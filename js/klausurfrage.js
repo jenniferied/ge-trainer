@@ -36,28 +36,43 @@
    abfragt. Eine eigene Ableitung hier waere die zweite Zaehlung, vor der die
    ROADMAP an genau dieser Stelle warnt. Siehe ARCHITEKTUR.md.
 
-   WAS HIER BEWUSST NICHT PASSIERT: der Aufdroesel-Schritt schreibt NICHTS ins
-   Antwort-Log. Eine Klausurfrage ergibt genau einen Log-Eintrag, naemlich den
-   der freiKarte. Sonst zaehlte ein Durchlauf doppelt aufs Tagespensum, und die
-   ROADMAP fragt gerade ohnehin, ob Mini-Games das Pensum allein fuellen duerfen
-   ("Tagespensum soll nicht allein durch Mini-Games erfuellbar sein"). Diesen
-   Modus vorher schon auf die falsche Seite der Frage zu stellen waere unfair
-   gegen die Antwort, die dort noch aussteht. */
+   WAS SICH AM 23.08.2026 GEDREHT HAT: bis dahin schrieb der Aufdroesel-Schritt
+   GAR NICHTS ins Log, aus Sorge, ein Durchlauf koenne doppelt aufs Tagespensum
+   zaehlen. Die Sorge war berechtigt, die Loesung zu grob - so war der Schritt
+   auch fuer eine spaetere Auswertung unsichtbar.
 
-import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile } from "./core.js";
+   Jennifers Zaehlregel loest es sauber: "eine Frage geuebt = 1 Frage geuebt.
+   Dieselbe Frage neu 3x geuebt = 3 Fragen geuebt. 3 Unterschritte zur selben
+   Frage = 1 Frage geuebt." Also: ALLES wird geloggt, aber die beiden
+   Unterschritte tragen teilschritt: true und werden von den Tageszaehlern
+   uebersprungen (core.js logAntwort erklaert das Feld). Der Eintrag der
+   freiKarte bleibt der eine, der als Frage zaehlt.
+
+   EIGENE QID-PRAEFIXE, kfa- und kfr-: reifeStand() fuehrt seinen Stand je qid.
+   Ohne Praefix landete die Stufenfrage zu ko-f-3 unter derselben qid wie die
+   Baustein-Items dieser Aufgabe, und ein geratenes AFB haette die Reife eines
+   Bausteins gesenkt, den Rose nie gesehen hat. */
+
+import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile, logAntwort } from "./core.js";
 import { stickerEl, setzeFarbe, themenAuswahl, afbAuswahl } from "./ui.js";
-import { afbAnalyse, afbOption, afbKurz, ROLLEN_KETTE, ROLLEN_NAME } from "./spiele.js";
+import { afbAnalyse, afbOption, afbKurz, ROLLEN_KETTE, ROLLEN_NAME,
+         rollenName, ROLLEN_ANZAHL, ANZAHL_HINWEIS } from "./spiele.js";
 import { rollenFuer, ROLLEN_AUFTRAG } from "./treppe.js";
 
-/* Nur Aufgaben mit gepflegtem afb-Feld: ohne das gaebe es im ersten Schritt
-   nichts aufzuloesen. Der Altbestand ohne afb steht als offener Punkt in der
-   ROADMAP; bis dahin faellt er hier still weg statt eine geratene Stufe zu
-   behaupten. */
+/* Hier stand bis zum 23.08.2026 ein "if (!f.afb) return" - Aufgaben ohne
+   gepflegte Anforderungsstufe fielen still aus dem Pool, weil es im ersten
+   Schritt sonst nichts aufzuloesen gaebe. Der Filter war schon eine Weile tot
+   (alle 355 Aufgaben tragen ein afb) und trotzdem nicht harmlos: er behauptete,
+   der Fall koenne eintreten, und haette im Ernstfall Aufgaben verschwinden
+   lassen, ohne dass jemand es merkt.
+
+   Jetzt verlangt sync-fragen.py afb als Pflichtfeld. Die Bedingung steht damit
+   an EINER Stelle und schlaegt beim Deploy laut an, statt hier leise zu
+   greifen. */
 function aufgabenPool(themen) {
   var out = [];
   (themen || []).forEach(function (t) {
     (t.frei || []).forEach(function (f) {
-      if (!f.afb) return;
       out.push({ thema: t, f: f });
     });
   });
@@ -281,6 +296,17 @@ export function zeigeKlausurfrage(themen, hooks) {
           else k.knopf.classList.add("blass");
         });
 
+        /* Unterschritt 1 von 2. teilschritt: true, damit das Tagespensum
+           weiterhin EINE Frage zaehlt und nicht drei (core.js logAntwort). */
+        logAntwort({
+          qid: "kfa-" + f.id,
+          modus: "klausurfrage",
+          teilschritt: true,
+          afb: f.afb,
+          richtig: richtig,
+          thema: item.thema.id
+        });
+
         karte.appendChild(rueckmeldung(richtig, aufloesung(analyse, f)));
         weiter();
       });
@@ -329,7 +355,7 @@ export function zeigeKlausurfrage(themen, hooks) {
       box.type = "checkbox";
       z.appendChild(box);
       var txt = el("span");
-      txt.appendChild(el("b", null, ROLLEN_NAME[e.rolle] || e.rolle));
+      txt.appendChild(el("b", null, rollenName(e.rolle)));
       txt.appendChild(el("span", "muted", " – " + (ROLLEN_AUFTRAG[e.rolle] || "")));
       z.appendChild(txt);
       liste.appendChild(z);
@@ -362,6 +388,18 @@ export function zeigeKlausurfrage(themen, hooks) {
           b.zeile.classList.add(b.box.checked ? "falsch" : "blass");
         }
       });
+      /* Unterschritt 2 von 2, gleiche Regel wie oben. Geloggt wird "alle
+         Haekchen sassen", nicht wie viele - die Teilmenge steht in den
+         Zeilen und waere als Zahl ohne die Rollen dahinter nicht deutbar. */
+      logAntwort({
+        qid: "kfr-" + item.f.id,
+        modus: "klausurfrage",
+        teilschritt: true,
+        afb: item.f.afb,
+        richtig: alleRichtig,
+        thema: item.thema.id
+      });
+
       karte.appendChild(rueckmeldung(alleRichtig, teileAufloesung(item.f, rollen)));
       schreibKnopf(karte, item);
     });
@@ -407,11 +445,17 @@ export function zeigeKlausurfrage(themen, hooks) {
      genau dafuer ist der Schritt da. Gesagt wird stattdessen, was in jedem Fall
      wahr ist - so fragt die Uebung sie ab. */
   function teileAufloesung(f, rollen) {
-    var kette = rollen.map(function (r) { return ROLLEN_NAME[r] || r; }).join(" · ");
+    var kette = rollen.map(rollenName).join(" · ");
     var satz = inKettenfolge(rollen)
       ? " In dieser Reihenfolge kannst du sie auch hinschreiben."
       : " In dieser Reihenfolge fragt die Übung sie auch ab.";
-    return "Diese Aufgabe verlangt: " + kette + "." + satz;
+    /* Der Absender der Zahl. Er steht NUR da, wenn diese Aufgabe wirklich eine
+       Rolle mit Anzahl traegt - sonst waere es ein Merksatz zu einer Regel, die
+       hier gar nicht gilt. */
+    var wieViele = rollen.some(function (r) { return ROLLEN_ANZAHL[r]; })
+      ? " " + ANZAHL_HINWEIS
+      : "";
+    return "Diese Aufgabe verlangt: " + kette + "." + satz + wieViele;
   }
 
   /* Stehen die Rollen so, wie eine Kette sie vorsieht? Wahr, sobald EINE Kette

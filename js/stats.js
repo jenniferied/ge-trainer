@@ -94,6 +94,10 @@ export function aktivitaetProTag(logArg) {
   for (var i = 0; i < log.length; i++) {
     var a = log[i];
     if (i + 1 < log.length && log[i + 1].qid === a.qid) continue;   // Doppeltippen
+    /* Unterschritte zaehlen nicht als eigene Frage (Roses Zaehlregel, 23.08.2026;
+       Begruendung bei logAntwort in core.js). Sie stehen im Log und sind damit
+       auswertbar - sie fuellen nur das Tagespensum nicht. */
+    if (a.teilschritt === true) continue;
     var t = tagVon(a.ts);
     var e = tage[t] || (tage[t] = { n: 0, gut: 0 });
     e.n++;
