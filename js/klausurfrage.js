@@ -8,7 +8,9 @@
    schon, sie standen bloss nie hintereinander:
 
      1. Aufdroeseln  — die Operatoren-Tabelle aus spiele.js (Signalwoerter-Spiel),
-                       hier ueber das Fenster afbAnalyse/afbOption/afbKurz.
+                       hier ueber das Fenster afbAnalyse/afbOption/afbKurz, und
+                       seit dem 23.08.2026 die Rollen der Aufgabe aus
+                       treppe.js rollenFuer().
      2. Schreiben    — hooks.freiKarte aus main.js. Da haengt alles dran:
                        Textfeld, Stift-Blatt (klausur.js stiftFlaeche),
                        Handschrift-Transkription, Musterloesung, KI-Korrektur
@@ -26,8 +28,13 @@
    Zeilen (Import, Router-Fall, Kachel) statt zweihundert.
 
    ABHAENGIGKEITEN: core.js und ui.js wie jedes Modul, dazu spiele.js
-   (Operatoren-Tabelle). Das ist ein Geschwister-Import und kein Zyklus —
-   spiele.js kennt diese Datei nicht. Siehe ARCHITEKTUR.md.
+   (Operatoren-Tabelle, Rollenketten) und seit dem 23.08.2026 treppe.js
+   (rollenFuer, ROLLEN_AUFTRAG). Beides sind Geschwister-Importe und keine
+   Zyklen — weder spiele.js noch treppe.js kennt diese Datei. Der Weg ueber
+   treppe.js ist Absicht und nicht Bequemlichkeit: die Rollen, nach denen die
+   zweite Frage fragt, MUESSEN dieselben sein, die die Uebungs-Treppe danach
+   abfragt. Eine eigene Ableitung hier waere die zweite Zaehlung, vor der die
+   ROADMAP an genau dieser Stelle warnt. Siehe ARCHITEKTUR.md.
 
    WAS HIER BEWUSST NICHT PASSIERT: der Aufdroesel-Schritt schreibt NICHTS ins
    Antwort-Log. Eine Klausurfrage ergibt genau einen Log-Eintrag, naemlich den
@@ -39,7 +46,8 @@
 
 import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile } from "./core.js";
 import { stickerEl, setzeFarbe, themenAuswahl, afbAuswahl } from "./ui.js";
-import { afbAnalyse, afbOption, afbKurz } from "./spiele.js";
+import { afbAnalyse, afbOption, afbKurz, ROLLEN_KETTE, ROLLEN_NAME } from "./spiele.js";
+import { rollenFuer, ROLLEN_AUFTRAG } from "./treppe.js";
 
 /* Nur Aufgaben mit gepflegtem afb-Feld: ohne das gaebe es im ersten Schritt
    nichts aufzuloesen. Der Altbestand ohne afb steht als offener Punkt in der
@@ -130,7 +138,8 @@ export function zeigeKlausurfrage(themen, hooks) {
     var liste = el("ol", "kf-schritte");
     [
       "Du bekommst eine echte Aufgabe aus dem Korpus – meistens eine, die du noch nicht hattest.",
-      "Zuerst nur die Frage: Welche Anforderungsstufe verlangt sie, und was heißt das für deine Antwort? (Fällt weg, wenn du unten selbst eine einzige Stufe wählst.)",
+      "Zuerst nur die Frage: Welche Anforderungsstufe verlangt sie? (Fällt weg, wenn du unten selbst eine einzige Stufe wählst.)",
+      "Dann: welche Teile braucht deine Antwort? Du hakst an, was dazugehört – zwei in der Liste gehören nicht dazu.",
       "Dann schreibst du – auf Papier und abfotografiert, mit dem Stift oder getippt. Danach die Musterlösung, und die KI schaut drüber."
     ].forEach(function (s) { liste.appendChild(el("li", null, s)); });
     karte.appendChild(liste);
@@ -204,23 +213,55 @@ export function zeigeKlausurfrage(themen, hooks) {
   /* ---------- Schirm 2: aufdroeseln ----------
      Bewusst OHNE Musterloesung, Stichpunkte oder Tipp — die stehen im naechsten
      Schritt. Hier geht es nur um die Frage "was will die Aufgabe von mir", und
-     genau die beantwortet man in der Klausur auch, bevor man das Blatt sieht. */
+     genau die beantwortet man in der Klausur auch, bevor man das Blatt sieht.
+
+     ZWEI FRAGEN SEIT DEM 23.08.2026 (Struktur-Block, Punkt 4). Vorher fragte
+     der Schritt genau eine Sache - die Anforderungsstufe - und sprang dann ins
+     Schreiben. Damit fehlte die Ebene dazwischen: WELCHE TEILE braucht eine
+     Antwort auf dieses Signalwort? Genau die entscheidet in der Klausur, ob
+     eine inhaltlich richtige Antwort Punkte bekommt; eine Eroerterung ohne
+     Gegenseite ist keine Eroerterung, egal wie gut das Wissen ist.
+
+     Die zweite Frage entfaellt lautlos, wenn die Aufgabe keinen Rollen-Aufbau
+     hat (eine Nennaufgabe zum Beispiel) - dann gibt es nichts zu fragen, und
+     eine Struktur zu behaupten, die es nicht gibt, waere schlimmer als die
+     Frage wegzulassen.
+
+     WENN ROSE DIE STUFE SELBST GEWAEHLT HAT, faellt nur die ERSTE Frage weg.
+     Die zweite hat sie damit ja nicht beantwortet. Bis zum 23.08. sprang der
+     Modus in diesem Fall direkt aufs Blatt; das war richtig, solange es nur
+     eine Frage gab. */
   function aufdroeseln(item, ohneStufenfrage) {
     if (!item) return start();
     zuletzt = item.f.id;
     if (ohneStufenfrage != null) stufeSelbstGewaehlt = !!ohneStufenfrage;
-    // Hat Rose die Stufe selbst festgelegt, gibt es nichts aufzudroeseln -
-    // dann ist der Weg direkt das Blatt.
-    if (stufeSelbstGewaehlt) return schreiben(item);
+
+    var rollen = rollenFuer(item.f);
+    // Unter zwei Rollen ist es kein Aufbau, sondern eine Liste.
+    var teileLohnt = rollen.length >= 2;
+    if (stufeSelbstGewaehlt && !teileLohnt) return schreiben(item);
+
     leeren();
     if (item.thema.farbe) setzeFarbe(app, item.thema.farbe);
     kopf("Eine Klausurfrage", item.thema.titel, "← Abbrechen", function () { start(); });
 
     var f = item.f;
-    var analyse = afbAnalyse(f.frage, f.afb);
-
     var karte = el("div", "karte");
     karte.appendChild(reichZeile("div", f.frage, "op-stamm"));
+    app.appendChild(karte);
+
+    var weiter = function () {
+      if (teileLohnt) return teileFrage(karte, item, rollen);
+      return schreibKnopf(karte, item);
+    };
+    if (stufeSelbstGewaehlt) return weiter();
+    stufenFrage(karte, item, weiter);
+  }
+
+  /* Frage 1: die Anforderungsstufe. */
+  function stufenFrage(karte, item, weiter) {
+    var f = item.f;
+    var analyse = afbAnalyse(f.frage, f.afb);
     karte.appendChild(el("div", "frage-text", "Was verlangt diese Aufgabe von dir?"));
 
     var beantwortet = false;
@@ -240,24 +281,145 @@ export function zeigeKlausurfrage(themen, hooks) {
           else k.knopf.classList.add("blass");
         });
 
-        var erk = el("div", "erklaerung " + (richtig ? "gut" : "schade"));
-        var stk = stickerEl(richtig ? "good" : "sanft");
-        if (stk) erk.appendChild(stk);
-        var text = el("div", "text");
-        text.appendChild(el("div", "titel", richtig ? "Genau." : "Schau mal:"));
-        text.appendChild(el("div", null, aufloesung(analyse, f)));
-        erk.appendChild(text);
-        karte.appendChild(erk);
-
-        var weiter = el("button", "knopf", "Jetzt schreiben");
-        weiter.addEventListener("click", function () { schreiben(item); });
-        karte.appendChild(weiter);
-        weiter.focus();
+        karte.appendChild(rueckmeldung(richtig, aufloesung(analyse, f)));
+        weiter();
       });
       karte.appendChild(knopf);
     });
+  }
 
-    app.appendChild(karte);
+  /* Frage 2: welche Teile braucht die Antwort?
+
+     MISCHLISTE statt reiner Aufzaehlung: die richtigen Rollen dieser Aufgabe
+     plus zwei plausible falsche aus anderen Operatoren-Ketten. Ohne die
+     falschen waere es keine Frage - wer alles ankreuzt, haette immer recht.
+
+     Die Distraktoren kommen aus einer ANDEREN Kette und nie aus dieser: ein
+     "Ein Beispiel aus dem Material" neben These/Dafuer/Dagegen/Fazit klingt
+     richtig und gehoert trotzdem in eine andere Funktion. Genau diese
+     Verwechslung kostet in der Klausur Punkte.
+
+     Gewertet wird als GANZES, nicht je Haekchen: die Frage lautet "welche
+     Teile braucht deine Antwort", und darauf gibt es eine richtige Menge.
+
+     KEIN LOG-EINTRAG, wie im Kopf dieser Datei begruendet: eine Klausurfrage
+     ergibt genau einen Eintrag, naemlich den der freiKarte. Solange das so
+     ist, kann reife.js diese Frage nicht steuern - die zweite Stufe der
+     ROADMAP ("spaeter frei") braucht also erst die Entscheidung, ob der
+     Aufdroesel-Schritt ins Log schreiben darf. */
+  function teileFrage(karte, item, rollen) {
+    karte.appendChild(el("div", "frage-text", "Und welche Teile braucht deine Antwort?"));
+    karte.appendChild(el("div", "klein", "Mehrere sind richtig. Zwei gehören nicht dazu."));
+
+    var falsche = distraktoren(rollen, rollen.length >= 4 ? 2 : 2);
+    var alle = mische(rollen.map(function (r) { return { rolle: r, gut: true }; })
+      .concat(falsche.map(function (r) { return { rolle: r, gut: false }; })));
+
+    /* Eigene Klasse statt .themen-wahl-liste: die sieht dort zwei Spalten vor
+       und faellt erst unter 420 px auf eine zurueck. Fuer eine Frage nach den
+       TEILEN einer Antwort ist eine Spalte die richtige Form, auf jeder Breite -
+       es ist eine Liste zum Durchgehen und keine Filtermatrix. Und sie haengt
+       damit nicht mehr am Layout des Baukastens, der sich unabhaengig aendern
+       darf. Die Zeilen selbst bleiben .check, das ist dieselbe Sache. */
+    var liste = el("div", "teile-liste");
+    var boxen = [];
+    alle.forEach(function (e) {
+      var z = el("label", "check");
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      z.appendChild(box);
+      var txt = el("span");
+      txt.appendChild(el("b", null, ROLLEN_NAME[e.rolle] || e.rolle));
+      txt.appendChild(el("span", "muted", " – " + (ROLLEN_AUFTRAG[e.rolle] || "")));
+      z.appendChild(txt);
+      liste.appendChild(z);
+      boxen.push({ box: box, zeile: z, e: e });
+    });
+    karte.appendChild(liste);
+
+    var los = el("button", "knopf", "Das sind meine Teile");
+    los.addEventListener("click", function () {
+      los.disabled = true;
+      var alleRichtig = true;
+      boxen.forEach(function (b) {
+        b.box.disabled = true;
+        var soll = b.e.gut;
+        if (b.box.checked !== soll) alleRichtig = false;
+        /* Vier Zustaende, nicht zwei. Gezeigt wird der SOLL-Zustand mit, nicht
+           nur der eigene Fehler: Rose soll die fertige Liste sehen und sie
+           nicht aus Haekchen rekonstruieren muessen.
+
+           "verpasst" ist von der Treppe geborgt (.treppe-kandidat.richtig.verpasst):
+           gestrichelt statt gefuellt heisst "gehoert dazu, hattest du aber
+           nicht". Ein falsch Angekreuztes darf NICHT blass werden - es ist die
+           Zeile, auf die es ankommt. */
+        // Einzelne Argumente, kein Leerzeichen-String: classList.add("a b")
+        // wirft InvalidCharacterError und bricht die ganze Auswertung ab.
+        if (soll) {
+          b.zeile.classList.add("richtig");
+          if (!b.box.checked) b.zeile.classList.add("verpasst");
+        } else {
+          b.zeile.classList.add(b.box.checked ? "falsch" : "blass");
+        }
+      });
+      karte.appendChild(rueckmeldung(alleRichtig, teileAufloesung(item.f, rollen)));
+      schreibKnopf(karte, item);
+    });
+    karte.appendChild(los);
+  }
+
+  /* Zwei Rollen, die zu dieser Aufgabe NICHT gehoeren. Gezogen aus den Ketten
+     anderer Operatoren, damit sie plausibel klingen - eine erfundene Rolle
+     waere als falsch zu erkennen, ohne dass man den Aufbau verstanden hat. */
+  function distraktoren(rollen, n) {
+    var drin = Object.create(null);
+    rollen.forEach(function (r) { drin[r] = true; });
+    var topf = [];
+    Object.keys(ROLLEN_KETTE).forEach(function (op) {
+      ROLLEN_KETTE[op].forEach(function (r) {
+        if (drin[r] || topf.indexOf(r) >= 0) return;
+        topf.push(r);
+      });
+    });
+    return mische(topf).slice(0, n);
+  }
+
+  // Fisher-Yates auf einer Kopie, wie in geteilt-zuordnen.js.
+  function mische(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* Die Aufloesung zur Teile-Frage: die Kette in der Reihenfolge, in der sie
+     im Erwartungshorizont steht. Kein Ausrechnen von Prozenten - die Antwort
+     ist eine Bauanleitung und keine Note. */
+  function teileAufloesung(f, rollen) {
+    var kette = rollen.map(function (r) { return ROLLEN_NAME[r] || r; }).join(" · ");
+    return "Diese Aufgabe verlangt: " + kette
+      + ". In dieser Reihenfolge kannst du sie auch hinschreiben.";
+  }
+
+  // Die Rueckmeldungs-Karte, wie sie schon die Stufenfrage benutzt.
+  function rueckmeldung(gut, text) {
+    var erk = el("div", "erklaerung " + (gut ? "gut" : "schade"));
+    var stk = stickerEl(gut ? "good" : "sanft");
+    if (stk) erk.appendChild(stk);
+    var t = el("div", "text");
+    t.appendChild(el("div", "titel", gut ? "Genau." : "Schau mal:"));
+    t.appendChild(el("div", null, text));
+    erk.appendChild(t);
+    return erk;
+  }
+
+  function schreibKnopf(karte, item) {
+    var weiter = el("button", "knopf", "Jetzt schreiben");
+    weiter.addEventListener("click", function () { schreiben(item); });
+    karte.appendChild(weiter);
+    weiter.focus();
   }
 
   /* Die Aufloesung sagt zuerst die Stufe und dann, was das fuer die ANTWORT

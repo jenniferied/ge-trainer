@@ -965,6 +965,44 @@
         "Beispiel aus der Vorlesung: Koffer mit ferngesteuertem Auto - Gruppe findet ohne Vorgabe heraus, dass Auto und Fernbedienung angeschaltet werden müssen; abgestufte Hilfen (z. B. motorische Unterstützung, Handführung)",
         "Alternativ: Teilschritte beim Bedienen einer Waschmaschine gemeinsam erarbeiten"
       ],
+      "abschnitte": [
+        {
+          "operator": "erlaeutern",
+          "rolle": "benennen",
+          "auftrag": "Was Handlungsorientierung ist – die Definition",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Handlungsorientierung meint, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "entfalten",
+          "auftrag": "Woran man handlungsorientierten Unterricht erkennt",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Das bedeutet konkret, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "belegen",
+          "auftrag": "Ein Beispiel – eines von beiden reicht",
+          "idx": [
+            4,
+            5
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Ein Beispiel dafür ist …"
+        }
+      ],
       "muster": "Handlungsorientierter Unterricht ist nach Jank und Meyer ein ganzheitlicher und schüleraktiver Unterricht, in dem die zwischen Lehrkraft und Schüler:innen vereinbarten Handlungsprodukte die Gestaltung des Unterrichtsprozesses leiten, sodass Kopf- und Handarbeit in ein ausgewogenes Verhältnis kommen. Ausgangspunkt sind die subjektiven Interessen der Schüler:innen; alle gelten als handlungskompetent auf jeweils unterschiedlichen Niveaustufen. Ein Beispiel aus der Vorlesung: Jede Lerngruppe erhält einen Koffer mit einem ferngesteuerten Auto samt Batterien. Die Schüler:innen sollen ohne direkte Anleitung herausfinden, dass Auto und Fernbedienung eingeschaltet werden müssen - sie planen, probieren, kontrollieren ihr Ergebnis und erhalten individuell abgestufte Unterstützung. Damit durchlaufen sie alle Bestandteile des Handelns: Handlungsorientierung, Handlungsplanung, Handlungsausführung und Handlungskontrolle.",
       "musterVarianten": {
         "de": {
@@ -1027,6 +1065,20 @@
         "Anschaulich: Zusammenhänge über Bilder, Fotos, Modelle oder darstellendes Spiel erschließen - z. B. symbolhafte Darstellung erklärt die Bedienung der Waschmaschine",
         "Abstrakt-begrifflich: über Sprache und Gedanken, ohne direkte Anschauung - z. B. Abläufe von Garverfahren, die man nicht sehen kann, abstrakt beschreiben"
       ],
+      "abschnitte": [
+        {
+          "operator": "erlaeutern",
+          "auftrag": "Die vier Aneignungsebenen – je Ebene: worüber sie den Zugang eröffnet und ein Beispiel dazu",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "punkte": 4
+        }
+      ],
       "muster": "Auf der basal-perzeptiven Ebene eignen sich Schüler:innen die Umwelt durch Wahrnehmung und Bewegung des eigenen Körpers an, etwa wenn mithilfe von Handführung ein elektrisches Gerät an- und ausgeschaltet wird und die Effekte über verschiedene Sinneskanäle erfahrbar werden. Auf der konkret-gegenständlichen Ebene werden Gegenstände handelnd genutzt und Wirkungen entdeckt, zum Beispiel wenn Salz in Wasser verrührt wird und sich auflöst. Auf der anschaulichen Ebene werden Zusammenhänge über ein Bild erschlossen, etwa wenn eine symbolhafte Darstellung die Bedienung der Waschmaschine erläutert. Auf der abstrakt-begrifflichen Ebene erfolgt die Auseinandersetzung über Sprache und Gedanken ohne direkte Anschauung, zum Beispiel wenn Abläufe von Garverfahren, die man nicht sehen kann, abstrakt beschrieben werden.",
       "musterVarianten": {
         "de": {
@@ -1078,6 +1130,52 @@
         "Gesamtzusammenhang: nötig, um den Sinn des eigenen Tuns zu erkennen",
         "Gefahr: eine rigide, durch die Lehrkraft gelenkte Lernsituation - vs. Chance: über Strukturierung werden Teilaspekte einer Handlung deutlich",
         "Bewertung: kein Entweder-oder; kleine Schritte immer in einen sinnvollen Gesamtzusammenhang einbetten"
+      ],
+      "abschnitte": [
+        {
+          "operator": "diskutieren",
+          "rolle": "dafuer",
+          "auftrag": "Was für die kleinen Schritte spricht",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Für kleine Schritte spricht, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "dagegen",
+          "auftrag": "Was für den Gesamtzusammenhang spricht – die Gegenseite",
+          "idx": [
+            1
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Für den Gesamtzusammenhang spricht dagegen, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "these",
+          "auftrag": "Worin das Spannungsverhältnis besteht",
+          "idx": [
+            2
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Das Spannungsverhältnis besteht darin, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "fazit",
+          "auftrag": "Dein abwägendes Urteil",
+          "idx": [
+            3
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Abwägend halte ich fest: …"
+        }
       ],
       "muster": "Kleine Schritte erlauben es, Schüler:innen einen dezidierten Handlungsplan anzubieten: Aufgaben werden bewältigbar, Teilaspekte einer Handlung werden deutlich, Erfolgserlebnisse werden möglich. Zugleich braucht es den Gesamtzusammenhang, damit die Schüler:innen den Sinn des eigenen Tuns erkennen - wer nur isolierte Teilschritte übt, weiß nicht, wofür. Die Gefahr kleinschrittigen Vorgehens liegt in einer rigiden, vollständig durch die Lehrkraft gelenkten Lernsituation. In der Bewertung gilt daher: kein Entweder-oder, sondern kleine Schritte, die bewusst in einen sinnstiftenden Gesamtzusammenhang eingebettet werden - das Prinzip heißt in der Vorlesung nicht zufällig kleine Schritte und/oder Sinnzusammenhang.",
       "musterVarianten": {
@@ -1132,6 +1230,44 @@
         "Beispiel: Sachanalyse = Energieerhaltungssatz (Energie wird nur umgewandelt, nicht erzeugt/vernichtet) → Erfahrungsmöglichkeiten: Kettcar fahren, Leuchte in Betrieb nehmen, nur das Ergebnis der Umwandlung ist sichtbar",
         "Elementarisierte Aussage: Bewegung wird durch Zuführung von Energie (Muskelkraft, elektrische Energie) beschleunigt und durch Wegnahme verlangsamt; beim Kettcar ist Muskelkraft als Anstrengung spürbar",
         "Dazu didaktische Reduktion: Stoffreduktion, Inhalts- und Komplexitätsreduktion, Reduzieren als Lernhandlung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "erlaeutern",
+          "rolle": "benennen",
+          "auftrag": "Was Elementarisierung ist – die Grundidee und ihre Leitfrage",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Elementarisierung meint, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "entfalten",
+          "auftrag": "Die Doppelrolle und die Felder des gemeinsamen Suchprozesses",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Das bedeutet konkret, dass …"
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "belegen",
+          "auftrag": "Das Energie-Beispiel: von der Sachanalyse zur elementarisierten Aussage",
+          "idx": [
+            3,
+            4,
+            5
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Am Energie-Beispiel heißt das: …"
+        }
       ],
       "muster": "Elementarisierung fragt danach, was das Elementare im Bildungsprozess ist, und verschränkt dabei Lerninhalt und Lernsubjekt. Sie ist zugleich fachdidaktisches Prinzip und ein didaktisches Vorgehen bei der Unterrichtsplanung. Wie das konkret aussieht, zeigt das Energie-Beispiel der Vorlesung: Die sachanalytische Betrachtung liefert den Energieerhaltungssatz - Energie kann weder erzeugt noch vernichtet, sondern nur von einer Form in eine andere umgewandelt werden. Daraus werden Erfahrungsmöglichkeiten abgeleitet, etwa dass ein Kettcar durch Muskelkraft in Bewegung kommt oder eine Leuchte durch elektrische Energie in Betrieb geht, wobei nur das Ergebnis der Umwandlung sichtbar ist. Am Ende stehen elementarisierte Aussagen: Die Bewegung eines Gegenstands kann durch Zuführung von Energie beschleunigt und durch Wegnahme verlangsamt werden; für die Fahrt im Kettcar ist Muskelkraft und damit spürbare Anstrengung notwendig. Begleitend sorgt die didaktische Reduktion - Stoffreduktion, Inhalts- und Komplexitätsreduktion sowie Reduzieren als Lernhandlung - dafür, dass der Inhalt zugänglich wird, ohne sachlich falsch zu werden.",
       "musterVarianten": {
@@ -1197,6 +1333,32 @@
         "Rückmeldung und Begründung: Tätigkeit wird ausgeführt, aber nicht in den Lebenszusammenhang eingeordnet; Erklärungen und/oder Aufforderung - Ziel: Ausübung in Eigenregie",
         "Begleitung: selbstständige und sachgerechte Ausführung gelingt - Ziel: Sicherung der Bedingungen, die für die Eigenständigkeit nötig sind",
         "Grundgedanke: Das Hilfeniveau folgt der Ausgangslage und zieht sich mit wachsender Selbstständigkeit schrittweise zurück"
+      ],
+      "abschnitte": [
+        {
+          "operator": "erlaeutern",
+          "auftrag": "Die fünf Hilfeniveaus – je Niveau: die Ausgangslage der Person und das Ziel",
+          "idx": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "form": "liste",
+          "punkte": 5
+        },
+        {
+          "operator": "erlaeutern",
+          "rolle": "benennen",
+          "auftrag": "Der Grundgedanke: wonach sich das Hilfeniveau richtet",
+          "idx": [
+            5
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Das Hilfeniveau richtet sich danach, dass …"
+        }
       ],
       "muster": "Die Hilfeniveaus bilden eine Stufenfolge, die sich an der Ausgangslage der Person orientiert und mit wachsender Selbstständigkeit schrittweise zurücknimmt. Zeigt eine Person in einem Bereich keinerlei eigene Aktivität, wird die Handlung stellvertretend vollständig ausgeführt - mit dem Ziel, eigene Aktivität überhaupt erst anzuregen. Zeigen sich Ansätze zur selbstständigen Ausführung, genügt Mithilfe, also eine teilweise Übernahme verbunden mit der Anleitung der lebenspraktischen Fertigkeiten. Gelingt die Ausführung bereits, aber noch nicht sachgerecht, braucht es Beobachtung und gegebenenfalls Korrektur, damit die Fertigkeiten durch Übung zur Routine werden. Wird eine Tätigkeit zwar ausgeführt, aber noch nicht in den Lebenszusammenhang eingeordnet, helfen Rückmeldung und Begründung sowie Aufforderungen, damit die Person die Tätigkeit in Eigenregie ausübt. Gelingt schließlich die selbstständige und sachgerechte Ausführung, bleibt die Begleitung: Sie sichert die Bedingungen, die nötig sind, um diese Selbstständigkeit auch leben zu können.",
       "musterVarianten": {
@@ -2198,6 +2360,54 @@
         "Dagegen 2: Transparenz des Unterrichtsablaufs wirkt der Überforderung entgegen; fehlt sie, kippt Offenheit in Orientierungslosigkeit",
         "Fazit 1: ein Gleichgewicht zwischen selbstständigem Arbeiten und der Vermittlung von Orientierung - Öffnung und Struktur sind zu dosieren, nicht gegeneinander auszuspielen"
       ],
+      "abschnitte": [
+        {
+          "operator": "diskutieren",
+          "rolle": "these",
+          "auftrag": "Worum es geht: Heterogenität ist der Normalfall, nicht der Sonderfall",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 1,
+          "satzanfang": "Ausgangspunkt ist, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "dafuer",
+          "auftrag": "Was für die Öffnung und die Differenzierung spricht",
+          "idx": [
+            1,
+            2
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Für Öffnung und Differenzierung spricht, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "dagegen",
+          "auftrag": "Was die Kollegin dagegenhalten kann",
+          "idx": [
+            3,
+            4
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Dagegen spricht, dass …"
+        },
+        {
+          "operator": "diskutieren",
+          "rolle": "fazit",
+          "auftrag": "Dein begründetes Fazit",
+          "idx": [
+            5
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Abwägend halte ich fest: …"
+        }
+      ],
       "muster": "Der Ausgangspunkt ist unstrittig: Jede Klasse stellt eine heterogene Lerngruppe dar. Differenzierung ist deshalb kein Sonderfall, sondern der Normalfall jeder Unterrichtsplanung. Für die Öffnung spricht, dass innere Differenzierung zeitlich flexibel auf diese Verschiedenheit reagieren kann, während äußere Differenzierung versucht, möglichst homogene Gruppen zu bilden und über einen längeren Zeitraum aufrechtzuerhalten. Dafür spricht auch, dass konkrete Stellschrauben zur Verfügung stehen: Stoffumfang und Zeitaufwand, Komplexitätsgrad, der Grad der Selbständigkeit beziehungsweise die Notwendigkeit direkter Hilfe, inhaltliche und methodische Zugänge, Interessen oder Team-Teaching. Die Kollegin hat dennoch einen Punkt: Differenzierte und geöffnete Unterrichtsformen bedürfen einer Einführung und Sicherung, sie tragen also nicht schon dadurch, dass man sie eröffnet. Und die Transparenz des Unterrichtsablaufs wirkt der Überforderung entgegen - fehlt sie, kippt Offenheit in Orientierungslosigkeit. Mein Fazit lautet deshalb: Es geht nicht um möglichst viel Öffnung, sondern um ein Gleichgewicht zwischen selbstständigem Arbeiten und der Vermittlung von Orientierung. Öffnung und Struktur sind zu dosieren, nicht gegeneinander auszuspielen.",
       "musterVarianten": {
         "de": {
@@ -2264,6 +2474,46 @@
         "Dagegen 2: die vier Grundlagen der Handlungsorientierung setzen einiges voraus - Bedürfnisse und Interessen, Einstellungen und Gewohnheiten, Erfahrungen und Kenntnisse, kognitive Strategien",
         "Dagegen 3: bei Menschen mit komplexer Behinderung nennt die Vorlesung eigens weitere Aspekte - Wachheit, Aktivität und Aufmerksamkeit, Wahrnehmungstätigkeit, basale Kommunikation und Interaktion",
         "Fazit 1: eigenes Urteil begründen, etwa dass das Prinzip trägt, der Ansatzpunkt sich aber verschiebt - weg vom vereinbarten Produkt, hin zu Wachheit, Wahrnehmung und basaler Verständigung"
+      ],
+      "abschnitte": [
+        {
+          "operator": "bewerten",
+          "rolle": "dafuer",
+          "auftrag": "Vier Argumente dafür, dass das Prinzip auch bei komplexer Behinderung trägt",
+          "idx": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "form": "rolle",
+          "punkte": 4,
+          "satzanfang": "Dafür spricht, dass …"
+        },
+        {
+          "operator": "bewerten",
+          "rolle": "dagegen",
+          "auftrag": "Drei Argumente dagegen – was das Prinzip voraussetzt",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Dagegen spricht, dass …"
+        },
+        {
+          "operator": "bewerten",
+          "rolle": "fazit",
+          "auftrag": "Dein eigenes Urteil",
+          "idx": [
+            7
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Abwägend urteile ich: …"
+        }
       ],
       "muster": "Für das Prinzip spricht zunächst seine eigene Grundannahme: Grundsätzlich gelten alle Schüler:innen als handlungskompetent, nur auf jeweils unterschiedlichen Niveaustufen. Dazu passt die Unterscheidung von Globalhandlung und Einzelhandlung - beide unterscheiden sich im Umfang, ihre Strukturmerkmale gleichen sich, und damit ist auch eine einzelne Teilhandlung vollwertiges Handeln. Auch die Begründung ist breit angelegt: Sie ruht auf entwicklungstheoretischen, lerntheoretischen, sozialisationstheoretischen und bildungstheoretischen Ansätzen und auf der Forderung nach mehr Selbstbestimmung. Schließlich reichen die Hilfeniveaus bis zur stellvertretenden Ausführung, und selbst dort heißt das Ziel Anregung zu eigener Aktivität. Dagegen lässt sich einwenden, dass die Definition handlungsorientierten Unterrichts zwischen Lehrkraft und Schüler:innen vereinbarte Handlungsprodukte voraussetzt, und eine Vereinbarung erfordert Verständigung. Ebenso setzen die vier Grundlagen der Handlungsorientierung einiges voraus: Bedürfnisse, Interessen und Gefühle, Einstellungen und Gewohnheiten, Erfahrungen und Kenntnisse sowie kognitive Strategien und Fähigkeiten. Nicht zufällig nennt die Vorlesung für Menschen mit komplexer Behinderung eigens weitere Aspekte - Wachheit, Aktivität und Aufmerksamkeit, Wahrnehmungstätigkeit sowie basale Kommunikation und Interaktion. Ich halte das Prinzip deshalb für tragfähig, aber nicht unverändert: Es trägt, wenn sich der Ansatzpunkt verschiebt - weg vom gemeinsam vereinbarten Produkt, hin zu Wachheit, Wahrnehmung und basaler Verständigung als dem, woran Handeln hier ansetzt.",
       "musterVarianten": {
@@ -2339,6 +2589,41 @@
         "Beobachtung 3: Tina kann wählen - Versuch mit der Blockbatterie oder Variante mit der Zitrone als Energiequelle; das bedient Interessen und einen anderen Komplexitätsgrad",
         "Einordnung 2: die Vorlesung überschreibt das Beispiel selbst mit der Differenzierung des Umfangs und des Komplexitätsniveaus - beide Wörter stammen aus der Kriterienliste der inneren Differenzierung"
       ],
+      "abschnitte": [
+        {
+          "operator": "analysieren",
+          "rolle": "gegenstand",
+          "auftrag": "Worum es geht: welche Art von Differenzierung hier vorliegt",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Betrachtet wird hier …"
+        },
+        {
+          "operator": "analysieren",
+          "auftrag": "Die einzelnen Beobachtungen – je Person: was sie tut und welches Differenzierungskriterium darin steckt",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "liste",
+          "punkte": 3
+        },
+        {
+          "operator": "analysieren",
+          "rolle": "folgerung",
+          "auftrag": "Was daraus folgt – wie die Vorlesung das Beispiel selbst überschreibt",
+          "idx": [
+            4
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Daraus folgt, dass …"
+        }
+      ],
       "muster": "Die Sequenz arbeitet mit innerer Differenzierung: Die Lerngruppe bleibt zusammen, angepasst wird innerhalb der Stunde und zeitlich flexibel. Alle beschäftigen sich mit demselben Gegenstand, dem Versuchsaufbau aus Kopfhörer, Stromleitern und Blockbatterie, mit dem sich der Strom hören lässt. Unterschiedlich ist, wie die Einzelnen daran arbeiten. Pia wechselt zwischen den Möglichkeiten, die Batterie zu halten oder unter Assistenz einen Kontakt zur Batterie zu führen, und wird dabei von Mitschüler:innen unterstützt; differenziert wird hier über den Grad der Selbständigkeit beziehungsweise die Notwendigkeit direkter Hilfe. Ali baut sich die Versuchsanordnung, am Beispiel orientiert, selbst auf; hier wirken die inhaltlichen und methodischen Zugänge und die Vorerfahrungen. Tina kann wählen, ob sie den Versuch mit der Blockbatterie durchführt oder die Variante mit der Zitrone als Energiequelle erprobt; das bedient ihre Interessen und zugleich einen anderen Komplexitätsgrad. Die Vorlesung selbst überschreibt das Beispiel mit der Differenzierung des Umfangs und des Komplexitätsniveaus; beide Wörter stammen aus der Kriterienliste der inneren Differenzierung. Alle arbeiten damit am selben Gegenstand, aber mit unterschiedlich viel Unterstützung und auf unterschiedlichem Anspruchsniveau - genau das ist der Kern innerer Differenzierung.",
       "musterVarianten": {
         "de": {
@@ -2400,6 +2685,56 @@
         "Dagegen 2: auch das Energie-Beispiel läuft als Kreislauf aus sachanalytischer Betrachtung, Erfahrungsmöglichkeiten, elementarisierten Aussagen und didaktischer Reduktion - das sind Schritte, die eine Lehrkraft vor der Stunde geht",
         "Dagegen 3: im Rahmenlehrplan-Abgleich bleibt die Zeile Elementarisierung leer, ein eigenes Qualitätsmerkmal gibt es dort nicht - das Argument wiegt allerdings begrenzt, weil auch Kleine Schritte und Strukturierung leer bleiben",
         "Fazit 1: eigenes Urteil begründen, etwa: als Planungsvorgehen ist sie im Raster vollständig abgebildet, als Prinzip trägt sie nur, solange die Frage nach dem Elementaren auch Durchführung und Evaluation steuert"
+      ],
+      "abschnitte": [
+        {
+          "operator": "eroertern",
+          "rolle": "these",
+          "auftrag": "Der Maßstab: woran du Elementarisierung misst",
+          "idx": [
+            0
+          ],
+          "form": "rolle",
+          "punkte": 2,
+          "satzanfang": "Die Frage ist, ob …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dafuer",
+          "auftrag": "Drei Argumente dafür, dass Elementarisierung mehr ist als ein Planungsschritt",
+          "idx": [
+            1,
+            2,
+            3
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Dafür spricht, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "dagegen",
+          "auftrag": "Drei Argumente dagegen – die Position der Kollegin",
+          "idx": [
+            4,
+            5,
+            6
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Dagegen spricht, dass …"
+        },
+        {
+          "operator": "eroertern",
+          "rolle": "fazit",
+          "auftrag": "Dein begründetes Urteil",
+          "idx": [
+            7
+          ],
+          "form": "rolle",
+          "punkte": 3,
+          "satzanfang": "Abwägend halte ich fest: …"
+        }
       ],
       "muster": "Ob Elementarisierung mehr ist als ein Schritt der Unterrichtsplanung, misst sich an dem, was ein didaktisches Prinzip leisten soll: Es orientiert nicht nur die Planung, sondern auch Durchführung und Evaluation, und es steht in der Rangfolge über Methoden, Techniken, Sozialformen und Medien. Die Frage lautet also, ob Elementarisierung alle drei Phasen orientiert oder nur die erste. Für ein eigenes Prinzip spricht dreierlei. Ihre Leitfrage lautet, was das Elementare im Bildungsprozess ist; sie verschränkt Lerninhalt und Lernsubjekt und ist damit vor jeder Methodenwahl zu beantworten. Das Schaubild von Lamers nennt sie einen gemeinsamen Suchprozess und legt fünf Blickwinkel nebeneinander, einen kulturell-gesellschaftlichen, einen sachorientierten, einen anthropologischen, einen entwicklungspsychologischen und einen methodisch-medialen; gesucht wird also, ein Raster wird nicht abgearbeitet. Und die didaktische Reduktion umfasst ausdrücklich das Reduzieren als Lernhandlung, wirkt also in der Stunde selbst und nicht nur in ihrer Vorbereitung. Dagegen spricht die Gegenüberstellung des Elementarisierungsprozesses nach Heinen mit dem Unterrichtsplanungsraster von Terfloth und Bauersfeld: Dort findet jede Ebene ihren Platz - die elementaren Grundannahmen und Strukturen in der Auseinandersetzung mit dem Bildungsinhalt, die elementaren Erfahrungen und Zugänge bei den Lernvoraussetzungen, die Vermittlungs- beziehungsweise Aneignungswege bei den methodischen Entscheidungen. Es bleibt kein Rest, und das Raster beruht auf Klafki, stammt also aus der allgemeinen Didaktik. Auch das Energie-Beispiel läuft als Kreislauf aus sachanalytischer Betrachtung, Erfahrungsmöglichkeiten, elementarisierten Aussagen und didaktischer Reduktion ab, und das sind Schritte, die eine Lehrkraft vor der Stunde geht. Schließlich bleibt im Abgleich mit dem Rahmenlehrplan die Zeile Elementarisierung leer, ein eigenes Qualitätsmerkmal gibt es dort nicht. Dieses Argument wiegt allerdings begrenzt, denn auch Kleine Schritte und Strukturierung bleiben ohne Entsprechung, ohne dass die Vorlesung sie deshalb aus der Liste der Prinzipien nähme. Mein Urteil: Als Planungsvorgehen ist Elementarisierung im Raster vollständig abgebildet, insofern hat die Kollegin recht. Als Prinzip trägt sie dennoch, aber nur unter einer Bedingung: Die Frage nach dem Elementaren muss auch die Durchführung und die Evaluation steuern, also mitbestimmen, wie viel in der Stunde reduziert wird und woran am Ende gemessen wird, ob der Inhalt wirklich elementar war. Bleibt sie auf die Vorbereitung beschränkt, ist sie ein Planungsschritt unter anderen.",
       "musterVarianten": {

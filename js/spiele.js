@@ -341,6 +341,8 @@ function spickzettel() {
       var s = document.createElement("summary");
       s.appendChild(el("b", null, anzeige(o.wort)));
       d.appendChild(s);
+      var kette = kettenText(o.wort);
+      if (kette) d.appendChild(el("div", "op-kette", kette));
       d.appendChild(el("div", "op-tipp", o.tipp));
       liste.appendChild(d);
     });
@@ -593,6 +595,99 @@ export function afbAnalyse(frage, afb) {
   };
 }
 
+/* ---------- Erkennung fuer die ROLLEN-Ableitung (23.08.2026) ----------
+   Entschieden von Jennifer am 23.08.: die OPERATOREN-Tabelle bleibt bei zehn
+   Woertern, weil sie SELBST Klausurstoff ist - sie steht im Spickzettel, sie
+   ist der Kartensatz des Signalwoerter-Spiels und die Vorlage des Zuordnens,
+   und die Klausur-Info der Dozentin nennt "vergleichen" und "zuordnen" nicht.
+   Ein Spiel, das Rose Signalwoerter beibringt, die auf ihrer Liste fehlen,
+   waere falscher Stoff.
+
+   Fuenf Korpus-Aufgaben stellen aber woertlich "Vergleichen Sie …", und ohne
+   Erkennung faellt ihre Rollen-Schablone (treppe.js ROLLEN_SCHABLONE) stumm
+   auf die flache Liste zurueck. Deshalb genau eine zusaetzliche Liste, die
+   NUR die Rollen ableitet und in keinem Spiel vorkommt.
+
+   Der tipp fehlt hier bewusst: er wird nirgends gelesen: ROLLEN_ZUSATZ geht
+   nur in rollenOperator(), und das gibt allein das normalisierte Wort zurueck.
+   Stuende hier einer, waere er ein Erklaertext, den niemand je zu sehen
+   bekommt - und beim naechsten Lesen sicher der Anlass, das Wort doch in den
+   Spickzettel zu heben. */
+var ROLLEN_ZUSATZ = [{ wort: "vergleichen", afb: 2 }, { wort: "zuordnen", afb: 2 }];
+
+/* Welcher Operator bestimmt den AUFBAU der Antwort? Gibt das normalisierte
+   Wort zurueck ("erlaeutern", nicht "erläutern") oder null.
+
+   BEWUSST NICHT afbAnalyse: das hier ist die breitere Frage. afbAnalyse
+   beantwortet "welches Klausur-Signalwort steht im Stamm" und muss deshalb bei
+   den zehn bleiben - klausurfrage.js sagt ihre Antwort woertlich auf dem Schirm
+   an ("Das Signalwort ist …"). Ein Satz, der Rose ein Wort als Signalwort
+   verkauft, das nicht auf ihrer Liste steht, waere genau der Schaden, den die
+   Trennung verhindern soll. */
+export function rollenOperator(frage) {
+  var klein = String(frage || "").toLowerCase();
+  var treffer = null, pos = Infinity;
+  OPERATOREN.concat(ROLLEN_ZUSATZ).forEach(function (o) {
+    var i = klein.indexOf(anzeige(o.wort).toLowerCase());
+    if (i >= 0 && i < pos) { pos = i; treffer = o.wort; }
+  });
+  return treffer;
+}
+
+/* ---------- Die Rollenketten: EINE Quelle fuer drei Verwendungen ----------
+   Bis zum 23.08.2026 stand diese Tabelle als ROLLEN_SCHABLONE in treppe.js
+   und hatte genau einen Leser. Seit dem Struktur-Block hat sie drei:
+
+     1. treppe.js  leitet daraus Abschnitte ab, wenn der Korpus keine hat
+     2. das Zuordnen-Spiel unten zeigt die Kette als das, was ein Operator
+        verlangt - statt es in einem Prosasatz zu verstecken
+     3. der Aufdroesel-Schritt der Klausurfrage fragt sie ab
+
+   Sie steht deshalb HIER und nicht mehr drueben: treppe.js importiert dieses
+   Modul, der Rueckweg waere ein Zyklus. Zwei Kopien der Kette waeren genau der
+   Fehler, den dieses Projekt schon zweimal hatte - eine Bedingung an zwei
+   Orten, die auseinanderlaufen, ohne dass es jemand merkt. (Gefunden am
+   23.08.: die Tabelle hier und ROLLEN_TABELLE im Edge-Prompt waren es
+   bereits - dort fehlte analysieren ganz.)
+
+   SATZANFANG und ROLLEN_AUFTRAG bleiben in treppe.js: das sind Rendering-
+   Fragen der Treppe, die sonst niemand stellt. */
+export var ROLLEN_KETTE = {
+  erlaeutern: ["benennen", "entfalten", "belegen"],
+  erklaeren: ["benennen", "entfalten", "belegen"],
+  analysieren: ["gegenstand", "zerlegung", "zusammenhang", "folgerung"],
+  diskutieren: ["these", "dafuer", "dagegen", "fazit"],
+  eroertern: ["these", "dafuer", "dagegen", "fazit"],
+  bewerten: ["these", "dafuer", "dagegen", "fazit"],
+  vergleichen: ["kriterium", "positionA", "positionB", "unterschied", "gemeinsamkeit"],
+  zuordnen: ["kriterium", "positionA", "positionB", "unterschied", "gemeinsamkeit"],
+  entwickeln: ["fall", "massnahme", "begruendung"],
+  anwenden: ["fall", "massnahme", "begruendung"]
+};
+
+/* Wie eine Rolle HEISST, wenn sie in einer Kette steht. Bewusst Substantive
+   und nicht die Fragen aus ROLLEN_AUFTRAG ("Was spricht dafuer?"): eine Reihe
+   von Fragen nebeneinander liest sich wie ein Fragebogen, eine Reihe von
+   Substantiven wie ein Bauplan. Genau der soll es sein. */
+export var ROLLEN_NAME = {
+  benennen: "Benennen", entfalten: "Entfalten", belegen: "Belegen",
+  these: "These", dafuer: "Dafür", dagegen: "Dagegen", fazit: "Fazit",
+  kriterium: "Kriterium", positionA: "Position A", positionB: "Position B",
+  unterschied: "Unterschied", gemeinsamkeit: "Gemeinsamkeit",
+  fall: "Fall", massnahme: "Maßnahme", begruendung: "Begründung",
+  gegenstand: "Gegenstand", zerlegung: "Zerlegung",
+  zusammenhang: "Zusammenhang", folgerung: "Folgerung"
+};
+
+/* "These · Dafür · Dagegen · Fazit" - oder "" fuer die AFB-I-Woerter, die
+   keine Kette haben. Der leere String ist kein Mangel: eine Nennaufgabe hat
+   eine Liste und keinen Aufbau, und etwas anderes zu behaupten waere falsch. */
+export function kettenText(wort) {
+  var kette = ROLLEN_KETTE[wort];
+  if (!kette) return "";
+  return kette.map(function (r) { return ROLLEN_NAME[r] || r; }).join(" · ");
+}
+
 export function afbOption(afb) { return AFB_OPTION[afb] || ""; }
 export function afbKurz(afb) { return AFB_KURZ[afb] ? AFB_KURZ[afb] + " (" + AFB_WOERTER[afb] + ")" : ""; }
 
@@ -637,19 +732,55 @@ function opzStand() {
   return s;
 }
 
+/* Hoechstens EIN Operator je Rollenkette in einer Runde.
+
+   Am 23.08.2026 beim Live-Blick aufgefallen und keine Kleinigkeit: die
+   Abbildung Operator -> Kette ist VIELE ZU EINS. bewerten, eroertern und
+   diskutieren tragen alle drei "These · Dafuer · Dagegen · Fazit", anwenden
+   und entwickeln beide "Fall · Massnahme · Begruendung". Standen zwei davon in
+   derselben Runde, zeigte die rechte Spalte zwei Karten mit identischer erster
+   Zeile - und Rose, die genau nach der Kette sucht, bekam fuer den
+   sachlich richtigen Griff ein Schuetteln.
+
+   Aufgeloest wird an der ZIEHUNG und nicht an der Anzeige: die Kette
+   wegzulassen, waere das Feature; sie zu verfremden, waere gelogen. Die
+   chain-losen AFB-I-Woerter (beschreiben, benennen, nennen) bleiben alle im
+   Topf - sie zeigen nur Prosa, und die ist bei jedem verschieden.
+
+   Dass mehrere Operatoren denselben Aufbau verlangen, ist uebrigens wahr und
+   lernenswert - es steht im Spickzettel, wo es niemanden bestraft. */
+function opzKandidaten(stand) {
+  var gesehen = Object.create(null), out = [];
+  var reihe = zieh(OPERATOREN, OPERATOREN.length, function (o) {
+    return paarGewicht(stand["opz-" + o.wort]);
+  });
+  reihe.forEach(function (o) {
+    var k = kettenText(o.wort);
+    if (k) {
+      if (gesehen[k]) return;
+      gesehen[k] = true;
+    }
+    out.push(o);
+  });
+  return out;
+}
+
 function opzRunde(raus) {
   var stand = opzStand();
-  var paare = zieh(OPERATOREN, Math.min(OPZ_RUNDE, OPERATOREN.length), function (o) {
+  var kandidaten = opzKandidaten(stand);
+  var paare = zieh(kandidaten, Math.min(OPZ_RUNDE, kandidaten.length), function (o) {
     return paarGewicht(stand["opz-" + o.wort]);
   }).map(function (o) {
-    return { id: "opz-" + o.wort, wort: anzeige(o.wort), tipp: o.tipp, afb: o.afb };
+    return { id: "opz-" + o.wort, wort: anzeige(o.wort), tipp: o.tipp, afb: o.afb,
+             kette: kettenText(o.wort) };
   });
 
   leeren();
   app.style.removeProperty("--tfarbe-basis");
   spielKopf("↔️ Zuordnen", raus, spickKnopf());
 
-  var hinweis = el("div", "untertitel", "Links das Signalwort antippen, rechts, was es verlangt.");
+  var hinweis = el("div", "untertitel",
+    "Links das Signalwort antippen, rechts der Aufbau, den es verlangt.");
   hinweis.style.marginBottom = "12px";
   app.appendChild(hinweis);
 
@@ -657,7 +788,19 @@ function opzRunde(raus) {
   app.appendChild(baueZuordnen({
     paare: paare,
     linksText: function (p) { return p.wort; },
-    rechtsText: function (p) { return p.tipp; },
+    /* Kette UND Prosa (Jennifer, 23.08.2026): oben der Bauplan, darunter der
+       Satz, den es vorher allein gab. Getrennt durch eine Leerzeile, die die
+       Regel .bg-card.rechts { white-space: pre-line } sichtbar macht.
+
+       ZWEI TEXTE IN EINEM KNOTEN, weil die Engine textContent setzt und
+       geteilt-zuordnen.js eine KOPIE ist: die Quelle liegt in
+       rose/geteilte-styles/ und bedient auch den ST-Trainer. Fuer zwei
+       Absaetze in verschiedener Schrift muesste die Mechanik einen Knoten
+       statt einer Zeichenkette annehmen - ein Umbau am geteilten Paket fuer
+       eine Frage, die nur diese App stellt. Die AFB-I-Woerter haben keine
+       Kette und bekommen nur die Prosa, ohne fuehrende Leerzeile: sonst
+       staende ihre Karte tiefer als die der Nachbarn. */
+    rechtsText: function (p) { return p.kette ? p.kette + "\n\n" + p.tipp : p.tipp; },
     onTreffer: function (id, voll) { logSpiel("opzuordnen", id, voll, {}); },
     onFertig: function (erg) {
       var daneben = paare.filter(function (p) { return erg.fehler.indexOf(p.id) >= 0; });
@@ -668,6 +811,7 @@ function opzRunde(raus) {
         daneben.forEach(function (p) {
           var z = el("div", "nachlesen-zeile");
           z.appendChild(el("b", null, p.wort + " · " + AFB_KURZ[p.afb]));
+          if (p.kette) z.appendChild(el("div", "op-kette", p.kette));
           z.appendChild(el("div", null, p.tipp));
           extra.appendChild(z);
         });

@@ -48,7 +48,7 @@ import { belegZeile } from "./beleg.js";
 /* afbAnalyse liest die EINE Operatoren-Tabelle der App (spiele.js, Klausurinfo
    Folie 5). Hier wird nur gelesen - spiele.js gehoert einer anderen Session, und
    eine zweite Signalwort-Tabelle liefe garantiert von der ersten weg. */
-import { afbAnalyse } from "./spiele.js";
+import { afbAnalyse, rollenOperator, ROLLEN_KETTE } from "./spiele.js";
 /* Das KI-Urteil je Baustein (Vertrag 2, Function-Zweig art "bausteine").
    Zyklusfrei: llm.js zieht nur config.js und core.js. Der Namensraum-Import ist
    Absicht - er macht die defensive Wache weiter unten moeglich, falls die App
@@ -299,39 +299,34 @@ var SATZANFANG = {
   positionA: "Auf der einen Seite …",
   positionB: "Auf der anderen Seite …",
   unterschied: "Der Unterschied liegt darin, dass …",
+  gemeinsamkeit: "Gemeinsam ist beiden, dass …",
   fall: "In diesem Fall geht es um …",
   massnahme: "Eine Maßnahme wäre, …",
-  begruendung: "Das trägt, weil …"
+  begruendung: "Das trägt, weil …",
+  /* analysieren, seit 23.08.2026 (Jennifer). Vorher lief der Operator auf der
+     Erlaeutern-Kette mit - das war eine stille Notloesung: Erlaeutern erklaert
+     eine Sache, Analysieren zerlegt sie und fragt nach dem Zusammenhang der
+     Teile. Vier eigene Rollen, damit der Unterschied auch im Feld steht. */
+  gegenstand: "Betrachtet wird …",
+  zerlegung: "Das lässt sich zerlegen in …",
+  zusammenhang: "Die Teile hängen so zusammen, dass …",
+  folgerung: "Daraus folgt, dass …"
 };
 
-/* Die Rollen-Schablonen. EINE Tabelle im Code, nicht im Korpus - so werden sie
-   an einer Stelle gepflegt (Vertrag 1). Bei AFB I ist eine Baustein-Liste
-   richtig: dort gibt es einen Vorrat, und die Rueckmeldung ist eine Zahl. Bei
-   AFB II/III ist sie falsch, weil die Antwort ein TEXT MIT ROLLEN ist -
-   "Baustein 4 fehlt" ist dort keine sinnvolle Auskunft, "die Rolle Beleg ist
-   noch leer" schon.
+/* Die Rollen-Schablonen liegen seit dem 23.08.2026 als ROLLEN_KETTE in
+   spiele.js - sie hat dort drei Leser statt einem (Treppe, Zuordnen-Spiel,
+   Aufdroesel-Schritt), und ein zweites Vorkommen hier waere die Kopie, die
+   irgendwann auseinanderlaeuft.
 
-   diskutieren/eroertern/bewerten steht bewusst mit diesen vier Rollen da,
-   OBWOHL die fachliche Bestaetigung dafuer noch aussteht (will die Dozentin
-   eine harte Gegenposition oder ein abwaegendes Entfalten?). Ein Umbenennen
-   der Rollen ist danach genau eine Zeile hier - deshalb ist das Bauen
-   billiger als das Warten. */
-var ROLLEN_SCHABLONE = {
-  erlaeutern: ["benennen", "entfalten", "belegen"],
-  erklaeren: ["benennen", "entfalten", "belegen"],
-  analysieren: ["benennen", "entfalten", "belegen"],
-  diskutieren: ["these", "dafuer", "dagegen", "fazit"],
-  eroertern: ["these", "dafuer", "dagegen", "fazit"],
-  bewerten: ["these", "dafuer", "dagegen", "fazit"],
-  vergleichen: ["kriterium", "positionA", "positionB", "unterschied"],
-  zuordnen: ["kriterium", "positionA", "positionB", "unterschied"],
-  entwickeln: ["fall", "massnahme", "begruendung"],
-  anwenden: ["fall", "massnahme", "begruendung"]
-};
+   Was die Tabelle sagt und warum sie so aussieht: Bei AFB I ist eine
+   Baustein-Liste richtig - dort gibt es einen Vorrat, und die Rueckmeldung ist
+   eine Zahl. Bei AFB II/III ist sie falsch, weil die Antwort ein TEXT MIT
+   ROLLEN ist: "Baustein 4 fehlt" ist dort keine sinnvolle Auskunft, "die Rolle
+   Beleg ist noch leer" schon. */
 
 /* Was in der Ueberschrift des Abschnitts steht, wenn die Schablone greift.
    Roses Sprache, nicht die des Korpus: eine Frage, die sie beantworten kann. */
-var ROLLEN_AUFTRAG = {
+export var ROLLEN_AUFTRAG = {
   benennen: "Um welchen Begriff geht es?",
   entfalten: "Was heißt das konkret?",
   belegen: "Ein Beispiel aus dem Material",
@@ -343,10 +338,41 @@ var ROLLEN_AUFTRAG = {
   positionA: "Die eine Seite",
   positionB: "Die andere Seite",
   unterschied: "Was ist der Unterschied?",
+  gemeinsamkeit: "Was haben beide gemeinsam?",
   fall: "Worum geht es in dem Fall?",
   massnahme: "Was würdest du tun?",
-  begruendung: "Warum trägt das?"
+  begruendung: "Warum trägt das?",
+  gegenstand: "Was schaust du dir an?",
+  zerlegung: "Aus welchen Teilen besteht das?",
+  zusammenhang: "Wie hängen die Teile zusammen?",
+  folgerung: "Was folgt daraus?"
 };
+
+/* Welche ROLLEN verlangt diese Aufgabe? Genau die Liste, die der
+   Aufdroesel-Schritt der Klausurfrage abfragt (klausurfrage.js).
+
+   AUS DERSELBEN QUELLE wie die Treppe, das ist der ganze Sinn: gefragt wird,
+   was Rose gleich hinschreiben soll, und das steht in abschnitteFuer(). Eine
+   zweite Zaehlung daneben - etwa "nimm die Kette des Operators" - haette
+   irgendwann etwas anderes gefragt als die App danach sehen will. Bei
+   Aufgaben mit gemischten Operatoren (gr-f-3: benennen plus die drei
+   Eroertern-Rollen) ist der Unterschied schon heute da.
+
+   Leere Liste heisst "diese Aufgabe hat keinen Rollen-Aufbau" - eine
+   Nennaufgabe zum Beispiel. Der Aufrufer laesst die Frage dann weg, statt
+   eine Struktur zu behaupten, die es nicht gibt. Reihenfolge ist die des
+   Korpus; Dubletten fallen weg (uf-f-3 nutzt dafuer/dagegen je zweimal). */
+export function rollenFuer(f) {
+  var ab = abschnitteFuer(f);
+  if (!ab || !ab.liste) return [];
+  var gesehen = Object.create(null), out = [];
+  ab.liste.forEach(function (a) {
+    if (!a.rolle || gesehen[a.rolle]) return;
+    gesehen[a.rolle] = true;
+    out.push(a.rolle);
+  });
+  return out;
+}
 
 // Wie viele Zeilen ein Abschnitt auf dem Schirm belegt. Der Deckel bei
 // niedriger Reife zaehlt ZEILEN, nicht Stichpunkte: Roses Beschwerde galt der
@@ -417,11 +443,13 @@ function ausKorpus(roh, kernVon) {
    und nicht je Rolle neu. */
 function ausSchablone(f, kern) {
   if ((f.afb || 2) < 2) return null;
-  var an = afbAnalyse(f.frage, f.afb);
-  // afbAnalyse liefert die Anzeige-Schreibweise ("erläutern"); normalWort macht
-  // daraus den Schluessel des Vertrags-Vokabulars ("erlaeutern").
-  var op = an && an.op ? normalWort(an.op.wort) : null;
-  var rollen = op ? ROLLEN_SCHABLONE[op] : null;
+  /* rollenOperator statt afbAnalyse (23.08.2026): die Rollen-Ableitung kennt
+     zwei Woerter mehr als die Klausur-Tabelle ("vergleichen", "zuordnen"), weil
+     fuenf Aufgaben sie im Stamm tragen. Begruendung steht bei ROLLEN_ZUSATZ in
+     spiele.js. operatorSatz() unten bleibt bewusst bei afbAnalyse: der Satz
+     geht woertlich auf den Schirm und darf nur Klausurstoff behaupten. */
+  var op = normalWort(rollenOperator(f.frage));
+  var rollen = op ? ROLLEN_KETTE[op] : null;
   if (!rollen) return null;
   var alle = kern.map(function (_, i) { return i; });
   return rollen.map(function (rolle) {

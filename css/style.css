@@ -779,6 +779,16 @@ p { margin: 0 0 var(--sp-3); }
 }
 .bg-card.sel { border-color: var(--tfarbe, var(--accent)); background: var(--glow); font-weight: 700; }
 .bg-card.done { opacity: .45; border-style: dashed; cursor: default; }
+/* Die rechte Spalte des Zuordnens traegt seit dem 23.08.2026 zwei Absaetze:
+   oben die Rollenkette, darunter den Prosasatz. Die Engine (geteilt-zuordnen.js)
+   setzt textContent und ist eine geteilte Kopie - der Umbruch kommt deshalb aus
+   einem \n im Text und muss hier sichtbar gemacht werden. pre-line und nicht
+   pre-wrap: fuehrende Leerzeichen sollen weiterhin zusammenfallen. */
+.bg-card.rechts { white-space: pre-line; }
+/* Die Kette im Spickzettel und im Nachlesen-Block. Kein eigener Kasten, nur
+   etwas Luft und die Akzentfarbe - sie ist eine Ueberschrift zum Tipp, keine
+   zweite Information. */
+.op-kette { margin: 2px 0 4px; font-weight: 600; color: var(--tfarbe, var(--accent)); }
 .bg-card.shake { animation: bg-shake .45s ease; border-color: var(--bad); }
 @keyframes bg-shake {
   0%, 100% { transform: translateX(0); }
@@ -2413,6 +2423,33 @@ p { margin: 0 0 var(--sp-3); }
   border-left: 0;
 }
 .check input:disabled + span { opacity: .45; }
+
+/* Die Teile-Frage im Aufdroesel-Schritt: immer EINE Spalte. Sie ist eine Liste
+   zum Durchgehen, keine Filtermatrix wie die Themenwahl. */
+.teile-liste { display: grid; grid-template-columns: 1fr; gap: var(--sp-1); margin: var(--sp-2) 0; }
+
+/* Die ausgewertete Teile-Frage im Aufdroesel-Schritt (klausurfrage.js, 23.08.2026).
+   Eigene Regeln, weil .richtig/.falsch/.blass bis dahin NUR fuer .option galten -
+   die Klassen standen im Markup und faerbten nichts.
+
+   Die opacity-Regel eine Zeile darueber dimmt nach dem Sperren jede Zeile; die
+   beiden Zeilen, auf die es ankommt (richtig und faelschlich angekreuzt), holen
+   sie hier ausdruecklich zurueck. Sonst waere die Aufloesung genau da am
+   blassesten, wo sie gelesen werden soll. */
+/* Volle Kontur statt nur des linken Streifens: "verpasst" soll GESTRICHELT
+   lesbar sein, und ein 3px-Streifen allein traegt keine Strichelung. Die
+   Streifenbreite links bleibt erhalten. */
+.check.richtig, .check.falsch, .check.blass {
+  border: 1.5px solid transparent; border-left-width: 3px;
+}
+.check.richtig { background: var(--ok-bg); border-color: var(--ok); }
+.check.richtig input:disabled + span { opacity: 1; }
+/* Gehoerte dazu, war aber nicht angehakt - gestrichelt statt gefuellt, dieselbe
+   Sprache wie .treppe-kandidat.richtig.verpasst. */
+.check.richtig.verpasst { background: transparent; border-style: dashed; }
+.check.falsch { background: var(--bad-bg); border-color: var(--bad); }
+.check.falsch input:disabled + span { opacity: 1; }
+.check.blass { opacity: .5; }
 /* Die Auswahl steht in einer .zeile des Baukastens, wo sonst eine
    Segment-Reihe sitzt - die ist nebeneinander, diese Liste untereinander. */
 .themen-wahl .themen-wahl-liste { display: block; }
