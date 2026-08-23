@@ -1116,11 +1116,20 @@ h2.abschnitt-titel, .abschnitt-titel {
    --------------------------------------------------------------------------- */
 
 .chat-sheet { display: flex; flex-direction: column; max-height: 82vh; }
-.chat-verlauf { flex: 1; overflow-y: auto; min-height: 140px; max-height: 48vh; padding: 4px 0; }
+.chat-verlauf { flex: 1; overflow-y: auto; min-height: 140px; max-height: 56vh; padding: 4px 0; }
 .chat-msg {
   border-radius: 12px; padding: 9px 12px; margin: 6px 0;
   font-size: .92rem; line-height: 1.5; max-width: 92%;
 }
+/* Seit dem 23.08.2026 antwortet die Kreatur in der Sprache, in der Rose
+   schreibt - auch auf Arabisch. Ohne diese Zeile stuende so ein Satz
+   linksbuendig und mit der Interpunktion auf der falschen Seite.
+   unicode-bidi: plaintext heisst: jeder Absatz nimmt seine Richtung aus seinem
+   ERSTEN starken Zeichen. Das ist genau, was dir="auto" tut - nur als eine
+   CSS-Zeile statt als Eingriff in zwei JS-Bausteine, von denen einer geteilt
+   ist. text-align: start zieht die Ausrichtung mit, sonst klebt der arabische
+   Text rechts gelesen am linken Rand. */
+.chat-msg, .fq-msg { unicode-bidi: plaintext; text-align: start; }
 .chat-msg.du { background: color-mix(in srgb, var(--accent) 12%, var(--card)); margin-left: auto; }
 .chat-msg.ki { background: var(--paper); border: 1px solid var(--line); margin-right: auto; white-space: pre-wrap; }
 /* Blase mit Bauteilen statt Absatz (Liste, Tipp, Musterloesung) - siehe
@@ -1301,7 +1310,19 @@ h2.abschnitt-titel, .abschnitt-titel {
 }
 @media (min-width: 700px) {
   .mk-chat-ov { align-items: center; }
-  .mk-chat-ov .chat-sheet { border-radius: 18px; border-top: 0; }
+  .mk-chat-ov .chat-sheet { border-radius: 18px; border-top: 0; max-width: 720px; }
+}
+
+/* Am Laptop war vom Gespraech zu wenig zu sehen (Rose ueber den GE-Chat,
+   23.08.2026): die Huelle stand auf 560 px Breite und der Verlauf auf 48vh,
+   beides Zahlen fuers Handy. Breite und Hoehe steigen deshalb erst, wenn
+   wirklich Platz da ist - am Telefon aendert sich nichts. Die Bedingung
+   fragt Breite UND Hoehe ab, sonst wuerde ein quer gehaltenes Handy
+   (breit, aber flach) den hoeheren Verlauf bekommen und der Eingabezeile
+   den Platz nehmen. */
+@media (min-width: 900px) and (min-height: 700px) {
+  .chat-verlauf { max-height: 64vh; }
+  .mk-chat-ov .chat-sheet { max-height: 88dvh; }
 }
 .chat-grip {
   flex: none; width: 42px; height: 4px; border-radius: 2px;

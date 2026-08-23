@@ -464,6 +464,38 @@ export function afbAuswahl(cfg) {
 
 /* ---------- Sticker (Meme-Feedback) ---------- */
 
+/* Weiter-Knoepfe bekommen den Fokus, damit eine Runde ohne Maus laeuft. Genau
+   das hat bis zum 23.08. die Aufloesung verschluckt, und zwar in einer Kette,
+   die man einzeln nirgends sieht: geprueft wird auf KEYDOWN, der Weiter-Knopf
+   entsteht im selben Tick und bekommt sofort .focus() - und Enter loest Buttons
+   EBENFALLS auf keydown aus. Ein gehaltenes oder doppelt getipptes Enter landete
+   also auf dem frischen Knopf und sprang zur naechsten Frage, bevor Rose die
+   Aufloesung der vorigen gesehen hatte.
+   Zwei Riegel statt einem: der Fokus kommt erst im naechsten Frame (die
+   Nachzuegler laufen ins Leere), und in den ersten Millisekunden danach
+   schluckt der Knopf Enter und Leertaste. Klicken geht die ganze Zeit, und wer
+   die Taste losgelassen und neu gedrueckt hat, ist ohnehin langsamer als die
+   Sperre. */
+export var FOKUS_SPERRE_MS = 350;
+
+export function fokusSicher(knopf, msOpt) {
+  if (!knopf) return knopf;
+  var ms = typeof msOpt === "number" ? msOpt : FOKUS_SPERRE_MS;
+  var frei = false;
+  knopf.addEventListener("keydown", function (ev) {
+    if (frei) return;
+    if (ev.key === "Enter" || ev.key === " " || ev.key === "Spacebar") {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  });
+  requestAnimationFrame(function () {
+    try { knopf.focus(); } catch (e) { /* Knoten schon wieder weg - egal */ }
+    setTimeout(function () { frei = true; }, ms);
+  });
+  return knopf;
+}
+
 var STICKER = {
   good: ["pepe_drool", "troll_grin", "patrick_happy", "laugh_cam", "happy_dog", "laughcry", "rat_dance", "kitten_lift"],
   part: ["emoji_eye", "seal_blob", "patrick_slime", "monkey_side", "cat_grass", "fish_drink"],

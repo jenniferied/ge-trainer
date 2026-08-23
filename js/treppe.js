@@ -43,7 +43,7 @@
        erschlagen; themen-lernen.js schneidet damit die Level-1-Portion. */
 
 import { el, ohneHilfe, stichpunkteTeilen } from "./core.js";
-import { stickerEl } from "./ui.js";
+import { stickerEl, fokusSicher } from "./ui.js";
 import { belegZeile } from "./beleg.js";
 /* afbAnalyse liest die EINE Operatoren-Tabelle der App (spiele.js, Klausurinfo
    Folie 5). Hier wird nur gelesen - spiele.js gehoert einer anderen Session, und
@@ -1465,7 +1465,7 @@ function kiSlotFuellen(s) {
       });
     });
     karte.appendChild(weiter);
-    weiter.focus();
+    fokusSicher(weiter);
   }
 
   return karte;
@@ -1658,7 +1658,7 @@ function aufdeckenKarte(f, kern, o) {
       });
     });
     karte.appendChild(weiter);
-    weiter.focus();
+    fokusSicher(weiter);
   }
 
   return karte;
@@ -1797,7 +1797,7 @@ function ziehenKarte(f, kern, o) {
       if (o.onFertig) o.onFertig({ gesamt: kern.length, hatte: richtige, halb: 0, fehlte: kern.length - richtige, quote: quote });
     });
     karte.appendChild(weiter);
-    weiter.focus();
+    fokusSicher(weiter);
   });
   karte.appendChild(pruefen);
 

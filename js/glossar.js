@@ -32,7 +32,7 @@
    Kein Import von main.js (Zyklus). */
 
 import { app, el, leeren, state } from "./core.js";
-import { themeKnopf, setzeFarbe, stickerEl } from "./ui.js";
+import { themeKnopf, setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
 import { belegZeile } from "./beleg.js";
 import { logSpiel } from "./spiele.js";
 import * as Llm from "./llm.js";
@@ -135,7 +135,7 @@ function editAbstand(a, b) {
    "auch": ["Synonym", …] ist vorbereitet, aber noch nicht befuellt. Fehlt es,
    bleibt alles wie vorher - deshalb ueberall (auch || []). */
 function kandidatenVon(begriff, auch) {
-  var out = [begriff];
+  var out = [begriff, kernBegriff(begriff)];
   var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(begriff);
   if (m) { out.push(m[1]); out.push(m[2]); }
   (auch || []).forEach(function (s) { out.push(s); });
@@ -187,7 +187,7 @@ function maskiere(text, kandidat) {
 }
 
 function ohneBegriff(text, begriff, auch) {
-  var roh = [begriff];
+  var roh = [begriff, kernBegriff(begriff)];
   var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(begriff);
   if (m) { roh.push(m[1]); roh.push(m[2]); }
   (auch || []).forEach(function (s) { roh.push(s); });
@@ -209,6 +209,33 @@ function ohneBegriff(text, begriff, auch) {
    Sie beschreibt nur die FORM: Wortzahl, Laenge, Anfangsbuchstabe.
    Klammerzusaetze werden getrennt behandelt - "(ICF)" ist eine Abkuerzung und
    wird mitgezaehlt, "(KMK 2021)" ist eine Quellenangabe und faellt weg. */
+/* Rose soll Theoretiker-Namen und Jahreszahlen NICHT raten muessen (Jennifer,
+   23.08.2026: "das sollte sie nicht auswendig lernen"). Sehen darf sie beides -
+   die Aufloesung zeigt weiter den vollen Begriff samt Quelle.
+   Zwei Formen kommen im Bestand vor, und nur die zweite war wirklich ein
+   Problem: acht der 131 Eintraege haengen die Quelle in Klammern an
+   ("Entwicklungsbereiche im SGE (KMK 2021)") - die schneidet kandidatenVon
+   ohnehin schon mit ab. Genau EINER traegt den Namen ausserhalb der Klammer
+   ("Entwicklungslogische Didaktik nach Feuser (1999)"), und dort verlangte die
+   Formzeile "4 Woerter", also Feuser mit.
+   Abkuerzungen bleiben stehen: "(ICF)" ist Teil des Begriffs, keine Quelle. */
+function istQuellenZusatz(inhalt) {
+  var t = String(inhalt).trim();
+  if (/^[A-ZÄÖÜ][A-ZÄÖÜ0-9-]{1,7}$/.test(t)) return false; // Abkuerzung
+  return /\b(1[89]|20)\d\d\b/.test(t) || /^vgl\.?\s/i.test(t);
+}
+
+export function kernBegriff(begriff) {
+  var b = String(begriff).trim();
+  var m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(b);
+  if (m && m[1].trim() && istQuellenZusatz(m[2])) b = m[1].trim();
+  // " nach Feuser", " nach Terfloth & Bauersfeld" - nur wegschneiden, wenn
+  // danach noch ein tragfaehiger Begriff steht (mindestens zwei Woerter).
+  var n = /^(.*?)\s+nach\s+[A-ZÄÖÜ][^\s]*(?:\s*(?:&|und|\/)\s*[A-ZÄÖÜ][^\s]*)*\s*$/.exec(b);
+  if (n && n[1].trim().split(/\s+/).length >= 2) b = n[1].trim();
+  return b;
+}
+
 function formAngabe(begriff) {
   var b = String(begriff).trim();
   var abk = null;
@@ -579,7 +606,7 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
 
   if (richtung === "tippen") {
     karte.appendChild(el("div", "gl-rolle", "Wie heißt der Fachbegriff?"));
-    var form = formAngabe(e.begriff);
+    var form = formAngabe(kernBegriff(e.begriff));
     if (form) karte.appendChild(el("div", "gl-formzeile", form));
     karte.appendChild(belegZeile("div", ohneBegriff((e.fassungen || {}).de || "", e.begriff, e.auch), null, "gl-definition"));
 
@@ -630,7 +657,14 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
       }
     }
     pruefen.addEventListener("click", pruefe);
-    eingabe.addEventListener("keydown", function (ev) { if (ev.key === "Enter") pruefe(); });
+    // ev.repeat schluckt die Wiederholungen einer gehaltenen Taste, bevor sie
+    // ueberhaupt entstehen; preventDefault haelt das Enter aus dem Formular-
+    // Default heraus. Der zweite Riegel sitzt am Weiter-Knopf (fokusSicher).
+    eingabe.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Enter" || ev.repeat) return;
+      ev.preventDefault();
+      pruefe();
+    });
     karte.appendChild(pruefen);
   } else {
     karte.appendChild(el("div", "gl-rolle", "Erklär den Begriff – laut oder im Kopf, in ganzen Sätzen."));
@@ -846,6 +880,16 @@ export function begriffErklaerKarte(e, thema, onErgebnis) {
   }
 
   pruefen.addEventListener("click", pruefe);
+  // Die Tipp-Richtung sendet mit Enter, hier war Enter bis zum 23.08. gar nicht
+  // gebunden - dieselbe Runde, zwei Tastatur-Semantiken. Im Textarea bleibt
+  // Enter der Zeilenumbruch (Rose schreibt hier mehrere Saetze), Strg/Cmd+Enter
+  // sendet. ev.repeat wie drueben, pruefe() hat zusaetzlich seinen fertig-Riegel.
+  eingabe.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Enter" || ev.repeat) return;
+    if (!ev.ctrlKey && !ev.metaKey) return;
+    ev.preventDefault();
+    pruefe();
+  });
   return karte;
 }
 
@@ -899,7 +943,7 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
         schritt();
       });
       karte.appendChild(weiter);
-      weiter.focus();
+      fokusSicher(weiter);
     }
     // Die erklaeren-Richtung laeuft seit dem KI-Abgleich ueber die eigene
     // Karte (tippen + gestufte Hinweise); geloggt wird unveraendert hier.

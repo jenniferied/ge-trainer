@@ -44,7 +44,7 @@
    glossar.js, stoebern.js (materialKarteFuer), reife.js. Kein main.js. */
 
 import { app, el, leeren, speichern, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
-import { setzeFarbe, stickerEl } from "./ui.js";
+import { setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
 import { logSpiel } from "./spiele.js";
 import { abrufKarte, abschnitteFuer, abschnittZeilen, distraktorenFuer, operatorSatz, saeulenIndizes } from "./treppe.js";
 import { begriffeFuerTagesspiel, begriffErklaerKarte, begriffKarte, eintraegeZu, hatGlossar } from "./glossar.js";
@@ -1138,7 +1138,7 @@ export function zeigeThemenLernen(themen, hooks) {
           var w = el("button", "knopf", index + 1 >= schritte.length ? "Prüfung abschließen" : "Weiter");
           w.addEventListener("click", weiter);
           karte.appendChild(w);
-          w.focus();
+          fokusSicher(w);
         };
         karte = richtung === "erklaeren"
           ? begriffErklaerKarte(s.e, s.thema, nachErgebnis)
