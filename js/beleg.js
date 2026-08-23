@@ -372,6 +372,31 @@ export function belegZeile(tag, text, thema, klasse) {
   return chipsEinsetzen(reichZeile(tag, text, klasse), thema);
 }
 
+/* Die Fundstelle aus dem strukturierten `quelle`-Feld, als antippbare Chips.
+   Zwei Formate liegen im Bestand nebeneinander, und nur eines davon findet die
+   Regex in chipsEinsetzen: Anker in der PROSA ("… steht auf Folie 12") gegen
+   SLUGS im Feld ("folie-freizeit-8, notizen-s52"). Gemessen am 23.08.2026:
+   genau EINER von 1019 Stichpunkten traegt einen Prosa-Anker, aber 160 der 165
+   freien Aufgaben tragen einen Slug. Wer also nur die Stichpunkte durch
+   belegZeile schickt - wie bisher - verlinkt praktisch nichts.
+   Diese Funktion uebersetzt die Slugs zurueck in Prosa und laesst dann
+   belegZeile die Chips daraus bauen. Sie lag bis heute als quelleEl() lokal in
+   glossar.js; hier steht sie, weil die freien Aufgaben dieselben Slugs tragen.
+   Unbekannte Praefixe (dozentin-*) fallen still weg - sie haben kein Blatt,
+   auf das ein Chip springen koennte. */
+export function quelleZeile(quelle, thema, klasse, praefix) {
+  var teile = String(quelle || "").split(",").map(function (q) {
+    q = q.trim();
+    var fol = /^folie-[a-z]+-(\d+)$/.exec(q);
+    if (fol) return "Folie " + parseInt(fol[1], 10);
+    var not = /^notizen-s(\d+)$/.exec(q);
+    if (not) return "Notizen S. " + (not[1].length < 2 ? "0" + not[1] : not[1]);
+    return null;
+  }).filter(Boolean);
+  if (!teile.length) return null;
+  return belegZeile("div", (praefix || "") + teile.join(" · "), thema, klasse);
+}
+
 /* ---- MC-Aufloesung: Faerbung UND Begruendung je Option ----
 
    Bis zum 18.08.2026 stand unter einer beantworteten MC-Frage genau EINE

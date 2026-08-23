@@ -1962,6 +1962,11 @@ p { margin: 0 0 var(--sp-3); }
 .gl-ar { font-size: 1.05rem; line-height: 1.9; }
 .gl-maschinell { font-size: .75rem; color: var(--ink-soft); font-style: italic; margin-top: var(--sp-1); }
 .gl-quelle { font-size: .85rem; color: var(--ink-soft); margin-top: var(--sp-2); }
+/* Die Fundstelle unter der Loesung einer freien Aufgabe (23.08.2026). Gleiche
+   Optik wie .gl-quelle im Glossar - es ist dieselbe Sache, nur an einer
+   zweiten Stelle -, aber mit etwas mehr Luft nach oben, weil darueber die
+   Fachbegriff-Chips stehen und nicht ein Definitionstext. */
+.fundstelle { font-size: .85rem; color: var(--ink-soft); margin-top: var(--sp-3); }
 .gl-rolle { font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: var(--sp-2); }
 .gl-begriff-gross { font-family: "Fraunces", Georgia, serif; font-size: 1.4rem; font-weight: 700; margin-bottom: var(--sp-3); }
 .gl-eingabe {

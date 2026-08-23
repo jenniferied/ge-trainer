@@ -33,7 +33,7 @@
 
 import { app, el, leeren, state } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
-import { belegZeile } from "./beleg.js";
+import { belegZeile, quelleZeile } from "./beleg.js";
 import { logSpiel } from "./spiele.js";
 import * as Llm from "./llm.js";
 
@@ -365,17 +365,9 @@ function sprachReihe(a, neu) {
    Komma-Liste) oder "notizen-sNN"; daraus wird der Text, den beleg.js ohnehin
    zu Chips macht ("Folie 31", "Notizen S. 04"). */
 function quelleEl(e, thema) {
-  var teile = String(e.quelle || "").split(",").map(function (q) {
-    q = q.trim();
-    var fol = /^folie-[a-z]+-(\d+)$/.exec(q);
-    if (fol) return "Folie " + parseInt(fol[1], 10);
-    var not = /^notizen-s(\d+)$/.exec(q);
-    if (not) return "Notizen S. " + (not[1].length < 2 ? "0" + not[1] : not[1]);
-    return null;
-  }).filter(Boolean);
-  if (!teile.length) return null;
-  var z = belegZeile("div", teile.join(" · "), idVon(thema), "gl-quelle");
-  return z;
+  // Der Rumpf steht seit dem 23.08. in beleg.js (quelleZeile) - die freien
+  // Aufgaben tragen dieselben Slugs, also gehoert er nicht ins Glossar.
+  return quelleZeile(e.quelle, idVon(thema), "gl-quelle");
 }
 
 /* Die Synonyme aus dem optionalen Feld "auch". Sie stehen nur in der
@@ -600,6 +592,12 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
       var q = quelleEl(e, thema);
       if (q) auf.appendChild(q);
       karte.appendChild(auf);
+    } else {
+      /* Auch der Treffer bekommt die Fundstelle (23.08.2026). Bis dahin sah
+         Rose nach einem RICHTIGEN Begriff nur "Genau: ..." und nie, wo er
+         herkommt - ausgerechnet auf dem Weg, den sie am oeftesten geht. */
+      var q2 = quelleEl(e, thema);
+      if (q2) karte.appendChild(q2);
     }
     onErgebnis(!!richtig);
   }

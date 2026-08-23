@@ -3836,6 +3836,13 @@ function freiKarte(thema, f, opts) {
     var fachbegriffe = Glossar.fachbegriffeZeile(thema, f);
     if (fachbegriffe) box.appendChild(fachbegriffe);
 
+    /* Wo das steht (23.08.2026, Jennifer: "bei aufloesung auch die folie durch
+       per chips verlinken"). Die Stichpunkte oben laufen zwar durch belegZeile,
+       aber nur EINER von 1019 nennt eine Folie im Fliesstext - die Fundstelle
+       steht im strukturierten quelle-Feld, und das wurde hier nie gezeigt. */
+    var fundstelle = Beleg.quelleZeile(f.quelle, thema.id, "fundstelle", "📍 Steht auf: ");
+    if (fundstelle) box.appendChild(fundstelle);
+
     /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
        mit - dann kann das Gespraech an dem ansetzen, was sie geschrieben hat.
        Der Text wird HIER eingesammelt und nicht erst beim Oeffnen des Sheets:
