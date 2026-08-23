@@ -35,6 +35,7 @@ import { app, el, leeren, state, speichern } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
 import { belegZeile, quelleZeile } from "./beleg.js";
 import { logSpiel } from "./spiele.js";
+import { reifeStand } from "./reife.js";
 import * as Llm from "./llm.js";
 
 var GLOSSAR = null;
@@ -321,14 +322,34 @@ function modusSetzen(m) { state.glossarModus = m; speichern(); }
    Fortschrittsanzeige. */
 function selbstDefiniert() {
   var seit = state.glossarSchreibStart || 0;
-  var s = new Set();
+  var m = new Map();
   state.antwortLog.forEach(function (a) {
     if (a.modus !== "spiel" || a.spiel !== "glossar") return;
-    if (a.richtung !== "erklaeren") return;
+    /* GESONDERT von allem anderen (Jennifer, 23.08.): gezaehlt wird nur, was
+       ueber DIESE Liste geschrieben wurde, erkennbar am Feld ausGlossar. Eine
+       Erklaer-Karte aus der Fachbegriffe-Runde hakt hier nichts ab - sonst
+       waere der Durchgang halb erledigt, ohne dass Rose je in der Liste war.
+       Dass ein solcher Begriff woanders trotzdem sitzt, sagt fremdMarke(). */
+    if (!a.ausGlossar) return;
     if ((a.ts || 0) < seit) return;
-    s.add(a.qid);
+    // Log ist chronologisch, der letzte Versuch gewinnt.
+    m.set(a.qid, { richtig: !!a.richtig, text: a.text || "" });
   });
-  return s;
+  return m;
+}
+
+/* "Das kannst du eigentlich schon" - aber woanders. Ab R3 ist ein Begriff
+   mindestens einmal FREI abgerufen worden (Fachbegriffe-Runde oder
+   Themen-Lernen). Das gehoert an die Zeile, damit ein voller Durchgang nicht
+   so aussieht, als faenge Rose bei null an. Die Stufe selbst bleibt im Tooltip:
+   R3/R4/R5 ist unsere Buchhaltung, nicht ihre Sprache. */
+function fremdMarke(reife, e) {
+  var st = reife.get(e.id);
+  if (!st || st.stufe < 3) return null;
+  var span = el("span", "gl-fremd", st.stufe >= 4 ? "sitzt schon" : "woanders schon abgerufen");
+  span.title = "Diesen Begriff hast du in der Fachbegriffe-Runde oder im Themen-Lernen"
+    + " schon frei abgerufen (Stufe R" + st.stufe + " von 5).";
+  return span;
 }
 
 function anzeigeVon(id) {
@@ -478,13 +499,13 @@ function schreibKoerper(e, thema, fertigCb) {
     if (fertig) return;
     fertig = true;
     aufloesung("Angesehen – zählt nicht als Abruf.", "schade", "sanft", null);
-    fertigCb(null);
+    fertigCb(null, "");
   });
 
   function werte(richtig, kopfText, klasse, stickerArt, satz) {
     fertig = true;
     aufloesung(kopfText, klasse, stickerArt, satz);
-    fertigCb(!!richtig);
+    fertigCb(!!richtig, eingabe.value.trim());
   }
 
   /* Ohne Netz oder ohne Tagesbudget entscheidet Rose selbst - dieselbe Regel
@@ -500,7 +521,7 @@ function schreibKoerper(e, thema, fertigCb) {
     var r2 = el("div", "knopf-reihe");
     [{ t: "Ja, saß", r: true }, { t: "Noch nicht", r: false }].forEach(function (o) {
       var b = el("button", "knopf sekundaer", o.t);
-      b.addEventListener("click", function () { r2.remove(); fertigCb(o.r); });
+      b.addEventListener("click", function () { r2.remove(); fertigCb(o.r, eingabe.value.trim()); });
       r2.appendChild(b);
     });
     frage.appendChild(r2);
@@ -666,6 +687,8 @@ export function zeigeGlossar(themen, hooks) {
   // Einmal gelesen und danach fortgeschrieben: 131-mal durchs Log zu laufen,
   // sobald irgendwo eine Zeile neu gezeichnet wird, waere Verschwendung.
   var schonDefiniert = selbstDefiniert();
+  // Einmal je Ansicht gerechnet: reifeStand() laeuft ueber das ganze Log.
+  var reife = reifeStand();
 
   function standAuffrischen() {
     var schreibt = modus() === "schreiben";
@@ -753,6 +776,8 @@ export function zeigeGlossar(themen, hooks) {
         var reihe = el("div", "gl-eintrag");
         var knopf = el("button", "gl-begriff");
         knopf.appendChild(el("span", null, e.begriff));
+        var fremd = fremdMarke(reife, e);
+        if (fremd) knopf.appendChild(fremd);
         if (e.quelleSicherheit === "unsicher") {
           var u = el("span", "gl-unsicher", "aus dem Kontext erschlossen");
           u.title = "Die Folie nennt den Begriff, erklärt ihn aber nicht – die Definition ist aus dem Zusammenhang erschlossen.";
@@ -760,15 +785,37 @@ export function zeigeGlossar(themen, hooks) {
         }
         reihe.appendChild(knopf);
 
-        /* Im Stift-Modus traegt eine schon definierte Zeile ihren Haken - so
-           sieht Rose beim Scrollen, wo sie stehengeblieben ist. hakenSetzen()
-           statt eines Neuzeichnens der Liste: die Zeile, die gerade beantwortet
-           wurde, zeigt ihre Aufloesung, und ein neuZeichnen() risse sie ihr
-           unter den Augen weg. */
+        /* Haken und Nochmal-Knopf stehen NEBEN dem Begriff, nicht darin: die
+           ganze Zeile ist ein <button>, und ein Knopf im Knopf ist ungueltiges
+           HTML (der innere ist dann per Tastatur nicht erreichbar). Deshalb ein
+           eigener Kasten als Geschwister. */
+        var marke = el("div", "gl-zeilen-marke");
+        reihe.appendChild(marke);
+
+        /* hakenSetzen() statt eines Neuzeichnens der Liste: die Zeile, die
+           gerade beantwortet wurde, zeigt ihre Aufloesung, und ein
+           neuZeichnen() risse sie ihr unter den Augen weg. */
         function hakenSetzen() {
+          marke.innerHTML = "";
           if (modus() !== "schreiben" || !schonDefiniert.has(e.id)) return;
-          if (knopf.querySelector(".gl-haken")) return;
-          knopf.appendChild(el("span", "gl-haken", "✓"));
+          marke.appendChild(el("span", "gl-haken", "✓"));
+          /* Ohne diesen Knopf waere ein Begriff nach einmal Definieren fuer
+             immer zu - der globale Reset nimmt nur ALLE auf einmal zurueck.
+             Er wirkt sitzungslokal: er streicht die Zeile aus der Merkliste und
+             oeffnet das Feld wieder. Das Log wird NICHT angefasst; schreibt
+             Rose nichts Neues, steht der Haken nach dem naechsten Laden wieder
+             da, und das ist ehrlich - es hat sich ja nichts geaendert. */
+          var nochmal = el("button", "gl-schalt gl-klein gl-nochmal", "↻ nochmal");
+          nochmal.title = "Nochmal selbst definieren";
+          nochmal.setAttribute("aria-label", "„" + e.begriff + "“ nochmal selbst definieren");
+          nochmal.addEventListener("click", function () {
+            schonDefiniert.delete(e.id);
+            hakenSetzen();
+            a.zu = false;          // gleich offen, damit das Feld sofort dasteht
+            detailZeichnen();
+            standAuffrischen();
+          });
+          marke.appendChild(nochmal);
         }
         hakenSetzen();
 
@@ -780,18 +827,36 @@ export function zeigeGlossar(themen, hooks) {
           if (!offen) return;
           detail = el("div", "gl-detail");
           if (modus() === "schreiben" && !schonDefiniert.has(e.id)) {
-            detail.appendChild(schreibKoerper(e, t, function (richtig) {
+            detail.appendChild(schreibKoerper(e, t, function (richtig, text) {
               if (richtig === null) return;   // nur aufgedeckt - kein Log
               /* Gleiche Form wie die Fachbegriffe-Runde, damit beide Wege in
                  EINEN Stand laufen: richtung "erklaeren" ist die Richtung, die
                  einen Begriff ueber R2 hebt. ausGlossar unterscheidet die
                  Herkunft, ohne die Auswertung zu aendern. */
-              logSpiel("glossar", e.id, richtig, { thema: e.thema, richtung: "erklaeren", ausGlossar: true });
-              schonDefiniert.add(e.id);
+              /* text reist im Log mit - dasselbe Feld, in dem auch die freien
+                 Aufgaben Roses Antwort tragen. Gedeckelt, weil das Log
+                 vollstaendig gesynct wird. */
+              logSpiel("glossar", e.id, richtig, {
+                thema: e.thema, richtung: "erklaeren", ausGlossar: true,
+                text: String(text || "").slice(0, 1000)
+              });
+              schonDefiniert.set(e.id, { richtig: !!richtig, text: String(text || "") });
               hakenSetzen();
               standAuffrischen();
             }));
           } else {
+            /* Ihre eigene Definition bleibt als Eintrag stehen (Jennifer,
+               23.08.: "und dann als eintrag bleiben"). Sie kommt aus dem
+               antwortLog, wandert also mit dem Sync aufs zweite Geraet und
+               ueberlebt jedes Neuladen - ohne ein neues Feld. */
+            var eig = schonDefiniert.get(e.id);
+            if (eig && eig.text) {
+              var meins = el("div", "gl-eigene");
+              meins.appendChild(el("div", "gl-eigene-titel",
+                eig.richtig ? "Deine Definition – saß:" : "Deine Definition:"));
+              meins.appendChild(el("div", null, eig.text));
+              detail.appendChild(meins);
+            }
             detail.appendChild(definitionEl(e, t, a.sprache, a.einfach));
             var q = quelleEl(e, t);
             if (q) detail.appendChild(q);

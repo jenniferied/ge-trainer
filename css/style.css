@@ -1978,6 +1978,32 @@ p { margin: 0 0 var(--sp-3); }
 
 /* Der Haken an einer schon definierten Zeile. Gruen, klein und NACH dem
    Begriff: er ist eine Randnotiz zum Wiederfinden, kein Gütesiegel. */
+/* Die Zeile traegt jetzt bis zu zwei Kinder nebeneinander (Begriff-Knopf und
+   die Marke rechts) und darunter das Detail. Der Begriff-Knopf stand auf
+   width: 100% - im Flex-Kontext muss das weichen, sonst schoebe er die Marke
+   aus der Zeile. Das Detail bricht per flex-basis auf die naechste Zeile um. */
+.gl-eintrag { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2); }
+.gl-eintrag > .gl-begriff { width: auto; flex: 1 1 auto; min-width: 0; }
+.gl-eintrag > .gl-detail { flex-basis: 100%; }
+.gl-zeilen-marke { display: flex; align-items: center; gap: var(--sp-2); flex: 0 0 auto; }
+.gl-zeilen-marke:empty { display: none; }
+.gl-nochmal { white-space: nowrap; }
+
+/* "Sitzt schon" an einer Zeile, die Rose in DIESER Liste noch nicht selbst
+   definiert hat. Bewusst leise: es ist eine Randnotiz, kein Haken - der Haken
+   gehoert allein dem Weg ueber diese Liste. */
+.gl-fremd { font-size: .72rem; font-weight: 500; color: var(--ink-soft); font-style: italic; }
+
+/* Ihre eigene Definition ueber der offiziellen. Abgesetzt, damit die beiden
+   nicht ineinanderlaufen - beim Wiederlesen soll auf einen Blick klar sein,
+   welcher Text von ihr ist. */
+.gl-eigene {
+  background: var(--paper-2); border-radius: var(--radius);
+  padding: var(--sp-3); margin-bottom: var(--sp-3);
+  border-left: 3px solid var(--tfarbe, var(--accent));
+}
+.gl-eigene-titel { font-size: .78rem; color: var(--ink-soft); margin-bottom: 4px; }
+
 .gl-haken { margin-left: var(--sp-2); color: var(--gut, #4ca97a); font-weight: 700; }
 .gl-definition { line-height: 1.55; }
 .gl-ar { font-size: 1.05rem; line-height: 1.9; }
