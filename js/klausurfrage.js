@@ -394,13 +394,40 @@ export function zeigeKlausurfrage(themen, hooks) {
     return a;
   }
 
-  /* Die Aufloesung zur Teile-Frage: die Kette in der Reihenfolge, in der sie
-     im Erwartungshorizont steht. Kein Ausrechnen von Prozenten - die Antwort
-     ist eine Bauanleitung und keine Note. */
+  /* Die Aufloesung zur Teile-Frage. Kein Ausrechnen von Prozenten - die Antwort
+     ist eine Bauanleitung und keine Note.
+
+     DER SATZ ZUR REIHENFOLGE STEHT NUR DA, WENN ER STIMMT. Die Rollen kommen in
+     der Reihenfolge des Korpus, und die folgt seit dem 23.08. der Reihenfolge
+     der Stichpunkte (Vertrag 1 verlangt das). Bei zehn von 165 Aufgaben ist das
+     NICHT die Reihenfolge der Kette - ko-f-3 zum Beispiel nennt das Dagegen vor
+     dem Dafuer, weil Muster und Erwartungshorizont es so tun. "In dieser
+     Reihenfolge kannst du sie hinschreiben" waere dort eine falsche Ansage, und
+     eine falsche Ansage im Aufdroesel-Schritt ist schlimmer als gar keine:
+     genau dafuer ist der Schritt da. Gesagt wird stattdessen, was in jedem Fall
+     wahr ist - so fragt die Uebung sie ab. */
   function teileAufloesung(f, rollen) {
     var kette = rollen.map(function (r) { return ROLLEN_NAME[r] || r; }).join(" · ");
-    return "Diese Aufgabe verlangt: " + kette
-      + ". In dieser Reihenfolge kannst du sie auch hinschreiben.";
+    var satz = inKettenfolge(rollen)
+      ? " In dieser Reihenfolge kannst du sie auch hinschreiben."
+      : " In dieser Reihenfolge fragt die Übung sie auch ab.";
+    return "Diese Aufgabe verlangt: " + kette + "." + satz;
+  }
+
+  /* Stehen die Rollen so, wie eine Kette sie vorsieht? Wahr, sobald EINE Kette
+     alle Rollen enthaelt und ihre Reihenfolge einhaelt. Aufgaben mit zwei
+     Operatoren im Stamm (fr-f-4 mischt bewerten und entwickeln) haben keine
+     gemeinsame Kette und fallen deshalb auf den vorsichtigen Satz zurueck. */
+  function inKettenfolge(rollen) {
+    for (var op in ROLLEN_KETTE) {
+      var k = ROLLEN_KETTE[op];
+      var pos = rollen.map(function (r) { return k.indexOf(r); });
+      if (pos.indexOf(-1) >= 0) continue;
+      var steigend = true;
+      for (var i = 1; i < pos.length; i++) if (pos[i] <= pos[i - 1]) steigend = false;
+      if (steigend) return true;
+    }
+    return false;
   }
 
   // Die Rueckmeldungs-Karte, wie sie schon die Stufenfrage benutzt.
