@@ -268,7 +268,12 @@ var SPIEL_TEXT = {
      SPIEL_ROUTE (main.js, sonst startet der 🔁-Knopf ein anderes Spiel) und in
      heuteGespielt (spiele.js, sonst zaehlt der Tag nicht). */
   "spiel-opzuordnen": { icon: "↔️", name: "Zuordnen", badge: "Spiel" },
-  "spiel-modelle": { icon: "🪪", name: "Modell-Steckbrief", badge: "Spiel" }
+  "spiel-modelle": { icon: "🪪", name: "Modell-Steckbrief", badge: "Spiel" },
+  /* Die Fallgeschichte (23.08.2026). Der Eintrag hier ist der Abschluss einer
+     gelesenen Folge; ihre Abruf-Antworten loggen bewusst als "themenlernen"
+     (Begruendung im Kopf von episode.js) und erscheinen dort. Badge "Lernen"
+     wie beim Themen-Lernen - eine Folge ist kein Spiel. */
+  "spiel-episode": { icon: "📖", name: "Episode", badge: "Lernen" }
 };
 
 function istSpielAntwort(a) { return a.modus === "spiel" || a.sid === "spiel"; }

@@ -31,6 +31,9 @@ import * as ThemenLernen from "./themen-lernen.js";
    Tuer soll dieselbe Portion und dasselbe Geruest zeigen wie das Themen-Lernen,
    und beide lesen dafuer denselben abgeleiteten Stand aus dem antwortLog. */
 import * as Reife from "./reife.js";
+// Die Fallgeschichte "Das erste Jahr" (23.08.2026). Kuratierte Folgen mit zwei
+// leichten Fragen im Fallgewand; Begruendung und Log-Schema im Kopf der Datei.
+import * as Episode from "./episode.js";
 // leseTabelle/fremdCache sind hier am 12.08. abends weggefallen: sie trugen nur
 // die events-Abfrage, mit der die Tageskacheln des ST-Trainers nachgebaut wurden.
 import { syncKarte, syncStart, setzeOffenZaehler, chatVerlauf, chatNotiere, loescheChatVerlauf,
@@ -150,6 +153,9 @@ function zeige(route, arg) {
        Der Router-Fall heisst seit dem 19.08. "themenlernen"; ein Legacy-Name
        braucht es nicht, die Route wird nur aus dieser Datei heraus gerufen. */
     case "themenlernen": return ThemenLernen.zeigeThemenLernen(themen, HOOKS);
+    // Die Fallgeschichte: Uebersicht der Folgen, Lesen und die zwei leichten
+    // Fragen laufen komplett im Modul; es braucht von hier nur den Rueckweg.
+    case "episode": return Episode.zeigeEpisoden(themen, HOOKS, function () { zeige("start"); });
     case "fachbegriffe": return Glossar.zeigeFachbegriffe(themen, HOOKS, function () { zeige("start"); });
     case "glossar": return Glossar.zeigeGlossar(themen, HOOKS);
     case "start":
@@ -172,6 +178,10 @@ var HOOKS = {
   // Der Weg aus dem Stoebern-Raum in die Fragen eines Themas - dieselbe
   // Themenansicht, die auch die Startseite oeffnet, kein zweiter Bau.
   thema: function (t) { zeige("thema", t); },
+  // Das Bild der Kreatur fuer den Episoden-Banner - dieselbe Quelle wie die
+  // KI-Sprechblasen (kiAvatarHtml unten, defensiv mit ""-Fallback), damit im
+  // Banner Roses ECHTES Tier mit Stufe und Farben schwebt und kein Double.
+  kiAvatar: function () { return kiAvatarHtml(); },
   mcKarte: function (thema, f, fortschritt, weiterText, onWeiter) { return mcKarte(thema, f, fortschritt, weiterText, onWeiter); },
   // einzeln: in den Runden steht genau EINE Karte auf dem Schirm, darum darf die
   // Uhr beim Rendern loslaufen. Auf der Themenseite stehen alle Aufgaben
@@ -1355,7 +1365,10 @@ var SPIEL_ROUTE = {
   // Ohne den Eintrag fuehrte der 🔁-Knopf einer Zuordnen- oder
   // Steckbrief-Zeile in den Begriffe-Blitz.
   "spiel-opzuordnen": "spiel-opz",
-  "spiel-modelle": "modelle"
+  "spiel-modelle": "modelle",
+  // Episode (23.08.2026): der 🔁-Knopf einer Episoden-Zeile fuehrt zur
+  // Folgen-Uebersicht - dieselbe Folge nochmal aufschlagen entscheidet Rose dort.
+  "spiel-episode": "episode"
 };
 
 function zuletztAktionen(r, aufNeu) {
@@ -2088,6 +2101,12 @@ function uebenKacheln() {
     ["📝", "MC", "Ankreuzen, Themen wählbar", function () { zeige("mcquer"); }],
     ["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]
   ];
+  /* Die Fallgeschichte (23.08.2026): direkt nach den drei Basis-Kacheln und
+     VOR Jennifers fester Schluss-Dreiergruppe (Kommentar unten). Ohne
+     episoden.json verschwindet die Kachel, wie bei Modellen und Begriffen. */
+  if (Episode.hatEpisoden()) {
+    kurz.push(["📖", "Episode", "Eine Folge aus Maras Klasse", function () { zeige("episode"); }]);
+  }
   /* DIE REIHENFOLGE AM SCHLUSS IST JENNIFERS (22.08.2026): "ordne die dann so:
      Modelle nach Thema, Begriffe nach Thema, Ganzer Stapel". Die drei gehoeren
      zusammen - zweimal dieselbe Bauform (ein Spiel, aber du waehlst das Thema
@@ -3887,7 +3906,7 @@ themeAnwenden();
 // Startseite zeigt den Begriffe-Blitz, und der wuerde sonst beim ersten Aufbau
 // fehlen und erst nach einem Seitenwechsel auftauchen. ladeBegriffe faengt
 // eigene Fehler ab und liefert dann null - der Boot kann daran nicht scheitern.
-Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren()])
+Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren(), Episode.ladeEpisoden()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
     // Erst JETZT anmelden, nicht frueher: tagesAufgaben() braucht themen (fuer

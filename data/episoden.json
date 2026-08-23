@@ -1,0 +1,130 @@
+{
+  "serie": {
+    "titel": "Das erste Jahr",
+    "hinweis": "Eine ausgedachte Geschichte zum Lernen: die Schule, das Team und die Kinder sind erfunden. Der Stoff dahinter kommt aus deinen Vorlesungen – die Fundstellen stehen unter jeder Folge.",
+    "prolog": {
+      "titel": "Die Kastanienhof-Schule",
+      "bloecke": [
+        {
+          "art": "text",
+          "text": "Komm, ich zeig dir was. Südlich von Berlin, kurz hinter der Stadtgrenze, steht ein roter Backsteinbau von 1907. Früher war das die Dorfschule, mit einem Klassenraum und einem Ofen. Heute ist es die Kastanienhof-Schule – eine Förderschule mit dem Förderschwerpunkt Geistige Entwicklung, rund sechzig Schüler:innen, kleine Klassen, und im Hof steht die Kastanie, die älter ist als das Haus. Im Herbst sammeln alle Klassen die Kastanien ein. Niemand weiß, wer damit angefangen hat. Es wird trotzdem jedes Jahr gemacht."
+        },
+        {
+          "art": "text",
+          "text": "Und hier arbeitet seit August Mara Winter, 27, erstes eigenes Klassenzimmer, dritte Tasse Tee vor der ersten Stunde. Ihr Weg hierher war kein gerader: erst zwei Semester BWL, weil das „was Vernünftiges“ war. Abgebrochen. Dann gejobbt, unter anderem als Schulbegleitung – und in genau so einer Klasse hat es klick gemacht. Also nochmal von vorn: Lehramt Sonderpädagogik in Potsdam, nebenbei gearbeitet, länger gebraucht als geplant. Ihr Praktikum hat sie hier gemacht, an der Kastanienhof-Schule. Danach wollte Frau Adler sie nicht mehr hergeben."
+        },
+        {
+          "art": "text",
+          "text": "Merk dir das mit dem Umweg. Mara hat lange gedacht, ihr Lebenslauf sei kaputt. Frau Adler hat dazu nur gesagt: „Die Besten hier sind alle über Umwege gekommen. Wer den geraden Weg kennt, kann ihn den Kindern nicht zeigen – die gehen nämlich auch keinen.“ In den Folgen begleiten wir Mara durch ihr erstes Jahr. Sie weiß noch längst nicht alles. Genau deshalb lernt sie so viel."
+        }
+      ]
+    }
+  },
+  "figuren": [
+    {
+      "name": "Mara Winter",
+      "emoji": "🧑‍🏫",
+      "rolle": "Klassenlehrerin, erstes Jahr",
+      "beschreibung": "27, hat über Umwege zur Sonderpädagogik gefunden (BWL abgebrochen, Schulbegleitung, Studium in Potsdam). Fragt viel, zweifelt manchmal, lernt schnell."
+    },
+    {
+      "name": "Frau Adler",
+      "emoji": "👩‍🦳",
+      "rolle": "Mentorin",
+      "beschreibung": "58, seit dreißig Jahren an der Kastanienhof-Schule. Ruhig, trinkt Kaffee aus einer Tasse mit Sprung, stellt Fragen statt Antworten zu geben."
+    },
+    {
+      "name": "Juna",
+      "emoji": "👧",
+      "rolle": "Schülerin, 9",
+      "beschreibung": "Mädchen, 9 Jahre, Down-Syndrom. Spricht wenige Worte und nutzt eine Kommunikationstafel. Liebt Musik und merkt sich jede Melodie."
+    },
+    {
+      "name": "Bela",
+      "emoji": "👦",
+      "rolle": "Schüler, 8",
+      "beschreibung": "Junge, 8 Jahre, geistige Behinderung (die Ärzte haben nie eine genaue Ursache gefunden). Immer in Bewegung – wo eine Kante ist, wird balanciert."
+    },
+    {
+      "name": "Samu",
+      "emoji": "🧒",
+      "rolle": "Schüler, 10",
+      "beschreibung": "Junge, 10 Jahre, Autismus und geistige Behinderung. Braucht feste Abläufe und liebt Pläne, Symbole und Haken zum Abhaken."
+    }
+  ],
+  "episoden": [
+    {
+      "id": "ep-unterrichtsformen",
+      "thema": "unterrichtsformen",
+      "nummer": 1,
+      "titel": "Stationen im Herbst",
+      "beleg": "Folie 15, Folie 16, Folie 24, Folie 27 und Folie 28; die Grundformen-Übersicht steht auf Folie 6.",
+      "bloecke": [
+        {
+          "art": "text",
+          "titel": "Montag, große Pause",
+          "text": "Mara lässt sich auf den Stuhl im Lehrerzimmer fallen. „Ich will das anders machen“, sagt sie zu Frau Adler. „Samu arbeitet nur, wenn sein Plan stimmt. Bela hält keine zwanzig Minuten am Tisch durch. Und Juna kommt bei meinem Frontalunterricht gar nicht erst vor. Ich hab gelesen, es gibt Freiarbeit – die Kinder entscheiden selbst, was sie lernen. Das mache ich. Ab morgen.“ Frau Adler rührt in ihrem Kaffee. „Ab morgen“, wiederholt sie, und man hört das Lächeln. „Weißt du, was passiert, wenn man einer Klasse, die nur Frontalunterricht kennt, am Montag die volle Freiheit hinstellt?“ Mara ahnt es. „Chaos?“ – „Ratlosigkeit. Freiheit muss man üben wie alles andere. Es gibt eine Treppe dafür, Stufe für Stufe.“"
+        },
+        {
+          "art": "mc",
+          "qid": "uf-mc-5",
+          "intro": "Frau Adler schiebt Mara einen Bierdeckel rüber und malt fünf Kästchen darauf. „Na los. In welcher Reihenfolge führt man das ein?“ Hilf Mara:"
+        },
+        {
+          "art": "text",
+          "titel": "Dienstag, Klassenraum",
+          "text": "Also keine Freiarbeit ab morgen. Aber eine Stufe auf der Treppe kann Mara nehmen: Lernen an Stationen. Das Thema liegt sowieso vor der Tür – im Hof fallen die Kastanien, auf dem Markt gibt es Äpfel und Pflaumen. „Herbstfrüchte“ steht am Mittwoch an der Tafel, und der Raum ist verwandelt: An einer Station wird Obst verdeckt ertastet und benannt. An der nächsten wird gerochen und geschmeckt. Eine Station macht Obstsalat, eine kocht Apfelkompott, an einer wird mit Obst einkaufen gespielt, an einer werden Wörter gelesen und gedruckt. Jedes Kind hat einen Laufzettel. Und dann passiert das, was Mara nicht geplant hat – und zwar im guten Sinn: Samu klemmt sich seinen Laufzettel unter den Arm wie einen Schatz und hakt jede Station ab. Bela wechselt zwischen den Stationen, und niemand muss ihn ermahnen – das Aufstehen gehört diesmal zum Unterricht. Und Juna bleibt lange an der Riech-Station, tippt auf ihrer Tafel das Feld „mehr“ und grinst."
+        },
+        {
+          "art": "text",
+          "titel": "Mittwoch, nach der Stunde",
+          "text": "„Und?“, fragt Frau Adler in der Tür. Mara strahlt und ist gleichzeitig fix und fertig. „Es hat funktioniert. Aber offen war das doch eigentlich kaum – ich habe das Thema bestimmt, die Stationen gebaut, den Laufzettel gedruckt.“ – „Sehr gut beobachtet“, sagt Frau Adler. „Öffnung ist keine Ja-Nein-Frage, sondern hat Dimensionen: Du hast heute geöffnet, WO gearbeitet wird, in welcher REIHENFOLGE und MIT WEM. Was gelernt wird, hast du festgelegt – und das war auch richtig so. Ganz offen wird es erst viel später auf der Treppe.“ Sie stellt ihre Tasse ab. „Die fünf Dimensionen – die solltest du dir merken, die fragen sie dir in jeder Prüfung ab.“"
+        },
+        {
+          "art": "abruf",
+          "qid": "uf-f-1",
+          "intro": "Mara kramt ihre Karteikarten raus. Zieh mit ihr die fünf Dimensionen der Öffnung zusammen – ganz entspannt, antippen reicht:"
+        },
+        {
+          "art": "text",
+          "titel": "Abspann",
+          "text": "Am Freitag steht auf Maras Schreibtisch ein Glas Apfelkompott, Etikett in Kinderschrift: „Für Frau Winter“. Daneben liegt Samus Laufzettel, alle sieben Haken gesetzt, und ein Zettel von Frau Adler: „Nächste Stufe: Tagesplan. Aber erst nächsten Monat. Treppe, nicht Aufzug.“ Mara klebt beides in ihr Notizbuch. Offen heißt nicht ohne Plan, schreibt sie darunter. Offen heißt: der Plan lässt Türen auf."
+        }
+      ]
+    },
+    {
+      "id": "ep-entwicklungsbereiche",
+      "thema": "entwicklungsbereiche",
+      "nummer": 7,
+      "titel": "Vier Blickwinkel",
+      "beleg": "Die vier Bereiche mit den Kommunikationsformen stehen auf Folie 10, das KMK-Zitat auf Folie 9, die Förderwege außerhalb des Unterrichts auf Folie 17, die Definition des dualen Unterrichts auf Folie 19 und das Fünf-Sinne-Beispiel auf Folie 25.",
+      "bloecke": [
+        {
+          "art": "text",
+          "titel": "Montag, 8:05 Uhr",
+          "text": "Die Kinder kommen an, und Mara steht mitten im Raum und sieht zwanzig Dinge gleichzeitig: Juna tippt auf ihrer Kommunikationstafel und zeigt ihr das Feld „Musik?“. Bela nimmt nicht den Weg zu seinem Platz, sondern die Route über die Teppichkante, Arme ausgebreitet, volle Konzentration. Samu rückt seinen Stuhl gerade, exakt parallel zur Tischkante, und schaut erst dann auf. In der Pause sagt Mara es laut: „Ich sehe so viel – und ich weiß nicht, welche davon die wichtigen Dinge sind.“ Frau Adler nickt, als hätte sie darauf gewartet. „Das weiß am Anfang niemand. Aber es gibt eine Landkarte dafür. Die KMK sortiert genau das, was du heute Morgen gesehen hast, in vier Entwicklungsbereiche.“"
+        },
+        {
+          "art": "abruf",
+          "qid": "eb-f-1",
+          "intro": "Frau Adler schiebt Mara einen Zettel rüber: „Welche vier?“ Zieh sie mit ihr zusammen – antippen reicht:"
+        },
+        {
+          "art": "text",
+          "titel": "Mit der Landkarte",
+          "text": "Und plötzlich sieht Mara die Morgenszene neu. Junas Tafel: Kommunikation – basal und nonverbal stehen sogar ausdrücklich als eigene Formen in der Übersicht, neben mündlich und schriftlich. Belas Teppichkanten-Balance: Motorik und Wahrnehmung. Samus Stuhl: emotionale und soziale Entwicklung – Verlässlichkeit ist für ihn keine Marotte, sie ist sein Boden. Und als Juna später das Steckpuzzle auf einem Weg löst, den niemand vorgemacht hat, denkt Mara: Kognition. Problemlösen. „Okay“, sagt sie nachmittags zu Frau Adler, „und wann fördere ich das alles? In Extra-Stunden?“ – „Manches ja. Vieles passiert nebenbei: beim Essen, in den Pausen, in der Pflege, über die Eltern. Aber rechne mal nach, was der größte Teil des Schultags ist.“ Mara überlegt. „Unterricht.“ – „Eben. Wenn Förderung nur außerhalb stattfindet, verschenkst du den größten Raum. Dafür gibt es ein Konzept, und das solltest du beim Namen kennen.“"
+        },
+        {
+          "art": "mc",
+          "qid": "eb-mc-6",
+          "intro": "„Dualer Unterricht“, sagt Frau Adler. „Was heißt das genau?“ Hilf Mara bei der Antwort:"
+        },
+        {
+          "art": "text",
+          "titel": "Abspann",
+          "text": "Am Abend sitzt Mara über ihrer Planung für die nächste Sachunterrichtsreihe: „Unsere fünf Sinne“. Ihr fällt auf, dass Fachziel und Entwicklungsziel hier fast dasselbe sind – Wahrnehmung lernen, indem man Wahrnehmung übt. Sie ahnt, dass das nicht immer so bequem sein wird. Aber das ist eine andere Folge. Sie weiß noch längst nicht alles. Sie hat eine Landkarte."
+        }
+      ]
+    }
+  ]
+}

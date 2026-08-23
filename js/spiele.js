@@ -172,7 +172,7 @@ export function heuteGespielt() {
      bis zum 19.08.2026, und Roses Lernstand traegt die alten Eintraege noch.
      opzuordnen (Zuordnen-Tageskachel) und modelle (Modell-Steckbrief) sind
      die zwei Neuen vom 22.08. */
-  var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0, opzuordnen: 0, modelle: 0 };
+  var s = { operatoren: 0, begriffe: 0, glossar: 0, themenlernen: 0, tagesspiel: 0, opzuordnen: 0, modelle: 0, episode: 0 };
   state.antwortLog.forEach(function (a) {
     // teilschritt: Unterschritt einer Frage, zaehlt nicht als eigene (core.js).
     if (a.teilschritt === true) return;
