@@ -2629,12 +2629,23 @@ p { margin: 0 0 var(--sp-3); }
    sieht in jedem Browser anders aus, und Safari zeigt ihn ueberhaupt nur ueber
    ::-webkit-details-marker. Ein gedrehtes ▸ sieht ueberall gleich aus und
    animiert mit. */
+/* Sichtbarer als vorher (23.08.2026): Rose hat die Auswahl beim Vorfuehren
+   schlicht uebersprungen - zugeklappt sah sie aus wie eine Beschriftung mit
+   einer dunklen "alle"-Pille daneben, nicht wie etwas, das man antippt.
+   Jetzt ein eigener Kasten mit Rahmen und Hoverflaeche, also erkennbar ein
+   Bedienelement. Der Inhalt ist unveraendert. */
 .wahl-summary {
   cursor: pointer;
   display: flex; align-items: baseline; gap: var(--sp-3);
-  padding: var(--sp-2) 0;
+  padding: var(--sp-3);
   list-style: none;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-2);
+  transition: border-color .15s ease;
 }
+.wahl-summary:hover { border-color: var(--tfarbe, var(--accent)); }
+details[open] > .wahl-summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 /* Safari zeigt den Marker sonst zusaetzlich zum eigenen Dreieck. */
 .wahl-summary::-webkit-details-marker { display: none; }
 .wahl-summary::before {

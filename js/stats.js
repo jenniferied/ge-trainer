@@ -11,7 +11,7 @@
      hooks.freiKarte(thema, f)                                   -> Frei-Karte */
 
 import { state, speichern, app, el, leeren, starteRunde, beendeRunde,
-  merkeOffeneKarte, vergissOffeneKarte, offeneKarte } from "./core.js";
+  merkeOffeneKarte, vergissOffeneKarte, offeneKarte, afbZuFrueh} from "./core.js";
 import { themeKnopf, setzeFarbe, standStickerEl, quoteStufe, quotePille, rundenSetup, rundenEinstellungen, rundenEinstellungenMerken, rundenZeilen, themenAuswahl } from "./ui.js";
 
 /* ---------- Bewertung einer Antwort ----------
@@ -1412,7 +1412,17 @@ export function zeigeNeu(themen, hooks) {
     var g = auswahl.gewaehlt();
     var erlaubt = {};
     g.unterthemen.forEach(function (k) { erlaubt[k] = true; });
-    var gefiltert = pool.filter(function (i) { return erlaubt[i.thema.id + "/" + i.f.unterthema]; });
+    /* Kaltstart-Sperre wie in klausurfrage.js (23.08.2026, nach einem Abbruch):
+       "5 neue" hat gar keine AFB-Wahl, hier kann Rose die Stufe also nicht selbst
+       bestimmen - umso wichtiger, dass keine AFB-III-Aufgabe aus einem kalten
+       Thema kommt. Ungesehen wiegt in gewichtNeu() am schwersten, sie waere sonst
+       der wahrscheinlichste Treffer. Begruendung bei afbZuFrueh in core.js. */
+    var gefiltert = pool.filter(function (i) {
+      return erlaubt[i.thema.id + "/" + i.f.unterthema] && !afbZuFrueh(i.thema.id, i.f.afb);
+    });
+    if (!gefiltert.length) {
+      gefiltert = pool.filter(function (i) { return erlaubt[i.thema.id + "/" + i.f.unterthema]; });
+    }
     if (!gefiltert.length) { leerHinweis.hidden = false; return; }
     mixRunde(gefiltert, themen, hooks, "neu", { anzahl: 5, auswahl: "neu" });
   });

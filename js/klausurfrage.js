@@ -53,7 +53,7 @@
    Baustein-Items dieser Aufgabe, und ein geratenes AFB haette die Reife eines
    Bausteins gesenkt, den Rose nie gesehen hat. */
 
-import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile, logAntwort } from "./core.js";
+import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile, logAntwort, afbZuFrueh } from "./core.js";
 import { stickerEl, setzeFarbe, themenAuswahl, afbAuswahl } from "./ui.js";
 import { afbAnalyse, afbOption, afbKurz, ROLLEN_KETTE, ROLLEN_NAME,
          rollenName, ROLLEN_ANZAHL, ANZAHL_HINWEIS } from "./spiele.js";
@@ -210,9 +210,25 @@ export function zeigeKlausurfrage(themen, hooks) {
       var stufen = stufenWahl.gewaehlt();
       var erlaubt = {};
       g.unterthemen.forEach(function (k) { erlaubt[k] = true; });
+      /* Kaltstart-Sperre (23.08.2026, nach einem Abbruch): AFB III kommt aus
+         einem Thema nur, wenn dort schon etwas Leichteres sitzt. Waehlt Rose
+         AFB III ausdruecklich als EINZIGE Stufe, gilt ihre Wahl - die Sperre
+         greift nur gegen die Voreinstellung "alles an". Begruendung ausfuehrlich
+         bei afbZuFrueh in core.js. */
+      var selbstGewaehlt = stufen.length === 1;
       var gefiltert = pool.filter(function (i) {
-        return erlaubt[i.thema.id + "/" + i.f.unterthema] && stufen.indexOf(i.f.afb) >= 0;
+        if (!erlaubt[i.thema.id + "/" + i.f.unterthema]) return false;
+        if (stufen.indexOf(i.f.afb) < 0) return false;
+        if (!selbstGewaehlt && afbZuFrueh(i.thema.id, i.f.afb)) return false;
+        return true;
       });
+      // Sperrt die Regel alles weg, faellt sie: lieber eine zu schwere Aufgabe
+      // als ein leerer Schirm, der wie ein Defekt aussieht.
+      if (!gefiltert.length) {
+        gefiltert = pool.filter(function (i) {
+          return erlaubt[i.thema.id + "/" + i.f.unterthema] && stufen.indexOf(i.f.afb) >= 0;
+        });
+      }
       if (!gefiltert.length) { leerHinweis.hidden = false; return; }
       /* Nur EINE Stufe angehakt heisst: Rose hat die Anforderungsstufe selbst
          bestimmt, und die Frage danach waere ihre eigene Antwort. Genau das

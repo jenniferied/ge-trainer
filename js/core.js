@@ -497,6 +497,49 @@ export function freiStand(thema) {
    ob ueberhaupt ein Eintrag existiert, waehrend angeschaut die Eintraege
    ZAEHLT. Getrennt, weil die Karte bei unberuehrt bewusst KEINE 0-%-Warnfarbe
    zeigt - unbearbeitet ist nicht dasselbe wie schwach. */
+/* ---------- Kaltstart-Sperre fuer hohe Anforderungsstufen ----------
+
+   WARUM ES DAS GIBT (23.08.2026, nach einem echten Vorfall):
+   Rose hat beim Vorfuehren der neuen Funktionen die Auswahl uebersprungen, sofort
+   eine AFB-III-Aufgabe aus einem Thema bekommen, das sie noch nicht kannte, und
+   danach abgebrochen. Das war kein Zufall, sondern die Ziehformel: sie gewichtet
+   UNGESEHENES am hoechsten (Faktor 8), und eine ungesehene AFB-III-Aufgabe aus
+   einem kalten Thema ist damit der wahrscheinlichste Treffer ueberhaupt. Dasselbe
+   Muster steht seit dem 19.08. im Lernstand (23:44 Uhr, zwei AFB-III-Aufgaben im
+   freien Abruf, Quote 0) - es war nur nie als Formel erkannt worden.
+
+   DIE REGEL: AFB III wird aus einem Thema nur gezogen, wenn dort schon etwas
+   Leichteres SITZT. Sitzt nichts, ist die Stufe fuer dieses Thema gesperrt.
+   Das ist bewusst eine reine VERENGUNG des Pools - sie kann nichts kaputtmachen,
+   nur etwas zu frueh Kommendes verhindern.
+
+   WAS SIE NICHT TUT: Rose bevormunden. Waehlt sie AFB III ausdruecklich selbst
+   an (nur diese eine Stufe angehakt), gilt ihre Wahl - die Sperre greift nur
+   gegen die VOREINSTELLUNG "alles an". Der Nordstern in der ROADMAP ("von easy
+   to hard, ueberall") ist die grosse Fassung davon; das hier ist der Riegel, der
+   sofort noetig war. */
+/* Die Frage-Ids tragen ein kurzes Themenkuerzel ("eb-f-1"), nicht den vollen
+   Slug ("entwicklungsbereiche") - ein startsWith geht also nicht. Die Zuordnung
+   wird beim Laden einmal gefuellt (merkeThemenIds in main.js). Ist sie leer,
+   liefert afbZuFrueh true und sperrt lieber zu viel als zu frueh zu oeffnen. */
+var THEMA_VON_ID = Object.create(null);
+export function merkeThemenIds(themen) {
+  (themen || []).forEach(function (t) {
+    (t.frei || []).forEach(function (f) { THEMA_VON_ID[f.id] = t.id; });
+    (t.mc || []).forEach(function (f) { THEMA_VON_ID[f.id] = t.id; });
+  });
+}
+
+export function afbZuFrueh(themaId, afb) {
+  if (Number(afb) < 3) return false;
+  var sitzt = false;
+  Object.keys(state.frei || {}).forEach(function (id) {
+    if (sitzt || state.frei[id] !== "gut") return;
+    if (THEMA_VON_ID[id] === themaId) sitzt = true;
+  });
+  return !sitzt;
+}
+
 export function themenStand(thema) {
   var mc = mcStand(thema), fr = freiStand(thema);
   var gesamt = mc.gesamt + fr.gesamt;

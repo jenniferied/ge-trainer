@@ -3,7 +3,7 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, themenStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
-  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen } from "./core.js";
+  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen, merkeThemenIds} from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, standPille, rundenPille, punkteText, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
 // Papier abfotografieren / Bild hochladen. Liefert dieselben Bilder wie der
@@ -3909,6 +3909,9 @@ themeAnwenden();
 Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren(), Episode.ladeEpisoden()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
+    // Frage-Id -> Thema. Braucht afbZuFrueh() (Kaltstart-Sperre) und muss stehen,
+    // BEVOR irgendein Modus zieht - eine leere Zuordnung sperrt lieber zu viel.
+    merkeThemenIds(themen);
     // Erst JETZT anmelden, nicht frueher: tagesAufgaben() braucht themen (fuer
     // den Wiederholen-Pool) und die geladenen Begriffe. Vorher waere die Liste
     // kuerzer und wir schrieben zu WENIG offene Aufgaben in den Lernstand — also
