@@ -63,12 +63,12 @@
         {
           "art": "text",
           "titel": "Montag, große Pause",
-          "text": "Mara lässt sich auf den Stuhl im Lehrerzimmer fallen. „Ich will das anders machen“, sagt sie zu Frau Adler. „Samu arbeitet nur, wenn sein Plan stimmt. Bela hält keine zwanzig Minuten am Tisch durch. Und Juna kommt bei meinem Frontalunterricht gar nicht erst vor. Ich hab gelesen, es gibt Freiarbeit – die Kinder entscheiden selbst, was sie lernen. Das mache ich. Ab morgen.“ Frau Adler rührt in ihrem Kaffee. „Ab morgen“, wiederholt sie, und man hört das Lächeln. „Weißt du, was passiert, wenn man einer Klasse, die nur Frontalunterricht kennt, am Montag die volle Freiheit hinstellt?“ Mara ahnt es. „Chaos?“ – „Ratlosigkeit. Freiheit muss man üben wie alles andere. Es gibt eine Treppe dafür, Stufe für Stufe.“"
+          "text": "Mara lässt sich auf den Stuhl im Lehrerzimmer fallen. „Ich will das anders machen“, sagt sie zu Frau Adler. „Samu arbeitet nur, wenn sein Plan stimmt. Bela hält keine zwanzig Minuten am Tisch durch. Und Juna kommt bei meinem Frontalunterricht gar nicht erst vor. Ich hab gelesen, es gibt Freiarbeit – die Kinder entscheiden selbst, was sie lernen. Das mache ich. Ab morgen.“ Frau Adler rührt in ihrem Kaffee. „Ab morgen“, wiederholt sie, und man hört das Lächeln. „Weißt du, was passiert, wenn man einer Klasse, die nur Frontalunterricht kennt, am Montag die volle Freiheit hinstellt?“ Mara ahnt es. „Chaos?“ – „Ratlosigkeit. Freiheit muss man üben wie alles andere. Es gibt eine Treppe dafür: erst eine Einführung, dann Tagesplan, Stationen, Wochenplan – Freiarbeit kommt ganz am Ende.“ Sie stellt die Tasse ab. „Aber bevor du irgendetwas öffnest, musst du wissen, was du da öffnest. Unterricht hat drei Grundformen – individualisiert, kooperativ, gemeinsam – und jede Methode hat darin ihren Platz.“ Sie tippt auf Maras Vorbereitungsheft, wo „Lehrgang: Schneiden mit der Schere“ steht."
         },
         {
           "art": "mc",
-          "qid": "uf-mc-5",
-          "intro": "Frau Adler schiebt Mara einen Bierdeckel rüber und malt fünf Kästchen darauf. „Na los. In welcher Reihenfolge führt man das ein?“ Hilf Mara:"
+          "qid": "uf-gen-mc-1",
+          "intro": "„Na?“, fragt Frau Adler. „Dein Lehrgang da – zu welcher Grundform gehört der?“ Hilf Mara:"
         },
         {
           "art": "text",

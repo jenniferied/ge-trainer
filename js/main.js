@@ -2101,12 +2101,12 @@ function uebenKacheln() {
     ["📝", "MC", "Ankreuzen, Themen wählbar", function () { zeige("mcquer"); }],
     ["🔤", "Fachbegriffe", "Das richtige Wort abrufen", function () { zeige("fachbegriffe"); }]
   ];
-  /* Die Fallgeschichte (23.08.2026): direkt nach den drei Basis-Kacheln und
-     VOR Jennifers fester Schluss-Dreiergruppe (Kommentar unten). Ohne
-     episoden.json verschwindet die Kachel, wie bei Modellen und Begriffen. */
-  if (Episode.hatEpisoden()) {
-    kurz.push(["📖", "Episode", "Eine Folge aus Maras Klasse", function () { zeige("episode"); }]);
-  }
+  /* KEINE Episode-Kachel mehr (Jennifer, 23.08. nachts, wenige Stunden nach
+     dem Einbau): "ich brauche episode als themenlernspiel intro immer, nicht
+     als einzelding - themenlernen soll interessant fuer sie werden." Die
+     Folgen laufen seitdem als Intro der Themen-Lernen-Sitzung
+     (themen-lernen.js material()); die Route "episode" bleibt als Bibliothek
+     zum Nochmal-Lesen und als Ziel der Verlaufszeile bestehen. */
   /* DIE REIHENFOLGE AM SCHLUSS IST JENNIFERS (22.08.2026): "ordne die dann so:
      Modelle nach Thema, Begriffe nach Thema, Ganzer Stapel". Die drei gehoeren
      zusammen - zweimal dieselbe Bauform (ein Spiel, aber du waehlst das Thema

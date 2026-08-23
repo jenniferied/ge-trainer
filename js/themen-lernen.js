@@ -50,6 +50,11 @@ import { abrufKarte, abschnitteFuer, abschnittZeilen, distraktorenFuer, operator
 import { begriffeFuerTagesspiel, begriffErklaerKarte, begriffKarte, eintraegeZu, hatGlossar } from "./glossar.js";
 import { materialKarteFuer } from "./stoebern.js";
 import { bausteinBudget, faellig, heuteTag, lerntage, modusFuer, reifeStand, STUFEN_MAX } from "./reife.js";
+/* Die Fallgeschichte (23.08.2026 nachts): die Episode ist das INTRO der
+   Sitzung, kein eigenes Spiel - Jennifer woertlich: "themenlernen soll
+   interessant fuer sie werden, das ist der main progressive hebel". Das Modul
+   importiert seinerseits kein themen-lernen (Zyklus-frei). */
+import { episodeFuer, istGelesen, spieleAlsIntro } from "./episode.js";
 
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
    Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
@@ -701,8 +706,23 @@ export function zeigeThemenLernen(themen, hooks) {
     return b;
   }
 
-  /* ---------- Schirm 2: Material ---------- */
+  /* ---------- Schirm 2: Material ----------
+     Davor liegt seit dem 23.08. die EPISODE des Themas, wenn sie noch
+     ungelesen ist: die Geschichte fuehrt in die Sitzung hinein, ihre zwei
+     leichten Fragen loggen wie normale Schritte (episode.js, Kopfkommentar).
+     Ueberspringen ist eine leise Zeile und loggt nichts - dann kommt die
+     Folge beim naechsten Sitzungsstart wieder. */
   function material(thema) {
+    var ep = episodeFuer(thema.id);
+    if (ep && !istGelesen(ep)) {
+      return spieleAlsIntro(thema, themen, hooks,
+        function () { materialSchirm(thema); },
+        function () { start(); });
+    }
+    materialSchirm(thema);
+  }
+
+  function materialSchirm(thema) {
     leeren();
     setzeFarbe(app, thema.farbe);
     var z = el("button", "zurueck", "← Anderes Thema");
@@ -716,6 +736,20 @@ export function zeigeThemenLernen(themen, hooks) {
     app.appendChild(kopf);
 
     app.appendChild(materialKarteFuer(thema, hooks));
+
+    /* Der Rueckweg zur Geschichte, wenn sie schon gelesen ist - eine leise
+       Zeile, kein zweiter Einstieg. Das Nochmal-Lesen loggt einen weiteren
+       Abschluss-Eintrag; der Gelesen-Haken fragt nur nach Existenz. */
+    var epNochmal = episodeFuer(thema.id);
+    if (epNochmal && istGelesen(epNochmal)) {
+      var nl = el("button", "episode-skip", "📖 Folge " + epNochmal.nummer + " nochmal lesen");
+      nl.addEventListener("click", function () {
+        spieleAlsIntro(thema, themen, hooks,
+          function () { materialSchirm(thema); },
+          function () { materialSchirm(thema); });
+      });
+      app.appendChild(nl);
+    }
 
     var weiter = el("div", "karte tl-tuer");
     weiter.appendChild(el("h2", null, "Wenn du bereit bist"));

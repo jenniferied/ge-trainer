@@ -2790,3 +2790,6 @@ details.afb-wahl,
 .episode-abspann { border-left: 4px solid var(--ok); }
 .episode-abspann-titel { font-weight: 600; margin-bottom: var(--sp-2); }
 .episode-beleg { font-size: .85rem; color: var(--ink-soft); }
+.episode-skip { display: block; margin: var(--sp-2) auto var(--sp-4); background: none;
+  border: none; padding: var(--sp-2); font: inherit; font-size: .85rem;
+  color: var(--ink-soft); text-decoration: underline; cursor: pointer; }
