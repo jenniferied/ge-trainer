@@ -1958,6 +1958,27 @@ p { margin: 0 0 var(--sp-3); }
 .gl-eintrag.offen .gl-begriff { color: var(--tfarbe); }
 .gl-unsicher { font-size: .72rem; font-weight: 500; color: var(--ink-soft); font-style: italic; }
 .gl-detail { padding: 0 0 var(--sp-3); }
+
+/* ---- Glossar: Sehen gegen Selbst-Definieren (23.08.2026) ---- */
+
+/* Die Umschaltzeile steht unter den Themen-Chips und traegt Abstand nach oben,
+   damit sie nicht wie ein weiterer Themenfilter aussieht - sie schaltet die
+   ganze Seite um, nicht ihren Inhalt. */
+.gl-modus-zeile { margin-top: var(--sp-3); }
+
+.gl-schreibstand {
+  display: flex; align-items: center; gap: var(--sp-2);
+  flex-wrap: wrap; margin-top: var(--sp-2); font-size: .85rem;
+}
+
+/* Der Schreib-Koerper einer Zeile. Etwas Luft nach oben, damit das Eingabefeld
+   nicht am Begriff klebt - der Begriff IST hier die Frage. */
+.gl-schreib { padding-top: var(--sp-2); }
+.gl-schreib .knopf-reihe { margin-top: var(--sp-2); }
+
+/* Der Haken an einer schon definierten Zeile. Gruen, klein und NACH dem
+   Begriff: er ist eine Randnotiz zum Wiederfinden, kein Gütesiegel. */
+.gl-haken { margin-left: var(--sp-2); color: var(--gut, #4ca97a); font-weight: 700; }
 .gl-definition { line-height: 1.55; }
 .gl-ar { font-size: 1.05rem; line-height: 1.9; }
 .gl-maschinell { font-size: .75rem; color: var(--ink-soft); font-style: italic; margin-top: var(--sp-1); }

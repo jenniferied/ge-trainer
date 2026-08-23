@@ -31,7 +31,7 @@
    ABHAENGIGKEITEN: core.js, ui.js, beleg.js, spiele.js (logSpiel, zieh-Muster).
    Kein Import von main.js (Zyklus). */
 
-import { app, el, leeren, state } from "./core.js";
+import { app, el, leeren, state, speichern } from "./core.js";
 import { themeKnopf, setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
 import { belegZeile, quelleZeile } from "./beleg.js";
 import { logSpiel } from "./spiele.js";
@@ -300,11 +300,48 @@ var SPRACHEN = [
    spraenge beim Tippen jeder Eintrag zurueck auf Deutsch und aufgeklappt. */
 var eintragsAnzeige = new Map();
 
+/* ---------- Sehen oder selbst definieren (Jennifer, 23.08.2026) ----------
+
+   Der Modus ueberlebt den Reload. Rose soll ueber MEHRERE SITZUNGEN
+   zurueckkommen und sich durch die 131 Begriffe schreiben koennen, ohne ihn
+   jedes Mal neu zu waehlen - er liegt deshalb in `state` (geraetelokal wie
+   state.theme) und ausdruecklich NICHT in eintragsAnzeige, das ein
+   Modul-Map ist und mit jedem Neuladen stirbt. */
+function modus() { return state.glossarModus === "schreiben" ? "schreiben" : "sehen"; }
+function modusSetzen(m) { state.glossarModus = m; speichern(); }
+
+/* Welche Begriffe Rose seit dem letzten Zuruecksetzen SELBST definiert hat.
+   Abgeleitet aus dem antwortLog, kein neues Sync-Feld - dieselbe Hausregel wie
+   ueberall hier (Log = Wahrheit, Stand = abgeleitet). Gezaehlt wird nur die
+   ERKLAER-Richtung: die Tipp-Richtung ist Wiedererkennen, kein Definieren.
+
+   Zurueckgesetzt wird ueber einen Datums-Stempel, nicht durch Loeschen -
+   dasselbe Muster wie TL_NEUSTART im Themen-Lernen. Roses Log bleibt
+   unangetastet, und ihr Reife-Stand auch: der Stempel steuert allein diese
+   Fortschrittsanzeige. */
+function selbstDefiniert() {
+  var seit = state.glossarSchreibStart || 0;
+  var s = new Set();
+  state.antwortLog.forEach(function (a) {
+    if (a.modus !== "spiel" || a.spiel !== "glossar") return;
+    if (a.richtung !== "erklaeren") return;
+    if ((a.ts || 0) < seit) return;
+    s.add(a.qid);
+  });
+  return s;
+}
+
 function anzeigeVon(id) {
   var a = eintragsAnzeige.get(id);
-  if (!a) { a = { sprache: "de", einfach: false, zu: false }; eintragsAnzeige.set(id, a); }
+  // zu === null heisst "Rose hat diese Zeile noch nicht angefasst" - dann
+  // entscheidet der Modus (siehe istOffen). Ein hart gesetztes false wuerde
+  // im Stift-Modus alles aufgeklappt zeigen.
+  if (!a) { a = { sprache: "de", einfach: false, zu: null }; eintragsAnzeige.set(id, a); }
   return a;
 }
+
+// Sehen-Modus: offen, bis Rose zuklappt. Stift-Modus: zu, bis sie aufklappt.
+function istOffen(a) { return a.zu === null ? modus() === "sehen" : !a.zu; }
 
 /* Die ausgeblendeten Themen - gespeichert wird das Weggeschaltete, nicht das
    Angeschaltete. So ist der Default (leere Menge) alles an, und ein spaeter
@@ -385,6 +422,117 @@ function auchZeile(e) {
    "das auch anzeigen bei ki auswertung" (Jennifer): welche Glossar-Begriffe
    in Stichpunkten oder Musterloesung der Aufgabe vorkommen, als antippbare
    Reihe - ein Tipp klappt die Definition direkt darunter auf. */
+/* Der Schreib-Koerper einer Glossarzeile im Stift-Modus.
+
+   BEWUSST NICHT begriffErklaerKarte. Die Karte der Fachbegriffe-Runde traegt
+   eine dreistufige Hinweisleiter (fehlt-Kern -> halbe Definition -> volle
+   Aufloesung mit "Haett ichs gewusst?"). Dort ist sie richtig: die Runde hat
+   zwoelf Karten, und die Eskalation IST der Punkt. Hier steht Rose vor 131
+   Zeilen und hat einen einzigen Schritt beschrieben - hinschreiben, aufdecken,
+   richtig oder falsch. Geteilt wird deshalb der KI-Aufruf (Llm.begriffAbgleich),
+   nicht die Karte.
+
+   fertigCb(richtig) meldet das Ergebnis nach oben; `null` heisst "nur
+   aufgedeckt" und wird nicht geloggt. */
+function schreibKoerper(e, thema, fertigCb) {
+  var box = el("div", "gl-schreib");
+  var eingabe = document.createElement("textarea");
+  eingabe.className = "gl-erklaer-eingabe";
+  eingabe.rows = 3;
+  eingabe.placeholder = "Was bedeutet der Begriff? In deinen Worten …";
+  box.appendChild(eingabe);
+
+  var reihe = el("div", "knopf-reihe");
+  var pruefen = el("button", "knopf", "Prüfen");
+  var nurAuf = el("button", "knopf sekundaer", "👁 Nur aufdecken");
+  reihe.appendChild(pruefen);
+  reihe.appendChild(nurAuf);
+  box.appendChild(reihe);
+
+  var fertig = false;
+
+  function definitionAnhaengen() {
+    box.appendChild(definitionEl(e, thema, "de", false));
+    var q = quelleEl(e, thema);
+    if (q) box.appendChild(q);
+  }
+
+  function aufloesung(kopfText, klasse, stickerArt, satz) {
+    eingabe.disabled = true;
+    reihe.remove();
+    var erk = el("div", "erklaerung " + klasse);
+    var stk = stickerEl(stickerArt);
+    if (stk) erk.appendChild(stk);
+    var text = el("div", "text");
+    text.appendChild(el("div", "titel", kopfText));
+    if (satz) text.appendChild(belegZeile("div", satz, idVon(thema), "muted"));
+    erk.appendChild(text);
+    box.appendChild(erk);
+    definitionAnhaengen();
+  }
+
+  /* Nur aufdecken zaehlt NICHT als Frage. Wer die Antwort ansieht, ohne sie
+     versucht zu haben, hat nichts abgerufen - ein Log-Eintrag hier wuerde den
+     Reife-Stand des Begriffs anheben, ohne dass etwas gesessen haette. */
+  nurAuf.addEventListener("click", function () {
+    if (fertig) return;
+    fertig = true;
+    aufloesung("Angesehen – zählt nicht als Abruf.", "schade", "sanft", null);
+    fertigCb(null);
+  });
+
+  function werte(richtig, kopfText, klasse, stickerArt, satz) {
+    fertig = true;
+    aufloesung(kopfText, klasse, stickerArt, satz);
+    fertigCb(!!richtig);
+  }
+
+  /* Ohne Netz oder ohne Tagesbudget entscheidet Rose selbst - dieselbe Regel
+     wie in der Fachbegriffe-Runde ("Roses Urteil gilt"). Die App bleibt damit
+     auch offline benutzbar, nur eben ohne KI-Satz. */
+  function selbstUrteil() {
+    fertig = true;
+    eingabe.disabled = true;
+    reihe.remove();
+    definitionAnhaengen();
+    var frage = el("div", "treppe-frage");
+    frage.appendChild(el("span", "muted", "Hast du das getroffen?"));
+    var r2 = el("div", "knopf-reihe");
+    [{ t: "Ja, saß", r: true }, { t: "Noch nicht", r: false }].forEach(function (o) {
+      var b = el("button", "knopf sekundaer", o.t);
+      b.addEventListener("click", function () { r2.remove(); fertigCb(o.r); });
+      r2.appendChild(b);
+    });
+    frage.appendChild(r2);
+    box.appendChild(frage);
+  }
+
+  function pruefe() {
+    if (fertig) return;
+    var text = eingabe.value.trim();
+    if (!text) { eingabe.focus(); return; }
+    pruefen.disabled = true;
+    nurAuf.disabled = true;
+    pruefen.textContent = "Wird gelesen …";
+    Llm.begriffAbgleich(e, text).then(function (res) {
+      if (fertig) return;
+      if (!res) return selbstUrteil();
+      if (res.urteil === "sitzt") return werte(true, "Sitzt: " + e.begriff, "gut", "good", res.satz);
+      if (res.urteil === "fast") return werte(true, "Fast – das zählt.", "gut", "part", res.satz);
+      werte(false, "Noch nicht ganz – so steht es auf der Folie:", "schade", "sanft", res.satz);
+    }, function () { if (!fertig) selbstUrteil(); });
+  }
+  pruefen.addEventListener("click", pruefe);
+  // Enter bleibt Zeilenumbruch (sie schreibt ganze Saetze), Strg/Cmd+Enter
+  // sendet - dieselbe Semantik wie in der Erklaer-Karte.
+  eingabe.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Enter" || ev.repeat || (!ev.ctrlKey && !ev.metaKey)) return;
+    ev.preventDefault();
+    pruefe();
+  });
+  return box;
+}
+
 export function fachbegriffeZeile(thema, f) {
   if (!GLOSSAR) return null;
   var texte = normal(((f.stichpunkte || []).join(" ")) + " " + (f.muster || ""));
@@ -445,7 +593,10 @@ export function zeigeGlossar(themen, hooks) {
   var zeile = el("div", "kopf-zeile");
   var titelBox = el("div");
   titelBox.appendChild(el("h1", null, "Glossar"));
-  titelBox.appendChild(el("div", "untertitel", "Jeder Fachbegriff ein Eintrag. Zum Nachschlagen – abgefragt wird in der Fachbegriffe-Runde."));
+  // Der Satz war im Stift-Modus schlicht falsch ("abgefragt wird woanders") -
+  // dort IST das hier die Abfrage.
+  var untertitel = el("div", "untertitel", "");
+  titelBox.appendChild(untertitel);
   zeile.appendChild(titelBox);
   zeile.appendChild(themeKnopf());
   kopf.appendChild(zeile);
@@ -496,7 +647,67 @@ export function zeigeGlossar(themen, hooks) {
     chips.appendChild(chip);
   });
   werkzeug.appendChild(chips);
+
+  /* Sehen oder selbst definieren (Jennifer, 23.08.2026). Zwei Knoepfe statt
+     einer Checkbox, weil beide Zustaende einen eigenen Namen verdienen: der
+     eine ist ein Nachschlagewerk, der andere eine Uebung. */
+  var modusZeile = el("div", "gl-kat-zeile gl-modus-zeile");
+  modusZeile.appendChild(el("span", "gl-kat-titel", "Ansicht"));
+  var sehenKnopf = el("button", "gl-schalt gl-klein", "👁 Sehen");
+  var schreibKnopf = el("button", "gl-schalt gl-klein", "✏️ Selbst definieren");
+  modusZeile.appendChild(sehenKnopf);
+  modusZeile.appendChild(schreibKnopf);
+  werkzeug.appendChild(modusZeile);
+
+  var standZeile = el("div", "gl-schreibstand");
+  werkzeug.appendChild(standZeile);
   app.appendChild(werkzeug);
+
+  // Einmal gelesen und danach fortgeschrieben: 131-mal durchs Log zu laufen,
+  // sobald irgendwo eine Zeile neu gezeichnet wird, waere Verschwendung.
+  var schonDefiniert = selbstDefiniert();
+
+  function standAuffrischen() {
+    var schreibt = modus() === "schreiben";
+    sehenKnopf.classList.toggle("an", !schreibt);
+    schreibKnopf.classList.toggle("an", schreibt);
+    untertitel.textContent = schreibt
+      ? "Klapp einen Begriff auf und schreib hin, was er bedeutet – aufgedeckt wird danach."
+      : "Jeder Fachbegriff ein Eintrag. Zum Nachschlagen – abgefragt wird in der Fachbegriffe-Runde.";
+    standZeile.innerHTML = "";
+    if (!schreibt) return;
+    var gesamt = GLOSSAR.eintraege.length;
+    standZeile.appendChild(el("span", "muted", schonDefiniert.size + " von " + gesamt + " selbst definiert"));
+    if (!schonDefiniert.size) return;
+    /* Der Zuruecksetzen-Knopf sagt, WAS er zuruecksetzt. Ein blankes
+       "Zuruecksetzen" auf einem Schirm, der Roses echten Fortschritt haelt,
+       waere der eine Knopf, bei dem Wortkargheit teuer wird. Er loescht
+       ausserdem nichts: er setzt einen Datums-Stempel, ab dem gezaehlt wird
+       (Muster wie TL_NEUSTART). Reife-Stand und Log bleiben unberuehrt. */
+    var reset = el("button", "gl-schalt gl-klein", "Die " + schonDefiniert.size + " noch einmal durchgehen");
+    reset.addEventListener("click", function () {
+      state.glossarSchreibStart = Date.now();
+      speichern();
+      schonDefiniert = selbstDefiniert();
+      eintragsAnzeige.clear();
+      standAuffrischen();
+      neuZeichnen();
+    });
+    standZeile.appendChild(reset);
+  }
+
+  function modusWechseln(m) {
+    modusSetzen(m);
+    /* Der Wechsel setzt NICHTS zurueck (Jennifer: "auf auge umsetzen global
+       resettet das nicht") - er raeumt nur die per Hand auf- und zugeklappten
+       Zeilen weg, damit die neue Ansicht ihren eigenen Default zeigt statt der
+       Klapp-Historie der anderen. */
+    eintragsAnzeige.clear();
+    standAuffrischen();
+    neuZeichnen();
+  }
+  sehenKnopf.addEventListener("click", function () { modusWechseln("sehen"); });
+  schreibKnopf.addEventListener("click", function () { modusWechseln("schreiben"); });
 
   function chipsAuffrischen() {
     katKnoepfe.forEach(function (k) { k.knopf.classList.toggle("an", !themenAus.has(k.id)); });
@@ -549,19 +760,46 @@ export function zeigeGlossar(themen, hooks) {
         }
         reihe.appendChild(knopf);
 
+        /* Im Stift-Modus traegt eine schon definierte Zeile ihren Haken - so
+           sieht Rose beim Scrollen, wo sie stehengeblieben ist. hakenSetzen()
+           statt eines Neuzeichnens der Liste: die Zeile, die gerade beantwortet
+           wurde, zeigt ihre Aufloesung, und ein neuZeichnen() risse sie ihr
+           unter den Augen weg. */
+        function hakenSetzen() {
+          if (modus() !== "schreiben" || !schonDefiniert.has(e.id)) return;
+          if (knopf.querySelector(".gl-haken")) return;
+          knopf.appendChild(el("span", "gl-haken", "✓"));
+        }
+        hakenSetzen();
+
         var detail = null;
         function detailZeichnen() {
           if (detail) { detail.remove(); detail = null; }
-          reihe.classList.toggle("offen", !a.zu);
-          if (a.zu) return;
+          var offen = istOffen(a);
+          reihe.classList.toggle("offen", offen);
+          if (!offen) return;
           detail = el("div", "gl-detail");
-          detail.appendChild(definitionEl(e, t, a.sprache, a.einfach));
-          var q = quelleEl(e, t);
-          if (q) detail.appendChild(q);
-          detail.appendChild(sprachReihe(a, detailZeichnen));
+          if (modus() === "schreiben" && !schonDefiniert.has(e.id)) {
+            detail.appendChild(schreibKoerper(e, t, function (richtig) {
+              if (richtig === null) return;   // nur aufgedeckt - kein Log
+              /* Gleiche Form wie die Fachbegriffe-Runde, damit beide Wege in
+                 EINEN Stand laufen: richtung "erklaeren" ist die Richtung, die
+                 einen Begriff ueber R2 hebt. ausGlossar unterscheidet die
+                 Herkunft, ohne die Auswertung zu aendern. */
+              logSpiel("glossar", e.id, richtig, { thema: e.thema, richtung: "erklaeren", ausGlossar: true });
+              schonDefiniert.add(e.id);
+              hakenSetzen();
+              standAuffrischen();
+            }));
+          } else {
+            detail.appendChild(definitionEl(e, t, a.sprache, a.einfach));
+            var q = quelleEl(e, t);
+            if (q) detail.appendChild(q);
+            detail.appendChild(sprachReihe(a, detailZeichnen));
+          }
           reihe.appendChild(detail);
         }
-        knopf.addEventListener("click", function () { a.zu = !a.zu; detailZeichnen(); });
+        knopf.addEventListener("click", function () { a.zu = istOffen(a); detailZeichnen(); });
         detailZeichnen();
 
         karte.appendChild(reihe);
@@ -579,6 +817,7 @@ export function zeigeGlossar(themen, hooks) {
     }
   }
   suche.addEventListener("input", neuZeichnen);
+  standAuffrischen();
   neuZeichnen();
 }
 
