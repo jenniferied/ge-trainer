@@ -2005,6 +2005,27 @@ p { margin: 0 0 var(--sp-3); }
 .gl-eigene-titel { font-size: .78rem; color: var(--ink-soft); margin-bottom: 4px; }
 
 .gl-haken { margin-left: var(--sp-2); color: var(--gut, #4ca97a); font-weight: 700; }
+
+/* ---- Glossar: die Operatoren als letzte Kategorie (23.08.2026) ---- */
+
+/* Bewusst KEINE Themenfarbe: die Operatoren gehoeren zu keinem der acht Themen,
+   sie gelten quer darueber. Eine geliehene Themenfarbe wuerde eine Zugehoerigkeit
+   behaupten, die es nicht gibt. */
+.gl-operatoren { --tfarbe: var(--ink-soft); }
+.gl-op-unter { margin: 0 0 var(--sp-2); }
+.gl-op-quelle { margin-top: var(--sp-3); padding-top: var(--sp-2);
+                border-top: 1px solid var(--line); }
+
+/* Die Stufe steht als ANGABE an der Zeile, nicht als Gruppierung - manche
+   Woerter liegen zwischen zwei Bereichen ("I-II"), drei Gruppen waeren also
+   eine Sortierung, die den Bestand verfaelscht. */
+.gl-afb {
+  font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+  padding: 1px 7px; border-radius: 999px; white-space: nowrap;
+}
+/* Die Farben kommen aus den vorhandenen .afb-1/2/3 (gruen/gelb/rot, dieselben
+   wie an den Aufgaben) - eine zweite Farbleiter fuer denselben Gedanken waere
+   genau der Fehler, den dieses Projekt beim AFB-Text schon einmal hatte. */
 .gl-definition { line-height: 1.55; }
 .gl-ar { font-size: 1.05rem; line-height: 1.9; }
 .gl-maschinell { font-size: .75rem; color: var(--ink-soft); font-style: italic; margin-top: var(--sp-1); }

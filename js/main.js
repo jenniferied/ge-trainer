@@ -3887,7 +3887,7 @@ themeAnwenden();
 // Startseite zeigt den Begriffe-Blitz, und der wuerde sonst beim ersten Aufbau
 // fehlen und erst nach einem Seitenwechsel auftauchen. ladeBegriffe faengt
 // eigene Fehler ab und liefert dann null - der Boot kann daran nicht scheitern.
-Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar()])
+Promise.all([ladeThemen(), Spiele.ladeBegriffe(), Glossar.ladeGlossar(), Glossar.ladeOperatoren()])
   .then(function (ergebnis) {
     themen = ergebnis[0];
     // Erst JETZT anmelden, nicht frueher: tagesAufgaben() braucht themen (fuer

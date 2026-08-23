@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "hinweis": "Die Operatoren (Signalwoerter) der Klausur, mit ihren AMTLICHEN Definitionen. Quelle ist die Operatorenliste des Fachs Wirtschaft-Arbeit-Technik der Universitaet Potsdam (Stand 12.05.2023) - die Liste, auf die die Vorlesung per QR-Code selbst verweist. Die Definitionen sind woertlich uebernommen und duerfen nicht umgeschrieben werden; wer sie glaettet, verliert den Beleg. afb ist die Stufe LAUT DIESER LISTE und kann eine Zwischenstufe sein (I-II, II-III) - deshalb sind die Eintraege NICHT nach AFB gruppiert, die Stufe steht nur als Angabe daneben. folie5 sagt, ob das Wort zusaetzlich auf der AFB-Pyramide der Vorlesung steht; kern markiert die Woerter, die der Trainer abfragt. Nur drei Fassungen statt sechs wie im Glossar: eine 'einfache' Fassung einer amtlichen Definition waere nicht mehr die amtliche Definition. fassungVon faellt dafuer auf de zurueck.",
+  "quelle": {
+    "titel": "Operatoren zur Verwendung im Fach Wirtschaft-Arbeit-Technik (WAT)",
+    "herausgeber": "Universitaet Potsdam, Wirtschafts- und Sozialwissenschaftliche Fakultaet",
+    "stand": "12.05.2023",
+    "url": "https://www.uni-potsdam.de/fileadmin/projects/wat/Studium/Operatoren_f%C3%BCr_den_Unterricht_im_Fach_WAT.pdf"
+  },
+  "eintraege": [
+    {
+      "id": "op-benennen",
+      "begriff": "(be)nennen, angeben",
+      "afb": "I",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Fakten, Begriffe oder Daten ohne nähere Erläuterungen aufzählen",
+        "en": "List facts, terms or data without further explanation",
+        "ar": "تعداد الحقائق أو المصطلحات أو البيانات دون شرح إضافي"
+      }
+    },
+    {
+      "id": "op-beschreiben",
+      "begriff": "beschreiben",
+      "afb": "I",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Einen Sachverhalt unter Verwendung der Fachsprache in eigenen Worten wiedergeben",
+        "en": "Restate a matter in your own words, using the technical vocabulary",
+        "ar": "إعادة صياغة موضوع بكلماتك الخاصة مع استخدام المصطلحات المتخصصة"
+      }
+    },
+    {
+      "id": "op-wiedergeben",
+      "begriff": "wiedergeben",
+      "afb": "I",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Erlernten Sachverhalt oder den Inhalt eines Mediums mit eigenen Worten unter Verwendung von kontextbezogenen Fachbegriffen wiedergeben",
+        "en": "Reproduce learned content in your own words, using context-related technical terms",
+        "ar": "إعادة عرض محتوى تعلَّمته بكلماتك الخاصة مع استخدام المصطلحات المرتبطة بالسياق"
+      }
+    },
+    {
+      "id": "op-zusammenfassen",
+      "begriff": "zusammenfassen",
+      "afb": "I",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Mit eigenen Worten und sinnvoll gegliedert die wesentlichen Informationen eines Textes formulieren",
+        "en": "Put the essential information of a text into your own words, sensibly structured",
+        "ar": "صياغة المعلومات الأساسية لنص بكلماتك الخاصة وبترتيب واضح"
+      }
+    },
+    {
+      "id": "op-ordnen",
+      "begriff": "ordnen / zuordnen",
+      "afb": "I-II",
+      "folie5": false,
+      "kern": true,
+      "fassungen": {
+        "de": "Begriffe, Gegenstände etc. auf der Grundlage bestimmter Merkmale systematisch einteilen",
+        "en": "Systematically sort terms or objects on the basis of particular features",
+        "ar": "تصنيف المصطلحات أو الأشياء بشكل منهجي على أساس خصائص محددة"
+      }
+    },
+    {
+      "id": "op-analysieren",
+      "begriff": "analysieren",
+      "afb": "II",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Wichtige Bestandteile oder Eigenschaften auf eine bestimmte Fragestellung hin herausarbeiten",
+        "en": "Work out the important components or properties with respect to a particular question",
+        "ar": "استخلاص المكوّنات أو الخصائص المهمة بالنسبة إلى سؤال محدد"
+      }
+    },
+    {
+      "id": "op-erlaeutern",
+      "begriff": "erläutern",
+      "afb": "II",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Einen Sachverhalt oder ein Material verständlich machen und in einen Zusammenhang einordnen",
+        "en": "Make a matter or a piece of material understandable and place it in a context",
+        "ar": "توضيح موضوع أو مادة وربطه بسياق أوسع"
+      }
+    },
+    {
+      "id": "op-vergleichen",
+      "begriff": "vergleichen",
+      "afb": "II",
+      "folie5": false,
+      "kern": true,
+      "fassungen": {
+        "de": "Gemeinsamkeiten und Unterschiede nach gegebenen Kriterien gewichtend einander gegenüberstellen und ein Ergebnis formulieren",
+        "en": "Weigh similarities and differences against each other by given criteria and state a result",
+        "ar": "مقارنة أوجه التشابه والاختلاف وفق معايير معطاة مع ترجيحها وصياغة نتيجة"
+      }
+    },
+    {
+      "id": "op-einordnen",
+      "begriff": "einordnen",
+      "afb": "II",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Wissen oder Informationen aus einem Material in einen neuen oder anderen Zusammenhang stellen",
+        "en": "Place knowledge or information from a source into a new or different context",
+        "ar": "وضع معرفة أو معلومات من مادة ما في سياق جديد أو مختلف"
+      }
+    },
+    {
+      "id": "op-anwenden",
+      "begriff": "anwenden",
+      "afb": "II",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Auf der Pyramide der Vorlesung als AFB II geführt. In der Potsdamer Liste gibt es dafür keine eigene Zeile — dort steht das Wort nur im Kopftext von AFB I.",
+        "en": "Listed as AFB II on the lecture pyramid. The Potsdam list has no separate entry for it — the word appears there only in the AFB I header.",
+        "ar": "مُدرَج في هرم المحاضرة ضمن المستوى الثاني. لا يوجد له سطر خاص في قائمة بوتسدام — إذ يَرِد اللفظ هناك في مقدمة المستوى الأول فقط."
+      }
+    },
+    {
+      "id": "op-erklaeren",
+      "begriff": "erklären",
+      "afb": "II-III",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Einen Sachverhalt in einen Zusammenhang stellen bzw. Hintergründe und Ursachen aufzeigen",
+        "en": "Place a matter in a context, or show its background and causes",
+        "ar": "وضع موضوع في سياقه أو بيان خلفياته وأسبابه"
+      }
+    },
+    {
+      "id": "op-begruenden",
+      "begriff": "begründen",
+      "afb": "III",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Sachaussagen, Thesen, Urteile usw. durch geeignete Beispiele stützen und zu nachvollziehbaren Argumenten verarbeiten",
+        "en": "Support statements, theses or judgements with suitable examples and turn them into comprehensible arguments",
+        "ar": "دعم العبارات أو الأطروحات أو الأحكام بأمثلة مناسبة وتحويلها إلى حجج مفهومة"
+      }
+    },
+    {
+      "id": "op-beurteilen",
+      "begriff": "beurteilen",
+      "afb": "III",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Zu einem Sachverhalt ein selbstständiges Urteil unter Verwendung von Fachwissen und Fachmethoden formulieren und begründen",
+        "en": "Form and justify an independent judgement on a matter, using subject knowledge and methods",
+        "ar": "صياغة حكم مستقل حول موضوع وتبريره باستخدام المعرفة والأساليب المتخصصة"
+      }
+    },
+    {
+      "id": "op-bewerten",
+      "begriff": "bewerten",
+      "afb": "III",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Eine eigene Position nach ausgewiesenen Normen oder Werten vertreten",
+        "en": "Advocate a position of your own according to stated norms or values",
+        "ar": "تبنّي موقف خاص بك استناداً إلى معايير أو قيم معلَنة"
+      }
+    },
+    {
+      "id": "op-diskutieren",
+      "begriff": "diskutieren",
+      "afb": "III",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Ein Bewertungsproblem erfassen, unterschiedliche Positionen auf ihre Stichhaltigkeit und ihren Wert bzw. das Für und Wider gegeneinander abwägen und zu einem begründeten Urteil kommen",
+        "en": "Grasp an evaluative problem, weigh different positions and the pros and cons against each other, and arrive at a justified judgement",
+        "ar": "إدراك مشكلة تقييمية، وموازنة المواقف المختلفة ومزاياها وعيوبها، والوصول إلى حكم مُبرَّر"
+      }
+    },
+    {
+      "id": "op-eroertern",
+      "begriff": "erörtern",
+      "afb": "III",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Eine eigene Meinung zu einem Problem entwickeln, indem Für- und Wider-Argumente gefunden und im Zusammenhang, sinnvoll gegliedert dargestellt werden. Daraus wird eine begründete Schlussfolgerung formuliert.",
+        "en": "Develop your own opinion on a problem by finding arguments for and against and presenting them in context and sensibly structured. From this a justified conclusion is formed.",
+        "ar": "تكوين رأي خاص بشأن مشكلة عبر إيجاد حجج مؤيدة ومعارضة وعرضها في سياقها وبترتيب واضح، ثم صياغة استنتاج مُبرَّر منها."
+      }
+    },
+    {
+      "id": "op-entwickeln",
+      "begriff": "entwickeln",
+      "afb": "III",
+      "folie5": true,
+      "kern": true,
+      "fassungen": {
+        "de": "Zu einem Sachverhalt oder Problem eigene Lösungswege oder Fragestellungen entwickeln",
+        "en": "Develop your own solutions or questions for a matter or problem",
+        "ar": "تطوير حلول أو أسئلة خاصة بك بشأن موضوع أو مشكلة"
+      }
+    },
+    {
+      "id": "op-stellungnehmen",
+      "begriff": "Stellung nehmen",
+      "afb": "III",
+      "folie5": false,
+      "kern": false,
+      "fassungen": {
+        "de": "Zu einer Aussage eine eigene, begründete Position beziehen",
+        "en": "Take your own, justified position on a statement",
+        "ar": "اتخاذ موقف خاص ومُبرَّر تجاه عبارة ما"
+      }
+    }
+  ]
+}

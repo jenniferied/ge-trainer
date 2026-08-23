@@ -54,6 +54,44 @@ export function ladeGlossar() {
     });
 }
 
+/* Die Operatoren als LETZTE Glossar-Kategorie (Jennifer, 23.08.2026).
+
+   Warum sie nicht einfach Glossar-Eintraege sind: sie tragen ihre Stufe (afb)
+   statt eines Themas, ihre Quelle ist ein externes Dokument statt einer Folie,
+   und sie haben drei Fassungen statt sechs - eine "einfache" Fassung einer
+   AMTLICHEN Definition waere nicht mehr die amtliche Definition. Sie kaemen
+   deshalb durch keine der harten Glossar-Pruefungen.
+
+   Warum sie NICHT nach AFB gruppiert werden (ihre Ansage): ein Operator kann
+   auf einer Zwischenstufe liegen - `ordnen` steht in der Potsdamer Liste auf
+   I-II. Drei Gruppen waeren also eine Sortierung, die den Bestand verfaelscht.
+   Die Stufe steht stattdessen als farbige Angabe an jeder Zeile.
+
+   Und sie heissen "Operatoren", nicht "Signalwoerter": das ist das offizielle
+   Wort. Im Spiel heisst es weiter Signalwoerter, dort geht es ums Erkennen. */
+var OPERATOREN_DATEN = null;
+
+export function ladeOperatoren() {
+  return fetch("data/operatoren.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+    .then(function (d) {
+      OPERATOREN_DATEN = d && Array.isArray(d.eintraege) && d.eintraege.length ? d : null;
+      return OPERATOREN_DATEN;
+    });
+}
+
+// Die AFB-Stufe als farbige Pille. I und I-II gruen, II und II-III gelb,
+// III rot - dieselbe Leiter wie die afb-badge der Aufgaben.
+function afbPille(afb) {
+  var stufe = String(afb || "").startsWith("III") ? 3
+    : String(afb || "").startsWith("II") ? 2 : 1;
+  var p = el("span", "gl-afb afb-" + stufe, "AFB " + afb);
+  p.title = "Stufe laut der Potsdamer Operatorenliste"
+    + (afb.indexOf("-") >= 0 ? " – dieses Wort liegt zwischen zwei Bereichen." : ".");
+  return p;
+}
+
 export function hatGlossar() { return !!GLOSSAR; }
 
 export function eintraegeZu(themaId) {
@@ -699,7 +737,10 @@ export function zeigeGlossar(themen, hooks) {
       : "Jeder Fachbegriff ein Eintrag. Zum Nachschlagen – abgefragt wird in der Fachbegriffe-Runde.";
     standZeile.innerHTML = "";
     if (!schreibt) return;
-    var gesamt = GLOSSAR.eintraege.length;
+    // Die Operatoren zaehlen mit: sie sind seit dem 23.08. eine Kategorie
+    // dieses Regals, kein zweiter Ort.
+    var gesamt = GLOSSAR.eintraege.length
+      + (OPERATOREN_DATEN ? OPERATOREN_DATEN.eintraege.length : 0);
     standZeile.appendChild(el("span", "muted", schonDefiniert.size + " von " + gesamt + " selbst definiert"));
     if (!schonDefiniert.size) return;
     /* Der Zuruecksetzen-Knopf sagt, WAS er zuruecksetzt. Ein blankes
@@ -871,6 +912,100 @@ export function zeigeGlossar(themen, hooks) {
       });
       halter.appendChild(karte);
     });
+    /* Die Operatoren ganz hinten und unten (ihre Ansage). Sie haengen bewusst
+       an KEINEM Thema: sie gelten quer ueber alle acht. Der Filter oben schaltet
+       Themen, nicht sie - deshalb bleibt die Karte stehen, auch wenn alle Themen
+       aus sind, und verschwindet nur, wenn die Suche nichts findet. */
+    if (OPERATOREN_DATEN) {
+      var opListe = OPERATOREN_DATEN.eintraege.filter(function (e) {
+        return !filter || normal(e.begriff).indexOf(filter) >= 0;
+      });
+      if (opListe.length) {
+        var opKarte = el("div", "karte gl-thema gl-operatoren");
+        var okz = el("div", "thema-kopfzeile");
+        okz.appendChild(el("span", "thema-titel", "Operatoren"));
+        okz.appendChild(el("span", "vl-badge", opListe.length + " Wörter"));
+        opKarte.appendChild(okz);
+        opKarte.appendChild(el("div", "klein gl-op-unter",
+          "Die Wörter, an denen du erkennst, was eine Aufgabe verlangt – mit ihren amtlichen "
+          + "Definitionen. Die Stufe steht als Angabe dabei; manche Wörter liegen zwischen zwei "
+          + "Bereichen."));
+
+        opListe.forEach(function (e) {
+          var a = anzeigeVon(e.id);
+          var reihe = el("div", "gl-eintrag");
+          var knopf = el("button", "gl-begriff");
+          knopf.appendChild(el("span", null, e.begriff));
+          knopf.appendChild(afbPille(e.afb));
+          reihe.appendChild(knopf);
+          var marke = el("div", "gl-zeilen-marke");
+          reihe.appendChild(marke);
+
+          function opHaken() {
+            marke.innerHTML = "";
+            if (modus() !== "schreiben" || !schonDefiniert.has(e.id)) return;
+            marke.appendChild(el("span", "gl-haken", "✓"));
+            var noch = el("button", "gl-schalt gl-klein gl-nochmal", "↻ nochmal");
+            noch.title = "Nochmal selbst definieren";
+            noch.addEventListener("click", function () {
+              schonDefiniert.delete(e.id);
+              opHaken();
+              a.zu = false;
+              opDetail();
+              standAuffrischen();
+            });
+            marke.appendChild(noch);
+          }
+
+          var det = null;
+          function opDetail() {
+            if (det) { det.remove(); det = null; }
+            var offen = istOffen(a);
+            reihe.classList.toggle("offen", offen);
+            if (!offen) return;
+            det = el("div", "gl-detail");
+            if (modus() === "schreiben" && !schonDefiniert.has(e.id)) {
+              det.appendChild(schreibKoerper(e, null, function (richtig, text) {
+                if (richtig === null) return;
+                logSpiel("glossar", e.id, richtig, {
+                  thema: null, richtung: "erklaeren", ausGlossar: true,
+                  text: String(text || "").slice(0, 1000)
+                });
+                schonDefiniert.set(e.id, { richtig: !!richtig, text: String(text || "") });
+                opHaken();
+                standAuffrischen();
+              }));
+            } else {
+              var eig = schonDefiniert.get(e.id);
+              if (eig && eig.text) {
+                var mein = el("div", "gl-eigene");
+                mein.appendChild(el("div", "gl-eigene-titel",
+                  eig.richtig ? "Deine Definition – saß:" : "Deine Definition:"));
+                mein.appendChild(el("div", null, eig.text));
+                det.appendChild(mein);
+              }
+              det.appendChild(definitionEl(e, null, a.sprache, a.einfach));
+              det.appendChild(sprachReihe(a, opDetail));
+            }
+            reihe.appendChild(det);
+          }
+          knopf.addEventListener("click", function () { a.zu = istOffen(a); opDetail(); });
+          opHaken();
+          opDetail();
+          opKarte.appendChild(reihe);
+        });
+
+        // Die Fundstelle steht EINMAL unter der Karte, nicht an jeder Zeile:
+        // alle achtzehn kommen aus derselben Liste.
+        var q = OPERATOREN_DATEN.quelle || {};
+        var qz = el("div", "klein gl-op-quelle");
+        qz.appendChild(document.createTextNode("Definitionen wörtlich aus: " + (q.titel || "") + ", "
+          + (q.herausgeber || "") + ", Stand " + (q.stand || "") + "."));
+        opKarte.appendChild(qz);
+        halter.appendChild(opKarte);
+      }
+    }
+
     /* Zwei Gruende fuer eine leere Seite, und sie brauchen verschiedene Saetze:
        wer alle Themen weggeschaltet hat, hat nichts falsch gesucht - der
        Suchsatz waere dort schlicht die falsche Auskunft. */
