@@ -2538,6 +2538,13 @@ p { margin: 0 0 var(--sp-3); }
 .md-karte .op-wort { font-size: 1.35rem; line-height: 1.2; }
 @media (max-width: 420px) { .md-karte .op-wort { font-size: 1.15rem; } }
 
+/* Die Gruppen-Karte des Signalwoerter-Spiels (23.08.2026) zeigt bis zu fuenf
+   Woerter statt einem. In der 1.8rem-Groesse von .op-wort waere das am Handy
+   eine Wand - kleiner und mit Zeilenabstand liest es sich als LISTE, und
+   genau als Liste soll Rose es sehen. */
+.op-gruppe { font-size: 1.15rem; line-height: 1.45; }
+@media (max-width: 420px) { .op-gruppe { font-size: 1rem; } }
+
 /* Die Kopfzeile einer zugeklappten Auswahl. Kein eigenes Dreieck-Zeichen:
    das setzt der Browser, und ein zweites danebenzumalen hiesse, den Zustand
    zweimal zu behaupten. */

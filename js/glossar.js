@@ -401,12 +401,27 @@ export function fachbegriffeZeile(thema, f) {
   treffer.slice(0, 6).forEach(function (e) {
     var chip = el("button", "gl-chip", e.begriff);
     chip.addEventListener("click", function () {
+      /* Mit Uebersetzungen (Jennifer, 23.08.2026: "wenn schon die fachbegriffe
+         die zaehlen bei ge angezeigt werden bei dem frei schreiben, dann gerne
+         mit uebersetzungen"). Rose ist keine deutsche Muttersprachlerin, und
+         die sechs Fassungen liegen an jedem Eintrag ohnehin bereit - hier stand
+         bis heute allein die deutsche.
+         Gebaut aus den vorhandenen Bausteinen der Glossar-Ansicht statt aus
+         neuen: definitionEl kann RTL und die Maschinell-Marke, sprachReihe ist
+         dieselbe Schalterzeile, und anzeigeVon merkt die Wahl JE BEGRIFF - wer
+         einmal auf EN stellt, findet denselben Begriff spaeter wieder auf EN. */
       if (offen) { offen.remove(); }
+      var a = anzeigeVon(e.id);
       var karte = el("div", "gl-chip-detail");
-      karte.appendChild(el("b", null, e.begriff));
-      karte.appendChild(belegZeile("div", (e.fassungen || {}).de || "", idVon(thema)));
-      var q = quelleEl(e, thema);
-      if (q) karte.appendChild(q);
+      function neu() {
+        karte.innerHTML = "";
+        karte.appendChild(el("b", null, e.begriff));
+        karte.appendChild(definitionEl(e, thema, a.sprache, a.einfach));
+        var q = quelleEl(e, thema);
+        if (q) karte.appendChild(q);
+        karte.appendChild(sprachReihe(a, neu));
+      }
+      neu();
       box.appendChild(karte);
       offen = karte;
     });

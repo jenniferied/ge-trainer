@@ -43,47 +43,10 @@ import { SICHER_AB, paarGewicht, baueZuordnen } from "./geteilt-zuordnen.js";
 import { kopfEl } from "./geteilt-tages-hub.js";
 
 /* ---------- AFB-Grundwissen (Klausurinfo, Folie 5) ---------- */
-
-var OPERATOREN = [
-  { wort: "beschreiben", afb: 1, tipp: "Sachverhalt in eigenen Worten wiedergeben, noch ohne Urteil." },
-  { wort: "benennen", afb: 1, tipp: "Die passenden Fachbegriffe hinschreiben. Stichpunkte reichen hier oft." },
-  { wort: "nennen", afb: 1, tipp: "Wie benennen: aufzählen, was dazugehört, ohne es auszuführen." },
-  { wort: "analysieren", afb: 2, tipp: "Etwas in seine Teile zerlegen und zeigen, wie sie zusammenhängen." },
-  { wort: "erlaeutern", afb: 2, tipp: "Erklären UND mit einem Beispiel oder Beleg verständlich machen." },
-  { wort: "anwenden", afb: 2, tipp: "Gelerntes auf einen neuen Fall übertragen – der Fall gehört in die Antwort." },
-  /* vergleichen und zuordnen, seit 23.08.2026 abends. Am Mittag standen sie
-     bewusst DRAUSSEN, weil die AFB-Pyramide auf Folie 5 sie nicht listet und ein
-     Spiel, das Rose Signalwoerter beibringt, die auf ihrer Liste fehlen,
-     falscher Stoff waere. Zurueckgenommen mit Beleg: die Dozentin fragt beide
-     woertlich in ihren eigenen Beispielaufgaben ("Vergleichen Sie die
-     Verkehrsmittel in der Alltagsmobilitaet 2002 und 2023", "Ordnen Sie
-     verschiedene Unterrichtsmassnahmen den Mobilitaetskompetenzen zu").
-     Was sie TATSAECHLICH FRAGT, schlaegt die Liste, die sie als Stoff ausgibt. */
-  { wort: "vergleichen", afb: 2, tipp: "Zwei Sachen nebeneinanderlegen: was ist gleich, was ist anders – und was folgt daraus." },
-  { wort: "zuordnen", afb: 2, tipp: "Sagen, was zu was gehört – und woran man das erkennt." },
-  { wort: "bewerten", afb: 3, tipp: "Ein begründetes Urteil fällen, Kriterien nennen." },
-  { wort: "eroertern", afb: 3, tipp: "Pro und Contra abwägen und am Ende Stellung beziehen." },
-  { wort: "entwickeln", afb: 3, tipp: "Etwas Eigenes vorschlagen, z. B. eine Maßnahme oder ein Konzept." },
-  { wort: "diskutieren", afb: 3, tipp: "Argumente gegeneinanderstellen und zu einem eigenen Fazit kommen." }
-];
-
-// Bewusst neutral formuliert: die Optionen duerfen die Signalwoerter NICHT
-// enthalten, sonst verraet die Antwortliste die Loesung.
-var AFB_OPTION = {
-  1: "AFB I – Reproduktion",
-  2: "AFB II – Reorganisation und Anwendung",
-  3: "AFB III – Reflexion und Urteil"
-};
-var AFB_KURZ = { 1: "AFB I", 2: "AFB II", 3: "AFB III" };
-var AFB_WOERTER = {
-  1: "beschreiben, (be)nennen",
-  2: "analysieren, erläutern, anwenden, vergleichen, zuordnen",
-  3: "bewerten, erörtern, entwickeln, diskutieren"
-};
-
-// Schreibweise mit Umlaut, wie sie in den Aufgabenstaemmen steht
-var SCHREIBWEISE = { erlaeutern: "erläutern", eroertern: "erörtern" };
-function anzeige(wort) { return SCHREIBWEISE[wort] || wort; }
+/* Die Tabellen stehen seit dem 23.08.2026 in afb.js - sie standen vorher
+   hier UND in ui.js, und die beiden Fassungen waren auseinandergelaufen.
+   Begruendung im Kopf von afb.js. */
+import { OPERATOREN, anzeige, AFB_OPTION, AFB_KURZ, AFB_WOERTER, AFB_STUFEN, woerterVon } from "./afb.js";
 
 /* Verdoppelt am 22.08.2026 (Rose: "Die totale Anzahl der Wiederholungen in
    den Spielen sollte gedoppelt werden in GE"). Traegt: 6 Signalwoerter aus der
@@ -444,9 +407,26 @@ function opRunde(themen, hooks, zurueck) {
     return { art: "wortwahl", id: "opw-" + a.f.id, thema: a.thema, f: a.f, afb: a.afb, op: a.op };
   });
 
-  var haelfte = Math.ceil(OP_RUNDE / 2);
+  /* Zwei neue Fragerichtungen (23.08.2026, Jennifer: "manchmal auch afbs
+     abfragen und dann die aspekte als gruppe, bzw mal auch nur die aspekte und
+     gruppe auf ne frage"). teilD zeigt die Woerter EINER Stufe und fragt nach
+     der Stufe; teilE zeigt die Stufe und fragt nach einem Wort daraus -
+     dieselbe Zuordnung, von beiden Seiten geuebt.
+     Die zwei ziehen BEWUSST verschiedene Stufen: teilD zeigt alle Woerter
+     seiner Stufe, und stuende teilE derselben Stufe in derselben Runde, haette
+     Rose die Antwort vorher schon gelesen. */
+  var gruppen = AFB_STUFEN.map(function (a) { return { art: "gruppe", id: "opg-" + a, afb: a }; });
+  var teilD = zieh(gruppen, 1, gew);
+  var vergeben = teilD.length ? teilD[0].afb : null;
+  var stufenfragen = AFB_STUFEN.filter(function (a) { return a !== vergeben; })
+    .map(function (a) { return { art: "stufenwahl", id: "ops-" + a, afb: a }; });
+  var teilE = zieh(stufenfragen, 1, gew);
+
+  // Der Rest der Runde verteilt sich wie bisher, nur auf zwei Plaetze weniger.
+  var kern = OP_RUNDE - teilD.length - teilE.length;
+  var haelfte = Math.ceil(kern / 2);
   var teilA = zieh(woerter, Math.min(haelfte, woerter.length), gew);
-  var restPlatz = OP_RUNDE - teilA.length;
+  var restPlatz = kern - teilA.length;
   var teilB = zieh(aufgaben, Math.min(Math.ceil(restPlatz / 2), aufgaben.length), gew);
   // Dieselbe Aufgabe nicht zweimal in einer Runde - einmal je Richtung waere
   // die Antwort der zweiten Karte schon gesehen.
@@ -454,12 +434,18 @@ function opRunde(themen, hooks, zurueck) {
     return !teilB.some(function (b) { return b.f.id === w.f.id; });
   }), Math.min(restPlatz - teilB.length, wortfragen.length), gew);
   // Zu wenig echte Aufgaben? Dann mit weiteren Signalwoertern auffuellen.
-  if (teilA.length + teilB.length + teilC.length < OP_RUNDE) {
+  if (teilA.length + teilB.length + teilC.length < kern) {
     var rest = woerter.filter(function (w) { return teilA.indexOf(w) < 0; });
-    teilA = teilA.concat(zieh(rest, OP_RUNDE - teilA.length - teilB.length - teilC.length, gew));
+    teilA = teilA.concat(zieh(rest, kern - teilA.length - teilB.length - teilC.length, gew));
   }
-  var runde = mischen(teilA.concat(teilB).concat(teilC));
+  var runde = mischen(teilA.concat(teilB).concat(teilC).concat(teilD).concat(teilE));
   if (!runde.length) return raus();
+
+  /* Die Optionsform wechselt JE KARTE statt global (Jennifer: "manchmal halt
+     afbs anzeigen, manchmal nicht"). Einmal beim Bauen gewuerfelt und am Item
+     gemerkt - wuerde sie beim Zeichnen fallen, spraenge die Beschriftung bei
+     jedem Neuzeichnen derselben Karte. */
+  runde.forEach(function (it) { it.kurzform = Math.random() < 0.5; });
 
   var index = 0, richtige = 0;
   var gepatzt = [];
@@ -475,8 +461,22 @@ function opRunde(themen, hooks, zurueck) {
       return mischen([{ text: anzeige(item.op.wort), korrekt: true }].concat(
         falsche.map(function (o) { return { text: anzeige(o.wort), korrekt: false }; })));
     }
-    return [1, 2, 3].map(function (afb) {
-      return { text: AFB_OPTION[afb], korrekt: afb === item.afb };
+    if (item.art === "stufenwahl") {
+      /* Umgekehrte Richtung: die Stufe steht in der FRAGE, gesucht ist ein Wort
+         daraus. Das Verbot von oben (keine Signalwoerter in den Optionen) gilt
+         hier nicht - es ist ja die Frage nach dem Wort. Distraktoren je eines
+         aus den beiden anderen Stufen. */
+      var meins = woerterVon(item.afb);
+      var fremd = AFB_STUFEN.filter(function (a) { return a !== item.afb; }).map(function (a) {
+        var k = woerterVon(a);
+        return k[Math.floor(Math.random() * k.length)];
+      });
+      return mischen([{ text: meins[Math.floor(Math.random() * meins.length)], korrekt: true }]
+        .concat(fremd.map(function (w) { return { text: w, korrekt: false }; })));
+    }
+    // "wort", "aufgabe" und "gruppe" fragen alle nach der STUFE.
+    return AFB_STUFEN.map(function (afb) {
+      return { text: item.kurzform ? AFB_KURZ[afb] : AFB_OPTION[afb], korrekt: afb === item.afb };
     });
   }
 
@@ -493,6 +493,12 @@ function opRunde(themen, hooks, zurueck) {
     if (item.art === "wort") {
       karte.appendChild(el("div", "op-wort", anzeige(item.op.wort)));
       karte.appendChild(el("div", "frage-text", "Welche Anforderungsstufe verlangt dieses Signalwort?"));
+    } else if (item.art === "gruppe") {
+      karte.appendChild(el("div", "op-wort op-gruppe", woerterVon(item.afb).join(" · ")));
+      karte.appendChild(el("div", "frage-text", "Welche Anforderungsstufe fassen diese Signalwörter zusammen?"));
+    } else if (item.art === "stufenwahl") {
+      karte.appendChild(el("div", "op-wort", AFB_OPTION[item.afb]));
+      karte.appendChild(el("div", "frage-text", "Welches dieser Signalwörter gehört zu dieser Stufe?"));
     } else if (item.art === "wortwahl") {
       karte.appendChild(reichZeile("div", item.f.frage, "op-stamm"));
       karte.appendChild(el("div", "frage-text", "Welches Signalwort steuert diese Aufgabe?"));
@@ -515,7 +521,10 @@ function opRunde(themen, hooks, zurueck) {
         // im selben Aufruf bereit. Ein reines Signalwort gehoert zu keinem
         // Thema, da bleibt es ehrlich null.
         var dazu = { zeit: sekundenSeit(uhr) };
-        if (item.art !== "wort") { dazu.afb = item.afb; dazu.thema = item.thema.id; }
+        // gruppe und stufenwahl tragen ein afb, aber kein Thema - vorher stand
+        // hier item.thema.id ungeschuetzt und haette an ihnen geworfen.
+        if (item.afb) dazu.afb = item.afb;
+        if (item.thema) dazu.thema = item.thema.id;
         logSpiel("operatoren", item.id, richtig, dazu);
 
         knoepfe.forEach(function (k) {
@@ -572,7 +581,11 @@ function opRunde(themen, hooks, zurueck) {
       extra.appendChild(el("h3", null, "Kurz nachlesen"));
       gepatzt.forEach(function (item) {
         var z = el("div", "nachlesen-zeile");
-        z.appendChild(reichZeile("b", item.art === "wort" ? anzeige(item.op.wort) : item.f.frage, null));
+        /* Die Ueberschrift der Nachlese-Zeile. Bis zum 23.08. stand hier eine
+           Zwei-Wege-Frage (Signalwort oder Aufgabenstamm) - die neuen Karten
+           gruppe und stufenwahl haben aber WEDER ein op NOCH ein f, und die
+           Zeile warf an ihnen. Im Smoke-Test drei Seitenfehler je Lauf. */
+        z.appendChild(reichZeile("b", ueberschriftZu(item), null));
         z.appendChild(el("div", null, erklaerungZu(item)));
         extra.appendChild(z);
       });
@@ -746,7 +759,22 @@ function heisst(op) {
   return wort.charAt(0).toUpperCase() + wort.slice(1) + " heißt: " + op.tipp;
 }
 
+/* Womit eine Karte in der Nachlese ueberschrieben wird. Fuenf Fragerichtungen,
+   und nur zwei davon tragen ein Signalwort oder einen Aufgabenstamm. */
+function ueberschriftZu(item) {
+  if (item.art === "gruppe") return woerterVon(item.afb).join(" · ");
+  if (item.art === "stufenwahl") return AFB_KURZ[item.afb];
+  if (item.art === "wort") return anzeige(item.op.wort);
+  return item.f.frage;
+}
+
 function erklaerungZu(item) {
+  if (item.art === "gruppe") {
+    return "Diese Signalwörter gehören alle zu " + AFB_KURZ[item.afb] + ": " + AFB_WOERTER[item.afb] + ".";
+  }
+  if (item.art === "stufenwahl") {
+    return AFB_KURZ[item.afb] + " verlangt: " + AFB_WOERTER[item.afb] + ".";
+  }
   if (item.art === "wort") {
     return anzeige(item.op.wort) + " gehört zu " + AFB_KURZ[item.afb] + " (" + AFB_WOERTER[item.afb] + "). " + heisst(item.op);
   }

@@ -409,11 +409,12 @@ export function themenAuswahl(themen, cfg) {
 
    Alles abgewaehlt ist kein gueltiger Zustand und wird beim Lesen wie "alles
    an" behandelt: eine Runde ohne Anforderungsstufe gibt es nicht. */
-export var AFB_TEXTE = [
-  { wert: 1, kurz: "AFB I", lang: "beschreiben, benennen" },
-  { wert: 2, kurz: "AFB II", lang: "erläutern, analysieren, anwenden" },
-  { wert: 3, kurz: "AFB III", lang: "bewerten, erörtern, diskutieren" }
-];
+/* Stand bis zum 23.08.2026 hier als eigene Liste - und war laengst veraltet:
+   vergleichen, zuordnen und entwickeln fehlten. Jetzt aus afb.js, wo die
+   Woerter aus OPERATOREN gerechnet werden. Re-Export, damit die bisherigen
+   Aufrufer unveraendert bleiben. */
+export { AFB_TEXTE } from "./afb.js";
+import { AFB_TEXTE } from "./afb.js";
 
 export function afbAuswahl(cfg) {
   var o = cfg || {};
