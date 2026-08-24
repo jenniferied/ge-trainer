@@ -2114,6 +2114,11 @@ p { margin: 0 0 var(--sp-3); }
    behaupten, die es nicht gibt. */
 .gl-operatoren { --tfarbe: var(--ink-soft); }
 .gl-op-unter { margin: 0 0 var(--sp-2); }
+/* Die Operatoren-Pille im Themenfilter hat keine Themenfarbe - sie gehoert
+   zu keinem der acht Themen. Ohne --tfarbe-basis bliebe ihr Aktiv-Zustand
+   aber unsichtbar, weil .gl-schalt.an genau darauf zeigt. Also der
+   App-Akzent: sichtbar an, und trotzdem keine geliehene Themenfarbe. */
+.gl-kat-op { --tfarbe-basis: var(--accent); }
 .gl-op-quelle { margin-top: var(--sp-3); padding-top: var(--sp-2);
                 border-top: 1px solid var(--line); }
 

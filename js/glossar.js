@@ -705,6 +705,25 @@ export function zeigeGlossar(themen, hooks) {
     katKnoepfe.push({ id: t.id, knopf: chip });
     chips.appendChild(chip);
   });
+  /* Die Operatoren bekommen eine eigene Pille (Jennifer, 24.08.). Sie sind kein
+     Thema - sie gelten quer ueber alle acht -, aber im Filter verhalten sie sich
+     wie eines: an- und abschaltbar, mit Zahl. Ohne die Pille war die Kategorie
+     die einzige, die man nicht wegschalten konnte, und "Keine" liess sie stehen.
+     Die Pseudo-Id traegt Unterstriche, damit sie nie mit einem Themen-Slug
+     kollidiert. */
+  var OP_ID = "__operatoren";
+  if (OPERATOREN_DATEN) {
+    var opChip = el("button", "gl-schalt gl-kat gl-kat-op", "Operatoren");
+    opChip.appendChild(el("span", "gl-kat-zahl", String(OPERATOREN_DATEN.eintraege.length)));
+    opChip.addEventListener("click", function () {
+      if (themenAus.has(OP_ID)) themenAus.delete(OP_ID); else themenAus.add(OP_ID);
+      chipsAuffrischen();
+      neuZeichnen();
+    });
+    katKnoepfe.push({ id: OP_ID, knopf: opChip });
+    chips.appendChild(opChip);
+  }
+
   werkzeug.appendChild(chips);
 
   /* Sehen oder selbst definieren (Jennifer, 23.08.2026). Zwei Knoepfe statt
@@ -916,7 +935,7 @@ export function zeigeGlossar(themen, hooks) {
        an KEINEM Thema: sie gelten quer ueber alle acht. Der Filter oben schaltet
        Themen, nicht sie - deshalb bleibt die Karte stehen, auch wenn alle Themen
        aus sind, und verschwindet nur, wenn die Suche nichts findet. */
-    if (OPERATOREN_DATEN) {
+    if (OPERATOREN_DATEN && !themenAus.has(OP_ID)) {
       var opListe = OPERATOREN_DATEN.eintraege.filter(function (e) {
         return !filter || normal(e.begriff).indexOf(filter) >= 0;
       });
