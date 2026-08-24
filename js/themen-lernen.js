@@ -54,7 +54,7 @@ import { bausteinBudget, faellig, heuteTag, lerntage, modusFuer, reifeStand, STU
    Sitzung, kein eigenes Spiel - Jennifer woertlich: "themenlernen soll
    interessant fuer sie werden, das ist der main progressive hebel". Das Modul
    importiert seinerseits kein themen-lernen (Zyklus-frei). */
-import { episodeFuer, istGelesen, spieleAlsIntro } from "./episode.js";
+import { episodeFuer, istGelesen, spieleAlsIntro, folgeOffen, prologOffen } from "./episode.js";
 
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
    Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
@@ -637,6 +637,8 @@ export function zeigeThemenLernen(themen, hooks) {
     var box = el("div", "abschnitt");
     box.appendChild(el("h2", "abschnitt-titel",
       "Dein Thema · noch " + offen + " von " + themen.length + " in dieser Runde"));
+    var storyHinweis = el("div", "tl-story-tipp");
+    box.appendChild(storyHinweis);
     var grid = el("div", "kachel-grid tl-grid");
     /* DER WEG ZU DEN DUENNEN THEMEN (22.08.2026). Die Rotation sperrt
        Gespieltes und sorgt damit fuer Gleichverteilung der SITZUNGEN, nicht der
@@ -650,11 +652,38 @@ export function zeigeThemenLernen(themen, hooks) {
        REIHENFOLGE, kein Mahnwort: derselbe Ton wie in reife.js, wo es
        ausdruecklich kein "faellig ueberschritten" gibt. Nie eine Zahl als
        Vorwurf, nie das Wort vernachlaessigt. */
+    /* DIE GESCHICHTE FUEHRT DIE WAHL (25.08.2026, Jennifer: "ich will dass im
+       themen lernen suggeriert wird, was sie als naechstes anklicken soll -
+       die stories sollen ja mit themen lernen verknuepft werden").
+
+       Die Episode ist das Intro dieser Sitzung, und seit dem 25.08. laufen die
+       Folgen der Reihe nach. Damit gibt es zu jedem Zeitpunkt GENAU EIN Thema,
+       das die Geschichte weitererzaehlt - und ausgerechnet das war hier
+       bisher nicht zu erkennen: Rose haette raten muessen, hinter welcher
+       Kachel die naechste Folge liegt.
+
+       Es steht vorn und traegt die Zeile. Das schlaegt "am wenigsten geuebt"
+       bewusst: die Story ist der Motivations-Hebel (ROADMAP: "themenlernen
+       soll interessant fuer sie werden, das ist der main progressive hebel"),
+       und sie betrifft ohnehin nur die Themen mit einer noch ungelesenen
+       Folge - sind alle gelesen, greift wieder die alte Ordnung. Ein
+       gesperrtes Thema kommt NICHT in Frage: ein Vorschlag, den man nicht
+       antippen kann, ist keiner. */
+    var story = null;
+    themen.forEach(function (t) {
+      if (gesperrt[t.id]) return;
+      var ep = episodeFuer(t.id);
+      if (!ep || istGelesen(ep) || !folgeOffen(ep)) return;
+      if (!story || ep.nummer < story.ep.nummer) story = { thema: t, ep: ep };
+    });
+
     var antworten = antwortenJeThema();
     var sortiert = themen.slice().sort(function (a, b) {
       var za = !!gesperrt[a.id], zb = !!gesperrt[b.id];
       if (za !== zb) return za ? 1 : -1;        // Gesperrtes ans Ende
       if (za) return 0;                          // untereinander egal
+      if (story && a.id === story.thema.id) return -1;
+      if (story && b.id === story.thema.id) return 1;
       return (antworten[a.id] || 0) - (antworten[b.id] || 0);
     });
     /* Die Zeile nur, wenn es ueberhaupt ein Gefaelle gibt. Auf einem frischen
@@ -664,20 +693,37 @@ export function zeigeThemenLernen(themen, hooks) {
     var offeneT = sortiert.filter(function (t) { return !gesperrt[t.id]; });
     var hoechste = 0;
     offeneT.forEach(function (t) { hoechste = Math.max(hoechste, antworten[t.id] || 0); });
-    var duennstes = hoechste > 0 && offeneT.length > 1
-      && (antworten[offeneT[0].id] || 0) < hoechste ? offeneT[0] : null;
+    /* Das duennste Thema wird UNABHAENGIG von der Sortierung gesucht, seit die
+       Story-Kachel vorn stehen kann - sonst waere es schlicht offeneT[0], und
+       das ist seitdem oft die Story und nicht das duennste. Die Story-Kachel
+       selbst ist ausgenommen: sie traegt schon eine Zeile. */
+    var duennstes = null;
+    offeneT.forEach(function (t) {
+      if (story && t.id === story.thema.id) return;
+      if (!duennstes || (antworten[t.id] || 0) < (antworten[duennstes.id] || 0)) duennstes = t;
+    });
+    if (!(hoechste > 0 && offeneT.length > 1 && duennstes
+        && (antworten[duennstes.id] || 0) < hoechste)) duennstes = null;
     sortiert.forEach(function (t) {
       var zu = !!gesperrt[t.id];
       var lvl = levelVon(t);
-      var b = el("button", "kachel" + (zu ? " tl-gespielt" : " glimmer"));
+      var istStory = !!story && !zu && t.id === story.thema.id;
+      var b = el("button", "kachel" + (zu ? " tl-gespielt" : " glimmer") + (istStory ? " tl-story" : ""));
       setzeFarbe(b, t.farbe);
-      b.appendChild(el("span", "kachel-icon", zu ? "✓" : "📚"));
+      b.appendChild(el("span", "kachel-icon", zu ? "✓" : istStory ? "📖" : "📚"));
       b.appendChild(el("b", null, t.titel));
       b.appendChild(el("span", "tl-level", "Level " + lvl));
       b.appendChild(el("span", "kachel-klein", zu ? "in dieser Runde schon dran" : t.vorlesung));
-      // Genau EINE Kachel bekommt die Zeile, und sie ist eine Einladung, keine
-      // Bilanz: keine Zahl, kein "vernachlaessigt".
-      if (!zu && duennstes && t.id === duennstes.id && themen.length > 1) {
+      /* Die Story-Zeile schlaegt die Duenn-Zeile: es soll bei EINER Auskunft
+         je Kachel bleiben. Beides untereinander waere die Kachel, die am
+         lautesten ruft - und genau das ist der Zustand, in dem Rose nichts
+         mehr anklickt. */
+      if (istStory) {
+        b.appendChild(el("span", "tl-story-zeile",
+          (prologOffen() ? "Prolog & " : "") + "Folge " + story.ep.nummer + " wartet hier"));
+      } else if (!zu && duennstes && t.id === duennstes.id && themen.length > 1) {
+        // Genau EINE Kachel bekommt die Zeile, und sie ist eine Einladung, keine
+        // Bilanz: keine Zahl, kein "vernachlaessigt".
         b.appendChild(el("span", "tl-duenn", "am wenigsten geübt"));
       }
       if (zu) {
@@ -688,6 +734,17 @@ export function zeigeThemenLernen(themen, hooks) {
       }
       grid.appendChild(b);
     });
+    /* Der Satz ueber den Kacheln - er nennt das Thema beim Namen, damit der
+       Vorschlag auch dann ankommt, wenn die Kachel gerade nicht im Bild ist.
+       Ein Satz, kein Knopf: die Wahl bleibt bei Rose (Optionen statt Befehle),
+       und ein zweiter Weg in dieselbe Sitzung waere ein zweiter Weg zum
+       selben Zustand. */
+    if (story) {
+      storyHinweis.textContent = "📖 Die Geschichte geht weiter mit „" + story.ep.titel
+        + "“ – die Folge liegt hinter " + story.thema.titel + ".";
+    } else {
+      storyHinweis.remove();
+    }
     box.appendChild(grid);
     app.appendChild(box);
   }

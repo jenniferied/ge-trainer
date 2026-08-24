@@ -98,16 +98,22 @@ export function prologOffen() {
    kann". "Das erste Jahr" ist EINE fortlaufende Geschichte - wer Folge 7 vor
    Folge 2 liest, bekommt Figuren und Vorgeschichte in der falschen Ordnung.
 
-   DIE REGEL ZAEHLT NUR, WAS ES GIBT: eine Folge ist offen, sobald der Prolog
-   und alle VORHANDENEN Folgen mit kleinerer Nummer gelesen sind. Heute
-   existieren Folge 1 und Folge 7, also braucht 7 nur den Prolog und die 1 -
-   nicht die noch ungeschriebenen 2 bis 6. Kommen sie dazu, waechst die Kette
-   von allein mit, ohne dass hier jemand nachpflegt. Waere es stattdessen
-   "Nummer minus eins", stuende Folge 7 heute vor einer Wand aus Folgen, die
-   es nicht gibt. */
+   DIE REGEL ZAEHLT NUR, WAS ES GIBT: eine Folge ist offen, sobald alle
+   VORHANDENEN Folgen mit kleinerer Nummer gelesen sind. Heute existieren
+   Folge 1 und Folge 7, also braucht 7 nur die 1 - nicht die noch
+   ungeschriebenen 2 bis 6. Kommen sie dazu, waechst die Kette von allein mit,
+   ohne dass hier jemand nachpflegt. Waere es stattdessen "Nummer minus eins",
+   stuende Folge 7 heute vor einer Wand aus Folgen, die es nicht gibt.
+
+   DER PROLOG ZAEHLT HIER BEWUSST NICHT MIT (Korrektur vom 25.08., im Test
+   gefunden): im Themen-Lernen laeuft er automatisch VOR der ersten Folge im
+   selben Lauf mit (siehe spieleAlsIntro). Haette er hier gesperrt, waere auf
+   einem frischen Stand GAR KEINE Folge vorgeschlagen worden - und der Weg zum
+   Prolog fuehrt genau ueber diesen Vorschlag. Wo der Prolog wirklich zuerst
+   drankommen muss, ist die Episoden-Uebersicht: dort wird eine Folge einzeln
+   gelesen, ohne dass er mitlaeuft, und dort steht die Bedingung auch. */
 export function folgeOffen(ep) {
   if (!DATEN || !ep) return false;
-  if (prologOffen()) return false;
   return DATEN.episoden.every(function (a) {
     return a.nummer >= ep.nummer || gelesen(a.id);
   });
@@ -442,7 +448,9 @@ export function zeigeEpisoden(themen, hooks, zurueck) {
          nicht anklickbar - sie zu VERSTECKEN waere schlechter: dann waere die
          Geschichte kuerzer, als sie ist, und niemand wuesste, dass da noch
          etwas kommt. Statt einer Sperre steht dort, was zuerst dran ist. */
-      var zu = !fertig && !folgeOffen(ep);
+      // Hier zaehlt der Prolog MIT: in der Uebersicht wird eine Folge einzeln
+      // gelesen, er laeuft also nicht wie im Themen-Lernen davor mit.
+      var zu = !fertig && (prologOffen() || !folgeOffen(ep));
       var k = el("button", "karte episode-karte" + (fertig ? " gelesen" : "") + (zu ? " spaeter" : ""));
       if (thema) setzeFarbe(k, thema.farbe);
       var kz = el("div", "episode-karte-zeile");

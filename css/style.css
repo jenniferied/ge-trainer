@@ -2476,6 +2476,29 @@ p { margin: 0 0 var(--sp-3); }
   color: var(--ink-soft);
 }
 
+/* ---------- Die Story fuehrt die Themenwahl (25.08.2026) ----------
+   Genau EINE Kachel traegt das zu jedem Zeitpunkt - die Folgen laufen der
+   Reihe nach, es gibt also immer nur ein Thema, das die Geschichte
+   weitererzaehlt. Deshalb darf sie deutlicher sein als die Duenn-Zeile:
+   sie konkurriert mit nichts. */
+.tl-story-zeile {
+  display: inline-block; margin-top: 4px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--tfarbe, var(--accent));
+}
+/* Ein Rahmen in der Themenfarbe statt eines zweiten Glimmers: die Kachel soll
+   sich abheben, ohne dass daneben alles ausgegraut aussieht. */
+.kachel.tl-story {
+  border-color: var(--tfarbe, var(--accent));
+  box-shadow: 0 0 0 1px var(--tfarbe, var(--accent)) inset;
+}
+/* Der Satz ueber den Kacheln. Steht direkt unter der Abschnitts-Ueberschrift
+   und traegt den Folgentitel - die Kachel selbst nennt nur die Nummer. */
+.tl-story-tipp {
+  font-size: .85rem; color: var(--ink-soft);
+  margin: 0 0 var(--sp-3); line-height: 1.4;
+}
+
 /* ---------- Felder-Modus der Abruf-Treppe (treppe.js opts.felder) ----------
    Das leichte Geruest gegen den 0%-Schock: Chip, Tipp-Feld, Sammelort. Alles
    sitzungslokal - nichts davon wird gespeichert, geloggt oder gesynct. */
