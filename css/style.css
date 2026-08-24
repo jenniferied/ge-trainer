@@ -2604,7 +2604,14 @@ p { margin: 0 0 var(--sp-3); }
 .dailies-reihe .daily-kachel.daily-breit {
   grid-column: 1 / -1;
   flex-direction: row; align-items: center; justify-content: flex-start;
-  gap: var(--sp-3); text-align: left; min-height: 0;
+  gap: var(--sp-3); text-align: left;
+  /* Seit dem 24.08. so hoch wie die kurzen Kacheln (Jennifer). Vorher stand
+     hier min-height: 0 - die breite Kachel war damit die flachste der Reihe,
+     obwohl sie die laengste Runde startet und seit dem 23.08. auch der Eingang
+     zur Fallgeschichte ist. Der Wert 81px kommt aus .daily-kachel im geteilten
+     Paket; er wird hier bewusst wiederholt statt geerbt, weil die Regel
+     darueber ihn ueberschreiben wuerde. */
+  min-height: 81px;
   padding: var(--sp-3) var(--sp-4);
 }
 .daily-kachel.daily-breit .d-icon { font-size: 1.5rem; }

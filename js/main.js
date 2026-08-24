@@ -1890,11 +1890,33 @@ function tagesAufgaben() {
      ausdruecklich NICHT angefasst; der Verlauf fuehrt ueber SPIEL_ROUTE ohnehin
      schon zum selben Schirm. */
   var tlOffen = ThemenLernen.offeneRunde(themen);
+
+  /* Die Fallgeschichte war von aussen UNSICHTBAR (24.08.2026, Jennifers Frage
+     "stories klarer machen oder gibts gerade noch gar keine?"). Es gibt sie -
+     Prolog und zwei Folgen -, aber die eigene Kachel ist am 23.08. bewusst
+     gefallen: die Episode ist das Intro der Themen-Lernen-Sitzung, kein
+     Einzelding. Nur stand danach nirgends mehr, dass es sie gibt, und die Route
+     "episode" wird von keiner Stelle aufgerufen.
+     Also sagt es die Kachel, die tatsaechlich dorthin fuehrt. Eine offene Runde
+     hat weiter Vorrang - wer mitten drin steckt, will das zuerst lesen. */
+  function offeneFolge() {
+    if (!Episode.hatEpisoden()) return null;
+    if (Episode.prologOffen()) return "der Prolog";
+    for (var i = 0; i < themen.length; i++) {
+      var ep = Episode.episodeFuer(themen[i].id);
+      if (ep && !Episode.istGelesen(ep)) return themen[i].titel;
+    }
+    return null;
+  }
+  var folge = tlOffen ? null : offeneFolge();
+
   var liste = [{
     key: "tl", icon: "📚", titel: "Themen-Lernen", kurz: "Themen-Lernen",
     klein: tlOffen
       ? tlOffen.titel + " liegt angefangen da"
-      : "ein Thema · erarbeiten, dann prüfen · die längste Runde, pausierbar",
+      : folge
+        ? "📖 " + folge + " wartet · dann ein Thema erarbeiten und prüfen"
+        : "ein Thema · erarbeiten, dann prüfen · die längste Runde, pausierbar",
     blase: tlHeute,
     erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
   }, {
