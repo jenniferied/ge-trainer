@@ -833,20 +833,52 @@ p { margin: 0 0 var(--sp-3); }
 }
 .kb-thema-summary {
   cursor: pointer; list-style: none;
-  display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
+  display: flex; align-items: flex-start; gap: var(--sp-2);
   padding: var(--sp-3);
 }
 .kb-thema-summary::-webkit-details-marker { display: none; }
 .kb-thema-summary::before {
-  content: "▸"; color: var(--ink-soft); font-size: .9em;
+  content: "▸"; color: var(--ink-soft); font-size: .9em; line-height: 1.5;
   transition: transform .15s ease; transform-origin: 45% 55%;
 }
 .kb-thema[open] > .kb-thema-summary::before { transform: rotate(90deg); }
 @media (prefers-reduced-motion: reduce) { .kb-thema-summary::before { transition: none; } }
-.kb-thema-titel { flex: 1; min-width: 0; font-weight: 700; overflow-wrap: anywhere; }
-.kb-thema-stand { font-size: .78rem; color: var(--ink-soft); white-space: nowrap; }
-.kb-thema-innen { padding: 0 var(--sp-2) var(--sp-2); }
+/* Der Inhalt des Kopfes steht in einer eigenen Spalte neben dem Dreieck -
+   sonst laege der Balken darunter auf voller Breite und begaenne links vom
+   Text. */
+.kb-thema-innen-kopf { flex: 1; min-width: 0; }
+.kb-thema-kopfzeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+/* KEIN overflow-wrap: anywhere und KEIN min-width: 0 (24.08.2026, im Bild
+   gefunden): mit beidem rechnet Flexbox die Mindestbreite des Titels auf EIN
+   ZEICHEN herunter, und "Verkehrserziehung" stand als "Verk / ehrs / erzie /
+   hun / g" untereinander, sobald zwei Badges und die Quotenpille daneben
+   lagen. `break-word` bricht ein Wort nur, wenn es allein in seiner Zeile
+   nicht passt; die 60 % Mindestbreite schicken stattdessen die Badges in die
+   naechste Zeile. */
+.kb-thema-titel {
+  flex: 1 1 60%; min-width: 8em; font-weight: 700;
+  overflow-wrap: break-word; hyphens: auto;
+}
+.kb-thema-stand {
+  display: block; font-size: .78rem; color: var(--ink-soft);
+  margin-top: 3px; overflow-wrap: anywhere;
+}
+/* Der Balken sitzt im zugeklappten Kopf (Jennifer, 24.08.) - dieselbe Optik
+   wie an den frueheren Themenkarten, nur eine Ebene tiefer. */
+.kb-thema-innen-kopf .balken { margin-top: var(--sp-2); }
+.kb-thema-innen { padding: 0 var(--sp-3) var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-2); }
 .kb-thema-innen .ke-eintrag { background: var(--paper-2); }
+
+/* Eine Textzeile als Knopf - fuer den Weg in die Fragenliste unter den
+   Uebe-Knoepfen. Bewusst KEIN .knopf: Ansehen ist etwas anderes als Ueben,
+   und zwei gleich aussehende Knoepfe daneben waeren drei Angebote statt
+   zweier plus einem Weg. */
+.text-zeile {
+  background: none; border: none; cursor: pointer; text-align: left;
+  color: var(--ink-soft); font: inherit; font-size: .85rem;
+  padding: 4px 0; text-decoration: underline; text-underline-offset: 3px;
+}
+.text-zeile:hover { color: var(--ink); }
 
 /* Das KE-Label ("KE2") traegt die Themenfarbe und steht an DREI Stellen mit
    derselben Beschriftung: hier, an der aufgeloesten Frage (main.js
@@ -939,6 +971,28 @@ p { margin: 0 0 var(--sp-3); }
 .stb-ke-zeile:disabled { cursor: default; opacity: .7; }
 .stb-ke-text { flex: 1; min-width: 8em; overflow-wrap: anywhere; }
 .stb-ke-folie { font-size: .75rem; color: var(--tfarbe, var(--ink-soft)); white-space: nowrap; }
+
+/* ---------- "Was jetzt am meisten bringt" (24.08.2026) ----------
+   Ganz unten auf der Startseite, unter dem Rueckblick. EIN Vorschlag, nicht
+   eine Liste - die Akzentkante wie beim Angebots-Kasten, weil es dieselbe
+   Geste ist: ein Angebot, kein Alarm. */
+.naechst-karte { border-left: 4px solid var(--tfarbe, var(--accent)); }
+.naechst-lage { font-size: .85rem; color: var(--ink-soft); margin: 0 0 var(--sp-2); }
+.naechst-zeile { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.naechst-thema {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--tfarbe, var(--ink-soft));
+}
+.naechst-text { font-size: .95rem; line-height: 1.4; margin: 4px 0 var(--sp-3); overflow-wrap: anywhere; }
+
+/* Der Kopf des Einstellungs-Sheets: Titel links, Schliessen rechts. */
+.einst-kopf { display: flex; align-items: center; gap: var(--sp-2); }
+.einst-kopf h3 { flex: 1; min-width: 0; margin: 0; }
+/* Im Sheet traegt die Sync-Karte den Rahmen des Sheets - ein Kasten im Kasten
+   waere eine Kante zu viel. */
+.einst-ov .sheet > .karte {
+  border: none; background: none; padding: 0; margin: var(--sp-3) 0 0;
+}
 
 /* Der Spiele-Hub ("Kurze Runden") ist am 22.08.2026 gefallen - .spiel-grid,
    .spiel-karte, .spiel-icon und .spiel-haken sind mit ihm gegangen. Die

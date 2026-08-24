@@ -230,8 +230,73 @@ var HOOKS = {
       freiKarte: function () { return freiKarte(thema, f, { einzeln: true }); }
     });
   },
-  glossar: function () { zeige("glossar"); }
+  glossar: function () { zeige("glossar"); },
+  /* Der Kopf einer aufklappbaren Themenzeile - EINE Bauform fuer beide
+     Sektionen der Startseite (Jennifer, 24.08.: "nach thema und nach kompetenz
+     gleich aussehen lassen"). Steht hier und nicht in stats.js, weil main.js
+     ihn selbst fuer "Nach Thema" braucht und stats.js ihn ueber den Hook holt
+     - ein Import zurueck waere ein Zyklus. */
+  kbKopf: function (o) { return kbKopf(o); },
+  glossarSchliessen: null
 };
+
+/* Titel, Vorlesungs-Badge, Quote-Pille, Balken. Der Balken steht bewusst IM
+   Summary und damit auch zugeklappt da (Jennifer): eine Liste aus acht
+   zugeklappten Zeilen soll schon sagen, wo es steht, sonst muss man achtmal
+   aufklappen, um zu sehen, wo sich das Aufklappen lohnt. */
+/* Die Einstellungen als Sheet (24.08.2026). Hier stehen NUR Geraete-Sachen -
+   Sync-Code, Abgleich, Zuruecksetzen; alles, was einen einzelnen Uebungslauf
+   betrifft, wird weiterhin dort eingestellt, wo der Lauf startet (Memory
+   `optionen-in-den-builder`). Bauform ist .sheet-ov/.sheet wie das Frage-Sheet:
+   eine zweite Huelle fuer dasselbe Muster waere ein zweites Aussehen fuer
+   dieselbe Geste.
+
+   Das Sheet haengt an document.body und nicht in der Seite: ein Sync zeichnet
+   die Startseite neu und risse es sonst weg, waehrend Rose den Code eintippt. */
+function einstellungenSheet() {
+  var alt = document.querySelector(".einst-ov");
+  if (alt) alt.remove();
+
+  var ov = el("div", "sheet-ov einst-ov");
+  var sheet = el("div", "sheet");
+  sheet.setAttribute("role", "dialog");
+  sheet.setAttribute("aria-modal", "true");
+  sheet.setAttribute("aria-label", "Einstellungen");
+  ov.appendChild(sheet);
+
+  var kopf = el("div", "einst-kopf");
+  kopf.appendChild(el("h3", null, "⚙️ Einstellungen"));
+  var zu = el("button", "kopf-knopf", "✕");
+  zu.setAttribute("aria-label", "Schließen");
+  zu.addEventListener("click", function () { ov.remove(); });
+  kopf.appendChild(zu);
+  sheet.appendChild(kopf);
+  sheet.appendChild(syncKarte());
+
+  // Tippen daneben schliesst, Escape auch - beides wie beim Frage-Sheet.
+  ov.addEventListener("click", function (e) { if (e.target === ov) ov.remove(); });
+  document.addEventListener("keydown", function esc(e) {
+    if (e.key !== "Escape") return;
+    ov.remove();
+    document.removeEventListener("keydown", esc);
+  });
+  document.body.appendChild(ov);
+}
+
+function kbKopf(o) {
+  var kopf = el("summary", "kb-thema-summary");
+  var oben = el("div", "kb-thema-kopfzeile");
+  oben.appendChild(el("span", "kb-thema-titel", o.titel));
+  if (o.badge) oben.appendChild(el("span", "vl-badge", o.badge));
+  (o.extra || []).forEach(function (x) { if (x) oben.appendChild(x); });
+  oben.appendChild(quotePille(o.beruehrt ? o.anteil : null));
+  var innen = el("div", "kb-thema-innen-kopf");
+  innen.appendChild(oben);
+  if (o.stand) innen.appendChild(el("span", "kb-thema-stand", o.stand));
+  innen.appendChild(Stats.standBalken(o.anteil, o.beruehrt));
+  kopf.appendChild(innen);
+  return kopf;
+}
 
 /* ---------- Startseite ----------
    Aufbau (Layout-Entscheidung Jennifer, 12.08.): Countdown-Kopf mit dem
@@ -2254,10 +2319,12 @@ function zeigeStart() {
   var zahnrad = el("button", "kopf-knopf", "⚙️");
   zahnrad.title = "Einstellungen";
   zahnrad.setAttribute("aria-label", "Einstellungen");
-  zahnrad.addEventListener("click", function () {
-    var ziel = document.getElementById("einstellungen");
-    if (ziel) ziel.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  // Seit dem 24.08.2026 oeffnet das Zahnrad die Einstellungen WIRKLICH
+  // (Jennifer: "jetzt abgleichen und sync in die einstellungen im rad, nicht
+  // nach unten"). Vorher scrollte es nur ans Seitenende zu einer Karte, die
+  // dort ohnehin stand - ein Zahnrad, das nichts oeffnet, ist eine Sprungmarke
+  // mit falschem Zeichen.
+  zahnrad.addEventListener("click", einstellungenSheet);
   ecke.appendChild(zahnrad);
   zeile.appendChild(ecke);
   kopf.appendChild(zeile);
@@ -2273,15 +2340,31 @@ function zeigeStart() {
   app.appendChild(heuteDranKarte());
   app.appendChild(uebenKacheln());
 
+  /* Kurzinfo zur Klausur - seit dem 24.08. HIER statt ganz unten (Jennifer:
+     "den text aber woanders hin, vielleicht ueber die dein weg zur klausur").
+     Sie sagt, worauf das alles hinauslaeuft, und steht deshalb direkt vor der
+     Karte, die die Tage bis dahin zaehlt. Die AFB-Operatoren stehen weiter
+     ausfuehrlich im Spickzettel der Signalwoerter; hier waeren sie eine
+     dritte Kopie. */
+  var info = el("div", "karte info-karte");
+  info.appendChild(el("h2", null, "So läuft die Klausur"));
+  var ul = document.createElement("ul");
+  ul.appendChild(el("li", null, "5 der 8 Themen kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle."));
+  // Die drei Saetze, die in der Klausur wirklich entscheiden, tragen seit dem
+  // 24.08. dieselbe starke Auszeichnung (Jennifer). Sie sind keine Hinweise
+  // unter anderen: an ihnen haengt, ob eine gewusste Sache Punkte bekommt.
+  ul.appendChild(el("li", "hinweis-stark", "Ganze Sätze und Fachbegriffe. Die Punktzahl an der Aufgabe sagt dir, wie viel sie erwartet."));
+  ul.appendChild(el("li", "hinweis-stark", "Inklusion kommt laut Dozentin nicht dran."));
+  ul.appendChild(el("li", "hinweis-stark", "Gefragt wird nach den Kompetenzerwartungen der Folien – die stehen unten unter „Nach Kompetenz“."));
+  info.appendChild(ul);
+  app.appendChild(info);
+
   var weg = wegKarte(tz);
   if (weg) app.appendChild(weg);
 
   // Kalender: Ziel erreicht? Punkte-Plot direkt darunter: wie viel war es wirklich?
   var freq = frequenzKarte(tz, themen);
   if (freq) app.appendChild(freq);
-
-  var zuletzt = zuletztKarte(themen);
-  if (zuletzt) app.appendChild(zuletzt);
 
   /* NACH KOMPETENZ (24.08.2026, ROADMAP 5b) - vor "Nach Thema", weil die
      Kompetenzerwartungen der Massstab sind und die Themen die Schublade:
@@ -2296,7 +2379,18 @@ function zeigeStart() {
   app.appendChild(Stats.kompetenzListe(themen, HOOKS));
 
   app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
+  app.appendChild(el("div", "abschnitt-klein",
+    "Dieselben Aufgaben, nur anders sortiert – nach der Vorlesung, aus der sie kommen."));
 
+  /* SEIT DEM 24.08.2026 DIESELBE BAUFORM WIE "NACH KOMPETENZ" (Jennifer:
+     "sollte einheitlicher aussehen"). Vorher war das hier eine flache
+     button.thema-karte, die beim Antippen in die Fragenliste sprang -
+     daneben eine aufklappbare Kompetenzliste mit Uebe-Knoepfen. Zwei
+     Sektionen, zwei Bedienlogiken, gleiche Sache.
+
+     Jetzt: aufklappen, und es stehen dieselben zwei Knoepfe da wie bei einer
+     Kompetenz (10 MC / 5 frei, echte Zahlen). Der Weg in die Fragenliste
+     bleibt als eigene Zeile darunter - er ist etwas anderes als Ueben. */
   themen.forEach(function (thema) {
     var mc = mcStand(thema), fr = freiStand(thema);
     /* Die Rechnung steht seit dem 23.08.2026 als themenStand() in core.js -
@@ -2305,65 +2399,43 @@ function zeigeStart() {
        Frage. mcStand/freiStand bleiben hier, weil die Meta-Zeile unten die
        Einzelteile ausschreibt ("3 von 12 sitzen"). */
     var st = themenStand(thema);
-    var angeschaut = st.angeschaut;
-    var zustand = kartenZustand(angeschaut, st.gesamt);
+    var zustand = kartenZustand(st.angeschaut, st.gesamt);
 
-    var k = el("button", "thema-karte " + zustand);
-    setzeFarbe(k, thema.farbe);
+    var falt = el("details", "kb-thema " + zustand);
+    setzeFarbe(falt, thema.farbe);
+    falt.appendChild(kbKopf({
+      titel: thema.titel,
+      badge: thema.vorlesung,
+      extra: [
+        thema.beispielthema ? el("span", "beispiel-badge", "Beispielaufgaben bekannt") : null,
+        zustandBadge(zustand)
+      ],
+      anteil: st.anteil,
+      beruehrt: st.beruehrt,
+      stand: "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: "
+        + fr.bearbeitet + " von " + fr.gesamt + " angeschaut"
+    }));
 
-    var anteil = st.anteil;
-
-    var kz = el("div", "thema-kopfzeile");
-    kz.appendChild(el("span", "thema-titel", thema.titel));
-    kz.appendChild(el("span", "vl-badge", thema.vorlesung));
-    if (thema.beispielthema) kz.appendChild(el("span", "beispiel-badge", "Beispielaufgaben bekannt"));
-    var badge = zustandBadge(zustand);
-    if (badge) kz.appendChild(badge);
-    // Die Quote als farbige Pille, ganz rechts: man soll sehen, ob ein Thema
-    // sitzt, ohne die Prozentzahl erst lesen zu muessen. Ein noch gar nicht
-    // angefasstes Thema bekommt bewusst KEINE 0-%-Warnfarbe, sondern eine
-    // neutrale Pille - unbearbeitet ist nicht dasselbe wie schwach.
-    kz.appendChild(quotePille(st.beruehrt ? anteil : null));
-    k.appendChild(kz);
-
-    var meta = "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: " + fr.bearbeitet + " von " + fr.gesamt + " angeschaut";
-    k.appendChild(el("div", "thema-meta", meta));
-
-    // Der Balken zeigt die Beherrschungs-Quote, faerbt sich also nach dem Wert
-    // und nicht mehr nach dem Thema. Die Themen-Identitaet steckt weiter im
-    // farbigen linken Rand der Karte und im Vorlesungs-Badge.
-    var balken = el("div", "balken");
-    var voll = el("div", "voll " + (st.beruehrt ? quoteStufe(anteil) : "q0"));
-    voll.style.width = anteil + "%";
-    balken.appendChild(voll);
-    k.appendChild(balken);
-
-    k.addEventListener("click", function () { zeige("thema", thema); });
-    app.appendChild(k);
+    var innen = el("div", "kb-thema-innen");
+    innen.appendChild(Stats.uebeKnoepfe(
+      function (typ) { return typ === "mc" ? (thema.mc || []) : (thema.frei || []); },
+      function (typ) { Stats.themaRunde(thema, typ, HOOKS); },
+      "Zu diesem Thema liegen gerade keine Aufgaben bereit."));
+    var alle = el("button", "text-zeile", "🗂 Alle Fragen ansehen und einzeln aufschlagen");
+    alle.addEventListener("click", function () { zeige("thema", thema); });
+    innen.appendChild(alle);
+    falt.appendChild(innen);
+    app.appendChild(falt);
   });
 
-  // Kurzinfo zur Klausur - bewusst weit unten und auf drei Zeilen gekuerzt.
-  // Die AFB-Operatoren stehen ausfuehrlich im Spickzettel der Signalwoerter
-  // und in der Statistik; hier waeren sie eine dritte Kopie.
-  var info = el("div", "karte info-karte");
-  info.appendChild(el("h2", null, "So läuft die Klausur"));
-  var ul = document.createElement("ul");
-  [
-    "5 der 8 Themen kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle.",
-    "Ganze Sätze und Fachbegriffe. Die Punktzahl an der Aufgabe sagt dir, wie viel sie erwartet."
-  ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
-  ul.appendChild(el("li", "hinweis-stark", "Inklusion kommt laut Dozentin nicht dran."));
-  info.appendChild(ul);
-  app.appendChild(info);
-
-  // Einstellungs-Ecke: Sync-Status und Sync-Code. Bewusst unter den Themen statt
-  // weiter oben - dort gehoeren Uebungs-Einstiege hin, der Sync soll unsichtbar
-  // laufen und nicht der erste Blick sein. Hier stehen NUR Geraete-Sachen
-  // (Theme oben im Kopf, Sync-Code, Zuruecksetzen); alles, was einen einzelnen
-  // Uebungslauf betrifft, wird dort eingestellt, wo der Lauf startet.
-  var einst = syncKarte();
-  einst.id = "einstellungen";        // Sprungziel des Zahnrads oben rechts
-  app.appendChild(einst);
+  /* GANZ UNTEN: erst was war, dann was als Naechstes lohnt (Jennifer, 24.08.:
+     "zuletzt geuebt nach ganz unten. was jetzt am meisten bringt dann darunter
+     nochmal"). Die Reihenfolge ist Absicht - wer bis hierher gescrollt hat,
+     soll nicht mit dem Rueckblick entlassen werden, sondern mit einem
+     konkreten naechsten Griff. */
+  var zuletzt = zuletztKarte(themen);
+  if (zuletzt) app.appendChild(zuletzt);
+  app.appendChild(Stats.naechsterSchritt(themen, HOOKS));
 
   app.appendChild(el("div", "fusszeile", "Jede Runde zählt – auch eine kurze. Dein Fortschritt bleibt auf diesem Gerät gespeichert."));
 }

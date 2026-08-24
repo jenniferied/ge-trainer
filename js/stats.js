@@ -1229,6 +1229,46 @@ function kompetenzKarte(themen, hooks) {
   return karte;
 }
 
+/* "Was jetzt am meisten bringt" (24.08.2026, Jennifer: ganz unten, unter
+   "Zuletzt geübt"). EIN konkreter naechster Griff statt einer Liste von
+   Baustellen - Vorbild ist sternSchrittHtml im ST-Trainer, das aus demselben
+   Grund eine Zeile statt sechs zeigt.
+
+   Welche Kompetenz? Die erste aus keZeilen - die Sortierung dort macht die
+   Arbeit schon: Ungetanes zuerst, danach das, wovon am wenigsten sitzt. Ist
+   alles beruehrt, steht statt eines Vorschlags ein Satz, der das feiert. */
+export function naechsterSchritt(themen, hooks) {
+  var box = el("div", "karte naechst-karte");
+  box.hidden = true;
+  ladeKompetenzen().then(function (d) {
+    if (!box.isConnected || !d) { box.remove(); return; }
+    var ab = kompetenzAbdeckung(themen, d);
+    var v = ab.keZeilen[0];
+    if (!v) { box.remove(); return; }
+    box.hidden = false;
+    box.appendChild(el("h2", null, "Was jetzt am meisten bringt"));
+
+    var nie = ab.nieBeruehrt.length;
+    box.appendChild(el("p", "naechst-lage", nie
+      ? (nie === 1 ? "Eine Kompetenz war noch nicht dran." : nie + " Kompetenzen waren noch nicht dran.")
+        + " Die hier liegt ganz oben:"
+      : "Jede Kompetenz war schon einmal dran. Am wenigsten sitzt gerade die hier:"));
+
+    var zeile = el("div", "naechst-zeile");
+    var label = el("span", "ke-label", keLabel(v.id));
+    if (v.thema) { setzeFarbe(label, v.thema.farbe); setzeFarbe(box, v.thema.farbe); }
+    zeile.appendChild(label);
+    zeile.appendChild(el("span", "naechst-thema", v.thema ? v.thema.titel : ""));
+    box.appendChild(zeile);
+    box.appendChild(el("div", "naechst-text", kurz((v.eintrag || {}).text, 140)));
+    box.appendChild(uebeKnoepfe(
+      function (typ) { return kePool(v, typ); },
+      function (typ) { kompetenzRunde(v, typ, hooks); },
+      "Hier ist gerade nichts freigeschaltet – üb eine Stufe tiefer, dann öffnet sich das hier von selbst."));
+  });
+  return box;
+}
+
 /* Die Liste "Nach Kompetenz" fuer die STARTSEITE - derselbe Renderer wie in
    der Statistik-Karte (fuelleKompetenzListe), nur ohne deren Rahmen. Rendert
    STATISCH aus der Kompetenz-Liste, nicht aus dem Antwort-Log: die Liste ist
@@ -1266,12 +1306,12 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
   leereKnoten(karte);
   karte.appendChild(el("h2", null, "Die Kompetenzen der Vorlesung"));
   karte.appendChild(el("p", "raster-hinweis",
-    "Was die acht Vorlesungen von dir erwarten – und wo du schon warst. Antippen klappt ein Thema auf, und jede Kompetenz lässt sich direkt üben."));
+    "Wie es über die 34 Erwartungen steht. Die Liste zum Üben steht auf der Startseite unter „Nach Kompetenz“."));
 
-  /* 1. Ganz oben das Angebot - nur noch als kompakte Zahl. Die Zeilen selbst
-     stehen EINMAL in der Liste unten (markiert als .frisch); bis zum 24.08.
-     standen die Unberuehrten doppelt da, Angebots-Kasten UND Listenkopf, auf
-     dem Handy eine sichtbare Wiederholung (ROADMAP 5b). */
+  /* 1. Ganz oben das Angebot - nur die Zahl. Die Zeilen dazu stehen auf der
+     STARTSEITE (siehe unten): erst standen sie hier doppelt, danach hier und
+     dort - beides war eine Wiederholung, die Rose raten liess, welche Liste
+     gilt. */
   var nie = ab.nieBeruehrt;
   var kasten = el("div", "ke-angebot");
   if (nie.length) {
@@ -1281,7 +1321,7 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
       (nie.length === 1 ? " Kompetenzen war noch nicht dran" : " Kompetenzen waren noch nicht dran")));
     kasten.appendChild(zahl);
     kasten.appendChild(el("p", "ke-angebot-text",
-      "Hier liegt am meisten bereit. Kein Vorwurf – unten sind genau diese Zeilen markiert, jede mit eigenem Übe-Knopf."));
+      "Hier liegt am meisten bereit. Kein Vorwurf – auf der Startseite sind genau diese Zeilen markiert, jede mit eigenem Übe-Knopf."));
   } else {
     kasten.appendChild(el("div", "ke-angebot-zahl",
       "Jede Kompetenz war schon einmal dran."));
@@ -1319,13 +1359,19 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
   karte.appendChild(el("p", "ke-fussnote",
     "„Sitzt“ zählt nur die frei geschriebenen Aufgaben, die du selbst mit „saß gut“ eingeschätzt hast. Angekreuzte Konzept-Checks zählen als berührt: in der Klausur schreibst du mit der Hand, und Wiedererkennen ist noch kein Satz auf dem Papier."));
 
-  // 3. Alle Kompetenzen, nach Thema gruppiert - derselbe Renderer wie die
-  // Startseiten-Sektion "Nach Kompetenz" (fuelleKompetenzListe), keine zwei
-  // Kopien. Kompetenzen ohne Aufgabe stehen als graue Zeile in ihrem Thema.
-  karte.appendChild(el("div", "chip-ueberschrift", "Alle Kompetenzerwartungen, nach Thema"));
-  var liste = el("div", "ke-nach-thema");
-  fuelleKompetenzListe(liste, themen, ab, hooks);
-  karte.appendChild(liste);
+  /* 3. KEINE LISTE MEHR HIER (24.08.2026, Jennifer: "warum gibt es in der
+     statistik was und auf der startseite? alles auf statistik nach startseite
+     aufloesen"). Bis heute stand dieselbe Liste an beiden Orten - dieselben
+     Zeilen, dieselben Knoepfe, und man musste raten, welche die "richtige"
+     ist. Sie steht jetzt nur noch auf der STARTSEITE, wo geuebt wird.
+
+     Was hier bleibt, ist das, was es dort NICHT gibt und was in eine Statistik
+     gehoert: die Zahl der unberuehrten Kompetenzen und die Bilanz je
+     AFB-Stufe. Kein Rundenstart, keine Wiederholung der Liste - nur der
+     Verweis. */
+  var hin = el("button", "knopf sekundaer", "Zur Liste auf der Startseite");
+  hin.addEventListener("click", function () { hooks.home(); });
+  karte.appendChild(hin);
 }
 
 /* ---------- Die Kompetenz-Liste (24.08.2026, ROADMAP 5b) ----------
@@ -1361,47 +1407,102 @@ function kernZuerst(pool) {
     .map(function (x) { return { typ: x.q.typ, f: x.q.f, thema: x.q.thema }; });
 }
 
-// Deckel = Zielbild je Kompetenz (Jennifer, 24.08.): hoechstens 12 MC bzw.
-// 6 freie Aufgaben, der Knopf traegt die ECHTE Zahl - keine stille Degradierung.
-var KE_DECKEL = { mc: 12, frei: 6 };
+/* Der Rundendeckel, EINMAL fuer die ganze App (Jennifer, 24.08.: "sollte
+   einheitlicher aussehen"): hoechstens 10 Ankreuz- oder 5 freie Aufgaben, egal
+   ob die Runde aus einer Kompetenz oder aus einem Thema kommt. Der Knopf
+   traegt die ECHTE Zahl - hat eine Kompetenz nur zwei freie Aufgaben, steht
+   "2" drauf und nicht "5". Keine stille Degradierung, keine Zahl, die luegt.
 
-function kompetenzRunde(v, typ, themen, hooks) {
-  var pool = kernZuerst(kePool(v, typ));
+   NICHT ZU VERWECHSELN mit dem KORPUS-Zielbild 12 MC / 6 frei je Kompetenz
+   (ROADMAP, KE x AFB-Matrix). Das ist eine Aussage darueber, wie viele Fragen
+   EXISTIEREN sollten; das hier ist die Laenge einer Sitzung. */
+var UEBE_DECKEL = { mc: 10, frei: 5 };
+
+/* Eine Runde aus einem fertigen Pool. Beide Einstiege - Kompetenz und Thema -
+   laufen hier durch, damit eine Themenrunde nicht anders funktioniert als eine
+   Kompetenzrunde und beide dieselbe Reihenfolge fahren (Kern zuerst, AFB
+   aufsteigend). meta traegt nur, was sich unterscheidet. */
+function poolRunde(roh, typ, meta, hooks) {
+  var pool = kernZuerst(roh);
   if (!pool.length) return;
-  var t = v.thema;
   runde(pool, {
+    art: meta.art,
+    ke: meta.ke || null,
+    titel: meta.titel,
+    unter: meta.unter,
+    farbe: meta.farbe || null,
+    zurueckText: "← Startseite",
+    zurueck: function () { hooks.home(); },
+    nochmal: function () { poolRunde(roh, typ, meta, hooks); },
+    fertigSatz: meta.fertigSatz,
+    extraText: null, extra: null
+  }, hooks, { anzahl: Math.min(UEBE_DECKEL[typ], pool.length), auswahl: "reihe" });
+}
+
+function kompetenzRunde(v, typ, hooks) {
+  var t = v.thema;
+  poolRunde(kePool(v, typ), typ, {
     art: "kompetenz",
     ke: v.id,
     titel: (t ? t.titel + " · " : "") + keLabel(v.id),
     unter: kurz((v.eintrag || {}).text, 90),
     farbe: t ? t.farbe : null,
-    zurueckText: "← Startseite",
-    zurueck: function () { hooks.home(); },
-    nochmal: function () { kompetenzRunde(v, typ, themen, hooks); },
     fertigSatz: typ === "mc"
       ? "Einmal quer durch die Ankreuzfragen genau dieser Kompetenz."
-      : "Frei geschrieben, genau auf diese Kompetenz.",
-    extraText: null, extra: null
-  }, hooks, { anzahl: Math.min(KE_DECKEL[typ], pool.length), auswahl: "reihe" });
+      : "Frei geschrieben, genau auf diese Kompetenz."
+  }, hooks);
 }
 
-function uebeKnoepfe(v, themen, hooks) {
+/* Dieselbe Runde, nur aus einem ganzen Thema (Jennifer, 24.08.: "bei nach
+   thema ueben auch bis zu 10/5 Fragen ueben"). Exportiert, weil die
+   Startseite in main.js sie braucht. */
+export function themaRunde(thema, typ, hooks) {
+  var roh = (typ === "mc" ? (thema.mc || []) : (thema.frei || []))
+    .filter(function (f) { return !afbZuFrueh(thema.id, f.afb); })
+    .map(function (f) { return { typ: typ, f: f, thema: thema }; });
+  poolRunde(roh, typ, {
+    art: "ueben",
+    titel: thema.titel,
+    unter: typ === "mc" ? "Ankreuzen quer durchs Thema" : "Frei schreiben quer durchs Thema",
+    farbe: thema.farbe,
+    fertigSatz: typ === "mc"
+      ? "Einmal quer durch die Ankreuzfragen dieses Themas."
+      : "Frei geschrieben, quer durch dieses Thema."
+  }, hooks);
+}
+
+/* Die zwei Uebe-Knoepfe. EINE Bauform fuer Thema und Kompetenz - was sich
+   unterscheidet, ist nur der Pool und was beim Klick passiert.
+   `leerSatz` steht da, wenn gar nichts freigeschaltet ist (kommt bei
+   Kompetenzen vor, deren Aufgaben alle AFB III sind und deren Thema kalt ist). */
+export function uebeKnoepfe(poolFuer, starte, leerSatz) {
   var reihe = el("div", "ke-uebe");
   [["mc", "MC üben", "⚡ "], ["frei", "Klausurfragen üben", "✍️ "]].forEach(function (w) {
-    var n = Math.min(KE_DECKEL[w[0]], kePool(v, w[0]).length);
+    var n = Math.min(UEBE_DECKEL[w[0]], poolFuer(w[0]).length);
     if (!n) return;
     var b = el("button", "knopf klein", w[2] + n + " " + w[1]);
     b.addEventListener("click", function (ev) {
       ev.preventDefault();
-      kompetenzRunde(v, w[0], themen, hooks);
+      ev.stopPropagation();
+      starte(w[0]);
     });
     reihe.appendChild(b);
   });
-  if (!reihe.childNodes.length) {
-    reihe.appendChild(el("span", "muted klein",
-      "Für diese Kompetenz ist gerade nichts freigeschaltet – AFB III öffnet sich, sobald im Thema etwas saß."));
-  }
+  if (!reihe.childNodes.length && leerSatz) reihe.appendChild(el("span", "muted klein", leerSatz));
   return reihe;
+}
+
+/* Der Balken unter einer Zeile - dieselbe Optik wie an den Themenkarten
+   (quoteStufe-Leiter). Steht seit dem 24.08. auch am ZUGEKLAPPTEN Kopf
+   (Jennifer): man soll sehen, wie es steht, ohne aufzuklappen.
+   `beruehrt: false` gibt bewusst q0 statt der 0-%-Warnfarbe - unbearbeitet
+   ist nicht dasselbe wie schwach. */
+export function standBalken(anteil, beruehrt) {
+  var balken = el("div", "balken");
+  var voll = el("div", "voll " + (beruehrt ? quoteStufe(anteil) : "q0"));
+  voll.style.width = (beruehrt ? anteil : 0) + "%";
+  balken.appendChild(voll);
+  return balken;
 }
 
 /* Eine Kompetenzerwartung als aufklappbare Zeile. Aufgeklappt: erst die
@@ -1424,6 +1525,7 @@ function kbZeile(v, themen, hooks) {
   zeile1.appendChild(quotePille(v.beruehrt ? anteil : null));
   innen.appendChild(zeile1);
   innen.appendChild(el("div", "ke-text", kurz(e.text, 130)));
+  innen.appendChild(standBalken(anteil, v.beruehrt));
 
   // Auf welcher Stufe ist die Kompetenz abrufbar? Eine Pille je AFB mit der
   // Fragenzahl; leer heisst: dazu gibt es (noch) keine Aufgabe dieser Stufe.
@@ -1443,7 +1545,10 @@ function kbZeile(v, themen, hooks) {
   falt.appendChild(kopf);
 
   var box = el("div", "ke-fragen");
-  box.appendChild(uebeKnoepfe(v, themen, hooks));
+  box.appendChild(uebeKnoepfe(
+    function (typ) { return kePool(v, typ); },
+    function (typ) { kompetenzRunde(v, typ, hooks); },
+    "Für diese Kompetenz ist gerade nichts freigeschaltet – AFB III öffnet sich, sobald im Thema etwas saß."));
 
   // Die Fragen, nach Unterthema aufgedroeselt (Jennifer, 24.08.) - in der
   // Reihenfolge des Themas, wie die Vorlesung sie erzaehlt.
@@ -1493,14 +1598,31 @@ function fuelleKompetenzListe(box, themen, ab, hooks) {
     var leere = ab.ohneFragen.filter(function (o) { return o.eintrag.thema === t.id; });
     if (!zeilen.length && !leere.length) return;
 
+    /* DERSELBE KOPF WIE IN "NACH THEMA" (24.08.2026, Jennifer: "nach thema und
+       nach kompetenz gleich aussehen lassen"): Titel, Vorlesungs-Badge,
+       Quote-Pille, Balken - und der Balken steht auch ZUGEKLAPPT da. Gebaut
+       von kbKopf() in main.js, damit es nicht zwei Koepfe gibt, die
+       auseinanderdriften.
+
+       Die Quote hier ist die der Kompetenzen: wie viele freie Aufgaben dieses
+       Themas sitzen, ueber alle seine Erwartungen. Sie kann von der Quote in
+       "Nach Thema" abweichen (die zaehlt MC mit) - das ist Absicht und der
+       ganze Punkt der Unterscheidung. */
+    var frei = 0, sitzt = 0, beruehrt = 0;
+    zeilen.forEach(function (v) {
+      frei += v.freiGesamt; sitzt += v.freiSitzt;
+      if (v.beruehrt) beruehrt++;
+    });
+    var anteil = frei ? Math.round(100 * sitzt / frei) : 0;
     var falt = el("details", "kb-thema");
     setzeFarbe(falt, t.farbe);
-    var kopf = el("summary", "kb-thema-summary");
-    kopf.appendChild(el("span", "kb-thema-titel", t.titel));
-    var beruehrt = zeilen.filter(function (v) { return v.beruehrt; }).length;
-    kopf.appendChild(el("span", "kb-thema-stand",
-      beruehrt + " von " + (zeilen.length + leere.length) + " dran gewesen"));
-    falt.appendChild(kopf);
+    falt.appendChild(hooks.kbKopf({
+      titel: t.titel,
+      badge: t.vorlesung,
+      anteil: anteil,
+      beruehrt: !!beruehrt,
+      stand: beruehrt + " von " + (zeilen.length + leere.length) + " dran gewesen"
+    }));
 
     var innen = el("div", "kb-thema-innen");
     zeilen.forEach(function (v) { innen.appendChild(kbZeile(v, themen, hooks)); });
