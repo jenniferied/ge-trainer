@@ -231,6 +231,7 @@ var ART_TEXT = {
   wdh6: { icon: "🔂", name: "Sechs zum Wiederholen" },
   neu: { icon: "✨", name: "Fünf neue" },
   "mc-quer": { icon: "🔀", name: "MC-Quermischung" },
+  kompetenz: { icon: "🧭", name: "Kompetenz-Runde" },
   klausur: { icon: "📄", name: "Klausur-Simulation" },
   klausurfrage: { icon: "🧩", name: "Eine Klausurfrage" }
 };
@@ -881,9 +882,16 @@ export function kompetenzAbdeckung(themen, daten) {
       var v = proKE[kid] || (proKE[kid] = {
         id: kid, eintrag: keL[kid] || null, thema: titel[keL[kid] && keL[kid].thema] || null,
         gesamt: 0, beruehrt: 0, mcGesamt: 0, mcBeruehrt: 0,
-        freiGesamt: 0, freiBeruehrt: 0, freiSitzt: 0, fragen: []
+        freiGesamt: 0, freiBeruehrt: 0, freiSitzt: 0, fragen: [],
+        // Je AFB-Stufe die Verfuegbarkeit (24.08.2026): daraus werden die
+        // kleinen I/II/III-Pillen der Liste - "auf welcher Stufe kann ich
+        // diese Kompetenz ueberhaupt abrufen". Zielbild laut Jennifer:
+        // 4 MC + 2 frei je Stufe; AFB III hat im Korpus kein einziges MC.
+        stufen: { 1: { mc: 0, frei: 0 }, 2: { mc: 0, frei: 0 }, 3: { mc: 0, frei: 0 } }
       });
       v.gesamt++; v.beruehrt += b ? 1 : 0;
+      var vs = v.stufen[m.afb];
+      if (vs) vs[m.typ === "mc" ? "mc" : "frei"]++;
       if (m.typ === "mc") { v.mcGesamt++; v.mcBeruehrt += b ? 1 : 0; }
       else { v.freiGesamt++; v.freiBeruehrt += b ? 1 : 0; v.freiSitzt += si ? 1 : 0; }
       v.fragen.push({ typ: m.typ, f: m.f, thema: m.thema, beruehrt: b, sitzt: si });
@@ -1036,7 +1044,7 @@ export function zeigeStats(themen, hooks) {
 
   wurzel.appendChild(kachelKarte(st));
   wurzel.appendChild(chipKarte(st, themen, hooks));
-  wurzel.appendChild(kompetenzKarte(themen));
+  wurzel.appendChild(kompetenzKarte(themen, hooks));
   wurzel.appendChild(rasterKarte(st, hooks));
   wurzel.appendChild(fussnote(st));
 
@@ -1194,17 +1202,20 @@ function fussnote(st) {
    Rose hat gestern nach einer zu schweren Aufgabe abgebrochen; diese Karte
    darf sie nicht ein zweites Mal treffen.
 
-   KEIN EINSTIEG IN EINE RUNDE. Jennifer: "kompetenzen aufzaehlen und
-   verknuepfte fragen anzeigen lassen" - eine Uebersicht, kein Modus. Wer von
-   hier aus ueben will, nimmt die Chips oder das Raster darueber; ein dritter
-   Rundenstart an derselben Seite waere eine Entscheidung mehr, nicht eine
-   weniger.
+   SEIT DEM 24.08.2026 MIT RUNDENSTART - das ist eine BEWUSSTE UMKEHR der
+   Entscheidung vom Vortag ("eine Uebersicht, kein Modus"). Jennifer am 24.08.:
+   die Ansicht zeigte, WAS offen ist, und liess Rose dann allein damit - der
+   Weg von "diese Kompetenzen waren noch nicht dran" zu "dann ueb ich die
+   jetzt" fehlte. Jede Kompetenzerwartung traegt jetzt zwei Knoepfe (MC und
+   frei, echte gedeckelte Zahlen), und dieselbe Liste steht als "Nach
+   Kompetenz" auf der Startseite (kompetenzListe, EIN Renderer fuer beide
+   Orte). Begruendung in ROADMAP (5b).
 
    ASYNCHRON: kompetenzerwartungen.json wird sonst nirgends geladen, und
    zeigeStats() ist synchron. Deshalb steht die Karte zuerst als Platzhalter da
    und fuellt sich, wenn die Datei da ist. */
 
-function kompetenzKarte(themen) {
+function kompetenzKarte(themen, hooks) {
   var karte = el("div", "karte ke-karte");
   karte.appendChild(el("p", "ke-laedt", "Die Kompetenzerwartungen werden geladen …"));
   ladeKompetenzen().then(function (d) {
@@ -1212,10 +1223,27 @@ function kompetenzKarte(themen) {
     // in einen losgeloesten Knoten zu schreiben waere Arbeit fuer den Papierkorb.
     if (!karte.isConnected) return;
     if (!d) { karte.remove(); return; }
-    fuelleKompetenzKarte(karte, kompetenzAbdeckung(themen, d));
+    fuelleKompetenzKarte(karte, kompetenzAbdeckung(themen, d), themen, hooks);
     belebeStats(karte);
   });
   return karte;
+}
+
+/* Die Liste "Nach Kompetenz" fuer die STARTSEITE - derselbe Renderer wie in
+   der Statistik-Karte (fuelleKompetenzListe), nur ohne deren Rahmen. Rendert
+   STATISCH aus der Kompetenz-Liste, nicht aus dem Antwort-Log: die Liste ist
+   auch vor der ersten Runde da (die ST-Falle "Beherrschung nach Thema gibt es
+   erst nach Antworten" wird bewusst nicht uebernommen). */
+export function kompetenzListe(themen, hooks) {
+  var box = el("div", "ke-nach-thema");
+  box.appendChild(el("p", "ke-laedt", "Die Kompetenzerwartungen werden geladen …"));
+  ladeKompetenzen().then(function (d) {
+    if (!box.isConnected) return;
+    if (!d) { box.remove(); return; }
+    leereKnoten(box);
+    fuelleKompetenzListe(box, themen, kompetenzAbdeckung(themen, d), hooks);
+  });
+  return box;
 }
 
 // Fragetexte sind lang und tragen Markdown-Sternchen. Fuer eine Uebersicht
@@ -1234,13 +1262,16 @@ function kePille(afb) {
   return el("span", "ke-afb afb-" + stufe, "AFB " + AFB_ROEMISCH[stufe]);
 }
 
-function fuelleKompetenzKarte(karte, ab) {
+function fuelleKompetenzKarte(karte, ab, themen, hooks) {
   leereKnoten(karte);
   karte.appendChild(el("h2", null, "Die Kompetenzen der Vorlesung"));
   karte.appendChild(el("p", "raster-hinweis",
-    "Was die acht Vorlesungen von dir erwarten – und wo du schon warst. Antippen klappt die Aufgaben auf, die dazugehören."));
+    "Was die acht Vorlesungen von dir erwarten – und wo du schon warst. Antippen klappt ein Thema auf, und jede Kompetenz lässt sich direkt üben."));
 
-  // 1. Ganz oben das Angebot: was noch nicht dran war.
+  /* 1. Ganz oben das Angebot - nur noch als kompakte Zahl. Die Zeilen selbst
+     stehen EINMAL in der Liste unten (markiert als .frisch); bis zum 24.08.
+     standen die Unberuehrten doppelt da, Angebots-Kasten UND Listenkopf, auf
+     dem Handy eine sichtbare Wiederholung (ROADMAP 5b). */
   var nie = ab.nieBeruehrt;
   var kasten = el("div", "ke-angebot");
   if (nie.length) {
@@ -1250,8 +1281,7 @@ function fuelleKompetenzKarte(karte, ab) {
       (nie.length === 1 ? " Kompetenzen war noch nicht dran" : " Kompetenzen waren noch nicht dran")));
     kasten.appendChild(zahl);
     kasten.appendChild(el("p", "ke-angebot-text",
-      "Hier liegt am meisten bereit. Kein Vorwurf – nur die Stelle, an der eine Runde am meisten Neues bringt."));
-    nie.forEach(function (v) { kasten.appendChild(keZeile(v, true)); });
+      "Hier liegt am meisten bereit. Kein Vorwurf – unten sind genau diese Zeilen markiert, jede mit eigenem Übe-Knopf."));
   } else {
     kasten.appendChild(el("div", "ke-angebot-zahl",
       "Jede Kompetenz war schon einmal dran."));
@@ -1289,65 +1319,204 @@ function fuelleKompetenzKarte(karte, ab) {
   karte.appendChild(el("p", "ke-fussnote",
     "„Sitzt“ zählt nur die frei geschriebenen Aufgaben, die du selbst mit „saß gut“ eingeschätzt hast. Angekreuzte Konzept-Checks zählen als berührt: in der Klausur schreibst du mit der Hand, und Wiedererkennen ist noch kein Satz auf dem Papier."));
 
-  // 3. Alle Kompetenzen, das Ungetane zuerst, jede aufklappbar.
-  karte.appendChild(el("div", "chip-ueberschrift", "Alle Kompetenzerwartungen"));
-  var liste = el("div", "ke-liste");
-  ab.keZeilen.forEach(function (v) { liste.appendChild(keZeile(v, false)); });
+  // 3. Alle Kompetenzen, nach Thema gruppiert - derselbe Renderer wie die
+  // Startseiten-Sektion "Nach Kompetenz" (fuelleKompetenzListe), keine zwei
+  // Kopien. Kompetenzen ohne Aufgabe stehen als graue Zeile in ihrem Thema.
+  karte.appendChild(el("div", "chip-ueberschrift", "Alle Kompetenzerwartungen, nach Thema"));
+  var liste = el("div", "ke-nach-thema");
+  fuelleKompetenzListe(liste, themen, ab, hooks);
   karte.appendChild(liste);
-
-  // Kompetenzen ohne eine einzige Aufgabe sind KEIN Rueckstand von Rose,
-  // sondern eine Luecke im Korpus - deshalb ausserhalb der Zaehlung oben und
-  // im Ton des grauen Rasterfelds ("hier gibt es noch keine Aufgabe").
-  if (ab.ohneFragen.length) {
-    karte.appendChild(el("div", "chip-ueberschrift", "Dazu gibt es noch keine Aufgabe"));
-    var rest = el("div", "ke-liste");
-    ab.ohneFragen.forEach(function (o) {
-      var z = el("div", "ke-eintrag leer");
-      var kopf = el("div", "ke-kopf");
-      kopf.appendChild(el("span", "ke-thema", o.thema ? o.thema.titel : o.eintrag.thema));
-      kopf.appendChild(kePille(o.eintrag.afb));
-      z.appendChild(kopf);
-      z.appendChild(el("div", "ke-text", kurz(o.eintrag.text, 140)));
-      rest.appendChild(z);
-    });
-    karte.appendChild(rest);
-  }
 }
 
-/* Eine Kompetenzerwartung als aufklappbare Zeile. `hervor` markiert die noch
-   nicht beruehrten oben im Angebots-Kasten - dieselbe Zeile, nur anders
-   gerahmt, damit man sie unten in der Vollstaendigkeit wiedererkennt. */
-function keZeile(v, hervor) {
+/* ---------- Die Kompetenz-Liste (24.08.2026, ROADMAP 5b) ----------
+   Acht aufklappbare Themenzeilen, darin je Kompetenzerwartung eine Zeile mit
+   KE-Chip, AFB-Pille der Erwartung, Regenbogen-Beherrschung (quoteStufe wie
+   ueberall), den drei Stufen-Pillen (auf welchem AFB ist sie abrufbar) und -
+   aufgeklappt - den Uebe-Knoepfen und den Fragen, nach Unterthema
+   aufgedroeselt. ST-Vorbild ist "Beherrschung nach Thema" (Liste B). */
+
+function keNummer(id) { var m = /-ke(\d+)$/.exec(String(id)); return m ? +m[1] : 99; }
+function keLabel(id) { return "KE" + (keNummer(id) === 99 ? "?" : keNummer(id)); }
+
+// Der Pool eines Knopfs: Fragen dieser Kompetenz, ein Typ, ohne AFB-III-Fruest
+// aus kalten Themen (afbZuFrueh, derselbe Riegel wie in klausurfrage/neu).
+function kePool(v, typ) {
+  return v.fragen.filter(function (q) {
+    return q.typ === typ && !afbZuFrueh(q.thema.id, q.f.afb);
+  });
+}
+
+/* Kern zuerst, dann AFB aufsteigend; ZUFALL NUR INNERHALB gleicher Stufe
+   (Nordstern: "Zufall gilt innerhalb der aktuellen Stufe, nicht ueber den
+   ganzen Bestand"). runde() schneidet mit auswahl "reihe" nur noch ab. */
+function kernZuerst(pool) {
+  return pool.map(function (q) { return { q: q, los: Math.random() }; })
+    .sort(function (a, b) {
+      var ka = a.q.f.core ? 0 : 1, kb = b.q.f.core ? 0 : 1;
+      if (ka !== kb) return ka - kb;
+      var aa = a.q.f.afb || 9, ab = b.q.f.afb || 9;
+      if (aa !== ab) return aa - ab;
+      return a.los - b.los;
+    })
+    .map(function (x) { return { typ: x.q.typ, f: x.q.f, thema: x.q.thema }; });
+}
+
+// Deckel = Zielbild je Kompetenz (Jennifer, 24.08.): hoechstens 12 MC bzw.
+// 6 freie Aufgaben, der Knopf traegt die ECHTE Zahl - keine stille Degradierung.
+var KE_DECKEL = { mc: 12, frei: 6 };
+
+function kompetenzRunde(v, typ, themen, hooks) {
+  var pool = kernZuerst(kePool(v, typ));
+  if (!pool.length) return;
+  var t = v.thema;
+  runde(pool, {
+    art: "kompetenz",
+    ke: v.id,
+    titel: (t ? t.titel + " · " : "") + keLabel(v.id),
+    unter: kurz((v.eintrag || {}).text, 90),
+    farbe: t ? t.farbe : null,
+    zurueckText: "← Startseite",
+    zurueck: function () { hooks.home(); },
+    nochmal: function () { kompetenzRunde(v, typ, themen, hooks); },
+    fertigSatz: typ === "mc"
+      ? "Einmal quer durch die Ankreuzfragen genau dieser Kompetenz."
+      : "Frei geschrieben, genau auf diese Kompetenz.",
+    extraText: null, extra: null
+  }, hooks, { anzahl: Math.min(KE_DECKEL[typ], pool.length), auswahl: "reihe" });
+}
+
+function uebeKnoepfe(v, themen, hooks) {
+  var reihe = el("div", "ke-uebe");
+  [["mc", "MC üben", "⚡ "], ["frei", "Klausurfragen üben", "✍️ "]].forEach(function (w) {
+    var n = Math.min(KE_DECKEL[w[0]], kePool(v, w[0]).length);
+    if (!n) return;
+    var b = el("button", "knopf klein", w[2] + n + " " + w[1]);
+    b.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      kompetenzRunde(v, w[0], themen, hooks);
+    });
+    reihe.appendChild(b);
+  });
+  if (!reihe.childNodes.length) {
+    reihe.appendChild(el("span", "muted klein",
+      "Für diese Kompetenz ist gerade nichts freigeschaltet – AFB III öffnet sich, sobald im Thema etwas saß."));
+  }
+  return reihe;
+}
+
+/* Eine Kompetenzerwartung als aufklappbare Zeile. Aufgeklappt: erst die
+   Uebe-Knoepfe, dann die Fragen nach Unterthema aufgedroeselt. */
+function kbZeile(v, themen, hooks) {
   var e = v.eintrag || {};
-  var falt = el("details", "ke-eintrag" + (hervor ? " hervor" : "") + (v.beruehrt ? "" : " frisch"));
+  var falt = el("details", "ke-eintrag" + (v.beruehrt ? "" : " frisch"));
   var kopf = el("summary", "ke-summary");
   var innen = el("div", "ke-summary-innen");
 
   var zeile1 = el("div", "ke-kopf");
-  var thema = el("span", "ke-thema", v.thema ? v.thema.titel : (e.thema || ""));
-  if (v.thema) setzeFarbe(thema, v.thema.farbe);
-  zeile1.appendChild(thema);
+  var label = el("span", "ke-label", keLabel(v.id));
+  if (v.thema) setzeFarbe(label, v.thema.farbe);
+  zeile1.appendChild(label);
   zeile1.appendChild(kePille(e.afb));
+  // Beherrschung als Regenbogen-Pille (quoteStufe-Leiter wie ueberall): nur
+  // die freien Aufgaben zaehlen - MC ist beruehrt, nie sitzt. Unberuehrt
+  // bekommt die neutrale Pille, nicht die 0-%-Warnfarbe.
+  var anteil = v.freiGesamt ? Math.round(100 * v.freiSitzt / v.freiGesamt) : 0;
+  zeile1.appendChild(quotePille(v.beruehrt ? anteil : null));
   innen.appendChild(zeile1);
   innen.appendChild(el("div", "ke-text", kurz(e.text, 130)));
+
+  // Auf welcher Stufe ist die Kompetenz abrufbar? Eine Pille je AFB mit der
+  // Fragenzahl; leer heisst: dazu gibt es (noch) keine Aufgabe dieser Stufe.
+  var stufen = el("div", "ke-stufen");
+  AFB_STUFEN.forEach(function (a) {
+    var z = v.stufen[a], n = z.mc + z.frei;
+    var p = el("span", "ke-stufe afb-" + a + (n ? "" : " leer"), AFB_ROEMISCH[a] + " · " + n);
+    p.title = n
+      ? z.mc + " Ankreuz- und " + z.frei + " freie Aufgaben auf " + AFB_KURZ[a]
+      : "Auf dieser Stufe gibt es zu dieser Kompetenz noch keine Aufgabe.";
+    stufen.appendChild(p);
+  });
+  innen.appendChild(stufen);
   innen.appendChild(el("div", "ke-stand", standSatz(v)));
 
   kopf.appendChild(innen);
   falt.appendChild(kopf);
 
   var box = el("div", "ke-fragen");
+  box.appendChild(uebeKnoepfe(v, themen, hooks));
+
+  // Die Fragen, nach Unterthema aufgedroeselt (Jennifer, 24.08.) - in der
+  // Reihenfolge des Themas, wie die Vorlesung sie erzaehlt.
+  var gruppen = Object.create(null), reihenfolge = [];
   v.fragen.forEach(function (q) {
-    var z = el("div", "ke-frage");
-    var marke = el("span", "ke-marke " + (q.typ === "mc" ? "mc" : "frei"),
-      q.typ === "mc" ? "Check" : "frei");
-    z.appendChild(marke);
-    z.appendChild(el("span", "ke-frage-text", kurz(q.f.frage, 110)));
-    z.appendChild(el("span", "ke-frage-stand",
-      q.sitzt ? "saß gut" : q.beruehrt ? "schon dran gewesen" : "noch nicht dran gewesen"));
-    box.appendChild(z);
+    var u = q.f.unterthema || "Ohne Unterthema";
+    if (!gruppen[u]) { gruppen[u] = []; reihenfolge.push(u); }
+    gruppen[u].push(q);
+  });
+  if (v.thema && Array.isArray(v.thema.unterthemen)) {
+    reihenfolge.sort(function (a, b) {
+      var ia = v.thema.unterthemen.indexOf(a), ib = v.thema.unterthemen.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+  }
+  reihenfolge.forEach(function (u) {
+    // Eine einzige Gruppe braucht keine Zwischenueberschrift - sie stuende
+    // ueber allem und triebe nur die Zeile auseinander.
+    if (reihenfolge.length > 1) box.appendChild(el("div", "ke-unterthema", u));
+    gruppen[u].forEach(function (q) {
+      var z = el("div", "ke-frage");
+      var marke = el("span", "ke-marke " + (q.typ === "mc" ? "mc" : "frei"),
+        q.typ === "mc" ? "Check" : "frei");
+      z.appendChild(marke);
+      z.appendChild(el("span", "ke-frage-text", kurz(q.f.frage, 110)));
+      z.appendChild(el("span", "ke-frage-stand",
+        q.sitzt ? "saß gut" : q.beruehrt ? "schon dran gewesen" : "noch nicht dran gewesen"));
+      box.appendChild(z);
+    });
   });
   falt.appendChild(box);
   return falt;
+}
+
+/* Acht Themen-Gruppen, je Thema die Kompetenzen in ke1..keN-Reihenfolge.
+   Kompetenzen ohne eine einzige Aufgabe sind KEIN Rueckstand von Rose,
+   sondern eine Luecke im Korpus - graue Zeile im Ton des Rasterfelds. */
+function fuelleKompetenzListe(box, themen, ab, hooks) {
+  var proThema = Object.create(null);
+  ab.keZeilen.forEach(function (v) {
+    var t = (v.eintrag && v.eintrag.thema) || "";
+    (proThema[t] || (proThema[t] = [])).push(v);
+  });
+  themen.forEach(function (t) {
+    var zeilen = (proThema[t.id] || []).slice()
+      .sort(function (a, b) { return keNummer(a.id) - keNummer(b.id); });
+    var leere = ab.ohneFragen.filter(function (o) { return o.eintrag.thema === t.id; });
+    if (!zeilen.length && !leere.length) return;
+
+    var falt = el("details", "kb-thema");
+    setzeFarbe(falt, t.farbe);
+    var kopf = el("summary", "kb-thema-summary");
+    kopf.appendChild(el("span", "kb-thema-titel", t.titel));
+    var beruehrt = zeilen.filter(function (v) { return v.beruehrt; }).length;
+    kopf.appendChild(el("span", "kb-thema-stand",
+      beruehrt + " von " + (zeilen.length + leere.length) + " dran gewesen"));
+    falt.appendChild(kopf);
+
+    var innen = el("div", "kb-thema-innen");
+    zeilen.forEach(function (v) { innen.appendChild(kbZeile(v, themen, hooks)); });
+    leere.forEach(function (o) {
+      var z = el("div", "ke-eintrag leer");
+      var kz = el("div", "ke-kopf");
+      kz.appendChild(el("span", "ke-label", keLabel(o.id)));
+      kz.appendChild(kePille(o.eintrag.afb));
+      z.appendChild(kz);
+      z.appendChild(el("div", "ke-text", kurz(o.eintrag.text, 140)));
+      z.appendChild(el("div", "ke-stand", "Dazu gibt es noch keine Aufgabe – Lücke im Korpus, nicht bei dir."));
+      innen.appendChild(z);
+    });
+    falt.appendChild(innen);
+    box.appendChild(falt);
+  });
 }
 
 /* Der Satz unter dem Kompetenz-Text. Beide Zahlen stehen GETRENNT da: eine
@@ -1393,7 +1562,13 @@ function runde(pool, meta, hooks, wahl) {
   var gew = w.auswahl === "bunt" ? function () { return 1; }
     : w.auswahl === "neu" ? gewichtNeu
     : gewicht;
-  var liste = zieh(pool, Math.min(w.anzahl || RUNDE, pool.length), gew);
+  /* "reihe" (24.08.2026, Kompetenz-Runde): der Aufrufer hat den Pool schon in
+     die Reihenfolge gebracht, die gelten soll (Kern zuerst, AFB aufsteigend -
+     der Nordstern). Hier wird nur noch abgeschnitten, nicht neu gewuerfelt;
+     der Zufall sitzt beim Aufrufer INNERHALB gleicher Stufen. */
+  var liste = w.auswahl === "reihe"
+    ? pool.slice(0, Math.min(w.anzahl || RUNDE, pool.length))
+    : zieh(pool, Math.min(w.anzahl || RUNDE, pool.length), gew);
   // Die angefangene Aufgabe kommt zuerst, wenn eine mitgegeben wurde (macheWeiter).
   if (w.zuerst) liste = zuerstZeigen(liste, pool, w.zuerst);
   var index = 0, richtige = 0, mcAnzahl = 0;
@@ -1414,7 +1589,8 @@ function runde(pool, meta, hooks, wahl) {
     art: meta.art || "ueben",
     titel: meta.titel,
     modus: modusVon(liste),
-    anzahl: liste.length
+    anzahl: liste.length,
+    ke: meta.ke || null
   });
 
   function farbeSetzen() {
@@ -2012,6 +2188,10 @@ export function restPool(r, themen) {
   var quelle = AUS_STAPEL[r.art] ? wiederholPool(themen) : alleItems(themen);
   return quelle.filter(function (i) {
     if (gehabt[i.f.id]) return false;
+    // Eine Kompetenz-Runde macht mit dem Rest DERSELBEN Kompetenz weiter -
+    // die Themen von vorhin waeren zu grob (alte Sitzungen ohne ke: Feld
+    // fehlt, Filter greift nicht, alles bleibt beim Alten).
+    if (r.ke && (i.f.ke || []).indexOf(r.ke) < 0) return false;
     // Der Stapel ist selbst schon die Auswahl - ihn zusaetzlich auf die Themen
     // von vorhin einzudampfen wuerde eine Wiederholen-Runde kuenstlich
     // verengen. Bei allen anderen Runden ist das Thema die Auswahl.

@@ -57,7 +57,7 @@ import { app, el, leeren, state, starteRunde, beendeRunde, reichZeile, logAntwor
 import { stickerEl, setzeFarbe, themenAuswahl, afbAuswahl } from "./ui.js";
 import { afbAnalyse, afbOption, afbKurz, ROLLEN_KETTE, ROLLEN_NAME,
          rollenName, ROLLEN_ANZAHL, ANZAHL_HINWEIS } from "./spiele.js";
-import { rollenFuer, ROLLEN_AUFTRAG } from "./treppe.js";
+import { rollenFuer, ROLLEN_AUFTRAG, operatorSatz } from "./treppe.js";
 
 /* Hier stand bis zum 23.08.2026 ein "if (!f.afb) return" - Aufgaben ohne
    gepflegte Anforderungsstufe fielen still aus dem Pool, weil es im ersten
@@ -417,6 +417,15 @@ export function zeigeKlausurfrage(themen, hooks) {
       });
 
       karte.appendChild(rueckmeldung(alleRichtig, teileAufloesung(item.f, rollen)));
+      /* Was der Operator selbst verlangt (24.08.2026) - der Aufdroesel-Schritt
+         ist genau dafuer da: er sagt bisher, WELCHE TEILE die Antwort braucht,
+         aber nicht, was das Signalwort ueberhaupt bedeutet. Dieselbe Zeile
+         zeigt das Themen-Lernen (themen-lernen.js), also dieselbe Funktion -
+         zwei Formulierungen desselben Satzes waeren zwei Lehrmeinungen.
+         Faellt der Operator aus der Analyse, liefert operatorSatz "" und die
+         Zeile bleibt weg. */
+      var opSatz = operatorSatz(item.f);
+      if (opSatz) karte.appendChild(el("p", "muted klein", opSatz));
       schreibKnopf(karte, item);
     });
     karte.appendChild(los);

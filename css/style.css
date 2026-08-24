@@ -816,6 +816,130 @@ p { margin: 0 0 var(--sp-3); }
 .ke-frage-text { flex: 1; min-width: 8em; overflow-wrap: anywhere; }
 .ke-frage-stand { font-size: .78rem; color: var(--ink-soft); white-space: nowrap; }
 
+/* ---------- Nach Kompetenz: die uebbare Liste (24.08.2026, ROADMAP 5b) ----------
+   Dieselbe Liste steht an ZWEI Orten (Startseite und Statistik-Karte) und
+   kommt aus EINEM Renderer (stats.js fuelleKompetenzListe). Deshalb hier auch
+   nur ein Regelblock - wer ihn aendert, aendert beide Orte, und das ist
+   Absicht.
+
+   Zwei Ebenen Aufklappen sind das Maximum: Thema -> Kompetenz. Eine dritte
+   (Unterthema) waere auf dem Handy nicht mehr zu bedienen; die Unterthemen
+   stehen deshalb als Zwischenueberschrift IN der aufgeklappten Kompetenz. */
+.ke-nach-thema { display: flex; flex-direction: column; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+
+.kb-thema {
+  border: 1.5px solid var(--line); border-left: 4px solid var(--tfarbe, var(--line));
+  border-radius: 12px; background: var(--card);
+}
+.kb-thema-summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
+  padding: var(--sp-3);
+}
+.kb-thema-summary::-webkit-details-marker { display: none; }
+.kb-thema-summary::before {
+  content: "▸"; color: var(--ink-soft); font-size: .9em;
+  transition: transform .15s ease; transform-origin: 45% 55%;
+}
+.kb-thema[open] > .kb-thema-summary::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .kb-thema-summary::before { transition: none; } }
+.kb-thema-titel { flex: 1; min-width: 0; font-weight: 700; overflow-wrap: anywhere; }
+.kb-thema-stand { font-size: .78rem; color: var(--ink-soft); white-space: nowrap; }
+.kb-thema-innen { padding: 0 var(--sp-2) var(--sp-2); }
+.kb-thema-innen .ke-eintrag { background: var(--paper-2); }
+
+/* Das KE-Label ("KE2") traegt die Themenfarbe und steht an DREI Stellen mit
+   derselben Beschriftung: hier, an der aufgeloesten Frage (main.js
+   kompetenzZeile) und im Rundentitel. Wer eine davon umbenennt, bricht den
+   Wiedererkennungswert der anderen zwei. */
+.ke-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+  padding: 1px 8px; border-radius: 999px; white-space: nowrap;
+  border: 1px solid var(--tfarbe, var(--line)); color: var(--tfarbe, var(--ink-soft));
+}
+
+/* Auf welchen Stufen ist diese Kompetenz ueberhaupt abrufbar. Eine leere
+   Stufe wird ausgegraut statt weggelassen: dass es zu einer Kompetenz KEINE
+   AFB-III-Aufgabe gibt, ist selbst eine Information (im ganzen Korpus gibt es
+   z. B. keine einzige AFB-III-Ankreuzfrage). */
+.ke-stufen { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.ke-stufe {
+  font-size: .66rem; font-weight: 700; letter-spacing: .03em;
+  padding: 1px 7px; border-radius: 999px; white-space: nowrap;
+  border: 1px solid transparent; color: var(--ink-soft);
+}
+.ke-stufe.leer {
+  background: none; border-style: dashed; border-color: var(--line);
+  color: var(--ink-soft); opacity: .55;
+}
+
+/* Die Uebe-Knoepfe stehen GANZ OBEN in der aufgeklappten Kompetenz, vor den
+   Fragen: der Weg von "das war noch nicht dran" zu "dann uebe ich es jetzt"
+   soll ein Griff sein und kein Scrollen. */
+.ke-uebe { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.ke-uebe .knopf { margin: 0; }
+.ke-unterthema {
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink-soft);
+  margin-top: var(--sp-1);
+}
+
+/* Kleiner Knopf fuer Knopf-Reihen in Listen. Es gibt ihn bisher nicht - die
+   App kennt nur den vollbreiten .knopf, und zwei davon nebeneinander in einer
+   aufgeklappten Zeile waeren zwei Bloecke statt zweier Angebote. */
+.knopf.klein {
+  width: auto; padding: 7px 14px; font-size: .85rem; border-radius: 999px;
+}
+
+/* Die kleine Zeile unter einer Abschnitts-Ueberschrift (h2.abschnitt-titel).
+   Sagt, was der Abschnitt ist, ohne eine Karte dafuer zu brauchen. */
+.abschnitt-klein {
+  font-size: .85rem; color: var(--ink-soft);
+  margin: calc(-1 * var(--sp-2)) 0 var(--sp-3);
+}
+
+/* Der KE-Filter in der Fragenliste (main.js zeigeThema). Bauform wie die
+   Operator-Pille im Glossar: antippen filtert, nochmal antippen hebt auf.
+   Die aktive Pille traegt die Themenfarbe, die anderen bleiben grau - sonst
+   sieht eine Reihe aus fuenf bunten Chips aus wie fuenf aktive Filter. */
+.ke-filter { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: var(--sp-2); }
+.ke-filter-titel { font-size: .78rem; color: var(--ink-soft); }
+.ke-filter-chip {
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  padding: 3px 10px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: none; color: var(--ink-soft);
+}
+.ke-filter-chip.an {
+  border-color: var(--tfarbe, var(--accent)); color: var(--tfarbe, var(--accent));
+  background: color-mix(in srgb, var(--tfarbe, var(--accent)) 12%, transparent);
+}
+
+/* Die Kompetenzerwartungen im Stoebern (stoebern.js kompetenzFalt). Sie sind
+   Material, keine Uebung - deshalb die Optik der .stb-zeile und nicht die der
+   Kompetenz-Liste, obwohl beide dieselben Saetze zeigen. */
+.stb-ke { border-bottom: 1px solid var(--line); }
+.stb-ke-summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: flex-start; gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+}
+.stb-ke-summary::-webkit-details-marker { display: none; }
+.stb-ke-summary::after {
+  content: "▸"; color: var(--ink-soft); margin-left: auto; align-self: center;
+  transition: transform .15s ease;
+}
+.stb-ke[open] > .stb-ke-summary::after { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .stb-ke-summary::after { transition: none; } }
+.stb-ke-liste { display: flex; flex-direction: column; gap: 4px; padding: 0 0 var(--sp-2) 28px; }
+.stb-ke-zeile {
+  display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
+  text-align: left; background: none; border: none; cursor: pointer;
+  padding: 5px 0; color: inherit; font: inherit; font-size: .85rem;
+}
+.stb-ke-zeile:disabled { cursor: default; opacity: .7; }
+.stb-ke-text { flex: 1; min-width: 8em; overflow-wrap: anywhere; }
+.stb-ke-folie { font-size: .75rem; color: var(--tfarbe, var(--ink-soft)); white-space: nowrap; }
+
 /* Der Spiele-Hub ("Kurze Runden") ist am 22.08.2026 gefallen - .spiel-grid,
    .spiel-karte, .spiel-icon und .spiel-haken sind mit ihm gegangen. Die
    Runden-Koepfe kommen seither aus dem geteilten Paket (.topbar/.back,

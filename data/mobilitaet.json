@@ -871,7 +871,9 @@
       "quelle": "folie-mobilitaet-6",
       "quelleSicherheit": "geprueft",
       "generiert": true,
-      "ke": [],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
       "core": false
     },
     {
@@ -1351,7 +1353,9 @@
         ]
       ],
       "original": true,
-      "ke": [],
+      "ke": [
+        "mobilitaet-ke2"
+      ],
       "core": false
     },
     {
@@ -2423,8 +2427,10 @@
           "Der Zweck, bei dem der Weg nicht einem selbst gilt."
         ]
       ],
-      "ke": [],
-      "core": false
+      "ke": [
+        "mobilitaet-ke2"
+      ],
+      "core": true
     },
     {
       "id": "mo-afb1-6",
@@ -2688,7 +2694,7 @@
       "ke": [
         "mobilitaet-ke2"
       ],
-      "core": true
+      "core": false
     },
     {
       "id": "mo-afb2-1",

@@ -241,6 +241,12 @@ export function starteRunde(info) {
     art: i.art || "ueben",
     titel: i.titel || "Übungsrunde",
     modus: i.modus || null,
+    /* Nur die Kompetenz-Runde setzt das (stats.js runde() reicht meta.ke durch).
+       Es reist innerhalb von state.sitzungen mit dem Sync mit - KEIN neues
+       Top-Level-Feld, also weder snapshot() noch signatur() anzufassen.
+       restPool() braucht es: ohne ke serviert "Weitermachen" nach einem
+       Abbruch Themenreste statt des Rests derselben Kompetenz. */
+    ke: i.ke || null,
     anzahl: typeof i.anzahl === "number" ? i.anzahl : null,
     themen: [],
     beantwortet: 0,

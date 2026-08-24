@@ -680,9 +680,9 @@ var KOERPER = {
 var SEITEN = {
   blob: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "▀"], [1, 8, "▄"], [2, 8, "█"], [3, 8, "▀"]],
   jung: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "▀"], [1, 10, "▄"], [2, 10, "█"], [3, 10, "▀"]],
-  /* JEDE art braucht hier eine Zeile. figurEbenen() greift ungeschuetzt zu
-     (SEITEN[st.art].forEach) — ein fehlender Schluessel ist kein stiller
-     Fehler, sondern ein TypeError beim Zeichnen. Ein Block laenger als bei
+  /* JEDE art braucht hier eine Zeile. figurEbenen() puffert zwar mit
+     (SEITEN[st.art] || []) gegen einen TypeError beim Zeichnen — aber ohne
+     Eintrag fehlen der Figur schlicht die Ohren. Ein Block laenger als bei
      jung, der Koerper hat eine Zeile mehr. */
   halbwuechsig: [[1, 0, "▄"], [2, 0, "█"], [3, 0, "█"], [4, 0, "▀"],
                  [1, 10, "▄"], [2, 10, "█"], [3, 10, "█"], [4, 10, "▀"]],
@@ -719,7 +719,7 @@ function figurEbenen(variante, stufe, nacht) {
      daraus wird - das Raetsel haelt also drei Stufen laenger als bis zum
      Schluepfen. */
   if (st.art !== "blob" || st.sub >= 2) {
-    SEITEN[st.art].forEach(function (s) { setzTier(zeilen, maske, s[0], s[1], s[2], "F"); });
+    (SEITEN[st.art] || []).forEach(function (s) { setzTier(zeilen, maske, s[0], s[1], s[2], "F"); });
   }
 
   /* Frisch geschluepft hat es nur eine Ahnung von Augen: helle Flecken, noch

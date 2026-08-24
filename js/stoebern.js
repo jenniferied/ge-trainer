@@ -38,7 +38,8 @@
 
 import { app, el, leeren, mcStand, freiStand } from "./core.js";
 import { themeKnopf, setzeFarbe } from "./ui.js";
-import { TOTAL, NOTIZEN_TOTAL, satzInfo, oeffneFolie, oeffneNotiz, oeffneDeck, oeffneHeft } from "./beleg.js";
+import { TOTAL, NOTIZEN_TOTAL, satzInfo, folienSeite, oeffneFolie, oeffneNotiz, oeffneDeck, oeffneHeft } from "./beleg.js";
+import { ladeKompetenzen } from "./stats.js";
 
 // Einmal geladen, dann gehalten: der Raum wird beim Zurueckkommen neu gerendert,
 // die Datei aendert sich dabei nicht. null = noch nicht versucht.
@@ -170,6 +171,15 @@ function themaKarte(thema, eigene, hooks) {
   kz.appendChild(el("span", "vl-badge", thema.vorlesung));
   k.appendChild(kz);
 
+  /* Zeile 0: was die Vorlesung erwartet (24.08.2026, ROADMAP (9) und Jennifers
+     "es muss browsbar sein"). Steht GANZ OBEN, noch vor dem Foliensatz: die
+     Kompetenzerwartungen sind die Landkarte zu allem, was darunter liegt.
+     Jede Zeile springt auf IHRE Folie - die aufgedruckte Nummer aus der
+     JSON durch folienSeite() in die durchlaufende Bildnummer gerechnet.
+     Zugeklappt, weil der Raum vom Ueberblick lebt und nicht von acht mal
+     fuenf Saetzen am Stueck. */
+  k.appendChild(kompetenzFalt(thema));
+
   // Zeile 1: die Original-Folien dieses Themas. Steht bewusst zuoberst und vor
   // allem Erzeugten - das ist die Quelle, an der sich die Klausur orientiert.
   var satz = satzInfo(thema.id);
@@ -230,6 +240,56 @@ function themaKarte(thema, eigene, hooks) {
 /* Eine anklickbare Zeile in einer Themenkarte. Ein <button>, kein div mit
    Klick-Hoerer: sonst ist die Zeile per Tastatur nicht erreichbar und ein
    Screenreader liest sie als Text vor. */
+/* Die Kompetenzerwartungen eines Themas als aufklappbare Zeile. Der Inhalt
+   kommt asynchron (dieselbe gecachte Datei wie ueberall, Stats.ladeKompetenzen)
+   und wird beim ERSTEN Aufklappen nachgetragen: acht Themenkarten wuerden sonst
+   achtmal dieselbe Liste vorbauen, die Rose vielleicht nie aufschlaegt.
+
+   Faellt die Datei aus, verschwindet die Zeile - genau wie eine Medienzeile
+   ohne medien.json. Ein halber Raum ist besser als eine Fehlermeldung. */
+function kompetenzFalt(thema) {
+  var falt = el("details", "stb-ke");
+  var kopf = el("summary", "stb-ke-summary");
+  kopf.appendChild(el("span", "stb-icon", "🎯"));
+  var txt = el("span", "stb-text");
+  txt.appendChild(el("b", null, "Was die Vorlesung erwartet"));
+  var unter = el("span", "stb-unter", "Die Kompetenzerwartungen dieser Sitzung");
+  txt.appendChild(unter);
+  kopf.appendChild(txt);
+  falt.appendChild(kopf);
+
+  var box = el("div", "stb-ke-liste");
+  falt.appendChild(box);
+
+  var gefuellt = false;
+  falt.addEventListener("toggle", function () {
+    if (!falt.open || gefuellt) return;
+    gefuellt = true;
+    ladeKompetenzen().then(function (d) {
+      var eintraege = ((d && d.eintraege) || []).filter(function (e) { return e.thema === thema.id; });
+      if (!eintraege.length) { falt.remove(); return; }
+      unter.textContent = eintraege.length + " Erwartungen · jede Zeile öffnet ihre Folie";
+      eintraege.forEach(function (e) {
+        var m = /-ke(\d+)$/.exec(String(e.id || ""));
+        var z = el("button", "stb-ke-zeile");
+        var label = el("span", "ke-label", "KE" + (m ? m[1] : "?"));
+        setzeFarbe(label, thema.farbe);
+        z.appendChild(label);
+        z.appendChild(el("span", "stb-ke-text", String(e.text || "").trim()));
+        var seite = folienSeite(thema.id, e.folie);
+        if (seite) {
+          z.appendChild(el("span", "stb-ke-folie", "Folie " + e.folie));
+          z.addEventListener("click", function () { oeffneFolie(seite); });
+        } else {
+          z.disabled = true;
+        }
+        box.appendChild(z);
+      });
+    });
+  });
+  return falt;
+}
+
 function stbZeile(icon, titel, unter, aufKlick, marke) {
   // marke: true -> "erzeugt" (die NotebookLM-Zeilen, unveraendert), ein String
   // -> genau dieses Wort. Ein Heft ist keine KI-Paraphrase und darf deshalb

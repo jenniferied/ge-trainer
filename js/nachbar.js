@@ -61,9 +61,6 @@ const CACHE_KEY = "ge-nachbar-st";
 // wirklich einen neuen gibt - also an Tagen, an denen Rose drueben geuebt hat.
 const POLL_MS = 10 * 60000;
 
-const tagVon = (ts) => { const d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); };
-const heuteTag = () => tagVon(Date.now());
-
 const aktiv = () => !!(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey);
 const leseKopf = () => ({ apikey: CONFIG.supabaseAnonKey, Authorization: "Bearer " + CONFIG.supabaseAnonKey });
 const leseUrl = (rest) => CONFIG.supabaseUrl + "/rest/v1/" + CONFIG.lernstandTabelle +
@@ -184,7 +181,6 @@ export function stStand() {
   const h = liesHeute(c);
   return {
     ts: c.ts,
-    frisch: tagVon(c.ts) === heuteTag(),
     // liesHeute() verwirft alles, was nicht von heute ist - auch einen Block,
     // der noch im Cache liegt, weil drueben seit gestern niemand gepusht hat.
     // tagesZeigen() haelt zusaetzlich einen frischen Block mit n = 0 zurueck:

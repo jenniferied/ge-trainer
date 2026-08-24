@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "hinweis": "Die Kompetenzerwartungen der acht Vorlesungen - was Rose nach jeder Sitzung koennen soll. Folie 11 sagt ausdruecklich, sie soll sich daran orientieren. afbQuelle sagt, WOHER die Stufe kommt: 'folie' heisst, die Dozentin hat sie selbst danebengeschrieben (nur im Thema freizeit); 'abgeleitet' heisst, wir haben sie aus dem Operator geschlossen - das ist eine LESART, keine Ansage. Wichtig und am 23.08. nachgemessen: der Operator einer Kompetenzerwartung sagt NICHT verlaesslich voraus, mit welchem Operator eine Klausuraufgabe zum selben Inhalt gestellt wird (Mobilitaet listet benennen/erlaeutern/analysieren/formulieren, die echten Aufgaben benutzen vergleichen, diskutieren und zuordnen). Als INHALTS-Landkarte tragfaehig, als Stufen-Vorhersage nicht. Die Zuordnung Unterthema -> Kompetenzerwartung steht in `zuordnung`; sie ist eine BEURTEILUNG (Stand 23.08.2026) und keine Ansage der Dozentin - wer sie aendert, aendert, was die App als Prioritaet zieht. Unterthemen mit leerer Liste deckt KEINE Kompetenzerwartung ab.",
+  "hinweis": "Die Kompetenzerwartungen der acht Vorlesungen - was Rose nach jeder Sitzung koennen soll. Folie 11 sagt ausdruecklich, sie soll sich daran orientieren. afbQuelle sagt, WOHER die Stufe kommt: 'folie' heisst, die Dozentin hat sie selbst danebengeschrieben (nur im Thema freizeit); 'abgeleitet' heisst, wir haben sie aus dem Operator geschlossen - das ist eine LESART, keine Ansage. Wichtig und am 23.08. nachgemessen: der Operator einer Kompetenzerwartung sagt NICHT verlaesslich voraus, mit welchem Operator eine Klausuraufgabe zum selben Inhalt gestellt wird (Mobilitaet listet benennen/erlaeutern/analysieren/formulieren, die echten Aufgaben benutzen vergleichen, diskutieren und zuordnen). Als INHALTS-Landkarte tragfaehig, als Stufen-Vorhersage nicht. Die Zuordnung Unterthema -> Kompetenzerwartung steht in `zuordnung`; sie ist eine BEURTEILUNG (Stand 23.08.2026) und keine Ansage der Dozentin - wer sie aendert, aendert, was die App als Prioritaet zieht. Unterthemen mit leerer Liste deckt KEINE Kompetenzerwartung ab. AENDERUNGEN 24.08.2026 (Jennifer, 10-Fragen-Review + Extraktions-Check): (1) 'Alltagsmobilität in Zahlen' -> mobilitaet-ke2, weil die Dozentin den Zahlenvergleich in ihrer eigenen Beispielaufgabe mo-f-4 woertlich abfragt - was sie tatsaechlich fragt, schlaegt die Liste. (2) 'Prinzipien im Rahmenlehrplan' -> prinzipien-ke2, die folien-referenz nennt Folie 33 selbst 'passend zur zweiten Kompetenzerwartung'. (3) konzeptionen/'Spannungsfelder der Disziplin' bleibt BEWUSST leer: Folie 3 ist Stoff der Dozentin, aber keine ihrer Kompetenzerwartungen nennt ihn; Jennifer hat sich gegen eine selbstgeschriebene Zusatz-KE entschieden. (4) grundlagen-ke1..4 folie 11->4: die KEs stehen auf Folie 4, Folie 11 verweist nur darauf. (5) entwicklungsbereiche-ke2 II->III und -ke4 I->III, angeglichen an die eigene folien-referenz (eroertern bzw. 'eigene Ideen anhand von Fallbeschreibungen' = entwickeln, konsistent mit wohnen-ke4); afbQuelle bleibt 'abgeleitet'.",
   "eintraege": [
     {
       "thema": "entwicklungsbereiche",
@@ -21,7 +21,7 @@
         "erklären",
         "erörtern"
       ],
-      "afb": "II",
+      "afb": "III",
       "afbQuelle": "abgeleitet",
       "id": "entwicklungsbereiche-ke2"
     },
@@ -43,7 +43,7 @@
       "operatoren": [
         "nennen"
       ],
-      "afb": "I",
+      "afb": "III",
       "afbQuelle": "abgeleitet",
       "id": "entwicklungsbereiche-ke4"
     },
@@ -106,7 +106,7 @@
     },
     {
       "thema": "grundlagen",
-      "folie": 11,
+      "folie": 4,
       "text": "kennen aktuelle Literatur und Recherche- und Informationsmöglichkeiten zur Didaktik und Methodik im Förderschwerpunkt Geistige Entwicklung",
       "operatoren": [
         "kennen"
@@ -117,7 +117,7 @@
     },
     {
       "thema": "grundlagen",
-      "folie": 11,
+      "folie": 4,
       "text": "erläutern Ablauf, organisatorische Rahmenbedingungen und Leistungsanforderungen des Moduls.",
       "operatoren": [
         "erläutern"
@@ -128,7 +128,7 @@
     },
     {
       "thema": "grundlagen",
-      "folie": 11,
+      "folie": 4,
       "text": "beschreiben spezifische Merkmale von Förderschulen",
       "operatoren": [
         "beschreiben"
@@ -139,7 +139,7 @@
     },
     {
       "thema": "grundlagen",
-      "folie": 11,
+      "folie": 4,
       "text": "vergleichen Beschulungsmöglichkeiten im sonderpädagogischen Schwerpunkt geistige Entwicklung",
       "operatoren": [
         "vergleichen"
@@ -421,8 +421,7 @@
       ],
       "Freizeitbedürfnisse": [
         "freizeit-ke1"
-      ],
-      "Freizeitteilhabe in Zahlen": []
+      ]
     },
     "grundlagen": {
       "Merkmale der Förderschule": [
@@ -479,7 +478,9 @@
       "Barrierefreiheit & Rahmenbedingungen": [
         "mobilitaet-ke2"
       ],
-      "Alltagsmobilität in Zahlen": []
+      "Alltagsmobilität in Zahlen": [
+        "mobilitaet-ke2"
+      ]
     },
     "prinzipien": {
       "Was sind didaktische Prinzipien?": [
@@ -503,7 +504,9 @@
       "Elementarisierung": [
         "prinzipien-ke3"
       ],
-      "Prinzipien im Rahmenlehrplan": [],
+      "Prinzipien im Rahmenlehrplan": [
+        "prinzipien-ke2"
+      ],
       "Analyse von Lehr-Lernsequenzen": [
         "prinzipien-ke4"
       ]

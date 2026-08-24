@@ -9,7 +9,6 @@
     "Selbstbestimmung & Kompetenzmodell",
     "Spannungsfelder",
     "Begriffsverständnis & Zeitmodell",
-    "Freizeitteilhabe in Zahlen",
     "Praktische Umsetzung",
     "Bildungsauftrag & Recht"
   ],
@@ -830,40 +829,6 @@
       "ke": [
         "freizeit-ke1"
       ],
-      "core": false
-    },
-    {
-      "id": "fr-fol-mc-4",
-      "unterthema": "Freizeitteilhabe in Zahlen",
-      "afb": 2,
-      "frage": "Trescher und Weidmann vergleichen die Freizeitteilhabe von Menschen mit Behinderung für 2014 und 2024. Welche Aussage gibt die Entwicklung zutreffend wieder?",
-      "optionen": [
-        {
-          "text": "Die Teilnahme an Freizeitangeboten ist deutlich gestiegen, und die vollständige Ablehnung von Inklusion ist zurückgegangen",
-          "korrekt": true,
-          "erklaerung": "Richtig: Teilnahme an Freizeitangeboten 52 auf 82 Prozent, bei Menschen mit kognitiven Beeinträchtigungen 19 auf 47 Prozent, vollständige Ablehnung von Inklusion 17 auf 7 Prozent. Diese Zahlen stehen nur auf der Folie, in deinen Notizen fehlen sie. (Folie 15)"
-        },
-        {
-          "text": "Die Teilnahme ist gestiegen, gleichzeitig hat die vollständige Ablehnung von Inklusion zugenommen",
-          "korrekt": false,
-          "erklaerung": "Falsch: Die Ablehnung ist zurückgegangen, von 17 auf 7 Prozent. (Folie 15)"
-        },
-        {
-          "text": "Menschen mit kognitiven Beeinträchtigungen haben inzwischen zur Teilnahmequote der Gesamtgruppe aufgeschlossen",
-          "korrekt": false,
-          "erklaerung": "Falsch: Mit 47 gegenüber 82 Prozent bleibt eine deutliche Lücke - aufgeschlossen ist die Gruppe nicht. (Folie 15)"
-        },
-        {
-          "text": "Die Werte sind über den ganzen Zeitraum weitgehend unverändert geblieben",
-          "korrekt": false,
-          "erklaerung": "Falsch: Alle drei Werte haben sich klar bewegt; die Folie fasst es als positive Entwicklung zusammen. (Folie 15)"
-        }
-      ],
-      "erklaerung": "Die Zahlen der Folie: Teilnahme an Freizeitangeboten 52 auf 82 Prozent, vollständige Ablehnung von Inklusion 17 auf 7 Prozent. Der schwierigste Decoy ist der dritte - die Teilnahme von Menschen mit kognitiven Beeinträchtigungen wächst zwar stark von 19 auf 47 Prozent, bleibt damit aber weit unter den 82 Prozent der Gesamtgruppe. Positive Entwicklung heißt hier nicht Gleichstand. (Folie 15, Trescher & Weidmann 2025)",
-      "quelle": "folie-freizeit-15",
-      "quelleSicherheit": "geprueft",
-      "generiert": true,
-      "ke": [],
       "core": false
     },
     {
@@ -2522,89 +2487,6 @@
       "ke": [
         "freizeit-ke4"
       ],
-      "core": false
-    },
-    {
-      "id": "fr-afb1-5",
-      "unterthema": "Freizeitteilhabe in Zahlen",
-      "afb": 1,
-      "frage": "Eine Erhebung zum Freizeitverhalten der Bundesbürger sortiert die genannten Tätigkeiten in vier nummerierte Gruppen. Benennen Sie diese vier Gruppen in der Reihenfolge, in der die Grafik sie führt, und geben Sie an, welche Gruppe die höchsten und welche die niedrigsten Anteile hat.",
-      "stichpunkte": [
-        "Medienkonsum",
-        "Persönliche Erholung",
-        "Soziale Interaktionen",
-        "Aktivitäten",
-        "Medienkonsum hat die höchsten Anteile, Aktivitäten die niedrigsten"
-      ],
-      "abschnitte": [
-        {
-          "operator": "benennen",
-          "auftrag": "Zuerst die vier Gruppen in der Reihenfolge der Grafik benennen",
-          "idx": [
-            0,
-            1,
-            2,
-            3
-          ],
-          "form": "liste",
-          "chips": [
-            "Gruppe 1",
-            "Gruppe 2",
-            "Gruppe 3",
-            "Gruppe 4"
-          ]
-        },
-        {
-          "operator": "nennen",
-          "auftrag": "Dann, welche Gruppe oben und welche unten steht",
-          "idx": [
-            4
-          ],
-          "form": "liste"
-        }
-      ],
-      "muster": "Das Balkendiagramm zur Freizeitgestaltung der Bundesbürger fasst die Tätigkeiten in vier nummerierte Gruppen zusammen. An erster Stelle steht der Medienkonsum mit Internetnutzung, Fernsehen, Musikhören, Computer- und Smartphonenutzung, sozialen Medien und Radio; hier liegen die Anteile am höchsten. Es folgt die persönliche Erholung mit dem Nachdenken über eigene Gedanken, dem Faulenzen und Entspannen und dem Ausschlafen. Die dritte Gruppe sind die sozialen Interaktionen: wichtige Gespräche führen und Zeit mit der Partnerin oder dem Partner verbringen. Die vierte Gruppe heißt Aktivitäten und umfasst Spaziergänge, Hobbys und Sport; ihre Anteile sind die niedrigsten der Grafik.",
-      "musterVarianten": {
-        "de": {
-          "einfach": "Eine Umfrage hat gefragt: Was machen die Menschen in Deutschland in ihrer Freizeit? Die Antworten stehen in vier Gruppen. Gruppe eins heißt Medienkonsum. Dazu gehören Internet, Fernsehen und Musik. Diese Gruppe hat die höchsten Werte. Gruppe zwei heißt persönliche Erholung. Dazu gehören Nachdenken, Faulenzen und Ausschlafen. Gruppe drei heißt soziale Interaktionen. Dazu gehören wichtige Gespräche und Zeit mit dem Partner. Gruppe vier heißt Aktivitäten. Dazu gehören Spaziergänge, Hobbys und Sport. Diese Gruppe hat die niedrigsten Werte."
-        },
-        "en": {
-          "klausur": "The bar chart on how German citizens spend their leisure time groups the activities into four numbered groups. In first place stands media consumption (Medienkonsum) with use of the internet, watching television, listening to music, use of computer and smartphone, social media and radio; here the shares are the highest. Next follows personal recreation (persönliche Erholung) with thinking about one's own thoughts, lazing about and relaxing, and sleeping in. The third group is social interactions (soziale Interaktionen): holding important conversations and spending time with one's partner. The fourth group is called activities (Aktivitäten) and comprises walks, hobbies and sport; its shares are the lowest in the chart.",
-          "einfach": "A survey asked: what do people in Germany do in their leisure time? The answers are in four groups. Group one is called media consumption (Medienkonsum). It includes the internet, television and music. This group has the highest values. Group two is called personal recreation (persönliche Erholung). It includes thinking, lazing about and sleeping in. Group three is called social interactions (soziale Interaktionen). It includes important conversations and time with one's partner. Group four is called activities (Aktivitäten). It includes walks, hobbies and sport. This group has the lowest values."
-        },
-        "ar": {
-          "klausur": "المخطّط البياني عن تنظيم وقت الفراغ عند مواطني ألمانيا بيجمّع النشاطات بأربع مجموعات مرقّمة. بالمرتبة الأولى استهلاك الإعلام (Medienkonsum) مع استخدام الإنترنت والتلفزيون وسماع الموسيقى واستخدام الكمبيوتر والموبايل ومواقع التواصل والراديو؛ وهون النسب هي الأعلى. وبعدين بتجي الراحة الشخصية (persönliche Erholung) مع التفكير بأفكار الواحد والكسل والاسترخاء والنوم لوقت متأخّر. والمجموعة التالتة هي التفاعلات الاجتماعية (soziale Interaktionen): إنو الواحد يعمل أحاديث مهمّة ويقضّي وقت مع شريكو أو شريكتو. والمجموعة الرابعة اسمها النشاطات (Aktivitäten) وبتشمل المشاوير على الأقدام والهوايات والرياضة؛ ونسبها هي الأوطى بالمخطّط.",
-          "einfach": "في استطلاع سأل: شو بيعملوا الناس بألمانيا بوقت فراغهن؟ الأجوبة موجودة بأربع مجموعات. المجموعة الأولى اسمها استهلاك الإعلام (Medienkonsum). فيها الإنترنت والتلفزيون والموسيقى. وهي المجموعة إلها أعلى قيم. المجموعة التانية اسمها الراحة الشخصية (persönliche Erholung). فيها التفكير والكسل والنوم لوقت متأخّر. المجموعة التالتة اسمها التفاعلات الاجتماعية (soziale Interaktionen). فيها الأحاديث المهمّة والوقت مع الشريك. المجموعة الرابعة اسمها النشاطات (Aktivitäten). فيها المشاوير على الأقدام والهوايات والرياضة. وهي المجموعة إلها أوطى قيم."
-        }
-      },
-      "musterVariantenGeprueft": false,
-      "tipp": "Das Balkendiagramm steht auf Folie 11 - es fehlt in deinen Notizen, du kennst es also nur vom Bild. Die Kopfzeile der Folie nennt als Quelle den Zukunftsmonitor 2025, im Literaturverzeichnis steht dagegen nur der Freizeitmonitor 2025; gemeint ist offenbar derselbe. Die einzelnen Prozentwerte musst du nicht auswendig können - gefragt sind die vier Gruppen und ihre Reihenfolge. Wenn du doch eine Zahl nennen möchtest: der höchste Balken der ganzen Grafik ist die Internetnutzung mit 98 Prozent.",
-      "quelle": "folie-freizeit-11",
-      "quelleSicherheit": "geprueft",
-      "generiert": true,
-      "hinweise": [
-        [
-          "Die größte Gruppe - alles, was über Bildschirm oder Lautsprecher läuft.",
-          "Sieben Balken stehen hier, alle bei 70 Prozent und darüber."
-        ],
-        [
-          "Die Gruppe, in der man nichts tut oder nur für sich ist.",
-          "Ausschlafen und Faulenzen sind ihre kleineren Balken."
-        ],
-        [
-          "Die kleinste Gruppe - zwei Balken, beide mit anderen Menschen.",
-          "Die zweite Nennung hier ist die Zeit mit dem Partner oder der Partnerin."
-        ],
-        [
-          "Die Gruppe für alles, wofür man aufsteht und losgeht.",
-          "Der schlichteste Sammelname der vier."
-        ],
-        [
-          "Der Vergleich zum Schluss: eine Gruppe ganz oben, eine ganz unten.",
-          "Die längsten Balken laufen über Geräte, die kürzesten verlangen Bewegung."
-        ]
-      ],
-      "ke": [],
       "core": false
     },
     {

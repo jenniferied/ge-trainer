@@ -935,7 +935,9 @@
       "quelle": "folie-prinzipien-33",
       "quelleSicherheit": "geprueft",
       "generiert": true,
-      "ke": [],
+      "ke": [
+        "prinzipien-ke2"
+      ],
       "core": false
     }
   ],

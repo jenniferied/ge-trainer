@@ -2283,6 +2283,18 @@ function zeigeStart() {
   var zuletzt = zuletztKarte(themen);
   if (zuletzt) app.appendChild(zuletzt);
 
+  /* NACH KOMPETENZ (24.08.2026, ROADMAP 5b) - vor "Nach Thema", weil die
+     Kompetenzerwartungen der Massstab sind und die Themen die Schublade:
+     Rose muss 34 Saetze koennen, nicht 355 Fragen abarbeiten. Die Liste
+     laedt asynchron nach (kompetenzerwartungen.json) und traegt ihre
+     Ueberschrift selbst mit, damit bei ausgefallener Datei nicht eine nackte
+     Ueberschrift ueber dem Nichts steht. */
+  var keTitel = el("h2", "abschnitt-titel", "Nach Kompetenz");
+  app.appendChild(keTitel);
+  app.appendChild(el("div", "abschnitt-klein",
+    "Das sind die Sätze, an denen die Klausur dich misst – aufklappen, und du übst genau eine davon."));
+  app.appendChild(Stats.kompetenzListe(themen, HOOKS));
+
   app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
 
   themen.forEach(function (thema) {
@@ -2465,6 +2477,34 @@ function zeigeThema(thema) {
     filterReihe.appendChild(b);
   });
   info.appendChild(filterReihe);
+
+  /* KE-FILTER (24.08.2026, Jennifer: "unter alle Fragen zumindest auch danach
+     filtern koennen"). Eine Chip-Reihe wie die Operator-Pille im Glossar:
+     antippen filtert auf genau diese Kompetenzerwartung, nochmal antippen
+     hebt auf. Sitzungslokal wie Suche und Typ-Filter - kein state-Feld.
+     Die Chips kommen nach, wenn die Datei da ist; faellt sie aus, bleibt die
+     Liste vollstaendig bedienbar und zeigt nur diese Reihe nicht. */
+  var keFilter = null;
+  var keReihe = el("div", "ke-filter");
+  info.appendChild(keReihe);
+  Stats.ladeKompetenzen().then(function (d) {
+    var eintraege = ((d && d.eintraege) || []).filter(function (e) { return e.thema === thema.id; });
+    if (!eintraege.length) { keReihe.remove(); return; }
+    keReihe.appendChild(el("span", "ke-filter-titel", "Kompetenz:"));
+    eintraege.forEach(function (e) {
+      var m = /-ke(\d+)$/.exec(String(e.id || ""));
+      var c = el("button", "ke-filter-chip", "KE" + (m ? m[1] : "?"));
+      c.title = String(e.text || "").trim();
+      c.addEventListener("click", function () {
+        keFilter = keFilter === e.id ? null : e.id;
+        Array.prototype.forEach.call(keReihe.querySelectorAll(".ke-filter-chip"),
+          function (x) { x.classList.remove("an"); });
+        if (keFilter) { c.classList.add("an"); setzeFarbe(c, thema.farbe); }
+        zeichnen();
+      });
+      keReihe.appendChild(c);
+    });
+  });
   app.appendChild(info);
 
   var halter = el("div");
@@ -2493,6 +2533,9 @@ function zeigeThema(thema) {
     if (typ !== "mc") (thema.frei || []).forEach(function (f) { alle.push({ typ: "frei", f: f }); });
     if (suche) {
       alle = alle.filter(function (e) { return String(e.f.frage || "").toLowerCase().indexOf(suche) >= 0; });
+    }
+    if (keFilter) {
+      alle = alle.filter(function (e) { return (e.f.ke || []).indexOf(keFilter) >= 0; });
     }
 
     // Gruppiert nach Unterthema, in der Reihenfolge des Themas - so liest sich
@@ -2730,6 +2773,13 @@ function mcKarte(thema, f, fortschritt, weiterText, onWeiter, modus) {
         text.appendChild(Beleg.belegZeile("div", f.erklaerung, thema.id));
         erk.appendChild(text);
         karte.appendChild(erk);
+
+        /* Wofuer die Frage steht - seit dem 24.08. auch beim Ankreuzen
+           (Jennifer). Die freie Aufgabe hatte diese Zeile schon; dass die
+           Haelfte des Korpus ohne sie dastand, war eine Luecke, keine
+           Entscheidung. Wie drueben: erst NACH der Aufloesung. */
+        var mcKompetenz = kompetenzZeile(f, thema);
+        if (mcKompetenz) karte.appendChild(mcKompetenz);
 
         // Nachfragen - erst hier, wenn die Aufloesung steht (siehe frageChatKnopf).
         var chat = frageChatKnopf(thema, f);
@@ -3306,25 +3356,27 @@ function standFuerKi(thema, f) {
    historische didaktische Ansaetze" gehoert, kennt die verlangte Stufe, bevor
    er nachgedacht hat.
 
-   Die Texte stehen in data/kompetenzerwartungen.json und wurden bisher von
-   niemandem im Client geladen. Der Loader faengt seine Fehler selbst ab und
-   liefert dann null - genau wie Glossar.ladeOperatoren, denn er haengt im
-   Promise.all des Boots, und daran darf der Start nicht scheitern. Faellt er
-   aus, bleibt die Kernaufgaben-Marke allein stehen; ein Fehler wird nie
+   Die Texte stehen in data/kompetenzerwartungen.json. Geladen wird sie GENAU
+   EINMAL, naemlich von Stats.ladeKompetenzen() - dort liegt der Cache, und
+   dort rechnet die Kompetenz-Abdeckung ohnehin damit. Bis zum 24.08. hatte
+   diese Datei ihren eigenen, ungecachten zweiten Loader; das war eine stille
+   Doppelung (zwei Module, zwei Netzwege, zwei Wahrheiten ueber dieselbe
+   Datei). Hier bleibt nur die Nachschlage-Map.
+
+   Der Loader faengt seine Fehler selbst ab und liefert dann null - er haengt
+   im Promise.all des Boots, und daran darf der Start nicht scheitern. Faellt
+   er aus, bleibt die Kernaufgaben-Marke allein stehen; ein Fehler wird nie
    gezeigt. */
 var KOMPETENZEN = null;
 
 function ladeKompetenzerwartungen() {
-  return fetch("data/kompetenzerwartungen.json")
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .catch(function () { return null; })
-    .then(function (d) {
-      var eintraege = d && Array.isArray(d.eintraege) ? d.eintraege : [];
-      if (!eintraege.length) { KOMPETENZEN = null; return null; }
-      KOMPETENZEN = {};
-      eintraege.forEach(function (e) { if (e && e.id) KOMPETENZEN[e.id] = e; });
-      return KOMPETENZEN;
-    });
+  return Stats.ladeKompetenzen().then(function (d) {
+    var eintraege = d && Array.isArray(d.eintraege) ? d.eintraege : [];
+    if (!eintraege.length) { KOMPETENZEN = null; return null; }
+    KOMPETENZEN = {};
+    eintraege.forEach(function (e) { if (e && e.id) KOMPETENZEN[e.id] = e; });
+    return KOMPETENZEN;
+  });
 }
 
 /* Der lange Erwartungstext (bis 145 Zeichen) auf Handybreite. Erst ab 120
@@ -3352,7 +3404,7 @@ function kompetenzText(text) {
    einer als AFB I ausgezeichneten Aufgabe laese sich als Korrektur des
    Aufgaben-Badges - das ist sie nicht. Aus demselben Grund steht das Wort
    Erwartung mit in der Pille. */
-function kompetenzZeile(f) {
+function kompetenzZeile(f, thema) {
   var kern = !!f && f.core === true;
   var ids = f && Array.isArray(f.ke) ? f.ke : [];
   var treffer = [];
@@ -3374,9 +3426,23 @@ function kompetenzZeile(f) {
 
   // 39 freie Aufgaben zahlen auf ZWEI Erwartungen ein - je eine eigene Zeile,
   // sonst wird daraus ein Satz, der keiner ist.
-  treffer.forEach(function (e) {
+  treffer.forEach(function (e, i) {
     var z = el("div", null);
     z.style.marginTop = "4px";
+    /* Themen- und KE-Chip (Jennifer, 24.08.): dieselbe Beschriftung wie in der
+       Kompetenz-Liste ("KE2"), damit die Aufgabe hier und die Zeile dort
+       erkennbar dasselbe meinen. Der Themen-Chip steht nur an der ersten
+       Zeile - beide Erwartungen einer Aufgabe gehoeren immer zum selben Thema. */
+    if (thema && !i) {
+      var tc = el("span", "chip", thema.titel);
+      setzeFarbe(tc, thema.farbe);
+      z.appendChild(tc);
+    }
+    var m = /-ke(\d+)$/.exec(String(e.id || ""));
+    var lc = el("span", "chip", "KE" + (m ? m[1] : "?"));
+    if (thema) setzeFarbe(lc, thema.farbe);
+    lc.title = "Kompetenzerwartung " + (m ? m[1] : "") + " der Vorlesung – so heißt sie auch in der Liste „Nach Kompetenz“ auf der Startseite.";
+    z.appendChild(lc);
     var pille = el("span", "chip", "Erwartung AFB " + e.afb);
     pille.title = e.afbQuelle === "folie"
       ? "Diese Stufe steht so auf der Folie der Dozentin."
@@ -3991,7 +4057,7 @@ function freiKarte(thema, f, opts) {
     /* Und wofuer sie steht: Kernaufgaben-Marke und die Kompetenzerwartung(en)
        im Klartext (kompetenzZeile weiter oben). Bewusst HIER und nicht am Kopf
        der Karte - vorher wuerde die Erwartung die Antwort faerben. */
-    var kompetenz = kompetenzZeile(f);
+    var kompetenz = kompetenzZeile(f, thema);
     if (kompetenz) box.appendChild(kompetenz);
 
     /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
