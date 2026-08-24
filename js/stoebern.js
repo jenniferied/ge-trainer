@@ -40,6 +40,7 @@ import { app, el, leeren, mcStand, freiStand } from "./core.js";
 import { themeKnopf, setzeFarbe } from "./ui.js";
 import { TOTAL, NOTIZEN_TOTAL, satzInfo, folienSeite, oeffneFolie, oeffneNotiz, oeffneDeck, oeffneHeft } from "./beleg.js";
 import { ladeKompetenzen } from "./stats.js";
+import { hatEpisoden } from "./episode.js";
 
 // Einmal geladen, dann gehalten: der Raum wird beim Zurueckkommen neu gerendert,
 // die Datei aendert sich dabei nicht. null = noch nicht versucht.
@@ -120,6 +121,26 @@ export function zeigeStoebern(themen, hooks) {
   themen.forEach(function (t) { themenBox.appendChild(themaKarte(t, [], hooks)); });
   var unten = el("div");
   app.appendChild(unten);
+
+  /* DER WEG ZUR GESCHICHTE (25.08.2026). Die Episoden-Uebersicht gab es seit
+     dem 23.08. im Router, aber KEINE STELLE rief sie auf - sie war fertig
+     gebaut und unerreichbar. Aufgefallen ist das erst, als die Folgen in eine
+     Reihenfolge gebracht wurden: "nur in der Reihenfolge anklicken" setzt
+     voraus, dass man sie ueberhaupt anklicken kann.
+
+     Sie steht HIER und nicht als Startseiten-Kachel, weil das genau ihre
+     Rolle ist: neue Folgen begegnen Rose im Themen-Lernen als Intro, hier
+     liest sie sie nach. Das ist Material, keine Uebung - der Raum ohne
+     Abfrage ist der richtige Ort. */
+  if (hooks.episoden && hatEpisoden()) {
+    unten.appendChild(el("h2", "abschnitt-titel", "Die Geschichte"));
+    var gk = el("div", "karte stb-karte");
+    gk.appendChild(stbZeile("📖", "Das erste Jahr",
+      "Die Folgen nochmal lesen · sie laufen der Reihe nach",
+      function () { hooks.episoden(); }));
+    unten.appendChild(gk);
+  }
+
   unten.appendChild(el("h2", "abschnitt-titel", "Dein Material"));
   unten.appendChild(materialKarte());
   Promise.all([ladeMedien(), ladeHefte()]).then(function (beides) {

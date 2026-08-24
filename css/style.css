@@ -3102,6 +3102,16 @@ details.afb-wahl,
 .episode-karte { display: block; width: 100%; text-align: left; cursor: pointer;
   border-left: 4px solid var(--tfarbe, var(--line)); margin-bottom: var(--sp-3); }
 .episode-karte.gelesen { opacity: .75; }
+/* Noch nicht dran: gestrichelt und ruhig, NICHT ausgegraut wie ein defekter
+   Knopf und ohne Schloss-Zeichen. Die Folge ist nicht verwehrt, sie ist nur
+   noch nicht an der Reihe - dieselbe Sprache wie beim Angebots-Kasten der
+   Kompetenzen ("noch nicht dran gewesen" statt "fehlt"). */
+.episode-karte.spaeter {
+  cursor: default; border-style: dashed; box-shadow: none;
+  background: var(--paper-2);
+}
+.episode-karte.spaeter .episode-titel,
+.episode-karte.spaeter .episode-nr { color: var(--ink-soft); }
 .episode-karte-zeile { display: flex; gap: var(--sp-2); align-items: baseline; flex-wrap: wrap; }
 .episode-nr { font-size: .78rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .04em; color: var(--tfarbe, var(--accent)); }

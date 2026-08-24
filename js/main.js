@@ -178,6 +178,12 @@ var HOOKS = {
   // Der Weg aus dem Stoebern-Raum in die Fragen eines Themas - dieselbe
   // Themenansicht, die auch die Startseite oeffnet, kein zweiter Bau.
   thema: function (t) { zeige("thema", t); },
+  /* Der Weg in die Episoden-Uebersicht, seit dem 25.08. aus dem Stoebern.
+     Als FUNKTION und ohne Vorab-Pruefung: HOOKS entsteht beim Laden des
+     Moduls, die Episoden kommen erst im Boot-Promise.all danach - ein
+     `hatEpisoden() ? … : null` an dieser Stelle waere also immer null.
+     Ob es etwas zu zeigen gibt, prueft der Raum selbst. */
+  episoden: function () { zeige("episode"); },
   // Das Bild der Kreatur fuer den Episoden-Banner - dieselbe Quelle wie die
   // KI-Sprechblasen (kiAvatarHtml unten, defensiv mit ""-Fallback), damit im
   // Banner Roses ECHTES Tier mit Stufe und Farben schwebt und kein Double.
@@ -1964,14 +1970,21 @@ function tagesAufgaben() {
      "episode" wird von keiner Stelle aufgerufen.
      Also sagt es die Kachel, die tatsaechlich dorthin fuehrt. Eine offene Runde
      hat weiter Vorrang - wer mitten drin steckt, will das zuerst lesen. */
+  /* Seit dem 25.08. IN DER REIHENFOLGE DER GESCHICHTE, nicht in der der
+     Themen: gesucht wird die naechste Folge, die wirklich dran ist. Vorher
+     lief die Schleife ueber `themen` und haette bei einer offenen Folge 7
+     deren Thema genannt, obwohl Folge 1 davor liegt - ein Wegweiser auf
+     etwas, das die Uebersicht gar nicht anklicken laesst. */
   function offeneFolge() {
     if (!Episode.hatEpisoden()) return null;
     if (Episode.prologOffen()) return "der Prolog";
-    for (var i = 0; i < themen.length; i++) {
-      var ep = Episode.episodeFuer(themen[i].id);
-      if (ep && !Episode.istGelesen(ep)) return themen[i].titel;
-    }
-    return null;
+    var naechste = null;
+    themen.forEach(function (t) {
+      var ep = Episode.episodeFuer(t.id);
+      if (!ep || Episode.istGelesen(ep) || !Episode.folgeOffen(ep)) return;
+      if (!naechste || ep.nummer < naechste.nr) naechste = { nr: ep.nummer, titel: t.titel };
+    });
+    return naechste ? naechste.titel : null;
   }
   var folge = tlOffen ? null : offeneFolge();
 

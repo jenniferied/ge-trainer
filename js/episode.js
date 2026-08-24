@@ -93,6 +93,39 @@ export function prologOffen() {
   return !!(DATEN && (DATEN.serie || {}).prolog) && !gelesen("ep-prolog");
 }
 
+/* ---------- Die Geschichte laeuft der Reihe nach (25.08.2026) ----------
+   Jennifer: "mache zumindest dass sie die nur in der reihenfolge anklicken
+   kann". "Das erste Jahr" ist EINE fortlaufende Geschichte - wer Folge 7 vor
+   Folge 2 liest, bekommt Figuren und Vorgeschichte in der falschen Ordnung.
+
+   DIE REGEL ZAEHLT NUR, WAS ES GIBT: eine Folge ist offen, sobald der Prolog
+   und alle VORHANDENEN Folgen mit kleinerer Nummer gelesen sind. Heute
+   existieren Folge 1 und Folge 7, also braucht 7 nur den Prolog und die 1 -
+   nicht die noch ungeschriebenen 2 bis 6. Kommen sie dazu, waechst die Kette
+   von allein mit, ohne dass hier jemand nachpflegt. Waere es stattdessen
+   "Nummer minus eins", stuende Folge 7 heute vor einer Wand aus Folgen, die
+   es nicht gibt. */
+export function folgeOffen(ep) {
+  if (!DATEN || !ep) return false;
+  if (prologOffen()) return false;
+  return DATEN.episoden.every(function (a) {
+    return a.nummer >= ep.nummer || gelesen(a.id);
+  });
+}
+
+/* Was zuerst dran ist, wenn eine Folge noch zu ist - fuer den Hinweis an der
+   Karte. Der Prolog schlaegt alles, danach die kleinste ungelesene Nummer. */
+export function davor(ep) {
+  if (!DATEN || !ep) return null;
+  if (prologOffen()) {
+    return { titel: ((DATEN.serie || {}).prolog || {}).titel || "Prolog", nr: "Prolog" };
+  }
+  var offen = DATEN.episoden
+    .filter(function (a) { return a.nummer < ep.nummer && !gelesen(a.id); })
+    .sort(function (a, b) { return a.nummer - b.nummer; })[0];
+  return offen ? { titel: offen.titel, nr: "Folge " + offen.nummer } : null;
+}
+
 function sanft() {
   return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ? "auto" : "smooth";
@@ -297,6 +330,17 @@ function bloeckeAbspielen(ep, thema, hooks, lauf, onFertig) {
 export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
   var ep = episodeFuer(thema.id);
   if (!ep) return weiter();
+  /* IST DIE FOLGE NOCH NICHT DRAN, WIRD SIE STILL UEBERSPRUNGEN (25.08.2026,
+     mit der Reihenfolge-Regel dazugekommen) - das Themen-Lernen laeuft dann
+     genau so weiter wie bei einem Thema ganz ohne Folge.
+
+     Warum kein Hinweis an dieser Stelle: Rose hat hier ein THEMA gewaehlt,
+     um zu lernen, nicht eine Geschichte, um sie zu lesen. Ein Kasten "diese
+     Folge kommt spaeter" waere eine Absage auf eine Frage, die sie nicht
+     gestellt hat - und ein Grund mehr, den Einstieg wieder zuzumachen. Wo
+     die Reihenfolge sichtbar sein MUSS, ist die Episoden-Uebersicht, und
+     dort steht sie auch. */
+  if (!istGelesen(ep) && !folgeOffen(ep)) return weiter();
 
   leeren();
   setzeFarbe(app, thema.farbe);
@@ -394,7 +438,12 @@ export function zeigeEpisoden(themen, hooks, zurueck) {
     .forEach(function (ep) {
       var thema = themaVon(themen, ep.thema);
       var fertig = gelesen(ep.id);
-      var k = el("button", "karte episode-karte" + (fertig ? " gelesen" : ""));
+      /* Eine noch nicht freigeschaltete Folge steht sichtbar da, ist aber
+         nicht anklickbar - sie zu VERSTECKEN waere schlechter: dann waere die
+         Geschichte kuerzer, als sie ist, und niemand wuesste, dass da noch
+         etwas kommt. Statt einer Sperre steht dort, was zuerst dran ist. */
+      var zu = !fertig && !folgeOffen(ep);
+      var k = el("button", "karte episode-karte" + (fertig ? " gelesen" : "") + (zu ? " spaeter" : ""));
       if (thema) setzeFarbe(k, thema.farbe);
       var kz = el("div", "episode-karte-zeile");
       kz.appendChild(el("span", "episode-nr", "Folge " + ep.nummer));
@@ -402,10 +451,18 @@ export function zeigeEpisoden(themen, hooks, zurueck) {
       if (fertig) kz.appendChild(el("span", "episode-haken", "✓ gelesen"));
       k.appendChild(kz);
       var fragen = ep.bloecke.filter(function (b) { return b.art !== "text"; }).length;
-      k.appendChild(el("div", "episode-karte-info",
-        (thema ? thema.titel : ep.thema) + " · " + fragen
-        + (fragen === 1 ? " Frage" : " Fragen") + " unterwegs, beide ganz leicht"));
-      k.addEventListener("click", function () { leseFolge(ep, thema, themen, hooks, zurueck); });
+      if (zu) {
+        var vor = davor(ep);
+        k.disabled = true;
+        k.appendChild(el("div", "episode-karte-info", vor
+          ? "Kommt später – die Geschichte läuft der Reihe nach. Zuerst: " + vor.nr + ", „" + vor.titel + "“."
+          : "Kommt später – die Geschichte läuft der Reihe nach."));
+      } else {
+        k.appendChild(el("div", "episode-karte-info",
+          (thema ? thema.titel : ep.thema) + " · " + fragen
+          + (fragen === 1 ? " Frage" : " Fragen") + " unterwegs, beide ganz leicht"));
+        k.addEventListener("click", function () { leseFolge(ep, thema, themen, hooks, zurueck); });
+      }
       app.appendChild(k);
     });
 
