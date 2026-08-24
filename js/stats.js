@@ -1027,28 +1027,39 @@ export function zeigeStats(themen, hooks) {
   kopf.appendChild(zeile);
   app.appendChild(kopf);
 
-  var st = statistik(themen);
   var wurzel = el("div", "stat-wurzel");
   app.appendChild(wurzel);
+  statistikBloecke(themen, hooks).forEach(function (k) { wurzel.appendChild(k); });
+  belebeStats(wurzel);
+}
+
+/* ---------- Die Statistik als BAUSTEINE (24.08.2026) ----------
+   Jennifer: "alle module aus statistik raus in die [Startseite]". Die
+   Statistik war eine eigene Seite, auf die man erst gehen musste - und dort
+   stand die Auskunft, die beim Entscheiden hilft ("wo bringt die naechste
+   Runde am meisten?"), waehrend die Entscheidung eine Seite weiter fiel.
+
+   Deshalb liefert diese Funktion die Karten einzeln, und die STARTSEITE
+   haengt sie unten an. Die Route "stats" gibt es weiter (hooks.stats() nach
+   jeder Runde, alte Verlaufszeilen), sie rendert nur dieselben Bausteine -
+   EINE Quelle, zwei Orte, kein zweiter Bau. */
+export function statistikBloecke(themen, hooks) {
+  var st = statistik(themen);
 
   if (!st.uebungen) {
-    var leer = el("div", "karte");
-    leer.appendChild(el("h2", null, "Hier wird bald was stehen"));
-    leer.appendChild(el("p", null, "Nach der ersten Runde siehst du hier, wie es je Thema und AFB-Stufe läuft. Jede Antwort zählt, auch eine einzelne."));
-    var los = el("button", "knopf", "Zu den Themen");
-    los.addEventListener("click", function () { hooks.home(); });
-    leer.appendChild(los);
-    wurzel.appendChild(leer);
-    return;
+    // Vor der ersten Runde gibt es nichts zu zeigen - und ein Kasten voller
+    // Nullen waere auf der Startseite ein taeglicher Vorwurf. Die Kompetenz-
+    // Bilanz bleibt trotzdem: sie sagt, was es zu tun GIBT, nicht was fehlt.
+    return [kompetenzKarte(themen, hooks)];
   }
 
-  wurzel.appendChild(kachelKarte(st));
-  wurzel.appendChild(chipKarte(st, themen, hooks));
-  wurzel.appendChild(kompetenzKarte(themen, hooks));
-  wurzel.appendChild(rasterKarte(st, hooks));
-  wurzel.appendChild(fussnote(st));
-
-  belebeStats(wurzel);
+  return [
+    amMeistenKarte(st, themen, hooks),
+    kachelKarte(st),
+    kompetenzKarte(themen, hooks),
+    rasterKarte(st, hooks),
+    fussnote(st)
+  ];
 }
 
 function kachelKarte(st) {
@@ -1072,13 +1083,46 @@ function kachelKarte(st) {
 // Schwaechste Zellen zuerst: Hebel = Luecke x Anzahl Versuche. Zellen ohne
 // genug Versuche werden nicht schlechtgeredet, sie kommen als "noch nicht
 // geuebt" dazu - das ist ein Angebot, kein Vorwurf.
-function chipKarte(st, themen, hooks) {
+/* EINE Karte "wo lohnt sich die naechste Runde", nicht zwei (24.08.2026).
+   Es gab kurzzeitig beide: diese hier (schwache Thema-x-AFB-Zellen, aus der
+   Statistik) und eine zweite auf der Startseite mit der naechstfaelligen
+   Kompetenz. Zwei Karten mit fast demselben Titel sind zwei Antworten auf
+   dieselbe Frage - also stehen jetzt beide Blickwinkel untereinander in
+   dieser einen: OBEN die Kompetenz (der Nordstern - Rose muss 34 Saetze
+   koennen), DARUNTER die wackligen Zellen (die Messung - wo faellt etwas ab).
+   Die Kompetenz-Zeile kommt asynchron und schiebt sich davor, wenn sie da ist. */
+function amMeistenKarte(st, themen, hooks) {
   var karte = el("div", "karte");
   var kopfZeile = el("div", "an-kopf");
   kopfZeile.appendChild(el("h2", null, "Wo die nächste Runde am meisten bringt"));
   var stk = standStickerEl(st.quote == null ? 0.5 : st.quote / 100);
   if (stk) kopfZeile.appendChild(stk);
   karte.appendChild(kopfZeile);
+
+  var keBox = el("div", "naechst-block");
+  karte.appendChild(keBox);
+  ladeKompetenzen().then(function (d) {
+    if (!keBox.isConnected || !d) { keBox.remove(); return; }
+    var ab = kompetenzAbdeckung(themen, d);
+    var v = ab.keZeilen[0];
+    if (!v) { keBox.remove(); return; }
+    var nie = ab.nieBeruehrt.length;
+    keBox.appendChild(el("p", "naechst-lage", nie
+      ? (nie === 1 ? "Eine Kompetenz war noch nicht dran." : nie + " Kompetenzen waren noch nicht dran.")
+        + " Die hier liegt ganz oben:"
+      : "Jede Kompetenz war schon einmal dran. Am wenigsten sitzt gerade die hier:"));
+    var zeile = el("div", "naechst-zeile");
+    var label = el("span", "ke-label", keLabel(v.id));
+    if (v.thema) { setzeFarbe(label, v.thema.farbe); setzeFarbe(keBox, v.thema.farbe); }
+    zeile.appendChild(label);
+    zeile.appendChild(el("span", "naechst-thema", v.thema ? v.thema.titel : ""));
+    keBox.appendChild(zeile);
+    keBox.appendChild(el("div", "naechst-text", kurz((v.eintrag || {}).text, 140)));
+    keBox.appendChild(uebeKnoepfe(
+      function (typ) { return kePool(v, typ); },
+      function (typ) { kompetenzRunde(v, typ, hooks); },
+      "Hier ist gerade nichts freigeschaltet – üb eine Stufe tiefer, dann öffnet sich das hier von selbst."));
+  });
 
   var wacklig = [], frisch = [];
   st.raster.forEach(function (r) {
@@ -1229,46 +1273,6 @@ function kompetenzKarte(themen, hooks) {
   return karte;
 }
 
-/* "Was jetzt am meisten bringt" (24.08.2026, Jennifer: ganz unten, unter
-   "Zuletzt geübt"). EIN konkreter naechster Griff statt einer Liste von
-   Baustellen - Vorbild ist sternSchrittHtml im ST-Trainer, das aus demselben
-   Grund eine Zeile statt sechs zeigt.
-
-   Welche Kompetenz? Die erste aus keZeilen - die Sortierung dort macht die
-   Arbeit schon: Ungetanes zuerst, danach das, wovon am wenigsten sitzt. Ist
-   alles beruehrt, steht statt eines Vorschlags ein Satz, der das feiert. */
-export function naechsterSchritt(themen, hooks) {
-  var box = el("div", "karte naechst-karte");
-  box.hidden = true;
-  ladeKompetenzen().then(function (d) {
-    if (!box.isConnected || !d) { box.remove(); return; }
-    var ab = kompetenzAbdeckung(themen, d);
-    var v = ab.keZeilen[0];
-    if (!v) { box.remove(); return; }
-    box.hidden = false;
-    box.appendChild(el("h2", null, "Was jetzt am meisten bringt"));
-
-    var nie = ab.nieBeruehrt.length;
-    box.appendChild(el("p", "naechst-lage", nie
-      ? (nie === 1 ? "Eine Kompetenz war noch nicht dran." : nie + " Kompetenzen waren noch nicht dran.")
-        + " Die hier liegt ganz oben:"
-      : "Jede Kompetenz war schon einmal dran. Am wenigsten sitzt gerade die hier:"));
-
-    var zeile = el("div", "naechst-zeile");
-    var label = el("span", "ke-label", keLabel(v.id));
-    if (v.thema) { setzeFarbe(label, v.thema.farbe); setzeFarbe(box, v.thema.farbe); }
-    zeile.appendChild(label);
-    zeile.appendChild(el("span", "naechst-thema", v.thema ? v.thema.titel : ""));
-    box.appendChild(zeile);
-    box.appendChild(el("div", "naechst-text", kurz((v.eintrag || {}).text, 140)));
-    box.appendChild(uebeKnoepfe(
-      function (typ) { return kePool(v, typ); },
-      function (typ) { kompetenzRunde(v, typ, hooks); },
-      "Hier ist gerade nichts freigeschaltet – üb eine Stufe tiefer, dann öffnet sich das hier von selbst."));
-  });
-  return box;
-}
-
 /* Die Liste "Nach Kompetenz" fuer die STARTSEITE - derselbe Renderer wie in
    der Statistik-Karte (fuelleKompetenzListe), nur ohne deren Rahmen. Rendert
    STATISCH aus der Kompetenz-Liste, nicht aus dem Antwort-Log: die Liste ist
@@ -1306,7 +1310,7 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
   leereKnoten(karte);
   karte.appendChild(el("h2", null, "Die Kompetenzen der Vorlesung"));
   karte.appendChild(el("p", "raster-hinweis",
-    "Wie es über die 34 Erwartungen steht. Die Liste zum Üben steht auf der Startseite unter „Nach Kompetenz“."));
+    "Wie es über die 34 Erwartungen steht. Geübt wird oben unter „Woran du übst“."));
 
   /* 1. Ganz oben das Angebot - nur die Zahl. Die Zeilen dazu stehen auf der
      STARTSEITE (siehe unten): erst standen sie hier doppelt, danach hier und
@@ -1321,7 +1325,7 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
       (nie.length === 1 ? " Kompetenzen war noch nicht dran" : " Kompetenzen waren noch nicht dran")));
     kasten.appendChild(zahl);
     kasten.appendChild(el("p", "ke-angebot-text",
-      "Hier liegt am meisten bereit. Kein Vorwurf – auf der Startseite sind genau diese Zeilen markiert, jede mit eigenem Übe-Knopf."));
+      "Hier liegt am meisten bereit. Kein Vorwurf – oben in der Liste sind genau diese Zeilen markiert, jede mit eigenem Übe-Knopf."));
   } else {
     kasten.appendChild(el("div", "ke-angebot-zahl",
       "Jede Kompetenz war schon einmal dran."));
@@ -1369,8 +1373,16 @@ function fuelleKompetenzKarte(karte, ab, themen, hooks) {
      gehoert: die Zahl der unberuehrten Kompetenzen und die Bilanz je
      AFB-Stufe. Kein Rundenstart, keine Wiederholung der Liste - nur der
      Verweis. */
-  var hin = el("button", "knopf sekundaer", "Zur Liste auf der Startseite");
-  hin.addEventListener("click", function () { hooks.home(); });
+  /* Der Weg zur Liste. Auf der Startseite steht sie weiter oben - dann wird
+     gescrollt statt neu gerendert; wer ueber die Route "stats" hier gelandet
+     ist (hooks.stats() nach einer Runde, alte Verlaufszeilen), kommt ueber
+     hooks.home() hin. Eine Zeile, die beides kann, statt zweier Knoepfe. */
+  var hin = el("button", "knopf sekundaer", "Zur Liste „Woran du übst“");
+  hin.addEventListener("click", function () {
+    var ziel = document.querySelector(".listen-seg");
+    if (ziel) ziel.scrollIntoView({ behavior: "smooth", block: "start" });
+    else hooks.home();
+  });
   karte.appendChild(hin);
 }
 

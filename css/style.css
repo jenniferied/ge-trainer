@@ -164,9 +164,16 @@ p { margin: 0 0 var(--sp-3); }
    Tablet); die 12 px an den Seiten sind der Grund, warum eine Tageskachel hier
    jetzt genauso breit ist wie ein Klausurversuch drueben. */
 
-.info-karte { border-left: 4px solid var(--accent); }
+/* Kleiner gesetzt als der Rest (Jennifer, 24.08.: "schriftgroesse kleiner bei
+   dem block"): der Block steht oben auf der Seite und erklaert die Lage - er
+   soll da sein, ohne den Platz einer Uebungskarte zu beanspruchen. Was man
+   behalten muss, traegt ein <b> im Satz; eingefaerbte GANZE Zeilen gab es
+   kurz, sie waren dreimal Alarm und damit keiner mehr. */
+.info-karte { border-left: 4px solid var(--accent); font-size: .85rem; }
+.info-karte h2 { font-size: 1.05rem; }
 .info-karte ul { margin: 0; padding-left: 1.2em; }
-.info-karte li { margin-bottom: 4px; }
+.info-karte li { margin-bottom: 5px; line-height: 1.45; }
+.info-karte li b { color: var(--ink); }
 /* Kein Gruen als Deko - Gruen ist in dieser App der Erfolgs-Zustand. */
 .info-karte .hinweis-stark { color: var(--glimmer-1); font-weight: 700; }
 
@@ -923,11 +930,34 @@ p { margin: 0 0 var(--sp-3); }
   width: auto; padding: 7px 14px; font-size: .85rem; border-radius: 999px;
 }
 
-/* Die kleine Zeile unter einer Abschnitts-Ueberschrift (h2.abschnitt-titel).
-   Sagt, was der Abschnitt ist, ohne eine Karte dafuer zu brauchen. */
+/* ---------- Abstaende der Startseite, eine Treppe (24.08.2026) ----------
+   Jennifer: "die abstaende gleichmaessiger machen". Vorher zog die kleine
+   Zeile unter der Ueberschrift sich mit einem NEGATIVEN Margin nach oben -
+   das ist der Bauform nach ein Ausgleich fuer etwas, das schon stimmte, und
+   solche Korrekturen driften, sobald irgendwo eine Stufe geaendert wird.
+
+   Die Treppe, von oben nach unten: Ueberschrift sp-5 Luft ueber sich (kommt
+   aus dem geteilten Paket), sp-2 darunter; Umschalter sp-2; Erklaerzeile
+   sp-3; Liste sp-4 nach unten - dieselbe Stufe, die auch jede Karte unter
+   sich hat. Damit sitzt zwischen zwei Bloecken immer dieselbe Luft, egal ob
+   dazwischen eine Karte, eine Liste oder eine Ueberschrift steht. */
 .abschnitt-klein {
   font-size: .85rem; color: var(--ink-soft);
-  margin: calc(-1 * var(--sp-2)) 0 var(--sp-3);
+  margin: 0 0 var(--sp-3);
+}
+
+/* Der Umschalter zwischen den zwei Sichtweisen derselben Liste. Bauform wie
+   die Segment-Schalter der Klausur (.kl-seg in papier.css) - aber mit eigenen
+   Regeln hier, damit die Startseite nicht von der Klausur-CSS abhaengt. */
+.listen-seg { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--sp-2); }
+.listen-seg .kl-seg-knopf {
+  font-size: .82rem; font-weight: 700; cursor: pointer;
+  padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--line); background: none; color: var(--ink-soft);
+}
+.listen-seg .kl-seg-knopf.an {
+  border-color: var(--accent); color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 /* Der KE-Filter in der Fragenliste (main.js zeigeThema). Bauform wie die
@@ -1540,11 +1570,23 @@ p { margin: 0 0 var(--sp-3); }
 /* Quoten-Balken: die Fuellung kodiert den Wert, nicht mehr das Thema. Die
    Themen-Identitaet steckt weiter im farbigen linken Rand der Karte. Reine
    Fortschrittsbalken ohne Stufenklasse behalten var(--tfarbe). */
+/* MIT VERLAUF SEIT DEM 24.08.2026 (Jennifer: "regenbogen wie bei st so ein
+   verlauf"). Bauform woertlich aus dem ST-Trainer (style.css .bar > i.q1..q4):
+   von der mit der Kartenfarbe gebrochenen Fassung nach links zur vollen Farbe
+   rechts. Das laesst den Balken laufen statt nur zu stehen - der Wert bleibt
+   derselbe, die Bewegung entsteht in der Flaeche. Flache Farben wirkten
+   daneben wie ein Platzhalter. */
 .balken .voll.q0 { background: var(--line); }
-.balken .voll.q1 { background: var(--zone-o); }
-.balken .voll.q2 { background: var(--zone-y); }
-.balken .voll.q3 { background: var(--zone-g); }
-.balken .voll.q4 { background: var(--zone-top); }
+.balken .voll.q1 { background: linear-gradient(90deg, color-mix(in srgb, var(--zone-o) 72%, var(--card)), var(--zone-o)); }
+.balken .voll.q2 { background: linear-gradient(90deg, color-mix(in srgb, var(--zone-y) 72%, var(--card)), var(--zone-y)); }
+.balken .voll.q3 { background: linear-gradient(90deg, color-mix(in srgb, var(--zone-g) 72%, var(--card)), var(--zone-g)); }
+/* q4 bekommt wie drueben zusaetzlich den Schein: das ist die Stufe kurz vor
+   voll, und sie soll sich von q3 auch dann unterscheiden, wenn der Balken nur
+   ein paar Pixel breit ist. */
+.balken .voll.q4 {
+  background: linear-gradient(90deg, var(--zone-g), var(--zone-top) 70%, #064a27);
+  box-shadow: 0 0 7px color-mix(in srgb, #19d073 45%, transparent);
+}
 .balken .voll.q5 { background: var(--regenbogen); }
 
 /* Schnitt-Kachel der Statistik: nur die Zahl faerben, nicht die ganze Flaeche -

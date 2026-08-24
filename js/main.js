@@ -2248,7 +2248,15 @@ function uebenKacheln() {
       ["📄", "Klausur", "Papier & Stift wie am 10.09.: alle Themen, weil die 5 echten vorher niemand kennt · Umfang und Zeit wählbar · 120 min", function () { zeige("klausur"); }]
     ] },
     { titel: "Nachschauen", kacheln: [
-      ["📊", "Statistik", "Wo es wackelt", function () { zeige("stats"); }],
+      /* Die Kachel scrollt seit dem 24.08. auf DERSELBEN Seite nach unten,
+         statt eine eigene zu oeffnen - die Statistik steht dort jetzt. Der
+         Router-Fall "stats" bleibt trotzdem (hooks.stats() nach Runden, alte
+         Verlaufszeilen); er rendert dieselben Bausteine. */
+      ["📊", "Deine Zahlen", "Wo es wackelt", function () {
+        var ziel = document.getElementById("zahlen");
+        if (ziel) ziel.scrollIntoView({ behavior: "smooth", block: "start" });
+        else zeige("stats");
+      }],
       ["📖", "Glossar", "Alle Fachbegriffe", function () { zeige("glossar"); }],
       ["🗂", "Stöbern", "Folien, Podcasts & Co.", function () { zeige("stoebern"); }]
     ] }
@@ -2349,13 +2357,21 @@ function zeigeStart() {
   var info = el("div", "karte info-karte");
   info.appendChild(el("h2", null, "So läuft die Klausur"));
   var ul = document.createElement("ul");
-  ul.appendChild(el("li", null, "5 der 8 Themen kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle."));
-  // Die drei Saetze, die in der Klausur wirklich entscheiden, tragen seit dem
-  // 24.08. dieselbe starke Auszeichnung (Jennifer). Sie sind keine Hinweise
-  // unter anderen: an ihnen haengt, ob eine gewusste Sache Punkte bekommt.
-  ul.appendChild(el("li", "hinweis-stark", "Ganze Sätze und Fachbegriffe. Die Punktzahl an der Aufgabe sagt dir, wie viel sie erwartet."));
-  ul.appendChild(el("li", "hinweis-stark", "Inklusion kommt laut Dozentin nicht dran."));
-  ul.appendChild(el("li", "hinweis-stark", "Gefragt wird nach den Kompetenzerwartungen der Folien – die stehen unten unter „Nach Kompetenz“."));
+  /* NUR DAS SCHLUESSELWORT FETT, nicht die ganze Zeile eingefaerbt (Jennifer,
+     24.08.). Drei lila Zeilen untereinander waren dreimal Alarm und damit
+     keiner mehr; fett hervorgehoben ist genau das Stueck, das man behalten
+     muss. Der Satz "Inklusion kommt nicht dran" ist ganz raus - er sagt, was
+     NICHT kommt, und das ist die unwichtigste der drei Auskuenfte. */
+  [
+    ["5 der 8 Themen", " kommen dran – welche, weißt du vorher nicht. Deshalb übst du hier alle."],
+    ["Ganze Sätze und Fachbegriffe.", " Die Punktzahl an der Aufgabe sagt dir, wie viel sie erwartet."],
+    ["Kompetenzerwartungen", " der Folien sind der Maßstab – sie stehen unten unter „Woran du übst“."]
+  ].forEach(function (paar) {
+    var li = document.createElement("li");
+    li.appendChild(el("b", null, paar[0]));
+    li.appendChild(document.createTextNode(paar[1]));
+    ul.appendChild(li);
+  });
   info.appendChild(ul);
   app.appendChild(info);
 
@@ -2366,67 +2382,93 @@ function zeigeStart() {
   var freq = frequenzKarte(tz, themen);
   if (freq) app.appendChild(freq);
 
-  /* NACH KOMPETENZ (24.08.2026, ROADMAP 5b) - vor "Nach Thema", weil die
-     Kompetenzerwartungen der Massstab sind und die Themen die Schublade:
-     Rose muss 34 Saetze koennen, nicht 355 Fragen abarbeiten. Die Liste
-     laedt asynchron nach (kompetenzerwartungen.json) und traegt ihre
-     Ueberschrift selbst mit, damit bei ausgefallener Datei nicht eine nackte
-     Ueberschrift ueber dem Nichts steht. */
-  var keTitel = el("h2", "abschnitt-titel", "Nach Kompetenz");
-  app.appendChild(keTitel);
-  app.appendChild(el("div", "abschnitt-klein",
-    "Das sind die Sätze, an denen die Klausur dich misst – aufklappen, und du übst genau eine davon."));
-  app.appendChild(Stats.kompetenzListe(themen, HOOKS));
+  /* EINE LISTE, ZWEI SICHTWEISEN (24.08.2026, Jennifer: "nach kompetenz und
+     nach thema togglen in derselben liste quasi"). Vorher standen beide
+     Sektionen untereinander - sechzehn aufklappbare Zeilen, die dieselben
+     Aufgaben zweimal sortierten, und man scrollte an der einen vorbei, um zur
+     anderen zu kommen.
 
-  app.appendChild(el("h2", "abschnitt-titel", "Nach Thema"));
-  app.appendChild(el("div", "abschnitt-klein",
-    "Dieselben Aufgaben, nur anders sortiert – nach der Vorlesung, aus der sie kommen."));
+     Die Vorgabe ist "Nach Kompetenz": die Kompetenzerwartungen sind der
+     Massstab, die Themen die Schublade - Rose muss 34 Saetze koennen, nicht
+     355 Fragen abarbeiten. Der Zustand liegt NUR im DOM (kein state-Feld,
+     kein Sync), gleiche Begruendung wie bei den Filtern im Baukasten: eine
+     Ansicht, die beim naechsten Oeffnen noch umgestellt ist, versteckt stumm
+     die halbe Seite. */
+  app.appendChild(el("h2", "abschnitt-titel", "Woran du übst"));
+  var listenModus = "kompetenz";
+  var seg = el("div", "kl-seg listen-seg");
+  var listeHalter = el("div");
+  var listeKlein = el("div", "abschnitt-klein");
 
-  /* SEIT DEM 24.08.2026 DIESELBE BAUFORM WIE "NACH KOMPETENZ" (Jennifer:
-     "sollte einheitlicher aussehen"). Vorher war das hier eine flache
-     button.thema-karte, die beim Antippen in die Fragenliste sprang -
-     daneben eine aufklappbare Kompetenzliste mit Uebe-Knoepfen. Zwei
-     Sektionen, zwei Bedienlogiken, gleiche Sache.
+  [["kompetenz", "Nach Kompetenz", "Das sind die Sätze, an denen die Klausur dich misst – aufklappen, und du übst genau eine davon."],
+   ["thema", "Nach Thema", "Dieselben Aufgaben, nur anders sortiert – nach der Vorlesung, aus der sie kommen."]]
+    .forEach(function (w) {
+      var b = el("button", "kl-seg-knopf" + (w[0] === listenModus ? " an" : ""), w[1]);
+      b.addEventListener("click", function () {
+        if (listenModus === w[0]) return;
+        listenModus = w[0];
+        Array.prototype.forEach.call(seg.querySelectorAll(".kl-seg-knopf"), function (x) { x.classList.remove("an"); });
+        b.classList.add("an");
+        listeZeichnen();
+      });
+      seg.appendChild(b);
+    });
+  app.appendChild(seg);
+  app.appendChild(listeKlein);
+  app.appendChild(listeHalter);
 
-     Jetzt: aufklappen, und es stehen dieselben zwei Knoepfe da wie bei einer
-     Kompetenz (10 MC / 5 frei, echte Zahlen). Der Weg in die Fragenliste
-     bleibt als eigene Zeile darunter - er ist etwas anderes als Ueben. */
-  themen.forEach(function (thema) {
-    var mc = mcStand(thema), fr = freiStand(thema);
-    /* Die Rechnung steht seit dem 23.08.2026 als themenStand() in core.js -
-       die Themen-Auswahl (ui.js) zeigt dieselben Zahlen, und zwei Rechnungen
-       nebeneinander waeren irgendwann zwei verschiedene Antworten auf dieselbe
-       Frage. mcStand/freiStand bleiben hier, weil die Meta-Zeile unten die
-       Einzelteile ausschreibt ("3 von 12 sitzen"). */
-    var st = themenStand(thema);
-    var zustand = kartenZustand(st.angeschaut, st.gesamt);
+  function listeZeichnen() {
+    listeHalter.innerHTML = "";
+    listeKlein.textContent = listenModus === "kompetenz"
+      ? "Das sind die Sätze, an denen die Klausur dich misst – aufklappen, und du übst genau eine davon."
+      : "Dieselben Aufgaben, nur anders sortiert – nach der Vorlesung, aus der sie kommen.";
+    if (listenModus === "kompetenz") {
+      listeHalter.appendChild(Stats.kompetenzListe(themen, HOOKS));
+      return;
+    }
+    /* Die Themen-Sicht: dieselbe Bauform wie die Kompetenz-Sicht (kbKopf),
+       aufgeklappt dieselben zwei Uebe-Knoepfe. Der Weg in die Fragenliste
+       bleibt eine Textzeile darunter - Ansehen ist etwas anderes als Ueben. */
+    var box = el("div", "ke-nach-thema");
+    themen.forEach(function (thema) {
+      /* Die Rechnung steht seit dem 23.08.2026 als themenStand() in core.js -
+         die Themen-Auswahl (ui.js) zeigt dieselben Zahlen, und zwei Rechnungen
+         nebeneinander waeren irgendwann zwei verschiedene Antworten auf
+         dieselbe Frage. mcStand/freiStand bleiben hier, weil die Stand-Zeile
+         die Einzelteile ausschreibt ("3 von 12 sitzen"). */
+      var mc = mcStand(thema), fr = freiStand(thema);
+      var st = themenStand(thema);
+      var zustand = kartenZustand(st.angeschaut, st.gesamt);
 
-    var falt = el("details", "kb-thema " + zustand);
-    setzeFarbe(falt, thema.farbe);
-    falt.appendChild(kbKopf({
-      titel: thema.titel,
-      badge: thema.vorlesung,
-      extra: [
-        thema.beispielthema ? el("span", "beispiel-badge", "Beispielaufgaben bekannt") : null,
-        zustandBadge(zustand)
-      ],
-      anteil: st.anteil,
-      beruehrt: st.beruehrt,
-      stand: "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: "
-        + fr.bearbeitet + " von " + fr.gesamt + " angeschaut"
-    }));
+      var falt = el("details", "kb-thema " + zustand);
+      setzeFarbe(falt, thema.farbe);
+      falt.appendChild(kbKopf({
+        titel: thema.titel,
+        badge: thema.vorlesung,
+        extra: [
+          thema.beispielthema ? el("span", "beispiel-badge", "Beispielaufgaben bekannt") : null,
+          zustandBadge(zustand)
+        ],
+        anteil: st.anteil,
+        beruehrt: st.beruehrt,
+        stand: "Konzept-Check: " + mc.richtig + " von " + mc.gesamt + " sitzen · Frei üben: "
+          + fr.bearbeitet + " von " + fr.gesamt + " angeschaut"
+      }));
 
-    var innen = el("div", "kb-thema-innen");
-    innen.appendChild(Stats.uebeKnoepfe(
-      function (typ) { return typ === "mc" ? (thema.mc || []) : (thema.frei || []); },
-      function (typ) { Stats.themaRunde(thema, typ, HOOKS); },
-      "Zu diesem Thema liegen gerade keine Aufgaben bereit."));
-    var alle = el("button", "text-zeile", "🗂 Alle Fragen ansehen und einzeln aufschlagen");
-    alle.addEventListener("click", function () { zeige("thema", thema); });
-    innen.appendChild(alle);
-    falt.appendChild(innen);
-    app.appendChild(falt);
-  });
+      var innen = el("div", "kb-thema-innen");
+      innen.appendChild(Stats.uebeKnoepfe(
+        function (typ) { return typ === "mc" ? (thema.mc || []) : (thema.frei || []); },
+        function (typ) { Stats.themaRunde(thema, typ, HOOKS); },
+        "Zu diesem Thema liegen gerade keine Aufgaben bereit."));
+      var alle = el("button", "text-zeile", "🗂 Alle Fragen ansehen und einzeln aufschlagen");
+      alle.addEventListener("click", function () { zeige("thema", thema); });
+      innen.appendChild(alle);
+      falt.appendChild(innen);
+      box.appendChild(falt);
+    });
+    listeHalter.appendChild(box);
+  }
+  listeZeichnen();
 
   /* GANZ UNTEN: erst was war, dann was als Naechstes lohnt (Jennifer, 24.08.:
      "zuletzt geuebt nach ganz unten. was jetzt am meisten bringt dann darunter
@@ -2435,7 +2477,21 @@ function zeigeStart() {
      konkreten naechsten Griff. */
   var zuletzt = zuletztKarte(themen);
   if (zuletzt) app.appendChild(zuletzt);
-  app.appendChild(Stats.naechsterSchritt(themen, HOOKS));
+
+  /* DIE STATISTIK STEHT JETZT HIER (24.08.2026, Jennifer: "alle module aus
+     statistik raus in die [Startseite]"). Sie war eine eigene Seite, auf die
+     man erst gehen musste - und dort stand die Auskunft, die beim Entscheiden
+     hilft ("wo bringt die naechste Runde am meisten?"), waehrend die
+     Entscheidung eine Seite weiter fiel.
+
+     Die Route "stats" gibt es weiter und rendert DIESELBEN Bausteine
+     (statistikBloecke) - hooks.stats() nach jeder Runde und alte
+     Verlaufszeilen laufen noch dorthin. Eine Quelle, zwei Orte. */
+  var statBox = el("div", "stat-wurzel");
+  statBox.id = "zahlen";
+  Stats.statistikBloecke(themen, HOOKS).forEach(function (k) { statBox.appendChild(k); });
+  app.appendChild(statBox);
+  Stats.belebeStats(statBox);
 
   app.appendChild(el("div", "fusszeile", "Jede Runde zählt – auch eine kurze. Dein Fortschritt bleibt auf diesem Gerät gespeichert."));
 }
