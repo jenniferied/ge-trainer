@@ -333,8 +333,7 @@ function bloeckeAbspielen(ep, thema, hooks, lauf, onFertig) {
    Ueberspringen loggt nichts - die Folge kommt beim naechsten Start wieder.
    Steht der Prolog noch aus, laeuft er direkt davor im selben Lauf (drei
    Blasen, keine Fragen - die Schule soll vor der ersten Folge da sein). */
-export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck, opts) {
-  opts = opts || {};
+export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
   var ep = episodeFuer(thema.id);
   if (!ep) return weiter();
   /* IST DIE FOLGE NOCH NICHT DRAN, WIRD SIE STILL UEBERSPRUNGEN (25.08.2026,
@@ -357,8 +356,7 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck, opts) {
 
   var kopf = el("div", "kopf");
   kopf.appendChild(el("h1", null, "📖 Folge " + ep.nummer + ": " + ep.titel));
-  kopf.appendChild(el("div", "untertitel",
-    opts.untertitel || (thema.titel + " · die Geschichte führt dich rein, dann kommt das Material.")));
+  kopf.appendChild(el("div", "untertitel", thema.titel + " · die Geschichte führt dich rein, dann kommt das Material."));
   app.appendChild(kopf);
 
   app.appendChild(banner(hooks));
@@ -370,7 +368,7 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck, opts) {
   app.appendChild(lauf);
 
   /* Der leise Ausgang: kein grosser Knopf, eine Zeile unter dem Lauf. */
-  var skip = el("button", "episode-skip", opts.skipText || "Geschichte überspringen – direkt zum Material");
+  var skip = el("button", "episode-skip", "Geschichte überspringen – direkt zum Material");
   skip.addEventListener("click", weiter);
   app.appendChild(skip);
 
@@ -383,7 +381,7 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck, opts) {
     lauf.appendChild(fertig);
     skip.remove();
     var reihe = el("div", "knopf-reihe");
-    var k = el("button", "knopf", opts.weiterText || "Weiter zum Material");
+    var k = el("button", "knopf", "Weiter zum Material");
     k.addEventListener("click", weiter);
     reihe.appendChild(k);
     lauf.appendChild(reihe);
