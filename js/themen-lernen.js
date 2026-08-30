@@ -671,7 +671,12 @@ export function zeigeThemenLernen(themen, hooks) {
        antippen kann, ist keiner. */
     var story = null;
     themen.forEach(function (t) {
-      if (gesperrt[t.id]) return;
+      /* Seit dem 30.08.2026 OHNE gesperrt-Filter: Roses Rotation hatte das
+         Folge-1-Thema schon gesperrt, BEVOR es die Episoden gab (23.08. 16:57
+         abgeschlossen, Episoden 22:37 committet) - und weil die Folgen der
+         Reihe nach laufen, uebersprang danach JEDES Thema seine Folge still.
+         Null Episoden-Eintraege im Log. Ein gesperrtes Story-Thema wird unten
+         zur Nur-Lesen-Kachel, nicht zur vollen Sitzung. */
       var ep = episodeFuer(t.id);
       if (!ep || istGelesen(ep) || !folgeOffen(ep)) return;
       if (!story || ep.nummer < story.ep.nummer) story = { thema: t, ep: ep };
@@ -679,11 +684,11 @@ export function zeigeThemenLernen(themen, hooks) {
 
     var antworten = antwortenJeThema();
     var sortiert = themen.slice().sort(function (a, b) {
+      if (story && a.id === story.thema.id) return -1;
+      if (story && b.id === story.thema.id) return 1;
       var za = !!gesperrt[a.id], zb = !!gesperrt[b.id];
       if (za !== zb) return za ? 1 : -1;        // Gesperrtes ans Ende
       if (za) return 0;                          // untereinander egal
-      if (story && a.id === story.thema.id) return -1;
-      if (story && b.id === story.thema.id) return 1;
       return (antworten[a.id] || 0) - (antworten[b.id] || 0);
     });
     /* Die Zeile nur, wenn es ueberhaupt ein Gefaelle gibt. Auf einem frischen
@@ -707,13 +712,14 @@ export function zeigeThemenLernen(themen, hooks) {
     sortiert.forEach(function (t) {
       var zu = !!gesperrt[t.id];
       var lvl = levelVon(t);
-      var istStory = !!story && !zu && t.id === story.thema.id;
-      var b = el("button", "kachel" + (zu ? " tl-gespielt" : " glimmer") + (istStory ? " tl-story" : ""));
+      var istStory = !!story && t.id === story.thema.id;
+      var b = el("button", "kachel" + (zu && !istStory ? " tl-gespielt" : " glimmer") + (istStory ? " tl-story" : ""));
       setzeFarbe(b, t.farbe);
-      b.appendChild(el("span", "kachel-icon", zu ? "✓" : istStory ? "📖" : "📚"));
+      b.appendChild(el("span", "kachel-icon", istStory ? "📖" : zu ? "✓" : "📚"));
       b.appendChild(el("b", null, t.titel));
       b.appendChild(el("span", "tl-level", "Level " + lvl));
-      b.appendChild(el("span", "kachel-klein", zu ? "in dieser Runde schon dran" : t.vorlesung));
+      b.appendChild(el("span", "kachel-klein",
+        zu ? (istStory ? "schon dran – aber die Folge ist offen" : "in dieser Runde schon dran") : t.vorlesung));
       /* Die Story-Zeile schlaegt die Duenn-Zeile: es soll bei EINER Auskunft
          je Kachel bleiben. Beides untereinander waere die Kachel, die am
          lautesten ruft - und genau das ist der Zustand, in dem Rose nichts
@@ -726,7 +732,13 @@ export function zeigeThemenLernen(themen, hooks) {
         // Bilanz: keine Zahl, kein "vernachlaessigt".
         b.appendChild(el("span", "tl-duenn", "am wenigsten geübt"));
       }
-      if (zu) {
+      if (zu && istStory) {
+        /* NUR DIE GESCHICHTE (30.08.2026, Jennifer: "ich dachte es soll teil
+           vom themenlernen sein"). Die Kachel bleibt fuer die Folge antippbar;
+           die Lern-Sitzung selbst bleibt gesperrt, die Rotation unangetastet. */
+        b.title = "Die Folge ist offen – das Thema selbst kommt wieder, wenn alle acht durch sind.";
+        b.addEventListener("click", function () { nurGeschichte(t); });
+      } else if (zu) {
         b.disabled = true;
         b.title = t.titel + " war in dieser Runde schon dran – kommt wieder, wenn alle acht durch sind.";
       } else {
@@ -741,7 +753,10 @@ export function zeigeThemenLernen(themen, hooks) {
        selben Zustand. */
     if (story) {
       storyHinweis.textContent = "📖 Die Geschichte geht weiter mit „" + story.ep.titel
-        + "“ – die Folge liegt hinter " + story.thema.titel + ".";
+        + "“ – die Folge liegt hinter " + story.thema.titel + "."
+        + (gesperrt[story.thema.id]
+          ? " Das Thema war in dieser Runde schon dran – die Folge kannst du trotzdem lesen."
+          : "");
     } else {
       storyHinweis.remove();
     }
@@ -769,6 +784,17 @@ export function zeigeThemenLernen(themen, hooks) {
      leichten Fragen loggen wie normale Schritte (episode.js, Kopfkommentar).
      Ueberspringen ist eine leise Zeile und loggt nichts - dann kommt die
      Folge beim naechsten Sitzungsstart wieder. */
+  /* Nur die Folge lesen, ohne Lern-Sitzung: fuer das gesperrte Story-Thema.
+     Danach zurueck zur Themenwahl - dort schlaegt die naechste Folge auf. */
+  function nurGeschichte(thema) {
+    spieleAlsIntro(thema, themen, hooks,
+      function () { start(); },
+      function () { start(); },
+      { weiterText: "Zurück zur Themenwahl",
+        skipText: "Geschichte überspringen – zurück zur Themenwahl",
+        untertitel: thema.titel + " · nur die Geschichte – das Thema selbst kommt wieder, wenn die Runde durch ist." });
+  }
+
   function material(thema) {
     var ep = episodeFuer(thema.id);
     if (ep && !istGelesen(ep)) {

@@ -918,6 +918,11 @@ function abschnitteKarte(f, o, ab, gezeigt) {
   /* ---- Der KI-Zweig (Vertrag 2) ---- */
   var kiAn = !!(o.felder && Llm && typeof Llm.bausteinUrteile === "function"
     && typeof Llm.aktiv === "function" && Llm.aktiv());
+  /* Die Regel steht VOR dem ersten Klick da, nicht erst danach (Rose,
+     30.08.2026: "Anscheinend muss ich sie alle zusammen loesen und dann alle
+     aufdecken" - fast richtig, nur hatte es ihr vorher niemand gesagt). */
+  if (kiAn && frostZeile) frostZeile.textContent =
+    "Schreib erst alle Bausteine auf – mit dem ersten Aufdecken wird verglichen, danach ist Schreiben zu.";
   var kiStatus = "aus";              // aus | laeuft | da | weg
   var kiUrteile = {};                // ROHER Index -> Urteil
   var kiSlots = [];                  // { kern, box, zeile }
@@ -1285,6 +1290,20 @@ function kiSlotFuellen(s) {
 
       var auf = el("button", "knopf klein-knopf", "Aufdecken");
       auf.addEventListener("click", function () {
+        /* Zwischenhalt vor dem Frost (30.08.2026): sind noch Felder leer,
+           warnt der erste Klick statt einzufrieren - der zweite gilt dann. */
+        if (kiAn && kiStatus === "aus" && !auf.dataset.trotzdem) {
+          var leer = alleFelder.filter(function (f) { return !f.value.trim(); }).length;
+          if (leer) {
+            auf.dataset.trotzdem = "1";
+            auf.textContent = "Trotzdem aufdecken";
+            if (frostZeile) frostZeile.textContent = (leer === 1
+              ? "Ein Baustein ist noch leer"
+              : leer + " Bausteine sind noch leer")
+              + " – nach dem Aufdecken kannst du nicht mehr schreiben. Erst fertig schreiben lohnt sich.";
+            return;
+          }
+        }
         // DER Ausloeser des KI-Aufrufs: der ERSTE Aufdecken-Klick der Karte.
         // Ein Aufruf je Aufgabe, nicht je Baustein - nur wenn das Modell alle
         // Felder zusammen sieht, erkennt es richtigen Inhalt im falschen Slot.
