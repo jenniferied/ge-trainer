@@ -106,6 +106,14 @@ function aufgabenId(qid) {
    quote steht im Log als PROZENT (Math.round(quote * 100)), so schreibt es
    themen-lernen.js und so stand es schon im Tagesspiel. Fehlt sie ganz -
    Begriffe zum Beispiel haben keine -, entscheidet a.richtig. */
+/* AB WELCHER QUOTE EIN ABRUF ALS SOUVERAEN GILT (31.08.2026, Jennifer: "ja
+   reife stufe ueberspringen"). urteil() nennt schon ab 75 einen Treffer - das
+   ist "bestanden", nicht "sass". Gemessen an Roses 74 freien Abrufen: 12 liegen
+   genau auf 75, 38 auf 100. Die Schwelle 90 trennt also "fast alles" sauber von
+   "gerade so" und trifft 39 der 74. Wer so antwortet, muss die Zwischenstufe
+   nicht noch einmal mitnehmen. */
+var SOUVERAEN_AB = 90;
+
 function urteil(a) {
   var q = typeof a.quote === "number" ? a.quote : null;
   if (q === null) return a.richtig ? "treffer" : "daneben";
@@ -166,16 +174,30 @@ export function reifeStand() {
       if (!stark) {
         if (st.stufe < 2) st.stufe = 2;
       } else {
-        st.inFolge++;
+        /* SOUVERAEN ZAEHLT DOPPELT (31.08.2026). Ein Abruf ab SOUVERAEN_AB gilt
+           wie zwei: er zaehlt zweimal in der Folge und darf zwei Stufen steigen.
+           Vorher brauchte jede Stufe ihren eigenen Tag, auch wenn Rose die
+           Aufgabe erkennbar konnte - bei 38 Abrufen mit Quote 100 in ihrem Log
+           ist das verschenkte Zeit.
+
+           DIE TAGES-BEDINGUNG FUER R5 BLEIBT. R5 heisst "sitzt ueber Tage";
+           ein Sprung dorthin am selben Tag waere eine falsche Auskunft, egal
+           wie gut die Antwort war. Der Sprung endet deshalb spaetestens an
+           tage >= 2. */
+        var souveraen = typeof a.quote === "number" && a.quote >= SOUVERAEN_AB;
+        st.inFolge += souveraen ? 2 : 1;
         if (!st.folgeTage) st.folgeTage = Object.create(null);
         st.folgeTage[tag] = true;
         var tage = Object.keys(st.folgeTage).length;
         // Von unten kommend zaehlt der erste freie Abruf doppelt: er beweist
         // die Schublade UND das Produzieren, also direkt auf R2.
-        if (st.stufe < 2) st.stufe = 2;
-        else if (st.stufe === 2) st.stufe = 3;
-        else if (st.stufe === 3 && st.inFolge >= 2) st.stufe = 4;
-        else if (st.stufe === 4 && st.inFolge >= 3 && tage >= 2) st.stufe = 5;
+        for (var stufenSchritt = 0; stufenSchritt < (souveraen ? 2 : 1); stufenSchritt++) {
+          if (st.stufe < 2) st.stufe = 2;
+          else if (st.stufe === 2) st.stufe = 3;
+          else if (st.stufe === 3 && st.inFolge >= 2) st.stufe = 4;
+          else if (st.stufe === 4 && st.inFolge >= 3 && tage >= 2) st.stufe = 5;
+          else break;
+        }
       }
     } else if (u === "daneben") {
       st.inFolge = 0;
@@ -246,16 +268,27 @@ export function modusFuer(stufe) {
    Handy sind neun Felder, egal wie viele Karten danach noch kommen - und genau
    das hat Rose am 19.08.2026 zurueckgemeldet.
 
-   Die Zahlen: R0/R1 vier, R2 sechs (das ist der alte LVL1_BAUSTEINE-Wert, der
-   bis zum 22.08. fuer alle galt), ab R3 alles. Vier ist dieselbe Zahl, mit der
-   der KI-Zweig rechnet - stuenden hier "3-4", haetten zwei Stellen der App eine
-   andere Portionsgroesse.
+   HOCHGESETZT AM 31.08.2026 (Jennifer: "weniger portionierung. felder sind
+   sowieso sus oder nicht."): R0/R1 sechs statt vier, R2 acht statt sechs, ab R3
+   weiter alles. Zusammen mit der neuen Regel in lvl1Teil - eine Portion, die
+   ohnehin fast die ganze Aufgabe waere, faellt weg - portioniert die App jetzt
+   nur noch die wirklich grossen Aufgaben.
+
+   WARUM DAS KEIN RUECKSCHRITT HINTER DEN 19.08. IST. Die Portion war die
+   Antwort auf Roses "overwhelmed". Von den drei Ursachen, die der Lernstand
+   damals zeigte, war die Feldzahl aber nur eine: dazu kamen zwei AFB-III-
+   Aufgaben um 23:44 ohne Filter und die Sammelzeile "Weitere: ...", die fuenf
+   richtige Antworten als falsch meldete. Die anderen beiden sind laengst
+   behoben. Und laut Memory `rose-kein-adhs` ist Roses Hebel Sprachgeruest
+   (Satzanfaenge, einfache Sprache), nicht Portionierung - die stammte aus einer
+   Begruendung, die so nicht stimmte. Der Deckel bleibt trotzdem stehen: bei
+   Aufgaben mit neun bis vierzehn Bausteinen ist er weiter richtig.
 
    GEZAEHLT WERDEN ZEILEN, NICHT STICHPUNKTE (treppe.js abschnittZeilen): eine
    Rolle ist ein Feld, auch wenn fuenf Vorratspunkte hinter ihr liegen. */
 export function bausteinBudget(stufe) {
   var s = typeof stufe === "number" ? stufe : 0;
-  if (s <= 1) return 4;
-  if (s === 2) return 6;
+  if (s <= 1) return 6;
+  if (s === 2) return 8;
   return null;
 }

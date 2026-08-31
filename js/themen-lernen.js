@@ -57,8 +57,12 @@ import { bausteinBudget, faellig, heuteTag, lerntage, modusFuer, reifeStand, STU
 import { episodeFuer, istGelesen, spieleAlsIntro, folgeOffen, prologOffen, folgeFuerSitzung } from "./episode.js";
 
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
-   Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
-var NEU_AUFGABEN = 6;
+   Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens.
+   VON 6 AUF 8 (31.08.2026): der Lastdeckel bindet ohnehin frueher, seit er
+   in Last statt in Karten rechnet. Eine Kartenzahl, die vor dem Budget greift,
+   ist eine zweite Bremse an derselben Stelle - Jennifer: "etwas mehr in die
+   Runde rein". */
+var NEU_AUFGABEN = 8;
 /* NEU_BEGRIFFE deckt bewusst den GANZEN Rang-1-Pool eines Themas ab. Der
    groesste ist entwicklungsbereiche mit 15 Kernbegriffen, die anderen liegen
    zwischen 8 und 14 (konzeptionen 14, wohnen 14, freizeit 12, mobilitaet 12,
@@ -67,13 +71,16 @@ var NEU_AUFGABEN = 6;
    Ungesehenes nur GEWICHTET zieht statt es hart vorzuziehen, waren es nicht
    verlaesslich dieselben sieben: manche Begriffe sah Rose nie. Ab Level 2 kommen
    die Randbegriffe dazu, dann ist 15 wieder eine Auswahl. */
-/* VON 15 AUF 8 (31.08.2026). Fuenfzehn Begriffe waren zusammen mit 4 MC und
-   6 Aufgaben exakt die alten 25 Schritte - der Begriffsblock allein hat den
-   Stapel aus der Sitzung gedraengt. Begriffe sind billig (Last 1) und Rose uebt
-   sie ohnehin reichlich im Tagesspiel; gemessen am 30.08. waren 35 ihrer 96
-   Antworten Glossar. Acht reichen als Aufwaermer, der Rest der Sitzung gehoert
-   dem, was in der Klausur geschrieben werden muss. */
-var NEU_BEGRIFFE = 8;
+/* VON 15 AUF 8 AUF 12 (31.08.2026, an einem Tag zweimal gedreht). Fuenfzehn
+   waren zusammen mit 4 MC und 6 Aufgaben exakt die alten 25 Schritte - der
+   Begriffsblock allein hat den Stapel aus der Sitzung gedraengt; deshalb erst
+   runter auf acht. Zurueck auf zwoelf, weil zwei Dinge sich geaendert haben:
+   die Wiederholung hat jetzt eine feste Reserve, die ihr niemand mehr wegnehmen
+   kann, und ein Begriff kostet nur noch halb so viel wie ein geschriebener
+   Baustein. Jennifer: "wenn sie vokabeln so im flug abrufen kann, entsteht ja
+   flow auch." Das ist ein Argument fuer den Einstieg in die Sitzung, nicht
+   dagegen - und es kann den Stapel seit heute nicht mehr aushungern. */
+var NEU_BEGRIFFE = 12;
 
 /* ---------- Ankreuzfragen: der Wiedererkennen-Schritt (22.08.2026) ----------
 
@@ -122,17 +129,18 @@ var NEU_MC = 4;
    schweren Aufgaben unbemerkt lang. Gezaehlt wird deshalb, was Rose wirklich
    PRODUZIEREN muss.
 
-   50 IST KEINE ERHOEHUNG DER MENGE. Eine heutige Level-2-Sitzung verlangt
-   ohnehin rund 55 Last (4 MC + 15 Begriffe + 6 Aufgaben mal ~6 Felder), und im
-   schlechtesten Fall das Doppelte, weil der Wiederholungs-Schwanz frueher
-   SCHRITTE gegen Schritte rechnete. Simuliert ueber den echten Korpus liegt
-   die neue Sitzung bei 64 Last im Schnitt und 88 in der Spitze - die alte kam
-   auf ueber 110. Die Sitzung wird also kuerzer, nicht laenger; sie wird nur
-   anders zusammengesetzt.
+   110 IN DER FEINEN EINHEIT (Feld 2, antippen 1), also rund 55 in der groben -
+   ungefaehr das, was eine heutige Level-2-Sitzung ohnehin verlangt. Zweimal
+   nachgezogen am 31.08.: erst 50 in der groben Einheit, dann verdoppelt fuer
+   die feine, dann auf 110 hoch, weil die geringere Portionierung jede freie
+   Aufgabe teurer macht - bei 100 passten nur noch ein bis zwei neue Aufgaben in
+   die Sitzung. Simuliert liegt die Sitzung damit bei rund 29 Sachen; der alte
+   25-Schritte-Deckel lag beim Gleichen, konnte aber im Wiederholungs-Schwanz
+   auf 50 Schirme wachsen.
 
    Neu ist ausserdem, dass ein fester Anteil des Budgets der Wiederholung
    gehoert und ihr nicht mehr weggefressen werden kann. */
-var LAST_BUDGET = 50;
+var LAST_BUDGET = 110;
 
 /* Wie viel vom Budget das NEUE hoechstens nehmen darf. Der Rest ist fuer den
    Endlos-Stapel reserviert und steht ihm auch dann zu, wenn das Tagesthema
@@ -155,13 +163,25 @@ var NEU_ANTEIL = 0.6;
    lvl1Teil und weicht davon ab (Abschnitts-Pfad, geteilter Vorrat, "null heisst
    alles"). Der Deckel muss dasselbe messen, was der Renderer zeichnet - sonst
    rechnet er an Roses Schirm vorbei. */
-var AFB_ZUSCHLAG = { 1: 0, 2: 1, 3: 2 };
+/* FEINERE EINHEIT SEIT DEM 31.08.2026. Vorher wog eine Vokabel 1 und ein
+   geschriebener Baustein ebenfalls 1 - Jennifer: "vokabeln und mc sind sehr
+   light", und das stimmt: antippen ist nicht schreiben. Jetzt zaehlt ein
+   geschriebenes Feld ZWEI und eine Vokabel EINS. Ganzzahlig, damit die
+   Budget-Rechnung lesbar bleibt; alle Budgets sind entsprechend verdoppelt.
+
+   Der Anlass war praktisch: mit der geringeren Portionierung kostet eine freie
+   Aufgabe mehr Felder, und bei gleichem Gewicht der Vokabeln blieb fuer neue
+   Aufgaben fast kein Platz - gemessen ein bis zwei je Sitzung. Wenn Rose
+   Vokabeln "im Flug abruft" (Jennifer), sollen sie auch nur so viel kosten. */
+var LEICHT = 1;                             // antippen, ein Wort tippen
+var FELD = 2;                               // einen Baustein hinschreiben
+var AFB_ZUSCHLAG = { 1: 0, 2: 2, 3: 4 };    // Denkstufe, in derselben Einheit
 
 function lastVon(s) {
   if (!s) return 0;
-  if (s.art !== "abruf") return 1;
+  if (s.art !== "abruf") return LEICHT;
   var felder = s.teil ? s.teil.length : stichpunkteTeilen(s.f).kern.length;
-  return felder + (AFB_ZUSCHLAG[(s.f && s.f.afb) || 1] || 0);
+  return felder * FELD + (AFB_ZUSCHLAG[(s.f && s.f.afb) || 1] || 0);
 }
 
 /* Ein reservierter Platz fuer eine AFB-III-Aufgabe, ab Level 2 (Roadmap (7),
@@ -172,7 +192,7 @@ function lastVon(s) {
    das Level-Gate sie erst im DRITTEN Durchlauf eines Themas oeffnet und sie den
    nicht erreicht. Eine Aufgabe je Sitzung ist ausdruecklich kein Block:
    Jennifer, 23.08., "too much and too soon and overwhelming". */
-var AFB3_RESERVE = 9;
+var AFB3_RESERVE = 18;
 
 /* Wie weit der Wiederholungs-Schwanz die geplante Last hoechstens ueberzieht.
    Siehe die Begruendung unten bei zusatz. */
@@ -507,6 +527,12 @@ function schrittKopf(s) {
    geuebte Aufgabe kann also ueber Nacht eine andere Portion zeigen. Das ist
    hinnehmbar (es geht nichts verloren, die Reife laeuft weiter), aber es soll
    niemanden ueberraschen. */
+/* EINE PORTION, DIE FAST DIE GANZE AUFGABE IST, IST KEINE (31.08.2026).
+   Die Abbruchbedingung stand auf ">= kernZahl", also "nur weglassen, wenn gar
+   nichts fehlt". Bei einer Aufgabe mit fuenf Bausteinen und Budget vier hiess
+   das: vier zeigen, einen verstecken. Das spart nichts und zerschneidet die
+   Aufgabe - Jennifer nennt es den krueppeligen Zwischenschritt. Jetzt faellt
+   die Portion auch dann weg, wenn nur noch EIN Baustein fehlen wuerde. */
 export function lvl1Teil(f, stufe, modus) {
   var budget = bausteinBudget(stufe);
   if (budget === null) return null;                 // ab R3 immer die ganze Aufgabe
@@ -562,7 +588,7 @@ export function lvl1Teil(f, stufe, modus) {
       eindeutig = eindeutig.slice(0, budget);
     }
 
-    if (eindeutig.length >= kernZahl) return null;
+    if (eindeutig.length >= kernZahl - 1) return null;
     return eindeutig;
   }
 
@@ -573,7 +599,7 @@ export function lvl1Teil(f, stufe, modus) {
     teil = teil.concat(saeulen[i]);
   }
   if (saeulen.length === 1 && teil.length > budget) teil = teil.slice(0, budget);
-  if (teil.length >= kernZahl) return null;
+  if (teil.length >= kernZahl - 1) return null;
   return teil.sort(function (a, b) { return a - b; });
 }
 
@@ -963,10 +989,22 @@ export function zeigeThemenLernen(themen, hooks) {
         // danebenlag, steht auch auf 0, war aber schon da. Noch nie gesehen
         // heisst: gar kein Stand. Das gehoert nach vorn - sonst versteckt sich
         // genau das Neue hinter etwas, das sie schon kennt.
-        return { f: f, neu: st ? 1 : 0, stufe: st ? st.stufe : 0, zufall: Math.random() };
+        return { f: f, neu: st ? 1 : 0, core: f.core ? 0 : 1, stufe: st ? st.stufe : 0, zufall: Math.random() };
       })
+      /* DAS PFLICHTPENSUM AUCH IM NACHSCHUB (31.08.2026), aber ERST INNERHALB
+         von "noch nie gesehen". Die Reihenfolge der Schluessel ist der ganze
+         Trick: neu vor core. Stuende core vorn, wuerden schon geuebte
+         Pflichtaufgaben als "neu" wieder eingezogen - die gehoeren in den
+         Stapel, nicht in den Neu-Block.
+
+         WARUM UEBERHAUPT: der Nachschub war kernblind, waehrend der Stapel
+         seit heute frueh das Pensum bevorzugt. Bei 59 Pflicht- gegen 115
+         Kuer-Aufgaben zog der Neu-Block also zu zwei Dritteln Kuer heran, und
+         die Wiederholung kam mit dem Konsolidieren nicht nach. Simuliert:
+         kernblinder Nachschub laesst 25 von 59 Pflichtaufgaben sitzen, mit
+         Vorrang 59 von 59. */
       .sort(function (a, b) {
-        return a.neu - b.neu || a.stufe - b.stufe || a.zufall - b.zufall;
+        return a.neu - b.neu || a.core - b.core || a.stufe - b.stufe || a.zufall - b.zufall;
       });
     // Beim Nachholen faellt der Deckel weg: alles, was fuer dieses Level offen
     // ist, kommt in einer Sitzung. Der Lastdeckel schneidet weiterhin ab.
