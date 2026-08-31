@@ -67,7 +67,13 @@ var NEU_AUFGABEN = 6;
    Ungesehenes nur GEWICHTET zieht statt es hart vorzuziehen, waren es nicht
    verlaesslich dieselben sieben: manche Begriffe sah Rose nie. Ab Level 2 kommen
    die Randbegriffe dazu, dann ist 15 wieder eine Auswahl. */
-var NEU_BEGRIFFE = 15;
+/* VON 15 AUF 8 (31.08.2026). Fuenfzehn Begriffe waren zusammen mit 4 MC und
+   6 Aufgaben exakt die alten 25 Schritte - der Begriffsblock allein hat den
+   Stapel aus der Sitzung gedraengt. Begriffe sind billig (Last 1) und Rose uebt
+   sie ohnehin reichlich im Tagesspiel; gemessen am 30.08. waren 35 ihrer 96
+   Antworten Glossar. Acht reichen als Aufwaermer, der Rest der Sitzung gehoert
+   dem, was in der Klausur geschrieben werden muss. */
+var NEU_BEGRIFFE = 8;
 
 /* ---------- Ankreuzfragen: der Wiedererkennen-Schritt (22.08.2026) ----------
 
@@ -95,20 +101,82 @@ var NEU_BEGRIFFE = 15;
         tl-/ts- fuer den Abschluss, tlab-/tsab- fuer den Aufgaben-Abruf.
 
    DECKEL: hoechstens NEU_MC je Sitzung, auch beim Nachholen. Die Sitzung soll
-   nicht doppelt so lang werden - SITZUNG_MAX ist eine Notbremse, kein Konzept. */
+   nicht doppelt so lang werden - der Lastdeckel ist eine Notbremse, kein Konzept. */
 var NEU_MC = 4;
 
-/* Deckel fuer die ganze Sitzung. Unten wird kommentarlos abgeschnitten: eine
-   Liste, die sagt "und 60 weitere", ist eine Drohung, keine Information.
+/* ---------- Der Deckel ist eine LAST, keine Schrittzahl (31.08.2026) ----------
 
-   VON 40 AUF 25 GESENKT (23.08.2026). Rose hat am 22.08. eine Runde mit 38
-   Schritten vor sich gehabt und die Menge gemeldet. 40 war als Notbremse
-   gedacht, nicht als Vorgabe - aber ein Deckel, der ueber der ueblichen Menge
-   liegt, ist keine Bremse, sondern eine Ansage. 25 ist ungefaehr das, was der
-   Neu-Block plus ein kurzer Stapel ohnehin ergibt (4 MC + 6 Aufgaben + 15
-   Begriffe): der Deckel greift jetzt genau dort, wo der Stapel eine Sitzung
-   sonst verdoppeln wuerde. Faellig bleibt faellig, der Rest kommt morgen. */
-var SITZUNG_MAX = 25;
+   VORHER: SITZUNG_MAX = 25 Schritte. Der Kommentar dazu rechnete "4 MC + 6
+   Aufgaben + 15 Begriffe" und nannte das "Neu-Block plus ein kurzer Stapel".
+   Die Rechnung stimmt nicht: 4 + 6 + 15 sind schon 25. Nachgemessen am
+   31.08. bekam der Endlos-Stapel auf Level 2 in SECHS von acht Themen
+   NULL Plaetze - Wiederholung fand im Themen-Lernen praktisch nicht mehr
+   statt. Genau die schiebt eine Aufgabe aber von "beruehrt" auf "sitzt", und
+   Roses Stand zeigte es: 27 freie Aufgaben bearbeitet, 15 davon "nochmal".
+
+   WARUM LAST STATT SCHRITTE. Jennifer, 31.08.: "manche sachen wie vokabeln
+   sollten viel geringer wiegen als eine afb III aufgabe". Ein Schritt ist als
+   Einheit wertlos - eine Vokabel ist ein Tastendruck, eine AFB-III-Aufgabe
+   sind sechs geschriebene Bausteine plus Abwaegen. Ein Deckel, der beide gleich
+   zaehlt, macht eine Sitzung mit vielen Vokabeln kuenstlich kurz und eine mit
+   schweren Aufgaben unbemerkt lang. Gezaehlt wird deshalb, was Rose wirklich
+   PRODUZIEREN muss.
+
+   50 IST KEINE ERHOEHUNG DER MENGE. Eine heutige Level-2-Sitzung verlangt
+   ohnehin rund 55 Last (4 MC + 15 Begriffe + 6 Aufgaben mal ~6 Felder), und im
+   schlechtesten Fall das Doppelte, weil der Wiederholungs-Schwanz frueher
+   SCHRITTE gegen Schritte rechnete. Simuliert ueber den echten Korpus liegt
+   die neue Sitzung bei 64 Last im Schnitt und 88 in der Spitze - die alte kam
+   auf ueber 110. Die Sitzung wird also kuerzer, nicht laenger; sie wird nur
+   anders zusammengesetzt.
+
+   Neu ist ausserdem, dass ein fester Anteil des Budgets der Wiederholung
+   gehoert und ihr nicht mehr weggefressen werden kann. */
+var LAST_BUDGET = 50;
+
+/* Wie viel vom Budget das NEUE hoechstens nehmen darf. Der Rest ist fuer den
+   Endlos-Stapel reserviert und steht ihm auch dann zu, wenn das Tagesthema
+   noch ungesehenes Material haette.
+
+   40 PROZENT, NICHT MEHR (simuliert am 31.08. ueber den echten Korpus und die
+   Reife-Regeln): bei 40 % erreichen nach vier Durchlaeufen 58 von 59
+   core-Aufgaben die Stufe "sitzt", bei 50 % nur 49, bei 60 % nur 14 - dann
+   kommt so wenig Neues nach, dass die Wiederholung nichts mehr zu wiederholen
+   hat. Der Anteil ist ein Optimum, kein "je mehr desto besser". */
+var NEU_ANTEIL = 0.6;
+
+/* Was ein Schritt kostet. Ankreuzen und ein Wort tippen sind je 1 - das ist
+   die leichteste Sache, die die App kennt, und der Massstab fuer alles andere.
+   Eine freie Aufgabe kostet ihre TATSAECHLICH GEZEIGTEN Felder (s.teil, sonst
+   die Kern-Bausteine) plus einen Zuschlag fuer die Denkstufe: erklaeren kostet
+   mehr als benennen, abwaegen mehr als erklaeren.
+
+   Gelesen wird s.teil und nicht bausteinBudget: die Portion entsteht in
+   lvl1Teil und weicht davon ab (Abschnitts-Pfad, geteilter Vorrat, "null heisst
+   alles"). Der Deckel muss dasselbe messen, was der Renderer zeichnet - sonst
+   rechnet er an Roses Schirm vorbei. */
+var AFB_ZUSCHLAG = { 1: 0, 2: 1, 3: 2 };
+
+function lastVon(s) {
+  if (!s) return 0;
+  if (s.art !== "abruf") return 1;
+  var felder = s.teil ? s.teil.length : stichpunkteTeilen(s.f).kern.length;
+  return felder + (AFB_ZUSCHLAG[(s.f && s.f.afb) || 1] || 0);
+}
+
+/* Ein reservierter Platz fuer eine AFB-III-Aufgabe, ab Level 2 (Roadmap (7),
+   "AFB III je Kompetenz zumischen, nicht als Block"). Ohne die Reserve verliert
+   AFB III jedes Rennen: die Sortierung stellt Ungesehenes nach vorn, und
+   ungesehen sind die leichteren Aufgaben genauso. Gemessen am 31.08. hatte Rose
+   1 von 41 AFB-III-Aufgaben sitzen - die Stufe war praktisch unbetreten, weil
+   das Level-Gate sie erst im DRITTEN Durchlauf eines Themas oeffnet und sie den
+   nicht erreicht. Eine Aufgabe je Sitzung ist ausdruecklich kein Block:
+   Jennifer, 23.08., "too much and too soon and overwhelming". */
+var AFB3_RESERVE = 9;
+
+/* Wie weit der Wiederholungs-Schwanz die geplante Last hoechstens ueberzieht.
+   Siehe die Begruendung unten bei zusatz. */
+var WIEDERHOLUNG_SCHWANZ = 0.7;
 
 /* DER NEUSTART-STEMPEL (Jennifer, 22.08.2026: "resette da nochmal alles -
    einfach alle Themen jungfraeulich anbieten"). Abschluss-Eintraege VOR diesem
@@ -844,6 +912,24 @@ export function zeigeThemenLernen(themen, hooks) {
     var benutzt = Object.create(null);
     var schritte = [];
 
+    /* Die Buchhaltung. verbraucht ist die Last der bisher aufgenommenen
+       Schritte; nimm() legt einen Schritt nur dann dazu, wenn er unter den
+       uebergebenen Deckel passt. Zwei Deckel: neuDeckel fuer alles aus dem
+       Tagesthema, LAST_BUDGET fuer die ganze Sitzung. Die Differenz gehoert
+       dem Stapel und kann vom Neuen nicht angefasst werden. */
+    var verbraucht = 0;
+    function nimm(s, deckel) {
+      if (!s) return false;
+      var kosten = lastVon(s);
+      // Der erste Schritt kommt immer rein, auch wenn er allein schon teuer
+      // ist - eine leere Sitzung waere die schlechtere Auskunft.
+      if (schritte.length && verbraucht + kosten > deckel) return false;
+      schritte.push(s);
+      benutzt[s.id] = true;
+      verbraucht += kosten;
+      return true;
+    }
+
     /* ERST BREITE, DANN TIEFE (Jennifer, 19.08.2026), scharfgestellt am
        23.08.2026: Level 1 sieht nur noch AFB I. Bis dahin stand hier
        "lvl >= 3 ? 3 : 2", und Level 1 mischte AFB II mit hinein - was zu dem
@@ -862,9 +948,9 @@ export function zeigeThemenLernen(themen, hooks) {
        Ihr Deckel bleibt auch beim Nachholen stehen - dort faellt der Deckel fuer
        Aufgaben und Begriffe weg, damit Rose das Neue am Stueck bekommt, aber
        eine doppelt so lange Sitzung war nie der Zweck. */
+    var neuDeckel = nachholen ? LAST_BUDGET : Math.round(LAST_BUDGET * NEU_ANTEIL);
     mcFuerThema(thema, NEU_MC).forEach(function (f) {
-      benutzt[f.id] = true;
-      schritte.push(schrittFuer("mc", f, thema, stand));
+      nimm(schrittFuer("mc", f, thema, stand), neuDeckel);
     });
 
     var aufgaben = (thema.frei || [])
@@ -883,22 +969,40 @@ export function zeigeThemenLernen(themen, hooks) {
         return a.neu - b.neu || a.stufe - b.stufe || a.zufall - b.zufall;
       });
     // Beim Nachholen faellt der Deckel weg: alles, was fuer dieses Level offen
-    // ist, kommt in einer Sitzung. SITZUNG_MAX schneidet weiterhin ab.
+    // ist, kommt in einer Sitzung. Der Lastdeckel schneidet weiterhin ab.
     if (!nachholen) aufgaben = aufgaben.slice(0, NEU_AUFGABEN);
+    /* Der reservierte AFB-III-Platz wird VOR den normalen Aufgaben abgezogen,
+       aber ERST DANACH gefuellt: so steht die schwere Aufgabe hinten in der
+       Sitzung (nach dem Ankreuzen und den leichteren Abrufen), hat ihren Platz
+       aber sicher. Umgekehrt - erst nehmen, dann auffuellen - stuende sie als
+       zweite Karte da, und genau das war "too much and too soon". */
+    var afb3Kandidat = null;
+    if (lvl >= 2 && !nachholen) {
+      afb3Kandidat = (thema.frei || []).filter(function (f) {
+        return (f.stichpunkte || []).length && (f.afb || 2) === 3 && !benutzt[f.id];
+      }).map(function (f) {
+        var st = stand.get(f.id);
+        return { f: f, neu: st ? 1 : 0, stufe: st ? st.stufe : 0, zufall: Math.random() };
+      }).sort(function (a, b) {
+        return a.neu - b.neu || a.stufe - b.stufe || a.zufall - b.zufall;
+      })[0] || null;
+    }
+    var aufgabenDeckel = afb3Kandidat ? Math.max(0, neuDeckel - AFB3_RESERVE) : neuDeckel;
     aufgaben.forEach(function (x) {
-      benutzt[x.f.id] = true;
       // Die Portion setzt schrittFuer selbst, an der Reife des Items - hier ist
       // nichts mehr zu tun. Der Reife-Schluessel bleibt die Item-Id, reife.js
       // merkt von der Portion nichts, und Roses Stand laeuft ohne Bruch weiter.
-      schritte.push(schrittFuer("abruf", x.f, thema, stand));
+      nimm(schrittFuer("abruf", x.f, thema, stand), aufgabenDeckel);
     });
+    if (afb3Kandidat && !benutzt[afb3Kandidat.f.id]) {
+      nimm(schrittFuer("abruf", afb3Kandidat.f, thema, stand), neuDeckel);
+    }
 
     // Level 1 uebt nur die Kernbegriffe (rang 1, rund zwei Drittel des
     // Glossars), ab Level 2 kommen die Randbegriffe dazu.
     if (hatGlossar()) {
       begriffeFuerTagesspiel(thema.id, nachholen ? 999 : NEU_BEGRIFFE, lvl >= 2 ? 2 : 1).forEach(function (e) {
-        benutzt[e.id] = true;
-        schritte.push(schrittFuer("begriff", e, thema, stand));
+        nimm(schrittFuer("begriff", e, thema, stand), neuDeckel);
       });
     }
 
@@ -911,7 +1015,7 @@ export function zeigeThemenLernen(themen, hooks) {
       /* DER STAPEL SIEBT SEIT DEM 23.08.2026 EBENFALLS NACH AFB - und zwar
          nach dem Level des Themas, aus dem die Aufgabe stammt, nicht nach dem
          des Tagesthemas. Ohne das lief die AFB-Regel oben ins Leere: gemessen
-         am 22.08. fuellte der AFB-blinde Stapel die Sitzung bis SITZUNG_MAX
+         am 22.08. fuellte der AFB-blinde Stapel die Sitzung bis zum Deckel
          wieder auf, mit AFB II und sogar AFB III, waehrend der Neu-Block
          brav bei AFB I blieb. Level 1 hiess dann "erst breite, dann tiefe" nur
          auf den ersten sechs Karten.
@@ -927,22 +1031,34 @@ export function zeigeThemenLernen(themen, hooks) {
         // Kein Stand heisst: noch nie begonnen. Das gehoert ins Thema, nicht
         // in den Stapel - sonst kaeme fremdes Neuland durch die Hintertuer.
         if (!st || !faellig(stand, f.id)) return;
-        stapel.push({ tag: st.letzterLerntag, s: schrittFuer("abruf", f, t, stand) });
+        stapel.push({ tag: st.letzterLerntag, core: !!f.core, s: schrittFuer("abruf", f, t, stand) });
       });
       if (!hatGlossar()) return;
       eintraegeZu(t.id).forEach(function (e) {
         if (benutzt[e.id]) return;
         var st = stand.get(e.id);
         if (!st || !faellig(stand, e.id)) return;
-        stapel.push({ tag: st.letzterLerntag, s: schrittFuer("begriff", e, t, stand) });
+        stapel.push({ tag: st.letzterLerntag, core: false, s: schrittFuer("begriff", e, t, stand) });
       });
     });
-    // Aeltester Kontakt zuerst - das ist die ganze Prioritaet. Es gibt kein
-    // "ueberfaellig", nur ein "am laengsten nicht gesehen".
-    stapel.sort(function (a, b) { return a.tag < b.tag ? -1 : a.tag > b.tag ? 1 : 0; });
-    stapel.forEach(function (x) { schritte.push(x.s); });
+    /* DAS PFLICHTPENSUM ZUERST (31.08.2026). Vorher war der aelteste Kontakt
+       die ganze Prioritaet - bei 174 freien Aufgaben und einem knappen
+       Wiederholungs-Budget streut das so duenn, dass nichts fertig wird.
+       Simuliert ueber den echten Korpus: ohne Kern-Vorrang erreichen nach vier
+       Durchlaeufen 5 von 59 core-Aufgaben die Stufe "sitzt", mit Vorrang 58.
+       Dieselbe Zahl, dieselben Sitzungen - nur die Reihenfolge im Stapel.
 
-    return schritte.slice(0, SITZUNG_MAX);
+       core ist Jennifers eigene Groesse (2 freie + 2 MC je Kompetenzerwartung,
+       Roadmap-Entscheid vom 23.08.). Wer die 34 Kompetenzerwartungen kann, hat
+       die Klausur; der Rest ist Zugabe. Innerhalb des Pensums bleibt es beim
+       aeltesten Kontakt - es gibt weiter kein "ueberfaellig". */
+    stapel.sort(function (a, b) {
+      if (a.core !== b.core) return a.core ? -1 : 1;
+      return a.tag < b.tag ? -1 : a.tag > b.tag ? 1 : 0;
+    });
+    stapel.forEach(function (x) { nimm(x.s, LAST_BUDGET); });
+
+    return schritte;
   }
 
   /* ---------- Schirm 3: Pruefen ---------- */
@@ -1018,8 +1134,15 @@ export function zeigeThemenLernen(themen, hooks) {
        vorher "von 14" stand. Das Ziel ruecke weg, je mehr man uebt - genau der
        Druck, den dieser Schirm nicht machen soll. Ist der geplante Stapel
        durch, faellt der Nenner ganz weg (siehe schritt()): was jetzt kommt,
-       ist Zugabe und hat keine Zielmarke mehr. */
+       ist Zugabe und hat keine Zielmarke mehr.
+
+       ZWEI GROESSEN, NICHT EINE (31.08.2026). Der Nenner auf dem Schirm zaehlt
+       SCHRITTE - "Schritt 6 von 14" ist eine Auskunft, die Rose lesen kann.
+       Der Deckel fuer den Wiederholungs-Schwanz rechnet dagegen in LAST, wie
+       der Sitzungsdeckel selbst. Beides in eine Variable zu legen hiesse
+       "Schritt 6 von 53" auf dem Schirm - eine Zahl, die nichts bedeutet. */
     var geplant = schritte.length;
+    var geplanteLast = schritte.reduce(function (n, s) { return n + lastVon(s); }, 0);
     // Wird gesetzt, wenn ein Schritt sein Wiederholungs-Konto aufgebraucht hat.
     // Angezeigt wird der Satz erst auf dem naechsten Schirm - beim Abruf faellt
     // onFertig ja erst NACH dem Weiter-Klick, da ist die Karte schon weg.
@@ -1027,10 +1150,24 @@ export function zeigeThemenLernen(themen, hooks) {
     var mitgenommenZahl = fortsetzen ? (fortsetzen.mitgenommenZahl || 0) : 0;
     /* DECKEL FUER DEN WIEDERHOLUNGS-SCHWANZ. REQUEUE_MAX gilt je Schritt; bei
        24 geplanten Schritten waeren das im schlechtesten Fall ueber 300
-       Schirme, ohne dass der Nenner noch etwas sagt. Hoechstens so viele
-       Zusatzschritte wie geplante - danach wird freundlich mitgenommen statt
+       Schirme, ohne dass der Nenner noch etwas sagt. Hoechstens so viel
+       Zusatz-LAST wie geplante Last - danach wird freundlich mitgenommen statt
        weiter im Kreis geschickt. Genau am schlechten Tag, an dem viel
-       danebengeht, hoert die Runde damit auch mal auf. */
+       danebengeht, hoert die Runde damit auch mal auf.
+
+       IN LAST GERECHNET SEIT DEM 31.08.2026, wie der Deckel selbst. Vorher
+       zaehlte der Schwanz Schritte gegen Schritte - eine Sitzung aus vielen
+       leichten Vokabeln erlaubte damit ebenso viele schwere Wiederholungen,
+       eine kurze Sitzung mit drei AFB-III-Aufgaben fast keine. Jetzt wiegt
+       eine wiederholte Vokabel 1 und eine wiederholte AFB-III-Aufgabe acht,
+       auf beiden Seiten der Rechnung.
+
+       UND ER DARF NICHT MEHR SO LANG WERDEN WIE DIE RUNDE SELBST. Frueher
+       durfte der Schwanz die geplante Menge verdoppeln. Gemessen in Last heisst
+       das an einem schlechten Tag 114 statt 55 - genau die Sitzungsform, nach
+       der Rose am 18.08. abgebrochen hat. 70 Prozent halten die Spitze bei
+       rund 88 und kosten in der Simulation nichts: das Kern-Pensum sitzt
+       danach genauso. */
     var zusatz = 0;
 
     // Eine Sache, ueber alle ihre Anlaeufe hinweg wiedererkennbar.
@@ -1042,14 +1179,14 @@ export function zeigeThemenLernen(themen, hooks) {
 
     function nochmal(s) {
       s.runde++;
-      if (s.runde > REQUEUE_MAX || zusatz >= geplant) {
+      if (s.runde > REQUEUE_MAX || zusatz >= geplanteLast * WIEDERHOLUNG_SCHWANZ) {
         mitgenommen = s.art === "abruf" ? s.f.frage
           : s.art === "mc" ? s.m.frage
             : s.e.begriff;
         mitgenommenZahl++;
         return;
       }
-      zusatz++;
+      zusatz += lastVon(s);
       wiederholungen++;
       // Ans ENDE, nicht gleich nochmal: dazwischen liegt anderes, und genau
       // das macht die Wiederholung wirksam. Dasselbe Objekt wandert mit, damit
