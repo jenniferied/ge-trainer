@@ -7,7 +7,8 @@
     "Merkmale der Förderschule",
     "Stufenmodell",
     "Gemeinsamer Unterricht",
-    "Rahmenfrage & Qualifikationsziele"
+    "Rahmenfrage & Qualifikationsziele",
+    "Literatur & Recherche"
   ],
   "mc": [
     {
@@ -579,6 +580,78 @@
         "grundlagen-ke3"
       ],
       "core": false
+    },
+    {
+      "id": "gr-ke1-mc-1",
+      "unterthema": "Literatur & Recherche",
+      "afb": 1,
+      "frage": "Welche der auf den Literaturfolien gezeigten Zeitschriften richtet sich ausdrücklich an den Förderschwerpunkt geistige Entwicklung?",
+      "optionen": [
+        {
+          "text": "Lernen konkret – Förderschwerpunkt geistige Entwicklung",
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Zusatz steht im Titel selbst. Das Cover auf der Folie zeigt das Heft „Bildung im Museum\" (Westermann). (Folie 12)"
+        },
+        {
+          "text": "Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete (VHN)",
+          "korrekt": false,
+          "erklaerung": "Falsch: Die VHN ist eine allgemein heilpädagogische Zeitschrift ohne Festlegung auf einen Förderschwerpunkt. (Folien 12 und 13)"
+        },
+        {
+          "text": "Inklusive Erwachsenenbildung",
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist ein Heft der Schweizerischen Zeitschrift für Heilpädagogik und zielt auf die Erwachsenenbildung, nicht auf einen Förderschwerpunkt. (Folie 12)"
+        },
+        {
+          "text": "Ohrenkuss",
+          "korrekt": false,
+          "erklaerung": "Falsch: Ohrenkuss ist ein Magazin, das von Menschen mit Down-Syndrom geschrieben wird - kein Fachorgan für den Förderschwerpunkt. (Folien 12 und 13)"
+        }
+      ],
+      "erklaerung": "Auf den Literaturfolien steht genau eine Zeitschrift mit dem Förderschwerpunkt im Titel: „Lernen konkret – Förderschwerpunkt geistige Entwicklung\" (Westermann).",
+      "quelle": "folie-grundlagen-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke1"
+      ],
+      "core": true
+    },
+    {
+      "id": "gr-ke1-mc-2",
+      "unterthema": "Literatur & Recherche",
+      "afb": 2,
+      "frage": "Sie suchen eine vollständige Übersicht über deutsch- und englischsprachige Fachzeitschriften des Feldes. Worauf verweist die Vorlesung dafür?",
+      "optionen": [
+        {
+          "text": "Auf die Sammlung der DIFGB unter difgb.de/fachzeitschriften",
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Folie nennt diese Adresse ausdrücklich als Weg zu einer umfassenden Übersicht - die beiden Listen auf der Folie selbst sind nur ein Ausschnitt. (Folie 13)"
+        },
+        {
+          "text": "Auf den Moodle-Kurs des Moduls",
+          "korrekt": false,
+          "erklaerung": "Falsch: Der Moodle-Kurs steht auf einer eigenen Folie und trägt die Materialien des Moduls, nicht die Zeitschriftenübersicht. (Folien 8 und 13)"
+        },
+        {
+          "text": "Auf die Literaturliste am Ende des Foliensatzes",
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Literaturangaben am Ende belegen die Sitzung selbst. Für die Recherche verweist die Vorlesung nach außen. (Folie 13)"
+        },
+        {
+          "text": "Auf die Zeitschrift „Sonderpädagogische Förderung heute“",
+          "korrekt": false,
+          "erklaerung": "Falsch: Das ist eine der gelisteten Zeitschriften, keine Übersicht über die anderen. (Folien 12 und 13)"
+        }
+      ],
+      "erklaerung": "Die Folie unterscheidet zwei Dinge: die beispielhaften Listen auf der Folie und den Verweis auf difgb.de/fachzeitschriften für die vollständige Übersicht.",
+      "quelle": "folie-grundlagen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke1"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -2594,6 +2667,54 @@
         "grundlagen-ke3"
       ],
       "core": false
+    },
+    {
+      "id": "gr-ke1-1",
+      "unterthema": "Literatur & Recherche",
+      "afb": 1,
+      "frage": "Die Vorlesung listet Fachzeitschriften des Feldes auf. Nennen Sie vier deutschsprachige Fachzeitschriften.",
+      "stichpunkte": [
+        "Zeitschrift für Heilpädagogik",
+        "Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete (VHN)",
+        "Sonderpädagogische Förderung heute",
+        "Teilhabe",
+        "Weitere: Behindertenpädagogik, Gemeinsam leben, Menschen",
+        "Weitere: Schweizerische Zeitschrift für Heilpädagogik, Heilpädagogische Forschung",
+        "Weitere: Lernen konkret – Förderschwerpunkt geistige Entwicklung, Frühförderung interdisziplinär"
+      ],
+      "muster": "Vier deutschsprachige Fachzeitschriften des Feldes sind die Zeitschrift für Heilpädagogik, die Vierteljahresschrift für Heilpädagogik und ihre Nachbargebiete, Sonderpädagogische Förderung heute und Teilhabe. Daneben nennt die Vorlesung unter anderem Behindertenpädagogik, Gemeinsam leben, Menschen, die Schweizerische Zeitschrift für Heilpädagogik, Heilpädagogische Forschung und Lernen konkret.",
+      "tipp": "Vier genügen. Die beiden mit „Heilpädagogik“ im Titel sind die naheliegendsten.",
+      "quelle": "folie-grundlagen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke1"
+      ],
+      "core": true
+    },
+    {
+      "id": "gr-ke1-2",
+      "unterthema": "Literatur & Recherche",
+      "afb": 2,
+      "frage": "Die Zeitschriftenfolie der Vorlesung ist in zwei Spalten geteilt. Erläutern Sie, wonach die beiden Spalten unterschieden werden, und nennen Sie je zwei Beispiele.",
+      "stichpunkte": [
+        "Unterschieden wird nach dem Erscheinungsweg bzw. Zugang, nicht nach dem Thema",
+        "Linke Spalte: deutschsprachige (klassische) Fachzeitschriften",
+        "Beispiele links: Zeitschrift für Heilpädagogik, Teilhabe, Behindertenpädagogik, Menschen",
+        "Rechte Spalte: Online-Zeitschriften und Magazine",
+        "Beispiele rechts: Zeitschrift für Inklusion (Inklusion online), Kobinet-Nachrichten, Die Neue Norm, Handicap Forum",
+        "Zusatz: Ohrenkuss steht in beiden Spalten - es erscheint gedruckt und online",
+        "Zusatz: für die vollständige Übersicht verweist die Folie auf difgb.de/fachzeitschriften"
+      ],
+      "muster": "Die beiden Spalten der Folie unterscheiden sich nicht nach dem Thema, sondern nach dem Erscheinungsweg. Links stehen die deutschsprachigen Fachzeitschriften im klassischen Sinn, zum Beispiel die Zeitschrift für Heilpädagogik und Teilhabe. Rechts stehen Online-Zeitschriften und Magazine, zum Beispiel die Zeitschrift für Inklusion und die Kobinet-Nachrichten. Ohrenkuss taucht in beiden Spalten auf, weil es gedruckt und online erscheint. Für eine vollständige Übersicht verweist die Folie außerdem auf difgb.de/fachzeitschriften.",
+      "tipp": "Frag dich zuerst: Wonach wird geteilt - nach Inhalt oder nach Zugang? Dann fallen die Beispiele leicht.",
+      "quelle": "folie-grundlagen-13",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "grundlagen-ke1"
+      ],
+      "core": true
     }
   ]
 }

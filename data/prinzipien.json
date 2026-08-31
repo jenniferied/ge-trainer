@@ -939,6 +939,78 @@
         "prinzipien-ke2"
       ],
       "core": false
+    },
+    {
+      "id": "pr-ke4-mc-1",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 1,
+      "frage": "In einer Sequenz hält die Lehrperson einen Kopfhörer an zwei Stromleiter einer Blockbatterie. Pia führt den zweiten Kontakt unter Assistenz zur Batterie, Ali baut den Versuch selbst auf, Tina kann stattdessen eine Zitrone als Energiequelle erproben. Welches didaktische Prinzip zeigt diese Sequenz?",
+      "optionen": [
+        {
+          "text": "Differenzierung",
+          "korrekt": true,
+          "erklaerung": "Richtig: Die Folie überschreibt den Kasten ausdrücklich mit „Differenzierung des Umfangs und des Komplexitätsniveaus\". Alle Kinder arbeiten am selben Inhalt, aber auf verschieden anspruchsvollen Wegen. (Folie 12)"
+        },
+        {
+          "text": "Elementarisierung",
+          "korrekt": false,
+          "erklaerung": "Falsch: Elementarisierung fragt, was das Elementare eines Inhalts ist, und läuft als Kreislauf aus sachanalytischer Betrachtung, Erfahrungsmöglichkeiten, elementarisierten Aussagen und didaktischer Reduktion. Hier wird nicht der Inhalt reduziert, sondern die Aufgabe je Kind anders zugeschnitten. (Folien 12 und 16)"
+        },
+        {
+          "text": "Kleine Schritte",
+          "korrekt": false,
+          "erklaerung": "Falsch: Kleine Schritte zerlegen eine Handlung in eine Abfolge. In dieser Sequenz stehen die Varianten nebeneinander, sie bauen nicht aufeinander auf. (Folie 12)"
+        },
+        {
+          "text": "Strukturierung",
+          "korrekt": false,
+          "erklaerung": "Falsch: Strukturierung ordnet Raum, Zeit und Ablauf. Davon ist in der Sequenz nichts beschrieben. (Folie 12)"
+        }
+      ],
+      "erklaerung": "Die Sequenz stammt von der Beispiel-Folie zur Differenzierung. Erkennungsmerkmal: ein gemeinsamer Gegenstand (Strom hörbar machen), aber je Schüler:in ein anderer Umfang und ein anderes Komplexitätsniveau.",
+      "quelle": "folie-prinzipien-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke4"
+      ],
+      "core": true
+    },
+    {
+      "id": "pr-ke4-mc-2",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 2,
+      "frage": "Die Vorlesung unterscheidet bei der Analyse einer Sequenz quantitative und qualitative Differenzierung. Pia bekommt weniger Teilschritte, Ali baut den Versuch eigenständig auf. Wie ordnen Sie die beiden Fälle zu?",
+      "optionen": [
+        {
+          "text": "Pia quantitativ (weniger Aufgaben), Ali qualitativ (höherer Schwierigkeitsgrad)",
+          "korrekt": true,
+          "erklaerung": "Richtig: Quantitativ meint die Menge, qualitativ den Schwierigkeitsgrad. Die beiden Begriffe fallen auf den Folien nur im Video-Arbeitsauftrag, definiert sind sie in deinen Notizen. (Folie 13, Notizen S. 36)"
+        },
+        {
+          "text": "Beide Fälle sind quantitativ, weil beide die Aufgabenmenge verändern",
+          "korrekt": false,
+          "erklaerung": "Falsch: Ali bekommt nicht mehr Aufgaben, sondern eine anspruchsvollere - das ist die qualitative Seite. (Notizen S. 36)"
+        },
+        {
+          "text": "Beide Fälle sind qualitativ, weil beide dasselbe Experiment betreffen",
+          "korrekt": false,
+          "erklaerung": "Falsch: Derselbe Gegenstand macht die Differenzierung nicht qualitativ. Entscheidend ist, ob Menge oder Schwierigkeitsgrad verändert wird. (Notizen S. 36)"
+        },
+        {
+          "text": "Pia qualitativ, Ali quantitativ",
+          "korrekt": false,
+          "erklaerung": "Falsch: genau andersherum. Weniger Teilschritte ist die Menge, eigenständiger Aufbau ist der Schwierigkeitsgrad. (Notizen S. 36)"
+        }
+      ],
+      "erklaerung": "Quantitative Differenzierung verändert die Menge, qualitative den Schwierigkeitsgrad. Beim Analysieren einer Sequenz lohnt sich diese Doppelfrage: Wie viel? Und wie schwer?",
+      "quelle": "notizen-s36",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke4"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -3559,7 +3631,51 @@
       "ke": [
         "prinzipien-ke4"
       ],
+      "core": false
+    },
+    {
+      "id": "pr-ke4-3",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 1,
+      "frage": "Die Vorlesung stellt Elementarisierung als Kreislauf mit vier Stationen dar, der am Beispiel des Energieerhaltungssatzes durchgespielt wird. Benennen Sie die vier Stationen in ihrer Reihenfolge.",
+      "stichpunkte": [
+        "Sachanalytische Betrachtung",
+        "Erfahrungsmöglichkeiten",
+        "Elementarisierte Aussagen",
+        "Didaktische Reduktion"
+      ],
+      "muster": "Der Kreislauf der Elementarisierung besteht aus vier Stationen: der sachanalytischen Betrachtung, den Erfahrungsmöglichkeiten, den elementarisierten Aussagen und der didaktischen Reduktion. Am Beispiel des Energieerhaltungssatzes heißt das: erst die Sache klären, dann fragen, woran Schülerinnen und Schüler das erfahren können, daraus einfache Aussagen bilden und zuletzt den Stoff reduzieren.",
+      "tipp": "Vier Stationen, im Kreis angeordnet. Fang bei der Sache an und hör bei der Reduktion auf.",
+      "quelle": "folie-prinzipien-16",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke4"
+      ],
       "core": true
+    },
+    {
+      "id": "pr-ke4-4",
+      "unterthema": "Analyse von Lehr-Lernsequenzen",
+      "afb": 3,
+      "frage": "Eine Kollegin plant zum Thema Strom eine Stunde, in der alle Schülerinnen und Schüler denselben Versuchsaufbau in derselben Reihenfolge nachbauen. Sie sagt: „Das ist handlungsorientiert, alle machen ja selbst etwas.\" Beurteilen Sie diese Sequenz mit Blick auf die didaktischen Prinzipien. Nennen Sie zwei Punkte, die für ihre Einschätzung sprechen, zwei Punkte dagegen, und kommen Sie zu einem begründeten Urteil.",
+      "stichpunkte": [
+        "Dafür 1: Handlungsorientierung ist tatsächlich berührt - die Schüler:innen handeln selbst, statt nur zuzusehen; eigenes Tun ist ihr Kern",
+        "Dafür 2: ein gemeinsamer Gegenstand und ein gleicher Ablauf schaffen Struktur und Sicherheit, was dem Prinzip der Strukturierung entspricht",
+        "Dagegen 1: Differenzierung fehlt vollständig - weder der Umfang noch das Komplexitätsniveau sind je Schüler:in verändert, obwohl die Vorlesung genau das am Strom-Beispiel vorführt",
+        "Dagegen 2: ohne Differenzierung greift auch die Lebensnähe zu kurz, weil der Zugang nicht an die individuellen Aneignungsebenen anschließt",
+        "Dagegen 3 (optional): Handeln allein genügt nicht - Handlungsorientierung meint eine vollständige Handlung mit Planung, Durchführung und Kontrolle, nicht das Nachbauen einer Vorlage",
+        "Fazit: eigenes Urteil begründen, etwa: die Sequenz erfüllt Handlungsorientierung im Ansatz, verfehlt aber Differenzierung - ein Prinzip ersetzt das andere nicht, und die Vorlesung führt beide am selben Beispiel zusammen"
+      ],
+      "muster": "Für die Einschätzung der Kollegin spricht zweierlei. Erstens ist Handlungsorientierung tatsächlich berührt: Die Schülerinnen und Schüler handeln selbst, statt nur zuzusehen, und eigenes Tun ist der Kern dieses Prinzips. Zweitens gibt ein gemeinsamer Gegenstand mit gleichem Ablauf Struktur und Sicherheit, was dem Prinzip der Strukturierung entspricht. Dagegen spricht ebenfalls zweierlei. Erstens fehlt die Differenzierung vollständig: Weder Umfang noch Komplexitätsniveau sind je Schülerin und Schüler verändert, obwohl die Vorlesung genau am Strom-Beispiel vorführt, wie das ginge - Pia unter Assistenz, Ali eigenständig, Tina mit der Zitronen-Variante. Zweitens greift ohne Differenzierung auch die Lebensnähe zu kurz, weil der Zugang nicht an die individuellen Aneignungsebenen anschließt. Mein Urteil: Die Sequenz erfüllt Handlungsorientierung im Ansatz, verfehlt aber die Differenzierung. Ein Prinzip ersetzt das andere nicht, und dass die Vorlesung beide am selben Beispiel zusammenführt, zeigt, dass sie zusammengehören.",
+      "tipp": "Zwei dafür, zwei dagegen, dann ein eigenes Urteil. Frag dich bei jedem Prinzip: Wo sehe ich es in der Sequenz - und wo müsste ich es sehen und sehe es nicht?",
+      "quelle": "folie-prinzipien-12",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "prinzipien-ke4"
+      ],
+      "core": false
     }
   ]
 }

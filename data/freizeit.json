@@ -902,6 +902,42 @@
         "freizeit-ke3"
       ],
       "core": true
+    },
+    {
+      "id": "fr-ke3-mc-2",
+      "unterthema": "Bildungsauftrag & Recht",
+      "afb": 2,
+      "frage": "Sie sollen begründen, dass Freizeit im Förderschwerpunkt geistige Entwicklung unterrichtet wird. Die Vorlesung liefert dafür zwei verschiedene Arten von Beleg. Welche Zuordnung stimmt?",
+      "optionen": [
+        {
+          "text": "Der Rahmenlehrplan belegt den curricularen Auftrag, die UN-Behindertenrechtskonvention den rechtlichen Anspruch",
+          "korrekt": true,
+          "erklaerung": "Richtig: Der Rahmenlehrplan von 2011 führt Freizeit als Handlungsfeld im Leitthema L1 „Der Mensch im Alltag\" - das ist der Bildungsauftrag. Artikel 30 der UN-BRK begründet daneben das Recht auf Teilhabe. Zwei Ebenen, zwei Belege. (Folien 20 und 28)"
+        },
+        {
+          "text": "Beide belegen dasselbe, die UN-BRK ist nur die ältere Fassung des Rahmenlehrplans",
+          "korrekt": false,
+          "erklaerung": "Falsch: Das sind zwei verschiedene Dokumentarten - ein Curriculum eines Bundeslandes und eine Menschenrechtskonvention. Sie stehen nebeneinander, nicht auseinander hervor. (Folien 20 und 28)"
+        },
+        {
+          "text": "Der Rahmenlehrplan begründet das Recht, die UN-BRK den Unterrichtsinhalt",
+          "korrekt": false,
+          "erklaerung": "Falsch: genau umgekehrt. Rechte stehen in der Konvention, Unterrichtsinhalte im Rahmenlehrplan. (Folien 20 und 28)"
+        },
+        {
+          "text": "Nur die UN-BRK trägt, weil ein Rahmenlehrplan rechtlich nicht bindet",
+          "korrekt": false,
+          "erklaerung": "Falsch: Die Vorlesung setzt den Rahmenlehrplan gerade als Beleg dafür ein, dass Freizeitbildung kein freiwilliges Extra einzelner Schulen ist. (Folie 20)"
+        }
+      ],
+      "erklaerung": "Zwei Belegarten für denselben Auftrag: der Rahmenlehrplan (2011, S. 23) als curriculare Verankerung im Leitthema L1, Artikel 30 UN-BRK als Menschenrecht auf Teilhabe. In der Klausur trägt eine Begründung deutlich weiter, wenn beide Ebenen vorkommen.",
+      "quelle": "folie-freizeit-28",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "freizeit-ke3"
+      ],
+      "core": true
     }
   ],
   "frei": [
@@ -3236,6 +3272,30 @@
         "freizeit-ke3"
       ],
       "core": true
+    },
+    {
+      "id": "fr-ke3-3",
+      "unterthema": "Bildungsauftrag & Recht",
+      "afb": 3,
+      "frage": "Eine Kollegin sagt in der Teamsitzung: „Freizeit ist Privatsache der Familien. Wir haben genug damit zu tun, Kulturtechniken zu vermitteln - dafür ist Schule da.\" Beurteilen Sie diese Position. Führen Sie zwei Punkte dafür und zwei dagegen an und kommen Sie zu einem begründeten Urteil.",
+      "stichpunkte": [
+        "Dafür 1: Unterrichtszeit ist begrenzt, und die Kulturtechniken haben im Schulauftrag ebenfalls einen festen Platz - jede Stunde Freizeitbildung fehlt woanders",
+        "Dafür 2: Freizeit ist definitionsgemäß der selbstbestimmte Teil der Lebenszeit - ein Eingriff der Schule kann diesen Charakter gerade zerstören (das ist eines der Spannungsfelder der Freizeitbildung)",
+        "Dagegen 1: der Rahmenlehrplan von 2011 führt Freizeit ausdrücklich als Handlungsfeld im Leitthema L1 „Der Mensch im Alltag\" - es ist damit kein privates Extra, sondern Bildungsauftrag",
+        "Dagegen 2: Artikel 30 der UN-Behindertenrechtskonvention begründet Freizeitteilhabe als Recht, nicht als Wunsch - gleichberechtigte Teilhabe am kulturellen Leben und Zugang zu Freizeit-, Sport- und Erholungsangeboten",
+        "Dagegen 3 (optional): wer nichts kennengelernt hat, kann nicht wählen - Selbstbestimmung muss laut Vorlesung bereits in der Schulzeit gezielt gefördert werden, sonst bleibt die Wahlfreiheit theoretisch",
+        "Dagegen 4 (optional): der Rahmenlehrplan sieht Freizeitgestaltung bei älteren Schüler:innen sogar als eigenes Unterrichtsangebot mit Blick auf die zukünftige Lebenssituation vor",
+        "Fazit: eigenes Urteil begründen, etwa: der Einwand trifft die Gefahr der Verschulung, nicht den Auftrag selbst - die Aufgabe der Schule ist es, Möglichkeiten zu eröffnen und Entscheiden zu üben, nicht die Freizeit zu verplanen"
+      ],
+      "muster": "Für die Position der Kollegin spricht zweierlei. Erstens ist Unterrichtszeit begrenzt, und die Kulturtechniken haben im Schulauftrag einen festen Platz; jede Stunde Freizeitbildung fehlt an anderer Stelle. Zweitens ist Freizeit definitionsgemäß der selbstbestimmte Teil der Lebenszeit - greift die Schule zu stark hinein, zerstört sie genau den Charakter, um den es geht. Die Vorlesung führt dieses Spannungsfeld selbst auf. Dagegen spricht allerdings mehr. Erstens führt der Rahmenlehrplan von 2011 Freizeit ausdrücklich als Handlungsfeld im Leitthema L1 „Der Mensch im Alltag\"; sie ist damit kein privates Extra, sondern Bildungsauftrag. Zweitens begründet Artikel 30 der UN-Behindertenrechtskonvention Freizeitteilhabe als Recht: gleichberechtigte Teilhabe am kulturellen Leben und Zugang zu Freizeit-, Sport- und Erholungsangeboten. Drittens kann niemand wählen, wer nichts kennengelernt hat - Selbstbestimmung muss laut Vorlesung bereits in der Schulzeit gezielt gefördert werden. Mein Urteil: Der Einwand trifft eine echte Gefahr, nämlich die Verschulung der Freizeit, aber nicht den Auftrag selbst. Aufgabe der Schule ist es, Möglichkeiten zu eröffnen und das Entscheiden zu üben, nicht die Freizeit der Schülerinnen und Schüler zu verplanen.",
+      "tipp": "Zwei dafür, zwei dagegen, dann dein Urteil. Die stärksten Gegenargumente sind die zwei Belege: der Rahmenlehrplan (Auftrag) und Artikel 30 UN-BRK (Recht).",
+      "quelle": "folie-freizeit-20",
+      "quelleSicherheit": "geprueft",
+      "generiert": true,
+      "ke": [
+        "freizeit-ke3"
+      ],
+      "core": false
     }
   ]
 }

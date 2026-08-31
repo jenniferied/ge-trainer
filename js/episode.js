@@ -119,6 +119,37 @@ export function folgeOffen(ep) {
   });
 }
 
+/* WELCHE FOLGE EINE SITZUNG SPIELT (31.08.2026, Jennifer: "die reihenfolge
+   danach lockern"). Bis dahin war die Folge ans Tagesthema GEKETTET: wer ein
+   Thema waehlte, dessen Folge noch nicht dran war, bekam gar keine Geschichte.
+   Gerechnet am 31.08. hiess das acht Folgen in acht Sitzungen - aber nur, wenn
+   Rose jede Sitzung genau das Thema traf, dessen Folge als naechste offen war.
+
+   GELOCKERT WIRD DIE KOPPLUNG, NICHT DIE REIHENFOLGE. "Das erste Jahr" ist eine
+   fortlaufende Geschichte und bleibt es (Jennifer, 25.08.: "nur in der
+   reihenfolge anklicken"). Neu ist nur: passt die eigene Folge des Themas noch
+   nicht, laeuft die naechste offene statt gar keiner. Damit bringt jede Sitzung
+   die Geschichte um eine Folge voran, egal welches Thema Rose waehlt.
+
+   Die eigene Folge hat weiterhin Vorrang - Geschichte und Stoff der Sitzung
+   passen dann zusammen, und genau dafuer ist das Intro da. */
+export function folgeFuerSitzung(themaId) {
+  if (!DATEN) return null;
+  var eigen = episodeFuer(themaId);
+  if (eigen && !gelesen(eigen.id) && folgeOffen(eigen)) return eigen;
+  return naechsteOffeneFolge();
+}
+
+/* Die kleinste ungelesene Nummer - nach der Reihenfolge-Regel ist genau die
+   offen, alle groesseren warten auf sie. */
+export function naechsteOffeneFolge() {
+  if (!DATEN) return null;
+  var offen = DATEN.episoden
+    .filter(function (e) { return !gelesen(e.id) && folgeOffen(e); })
+    .sort(function (a, b) { return a.nummer - b.nummer; });
+  return offen[0] || null;
+}
+
 /* Was zuerst dran ist, wenn eine Folge noch zu ist - fuer den Hinweis an der
    Karte. Der Prolog schlaegt alles, danach die kleinste ungelesene Nummer. */
 export function davor(ep) {
@@ -335,7 +366,17 @@ function bloeckeAbspielen(ep, thema, hooks, lauf, onFertig) {
    Blasen, keine Fragen - die Schule soll vor der ersten Folge da sein). */
 export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
   var ep = episodeFuer(thema.id);
+  /* Ist die eigene Folge noch nicht dran (oder hat das Thema gar keine), tritt
+     die naechste offene an ihre Stelle - siehe folgeFuerSitzung. Eine SCHON
+     GELESENE eigene Folge bleibt stehen: das ist der Nochmal-Lesen-Weg aus dem
+     Material-Schirm, und der meint ausdruecklich diese eine Folge. */
+  if (!ep || (!gelesen(ep.id) && !folgeOffen(ep))) ep = folgeFuerSitzung(thema.id);
   if (!ep) return weiter();
+  /* Ab hier zaehlt das Thema DER FOLGE, nicht das gewaehlte: bloeckeAbspielen
+     loest die qids gegen thema.mc/thema.frei auf, und eine fremde Folge faende
+     im Tagesthema keine ihrer Fragen. Farbe und Beleg gehoeren ebenfalls zur
+     Folge. */
+  var epThema = themaVon(themen, ep.thema) || thema;
   /* IST DIE FOLGE NOCH NICHT DRAN, WIRD SIE STILL UEBERSPRUNGEN (25.08.2026,
      mit der Reihenfolge-Regel dazugekommen) - das Themen-Lernen laeuft dann
      genau so weiter wie bei einem Thema ganz ohne Folge.
@@ -346,17 +387,15 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
      gestellt hat - und ein Grund mehr, den Einstieg wieder zuzumachen. Wo
      die Reihenfolge sichtbar sein MUSS, ist die Episoden-Uebersicht, und
      dort steht sie auch. */
-  if (!istGelesen(ep) && !folgeOffen(ep)) return weiter();
-
   leeren();
-  setzeFarbe(app, thema.farbe);
+  setzeFarbe(app, epThema.farbe);
   var z = el("button", "zurueck", "← Anderes Thema");
   z.addEventListener("click", zurueck);
   app.appendChild(z);
 
   var kopf = el("div", "kopf");
   kopf.appendChild(el("h1", null, "📖 Folge " + ep.nummer + ": " + ep.titel));
-  kopf.appendChild(el("div", "untertitel", thema.titel + " · die Geschichte führt dich rein, dann kommt das Material."));
+  kopf.appendChild(el("div", "untertitel", epThema.titel + " · die Geschichte führt dich rein, dann kommt das Material."));
   app.appendChild(kopf);
 
   app.appendChild(banner(hooks));
@@ -377,7 +416,7 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
     fertig.appendChild(el("div", "episode-abspann-titel",
       "Folge gelesen – die Fragen zählen ganz normal für deinen Lernstand."));
     if (ep.beleg) fertig.appendChild(belegZeile("div", "Woher der Stoff stammt: " + ep.beleg,
-      thema.id, "episode-beleg"));
+      epThema.id, "episode-beleg"));
     lauf.appendChild(fertig);
     skip.remove();
     var reihe = el("div", "knopf-reihe");
@@ -393,10 +432,10 @@ export function spieleAlsIntro(thema, themen, hooks, weiter, zurueck) {
     var prolog = DATEN.serie.prolog;
     bloeckeAbspielen({ id: "ep-prolog", bloecke: prolog.bloecke }, null, hooks, lauf, function () {
       lauf.appendChild(el("div", "episode-szene", "— und jetzt zu deinem Thema —"));
-      bloeckeAbspielen(ep, thema, hooks, lauf, fertigMitFolge);
+      bloeckeAbspielen(ep, epThema, hooks, lauf, fertigMitFolge);
     });
   } else {
-    bloeckeAbspielen(ep, thema, hooks, lauf, fertigMitFolge);
+    bloeckeAbspielen(ep, epThema, hooks, lauf, fertigMitFolge);
   }
 }
 

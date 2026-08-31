@@ -54,7 +54,7 @@ import { bausteinBudget, faellig, heuteTag, lerntage, modusFuer, reifeStand, STU
    Sitzung, kein eigenes Spiel - Jennifer woertlich: "themenlernen soll
    interessant fuer sie werden, das ist der main progressive hebel". Das Modul
    importiert seinerseits kein themen-lernen (Zyklus-frei). */
-import { episodeFuer, istGelesen, spieleAlsIntro, folgeOffen, prologOffen } from "./episode.js";
+import { episodeFuer, istGelesen, spieleAlsIntro, folgeOffen, prologOffen, folgeFuerSitzung } from "./episode.js";
 
 /* Wie viel NEUES aus dem Tagesthema hoechstens drankommt. Der Rest der
    Sitzung gehoert dem Stapel - Neues ist der kleinere Teil des Lernens. */
@@ -778,8 +778,13 @@ export function zeigeThemenLernen(themen, hooks) {
      Ueberspringen ist eine leise Zeile und loggt nichts - dann kommt die
      Folge beim naechsten Sitzungsstart wieder. */
   function material(thema) {
-    var ep = episodeFuer(thema.id);
-    if (ep && !istGelesen(ep)) {
+    /* Gefragt wird nicht mehr "hat DIESES Thema eine ungelesene Folge", sondern
+       "gibt es ueberhaupt eine, die jetzt dran ist" (folgeFuerSitzung, seit dem
+       31.08.2026). Sonst blieb die Geschichte genau dann aus, wenn Rose ein
+       Thema waehlte, dessen eigene Folge noch wartet - und das war bei sieben
+       von acht Themen der Fall. Welche Folge es wird, entscheidet episode.js;
+       die eigene des Themas hat dort Vorrang. */
+    if (folgeFuerSitzung(thema.id)) {
       return spieleAlsIntro(thema, themen, hooks,
         function () { materialSchirm(thema); },
         function () { start(); });
