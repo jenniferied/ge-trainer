@@ -31,6 +31,13 @@ import * as Foto from "./foto.js";
 // llm.js haengt nur an config.js).
 import "./llm.js";
 
+/* Die Kompetenz-Zeile ("🎯 Dafür steht die Aufgabe") lebt in main.js neben
+   KOMPETENZEN, und main.js importiert dieses Modul - ein Rueckimport waere
+   ein Zyklus. main.js reicht die Funktion deshalb beim Boot herein
+   (nutzeKompetenzZeile). Fehlt sie, fehlt nur die Zeile. */
+var kompetenzZeileFn = null;
+export function nutzeKompetenzZeile(fn) { kompetenzZeileFn = fn; }
+
 /* ---------- Abhaengigkeiten ----------
    fonts/fonts.css, css/papier.css und vendor/rough-notation.iife.js stehen als
    statische Tags in index.html (das IIFE haengt an window.RoughNotation).
@@ -1551,6 +1558,15 @@ function korrekturBlatt(a) {
   if (a.punkte !== null && a.punkte >= a.max * 0.8) {
     var st = stickerEl("good", "aufgeklebt");
     if (st) b.appendChild(st);
+  }
+
+  /* Wofuer die Aufgabe steht - dieselbe Zeile wie nach jeder Aufloesung im
+     Ueben (Rose, 31.08.2026: alles soll kompetenzfokussiert sein). Erst hier
+     in der Korrektur, nie auf dem Bogen: vorher wuerde die Erwartung die
+     verlangte Stufe verraten. */
+  if (kompetenzZeileFn && f && t) {
+    var kompetenz = kompetenzZeileFn(f, t);
+    if (kompetenz) b.appendChild(kompetenz);
   }
 
   // KI-Korrektur ist optional: fehlt llm.js oder liefert es null, bleibt der

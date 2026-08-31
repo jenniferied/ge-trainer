@@ -114,7 +114,7 @@ function kopf(titel, unter, zurueckText, zurueck) {
   app.appendChild(k);
 }
 
-export function zeigeKlausurfrage(themen, hooks) {
+export function zeigeKlausurfrage(themen, hooks, opts) {
   var pool = aufgabenPool(themen);
   if (!pool.length) return hooks.home();
   var zuletzt = null;
@@ -590,5 +590,14 @@ export function zeigeKlausurfrage(themen, hooks) {
     });
   }
 
+  /* Direkteinstieg von der Startseite (31.08.2026): eine heute angefangene
+     Frage wird nicht neu gewuerfelt, sondern genau dort wieder aufgenommen.
+     Der Aufdroesel-Schritt laeuft dabei erneut - er ist kurz, und die
+     Wiederholung schadet der Sache nicht. Fehlt die Frage inzwischen im
+     Korpus, faellt der Einstieg still auf die normale Auswahl zurueck. */
+  if (opts && opts.qid) {
+    var direkt = pool.filter(function (i) { return i.f.id === opts.qid; })[0];
+    if (direkt) { aufdroeseln(direkt, false); return; }
+  }
   start();
 }

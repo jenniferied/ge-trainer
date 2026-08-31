@@ -147,7 +147,7 @@ function zeige(route, arg) {
        und wuerde sonst an die vorige Sitzung anbauen. Der Aufdroesel-Schritt
        davor schreibt bewusst gar nichts ins Log (Begruendung im Kopf der
        Datei), ein Durchlauf ergibt also genau einen Eintrag. */
-    case "klausurfrage": return Klausurfrage.zeigeKlausurfrage(themen, HOOKS);
+    case "klausurfrage": return Klausurfrage.zeigeKlausurfrage(themen, HOOKS, arg);
     /* Die drei Neuen vom 18.08.2026. Themen-Lernen und Fachbegriffe loggen
        ueber Spiele.logSpiel (sid "spiel"), das Glossar ist reines Nachschlagen.
        Der Router-Fall heisst seit dem 19.08. "themenlernen"; ein Legacy-Name
@@ -875,6 +875,36 @@ function mkChatAdapter(tz, stufe) {
   };
 }
 
+/* Eine heute angefangene, nicht abgeschlossene Klausurfrage - erkennbar an
+   ihren Aufdroesel-Schritten (teilschritt: true, modus "klausurfrage"), auf
+   die kein Schreib-Schritt derselben Frage folgt. Anlass 31.08.2026: Rose
+   sass eine Stunde an einer Klausurfrage, und der Tagesbalken stand still -
+   was angefangen ist, soll sichtbar sein und sich fortsetzen lassen. Liest
+   die teilschritt-Eintraege bewusst MIT; das ist kein dritter Fragen-Zaehler
+   im Sinne von logAntwort (gezaehlt wird hier nichts, gesucht wird die eine
+   offene Frage). Existiert die Frage nicht mehr im Korpus, kommt null. */
+function offeneKlausurfrage() {
+  var beginn = new Date(); beginn.setHours(0, 0, 0, 0);
+  var log = state.antwortLog || [], offen = {};
+  for (var i = 0; i < log.length; i++) {
+    var e = log[i];
+    if (!e || e.ts < beginn.getTime()) continue;
+    if (e.modus === "klausurfrage" && e.teilschritt === true) {
+      offen[String(e.qid || "").replace(/^kf[ar]-/, "")] = e.ts;
+    } else if (e.art === "klausurfrage" && e.teilschritt !== true) {
+      delete offen[e.qid];
+    }
+  }
+  var qid = null;
+  Object.keys(offen).forEach(function (q) { if (!qid || offen[q] > offen[qid]) qid = q; });
+  if (!qid) return null;
+  for (var t = 0; t < themen.length; t++) {
+    var f = (themen[t].frei || []).filter(function (x) { return x.id === qid; })[0];
+    if (f) return { thema: themen[t], f: f };
+  }
+  return null;
+}
+
 function countdownKarte(tz) {
   var karte = el("div", "karte countdown glimmer");
 
@@ -934,6 +964,18 @@ function countdownKarte(tz) {
     karte.appendChild(kopf);
     karte.appendChild(zonenBalken(tz));
     karte.appendChild(el("div", "countdown-meta", tagesSatz(tz)));
+
+    /* Angefangenes sichtbar machen (31.08.2026): der Balken zaehlt eine
+       Klausurfrage erst mit dem Schreib-Schritt - bis dahin sagt diese Zeile,
+       dass die Arbeit trotzdem da ist, und traegt den Weg zurueck hinein. */
+    var offenKf = offeneKlausurfrage();
+    if (offenKf) {
+      var kfZeile = el("div", "countdown-meta");
+      var kfKnopf = el("button", "knopf sekundaer", "✍️ Deine Klausurfrage von vorhin wartet – weitermachen");
+      kfKnopf.addEventListener("click", function () { zeige("klausurfrage", { qid: offenKf.f.id }); });
+      kfZeile.appendChild(kfKnopf);
+      karte.appendChild(kfZeile);
+    }
   }
 
   var g = gesamtStand();
@@ -3594,6 +3636,12 @@ function kompetenzZeile(f, thema) {
   });
   return zeile;
 }
+
+/* Auch die Klausur-Simulation zeigt die Zeile in ihrer Korrektur (Rose,
+   31.08.2026) - klausur.js kann sie nicht importieren (Zyklus), also wird
+   sie hereingereicht. Registrierung beim Modul-Laden reicht: die Funktion
+   liest KOMPETENZEN erst beim Aufruf. */
+Klausur.nutzeKompetenzZeile(kompetenzZeile);
 
 function freiKarte(thema, f, opts) {
   var o = opts || {};
