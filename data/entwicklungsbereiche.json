@@ -1127,7 +1127,7 @@
         "entwicklungsbereiche-ke3",
         "entwicklungsbereiche-ke4"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "eb-f-4",
@@ -3011,7 +3011,7 @@
       "ke": [
         "entwicklungsbereiche-ke2"
       ],
-      "core": false
+      "core": true
     }
   ]
 }

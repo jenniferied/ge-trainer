@@ -1254,7 +1254,7 @@
       "ke": [
         "unterrichtsformen-ke3"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "uf-f-4",
@@ -2724,7 +2724,7 @@
         "unterrichtsformen-ke1",
         "unterrichtsformen-ke2"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "uf-afb3-1",

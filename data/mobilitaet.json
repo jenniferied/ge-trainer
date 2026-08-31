@@ -1356,7 +1356,7 @@
       "ke": [
         "mobilitaet-ke2"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "mo-f-5",
@@ -1598,7 +1598,7 @@
         "mobilitaet-ke1",
         "mobilitaet-ke3"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "mo-gen-f-2",
@@ -2804,7 +2804,7 @@
       "ke": [
         "mobilitaet-ke4"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "mo-afb3-1",

@@ -2552,7 +2552,7 @@
       "ke": [
         "konzeptionen-ke5"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "ko-afb2-2",
@@ -2775,7 +2775,7 @@
         "konzeptionen-ke3",
         "konzeptionen-ke4"
       ],
-      "core": false
+      "core": true
     },
     {
       "id": "ko-afb3-2",
