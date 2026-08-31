@@ -440,6 +440,21 @@ export function levelVon(thema) {
   return Math.min(n + 1, MAX_LEVEL);
 }
 
+/* Durchgaenge eines Themas: wie oft es komplett durch war, ungedeckelt.
+   Jennifers Drei-Durchgaenge-Regel (31.08.2026): "es ist erst done wenn 3x
+   geuebt wurde" - passt zu Roses Wunsch vom selben Abend, "do the
+   wiederholungen over and over until its easier". levelVon() steuert weiter
+   die Gates und deckelt bei MAX_LEVEL; diese Zahl hier ist die ANZEIGE:
+   x von 3, und fertig heisst drei. */
+export var DURCH_ZIEL = 3;
+export function durchgaengeVon(thema) {
+  var n = 0;
+  state.antwortLog.forEach(function (a) {
+    if (istAbschluss(a) && a.thema === thema.id) n++;
+  });
+  return n;
+}
+
 /* Wie viele Antworten je Thema im Log liegen. Gezaehlt wird JEDE Antwort mit
    Themenbezug - Ankreuzfragen, freie Aufgaben, Spiele -, denn geuebt ist
    geuebt. Kein neues Sync-Feld: die Zahlen stehen im antwortLog.
@@ -808,13 +823,22 @@ export function zeigeThemenLernen(themen, hooks) {
         && (antworten[duennstes.id] || 0) < hoechste)) duennstes = null;
     sortiert.forEach(function (t) {
       var zu = !!gesperrt[t.id];
-      var lvl = levelVon(t);
+      var durch = durchgaengeVon(t);
+      var fertig = durch >= DURCH_ZIEL;
       var istStory = !!story && !zu && t.id === story.thema.id;
       var b = el("button", "kachel" + (zu ? " tl-gespielt" : " glimmer") + (istStory ? " tl-story" : ""));
       setzeFarbe(b, t.farbe);
-      b.appendChild(el("span", "kachel-icon", zu ? "✓" : istStory ? "📖" : "📚"));
+      /* Das Haekchen ist seit dem 31.08. verdient, nicht geliehen: es steht
+         fuer drei komplette Durchgaenge (Jennifers Drei-Durchgaenge-Regel).
+         Ein rundengesperrtes Thema unter drei zeigt 🔁 - schon dran gewesen,
+         kommt wieder. */
+      b.appendChild(el("span", "kachel-icon", fertig ? "✓" : zu ? "🔁" : istStory ? "📖" : "📚"));
       b.appendChild(el("b", null, t.titel));
-      b.appendChild(el("span", "tl-level", "Level " + lvl));
+      var fortschritt = el("span", "tl-level", Math.min(durch, DURCH_ZIEL) + "/" + DURCH_ZIEL + " geübt");
+      fortschritt.title = fertig
+        ? "Dreimal komplett durchgearbeitet – dieses Thema sitzt."
+        : "Zählt komplette Durchgänge dieses Themas. Fertig ist es nach dreien.";
+      b.appendChild(fortschritt);
       b.appendChild(el("span", "kachel-klein", zu ? "in dieser Runde schon dran" : t.vorlesung));
       /* Die Story-Zeile schlaegt die Duenn-Zeile: es soll bei EINER Auskunft
          je Kachel bleiben. Beides untereinander waere die Kachel, die am
@@ -1536,6 +1560,14 @@ export function zeigeThemenLernen(themen, hooks) {
       : "Reingeschaut" + (gesamt ? " – " + punkte + " von " + gesamt + " Sachen saßen" : "")
         + ". Das zählt noch nicht als Runde: dafür braucht es " + ABSCHLUSS_MIN
         + " Sachen. Der Rest liegt bereit, du kannst jederzeit weitermachen."));
+    /* Der Stand nach der Drei-Durchgaenge-Regel - der Abschluss oben ist
+       schon geloggt, die Zahl traegt diesen Durchgang also mit. */
+    if (zaehlt !== false) {
+      var durchJetzt = durchgaengeVon(thema);
+      karte.appendChild(el("div", "satz", durchJetzt >= DURCH_ZIEL
+        ? "✓ " + Math.min(durchJetzt, DURCH_ZIEL) + "/" + DURCH_ZIEL + " – dieses Thema ist dreimal komplett durchgearbeitet. Es sitzt."
+        : "Durchgang " + durchJetzt + " von " + DURCH_ZIEL + " für dieses Thema – fertig heißt dreimal geübt."));
+    }
     if (nochmalZahl) {
       karte.appendChild(el("div", "satz",
         nochmalZahl === 1 ? "Einmal bist du nochmal drangegangen – genau das ist der Teil, der hängen bleibt."
