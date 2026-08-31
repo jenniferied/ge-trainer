@@ -2032,13 +2032,19 @@ function tagesAufgaben() {
 
   var liste = [{
     key: "tl", icon: "📚", titel: "Themen-Lernen", kurz: "Themen-Lernen",
-    klein: tlOffen
+    /* "x von 3 heute" vorneweg (Jennifer, 31.08.2026): der Tag zielt auf DREI
+       Themen - so ist der ganze Stapel taeglich einmal durch, und es passt
+       zur Drei-Durchgaenge-Regel der Kacheln. Der gruene Punkt (erledigt)
+       kommt deshalb erst beim dritten Thema, nicht mehr beim ersten. Die
+       blase bleibt die nackte Zahl - geteilt-tages-hub.js baut daraus selbst
+       einen Satz und zaehlt ueber drei hinaus einfach weiter. */
+    klein: Math.min(tlHeute, 3) + " von 3 Themen heute · " + (tlOffen
       ? tlOffen.titel + " liegt angefangen da"
       : folge
         ? "📖 " + folge + " wartet · dann ein Thema erarbeiten und prüfen"
-        : "ein Thema · erarbeiten, dann prüfen · die längste Runde, pausierbar",
+        : "ein Thema erarbeiten, dann prüfen · pausierbar"),
     blase: tlHeute,
-    erledigt: tlHeute > 0, geh: function () { zeige("themenlernen"); }
+    erledigt: tlHeute >= 3, geh: function () { zeige("themenlernen"); }
   }, {
     key: "op", icon: "🎯", titel: "Signalwörter", kurz: "Signalwörter",
     klein: "12 Aufgaben · beide Fragerichtungen",
