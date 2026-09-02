@@ -81,6 +81,36 @@ function tagVon(ts) { var d = new Date(ts); d.setHours(0, 0, 0, 0); return d.get
    main.js zeigt oben den Countdown und den heutigen Uebungsstand. Die Zahlen
    kommen von hier, damit die Tages-Logik an EINER Stelle steht (tagVon). */
 
+/* ---------- Was eine Antwort im Tagespensum WIEGT (Jennifer, 02.09.2026) ----------
+   Rose: ihr Einsatz bei den schriftlichen Aufgaben soll gut gewertet werden.
+   Eine offene Aufgabe ist keine MC-Karte - sie kostet Nachdenken, Schreiben und
+   den ehrlichen Abgleich hinterher, und stand trotzdem mit derselben 1 im
+   Tagespensum wie ein Tipp auf eine von vier Optionen. Ab jetzt zaehlt sie nach
+   ihrem Anforderungsbereich:
+
+     AFB I = 2 · AFB II = 3 · AFB III = 4
+
+   Das sind GESAMTWERTE, keine Zuschlaege - wer hier "+2" liest und addiert,
+   verdoppelt Roses Bar. Alles andere (MC, Spiele, Klausur) bleibt bei 1, und
+   eine offene Aufgabe ohne afb bleibt es auch: geraten wird hier nichts.
+
+   AB HEUTE, NICHT RUECKWIRKEND (Jennifers Ansage). Ohne den Datums-Riegel
+   waeren Roses alte Tage ueber Nacht groesser geworden - genau der Fehler,
+   gegen den tzHist geschrieben wurde ("always true to what was true on the
+   day", 21.08.). Der 02.09. ist ein sauberer Schnitt: an ihm liegt im GE-Log
+   noch nichts.
+
+   Die Groessenordnung ist nachgerechnet und bewusst klein: Rose bearbeitet 0-8
+   offene Aufgaben am Tag (01.09.: acht, das war der Ausreisser). Der Balken
+   waechst dadurch um wenige Prozent - es ist eine Anerkennung, keine Abkuerzung. */
+var FREI_GEWICHT_AB = "2026-09-02";
+var FREI_GEWICHT = { 1: 2, 2: 3, 3: 4 };
+function gewichtVon(a) {
+  if (a.modus !== "frei") return 1;
+  if (isoTag(a.ts) < FREI_GEWICHT_AB) return 1;
+  return FREI_GEWICHT[a.afb] || 1;
+}
+
 /* Aktivitaet je Kalendertag - Grundlage fuer Tagesziel-Bar UND Datumsuebersicht,
    damit beide dieselbe Zahl zeigen. Gezaehlt wird ALLES, auch die Spiele (eine
    kurze Runde ist genauso Uebung wie eine lange); nur die Sofort-Wiederholung
@@ -100,10 +130,14 @@ export function aktivitaetProTag(logArg) {
     if (a.teilschritt === true) continue;
     var t = tagVon(a.ts);
     var e = tage[t] || (tage[t] = { n: 0, gut: 0 });
-    e.n++;
+    // Gewicht statt 1 (gewichtVon oben). gut zaehlt mit DEMSELBEN Gewicht -
+    // sonst faellt die "davon gut"-Linie an jedem Tag mit offenen Aufgaben ab,
+    // ohne dass Rose irgendetwas schlechter gemacht haette.
+    var g = gewichtVon(a);
+    e.n += g;
     var w = wertVon(a);
     if (w === undefined) w = a.richtig ? 1 : 0;   // Spiele: nur richtig/falsch
-    if (w >= 1) e.gut++;
+    if (w >= 1) e.gut += g;
   }
   return tage;
 }
@@ -582,7 +616,30 @@ var TZ_MIN = 15, TZ_MAX = 60;
    Als Dauerzustand taugt das nicht: das Pensum ist eine Aussage darueber, was
    bis zum 10.09. noch zu tun ist, keine Motivations-Schraube. Gleiche
    Begruendung wie beim Einmal-Schalter NACHHOLEN in themen-lernen.js. */
-var FOKUS_VON = "2026-08-20", FOKUS_BIS = "2026-08-26", FOKUS_FAKTOR = 1.5;
+/* EINE LISTE STATT EINES PAARES (02.09.2026). Bis dahin standen von/bis/faktor
+   als drei Konstanten da, und die naechste Fokus-Phase haette sie
+   ueberschrieben - womit der 20.08. still neu bewertet worden waere (er haengt
+   fuer immer an diesen Zahlen, siehe oben). Jedes Fenster bekommt jetzt eine
+   eigene Zeile, alte Zeilen bleiben stehen. Ueberlappen duerfen sie nicht; das
+   erste Treffer-Fenster gewinnt.
+
+   ZWEITES FENSTER (Jennifer, 02.09.2026): "ab morgen das ge limit wieder hoch
+   bis zur klausur (heute so lassen)". Die Fokus-Woche war am 26.08. abgelaufen,
+   und mit ihr ist Roses GE-Pensum von 90 auf 60 zurueckgefallen (nachgesehen in
+   ihrem tzHist) - genau in der Woche vor der Klausur. Der Endspurt holt das
+   zurueck: 03.09. bis 09.09., derselbe Faktor 1,5, also wieder rund 90.
+
+   Warum der 03.09. und nicht heute: der Plan des 02.09. ist auf Roses Geraet
+   schon eingefroren. Eine Erhoehung wuerde ihr mitten am Tag das Ziel
+   verschieben - das Gegenteil dessen, wofuer das Einfrieren da ist.
+
+   Warum das Fenster am 09.09. endet: der 10.09. ist der Klausurtag, und den
+   regelt planRechnen selbst (tage === 0 -> TZ_MIN, und die Startseite zeigt gar
+   keinen Balken mehr). Ein Faktor darueber waere wirkungslos und irrefuehrend. */
+var FOKUS_FENSTER = [
+  { von: "2026-08-20", bis: "2026-08-26", faktor: 1.5 },
+  { von: "2026-09-03", bis: "2026-09-09", faktor: 1.5 }
+];
 
 function isoTag(ts) {
   var d = new Date(ts), m = d.getMonth() + 1, t = d.getDate();
@@ -590,7 +647,11 @@ function isoTag(ts) {
 }
 function fokusFaktor(ts) {
   var tag = isoTag(ts);
-  return tag >= FOKUS_VON && tag <= FOKUS_BIS ? FOKUS_FAKTOR : 1;
+  for (var i = 0; i < FOKUS_FENSTER.length; i++) {
+    var f = FOKUS_FENSTER[i];
+    if (tag >= f.von && tag <= f.bis) return f.faktor;
+  }
+  return 1;
 }
 
 /* ---------- Die Schwellen eines KALENDERTAGS (Jennifer, 21.08.2026) ----------

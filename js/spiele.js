@@ -151,6 +151,34 @@ function zieh(arr, n, gewFn) {
     .slice(0, n).map(function (y) { return y.x; });
 }
 
+/* ---------- "Nicht schon wieder dieselben" (Rose, 02.09.2026) ----------
+   Roses Beobachtung: "es wiederholt sich immer wieder am selben Tag und aendert
+   sich dann am naechsten Tag." Das stimmt und hat einen Grund - paarGewicht()
+   und fehlerZaehler() gewichten nach Koennen, und solange sich das Koennen nicht
+   aendert, faellt dieselbe Auswahl. Der Zufall in zieh() mischt nur die
+   Reihenfolge, nicht den Topf.
+
+   Die Loesung ist ein FAKTOR, kein Filter: was gerade dran war, bekommt Gewicht
+   x 0,15 und rutscht damit fast immer hinter alles andere. Ein harter Ausschluss
+   waere hier falsch - die Begriffe-Kategorien haben teils nur vier oder fuenf
+   Paare bei BG_RUNDE = 5, und eine Runde, die dann leer bleibt oder abbricht,
+   waere schlimmer als eine Wiederholung. Bei kleinem Topf kommen die Alten also
+   weiter, nur eben zuletzt.
+
+   Gemerkt wird genau EINE Runde je Spiel, und zwar SITZUNGSLOKAL: kein
+   localStorage, kein snapshot(), kein signatur() (sync.js). Das ist Absicht -
+   es ist eine Anzeige-Laune, kein Lernstand, und ein neuer App-Start darf
+   ruhig wieder von vorn ziehen.
+
+   Die "die gleichen nochmal"-Runde meldet hier NICHTS: sie soll ja dieselben
+   Aufgaben zeigen. Nur ein frisch gezogener Satz wird gemerkt. */
+var ZULETZT = Object.create(null);
+function frische(spiel, id) {
+  var l = ZULETZT[spiel];
+  return l && l.indexOf(id) >= 0 ? 0.15 : 1;
+}
+function merkeRunde(spiel, ids) { ZULETZT[spiel] = ids; }
+
 // Wie oft wurde ein Item in diesem Spiel schon vergeigt? Fehler kommen eher wieder.
 function fehlerZaehler(spiel) {
   var f = Object.create(null);
@@ -250,8 +278,29 @@ function spielKopf(titel, zurueckFn, extraKnopf) {
   app.appendChild(kopfEl({ titel: titel, zurueck: zurueckFn, extra: extraKnopf || null }));
 }
 
-// Fazit-Banner: Sticker passend zum Stand, nie haemisch, plus Nochmal/Fertig.
-function fazit(ziel, ok, n, nochmal, fertig, extra) {
+/* Fazit-Banner: Sticker passend zum Stand, nie haemisch.
+
+   OPTIONEN-OBJEKT STATT SECHS POSITIONEN (02.09.2026). Mit dem
+   Wiederholen-Knopf waere die Liste auf sieben Stellen gewachsen, und an
+   `fazit(karte, erg.ok, paare.length, fn, raus, extra, fn2)` sieht niemand
+   mehr, welche Funktion welche ist. Die vier Aufrufer stehen alle in dieser
+   Datei.
+
+     ok, n     die Wertung der Runde
+     gleiche   optional: startet DIESELBEN Aufgaben noch einmal
+     neu       zieht eine frische Runde
+     fertig    zurueck, wo Rose herkam
+     extra     die "Kurz nachlesen"-Box, falls es etwas nachzulesen gibt
+
+   DER WIEDERHOLEN-KNOPF ERSCHEINT NUR, WENN ETWAS DANEBENLAG (Rose, 02.09.2026).
+   Ihr Weg bisher: "sie kriegt Smileys, wenn alles richtig ist, deswegen spielt
+   sie immer wieder, bis alles richtig ist" - nur ging das ueber "Naechste
+   Runde", und die zog jedes Mal andere Aufgaben. Sie hat also nie die
+   nachgeholt, an denen sie haengen geblieben ist. Bei einer fehlerfreien Runde
+   fehlt der Knopf bewusst: da gibt es nichts zu wiederholen, und ein Angebot,
+   das Perfektes noch einmal abfragt, macht aus einem Erfolg eine Aufgabe. */
+function fazit(ziel, o) {
+  var ok = o.ok, n = o.n;
   var quote = n ? ok / n : 0;
   var banner = el("div", "erklaerung " + (quote === 1 ? "gut" : "schade"));
   var stk = stickerEl(quote === 1 ? "good" : quote >= 0.6 ? "part" : "sanft");
@@ -265,14 +314,24 @@ function fazit(ziel, ok, n, nochmal, fertig, extra) {
       : "Gut, dass es hier passiert und nicht in der Klausur. Beim nächsten Mal erkennst du schon mehr wieder."));
   banner.appendChild(text);
   ziel.appendChild(banner);
-  if (extra) ziel.appendChild(extra);
+  if (o.extra) ziel.appendChild(o.extra);
 
   var reihe = el("div", "knopf-reihe");
-  var k1 = el("button", "knopf", "Nächste Runde");
-  k1.addEventListener("click", nochmal);
+  var wiederholbar = quote < 1 && typeof o.gleiche === "function";
+  if (wiederholbar) {
+    var kw = el("button", "knopf", "Die gleichen nochmal");
+    kw.addEventListener("click", o.gleiche);
+    reihe.appendChild(kw);
+  }
+  // Steht der Wiederholen-Knopf da, ist ER der Hauptweg - dann tritt die neue
+  // Runde eine Stufe zurueck und heisst auch anders, sonst staenden zwei Knoepfe
+  // nebeneinander, die beide "nochmal" bedeuten und Verschiedenes tun.
+  var k1 = el("button", "knopf" + (wiederholbar ? " sekundaer" : ""),
+    wiederholbar ? "Andere Aufgaben" : "Nächste Runde");
+  k1.addEventListener("click", o.neu);
   reihe.appendChild(k1);
   var k2 = el("button", "knopf sekundaer", "Fertig für jetzt");
-  k2.addEventListener("click", fertig);
+  k2.addEventListener("click", o.fertig);
   reihe.appendChild(k2);
   ziel.appendChild(reihe);
 
@@ -389,10 +448,14 @@ function signalwortIn(text) {
 
 /* zurueck ist Pflicht: der Rueckweg kommt vom Aufrufer (Router, Tageskachel
    oder der Adapter in starteOperatoren) und spielKopf wirft ohne ihn. */
-function opRunde(themen, hooks, zurueck) {
+function opRunde(themen, hooks, zurueck, opts) {
+  var o = opts || {};
   var raus = zurueck;
   var fehler = fehlerZaehler("operatoren");
-  var gew = function (item) { return 1 + Math.min(3, fehler[item.id] || 0); };
+  // Fehler zaehlen wie bisher, dazu der Frische-Faktor (siehe frische() oben).
+  var gew = function (item) {
+    return (1 + Math.min(3, fehler[item.id] || 0)) * frische("operatoren", item.id);
+  };
 
   var woerter = OPERATOREN.map(function (o) {
     return { art: "wort", id: "op-" + o.wort, op: o, afb: o.afb };
@@ -438,8 +501,17 @@ function opRunde(themen, hooks, zurueck) {
     var rest = woerter.filter(function (w) { return teilA.indexOf(w) < 0; });
     teilA = teilA.concat(zieh(rest, kern - teilA.length - teilB.length - teilC.length, gew));
   }
-  var runde = mischen(teilA.concat(teilB).concat(teilC).concat(teilD).concat(teilE));
+  /* "Die gleichen nochmal": der ganze Bau oben lief zwar durch, sein Ergebnis
+     wird aber verworfen. Bewusst so herum - die Ziehung haengt an fuenf
+     Zwischenschritten (teilA-teilE, Auffuellen, Doppel-Sperre), und ein zweiter
+     Weg an ihr vorbei waere eine zweite Rundenlogik. Ein paar Array-Operationen
+     kosten nichts, eine zweite Wahrheit schon. Gemischt wird trotzdem neu:
+     dieselben Aufgaben, andere Reihenfolge. */
+  var runde = o.wieder && o.wieder.length
+    ? mischen(o.wieder.slice())
+    : mischen(teilA.concat(teilB).concat(teilC).concat(teilD).concat(teilE));
   if (!runde.length) return raus();
+  if (!o.wieder) merkeRunde("operatoren", runde.map(function (it) { return it.id; }));
 
   /* Die Optionsform wechselt JE KARTE statt global (Jennifer: "manchmal halt
      afbs anzeigen, manchmal nicht"). Einmal beim Bauen gewuerfelt und am Item
@@ -590,10 +662,11 @@ function opRunde(themen, hooks, zurueck) {
         extra.appendChild(z);
       });
     }
-    fazit(karte, richtige, runde.length,
-      function () { opRunde(themen, hooks, zurueck); },
-      raus,
-      extra);
+    fazit(karte, {
+      ok: richtige, n: runde.length, extra: extra, fertig: raus,
+      neu: function () { opRunde(themen, hooks, zurueck); },
+      gleiche: function () { opRunde(themen, hooks, zurueck, { wieder: runde }); }
+    });
     app.appendChild(karte);
   }
 
@@ -825,8 +898,11 @@ function opzStand() {
    lernenswert - es steht im Spickzettel, wo es niemanden bestraft. */
 function opzKandidaten(stand) {
   var gesehen = Object.create(null), out = [];
+  // Der Frische-Faktor gehoert AUCH hierher, nicht nur in die Ziehung unten:
+  // diese Reihe entscheidet, wer seine Rollenkette besetzt, und ein gerade
+  // gespieltes Wort wuerde sonst das frische aus derselben Kette verdraengen.
   var reihe = zieh(OPERATOREN, OPERATOREN.length, function (o) {
-    return paarGewicht(stand["opz-" + o.wort]);
+    return paarGewicht(stand["opz-" + o.wort]) * frische("opzuordnen", "opz-" + o.wort);
   });
   reihe.forEach(function (o) {
     var k = kettenText(o.wort);
@@ -839,15 +915,18 @@ function opzKandidaten(stand) {
   return out;
 }
 
-function opzRunde(raus) {
+function opzRunde(raus, opts) {
+  var vor = opts || {};
   var stand = opzStand();
   var kandidaten = opzKandidaten(stand);
-  var paare = zieh(kandidaten, Math.min(OPZ_RUNDE, kandidaten.length), function (o) {
-    return paarGewicht(stand["opz-" + o.wort]);
-  }).map(function (o) {
+  var paare = vor.wieder && vor.wieder.length ? vor.wieder.slice() : zieh(
+    kandidaten, Math.min(OPZ_RUNDE, kandidaten.length), function (o) {
+      return paarGewicht(stand["opz-" + o.wort]) * frische("opzuordnen", "opz-" + o.wort);
+    }).map(function (o) {
     return { id: "opz-" + o.wort, wort: anzeige(o.wort), tipp: o.tipp, afb: o.afb,
              kette: kettenText(o.wort) };
   });
+  if (!vor.wieder) merkeRunde("opzuordnen", paare.map(function (p) { return p.id; }));
 
   leeren();
   app.style.removeProperty("--tfarbe-basis");
@@ -891,9 +970,11 @@ function opzRunde(raus) {
         });
       }
       var karte = el("div", "karte");
-      fazit(karte, erg.ok, paare.length,
-        function () { opzRunde(raus); },
-        raus, extra);
+      fazit(karte, {
+        ok: erg.ok, n: paare.length, extra: extra, fertig: raus,
+        neu: function () { opzRunde(raus); },
+        gleiche: function () { opzRunde(raus, { wieder: paare }); }
+      });
       fazitPlatz.appendChild(karte);
       karte.scrollIntoView({ block: "nearest" });
     }
@@ -1004,7 +1085,24 @@ function themenFarbe(id) { return id ? THEMEN_FARBEN[id] : null; }
                        dieselben Paare kommen also in der Gegenrichtung.
      opts.teil2        das IST schon Runde 2 - danach kommt das Fazit.
      opts.vorherOk/N   Zaehler aus Runde 1, damit das Fazit die ganze
-                       Doppelrunde nennt und nicht nur die Haelfte. */
+                       Doppelrunde nennt und nicht nur die Haelfte.
+
+   Dazu seit dem 02.09.2026 der Wiederholen-Weg (Rose: "dann werden genau die
+   gleichen Fragen wiederholt, bis sie es komplett richtig hat"):
+     opts.wieder       feste Paarliste statt einer Ziehung.
+     opts.vorherKat/Paare  Kategorie und Paare aus Runde 1. Runde 2 kennt sie
+                       sonst nicht, und ohne sie koennte "die gleichen nochmal"
+                       am Ende einer Tageskachel-Doppelrunde nur die zweite
+                       Haelfte wiederholen.
+     opts.naechsteKat/Paare  was Runde 2 einer WIEDERHOLTEN Doppelrunde nehmen
+                       soll - damit sie dieselben zwei Kategorien laeuft wie
+                       eben und nicht in eine dritte weiterwandert.
+
+   NEBENBEI GERADEGEZOGEN (02.09.2026): der Halbzeit-Text verspricht seit jeher
+   "dieselben Paare in der Gegenrichtung", Runde 2 hat aber neu gezogen. Das
+   fiel nicht auf, solange die Ziehung ohnehin fast dasselbe lieferte - mit dem
+   Frische-Faktor waere daraus ein sichtbarer Widerspruch geworden. Jetzt gibt
+   Runde 1 ihre Paare weiter, und der Satz stimmt. */
 function bgRunde(kat, hooks, zurueck, opts) {
   var o = opts || {};
   var raus = zurueck;
@@ -1013,7 +1111,12 @@ function bgRunde(kat, hooks, zurueck, opts) {
   var stand = begriffStand();
   // Gewicht (nie geuebt zuerst, unsicher am haeufigsten) kommt aus dem
   // geteilten Baustein — drueben zieht der Begriffe-Blitz mit denselben Zahlen.
-  var paare = zieh(alle, Math.min(BG_RUNDE, alle.length), function (p) { return paarGewicht(stand[p.id]); });
+  // Dazu der Frische-Faktor; er wirkt hier am schwaechsten, weil manche
+  // Kategorien kaum mehr Paare haben als eine Runde lang ist (siehe frische()).
+  var paare = o.wieder && o.wieder.length ? o.wieder.slice()
+    : zieh(alle, Math.min(BG_RUNDE, alle.length), function (p) {
+        return paarGewicht(stand[p.id]) * frische("begriffe", p.id);
+      });
 
   // Sicherheitsnetz: identische Antworttexte in einer Runde waeren nicht
   // eindeutig zuzuordnen. In begriffe.json ist das ausgeschlossen, aber hier
@@ -1024,6 +1127,9 @@ function bgRunde(kat, hooks, zurueck, opts) {
     gesehen[p.antwort] = true;
     return true;
   });
+  // Erst NACH dem Sicherheitsnetz merken - sonst stuende eine gefilterte Id in
+  // der Frische-Liste, die in der Runde gar nicht vorkam.
+  if (!o.wieder) merkeRunde("begriffe", paare.map(function (p) { return p.id; }));
 
   // Abrufrichtung pro Runde wechseln - die Rueckrichtung wird sonst nie gelernt.
   state.bgRichtung = !state.bgRichtung;
@@ -1088,12 +1194,22 @@ function bgRunde(kat, hooks, zurueck, opts) {
         ok + " von " + paare.length + " – gleich Runde 2, "
         + (o.tagesKachel ? "dann mit der nächsten Kategorie." : "dieselben Paare in der Gegenrichtung."),
         function () {
-          var kat2 = kat;
-          if (o.tagesKachel) {
+          var kat2 = kat, paare2 = null;
+          if (o.naechsteKat) {
+            // Wiederholte Doppelrunde: Runde 2 laeuft genau die Kategorie und
+            // die Paare, die sie beim ersten Mal hatte.
+            kat2 = o.naechsteKat; paare2 = o.naechstePaare;
+          } else if (o.tagesKachel) {
             var andere = bgKategorien().filter(function (x) { return x.k.id !== kat; });
             if (andere.length) kat2 = andere[0].k.id;
+          } else {
+            // Dieselbe Kategorie, dieselben Paare - "in der Gegenrichtung",
+            // wie es die Halbzeit-Zeile sagt (state.bgRichtung kippt gleich).
+            paare2 = paare;
           }
-          bgRunde(kat2, hooks, raus, { teil2: true, tagesKachel: o.tagesKachel, vorherOk: ok, vorherN: paare.length });
+          bgRunde(kat2, hooks, raus, { teil2: true, tagesKachel: o.tagesKachel,
+            vorherOk: ok, vorherN: paare.length, vorherKat: kat, vorherPaare: paare,
+            wieder: paare2 });
         }, raus);
       karte.scrollIntoView({ block: "nearest" });
       return;
@@ -1102,10 +1218,23 @@ function bgRunde(kat, hooks, zurueck, opts) {
     /* Fazit ueber die ganze Doppelrunde. "Fertig fuer jetzt" fuehrt dorthin
        zurueck, wo Rose herkam - Startseite oder Kategorienliste, je nach
        Einstieg; der Rueckweg kam als Parameter mit. */
-    fazit(fkarte, ok + (o.vorherOk || 0), paare.length + (o.vorherN || 0),
-      function () { bgRunde(kat, hooks, raus, { tagesKachel: o.tagesKachel }); },
-      raus,
-      extra);
+    /* Die Wiederholung startet die Doppelrunde von vorn - mit der Kategorie und
+       den Paaren aus Runde 1 und der Anweisung, in Runde 2 wieder hierher zu
+       kommen. Kam Rose nicht ueber die Tageskachel, sind vorherKat/vorherPaare
+       ohnehin dieselben wie hier, und der Weg ist einfach dieselbe Runde noch
+       einmal. */
+    fazit(fkarte, {
+      ok: ok + (o.vorherOk || 0), n: paare.length + (o.vorherN || 0),
+      extra: extra, fertig: raus,
+      neu: function () { bgRunde(kat, hooks, raus, { tagesKachel: o.tagesKachel }); },
+      gleiche: function () {
+        bgRunde(o.vorherKat || kat, hooks, raus, {
+          tagesKachel: o.tagesKachel,
+          wieder: o.vorherPaare || paare,
+          naechsteKat: kat, naechstePaare: paare
+        });
+      }
+    });
     fazitPlatz.appendChild(fkarte);
     fkarte.scrollIntoView({ block: "nearest" });
   }
@@ -1257,13 +1386,17 @@ function mdRunde(raus, opts) {
   var o = opts || {};
   var fehler = fehlerZaehler("modelle");
   var gew = function (m) {
-    return 1 + Math.min(3, (fehler["mdw-" + m.id] || 0) + (fehler["mdk-" + m.id] || 0) + (fehler["mdt-" + m.id] || 0));
+    return (1 + Math.min(3, (fehler["mdw-" + m.id] || 0) + (fehler["mdk-" + m.id] || 0) + (fehler["mdt-" + m.id] || 0)))
+      * frische("modelle", m.id);
   };
   var topf = o.thema
     ? MODELLE.filter(function (m) { return m.thema === o.thema; })
     : MODELLE;
   if (!topf.length) topf = MODELLE;
-  var modelle = zieh(topf, Math.min(MD_RUNDE, topf.length), gew);
+  var modelle = o.wieder && o.wieder.length
+    ? o.wieder.slice()
+    : zieh(topf, Math.min(MD_RUNDE, topf.length), gew);
+  if (!o.wieder) merkeRunde("modelle", modelle.map(function (m) { return m.id; }));
   var mIndex = 0, richtige = 0;
   var gesamt = modelle.length * MD_FRAGEN.length;
   var gepatzt = [];
@@ -1392,9 +1525,15 @@ function mdRunde(raus, opts) {
         extra.appendChild(z);
       });
     }
-    fazit(karte, richtige, gesamt,
-      function () { mdRunde(raus, o); },
-      raus, extra);
+    /* `o` traegt hier auch das Thema (mdRunde wird aus der Themenliste
+       gestartet) - deshalb wird es fuer beide Wege durchgereicht und fuer die
+       Wiederholung nur um `wieder` ergaenzt, statt ein frisches Objekt zu
+       bauen. Sonst faende sich Rose nach dem Wiederholen im Gesamttopf wieder. */
+    fazit(karte, {
+      ok: richtige, n: gesamt, extra: extra, fertig: raus,
+      neu: function () { mdRunde(raus, { thema: o.thema }); },
+      gleiche: function () { mdRunde(raus, { thema: o.thema, wieder: modelle }); }
+    });
     app.appendChild(karte);
   }
 
