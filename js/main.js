@@ -1866,6 +1866,71 @@ function trefferListe(a, gefunden) {
   return box;
 }
 
+/* ---------- Was Rose in einem Abruf-Schritt gesagt hat (03.09.2026) --------
+   Jennifer: *"es sollte immer auch gespeichert und dann angezeigt werden was
+   sie gesagt hat."* Die freien Klausurfragen zeigen ihren Text als Zettel
+   (antwortZettel); ein Abruf-Schritt aus dem Themen-Lernen ist aber kein
+   Fliesstext, sondern eine Zeile je Baustein - und genau so steht er hier:
+   Beschriftung, ihr Wortlaut, ihr eigenes Urteil, daneben das der KI.
+
+   ROSES URTEIL STEHT VORN, das der KI daneben und als Vorschlag markiert -
+   dieselbe Rangfolge wie ueberall in dieser App. Und ein Baustein, zu dem sie
+   nichts geschrieben hat, verschwindet NICHT: dass da nichts stand, ist die
+   Auskunft, um die es geht. */
+var ABRUF_WORT = { hatte: "hatte ich", halb: "halb", fehlte: "fehlte" };
+// Zwei Tabellen, weil es zwei Bauteile sind: der Streifen links an der Zeile
+// (bs-*, eigene Regeln) und die kleine Pille rechts (status-*, die es in der
+// App schon gibt). "fehlte" bekommt dieselbe Pille wie "nochmal üben" - es ist
+// dieselbe Aussage.
+var ABRUF_KLASSE = { hatte: "gut", halb: "mittel", fehlte: "offen" };
+var ABRUF_PILLE = { hatte: "gut", halb: "mittel", fehlte: "nochmal" };
+
+function bausteinListe(a, gefunden) {
+  var liste = a.bausteine;
+  if (!Array.isArray(liste) || !liste.length) return null;
+  var box = el("div", "runde-bausteine");
+  box.appendChild(el("span", "runde-treffer-titel", "Was du geschrieben hast"));
+  liste.forEach(function (b) {
+    if (!b) return;
+    var zeile = el("div", "runde-baustein" + (b.wert ? " bs-" + ABRUF_KLASSE[b.wert] : ""));
+    if (b.chip) zeile.appendChild(el("span", "treppe-label", b.chip));
+    zeile.appendChild(b.text
+      ? (gefunden ? Beleg.belegZeile("div", b.text, gefunden.thema.id, "runde-baustein-text")
+        : el("div", "runde-baustein-text", b.text))
+      : el("div", "runde-baustein-text leer", "– nichts notiert –"));
+    var marken = el("div", "runde-baustein-marken");
+    if (b.wert) {
+      marken.appendChild(el("span", "runde-rueck-wert status-" + (ABRUF_PILLE[b.wert] || "mittel"),
+        ABRUF_WORT[b.wert] || b.wert));
+    }
+    if (b.ki && b.ki !== b.wert) {
+      marken.appendChild(el("span", "runde-rueck-ki", "KI: " + (ABRUF_WORT[b.ki] || b.ki)));
+    }
+    if (marken.children.length) zeile.appendChild(marken);
+    box.appendChild(zeile);
+  });
+  return box.children.length > 1 ? box : null;
+}
+
+/* Der Zieh-Modus: dort ist ihre Aeusserung die Auswahl. Aufgezaehlt wird nur,
+   was sie GEGRIFFEN hat - was sie richtig liegen liess, hat sie nicht gesagt. */
+function gezogenListe(a, gefunden) {
+  var liste = a.gezogen;
+  if (!Array.isArray(liste) || !liste.length) return null;
+  var box = el("div", "runde-bausteine");
+  box.appendChild(el("span", "runde-treffer-titel", "Was du gewählt hast"));
+  liste.forEach(function (g) {
+    if (!g || !g.text) return;
+    var zeile = el("div", "runde-baustein " + (g.echt ? "bs-gut" : "bs-offen"));
+    zeile.appendChild(el("span", "runde-zeichen " + (g.echt ? "gut" : "offen"), g.echt ? "✓" : "↻"));
+    zeile.appendChild(gefunden
+      ? Beleg.belegZeile("div", g.text, gefunden.thema.id, "runde-baustein-text")
+      : el("div", "runde-baustein-text", g.text));
+    box.appendChild(zeile);
+  });
+  return box.children.length > 1 ? box : null;
+}
+
 function rueckmeldung(a, gefunden) {
   var box = el("div", "runde-rueck");
   var leer = true;
@@ -2029,6 +2094,13 @@ function zeigeRunde(r) {
 
     var mc = mcAufloesung(a, gefunden);
     if (mc) karte.appendChild(mc);
+
+    // Ihre eigenen Worte aus einem Abruf-Schritt - vor der Musterloesung und
+    // vor allem, was die KI dazu meinte.
+    var bs = bausteinListe(a, gefunden);
+    if (bs) karte.appendChild(bs);
+    var gez = gezogenListe(a, gefunden);
+    if (gez) karte.appendChild(gez);
 
     /* Roses eigener Text - bei offenen Aufgaben IST das die Leistung, die
        Punktzahl nur ihr Schatten. Steht als Zettel da, in derselben Optik wie

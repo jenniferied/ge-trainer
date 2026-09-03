@@ -341,6 +341,9 @@ function bloeckeAbspielen(ep, thema, hooks, lauf, onFertig) {
             logSpiel("themenlernen", "tlab-" + f.id, erg.quote >= 0.5, {
               thema: thema.id,
               quote: Math.round(erg.quote * 100),
+              // Was sie gegriffen hat, wie im Themen-Lernen (Begruendung dort).
+              // Eine Folgen-Frage ist eine Antwort wie jede andere.
+              gezogen: (erg.gezogen || []).length ? erg.gezogen : undefined,
               modus2: "ziehen",
               episode: ep.id
             });

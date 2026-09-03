@@ -1638,10 +1638,27 @@ export function zeigeThemenLernen(themen, hooks, opt) {
                  Prozentzahl ist an einer Aufgabe mit sechs Bausteinen keine
                  Rueckmeldung, sondern eine Note. quote bleibt trotzdem
                  stehen: reife.js und der Bestand vor dem 03.09. lesen sie. */
+              /* Und was sie GESAGT hat (Jennifer, 03.09.2026: "es sollte immer
+                 auch gespeichert und dann angezeigt werden was sie gesagt hat,
+                 das sehe ich da nicht"). Bis hierher kamen nur Zahlen zurueck,
+                 und im Verlauf stand "4 von 6 Bausteinen" ueber einer Aufgabe,
+                 zu der Rose einen Absatz geschrieben hatte.
+
+                 Zwei Formen, weil es zwei Abfragen sind: `bausteine` je Zeile
+                 (Beschriftung, ihr Text, ihr Urteil, das der KI) beim
+                 Schreiben, `gezogen` beim Wiedererkennen (was sie gegriffen
+                 hat, richtig oder nicht). Beide kommen fertig aus treppe.js;
+                 gefiltert wird nur Leeres, damit ein Schritt ohne jede
+                 Aeusserung kein leeres Feld in den Lernstand schreibt. */
+              var gesagt = (erg.bausteine || []).filter(function (b) {
+                return b && (b.text || b.wert || b.ki);
+              });
               logSpiel("themenlernen", "tlab-" + s.f.id, ok, {
                 thema: s.thema.id,
                 quote: Math.round(erg.quote * 100),
                 bs: [erg.hatte || 0, erg.halb || 0, erg.gesamt || 0],
+                bausteine: gesagt.length ? gesagt : undefined,
+                gezogen: (erg.gezogen || []).length ? erg.gezogen : undefined,
                 modus2: s.modus === "ziehen" ? "ziehen" : "frei"
               });
               if (!ok) nochmal(s);

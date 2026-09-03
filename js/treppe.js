@@ -544,6 +544,12 @@ function jaccard(a, b) {
    waere schlimmer als gar keine Begruendung. */
 var DUBLETTE_AB = 0.5;
 
+/* Deckel je Notizfeld im Protokoll (03.09.2026). Roses Bausteine sind Saetze,
+   keine Aufsaetze - 600 Zeichen sind grosszuegig und halten trotzdem einen
+   versehentlich eingefuegten Foliensatz aus dem Lernstand heraus, der bei
+   jedem Sync komplett hoch und runter faehrt. */
+var TEXT_MAX = 600;
+
 /* Selbsteinschaetzung je Punkt. Dieselbe Dreiteilung wie der Selbstcheck der
    freien Aufgaben (gut/mittel/nochmal), nur mit Worten, die zu einem einzelnen
    Listenpunkt passen. Keine Panik-Sprache: "fehlte" ist eine Auskunft. */
@@ -1206,6 +1212,10 @@ function kiSlotFuellen(s) {
              Kern-Index: links daneben steht die laufende Zeilennummer, und zwei
              verschiedene Zahlen fuer dieselbe Zeile sind eine Zumutung. */
           var chipT = z.chip || chipText(labelChip(punktVon(z.kern[0]), nr - 1), nr - 1, f);
+          // Auch fuers Protokoll merken: im Rueckblick soll ueber Roses Text
+          // dieselbe Beschriftung stehen wie live ueber dem Feld - bei einer
+          // Aufgabe ohne deklarierte Chips also "Baustein 2" statt nichts.
+          z.label = chipT;
           inhalt.appendChild(el("span", "treppe-label", chipT));
         }
         inhalt.appendChild(verdeckt);
@@ -1403,6 +1413,9 @@ function kiSlotFuellen(s) {
             if (zeile.dataset.fertig) return;
             zeile.dataset.fertig = "1";
             stand[w.wert]++;
+            // Fuers Protokoll (protokoll() unten): was Rose ueber diese Zeile
+            // gesagt hat, nicht nur die Summe.
+            z.wert = w.wert;
             // gewaehlt auf den GEKLICKTEN: die CSS-Regeln dafuer standen seit
             // Monaten da und waren auf diesem Pfad toter Code. Rose wollte die
             // Farbe (gruen / orange / ruhig), nicht das Ausblassen der anderen.
@@ -1450,6 +1463,35 @@ function kiSlotFuellen(s) {
 
   if (vorratBox) karte.appendChild(vorratBox);
 
+  /* ---------- Das Protokoll einer Karte (03.09.2026) ----------
+     Jennifer, nachdem sie die neue Detailansicht gesehen hat: *"es sollte immer
+     auch gespeichert und dann angezeigt werden was sie gesagt hat, das sehe ich
+     da nicht."* Sie hat recht - bis hierher gab dieser Schritt nur Zahlen
+     zurueck (hatte/halb/fehlte), und im Verlauf stand deshalb "4 von 6
+     Bausteinen" ueber einer Aufgabe, zu der Rose einen Absatz geschrieben
+     hatte. Die freien Klausurfragen zeigen ihren Text laengst; hier fehlte er.
+
+     Je Zeile: die Beschriftung, IHR Text, IHR Urteil und das der KI. Der Text
+     wird gedeckelt (TEXT_MAX) - er faehrt im antwortLog bei jedem Sync komplett
+     hoch und runter, und ein versehentlich eingefuegter Foliensatz soll den
+     Lernstand nicht sprengen. Leere Zeilen fallen NICHT weg: dass sie zu einem
+     Baustein nichts geschrieben hat, ist die Auskunft, um die es geht. */
+  function protokoll() {
+    return zeilenAlle.map(function (z) {
+      var eigen = z.feld ? z.feld.value.trim() : "";
+      if (z.partnerFeld && z.partnerFeld.value.trim()) {
+        eigen += (eigen ? " ↳ " : "") + z.partnerFeld.value.trim();
+      }
+      var u = kiUrteile[rohVon(z.kern[0])];
+      return {
+        chip: z.form === "rolle" ? (z.a.auftrag || "Rolle") : (z.chip || z.label || null),
+        text: eigen ? eigen.slice(0, TEXT_MAX) : "",
+        wert: z.wert || null,
+        ki: u && u.vorschlag ? u.vorschlag : null
+      };
+    });
+  }
+
   function fertigZeigen() {
     var quote = (stand.hatte + stand.halb * 0.5) / zeilenAlle.length;
     var fazit = el("div", "treppe-fazit");
@@ -1480,7 +1522,8 @@ function kiSlotFuellen(s) {
          nicht kennt, verhaelt sich wie vorher. */
       if (o.onFertig) o.onFertig({
         gesamt: zeilenAlle.length, hatte: stand.hatte, halb: stand.halb,
-        fehlte: stand.fehlte, quote: quote, wort: nurRollen ? "Rollen" : "Bausteinen"
+        fehlte: stand.fehlte, quote: quote, wort: nurRollen ? "Rollen" : "Bausteinen",
+        bausteine: protokoll()
       });
     });
     karte.appendChild(weiter);
@@ -1557,6 +1600,9 @@ function aufdeckenKarte(f, kern, o) {
 
   var offen = kern.length;
   var stand = { hatte: 0, halb: 0, fehlte: 0 };
+  // Das Protokoll dieser Karte - Begruendung bei protokoll() in der
+  // Abschnitte-Karte oben. Hier ohne KI-Urteil: diesen Zweig prueft niemand.
+  var zeilenLog = [];
 
   kern.forEach(function (punkt, i) {
     var zeile = el("div", "treppe-punkt");
@@ -1585,6 +1631,8 @@ function aufdeckenKarte(f, kern, o) {
       inhalt.appendChild(verdeckt);
     }
     kopf.appendChild(inhalt);
+    var log = { chip: chip ? chip.textContent : null, text: "", wert: null, ki: null };
+    zeilenLog.push(log);
 
     var werkzeuge = el("div", "treppe-werkzeuge");
     var hv = hinweiseFuer(f, o.stichIndex[i], punkt, o.hinweisIndex);
@@ -1610,6 +1658,7 @@ function aufdeckenKarte(f, kern, o) {
     auf.addEventListener("click", function () {
       werkzeuge.remove();
       var eigenerText = eingabe ? eingabe.value.trim() : "";
+      log.text = eigenerText.slice(0, TEXT_MAX);
       inhalt.innerHTML = "";
       if (chip) inhalt.appendChild(chip);
       if (eigenerText) {
@@ -1633,6 +1682,7 @@ function aufdeckenKarte(f, kern, o) {
           if (zeile.dataset.fertig) return;
           zeile.dataset.fertig = "1";
           stand[w.wert]++;
+          log.wert = w.wert;
           // Der geklickte Knopf bekommt seit dem 22.08. gewaehlt - die CSS-Regeln
           // dafuer standen laengst da und waren auf diesem Pfad toter Code.
           b.classList.add("gewaehlt");
@@ -1673,7 +1723,7 @@ function aufdeckenKarte(f, kern, o) {
     weiter.addEventListener("click", function () {
       if (o.onFertig) o.onFertig({
         gesamt: kern.length, hatte: stand.hatte, halb: stand.halb,
-        fehlte: stand.fehlte, quote: quote
+        fehlte: stand.fehlte, quote: quote, bausteine: zeilenLog
       });
     });
     karte.appendChild(weiter);
@@ -1813,7 +1863,17 @@ function ziehenKarte(f, kern, o) {
 
     var weiter = el("button", "knopf", o.weiterText || "Weiter");
     weiter.addEventListener("click", function () {
-      if (o.onFertig) o.onFertig({ gesamt: kern.length, hatte: richtige, halb: 0, fehlte: kern.length - richtige, quote: quote });
+      /* Auch im Zieh-Modus wird festgehalten, was Rose GESAGT hat - hier ist
+         das die Auswahl. Ohne diese Zeile stuende im Verlauf nur "3 von 5
+         getroffen" ueber einer Aufgabe, bei der genau interessant ist, WELCHEN
+         Distraktor sie gegriffen hat. Nur das Gewaehlte, in ihrer Reihenfolge;
+         was sie richtig liegen liess, ist keine Aeusserung. */
+      if (o.onFertig) o.onFertig({
+        gesamt: kern.length, hatte: richtige, halb: 0, fehlte: kern.length - richtige, quote: quote,
+        gezogen: gewaehlt.map(function (k) {
+          return { text: String(k.text || "").slice(0, TEXT_MAX), echt: !!k.echt };
+        })
+      });
     });
     karte.appendChild(weiter);
     fokusSicher(weiter);

@@ -1447,6 +1447,26 @@ p { margin: 0 0 var(--sp-3); }
 /* Nicht gefordert (main.js trefferWert) - blass, kein Signal. */
 .runde-treffer-zeichen.egal { background: transparent; color: var(--ink-soft); opacity: .6; }
 
+/* ---------- Was Rose in einem Abruf-Schritt geschrieben hat (03.09.2026) ----
+   Eine Zeile je Baustein statt eines Zettels: der Abruf IST nach Bausteinen
+   gegliedert, und ihr Text gehoert an seine Beschriftung. Der farbige Streifen
+   links traegt ihr eigenes Urteil - dieselben drei Farben wie live an der
+   Treppe (quittiert-gut/-halb/-fehlte), damit sich die zwei Orte gleich lesen. */
+.runde-bausteine { display: flex; flex-direction: column; gap: 6px; margin-top: var(--sp-2); }
+.runde-baustein {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  padding: 6px 8px; border-radius: 8px;
+  border-left: 3px solid var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.runde-baustein.bs-gut { border-left-color: var(--ok); }
+.runde-baustein.bs-mittel { border-left-color: var(--warn-ink); }
+.runde-baustein.bs-offen { border-left-color: var(--glimmer-1); }
+.runde-baustein-text { flex: 1 1 12rem; font-size: .9rem; white-space: pre-wrap; }
+/* Kein Vorwurf, nur eine Auskunft: leer heisst leer, nicht falsch. */
+.runde-baustein-text.leer { color: var(--ink-soft); font-style: italic; }
+.runde-baustein-marken { display: flex; align-items: baseline; gap: 8px; flex: 0 0 auto; }
+
 /* ---------- Die MC-Frage aufgeschluesselt ----------
    Man soll sehen, WOBEI es danebenlag, nicht nur DASS. Die richtige Option
    traegt die gruene Marke, Roses Wahl den Rahmen - liegt beides
