@@ -1578,6 +1578,31 @@ function zuletztAktionen(r, aufNeu) {
       zeige("themenlernen", { weiter: true });
     });
     box.appendChild(tlWeiter);
+  } else if (r.typ === "tl" && !r.fertig) {
+    /* Eine angefangene Runde, deren Rest nirgends abgelegt ist - jede Runde
+       von vor dem 03.09.2026 abends, und jede, die damals mit "Abbrechen"
+       endete. Sie laesst sich trotzdem fortsetzen: was in ihr dran war, steht
+       im Log (ThemenLernen.fortsetzenAusZeile).
+
+       DIE FRAGE NENNT DAS THEMA. Beim Abschluss schreibt fazit() `tl-<thema>`,
+       und daran haengen Rotation und Level - bei einer rekonstruierten Zeile
+       ist das Thema aber geschaetzt (stats.js, Topf E). Steht es in der Frage,
+       sieht Rose eine falsche Schaetzung, BEVOR sie gezaehlt wird. */
+    var bau = ThemenLernen.fortsetzenAusZeile(r);
+    if (bau) {
+      var tlAlt = el("button", "zuletzt-knopf stark", "Weitermachen");
+      tlAlt.title = "Diese Runde weiterführen – was nicht saß, kommt zuerst";
+      tlAlt.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        frag("„" + r.titel + "“ weitermachen? Die " + bau.versucht.length
+          + " Sachen von vorhin zählen mit"
+          + (bau.rest.length ? ", und die " + bau.rest.length + ", die noch nicht saßen, kommen zuerst." : "."),
+        { ja: "Weitermachen", nein: "Lieber nicht" }).then(function (ja) {
+          if (ja) zeige("themenlernen", { zeile: r });
+        });
+      });
+      box.appendChild(tlAlt);
+    }
   }
 
   var art = Stats.wiederholArt(r, themen);

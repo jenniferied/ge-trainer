@@ -551,6 +551,112 @@ export function istRundenMarke(a) {
   return q.indexOf("tl-") === 0 || q.indexOf("ts-") === 0;
 }
 
+/* ---------- E) Themen-Lernen-Runden aus dem BESTAND (03.09.2026 abends) ----
+   Der Stempel oben gilt erst ab heute. Roses Lernstand traegt drei Wochen
+   Themen-Lernen ohne ihn, und Jennifer will genau die aufgedroeselt sehen:
+   *"einzelne session ich sehe aber nur eine kombinierte, die bitte
+   aufdroeseln"*. Also wird hier rekonstruiert, was damals nicht mitgeschrieben
+   wurde - aus Zeit und Form, nicht aus einer Id.
+
+   DIE REGEL, und woran sie geprueft ist. Am 03.09.2026 stehen in Roses Log
+   vier Themen-Lernen-Bloecke, zwei davon mit Abschluss-Marke
+   (`tl-grundlagen` 13:46, `tl-entwicklungsbereiche` 16:01) - die beiden sind
+   der Pruefstein, denn bei ihnen ist die Wahrheit bekannt:
+
+     KERN     Was sicher zum Themen-Lernen gehoert: die Abruf-Schritte
+              (spiel "themenlernen"/"tagesspiel") und die Begriffe, die
+              ausdruecklich aus einer Runde kommen (`imThemenLernen`).
+     SCHNITT  Mehr als RUNDEN_PAUSE Abstand -> neue Runde. Und eine
+              Abschluss-Marke SCHLIESST ihre Runde: was danach kommt, ist die
+              naechste, auch wenn nur zwei Minuten dazwischenliegen.
+     DAZU     Die Ankreuzfragen. Sie loggen `modus: "check"` ohne sid und
+              waeren sonst weiter eine eigene "Konzept-Check"-Zeile. Genommen
+              wird, was IM Fenster der Runde liegt oder kurz davor - der
+              Ankreuz-Block steht am ANFANG einer Runde (schritteBauen), am
+              03.09. ein bis zwei Minuten vor dem ersten Abruf.
+     THEMA    Die Marke, wenn es eine gibt. Sonst das haeufigste Thema der
+              ANKREUZFRAGEN - denn die zieht eine Runde nur aus ihrem eigenen
+              Thema, waehrend der Endlos-Stapel Abrufe fremder Themen
+              mitbringt. Gegengeprueft an den beiden markierten Runden: beide
+              Male nennt die Ankreuz-Mehrheit dasselbe Thema wie die Marke.
+              Bleibt auch das leer, nennt die Zeile kein Thema, statt eins zu
+              raten.
+
+   Das ist eine SCHAETZUNG und wird nie in den Lernstand geschrieben - es ist
+   eine Anzeige, gerechnet bei jedem Aufruf. Was sie nicht kann: zwei Runden
+   trennen, die ohne Pause und ohne Marke aufeinander folgen (am 03.09. haengen
+   drei Eintraege einer angesehenen Prinzipien-Folge vorn an der
+   Mobilitaets-Runde). Das ist der Preis dafuer, dass damals niemand
+   mitgeschrieben hat, welche Antwort zu welcher Runde gehoerte. */
+
+var TL_VORLAUF = RUNDEN_PAUSE;   // so weit vor dem ersten Abruf darf der Ankreuz-Block liegen
+
+function aidVon(a) { return a.aid || (a.ts + "-" + a.qid); }
+
+function istTlKern(a) {
+  if (!a || a.modus !== "spiel") return false;
+  if (a.spiel === "themenlernen" || a.spiel === "tagesspiel") return true;
+  return a.spiel === "glossar" && a.imThemenLernen === true;
+}
+
+// Haeufigster Wert einer Liste, leere Liste -> null.
+function haeufigstes(arr) {
+  var z = Object.create(null), best = null;
+  arr.forEach(function (x) {
+    if (!x) return;
+    z[x] = (z[x] || 0) + 1;
+    if (!best || z[x] > z[best]) best = x;
+  });
+  return best;
+}
+
+function tlAltThema(g) {
+  var marke = g.antworten.filter(istRundenMarke)[0];
+  if (marke && marke.thema) return marke.thema;
+  var ausChecks = haeufigstes(g.antworten
+    .filter(function (a) { return a.modus === "check"; })
+    .map(function (a) { return a.thema; }));
+  return ausChecks || "?";
+}
+
+export function tlAltGruppen(log) {
+  var gruppen = [], aktuell = null, zu = false;
+  (log || []).forEach(function (a) {
+    if (!a || !a.ts || a.lauf || !istTlKern(a)) return;
+    if (!aktuell || zu || a.ts - aktuell.bis > RUNDEN_PAUSE) {
+      aktuell = { von: a.ts, bis: a.ts, antworten: [] };
+      gruppen.push(aktuell);
+      zu = false;
+    }
+    aktuell.bis = a.ts;
+    aktuell.antworten.push(a);
+    // Die Marke schliesst ihre Runde - alles danach ist die naechste.
+    if (istRundenMarke(a)) zu = true;
+  });
+  // Die Ankreuzfragen einsammeln. Erste passende Runde gewinnt; die Liste ist
+  // chronologisch, also ist das die frueheste, in deren Fenster sie faellt.
+  (log || []).forEach(function (a) {
+    if (!a || !a.ts || a.lauf || a.sid || a.modus !== "check") return;
+    for (var i = 0; i < gruppen.length; i++) {
+      var g = gruppen[i];
+      if (a.ts < g.von - TL_VORLAUF || a.ts > g.bis) continue;
+      g.antworten.push(a);
+      if (a.ts < g.von) g.von = a.ts;
+      return;
+    }
+  });
+  gruppen.forEach(function (g) {
+    g.antworten.sort(function (x, y) { return x.ts - y.ts; });
+    /* Ein synthetischer Lauf-Schluessel, damit diese Zeile dieselbe Bauform
+       hat wie eine echte - und damit ein Weitermachen an ihr in DIESELBE Zeile
+       zurueckschreiben kann (themen-lernen.js nimmt ihn als laufId). Das "r"
+       trennt ihn von einem echten Stempel (Date.now in Basis 36 faengt heute
+       mit "m" an) und macht ihn ueber Reloads hinweg stabil. */
+    g.lauf = tlAltThema(g) + ":r" + g.von.toString(36);
+  });
+  return gruppen;
+}
+
 /* GEARBEITETE ZEIT, NICHT KALENDERZEIT. Eine pausierte Runde behaelt ihre
    lauf-Id - der Knopf heisst ausdruecklich "Pause – morgen weiter" -, also
    liegt zwischen ihrem ersten und ihrem letzten Eintrag notfalls eine Nacht.
@@ -626,8 +732,22 @@ export function letzteRunden(themen, max) {
 
   // Genau ein Topf je Antwort - siehe zweite Invariante oben.
   var lose = [], spiele = {}, laeufe = {};
+
+  /* Die rekonstruierten Runden aus dem Bestand kommen ZUERST in denselben Topf
+     wie die gestempelten. Das ist kein Trick, sondern der Grund, warum der
+     synthetische Schluessel so gebaut ist: macht Rose an so einer Zeile
+     weiter, tragen die neuen Antworten denselben Lauf und landen unten in
+     GENAU DIESER Gruppe - eine fortgesetzte Runde bleibt eine Zeile, egal auf
+     welcher Seite des Umbaus sie angefangen hat. */
+  var altDrin = Object.create(null);
+  tlAltGruppen(state.antwortLog || []).forEach(function (g) {
+    laeufe[g.lauf] = g;
+    g.antworten.forEach(function (a) { altDrin[aidVon(a)] = true; });
+  });
+
   (state.antwortLog || []).forEach(function (a) {
     if (!a || !a.ts) return;
+    if (altDrin[aidVon(a)]) return;
     /* Die Runden-Id zuerst: sie sticht Spiel UND sid. Ein Themen-Lernen-
        Schritt traegt beides (modus "spiel", sid "spiel"), und eine
        Ankreuzfrage aus derselben Runde gar nichts davon - erst der Lauf legt
@@ -641,7 +761,8 @@ export function letzteRunden(themen, max) {
        einen Stelle, die alle Schreibwege sieht. */
     if (a.lauf && a.spiel !== "episode") {
       var lg = laeufe[a.lauf] || (laeufe[a.lauf] = { lauf: a.lauf, von: a.ts, bis: a.ts, antworten: [] });
-      lg.bis = a.ts;
+      if (a.ts < lg.von) lg.von = a.ts;
+      if (a.ts > lg.bis) lg.bis = a.ts;
       lg.antworten.push(a);
       return;
     }
@@ -683,6 +804,9 @@ export function letzteRunden(themen, max) {
      passiert, wenn ihre Antworten geloescht worden sind oder aus einem Merge
      ohne sie zurueckkommen. Dieselbe Regel wie oben bei den Sitzungen. */
   Object.keys(laeufe).forEach(function (k) {
+    // Eine Gruppe kann aus zwei Quellen gefuellt sein (rekonstruiert plus
+    // fortgesetzt); die Detailansicht und die Dauer wollen sie chronologisch.
+    laeufe[k].antworten.sort(function (x, y) { return x.ts - y.ts; });
     var z = zeileLauf(laeufe[k], titelMap);
     if (z.n) zeilen.push(z);
   });

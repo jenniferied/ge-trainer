@@ -338,6 +338,69 @@ export function offeneRunde(themen) {
   return l ? { id: l.thema.id, titel: l.thema.titel, offen: l.p.rest.length } : null;
 }
 
+/* ---------- Eine Runde aus ihrer Verlaufszeile fortsetzen (03.09.2026) ------
+   Jennifer, nachdem Rose eine fertige Runde verloren hatte: *"hauptsache sie
+   kann heute genau die runde die sie abgebrochen hatte weitermachen."*
+
+   Fuer Runden von HEUTE ABEND an liegt der Rest ohnehin abgelegt da (die Pause
+   oben). Fuer alles davor gibt es ihn nicht - abgelegt wurde damals nur beim
+   Pausieren, und Abbrechen hat nichts abgelegt. Rekonstruiert wird deshalb aus
+   dem, was im Log steht: WELCHE Sachen in der Runde dran waren und wie sie
+   zuletzt ausgingen.
+
+   Das reicht fuer genau das, worauf es Rose ankommt:
+     - Was nicht sass, steht wieder vorn auf dem Stapel.
+     - Die Sachen von vorhin ZAEHLEN MIT (versucht/sass werden gesetzt). Ohne
+       das faengt der Zaehler bei null an, die fortgesetzte Runde bliebe unter
+       ABSCHLUSS_MIN, und sie bekaeme fuer eine halbe Stunde Arbeit wieder
+       keinen Abschluss - der Fehler, der diesen ganzen Umbau ausgeloest hat.
+     - Die Runde behaelt ihre Id, die neuen Antworten landen also in DERSELBEN
+       Verlaufszeile statt in einer zweiten daneben.
+
+   Sass am Ende alles, ist der Rest leer - dann baut pruefung() frisch auf
+   (Zweig `fortsetzen` ohne `rest`), und die Zaehler von vorhin reisen
+   trotzdem mit. Das ist die ehrliche Lesart von "weitermachen": es gibt
+   nichts Liegengebliebenes mehr, die Runde selbst laeuft weiter.
+
+   Der SCHLUESSEL je Sache ist derselbe wie drinnen (sid(): f:/m:/b:) - stuende
+   hier ein anderer, zaehlte dieselbe Aufgabe zweimal. */
+function schluesselUndSchritt(a) {
+  var q = String(a.qid || "");
+  if (a.modus === "check") return { key: "m:" + q, art: "mc", id: q };
+  if (a.spiel === "glossar") return { key: "b:" + q, art: "begriff", id: q };
+  var p = q.indexOf("tlab-") === 0 ? 5 : q.indexOf("tsab-") === 0 ? 5 : 0;
+  if (!p) return null;   // Abschluss-Marken und alles Unbekannte fallen weg
+  var id = q.slice(p);
+  return { key: "f:" + id, art: "abruf", id: id };
+}
+
+export function fortsetzenAusZeile(r) {
+  if (!r || !r.lauf) return null;
+  var themaId = String(r.lauf).split(":")[0];
+  if (!themaId || themaId === "?") return null;
+  var stand = Object.create(null), reihe = [], themaJe = Object.create(null);
+  (r.antworten || []).forEach(function (a) {
+    var s = schluesselUndSchritt(a);
+    if (!s) return;
+    if (stand[s.key] === undefined) reihe.push(s);
+    stand[s.key] = { ok: a.richtig === true, art: s.art, id: s.id };
+    themaJe[s.key] = a.thema || themaId;
+  });
+  if (!reihe.length) return null;
+  var versucht = [], sass = Object.create(null), rest = [];
+  reihe.forEach(function (s) {
+    versucht.push(s.key);
+    sass[s.key] = stand[s.key].ok;
+    if (!stand[s.key].ok) {
+      rest.push({ art: s.art, id: s.id, thema: themaJe[s.key], runde: 0 });
+    }
+  });
+  return {
+    thema: themaId, lauf: r.lauf, rest: rest, versucht: versucht, sass: sass,
+    wiederholungen: 0, mitgenommenZahl: 0, tag: heuteTag(), ts: Date.now()
+  };
+}
+
 /* Fuer den Verlauf (main.js): welche RUNDE liegt angefangen da, und wie viele
    Schritte sind offen? Gibt { lauf, offen } oder null. Dieselbe
    Verfalls-Pruefung wie oben, aus demselben Grund - ein "Weitermachen" an einer
@@ -711,6 +774,15 @@ export function zeigeThemenLernen(themen, hooks, opt) {
   if (opt && opt.weiter) {
     var liegtJetzt = pauseLesen(themen);
     if (liegtJetzt) return pruefung(liegtJetzt.thema, liegtJetzt.p);
+  }
+  /* Und derselbe Weg fuer eine Runde, deren Rest nur noch im Log steht
+     (fortsetzenAusZeile). main.js reicht die Verlaufszeile herein; das Thema
+     wird hier aufgeloest, weil die Themenliste hier liegt. Findet es sich
+     nicht mehr, bleibt es bei der Themenwahl - kein Fehlersatz. */
+  if (opt && opt.zeile) {
+    var f = fortsetzenAusZeile(opt.zeile);
+    var tZ = f && themen.filter(function (t) { return t.id === f.thema; })[0];
+    if (tZ) return pruefung(tZ, f);
   }
 
   /* ---------- Schirm 1: Thema aussuchen ---------- */
@@ -1224,10 +1296,18 @@ export function zeigeThemenLernen(themen, hooks, opt) {
     var laufId = laufIdFuer(thema, fortsetzen);
     laufSetzen(laufId);
     var schritte;
-    if (fortsetzen) {
+    if (fortsetzen && (fortsetzen.rest || []).length) {
       schritte = fortsetzen.rest
         .map(function (e) { return schrittAusId(e, stand); })
         .filter(function (s) { return !!s; });
+    } else if (fortsetzen) {
+      /* Fortsetzen ohne Rest: die Runde einer Verlaufszeile, in der am Ende
+         alles sass (fortsetzenAusZeile). Dann gibt es nichts Liegengebliebenes
+         zurueckzuholen, und der Stapel wird frisch gebaut - die Zaehler von
+         vorhin reisen unten trotzdem mit, die Runde laeuft also weiter, statt
+         bei null anzufangen. Eine abgelegte Pause hat immer einen Rest
+         (pauseSpeichern loescht sonst) und kommt hier nie an. */
+      schritte = schritteBauen(thema, stand);
     } else {
       // Eine neue Runde ueberschreibt ein liegendes Angebot - so steht es in
       // Roses Satz ("wenn man keine neue Runde angefangen hat").
