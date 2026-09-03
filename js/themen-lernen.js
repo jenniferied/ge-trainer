@@ -1703,11 +1703,15 @@ export function zeigeThemenLernen(themen, hooks, opt) {
         // Fachbegriffe-Runde - deshalb spiel "glossar", nicht "themenlernen".
         var richtung = s.modus === "ziehen" ? "tippen" : "erklaeren";
         var karte;
-        var nachErgebnis = function (richtig) {
+        var nachErgebnis = function (richtig, gesagt) {
           versucht[sid(s)] = true;
           sass[sid(s)] = !!richtig;
+          /* `text` ist dasselbe Feld, in dem die freien Aufgaben Roses Antwort
+             tragen - die Detailansicht zeigt es damit ohne eigenen Zweig als
+             Zettel an. Gedeckelt wird schon in glossar.js. */
           logSpiel("glossar", s.e.id, richtig, {
-            thema: s.thema.id, richtung: richtung, imThemenLernen: true
+            thema: s.thema.id, richtung: richtung, imThemenLernen: true,
+            text: gesagt || undefined
           });
           if (!richtig) nochmal(s);
           // Jetzt steht die Liste fest (nochmal() ist durch), also stimmt auch

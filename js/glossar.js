@@ -1048,10 +1048,15 @@ export function zeigeGlossar(themen, hooks) {
    richtung "erklaeren": Begriff steht da, laut erklaeren, aufdecken, ehrlich
                          einschaetzen - Anki-Prinzip, ohne Tipp-Qual am Handy.
    onErgebnis(richtig) feuert genau einmal; geloggt wird beim Aufrufer. */
+/* Deckel fuer Roses eigenen Text im Lernstand. Gleiche Zahl und gleicher Grund
+   wie TEXT_MAX in treppe.js: er faehrt bei jedem Sync komplett hoch und runter. */
+var GESAGT_MAX = 600;
+
 export function begriffKarte(e, thema, richtung, onErgebnis) {
   var karte = el("div", "karte gl-karte");
   if (thema && thema.farbe) setzeFarbe(karte, thema.farbe);
   var fertig = false;
+  var gesagt = "";   // was Rose getippt hat, fuer den Rueckblick
 
   function abschliessen(richtig, aufdeckenNoetig) {
     if (fertig) return;
@@ -1072,7 +1077,11 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
       var q2 = quelleEl(e, thema);
       if (q2) karte.appendChild(q2);
     }
-    onErgebnis(!!richtig);
+    /* Was Rose GETIPPT hat, wandert mit (03.09.2026, Jennifer: "es sollte
+       immer auch gespeichert und dann angezeigt werden was sie gesagt hat").
+       Der Aufrufer loggt es; hier wird es nur durchgereicht, damit die Karte
+       weiter nichts ueber den Lernstand weiss. */
+    onErgebnis(!!richtig, gesagt);
   }
 
   if (richtung === "tippen") {
@@ -1092,6 +1101,7 @@ export function begriffKarte(e, thema, richtung, onErgebnis) {
     var pruefen = el("button", "knopf", "Prüfen");
     function pruefe() {
       if (fertig) return;
+      gesagt = eingabe.value.trim().slice(0, GESAGT_MAX);
       var getroffen = trifftBegriff(eingabe.value, e.begriff, e.auch);
       eingabe.disabled = true;
       pruefen.remove();
@@ -1210,7 +1220,10 @@ export function begriffErklaerKarte(e, thema, onErgebnis) {
   function abschliessen(richtig) {
     if (fertig) return;
     fertig = true;
-    onErgebnis(!!richtig);
+    // Ihre Erklaerung reist mit - Begruendung bei begriffKarte oben. Gelesen
+    // wird das Feld HIER und nicht beim Aufrufer: nach dem Abschliessen kann
+    // die Karte laengst umgebaut sein.
+    onErgebnis(!!richtig, (eingabe.value || "").trim().slice(0, GESAGT_MAX));
   }
 
   karte.appendChild(el("div", "gl-rolle", "Was bedeutet das? Erklär es in deinen Worten."));
@@ -1403,9 +1416,12 @@ export function zeigeFachbegriffe(themen, hooks, zurueckFn) {
     var e = gezogen[index];
     var thema = titelVon[e.thema];
     var richtung = richtungFuer(index);
-    function nachErgebnis(richtig) {
+    function nachErgebnis(richtig, gesagt) {
       if (richtig) richtige++;
-      logSpiel("glossar", e.id, richtig, { thema: e.thema, richtung: richtung });
+      // text wie beim Schreib-Modus oben: dasselbe Feld, dieselbe Anzeige.
+      logSpiel("glossar", e.id, richtig, {
+        thema: e.thema, richtung: richtung, text: gesagt || undefined
+      });
       var weiter = el("button", "knopf", index + 1 >= gezogen.length ? "Runde abschließen" : "Weiter");
       weiter.addEventListener("click", function () {
         index++;
