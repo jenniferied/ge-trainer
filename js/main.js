@@ -3,7 +3,7 @@
    und ui.js (Theme/Sticker/Konfetti). Einstiegspunkt der App (type="module"). */
 
 import { state, speichern, logAntwort, ladeThemen, mcStand, freiStand, themenStand, app, el, mischen, leeren, autoWachsen, beiSpeicherVoll,
-  starteRunde, beendeRunde, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen, merkeThemenIds} from "./core.js";
+  starteRunde, beendeRunde, laufSetzen, antwortText, sekundenSeit, reichZeile, stichpunkteTeilen, merkeThemenIds} from "./core.js";
 import { themeAnwenden, themeKnopf, setzeFarbe, stickerEl, standStickerEl, feiereEinmal, konfetti, quoteStufe, quotePille, standPille, rundenPille, punkteText, frag, erklaerAbfrage, rundenEinstellungen } from "./ui.js";
 import * as Klausur from "./klausur.js";
 // Papier abfotografieren / Bild hochladen. Liefert dieselben Bilder wie der
@@ -90,6 +90,14 @@ var themen = [];
    Antwort verschwindet dabei wieder, sie hat nie stattgefunden. */
 function zeige(route, arg) {
   beendeRunde();
+  /* Und er beendet den Lauf-Stempel des Themen-Lernens (core.js laufSetzen).
+     Die Runde loescht ihn selbst an ihren beiden Ausgaengen; hier liegt der
+     Riegel fuer alles andere - ein Weg aus dem Themen-Lernen heraus, der ueber
+     den Router geht, endet die Runde ohnehin (ihre Schrittliste lebt in einer
+     Closure, die niemand mehr aufrufen kann). Ohne diese Zeile truege die
+     naechste Antwort irgendwo in der App die Id einer Runde, die es nicht mehr
+     gibt, und stuende in deren Verlaufszeile. */
+  laufSetzen(null);
   switch (route) {
     case "thema": return zeigeThema(arg);
     case "check": return starteQuiz(arg);
@@ -152,7 +160,9 @@ function zeige(route, arg) {
        ueber Spiele.logSpiel (sid "spiel"), das Glossar ist reines Nachschlagen.
        Der Router-Fall heisst seit dem 19.08. "themenlernen"; ein Legacy-Name
        braucht es nicht, die Route wird nur aus dieser Datei heraus gerufen. */
-    case "themenlernen": return ThemenLernen.zeigeThemenLernen(themen, HOOKS);
+    // arg ist { weiter: true }, wenn der Aufruf aus einer Verlaufszeile kommt
+    // und direkt in die abgelegte Runde fuehren soll (zuletztAktionen).
+    case "themenlernen": return ThemenLernen.zeigeThemenLernen(themen, HOOKS, arg);
     // Die Fallgeschichte: Uebersicht der Folgen, Lesen und die zwei leichten
     // Fragen laufen komplett im Modul; es braucht von hier nur den Rueckweg.
     case "episode": return Episode.zeigeEpisoden(themen, HOOKS, function () { zeige("start"); });
@@ -1332,6 +1342,15 @@ function zeitText(ts) {
 /* Die Aufgabe zu einer Fragen-Id finden. Der GE-Trainer hat keine Session-
    Liste, die Runden werden aus dem Antwort-Log geschnitten - fuer die
    Detailansicht muss die Frage darum ueber ihre Id zurueckgesucht werden. */
+/* Die Aufgabe hinter einer qid im Log. SEIT DEM 03.09.2026 AUCH HINTER EINEM
+   PRAEFIX: die Abruf-Schritte des Themen-Lernens loggen "tlab-<id>" (im
+   Bestand "tsab-<id>"), damit sie im Themen-Lernen-Fortschritt von den
+   Abschluss-Marken zu unterscheiden sind. Dahinter steht aber eine ganz
+   normale freie Aufgabe, und ohne diesen Griff stand in der Detailansicht
+   fuer jeden einzelnen Schritt "Aufgabe aus einer frueheren Fassung" - der
+   Grund, warum Themen-Lernen-Zeilen bis dahin gar keine Detailansicht hatten. */
+var TL_PRAEFIX = ["tlab-", "tsab-"];
+
 function frageVon(qid) {
   for (var i = 0; i < themen.length; i++) {
     var t = themen[i];
@@ -1340,6 +1359,34 @@ function frageVon(qid) {
     var fr = (t.frei || []).filter(function (f) { return f.id === qid; })[0];
     if (fr) return { thema: t, frage: fr, typ: "frei" };
   }
+  for (var p = 0; p < TL_PRAEFIX.length; p++) {
+    if (String(qid).indexOf(TL_PRAEFIX[p]) === 0) {
+      return frageVon(String(qid).slice(TL_PRAEFIX[p].length));
+    }
+  }
+  return null;
+}
+
+/* Der Glossar-Eintrag hinter einer qid ("gl-…"). Begriffs-Schritte loggen ihre
+   eigene Id und liegen nicht im Themenkorpus - deshalb der zweite Nachschlager
+   neben frageVon(). eintraegeZu(null) gibt das ganze Glossar; ist es nicht
+   geladen, kommt eine leere Liste und damit null. */
+function begriffVon(qid) {
+  if (!qid || String(qid).indexOf("gl-") !== 0) return null;
+  return Glossar.eintraegeZu(null).filter(function (e) { return e.id === qid; })[0] || null;
+}
+
+/* Wie viele Bausteine einer Abruf-Aufgabe kamen. Zwei Fassungen, weil zwei im
+   Log liegen: seit dem 03.09.2026 die drei Zahlen (bs: [hatte, halb, gesamt]),
+   davor nur die Prozentzahl. Aus einer Prozentzahl wird hier KEINE Anzahl
+   zurueckgerechnet - "67 %" von sechs Bausteinen waeren 4,02, und eine
+   gerundete Vier waere eine Zahl, die Rose nie gesehen hat. */
+function bausteinText(a) {
+  var bs = a.bs;
+  if (Array.isArray(bs) && bs[2]) {
+    return bs[0] + " von " + bs[2] + " Bausteinen" + (bs[1] ? ", " + bs[1] + " halb" : "");
+  }
+  if (a.modus === "spiel" && typeof a.quote === "number") return a.quote + " % der Bausteine";
   return null;
 }
 
@@ -1351,6 +1398,13 @@ function antwortZeichen(a) {
     if (a.selbsteinschaetzung === "gut") return { z: "✓", k: "gut", w: "saß" };
     if (a.selbsteinschaetzung === "mittel") return { z: "~", k: "mittel", w: "halb" };
     return { z: "↻", k: "offen", w: "kommt wieder" };
+  }
+  /* Ein Schritt aus dem Themen-Lernen oder einem Spiel (modus "spiel"). Bis
+     zum 03.09.2026 stand hier ein blasser Punkt, weil diese Eintraege nie in
+     einer Detailansicht landeten. Dieselben zwei Zeichen wie beim Ankreuzen:
+     die Frage ist beantwortet oder sie kommt wieder. */
+  if (a.modus === "spiel") {
+    return a.richtig ? { z: "✓", k: "gut", w: "saß" } : { z: "↻", k: "offen", w: "kommt wieder" };
   }
   if (a.modus === "klausur") {
     // Seit 13.08. stehen auch BEARBEITETE, aber noch nicht bewertete Aufgaben im
@@ -1414,6 +1468,11 @@ function geschafftText(r) {
     return r.beantwortet + " von " + r.anzahl + (r.typ === "spiel" ? " Karten" : " Aufgaben");
   }
   if (r.typ === "spiel") return r.n + (r.n === 1 ? " Karte" : " Karten");
+  // Eine Themen-Lernen-Runde zaehlt SCHRITTE: darin liegen Ankreuzfragen,
+  // Abrufe und Begriffe nebeneinander, und "Aufgaben" waere fuer die Begriffe
+  // schon nicht mehr wahr. Es ist auch das Wort, das der Schirm selbst benutzt
+  // ("Schritt 4 von 19", themen-lernen.js).
+  if (r.typ === "tl") return r.n + (r.n === 1 ? " Schritt" : " Schritte");
   return r.n + (r.n === 1 ? " Antwort" : " Antworten");
 }
 
@@ -1498,6 +1557,29 @@ function zuletztAktionen(r, aufNeu) {
     box.appendChild(weiter);
   }
 
+  /* WEITERMACHEN AN EINER THEMEN-LERNEN-RUNDE (03.09.2026). Jennifers Frage
+     zu Roses verlorener Runde: "cant u pick it back up in the list all the way
+     down". Bis hierher nicht - der Weitermachen-Knopf darueber gilt nur
+     Sitzungen, und eine Themen-Lernen-Runde ist keine.
+
+     Er steht an GENAU EINER Zeile: der Runde, deren Rest wirklich abgelegt ist
+     (themen-lernen.js offeneLauf vergleicht die lauf-Id). Ein zweiter Knopf an
+     einer aelteren Zeile waere ein Versprechen ohne Deckung - abgelegt ist
+     immer nur eine Runde. Was in den anderen offen blieb, kommt ueber die
+     Faelligkeit von selbst wieder (reife.js), und der 🔁-Knopf daneben fuehrt
+     dorthin. */
+  var tlOffen = r.typ === "tl" && r.lauf ? ThemenLernen.offeneLauf(themen) : null;
+  if (tlOffen && tlOffen.lauf === r.lauf) {
+    var tlWeiter = el("button", "zuletzt-knopf stark", "Weitermachen");
+    tlWeiter.title = "Genau da weiter, wo du warst – "
+      + tlOffen.offen + (tlOffen.offen === 1 ? " Schritt" : " Schritte") + " liegen bereit";
+    tlWeiter.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      zeige("themenlernen", { weiter: true });
+    });
+    box.appendChild(tlWeiter);
+  }
+
   var art = Stats.wiederholArt(r, themen);
   if (art) {
     var nochmal = el("button", "zuletzt-knopf", "🔁");
@@ -1560,7 +1642,11 @@ function zuletztZeile(r, onKlick, aufNeu) {
   if (r.badge) kopf.appendChild(el("span", "zuletzt-art", r.badge));
   // Kein Rot und nicht "abgebrochen": eine Runde, die noch offen ist, ist eine,
   // die weitergehen darf. Rot bleibt fuer "heute dran und offen" reserviert.
-  if (r.typ === "sitzung" && !r.fertig) kopf.appendChild(el("span", "zuletzt-offen", "angefangen"));
+  // Auch an einer Themen-Lernen-Runde: "angefangen" heisst dort, dass kein
+  // Abschluss-Eintrag geschrieben wurde - das Thema ist also nicht durch.
+  if ((r.typ === "sitzung" || r.typ === "tl") && !r.fertig) {
+    kopf.appendChild(el("span", "zuletzt-offen", "angefangen"));
+  }
   box.appendChild(kopf);
 
   box.appendChild(el("span", null, rundenMeta(r)));
@@ -1873,18 +1959,38 @@ function zeigeRunde(r) {
 
   var hatHand = false;
   r.antworten.forEach(function (a) {
+    /* Die Abschluss-Marke einer Themen-Lernen-Runde ist keine Aufgabe, sondern
+       die Notiz "diese Runde zaehlt" (stats.js istRundenMarke). Sie steht in
+       der Liste, weil das Loeschen sie mitnehmen muss - angezeigt gehoert sie
+       nicht, hier stuende sonst eine Karte ohne Frage. */
+    if (Stats.istRundenMarke(a)) return;
     var gefunden = frageVon(a.qid);
+    // Ein Begriffs-Schritt (Themen-Lernen, Fachbegriffe-Runde). Er steht nicht
+    // im Themenkorpus, sondern im Glossar - ohne diesen Griff hiess er in der
+    // Detailansicht "Aufgabe aus einer frueheren Fassung".
+    var begriff = gefunden ? null : begriffVon(a.qid);
     var z = antwortZeichen(a);
     var karte = el("div", "karte runde-aufgabe");
 
     var zeile = el("div", "runde-zeile");
     zeile.appendChild(el("span", "runde-zeichen " + z.k, z.z));
     var box = el("div", "runde-text");
-    box.appendChild(reichZeile("b", gefunden ? gefunden.frage.frage : "Aufgabe aus einer früheren Fassung", null));
+    box.appendChild(reichZeile("b", gefunden ? gefunden.frage.frage
+      : begriff ? begriff.begriff
+        : "Aufgabe aus einer früheren Fassung", null));
     var meta = [];
     if (gefunden) meta.push(gefunden.thema.titel);
+    else if (begriff) meta.push("Fachbegriff");
     if (a.afb) meta.push("AFB " + AFB_ROEM[a.afb]);
     if (z.w) meta.push(z.w);
+    /* Wie viele Bausteine der Aufgabe kamen - die eigentliche Rueckmeldung
+       eines Abruf-Schritts. Seit dem 03.09.2026 stehen die drei Zahlen im Log
+       (themen-lernen.js, Feld bs); fuer alles davor gibt es nur die Prozentzahl,
+       und dann steht eben die da. Erfunden wird nichts. */
+    var bs = bausteinText(a);
+    if (bs) meta.push(bs);
+    if (a.modus2 === "ziehen") meta.push("Bausteine gezogen");
+    else if (a.modus2) meta.push("frei abgerufen");
     if (a.zeit) meta.push(a.zeit < 60 ? a.zeit + " s" : Math.round(a.zeit / 60) + " min");
     // Der Vermerk ueberlebt das Bild: gezeichnet wurde, auch wenn die Zeichnung
     // laengst nur noch auf dem Geraet liegt, auf dem sie entstanden ist.
@@ -1892,6 +1998,11 @@ function zeigeRunde(r) {
     box.appendChild(el("span", null, meta.join(" · ")));
     zeile.appendChild(box);
     karte.appendChild(zeile);
+
+    // Die Definition zum Nachlesen - beim Begriff ist SIE die Musterloesung.
+    if (begriff && (begriff.fassungen || {}).de) {
+      karte.appendChild(Beleg.belegZeile("div", begriff.fassungen.de, begriff.thema, "gl-definition"));
+    }
 
     var mc = mcAufloesung(a, gefunden);
     if (mc) karte.appendChild(mc);

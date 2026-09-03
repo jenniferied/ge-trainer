@@ -510,6 +510,112 @@ function zeileSpiel(g, titelMap) {
   };
 }
 
+/* ---------- D) Eine Themen-Lernen-Runde (03.09.2026) ----------
+   Der vierte Topf, und der einzige, der eine RUNDE zusammenhaelt, die keine
+   Sitzung ist. Die Vorgeschichte steht in core.js bei laufSetzen(): bis zum
+   03.09. lag eine Themen-Lernen-Runde in drei Zeilen - die Abruf-Schritte in
+   der Tageszeile "Themen-Lernen", die Ankreuzfragen in einer abgeleiteten
+   "Konzept-Check"-Zeile, die Begriffe in der Tageszeile "Fachbegriffe" -, und
+   drei Runden desselben Tages fielen zusaetzlich in EINE davon zusammen.
+   Roses Lernstand vom 03.09. zeigt das Muster in Reinform: drei Runden
+   zwischen 14:17 und 16:01, im Verlauf als eine einzige Zeile ohne
+   Detailansicht.
+
+   Der Gruppenschluessel ist die lauf-Id am Log-Eintrag (thema:zeitstempel).
+   Sie wird HIER ZUERST gefragt, vor Spiel und vor sid - sonst zoege
+   istSpielAntwort die Abruf-Schritte weiter in die Tageszeile und die zweite
+   Invariante oben ("jeder Eintrag in genau einer Zeile") waere gebrochen.
+
+   KEINE SITZUNG UND KEINE QUOTENPILLE. Die erste Invariante oben gilt
+   unveraendert: die Zeile entsteht ausschliesslich hier zur Anzeige, nichts
+   davon landet in state.sitzungen, und der Rundenschnitt sieht sie nicht. Was
+   sie traegt, ist die GEZAEHLTE Zahl - und zwar nach genau der Regel, mit der
+   das Fazit der Runde rechnet (themen-lernen.js versucht/sass): je Sache ihr
+   LETZTER Ausgang. Wer dreimal an derselben Aufgabe sitzt und sie am Ende
+   kann, hat sie gekonnt. Anders gerechnet stuenden Fazit und Verlauf mit zwei
+   verschiedenen Zahlen fuer dieselbe Runde da.
+
+   Alteintraege ohne lauf (alles vor dem 03.09.) fallen weiter in die
+   Tageszeilen. Das ist kein Rueckfall, sondern die Wahrheit ueber sie: fuer
+   sie ist nie festgehalten worden, welche Antwort zu welcher Runde gehoerte. */
+
+/* Der Abschluss-Eintrag einer Themen-Lernen-Runde ("tl-<thema>", im Bestand
+   "ts-<thema>"). Er ist keine Antwort, sondern eine Marke: die Runde zaehlt.
+   "tlab-…" faellt durch (indexOf("tl-") ist dort -1) - dieselbe Pruefung wie
+   istAbschluss() in themen-lernen.js, hier nochmal, weil stats.js das Modul
+   nicht importiert (es wuerde einen Zyklus ueber main.js aufziehen). */
+export function istRundenMarke(a) {
+  if (!a || a.modus !== "spiel") return false;
+  if (a.spiel !== "themenlernen" && a.spiel !== "tagesspiel") return false;
+  var q = String(a.qid || "");
+  return q.indexOf("tl-") === 0 || q.indexOf("ts-") === 0;
+}
+
+/* GEARBEITETE ZEIT, NICHT KALENDERZEIT. Eine pausierte Runde behaelt ihre
+   lauf-Id - der Knopf heisst ausdruecklich "Pause – morgen weiter" -, also
+   liegt zwischen ihrem ersten und ihrem letzten Eintrag notfalls eine Nacht.
+   bis - von haette dann "18 h" in die Zeile geschrieben. Gezaehlt werden
+   darum nur Abstaende, die nach Arbeit aussehen; die Grenze ist dieselbe wie
+   beim abgeleiteten Topf oben (RUNDEN_PAUSE, 30 Minuten).
+   Der erste Schritt hat keinen Vorgaenger und bringt deshalb keine Zeit mit -
+   die Zahl ist also eine Untergrenze. Das ist die richtige Richtung: eine
+   geschaetzte Lesezeit davorzurechnen waere eine erfundene Minute. */
+function arbeitsSek(arr) {
+  var summe = 0;
+  for (var i = 1; i < arr.length; i++) {
+    var d = arr[i].ts - arr[i - 1].ts;
+    if (d > 0 && d <= RUNDEN_PAUSE) summe += d;
+  }
+  return Math.round(summe / 1000);
+}
+
+function zeileLauf(g, titelMap) {
+  var schritte = g.antworten.filter(function (a) { return !istRundenMarke(a); });
+  // Die Marke im Topf heisst: die Runde ist regulaer abgeschlossen worden.
+  var fertig = schritte.length !== g.antworten.length;
+  // Je Sache ihr letzter Ausgang - die Regel des Fazits, siehe oben.
+  var stand = Object.create(null);
+  schritte.forEach(function (a) {
+    if (a.richtig === undefined || a.richtig === null) return;
+    stand[a.qid] = !!a.richtig;
+  });
+  var ids = Object.keys(stand);
+  var sass = ids.filter(function (k) { return stand[k]; }).length;
+  // Das Thema DER RUNDE steht im Schluessel (themen-lernen.js laufIdFuer).
+  // Faellt es aus - alter Schluessel, umgebautes Manifest -, nennt die Zeile
+  // die haeufigste Themen-Id ihrer Schritte statt zu raten.
+  var themaId = String(g.lauf).split(":")[0];
+  var titel = titelMap[themaId];
+  return {
+    typ: "tl", id: "tl:" + g.lauf, lauf: g.lauf, art: "spiel-themenlernen",
+    von: g.von, bis: g.bis,
+    /* Titel ist das THEMA - das Wort, auf das Rose gedrueckt hat -, die
+       Gattung daneben "Themen-Lernen". Dieselbe Aufteilung wie bei den
+       Sitzungen oben (Titel "Wohnen im SGE · AFB II", Gattung "Uebungsrunde").
+       Kein badge: neben der Gattung "Themen-Lernen" waere "Lernen" nur noch
+       ein zweites Wort fuer dasselbe. Die Spiel-Zeilen brauchen ihr badge, weil
+       ihre Gattung ihr Name ist ("Begriffe-Blitz"). */
+    icon: "📚", name: "Themen-Lernen",
+    titel: titel || "Themen-Lernen",
+    gemischt: false,
+    n: schritte.length,
+    anzahl: null, beantwortet: schritte.length, bewertet: ids.length,
+    dauerSek: arbeitsSek(g.antworten),
+    fertig: fertig,
+    punkte: null, max: null, bestanden: null,
+    zaehlung: { sass: sass, bewertet: ids.length },
+    themen: themenTitel(titel ? [themaId] : themenAus(schritte), titelMap),
+    // ALLE Eintraege, die Marke eingeschlossen: an dieser Liste haengt das
+    // Loeschen (sync.js loescheRunde setzt je Antwort einen Grabstein), und
+    // eine geloeschte Runde, deren Abschluss-Marke stehenblieb, liesse das
+    // Thema als durchgearbeitet gelten, ohne dass noch eine Antwort davon
+    // erzaehlt. Die Detailansicht ueberspringt die Marke (main.js).
+    antworten: g.antworten,
+    selbst: selbstZaehler(schritte),
+    quote: null
+  };
+}
+
 export function letzteRunden(themen, max) {
   var titelMap = {};
   (themen || []).forEach(function (t) { titelMap[t.id] = t.titel; });
@@ -519,9 +625,26 @@ export function letzteRunden(themen, max) {
   sitzungen.forEach(function (s) { if (s && s.id) proSid[s.id] = []; });
 
   // Genau ein Topf je Antwort - siehe zweite Invariante oben.
-  var lose = [], spiele = {};
+  var lose = [], spiele = {}, laeufe = {};
   (state.antwortLog || []).forEach(function (a) {
     if (!a || !a.ts) return;
+    /* Die Runden-Id zuerst: sie sticht Spiel UND sid. Ein Themen-Lernen-
+       Schritt traegt beides (modus "spiel", sid "spiel"), und eine
+       Ankreuzfrage aus derselben Runde gar nichts davon - erst der Lauf legt
+       sie in dieselbe Zeile. */
+    /* AUSSER DER EPISODE. Die Folge laeuft als Intro der Sitzung, ihre zwei
+       Fragen gehoeren in die Runde (sie loggen als "themenlernen") - ihr
+       ABSCHLUSS-Eintrag aber nicht: "gelesen" ist ein eigener Vorgang, er
+       gehoert in seine eigene Zeile 📖, und in der Runden-Detailansicht
+       stuende er als Karte ohne Frage da. Er traegt den Stempel trotzdem, weil
+       er durch dieselbe Schreibstelle laeuft; aussortiert wird er hier, an der
+       einen Stelle, die alle Schreibwege sieht. */
+    if (a.lauf && a.spiel !== "episode") {
+      var lg = laeufe[a.lauf] || (laeufe[a.lauf] = { lauf: a.lauf, von: a.ts, bis: a.ts, antworten: [] });
+      lg.bis = a.ts;
+      lg.antworten.push(a);
+      return;
+    }
     if (istSpielAntwort(a)) {
       var art = SPIEL_TEXT[a.art] ? a.art : (a.spiel === "operatoren" ? "spiel-operatoren" : "spiel-begriffe");
       var key = new Date(a.ts).toDateString() + "|" + art;
@@ -556,6 +679,13 @@ export function letzteRunden(themen, max) {
   gruppen.forEach(function (g) { zeilen.push(zeileAbgeleitet(g, titelMap)); });
 
   Object.keys(spiele).forEach(function (k) { zeilen.push(zeileSpiel(spiele[k], titelMap)); });
+  /* Eine Runde, in der nur die Abschluss-Marke steht, ist keine Zeile: das
+     passiert, wenn ihre Antworten geloescht worden sind oder aus einem Merge
+     ohne sie zurueckkommen. Dieselbe Regel wie oben bei den Sitzungen. */
+  Object.keys(laeufe).forEach(function (k) {
+    var z = zeileLauf(laeufe[k], titelMap);
+    if (z.n) zeilen.push(z);
+  });
 
   zeilen.sort(function (a, b) { return b.bis - a.bis; });
   return zeilen.slice(0, max || 5);
@@ -2317,6 +2447,13 @@ export function rundePool(r, themen) {
 export function wiederholArt(r, themen) {
   if (!r) return null;
   if (r.typ === "spiel") return "spiel";
+  /* Eine Themen-Lernen-Runde wird nicht als Uebungsrunde nachgebaut. Sie ist
+     mehr als ihre Aufgaben: Reihenfolge, Wiedererkennen-Einstieg, Begriffe,
+     Wiederholung bis es sitzt (themen-lernen.js). Durch runde() geschickt
+     bliebe davon eine Liste Aufgaben uebrig, die "Themen-Lernen" hiesse und
+     keines waere - dieselbe Begruendung wie bei der Klausur darunter. Der
+     Knopf fuehrt darum an ihren eigenen Einstieg (main.js SPIEL_ROUTE). */
+  if (r.typ === "tl") return "spiel";
   if (r.art === "klausur" || r.art === "klausurfrage") return "klausur";
   return rundePool(r, themen).pool.length ? "runde" : null;
 }

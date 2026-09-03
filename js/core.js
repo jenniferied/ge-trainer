@@ -418,9 +418,43 @@ export function sitzungenNachziehen(st) {
 
    Auf die aid hat das Feld KEINEN Einfluss: antwortId() ist ts + "-" + qid.
    Ein Teilschritt-Eintrag merged sich also wie jeder andere. */
+/* ---------- Der Lauf-Stempel (03.09.2026) ----------
+   Eine Themen-Lernen-Runde ist KEINE Sitzung (state.sitzungen) und darf keine
+   werden - die Invariante in stats.js ("Spiele bekommen nie eine Sitzung",
+   dort begruendet) haengt am Rundenschnitt, der Klausurnaehe messen soll.
+   Trotzdem IST so eine Runde eine Runde: Rose drueckt auf ein Thema, arbeitet
+   zwanzig Schritte und hoert wieder auf.
+
+   Sichtbar wurde das am 03.09.2026 an Roses Lernstand: ihre drei Runden dieses
+   Tages lagen im Verlauf als EINE Zeile ("je Tag und Spielart eine Zeile"),
+   ihre Ankreuzschritte daneben als eigene "Konzept-Check"-Zeile (die loggen
+   modus "check" ohne sid) und ihre Begriffe als "Fachbegriffe"-Zeile. Eine
+   Runde stand also in drei Zeilen, keine davon anklickbar.
+
+   Deshalb dieser Stempel: wer eine Runde faehrt, setzt EINE Id, und jeder
+   Log-Eintrag traegt sie mit - egal, ueber welchen Weg er entsteht
+   (logSpiel in spiele.js, die MC-Karte in main.js, die Begriffskarten in
+   glossar.js). Gruppiert wird spaeter darueber (stats.js, zeileLauf).
+
+   AM LOG-EINTRAG SELBST AENDERT SICH SONST NICHTS: modus bleibt "spiel",
+   sid bleibt "spiel", art bleibt "spiel-themenlernen". Das ist Absicht und
+   nicht Bequemlichkeit - an modus "spiel" haengen wertVon() in stats.js,
+   ausLog() in sync.js (leitet mc/frei-Staende ab) und heuteGespielt() in
+   spiele.js. Ein Themen-Lernen-Schritt, der ploetzlich modus "frei" hiesse,
+   schriebe in Roses Lernstand hinein.
+
+   Der Stempel ist geraetelokal und lebt nur, solange die Runde laeuft: kein
+   snapshot(), kein signatur(), kein Feld in sync.js. Er REIST nur als Feld
+   `lauf` an den Antworten mit, und die reisen ohnehin. */
+var aktiverLauf = null;
+export function laufSetzen(id) { aktiverLauf = id || null; }
+
 export function logAntwort(eintrag) {
   var e = Object.assign({ afb: null, ts: Date.now() }, eintrag);
   var runde = aktiveRunde();
+  // Der Lauf-Stempel, falls einer laeuft. Ein Aufrufer, der `lauf` selbst
+  // setzt, behaelt seinen Wert - dieselbe Regel wie bei sid darunter.
+  if (aktiverLauf && e.lauf === undefined) e.lauf = aktiverLauf;
   // Runden-Kontext stempeln. Aufrufer duerfen sid selbst setzen (die Spiele
   // tragen "spiel", die Klausur ihre Bogen-Id) - dann bleibt das stehen.
   if (e.sid === undefined) e.sid = runde ? runde.id : null;

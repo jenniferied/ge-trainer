@@ -43,7 +43,7 @@
    ABHAENGIGKEITEN: core.js, ui.js, spiele.js (logSpiel), treppe.js,
    glossar.js, stoebern.js (materialKarteFuer), reife.js. Kein main.js. */
 
-import { app, el, leeren, speichern, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
+import { app, el, laufSetzen, leeren, speichern, state, ohneHilfe, reichZeile, stichpunkteTeilen } from "./core.js";
 import { setzeFarbe, stickerEl, fokusSicher } from "./ui.js";
 import { logSpiel } from "./spiele.js";
 import { abrufKarte, abschnitteFuer, abschnittZeilen, distraktorenFuer, operatorSatz, saeulenIndizes } from "./treppe.js";
@@ -336,6 +336,18 @@ function pauseLoeschen() {
 export function offeneRunde(themen) {
   var l = pauseLesen(themen || []);
   return l ? { id: l.thema.id, titel: l.thema.titel, offen: l.p.rest.length } : null;
+}
+
+/* Fuer den Verlauf (main.js): welche RUNDE liegt angefangen da, und wie viele
+   Schritte sind offen? Gibt { lauf, offen } oder null. Dieselbe
+   Verfalls-Pruefung wie oben, aus demselben Grund - ein "Weitermachen" an einer
+   Verlaufszeile, hinter dem nichts mehr liegt, waere ein toter Knopf.
+   Pausen aus dem Bestand vor dem 03.09.2026 tragen keine lauf-Id; fuer sie
+   gibt es hier nichts, und der Weg bleibt der Knopf auf dem Themen-Lernen-
+   Schirm (den es unveraendert weiter gibt). */
+export function offeneLauf(themen) {
+  var l = pauseLesen(themen || []);
+  return l && l.p.lauf ? { lauf: l.p.lauf, offen: l.p.rest.length } : null;
 }
 
 /* Liegt eine angefangene Runde? Verfaellt still, wenn der Stempel mehr als zwei
@@ -687,11 +699,30 @@ function schrittFuer(art, obj, thema, stand) {
 
 /* ---------- Der Hauptschirm ---------- */
 
-export function zeigeThemenLernen(themen, hooks) {
+export function zeigeThemenLernen(themen, hooks, opt) {
   var gesperrt = gespielteRunde(themen);
+
+  /* Direkt in die abgelegte Runde (03.09.2026). Kommt Rose ueber
+     "Weitermachen" an einer Verlaufszeile, hat sie ihre Entscheidung schon
+     getroffen - dann waere der Themenwahl-Schirm mit demselben Knopf darauf
+     ein zweiter Klick fuer dasselbe. Liegt nichts (mehr) da, faellt der Weg
+     still auf die Themenwahl zurueck: pauseLesen hat dann eben verworfen,
+     und ein Fehlersatz darueber wuerde nur erschrecken. */
+  if (opt && opt.weiter) {
+    var liegtJetzt = pauseLesen(themen);
+    if (liegtJetzt) return pruefung(liegtJetzt.thema, liegtJetzt.p);
+  }
 
   /* ---------- Schirm 1: Thema aussuchen ---------- */
   function start() {
+    /* Hier endet jede Runde, die nicht ins Fazit laeuft (Zurueck, Pause, ein
+       Stapel, der sich nicht mehr aufloest). Der Lauf-Stempel muss weg, sonst
+       traegt die naechste Antwort irgendwo in der App noch die Id einer Runde,
+       die es nicht mehr gibt - und der Verlauf zeigte sie in dieser Zeile.
+       Zusammen mit demselben Aufruf in fazit() deckt das ALLE Ausgaenge ab:
+       vom Schritt-Schirm fuehren nur diese zwei Wege weg. */
+    laufSetzen(null);
+    laufBereit = null;
     leeren();
     app.style.removeProperty("--tfarbe-basis");
     var z = el("button", "zurueck", "← Startseite");
@@ -903,6 +934,13 @@ export function zeigeThemenLernen(themen, hooks) {
        von acht Themen der Fall. Welche Folge es wird, entscheidet episode.js;
        die eigene des Themas hat dort Vorrang. */
     if (folgeFuerSitzung(thema.id)) {
+      /* Die Runde faengt HIER an, nicht erst bei der Pruefung: die zwei
+         leichten Fragen der Folge loggen als "themenlernen" und gehoeren in
+         diese Zeile. Der Stempel haelt bis zum Ausstieg - start() und fazit()
+         raeumen ihn weg, und der Router tut es fuer jeden anderen Weg
+         (main.js zeige). */
+      laufBereit = laufIdFuer(thema, null);
+      laufSetzen(laufBereit);
       return spieleAlsIntro(thema, themen, hooks,
         function () { materialSchirm(thema); },
         function () { start(); });
@@ -1151,8 +1189,40 @@ export function zeigeThemenLernen(themen, hooks) {
     return treffer;
   }
 
+  /* Die Id DIESER Runde (03.09.2026). Sie steht in jedem Log-Eintrag der Runde
+     (core.js laufSetzen, Begruendung dort) und ist der Gruppenschluessel im
+     Verlauf - eine Runde, eine Zeile, egal wie viele Schritte welcher Art
+     darin liegen.
+
+     DAS THEMA STEHT IM SCHLUESSEL, vor dem Doppelpunkt. Nicht aus Sparsamkeit,
+     sondern weil die Alternative ein zweites Feld an jedem Eintrag waere: der
+     Verlauf braucht das Thema DER RUNDE, und die Schritte tragen ihr eigenes
+     (der Endlos-Stapel bringt Aufgaben aus frueheren Themen mit, siehe
+     schritteBauen). Wer den Schluessel liest, splittet an ":" - faellt das aus,
+     bleibt der Rueckfall ueber die haeufigste Themen-Id (stats.js themenAus).
+
+     BEIM FORTSETZEN BLEIBT DIE ALTE ID STEHEN. Eine pausierte und morgen
+     weitergefuehrte Runde ist EINE Runde - sonst stuenden im Verlauf zwei
+     Zeilen fuer etwas, das Rose als eine Sache erlebt hat. */
+  /* laufBereit: die Id einer Runde, die schon VOR der Pruefung angefangen hat.
+     Das gibt es genau einmal - die Episode laeuft als Intro der Sitzung, und
+     ihre zwei leichten Fragen loggen als "themenlernen" (episode.js,
+     Kopfkommentar). Ohne diesen Vorgriff bekaeme ein Tag, an dem Rose eine
+     Folge liest, neben den Runden-Zeilen eine zweite, tagesgruppierte und
+     nicht antippbare Themen-Lernen-Zeile mit diesen zwei Fragen darin - also
+     genau die Verwirrung, die dieser Umbau abschafft. */
+  var laufBereit = null;
+
+  function laufIdFuer(thema, fortsetzen) {
+    if (fortsetzen && fortsetzen.lauf) return fortsetzen.lauf;
+    if (laufBereit) return laufBereit;
+    return thema.id + ":" + Date.now().toString(36);
+  }
+
   function pruefung(thema, fortsetzen) {
     var stand = reifeStand();
+    var laufId = laufIdFuer(thema, fortsetzen);
+    laufSetzen(laufId);
     var schritte;
     if (fortsetzen) {
       schritte = fortsetzen.rest
@@ -1268,8 +1338,37 @@ export function zeigeThemenLernen(themen, hooks) {
       leeren();
       setzeFarbe(app, s.thema.farbe);
       var reihe = el("div", "tl-kopf-reihe");
-      var z = el("button", "zurueck", "← Abbrechen");
-      z.addEventListener("click", function () { start(); });
+      /* ← ZURUECK WIRFT NICHTS MEHR WEG (03.09.2026, nach Roses Bericht).
+         Der Knopf hiess "Abbrechen" und tat genau das: raus, ohne Pause und
+         ohne Abschluss-Eintrag. Rose hat ihn am 03.09. am Ende ihrer dritten
+         Runde erwischt - "i accidentally pressed on abrechnen and it was
+         gone". Ihre Antworten standen zwar noch im Log, aber das Thema war
+         nicht durch, das Level nicht gehoben, die Zaehl-Blase zeigte zwei
+         statt drei. Von einem Knopf oben links erwartet niemand, dass er eine
+         halbe Stunde Arbeit ungezaehlt laesst.
+
+         Jetzt entscheidet der Knopf danach, WAS ueberhaupt noch kommt:
+
+           nichts angefangen  -> schlicht zurueck (wie bisher)
+           es liegt noch Rest -> Pause: die Runde bleibt ein Angebot, Rotation
+                                 und Level bleiben unangetastet
+           kein Rest mehr     -> abschliessen(): es gibt nichts, wozu Rose
+                                 zurueckkehren koennte, also ist die Runde
+                                 vorbei. abschliessen() prueft selbst, ob sie
+                                 mit ABSCHLUSS_MIN Sachen zaehlt, und legt
+                                 sonst wieder eine Pause ab.
+
+         Damit gibt es aus dieser Runde keinen Ausgang mehr, der Arbeit
+         verliert - "Fuer heute reicht es" schliesst sie bewusst ab, Pause
+         parkt sie bewusst, und Zurueck tut das Naheliegende von beidem. */
+      var z = el("button", "zurueck", "← Zurück");
+      z.title = "Nichts geht verloren – der Rest liegt dann bereit";
+      z.addEventListener("click", function () {
+        if (!index && !Object.keys(versucht).length) return start();
+        if (index >= schritte.length - 1) return abschliessen();
+        pauseSpeichern();
+        start();
+      });
       reihe.appendChild(z);
       /* "Fuer heute reicht es" schreibt das Fazit REGULAER - inklusive
          Abschluss-Eintrag. Abbrechen tut das nicht, und damit zaehlte eine
@@ -1382,9 +1481,16 @@ export function zeigeThemenLernen(themen, hooks) {
               /* JEDER Versuch wird geloggt, auch der dritte an derselben
                  Aufgabe: die Reife-Ableitung (reife.js) liest die FOLGE, und
                  eine ausgelassene Zeile wuerde sie verfaelschen. */
+              /* bs = wie viele Bausteine da waren, wie viele sassen, wie viele
+                 halb. Drei kleine Zahlen, damit die Verlaufs-Detailansicht
+                 "4 von 6 Bausteinen, 1 halb" sagen kann statt "67 %" - eine
+                 Prozentzahl ist an einer Aufgabe mit sechs Bausteinen keine
+                 Rueckmeldung, sondern eine Note. quote bleibt trotzdem
+                 stehen: reife.js und der Bestand vor dem 03.09. lesen sie. */
               logSpiel("themenlernen", "tlab-" + s.f.id, ok, {
                 thema: s.thema.id,
                 quote: Math.round(erg.quote * 100),
+                bs: [erg.hatte || 0, erg.halb || 0, erg.gesamt || 0],
                 modus2: s.modus === "ziehen" ? "ziehen" : "frei"
               });
               if (!ok) nochmal(s);
@@ -1465,6 +1571,12 @@ export function zeigeThemenLernen(themen, hooks) {
       if (!rest.length) return pauseLoeschen();
       state.tlPause = {
         thema: thema.id,
+        /* Die Id der Runde, damit ihre Zeile im Verlauf weiss, dass GENAU SIE
+           angefangen daliegt (stats.js tlWeiter). Ohne das Feld waere
+           "Weitermachen" eine Vermutung ueber die neueste Zeile. Eine Pause
+           aus dem Bestand vor dem 03.09. hat keine - dann steht der Knopf
+           eben nur auf dem Themen-Lernen-Schirm. */
+        lauf: laufId,
         rest: rest,
         versucht: Object.keys(versucht),
         sass: sass,
@@ -1534,6 +1646,11 @@ export function zeigeThemenLernen(themen, hooks) {
       // Die Runde ist durch - ein liegendes Angebot waere ab jetzt eine Luege.
       pauseLoeschen();
     }
+    /* NACH dem Abschluss-Eintrag: der gehoert noch zu dieser Runde und traegt
+       ihre Id, damit die Verlaufszeile weiss, dass sie fertig ist. Alles, was
+       Rose von hier an tut, gehoert nicht mehr dazu. */
+    laufSetzen(null);
+    laufBereit = null;
 
     var heuteZahl = heuteThemen();
     leeren();
