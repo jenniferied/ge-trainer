@@ -42,6 +42,27 @@ function laden() {
   if (!s.mk || typeof s.mk !== "object") s.mk = {};
   if (!s.mk.ei && s.eiVariante) s.mk.ei = s.eiVariante;
   delete s.eiVariante;
+  /* Migration 03.09.2026: aus EINEM Parkplatz fuer eine angefangene
+     Themen-Lernen-Runde wird eine LISTE (state.tlPausen). Jennifer, nachdem
+     Rose eine Runde verloren hatte: "mach dann einfach mehrere parkplaetze".
+     Vorher kostete das Anfangen eines zweiten Themas den Rest des ersten -
+     genau das ist Rose am 03.09. zwischen Mobilitaet und Freizeit passiert.
+
+     Die alte Einzelpause wird uebernommen, nicht weggeworfen; sie bekommt
+     einen synthetischen Lauf-Schluessel, damit sie sich wie jede neue mergen
+     laesst (sync.js). Ein Grabstein (rest: []) wandert nicht mit - er hat
+     seine Arbeit getan, sobald hier nichts mehr liegt. `tlPause` selbst wird
+     ab jetzt nicht mehr geschrieben; ein Geraet mit der alten Fassung behaelt
+     seine eigene Pause, bis es den neuen Stand laedt. */
+  if (!Array.isArray(s.tlPausen)) s.tlPausen = [];
+  if (s.tlPause && typeof s.tlPause === "object" && (s.tlPause.rest || []).length) {
+    var alt = s.tlPause;
+    var schluessel = (alt.thema || "?") + ":m" + (alt.ts || Date.now()).toString(36);
+    if (!s.tlPausen.some(function (p) { return p && p.lauf === schluessel; })) {
+      s.tlPausen.push(Object.assign({}, alt, { lauf: schluessel }));
+    }
+  }
+  s.tlPause = null;
   // Stabiler Dedupe-Schluessel je Antwort an Altbestand nachtragen (siehe ARCHITEKTUR.md).
   s.antwortLog.forEach(function (a) { if (a && !a.aid && a.qid) a.aid = antwortId(a); });
   return s;

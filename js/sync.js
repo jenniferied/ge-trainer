@@ -623,7 +623,19 @@ export function snapshot(st) {
     // Server-Zeile ohne das Feld nicht dauerhaft als verschieden gilt. Ein
     // Grabstein { ts, rest: [] } faehrt als Objekt mit - das Loeschen ist ein
     // Ereignis und muss das andere Geraet erreichen (Merge-Regel in mergeIn).
-    tlPause: s.tlPause || null };
+    tlPause: s.tlPause || null,
+    /* tlPausen: dieselbe Sache als LISTE (03.09.2026) - eine angefangene Runde
+       je Thema statt einer im ganzen Trainer. Der Schluessel je Eintrag ist die
+       lauf-Id, und damit gilt die alte Merge-Regel unveraendert JE EINTRAG:
+       hoeheres ts gewinnt, ein Grabstein (rest: []) ist eine Handlung wie jede
+       andere. Der Deckel sitzt beim Schreiber (themen-lernen.js PAUSE_MAX);
+       hier wird nur normiert, damit eine Server-Zeile ohne das Feld dieselbe
+       Signatur traegt wie ein Geraet ohne Parkplatz.
+       `tlPause` darueber bleibt im Snapshot, wird aber nicht mehr geschrieben
+       (core.js migriert es in die Liste): ein Geraet mit der alten Fassung
+       soll durch unser null nichts verlieren, und mergeIn faltet seine Pause
+       unten in die Liste. */
+    tlPausen: (s.tlPausen || []).slice() };
   if (heute) aus.heute = heute;
   return aus;
 }
@@ -737,7 +749,15 @@ export function signatur(d) {
   var tlp = daten.tlPause && typeof daten.tlPause === "object"
     ? (daten.tlPause.ts || 0) + ":" + ((daten.tlPause.rest || []).length)
     : "-";
-  return [aids, mc, frei, tot, mk, chat, sit, fq, hist, tlp].join("|");
+  /* Und dasselbe fuer die Liste, sortiert nach lauf - zwei Geraete mit
+     denselben Parkplaetzen in anderer Reihenfolge sind derselbe Stand und
+     duerfen sich nicht gegenseitig pushen. Eine leere Liste und ein fehlendes
+     Feld ergeben beide "-", sonst gaelte jede alte Server-Zeile als
+     verschieden und jedes Laden schriebe zurueck. */
+  var tlps = (daten.tlPausen || []).map(function (p) {
+    return (p && p.lauf) + ":" + ((p && p.ts) || 0) + ":" + (((p && p.rest) || []).length);
+  }).sort().join(",") || "-";
+  return [aids, mc, frei, tot, mk, chat, sit, fq, hist, tlp, tlps].join("|");
 }
 
 /* ---------- Merge ----------
@@ -1009,14 +1029,35 @@ export function mergeIn(st, remote) {
      bei Gleichstand bleibt der lokale Wert stehen. Ein Remote ohne das Feld
      (jede Zeile von vor dem 22.08.) loescht nichts - dieselbe Eigenschaft wie
      bei mkChat und den Kaeufen. */
+  /* DIE LISTE (03.09.2026). Dieselbe Regel wie oben, nur je lauf: Vereinigung
+     ueber den Schluessel, hoeheres ts gewinnt, Grabsteine gewinnen genauso.
+     Ein Remote OHNE das Feld entwertet nichts - dieselbe Eigenschaft wie bei
+     mkChat und den Kaeufen.
+
+     Die einzelne `tlPause` eines Geraets mit der alten Fassung wird dabei
+     EINGEFALTET, mit demselben synthetischen Schluessel, den core.js beim
+     Migrieren vergibt. Ohne das verlore Rose ihre Pause genau einmal: beim
+     ersten Sync zwischen altem Handy und neuem Laptop. */
+  var rPausen = (r.tlPausen || []).slice();
   var rPause = r.tlPause;
-  if (rPause && typeof rPause === "object") {
-    var lPause = st.tlPause;
-    var lTs = (lPause && typeof lPause === "object" && lPause.ts) || 0;
-    if ((rPause.ts || 0) > lTs) st.tlPause = rPause;
-    // Altbestand-Bruecke: lokal liegt gar nichts, remote eine echte Pause ohne
-    // ts (D's Bauform vor dem Umzug) - die darf nicht an 0 > 0 scheitern.
-    else if (!lPause && (rPause.rest || []).length) st.tlPause = rPause;
+  if (rPause && typeof rPause === "object" && (rPause.rest || []).length) {
+    rPausen.push(Object.assign({}, rPause, {
+      lauf: rPause.lauf || ((rPause.thema || "?") + ":m" + (rPause.ts || 0).toString(36))
+    }));
+  }
+  if (rPausen.length) {
+    var jeLauf = Object.create(null);
+    (st.tlPausen || []).forEach(function (p) { if (p && p.lauf) jeLauf[p.lauf] = p; });
+    rPausen.forEach(function (p) {
+      if (!p || !p.lauf) return;
+      var da = jeLauf[p.lauf];
+      if (!da || (p.ts || 0) > (da.ts || 0)) jeLauf[p.lauf] = p;
+    });
+    var vereint = Object.keys(jeLauf).map(function (k) { return jeLauf[k]; })
+      .sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+    // Derselbe Deckel wie beim Schreiber (themen-lernen.js PAUSE_MAX) - sonst
+    // waechst die Liste ueber den Merge, den kein Knopfdruck begrenzt.
+    st.tlPausen = vereint.slice(0, 6);
   }
 
   // Chatverlauf: Vereinigung beider Seiten, ueber die Id dedupliziert, nach

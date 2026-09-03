@@ -1562,14 +1562,12 @@ function zuletztAktionen(r, aufNeu) {
      down". Bis hierher nicht - der Weitermachen-Knopf darueber gilt nur
      Sitzungen, und eine Themen-Lernen-Runde ist keine.
 
-     Er steht an GENAU EINER Zeile: der Runde, deren Rest wirklich abgelegt ist
-     (themen-lernen.js offeneLauf vergleicht die lauf-Id). Ein zweiter Knopf an
-     einer aelteren Zeile waere ein Versprechen ohne Deckung - abgelegt ist
-     immer nur eine Runde. Was in den anderen offen blieb, kommt ueber die
-     Faelligkeit von selbst wieder (reife.js), und der 🔁-Knopf daneben fuehrt
-     dorthin. */
-  var tlOffen = r.typ === "tl" && r.lauf ? ThemenLernen.offeneLauf(themen) : null;
-  if (tlOffen && tlOffen.lauf === r.lauf) {
+     Er steht an jeder Zeile, deren Rest wirklich abgelegt ist - seit dem
+     03.09.2026 abends koennen das mehrere sein, eine Runde je Thema
+     (themen-lernen.js, PAUSE_MAX). Fuer alles davor greift der Zweig
+     darunter: dort wird der Rest aus dem Log rekonstruiert. */
+  var tlOffen = r.typ === "tl" ? ThemenLernen.offeneLauf(themen, r.lauf) : null;
+  if (tlOffen) {
     var tlWeiter = el("button", "zuletzt-knopf stark", "Weitermachen");
     tlWeiter.title = "Genau da weiter, wo du warst – "
       + tlOffen.offen + (tlOffen.offen === 1 ? " Schritt" : " Schritte") + " liegen bereit";
@@ -2331,8 +2329,12 @@ function heuteDranKarte() {
   var tlLiegt = ThemenLernen.offeneRunde(themen);
   if (tlLiegt) {
     var z = el("div", "heute-liegt");
+    // Die weiteren nur zaehlen, nicht aufzaehlen: hier steht der naechste
+    // Schritt, die vollstaendige Liste steht auf dem Themen-Lernen-Schirm.
     z.appendChild(el("span", null, "📚 " + tlLiegt.titel + " liegt angefangen da – "
-      + tlLiegt.offen + (tlLiegt.offen === 1 ? " Schritt" : " Schritte") + " offen. "));
+      + tlLiegt.offen + (tlLiegt.offen === 1 ? " Schritt" : " Schritte") + " offen"
+      + (tlLiegt.weitere ? " (und " + tlLiegt.weitere + " weitere Runde" + (tlLiegt.weitere === 1 ? "" : "n") + ")" : "")
+      + ". "));
     var hin = el("button", "text-knopf", "Weitermachen");
     hin.addEventListener("click", function () { zeige("themenlernen"); });
     z.appendChild(hin);

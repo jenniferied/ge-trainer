@@ -318,15 +318,59 @@ var MAX_LEVEL = 3;
    mehr gibt, faellt still weg. Ein Korpus-Umbau kann die Pause damit nie
    kaputtmachen - und eine Pause von einem ANDEREN Geraet mit fremden Ids
    genauso wenig (alles weg -> "keine Pause", siehe fortsetzen-Pfad). Klein
-   bleibt der Snapshot damit auch: reine Ids, nie Objekte. */
-var PAUSE_LERNTAGE = 2;
+   bleibt der Snapshot damit auch: reine Ids, nie Objekte.
 
-function pauseLoeschen() {
-  // "Kein rest" ist schon der geloeschte Zustand - ein Grabstein muss seinen
-  // Stempel dann nicht erneuern (er hat beim Loeschen gewonnen und bleibt).
-  if (!state.tlPause || !(state.tlPause.rest || []).length) return;
-  state.tlPause = { ts: Date.now(), rest: [] };
+   MEHRERE PARKPLAETZE SEIT DEM 03.09.2026 (Jennifer: "mach dann einfach
+   mehrere parkplaetze"). Bis dahin gab es genau einen: wer Thema B anfing,
+   verlor den Rest von Thema A wortlos. Genau das ist Rose am 03.09. zwischen
+   Mobilitaet und Freizeit passiert. Jetzt ist es eine Liste (state.tlPausen),
+   und der Schluessel je Eintrag ist die lauf-Id der Runde - dieselbe, unter
+   der sie im Verlauf steht. Damit gehoert jeder Parkplatz sichtbar zu genau
+   einer Zeile, und "Weitermachen" dort trifft immer die richtige Runde.
+
+   AN DER MERGE-REGEL AENDERT SICH NICHTS, sie gilt jetzt JE LAUF: hoeheres ts
+   gewinnt, ein Grabstein (rest: []) ist eine Handlung mit Stempel wie jede
+   andere. Der Deckel haelt die Liste klein (PAUSE_MAX, die aeltesten fallen
+   raus) - ohne ihn waechst ein Feld, das bei jedem Sync komplett hoch und
+   runter faehrt. */
+var PAUSE_LERNTAGE = 2;
+/* Wie viele Parkplaetze. Sechs, weil acht Themen im Umlauf sind und die
+   Verfallsregel (zwei Lerntage) ohnehin frueher greift als der Deckel - er
+   ist die Notbremse gegen ein wachsendes Sync-Feld, nicht die eigentliche
+   Grenze. */
+var PAUSE_MAX = 6;
+
+function pausenListe() {
+  if (!Array.isArray(state.tlPausen)) state.tlPausen = [];
+  return state.tlPausen;
+}
+
+// Ein Parkplatz je lauf. Neuere Fassung ersetzt die aeltere, der Deckel
+// schneidet die aeltesten Stempel ab.
+function pauseSetzen(p) {
+  var liste = pausenListe().filter(function (x) { return x && x.lauf !== p.lauf; });
+  liste.push(p);
+  liste.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+  state.tlPausen = liste.slice(0, PAUSE_MAX);
   speichern();
+}
+
+/* Loeschen heisst Grabstein, nicht Wegwerfen - sonst schoebe das andere Geraet
+   die fertig gemachte Runde beim naechsten Sync zurueck.
+
+   OHNE lauf PASSIERT NICHTS, und das ist der Punkt: solange es einen Parkplatz
+   gab, hiess "loeschen" zwangslaeufig "den einen". Jetzt gehoert jedes Loeschen
+   zu einer bestimmten Runde, und ein Aufrufer, der keine nennen kann, meint
+   sicher nicht "irgendeine" - er wuerde sonst Rose eine fremde Runde
+   wegraeumen. */
+function pauseLoeschen(lauf) {
+  if (!lauf) return;
+  var treffer = null;
+  pausenListe().forEach(function (p) {
+    if (p && p.lauf === lauf && (p.rest || []).length) treffer = p;
+  });
+  if (!treffer) return;
+  pauseSetzen({ lauf: treffer.lauf, thema: treffer.thema, rest: [], ts: Date.now() });
 }
 
 /* Fuer die Startseite (main.js): liegt eine angefangene Runde, und wenn ja,
@@ -334,8 +378,9 @@ function pauseLoeschen() {
    Verfalls-Pruefung wie drinnen - eine Kachel, die auf ein Angebot zeigt, das
    der Schirm dahinter schon verworfen hat, waere schlimmer als keine Kachel. */
 export function offeneRunde(themen) {
-  var l = pauseLesen(themen || []);
-  return l ? { id: l.thema.id, titel: l.thema.titel, offen: l.p.rest.length } : null;
+  var alle = pausenLesen(themen || []);
+  var l = alle[0];
+  return l ? { id: l.thema.id, titel: l.thema.titel, offen: l.p.rest.length, weitere: alle.length - 1 } : null;
 }
 
 /* ---------- Eine Runde aus ihrer Verlaufszeile fortsetzen (03.09.2026) ------
@@ -408,20 +453,20 @@ export function fortsetzenAusZeile(r) {
    Pausen aus dem Bestand vor dem 03.09.2026 tragen keine lauf-Id; fuer sie
    gibt es hier nichts, und der Weg bleibt der Knopf auf dem Themen-Lernen-
    Schirm (den es unveraendert weiter gibt). */
-export function offeneLauf(themen) {
-  var l = pauseLesen(themen || []);
-  return l && l.p.lauf ? { lauf: l.p.lauf, offen: l.p.rest.length } : null;
+export function offeneLauf(themen, lauf) {
+  if (!lauf) return null;
+  var l = pausenLesen(themen || []).filter(function (x) { return x.p.lauf === lauf; })[0];
+  return l ? { lauf: lauf, offen: l.p.rest.length } : null;
 }
 
 /* Liegt eine angefangene Runde? Verfaellt still, wenn der Stempel mehr als zwei
    LERNTAGE alt ist - verloren geht dabei nichts, die Items sind ueber
    reife.js faellig ohnehin wieder dran, und genau das darf der Satz auch sagen. */
-function pauseLesen(themen) {
-  var p = state.tlPause;
+function pausePruefen(p, themen) {
   if (!p || !p.thema || !Array.isArray(p.rest) || !p.rest.length) return null;
   var thema = null;
-  themen.forEach(function (t) { if (t.id === p.thema) thema = t; });
-  if (!thema) { pauseLoeschen(); return null; }
+  (themen || []).forEach(function (t) { if (t.id === p.thema) thema = t; });
+  if (!thema) { pauseLoeschen(p.lauf); return null; }
   /* HEUTE ist immer gueltig, ohne Umweg ueber lerntage(). Der Stempel ist
      heuteTag(), lerntage() kennt aber nur Tage MIT Log-Eintrag - und pausieren
      kann Rose, ohne heute schon etwas beantwortet zu haben (der Knopf fragt nur,
@@ -433,10 +478,23 @@ function pauseLesen(themen) {
     var i = tage.indexOf(p.tag);
     // Kein Lerntag mit diesem Stempel: der Eintrag ist aelter, als das Log reicht.
     var abstand = i < 0 ? 99 : (tage.length - 1) - i;
-    if (abstand > PAUSE_LERNTAGE) { pauseLoeschen(); return null; }
+    if (abstand > PAUSE_LERNTAGE) { pauseLoeschen(p.lauf); return null; }
   }
   return { p: p, thema: thema };
 }
+
+/* Alle gueltigen Parkplaetze, juengster zuerst. Auf einer Kopie gearbeitet,
+   weil pausePruefen Verfallenes gleich abraeumt und damit in die Liste
+   schreibt, ueber die wir sonst laufen wuerden. */
+function pausenLesen(themen) {
+  return pausenListe().slice()
+    .sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); })
+    .map(function (p) { return pausePruefen(p, themen); })
+    .filter(function (x) { return !!x; });
+}
+
+// Der juengste - fuer die Wege, die nur EINEN meinen (Kachel, "weiter" ohne Zeile).
+function pauseLesen(themen) { return pausenLesen(themen)[0] || null; }
 
 /* ---------- Log-Lesen: alt und neu ---------- */
 
@@ -830,18 +888,29 @@ export function zeigeThemenLernen(themen, hooks, opt) {
     /* Eine angefangene Runde wiederfinden. Ruhige Zeile, kein Mahnwort - und
        sie sagt ausdruecklich dazu, dass nichts verlorengeht, weil das stimmt:
        die Items sind ueber reife.js faellig ohnehin wieder dran. */
-    var liegt = pauseLesen(themen);
-    if (liegt) {
+    /* ALLE angefangenen Runden, nicht mehr nur die juengste (03.09.2026).
+       Solange es einen Parkplatz gab, war die Karte hier die einzige Wahrheit
+       und der Satz darunter musste warnen, dass ein neues Thema sie loescht.
+       Jetzt hat jede Runde ihren eigenen, also stehen sie alle da - und der
+       Satz kann sagen, was jetzt stimmt: es geht nichts weg. */
+    var liegen = pausenLesen(themen);
+    if (liegen.length) {
       var pk = el("div", "karte tl-liegt");
-      pk.appendChild(reichZeile("div",
-        "**" + liegt.thema.titel + "** liegt angefangen da – " + liegt.p.rest.length
-        + (liegt.p.rest.length === 1 ? " Schritt" : " Schritte") + " offen.", "tl-liegt-satz"));
-      pk.appendChild(el("div", "karten-hinweis",
-        "Du kannst da weitermachen, wo du warst. Oder ein neues Thema anfangen – dann ist das hier weg, "
-        + "und die offenen Sachen kommen von selbst wieder."));
-      var w = el("button", "knopf", "Weitermachen");
-      w.addEventListener("click", function () { pruefung(liegt.thema, liegt.p); });
-      pk.appendChild(w);
+      liegen.forEach(function (liegt) {
+        var zeile = el("div", "tl-liegt-zeile");
+        zeile.appendChild(reichZeile("div",
+          "**" + liegt.thema.titel + "** – " + liegt.p.rest.length
+          + (liegt.p.rest.length === 1 ? " Schritt" : " Schritte") + " offen", "tl-liegt-satz"));
+        var w = el("button", "knopf", "Weitermachen");
+        w.addEventListener("click", function () { pruefung(liegt.thema, liegt.p); });
+        zeile.appendChild(w);
+        pk.appendChild(zeile);
+      });
+      pk.appendChild(el("div", "karten-hinweis", liegen.length === 1
+        ? "Du kannst da weitermachen, wo du warst – oder ein neues Thema anfangen. "
+          + "Die angefangene Runde bleibt liegen, es geht nichts weg."
+        : "Jede davon wartet für sich. Fang ruhig auch ein neues Thema an – "
+          + "die hier bleiben liegen, es geht nichts weg."));
       app.appendChild(pk);
     }
 
@@ -1309,9 +1378,11 @@ export function zeigeThemenLernen(themen, hooks, opt) {
          (pauseSpeichern loescht sonst) und kommt hier nie an. */
       schritte = schritteBauen(thema, stand);
     } else {
-      // Eine neue Runde ueberschreibt ein liegendes Angebot - so steht es in
-      // Roses Satz ("wenn man keine neue Runde angefangen hat").
-      pauseLoeschen();
+      /* Eine neue Runde raeumt seit dem 03.09.2026 KEIN liegendes Angebot mehr
+         weg. Vorher stand hier pauseLoeschen(), weil es nur einen Parkplatz
+         gab; das hat Rose am 03.09. den Rest ihrer Mobilitaets-Runde gekostet,
+         als sie danach Freizeit anfing. Jetzt hat jede Runde ihren eigenen
+         (pauseSetzen, Schluessel ist die lauf-Id). */
       schritte = schritteBauen(thema, stand);
     }
     /* Loest sich beim Fortsetzen kein einziger Schritt mehr auf (der Korpus darf
@@ -1319,8 +1390,8 @@ export function zeigeThemenLernen(themen, hooks, opt) {
        fazit() schreibt den tl-Eintrag und drehte Rotation und Level weiter, ohne
        dass etwas dran war. Dann wird die Pause still verworfen und Rose steht
        wieder auf der Themenwahl. */
-    if (!schritte.length && fortsetzen) { pauseLoeschen(); return start(); }
-    if (!schritte.length) return fazit(thema, 0, 0);
+    if (!schritte.length && fortsetzen) { pauseLoeschen(laufId); return start(); }
+    if (!schritte.length) return fazit(thema, 0, 0, 0, 0, true, laufId);
     var index = 0;
     /* GEZAEHLT WIRD JE SACHE, NICHT JE SCHIRM (19.08.2026). Vorher liefen zwei
        schlichte Zaehler mit, und weil ein misslungener Schritt wiederkommt,
@@ -1648,8 +1719,8 @@ export function zeigeThemenLernen(themen, hooks, opt) {
       var rest = schritte.slice(index).map(function (s) {
         return { art: s.art, id: s.id, thema: s.thema.id, runde: s.runde };
       });
-      if (!rest.length) return pauseLoeschen();
-      state.tlPause = {
+      if (!rest.length) return pauseLoeschen(laufId);
+      pauseSetzen({
         thema: thema.id,
         /* Die Id der Runde, damit ihre Zeile im Verlauf weiss, dass GENAU SIE
            angefangen daliegt (stats.js tlWeiter). Ohne das Feld waere
@@ -1669,8 +1740,7 @@ export function zeigeThemenLernen(themen, hooks, opt) {
            Geraete hinweg. Eine alte Pause ohne ts zaehlt beim Merge als 0 und
            verliert gegen jede neuere - das ist richtig so. */
         ts: Date.now()
-      };
-      speichern();
+      });
     }
 
     function weiter() {
@@ -1698,7 +1768,7 @@ export function zeigeThemenLernen(themen, hooks, opt) {
       // Reihenfolge zaehlt: erst die Pause ablegen, dann das Fazit zeichnen -
       // fazit() raeumt die Pause weg, sobald die Runde wirklich zaehlt.
       if (!zaehlt) pauseSpeichern();
-      fazit(thema, sassen, dran, mitgenommenZahl, wiederholungen, zaehlt);
+      fazit(thema, sassen, dran, mitgenommenZahl, wiederholungen, zaehlt, laufId);
     }
 
     schritt();
@@ -1714,7 +1784,7 @@ export function zeigeThemenLernen(themen, hooks, opt) {
   }
 
   /* ---------- Fazit + Abschluss-Eintrag ---------- */
-  function fazit(thema, punkte, gesamt, offenMorgen, nochmalZahl, zaehlt) {
+  function fazit(thema, punkte, gesamt, offenMorgen, nochmalZahl, zaehlt, lauf) {
     /* DER Abschluss-Eintrag: markiert das Thema als durch und traegt Rotation
        UND Level (gespielteRunde und levelVon lesen genau diese Eintraege).
        Er faellt weg, wenn die Runde unter ABSCHLUSS_MIN Sachen geblieben ist -
@@ -1723,8 +1793,9 @@ export function zeigeThemenLernen(themen, hooks, opt) {
        weggeraeumt werden, sonst waere das Fortfahren wieder weg. */
     if (zaehlt !== false) {
       logSpiel("themenlernen", "tl-" + thema.id, true, { thema: thema.id });
-      // Die Runde ist durch - ein liegendes Angebot waere ab jetzt eine Luege.
-      pauseLoeschen();
+      /* Die Runde ist durch - IHR Parkplatz waere ab jetzt eine Luege. Die der
+         anderen Themen bleiben stehen; das ist der ganze Unterschied zu vorher. */
+      pauseLoeschen(lauf);
     }
     /* NACH dem Abschluss-Eintrag: der gehoert noch zu dieser Runde und traegt
        ihre Id, damit die Verlaufszeile weiss, dass sie fertig ist. Alles, was
