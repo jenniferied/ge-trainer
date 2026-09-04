@@ -392,12 +392,40 @@ var MAKEUP = [
 var FARBTOEPFE = [
   { key: "standard", name: "Wie geliefert", preis: preis(0), farbe: null,
     hinweis: "Die Farbe, in der das Stück im Regal liegt. Immer da, kostet nichts." },
+  /* ---- Die hellen ---- */
   { key: "rosa", name: "Rosa", preis: preis(0, 2), farbe: "#e87ba8" },
   { key: "himmel", name: "Himmelblau", preis: preis(0, 3), farbe: "#5aa9e0" },
   { key: "mint", name: "Mint", preis: preis(0, 3), farbe: "#4fc4a0" },
-  { key: "sonne", name: "Sonnengelb", preis: preis(0, 4), farbe: "#f0c040" },
+  /* SONNENGELB UND GOLD WAREN DASSELBE. Sie standen als #f0c040 und #e0b040
+     im Regal — sechzehn von 255 Unterschied in zwei Kanaelen, auf einem Punkt
+     von dreizehn Pixeln schlicht nicht zu sehen (Jennifer, 04.09.2026:
+     "sonnegelb und gold are the same"). Zwei Toepfe, die gleich aussehen, sind
+     kein Angebot, sondern eine Falle: der zweite kostet fuenf Sterne und
+     aendert nichts.
+
+     Jetzt gehen sie AUSEINANDER statt sich anzunaehern. Sonnengelb wird
+     heller und reiner — ein Gelb, kein Ocker. Gold wird dunkler und geht ins
+     Messing: Metall liest sich ueber die Tiefe, nicht ueber die Helligkeit,
+     und neben dem hellen Gelb hat es jetzt eine Chance darauf. */
+  { key: "sonne", name: "Sonnengelb", preis: preis(0, 4), farbe: "#ffd83d" },
   { key: "flieder", name: "Flieder", preis: preis(0, 4), farbe: "#a98be0" },
-  { key: "gold", name: "Gold", preis: preis(0, 5), farbe: "#e0b040" },
+  /* ---- Die satten und dunklen ----
+     Nachgelegt am 04.09.2026: "nicht nur pastell töne auch braun, etc."
+     Das Regal war bis dahin komplett hell — acht Toepfe, und jeder davon
+     aufgehellt. Wer etwas Ruhiges oder Warmes anziehen wollte, hatte im ganzen
+     Laden keine Wahl ausser "wie geliefert".
+
+     Sie kosten dasselbe wie die hellen und stehen nach Preis dazwischen, nicht
+     hinten dran: eine eigene Gruppe am Ende haette behauptet, sie waeren
+     etwas Besonderes oder etwas Nachtraegliches. Sind sie nicht — es sind
+     Farben. */
+  { key: "braun", name: "Kastanie", preis: preis(0, 2), farbe: "#8a5a34" },
+  { key: "anthrazit", name: "Anthrazit", preis: preis(0, 2), farbe: "#3a3e47" },
+  { key: "rost", name: "Rost", preis: preis(0, 3), farbe: "#c96a35" },
+  { key: "kirsche", name: "Kirschrot", preis: preis(0, 3), farbe: "#bb3a4a" },
+  { key: "tanne", name: "Tannengrün", preis: preis(0, 3), farbe: "#2e7a55" },
+  { key: "marine", name: "Nachtblau", preis: preis(0, 4), farbe: "#2f4a8c" },
+  { key: "gold", name: "Gold", preis: preis(0, 5), farbe: "#c69026" },
   { key: "silber", name: "Silber", preis: preis(0, 5), farbe: "#c8ccd8" },
   { key: "regen", name: "Regenbogen", preis: preis(0, 7), farbe: "var(--laden-regen)", verlauf: true,
     hinweis: "Derselbe Verlauf wie die Leiste am Streckziel. Der einzige Topf, der keine Farbe ist, sondern sieben." },

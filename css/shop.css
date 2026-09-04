@@ -312,15 +312,26 @@
    Weg "Stueck ansehen, Farbe antippen, fertig" statt "Farbe suchen, Stueck
    suchen, zuordnen".
 
-   28 px Zielflaeche in beide Richtungen, obwohl der Punkt nur 18 px misst —
-   darunter liegt die Trefferquote am Daumen unter dem, was man Rose zumuten
-   will. Der Rand macht den Unterschied unsichtbar. */
+   SICHTBARE GROESSE UND ZIELFLAECHE SIND ZWEI ZAHLEN. Der Punkt misst 13 px,
+   angefasst wird ein Feld von 23 px — das ::after darunter ragt in die Luft
+   ringsum, ohne dass man es sieht.
+
+   Der Punkt war bis zum 04.09.2026 18 px gross (Jennifer: "farben kleiner
+   darstellen"). Gleichzeitig ist das Regal von acht auf fuenfzehn Toepfe
+   gewachsen, und je Kachel stehen sie ALLE untereinander, sobald Rose sie
+   besitzt. Bei 18 px waeren das vier Zeilen Punkte unter jedem Stueck, und die
+   Kachel bestuende mehr aus Farbwahl als aus dem Stueck.
+
+   Die Zielflaeche geht dabei nur von 28 auf 23 px zurueck, nicht auf 13. Sie
+   darf sich auch nicht ueberlappen, sonst faengt der obere Punkt die Tipps
+   seines Nachbarn ab: 23 px Feld plus 3 px Luecke ergibt ein Raster von 26 px,
+   und genau so weit stehen die Punkte auseinander. */
 .shop-farben {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 3px;
   margin-top: 4px;
 }
 .shop-farbe {
-  width: 18px; height: 18px; padding: 0; margin: 5px;
+  width: 13px; height: 13px; padding: 0; margin: 5px;
   border-radius: 999px; border: 1px solid var(--line);
   background: var(--paper-2); cursor: pointer;
   position: relative; flex-shrink: 0;
@@ -332,7 +343,16 @@
   border-color: var(--ink);
   box-shadow: 0 0 0 2px var(--card), 0 0 0 3px var(--ink);
 }
-.shop-farbe.verlauf { background-size: 300% 300%; }
+/* DER GANZE REGENBOGEN IN DEN PUNKT, nicht ein Ausschnitt daraus. Hier stand
+   `300% 300%` — ein Drittel des Verlaufs auf einem Punkt von 13 px, und das
+   ist genau eine Farbe. Der Topf las sich damit als zweites Orange neben Gold,
+   also derselbe Fehler wie bei Sonnengelb und Gold, nur unbeabsichtigt.
+
+   Die 300 % waren fuer eine Bewegung gedacht, die es an diesem Punkt nie gab:
+   die Position wird nirgends animiert (der reduced-motion-Block weiter unten
+   setzt sie trotzdem zurueck — eine Vorsichtsmassnahme gegen nichts). Auf
+   100 % liegen alle sieben Farben im Punkt, und man sieht, was man kauft. */
+.shop-farbe.verlauf { background-size: 100% 100%; }
 
 /* ---------- Derselbe Streifen, nur stumm ----------
    An einer Brille, die noch im Regal liegt, sagen die Punkte "gibt es in" statt
@@ -342,7 +362,7 @@
    bedienbare Streifen: es ist ein Hinweis, keine Bedienung. */
 .shop-farben.vorschau { gap: 2px; margin-top: 2px; }
 .shop-farben.vorschau .shop-farbe {
-  width: 12px; height: 12px; margin: 2px; cursor: default;
+  width: 10px; height: 10px; margin: 2px; cursor: default;
 }
 .shop-farben.vorschau .shop-farbe::after { content: none; }
 .shop-farben-satz {
