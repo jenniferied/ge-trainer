@@ -305,6 +305,22 @@
 }
 .shop-farbe.verlauf { background-size: 300% 300%; }
 
+/* ---------- Derselbe Streifen, nur stumm ----------
+   An einer Brille, die noch im Regal liegt, sagen die Punkte "gibt es in" statt
+   "waehle". Sie sind <i> und kein Knopf, aber .shop-farbe traegt cursor und
+   Zielflaeche mit; beides wird hier zurueckgenommen, damit der Daumen nicht
+   etwas anfasst, das nicht antwortet. Etwas kleiner und enger als der
+   bedienbare Streifen: es ist ein Hinweis, keine Bedienung. */
+.shop-farben.vorschau { gap: 2px; margin-top: 2px; }
+.shop-farben.vorschau .shop-farbe {
+  width: 12px; height: 12px; margin: 2px; cursor: default;
+}
+.shop-farben.vorschau .shop-farbe::after { content: none; }
+.shop-farben-satz {
+  margin: 0; text-align: center;
+  font-size: .68rem; color: var(--ink-soft);
+}
+
 /* ---------- Der Hintergrund in der Tageskarte ----------
    Liegt hinter Figur und Pet und ist genau so gross wie die beiden zusammen,
    nicht so breit wie die Karte. inline-flex, damit er sich an den Inhalt

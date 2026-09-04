@@ -615,9 +615,23 @@ function figurKlassen(getragen, stunde) {
   var g = getragen || {};
   var k = [];
   if (g.kopf && g.kopf.stueck === "kopfhoerer") k.push("mk-noten");
-  // Die Brille liegt als zweite Blockebene ueber der Figur und braucht dafuer
-  // ein positioniertes <pre> (siehe brilleBloecke).
-  if (g.gesicht && g.gesicht.stueck === "brille") k.push("mk-brille");
+  /* Die Brille liegt als zweite Blockebene ueber der Figur und braucht dafuer
+     ein positioniertes <pre> (siehe brilleBloecke).
+
+     GEFRAGT WIRD DER KATALOG, nicht der Schluessel. Bis zum 04.09.2026 stand
+     hier `=== "brille"`, und das war richtig, solange es eine Fassung gab. Mit
+     der Rundbrille und der Kastenbrille war es ein stiller Fehler: die beiden
+     wurden gezeichnet, ihr Overlay fand aber keinen positionierten Vorfahren
+     mehr und landete am naechsten Kasten weiter oben statt im Gesicht. Im Laden
+     sah das aus, als gaebe es die Stuecke gar nicht.
+
+     `fassung` ist das Merkmal, das der Zeichner ohnehin braucht — was eine
+     Fassung hat, wird als Bloecke ueber die Figur gelegt. Eine neue Brille
+     bringt ihre Klasse damit selbst mit. */
+  if (g.gesicht) {
+    var gs = stueckVon("kleidung", g.gesicht.stueck);
+    if (gs && gs.fassung) k.push("mk-brille");
+  }
   if (schlaeft(stunde)) k.push("mk-schlaeft");
   return k.join(" ");
 }
@@ -734,7 +748,7 @@ var REGALE = [
   { art: "pet", titel: "Mini-Pets", liste: PETS,
     text: "Sitzt neben dir in der Karte. Immer nur eins auf einmal, wechseln kostet nichts." },
   { art: "kleidung", titel: "Kleiderschrank", liste: KLEIDUNG,
-    text: "Zehn Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die beiden Brillen das Gesicht." },
+    text: "Elf Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die drei Brillen das Gesicht." },
   { art: "farbe", titel: "Farbtöpfe", liste: FARBTOEPFE,
     text: "Eine Farbe, die danach auf jedes gekaufte Stück passt. Beliebig oft umfärben, das kostet nie wieder etwas." },
   { art: "makeup", titel: "Make-up", liste: MAKEUP,
@@ -1867,7 +1881,44 @@ function blattFuellen(blatt, api) {
          dem, was gerade AN ist — an einem Stueck im Schrank hat eine Farbe
          nichts zu entscheiden. */
       if (opt.an && opt.slot) karte.appendChild(farbStreifen(opt.slot, opt.farbe, opt.eigeneFarben));
+      /* Ein Stueck mit EIGENEN Farben (die Brillen) zeigt sie auch, solange es
+         im Regal liegt — sonst sieht man drei Fassungen in drei Toenen und
+         haelt die Farbe fuer Teil der Form. Der Streifen ist hier bewusst
+         STUMM: faerben() greift nur an etwas Getragenem, ein Punkt vor dem Kauf
+         waere ein Knopf, der nichts tut. */
+      else if (opt.eigeneFarben) karte.appendChild(farbVorschau(opt.eigeneFarben));
       return karte;
+    }
+
+    /* Wie ein Punkt aussieht. Zweifarbige Fassungen (gefleckt, Silber) zeigen
+       beide Toene, sonst saehe Schildpatt aus wie ein braunes Nichts. Steht
+       einmal hier, weil der stumme und der bedienbare Streifen dieselben
+       Punkte malen und nur verschieden auf Antippen reagieren. */
+    function punktFarbe(el2, t) {
+      el2.style.background = t.zweit
+        ? "linear-gradient(135deg, " + t.farbe + " 0 55%, " + t.zweit + " 55% 100%)"
+        : t.farbe;
+    }
+
+    /* Der stumme Streifen: dieselbe Reihe, aber aus <i> statt aus Knoepfen.
+       Nicht deaktivierte Knoepfe, denn ein grauer Knopf sagt "geht gerade
+       nicht" — hier soll er "gibt es in" sagen. Der Satz darunter traegt die
+       Aussage fuer den Screenreader, die Punkte sind nur Bild. */
+    function farbVorschau(eigene) {
+      var reihe = el("div", "shop-farben vorschau");
+      reihe.setAttribute("aria-hidden", "true");
+      eigene.forEach(function (t) {
+        var punkt = el("i", "shop-farbe");
+        punktFarbe(punkt, t);
+        punkt.title = t.name;
+        reihe.appendChild(punkt);
+      });
+      var satz = el("p", "shop-farben-satz",
+        "Gibt es in " + eigene.length + " Fassungsfarben");
+      var box = el("div", "shop-farben-vorschau");
+      box.appendChild(reihe);
+      box.appendChild(satz);
+      return box;
     }
 
     /* Die Farben als Reihe kleiner Kreise.
@@ -1887,11 +1938,7 @@ function blattFuellen(blatt, api) {
           var b = knopf("", "shop-farbe" + (an ? " an" : ""), function () {
             api.faerben(slot, t.key); nachKauf();
           });
-          // Zweifarbige Fassungen (gefleckt, Silber) zeigen beide Toene im
-          // Punkt, sonst saehe Schildpatt aus wie ein braunes Nichts.
-          b.style.background = t.zweit
-            ? "linear-gradient(135deg, " + t.farbe + " 0 55%, " + t.zweit + " 55% 100%)"
-            : t.farbe;
+          punktFarbe(b, t);
           b.setAttribute("aria-label", t.name + (an ? " (gewählt)" : ""));
           b.setAttribute("aria-pressed", an ? "true" : "false");
           b.title = t.name;
@@ -1988,7 +2035,7 @@ function blattFuellen(blatt, api) {
     }
 
     tragbaresRegal("kleidung", KLEIDUNG, "Kleiderschrank",
-      "Zehn Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die beiden Brillen das Gesicht.",
+      "Elf Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die drei Brillen das Gesicht.",
       "anziehen");
 
     tragbaresRegal("makeup", MAKEUP, "Make-up",
