@@ -600,6 +600,31 @@ function hintergrundKlassen(key, nacht) {
    Die Elemente sind <i> und nicht <div>: sie stehen in beiden Trainern in
    einer Zeile mit der Figur, und <i> ist das kuerzeste Element ohne eigene
    Bedeutung. aria-hidden, weil sie nichts sagen. */
+/* ---------- Der Hintergrund im LADEN: Tag und Nacht nebeneinander ----------
+   Auf der Buehne und in der Tageskarte zeigt ein Hintergrund den Modus, der
+   gerade gilt — dort ist er Kulisse und soll zur Uhrzeit passen. In der Kachel
+   ist er aber KEINE Kulisse, sondern ein Angebot, und wer um vierzehn Uhr
+   kauft, sieht sonst nie, was er nachts bekommt. Bei "Sonne" ist das der ganze
+   Unterschied: tags eine Sonne auf Warm, nachts ein Mond auf Blau.
+
+   Jede Haelfte ist ein FENSTER auf eine ganze Kachel, nicht eine halb so
+   breite Kachel. Sonst stauchte sich der Verlauf, die Wolken zoegen auf halber
+   Strecke und die Randmaske (mk-hg-bild) blendete mitten im Bild aus — die
+   Naht saehe aus wie zwei Bilder, nicht wie ein Tag, der in eine Nacht kippt.
+   Die Klassen sitzen an diesem inneren Element, weil die Deko je Modus
+   verschieden ist: der Mond hat keine Strahlen, die Nacht hat Sterne. */
+function hintergrundVorschauHtml(key) {
+  if (!hintergrundStil(key, false)) return "";
+  return ["tag", "nacht"].map(function (seite) {
+    var n = seite === "nacht";
+    return '<i class="shop-hg-haelfte shop-hg-' + seite + '" aria-hidden="true">' +
+             '<i class="shop-hg-voll ' + hintergrundKlassen(key, n) + '">' +
+               hintergrundHtml(key, n) +
+             '</i>' +
+           '</i>';
+  }).join("");
+}
+
 /* Klassen fuer das <pre> der FIGUR — alles, was sich bewegen soll und dafuer
    aus dem Zeichenraster heraus muss.
 
@@ -2087,7 +2112,7 @@ function blattFuellen(blatt, api) {
 
     // ---- Regal 6: Hintergründe ----
     var rHg = regalKopf("Hintergründe",
-      "Liegt hinter dir in der Tageskarte. Kostet immer Herzen UND Sterne — das Große im Bild soll beides verlangen.");
+      "Liegt hinter dir in der Tageskarte. Jede Kachel zeigt beides: links der Tag, rechts die Nacht. Kostet immer Herzen UND Sterne — das Große im Bild soll beides verlangen.");
     var hgAn = api.wahl("hintergrund") || "keiner";
     HINTERGRUENDE.forEach(function (h) {
       var was = stueckId("hintergrund", h.key);
@@ -2096,8 +2121,11 @@ function blattFuellen(blatt, api) {
       rHg.appendChild(kachel({
         name: h.name, hinweis: h.hinweis, preis: h.preis,
         flaeche: hintergrundStil(h.key, api.nacht()) || "linear-gradient(var(--paper-2), var(--paper-2))",
-        flaecheHtml: hintergrundHtml(h.key, api.nacht()),
-        flaecheKlassen: hintergrundKlassen(h.key, api.nacht()),
+        /* Beide Modi nebeneinander. Die Deko-Klassen sitzen INNEN an je einer
+           Haelfte (hintergrundVorschauHtml) und darum nicht mehr hier — stuenden
+           sie zusaetzlich aussen, laegen Wolken und Sterne doppelt uebereinander. */
+        flaecheHtml: hintergrundVorschauHtml(h.key),
+        flaecheKlassen: "shop-flaeche-geteilt",
         hat: hat, an: an, anText: "ist an", ausText: "aufhängen",
         ablegen: h.key === "keiner" ? null : function () { api.waehle("hintergrund", "keiner"); nachKauf(); },
         kaufen: function () {
@@ -2133,7 +2161,7 @@ export {
   KLEIDUNG, MAKEUP, FARBTOEPFE, LOOKS, HINTERGRUENDE, PETS, REGALE,
   preis, preisText, preisGesprochen, fehltText, bezahlbar,
   stueckVon, stueckId, farbeVon, farbTabelle, farbenFuer,
-  hintergrundStil, hintergrundKlassen, hintergrundHtml,
+  hintergrundStil, hintergrundKlassen, hintergrundHtml, hintergrundVorschauHtml,
   figurKlassen, petKlassen, schlaeft,
   petVon, petHtml,
   anziehen, malen, brilleBloecke, alsText, verbreitern, zeileOben, setz, kopie,

@@ -426,6 +426,48 @@
 .buehne > *:not([class^="mk-hg-"]) {
   position: relative; z-index: 1;
 }
+/* ---------- Die geteilte Hintergrund-Kachel im Laden ----------
+   Links Tag, rechts Nacht. Jede Haelfte ist ein FENSTER (overflow: hidden) auf
+   eine doppelt so breite, also kachelbreite Ebene: die Tag-Ebene sitzt links
+   buendig, die Nacht-Ebene rechts. Dadurch sehen beide Seiten denselben
+   Bildausschnitt an derselben Stelle, und die Naht in der Mitte trennt zwei
+   Faerbungen desselben Himmels statt zweier gestauchter Bilder.
+
+   Die Naht ist ein heller Strich mit wenig Deckkraft: genug, damit man sie als
+   Absicht liest, zu wenig, um mit dem Bild zu konkurrieren. */
+.shop-flaeche-geteilt { overflow: hidden; }
+.shop-hg-haelfte {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  overflow: hidden;
+  /* Die Randmaske aus .mk-hg-bild, aber ueber BEIDE Haelften hinweg gerechnet:
+     doppelt so breit wie die Haelfte, links buendig fuer den Tag und rechts
+     buendig fuer die Nacht. Zusammengesetzt ergeben die beiden Haelften genau
+     die Ellipse, die eine ungeteilte Kachel auch haette — die Naht liegt in
+     ihrer Mitte, wo die Maske voll deckt, und faellt darum nicht auf.
+
+     Ohne diesen Umweg fadete jede Haelfte fuer sich aus, und in der Mitte
+     stuende ein heller Spalt zwischen Tag und Nacht. */
+  -webkit-mask-image: radial-gradient(ellipse 72% 76% at 50% 45%, #000 24%, rgba(0,0,0,.42) 58%, transparent 88%);
+  mask-image: radial-gradient(ellipse 72% 76% at 50% 45%, #000 24%, rgba(0,0,0,.42) 58%, transparent 88%);
+  -webkit-mask-size: 200% 100%; mask-size: 200% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.shop-hg-tag { left: 0; -webkit-mask-position: left center; mask-position: left center; }
+.shop-hg-nacht {
+  right: 0; -webkit-mask-position: right center; mask-position: right center;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, .28);
+}
+/* Die Ebene fuellt ihre Haelfte GANZ und ist kein Fenster auf eine breitere
+   Kachel. Der Unterschied entscheidet sich an der Sonne: sie steht bei 80 %
+   Breite, ein halbes Fenster von links haette sie schlicht abgeschnitten und
+   die Tagseite waere ein leerer warmer Himmel. Jede Seite zeigt darum ihr
+   volles Bild, nur halb so breit. */
+.shop-hg-voll { position: absolute; inset: 0; }
+/* Die eigene Maske der Ebene entfaellt hier — sie liegt jetzt an der Haelfte. */
+.shop-flaeche-geteilt .mk-hg-bild {
+  -webkit-mask-image: none; mask-image: none;
+}
+
 .mk-hg-bild, .mk-hg-flor, .mk-hg-extra {
   position: absolute; inset: 0; z-index: 0;
   pointer-events: none;
