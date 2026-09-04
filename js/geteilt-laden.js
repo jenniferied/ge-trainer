@@ -420,7 +420,14 @@ var FARBTOEPFE = [
      etwas Besonderes oder etwas Nachtraegliches. Sind sie nicht — es sind
      Farben. */
   { key: "braun", name: "Kastanie", preis: preis(0, 2), farbe: "#8a5a34" },
-  { key: "anthrazit", name: "Anthrazit", preis: preis(0, 2), farbe: "#3a3e47" },
+  /* Anthrazit stand am 04.09.2026 kurz auf #3a3e47 und war auf dem DUNKLEN
+     Blatt nicht zu sehen: 1,54:1 gegen die Karte (#201c31), also ein leerer
+     Kreis mit Rand. Gemessen, nicht geschaetzt — und der Massstab ist nicht
+     eine Norm, sondern das Regal selbst: Kastanie kommt dort auf 2,82:1 und
+     liest sich gut. Dieser Ton liegt mit 2,99:1 daneben und bleibt auf dem
+     hellen Blatt mit 5,44:1 klar. Zu Silber (#c8ccd8) ist der Abstand gross
+     genug, dass die beiden Grautoene nie verwechselt werden. */
+  { key: "anthrazit", name: "Anthrazit", preis: preis(0, 2), farbe: "#616978" },
   { key: "rost", name: "Rost", preis: preis(0, 3), farbe: "#c96a35" },
   { key: "kirsche", name: "Kirschrot", preis: preis(0, 3), farbe: "#bb3a4a" },
   { key: "tanne", name: "Tannengrün", preis: preis(0, 3), farbe: "#2e7a55" },
@@ -2291,8 +2298,41 @@ function blattFuellen(blatt, api) {
         ? "Hier ist nichts mehr zu holen — dir gehört alles. Anziehen und umfärben kannst du drüben in der Ankleide."
         : "Noch nichts im Schrank. Im Laden liegt alles, was es gibt."));
     } else if (!imLaden) {
-      blatt.appendChild(el("p", "shop-regal-text",
-        "Neue Farben gibt es als Farbtöpfe im Laden. Sobald du einen hast, taucht er unter jedem Stück als Punkt auf."));
+      /* ---- Deine Farben ----
+         Die Farbtoepfe haben in der Ankleide KEIN Regal aus Kacheln: dort
+         waeren sie eine Wahl, und man traegt keinen Topf. Ihre Wirkung steht
+         als Punkt unter jedem Stueck.
+
+         Was ohne sie fehlte, ist die Uebersicht — welche gehoeren mir
+         eigentlich? Die stand vorher als Kachelregal im Laden und ist mit dem
+         Umbau verschwunden. Sie kommt darum als LISTE zurueck: Punkt und Name
+         nebeneinander, stumm, ohne Preis. Wer hier etwas antippen koennte,
+         muesste sich fragen, was dann passiert — und die Antwort waere nichts.
+
+         "Wie geliefert" faellt heraus: es ist kein Topf, sondern das Fehlen
+         eines Topfes, und in einer Liste des Besitzes hat es nichts verloren. */
+      var meine = FARBTOEPFE.filter(function (t) {
+        return t.key !== "standard" && api.besitzt(stueckId("farbe", t.key));
+      });
+      blatt.appendChild(el("h3", "shop-regal-kopf", "Deine Farben"));
+      if (meine.length) {
+        var liste = el("div", "shop-topfliste");
+        meine.forEach(function (t) {
+          var chip = el("span", "shop-topf");
+          var punkt = el("i", "shop-topf-punkt");
+          if (t.farbe) {
+            if (t.verlauf) punkt.style.backgroundImage = t.farbe;
+            else punkt.style.background = t.farbe;
+          }
+          chip.appendChild(punkt);
+          chip.appendChild(el("span", "", t.name));
+          liste.appendChild(chip);
+        });
+        blatt.appendChild(liste);
+      }
+      blatt.appendChild(el("p", "shop-regal-text", meine.length
+        ? "Sie liegen als Punkte unter jedem Stück. Neue gibt es im Laden — einmal gekauft, danach beliebig oft und immer kostenlos."
+        : "Noch keiner. Farbtöpfe gibt es im Laden; sobald du einen hast, taucht er unter jedem Stück als Punkt auf."));
     }
 
     var zu = knopf("Schließen", "knopf klein sekundaer shop-zu", api.schliessen);

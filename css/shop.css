@@ -278,6 +278,27 @@
   border: 1px solid var(--line);
 }
 
+/* ---------- Deine Farben: die Uebersicht in der Ankleide ----------
+   Punkt und Name als Chip, nicht als Kachel. Eine Kachel behauptet, man koenne
+   etwas damit tun; hier gibt es nur etwas zu WISSEN — welche Toepfe mir
+   gehoeren. Darum <span> statt <button>, kein Rahmen, keine Zielflaeche.
+
+   Der Punkt ist kleiner als der bedienbare im Farbstreifen (10 statt 13 px):
+   er steht neben seinem Namen und muss nicht allein tragen. */
+.shop-topfliste {
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  margin: 2px 6px 8px;
+}
+.shop-topf {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .78rem; color: var(--ink-soft);
+}
+.shop-topf-punkt {
+  width: 10px; height: 10px; flex-shrink: 0;
+  border-radius: 999px; border: 1px solid var(--line);
+  background-size: 100% 100%;
+}
+
 /* ---------- Die beiden Reiter ----------
    Laden und Ankleide. Zwei Knoepfe in einer Zeile, der offene mit Grund statt
    nur mit Rand: bei zwei Reitern nebeneinander ist eine Linie darunter auf
