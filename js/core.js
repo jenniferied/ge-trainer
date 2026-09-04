@@ -214,6 +214,11 @@ export function antwortText(roh) {
    einer Zahl: dann lag die Karte offen, waehrend Rose etwas anderes gemacht hat,
    und eine erfundene Dauer waere schlechter als gar keine. */
 var ZEIT_MAX_SEK = 3600;
+/* Deckel fuer die aus dem Abstand abgeleitete Zeit (logAntwort). Bewusst viel
+   enger als ZEIT_MAX_SEK: eine offen liegengelassene Karte kann eine Stunde
+   dauern und das ist eine echte Messung, aber fuenf Minuten Abstand zwischen
+   zwei Antworten heisst, dass dazwischen etwas anderes passiert ist. */
+var LUECKE_MAX_SEK = 300;
 export function sekundenSeit(start) {
   if (!start) return null;
   var s = Math.max(0, Math.round((Date.now() - start) / 1000));
@@ -483,6 +488,28 @@ export function logAntwort(eintrag) {
   if (e.art === undefined && runde) e.art = runde.art;
   // ts muss je Antwort eindeutig sein, sonst kollidiert die aid beim Merge.
   var letzte = state.antwortLog[state.antwortLog.length - 1];
+  /* Zeit IMMER protokollieren (Jennifer, 04.09.2026: "protokolliere die Zeit nun
+     immer"). Bis dahin trugen nur 38 % der Eintraege eine - Begriffe, Glossar,
+     Zuordnen und Themen-Lernen gar keine -, und damit liess sich die Frage
+     "wie teilt Rose ihre Tage zwischen GE und ST auf" gar nicht beantworten.
+
+     Gemessen wird der ABSTAND ZUR VORIGEN ANTWORT, nicht eine eigene Uhr je
+     Aufrufer. Das ist Absicht: es ist EINE Stelle statt zwoelf, es gilt
+     automatisch auch fuer Aufrufer, die es spaeter dazugibt, und es bedeutet
+     ueberall dasselbe - genau das fehlte vorher. Wer eine echte Uhr hat, setzt
+     zeit weiterhin selbst; ein gesetzter Wert wird nie ueberschrieben.
+
+     Eigener, engerer Deckel als sekundenSeit(): mehr als LUECKE_MAX_SEK
+     zwischen zwei Antworten ist keine Bearbeitungsdauer mehr, sondern eine
+     Pause, und dann steht hier ehrlich null. Dieselbe Groessenordnung, mit der
+     der ST-Trainer seine Zeiten auswertet. Die erste Antwort nach einer Pause
+     und die erste ueberhaupt tragen deshalb null - auch das ist ehrlicher als
+     eine geratene Zahl. Alteintraege werden NICHT nachgefuellt: das aenderte
+     ihre aid nicht, ginge also nie hoch. */
+  if (e.zeit === undefined) {
+    var abstand = letzte ? Math.round((e.ts - letzte.ts) / 1000) : null;
+    e.zeit = (abstand !== null && abstand >= 0 && abstand <= LUECKE_MAX_SEK) ? abstand : null;
+  }
   if (letzte && letzte.qid === e.qid && letzte.ts >= e.ts) e.ts = letzte.ts + 1;
   e.aid = antwortId(e);
   state.antwortLog.push(e);

@@ -25,6 +25,11 @@ import * as Stats from "./stats.js";
 // Nur fuer syncBald: speichern() schreibt nach localStorage, es schiebt nichts hoch.
 // Ei-Wahl und Stufe sollen aber sofort auf dem anderen Geraet stehen.
 import { syncBald, MK_WAHL_FELDER } from "./sync.js";
+/* Der Laden: Katalog, Preise und die reine Zeichenarbeit. Kennt weder Zustand
+   noch DOM (Quelle: rose/geteilte-styles/laden.js, verteilt per verteilen.sh).
+   Das KONTO bleibt hier — es haengt am Zustand und darf darum nicht in einen
+   Baustein wandern, der von beiden Trainern geteilt wird. */
+import * as Laden from "./geteilt-laden.js";
 
 var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -368,10 +373,12 @@ export function standJetzt(tz) {
    nur nichts Neues kaufen, bis herzenMax nachgewachsen ist. Eine negative Zahl
    waere Strafe, ein eingezogenes Pet waere Wortbruch. */
 
-/* Die Preise stehen an den Regalen (PETS unten), nicht hier. kaufen() bekommt
-   den Preis herein und schreibt ihn in die Zeile — der Kauf ist dadurch
-   historisch: senkt jemand spaeter einen Preis, bleiben alte Kaeufe so teuer,
-   wie sie waren, und das Guthaben springt nicht rueckwirkend. */
+/* Die Preise stehen an den Regalen (PETS unten, alles Uebrige in
+   geteilt-laden.js), nicht hier. kaufen() bekommt den Preis herein und
+   schreibt ihn in die Zeile — der Kauf ist dadurch historisch: aendert jemand
+   spaeter einen Preis, bleiben alte Kaeufe so teuer, wie sie waren, und das
+   Guthaben springt nicht rueckwirkend. Genau das traegt die Preiserhoehung
+   vom 03.09.2026: Roses Maus hat 4 ♥ gekostet und kostet fuer immer 4 ♥. */
 export function kaeufe() {
   return (state.mk && Array.isArray(state.mk.kaeufe)) ? state.mk.kaeufe : [];
 }
@@ -386,18 +393,45 @@ export function besitzt(was) {
   return kaeufe().some(function (k) { return k && k.was === was; });
 }
 
-function ausgegeben(waehrung) {
-  return kaeufe().reduce(function (s, k) {
-    return s + (k && k.waehrung === waehrung && isFinite(k.preis) ? k.preis : 0);
-  }, 0);
+/* ---------- Was eine Kaufzeile gekostet hat ----------
+   ZWEI FORMEN, DIE FUER IMMER NEBENEINANDER LEBEN:
+
+     bis 03.09.2026   { preis: 4, waehrung: "herz" }     eine Zahl, eine Waehrung
+     ab  03.09.2026   { preis: { herz: 9, stern: 2 } }   beides zugleich
+
+   Die alte Form wird nirgends mehr geschrieben, aber sie steht in Roses
+   gespeicherten Zeilen (am 03.09. zwei Stueck: kf:pet:maus 4 ♥ und
+   kf:pet:schildkroete 6 ♥) und in jedem Snapshot, der je hochgegangen ist.
+   Kaeufe werden nie gestrichen — also muss diese Funktion beide Formen lesen,
+   solange es das Register gibt. Wer sie vereinfacht, verschenkt Rose still
+   10 ♥, weil die alten Zeilen dann nichts mehr zu kosten scheinen. */
+function kaufPreis(k) {
+  if (!k) return { herz: 0, stern: 0 };
+  if (typeof k.preis === "number") {
+    if (!isFinite(k.preis) || k.preis < 0) return { herz: 0, stern: 0 };
+    return k.waehrung === "stern" ? { herz: 0, stern: k.preis } : { herz: k.preis, stern: 0 };
+  }
+  var p = k.preis || {};
+  return {
+    herz: isFinite(p.herz) && p.herz > 0 ? p.herz : 0,
+    stern: isFinite(p.stern) && p.stern > 0 ? p.stern : 0,
+  };
+}
+
+function ausgegeben() {
+  return kaeufe().reduce(function (summe, k) {
+    var p = kaufPreis(k);
+    return { herz: summe.herz + p.herz, stern: summe.stern + p.stern };
+  }, { herz: 0, stern: 0 });
 }
 
 /* Guthaben, abgeleitet. Bei 0 geklemmt — siehe UEBERZIEH-FALL oben. */
 export function guthaben(stand) {
   var s = stand || { herzen: 0, sterne: 0 };
+  var aus = ausgegeben();
   return {
-    herz: Math.max(0, (s.herzen || 0) - ausgegeben("herz")),
-    stern: Math.max(0, (s.sterne || 0) - ausgegeben("stern")),
+    herz: Math.max(0, (s.herzen || 0) - aus.herz),
+    stern: Math.max(0, (s.sterne || 0) - aus.stern),
   };
 }
 
@@ -407,15 +441,19 @@ export function guthaben(stand) {
    abbuchen. Beide Waechter sind noetig — besitzt() gegen den Doppelklick,
    guthaben() gegen den Kauf ohne Deckung (auch im geklemmten Fall, in dem
    frei bereits 0 ist). */
-export function kaufen(was, preis, waehrung, stand) {
-  if (!was || !isFinite(preis) || preis < 0) return false;
-  if (waehrung !== "herz" && waehrung !== "stern") return false;
+export function kaufen(was, preis, stand) {
+  if (!was || !preis) return false;
+  var p = { herz: preis.herz || 0, stern: preis.stern || 0 };
+  if (!isFinite(p.herz) || !isFinite(p.stern) || p.herz < 0 || p.stern < 0) return false;
   if (besitzt(was)) return false;
   var frei = guthaben(stand);
-  if ((waehrung === "herz" ? frei.herz : frei.stern) < preis) return false;
+  // BEIDE Waehrungen muessen reichen. Ein Kombipreis, bei dem nur eine Haelfte
+  // gedeckt ist, ist nicht bezahlbar — und darf auch nicht halb abgebucht
+  // werden, sonst waeren Herzen weg und das Stueck trotzdem nicht da.
+  if (frei.herz < p.herz || frei.stern < p.stern) return false;
   state.mk = state.mk || {};
   if (!Array.isArray(state.mk.kaeufe)) state.mk.kaeufe = [];
-  state.mk.kaeufe.push({ id: kaufId(was), was: was, preis: preis, waehrung: waehrung, ts: Date.now() });
+  state.mk.kaeufe.push({ id: kaufId(was), was: was, preis: p, ts: Date.now() });
   // syncBald wie bei der Ei-Wahl: speichern() schreibt nur nach localStorage.
   // Ein Kauf ist eine Entscheidung und soll auf dem zweiten Geraet stehen,
   // bevor Rose dort das naechste Mal aufmacht.
@@ -461,6 +499,53 @@ export function waehle(feld, wert) {
   state.mk[feld] = { wert: wert, ts: Date.now() };
   speichern(); syncBald(500);
 }
+
+/* ---------- Das Outfit ----------
+   mk.getragen ist EIN Objekt: { slot: { stueck, farbe }, ... }. Warum eins und
+   nicht eins je Slot, steht in sync.js an MK_WAHL_FELDER — kurz: ein Outfit ist
+   eine Wahl, keine Sammlung, und eine Vereinigung koennte nichts mehr ausziehen.
+
+   Immer eine KOPIE schreiben, nie das gespeicherte Objekt veraendern. waehle()
+   setzt einen neuen Zeitstempel, und ein an Ort und Stelle veraendertes Objekt
+   waere schon vorher still in den alten Eintrag geflossen — der Merge haette
+   dann eine neue Belegung mit einem alten ts und verlaere sie gegen das andere
+   Geraet. */
+export function outfit() {
+  var o = wahl("getragen");
+  return (o && typeof o === "object") ? o : {};
+}
+
+/* Ein Stueck an- oder ablegen. key === null zieht den Slot aus.
+   Die FARBE ueberlebt einen Wechsel des Stuecks bewusst NICHT: wer den Hut
+   gegen die Krone tauscht, hat eine andere Sache am Kopf, und dass die die
+   Farbe des Hutes erbt, waere eine Entscheidung, die niemand getroffen hat. */
+export function anlegen(slot, key) {
+  var o = Object.assign({}, outfit());
+  if (!key) delete o[slot];
+  else o[slot] = { stueck: key, farbe: (o[slot] && o[slot].stueck === key) ? o[slot].farbe : "standard" };
+  waehle("getragen", o);
+}
+
+/* Umfaerben. Kostet nie etwas — der Farbtopf war der Kauf, das Auftragen ist
+   eine Wahl. Auf einem leeren Slot passiert nichts: eine Farbe ohne Stueck
+   waere ein Zustand, den die Buehne nicht zeigen kann. */
+export function faerben(slot, farbKey) {
+  var o = Object.assign({}, outfit());
+  if (!o[slot]) return;
+  o[slot] = { stueck: o[slot].stueck, farbe: farbKey };
+  waehle("getragen", o);
+}
+
+/* Ob gerade das dunkle Thema laeuft. NICHT die Uhrzeit: satzVon() nennt seine
+   Variable auch "nacht", meint aber "nach 22 Uhr" und laesst davon ein Augenlid
+   fallen. Der Hintergrund muss dagegen zum BLATT passen, sonst leuchtet mittags
+   um zwei ein Nachthimmel in einer weissen Karte. Zwei verschiedene Fragen, die
+   sich zufaellig gleich anhoeren. */
+function nachtJetzt() {
+  return document.documentElement.getAttribute("data-theme") !== "hell";
+}
+
+
 
 /* ---------- Das Ei, Blockgrafik ----------
    Volle Flaeche statt Umriss. Die Musterung ist keine andere Zeichenart,
@@ -544,34 +629,19 @@ function eiEbenen(variante, stufe) {
   return { zeilen: zeilen, maske: maske };
 }
 /* ---------- Der eine Maler ----------
-   Zeichen-Ebene und Farbschluessel-Ebene werden zu Spans zusammengelegt, Zellen
-   mit gleichem Schluessel als ein Span (Lauflaenge) — sonst stuenden bei jeder
-   Figur dreimal so viele Knoten im DOM.
+   Er steht seit dem 03.09.2026 nicht mehr hier, sondern in geteilt-laden.js
+   (Laden.malen) — Wort fuer Wort dieselbe Bauart, nur zusaetzlich faehig,
+   getragene Stuecke, Verlaeufe und Marken auf Fell zu faerben.
 
-   Stand bis zum 22.08.2026 dreimal fast wortgleich in dieser Datei (Ei, Tier,
-   und mit den Pets waere es das vierte Mal geworden). Eine Stelle, weil der
-   Sonderfall A sonst irgendwann nur noch in zweien davon stimmt. */
-function zeichne(e, FARBE) {
-  return e.zeilen.map(function (zeile, i) {
-    var out = "", puffer = "", k = null;
-    function spuelen() {
-      if (!puffer) return;
-      // Marken (Bluete, Ring, Brustmarke) sind KEINE Blockzeichen. Ohne eigenen
-      // Zellhintergrund scheint die Karte durch und es sieht aus wie ein Loch
-      // in der Figur.
-      var stil = k === "A" ? "color:" + FARBE.A + ";background:" + FARBE.F : "color:" + FARBE[k];
-      out += k === " " ? puffer : '<span style="' + stil + '">' + puffer + "</span>";
-      puffer = "";
-    }
-    for (var j = 0; j < zeile.length; j++) {
-      var kk = e.maske[i][j] || " ";
-      if (kk !== k) { spuelen(); k = kk; }
-      puffer += zeile[j];
-    }
-    spuelen();
-    return out;
-  }).join("\n");
-}
+   Warum er umgezogen ist: er stand bis zum 22.08.2026 dreimal fast wortgleich
+   in dieser Datei (Ei, Tier, Pets). Mit Kleidung und Make-up waere er ein
+   viertes und fuenftes Mal faellig gewesen — und im ST-Trainer noch einmal
+   fuenf. Der Sonderfall "Marke braucht Fellhintergrund" stimmt jetzt an einer
+   Stelle statt an zehn.
+
+   Ein Alias, damit die drei Aufrufer unten lesbar bleiben. */
+var zeichne = Laden.malen;
+
 
 export function eiHtml(variante, stufe) {
   var FARBE = { F: variante.fell, M: variante.muster, A: variante.akzent || variante.muster, R: "var(--mk-riss)" };
@@ -729,10 +799,15 @@ function figurEbenen(variante, stufe, nacht) {
 
   /* Offenes Auge volle Zelle, nachts eine halbe: ein Lid, das faellt - und
      kein Sonderzeichen, das in einen Ersatzfont fallen koennte. */
+  /* Die Augen tragen seit dem 04.09.2026 den Schluessel "E" statt "T", obwohl
+     sie dieselbe Farbe haben wie das Maul. Der Grund ist das Blinzeln: es ist
+     eine Animation auf dem Zeichen, und mit einem gemeinsamen Schluessel haette
+     das Maul mitgeblinzelt. Zwei Dinge, die gleich aussehen, aber Verschiedenes
+     tun, brauchen zwei Schluessel. farbTabelle() gibt E dieselbe Farbe wie T. */
   var augeCh = nacht ? "▄" : "█";
   k.augen.forEach(function (a) {
     for (var i = 0; i < k.augenBreit; i++) {
-      setzTier(zeilen, maske, a[0], a[1] + i, ahnung ? "▄" : augeCh, ahnung ? "A" : "T");
+      setzTier(zeilen, maske, a[0], a[1] + i, ahnung ? "▄" : augeCh, ahnung ? "A" : "E");
     }
   });
   if (!ahnung) k.maul.forEach(function (m) { setzTier(zeilen, maske, m[0], m[1], "▄", "T"); });
@@ -742,15 +817,59 @@ function figurEbenen(variante, stufe, nacht) {
     k.brust.forEach(function (b) { setzTier(zeilen, maske, b[0], b[1], marke[2], "A"); });
   }
 
-  return { zeilen: zeilen, maske: maske };
+  /* DIE GEOMETRIE WANDERT MIT HERAUS, nicht nur die Zeichen. Kleidung und
+     Make-up sitzen im Laden (geteilt-laden.js), und der kennt die
+     Koerpertabelle oben nicht — er rechnet jede Position aus diesen vier
+     Zahlen. Deshalb ist es kein Zusatz, sondern der Vertrag:
+
+       breite    Zellen je Zeile
+       ohrHoehe  Zeilen UEBER dem Koerperraster
+       augen     [[zeile, spalte, breite], ...] in endgueltigen Koordinaten
+       unten     Index der letzten Koerperzeile
+
+     ohrHoehe ist hier 0: der Hund traegt seine Schlappohren NEBEN dem Kopf,
+     also innerhalb des Rasters. Die Katze im ST-Trainer setzt eine Ohrenzeile
+     obendrauf und liefert 1. Genau dieser eine Unterschied ist der Grund,
+     warum die Zahl mitkommen muss, statt im Laden zu stehen — sonst sitzt der
+     Hut bei einem der beiden Tiere in der Luft.
+
+     augenBreit wird hier aufgeloest: der Laden soll nicht wissen muessen,
+     dass ein Blob einzellige Augen hat und alles andere zweizellige.
+
+     maul und schnauze kamen am 04.09.2026 dazu, und zwar wegen genau einem
+     Satz von Jennifer: "bei lippen verliert er die nase". Der Lippenstift
+     suchte sich das Maul ueber die MASKE (die einzige Tinte-Zelle unter den
+     Augen) und faerbte es um — damit war der dunkle Fleck weg, der als Nase
+     gelesen wird. Jetzt bekommt der Laden beides benannt und kann die Lippen
+     NEBEN die Nase legen, statt sie zu ersetzen.
+
+     Ein Blob hat weder Schnauze noch Brustmarke; die Listen sind dann leer,
+     und der Laden zeichnet einfach nichts. */
+  return {
+    zeilen: zeilen, maske: maske,
+    breite: zeilen[0].length,
+    ohrHoehe: 0,
+    augen: k.augen.map(function (a) { return [a[0], a[1], k.augenBreit]; }),
+    maul: (k.maul || []).map(function (m) { return [m[0], m[1]]; }),
+    schnauze: (k.schnauze || []).map(function (x) { return [x[0], x[1]]; }),
+    unten: zeilen.length - 1,
+  };
 }
 
-export function figurHtml(variante, stufe, nacht) {
-  var FARBE = {
-    F: variante.fell, M: variante.muster,
-    A: variante.akzent || variante.muster, T: variante.tinte || variante.muster,
-  };
-  return zeichne(figurEbenen(variante, stufe, nacht), FARBE);
+/* opt ist optional und beschreibt, was die Figur traegt:
+
+     { look: "cyber", getragen: { kopf: { stueck: "hut", farbe: "gold" }, ... } }
+
+   OHNE opt zeichnet die Funktion exakt das, was sie vor dem Laden gezeichnet
+   hat. Das ist kein Zufall, sondern die Bedingung dafuer, dass dieser Umbau
+   niemandem etwas kaputt macht: es gibt Aufrufer (Schluepf-Moment, Ankunft,
+   KI-Blase), die von Kleidung nichts wissen und auch nichts wissen sollen. */
+export function figurHtml(variante, stufe, nacht, opt) {
+  var o = opt || {};
+  var farben = Laden.farbenFuer(variante, o.look);
+  var e = figurEbenen(variante, stufe, nacht);
+  if (o.getragen) e = Laden.anziehen(e, o.getragen);
+  return Laden.malen(e, Laden.farbTabelle(farben, o.getragen));
 }
 
 /* ==========================================================================
@@ -762,13 +881,21 @@ export function figurHtml(variante, stufe, nacht) {
    Sync, und ein umbenannter Key entwertet still eine bereits getroffene Wahl —
    genau das ist mit den Ei-Keys zweimal passiert (siehe ALT_KEYS oben).
 
-   WARUM DIE PETS DAS ERSTE REGAL SIND, obwohl die Looks billiger zu bauen
+   WARUM DIE PETS DAS ERSTE REGAL WAREN, obwohl die Looks billiger zu bauen
    waeren (reine Farbumschaltung, null Zeichenarbeit): Looks kosten STERNE, und
-   Sterne gibt es nur fuers Streckziel. Vier Looks kosten zusammen 23 ★, Rose
-   steht am 22.08.2026 bei 3. Ein Regal, das sie ansieht und nicht bezahlen
-   kann, ist kein Durchstich, sondern eine Auslage. Die Pets kosten HERZEN
-   (4 bis 6), und mit 42 ♥ auf Stufe 8 sind alle fuenf zusammen (24 ♥) am Tag
-   des Aufgehens bezahlbar.
+   Sterne gibt es nur fuers Streckziel. Am 22.08.2026 standen die Looks bei
+   23 ★ zusammen und Rose bei 3. Ein Regal, das sie ansieht und nicht bezahlen
+   kann, ist kein Durchstich, sondern eine Auslage. Die Pets kosten HERZEN und
+   waren damit am Tag des Aufgehens erreichbar.
+
+   PREISE AM 03.09.2026 ANGEHOBEN, von 4–6 ♥ auf 6–10 ♥. Der Grund steht
+   ausfuehrlich in geteilt-laden.js (Abschnitt "DIE PREISE"): der ganze Katalog
+   kostete 24 ♥, Rose hatte an dem Tag 40 ♥ frei und haette ihn in einer
+   Sitzung leergeraeumt. Der billigste Posten bleibt bewusst klein — teuer ist
+   die Sammlung, nicht der erste Schritt.
+
+   Roses beide gekaufte Pets bleiben davon unberuehrt: kaufen() hat 4 ♥ und
+   6 ♥ in die Zeilen geschrieben, und das Guthaben rechnet aus den Zeilen.
 
    Sie brauchen die figurEbenen()-Operation NICHT: eigener kleiner Renderer,
    eigenes Raster (7 breit, hoechstens 4 hoch), sitzen neben der Figur. Deshalb
@@ -778,62 +905,24 @@ export function figurHtml(variante, stufe, nacht) {
    Kleiner als jedes Jungtier, damit im Bild klar bleibt, wer hier das Haustier
    ist. */
 
-/* Eigene Liste statt VOLL_TIER: die Pets benutzen Viertelbloecke (▖ ▗ ▛), die
-   in keiner Tierfigur vorkommen. Wer hier ein Zeichen vergisst, macht es
-   unsichtbar-FALSCH statt sichtbar kaputt — die Zelle bekommt keinen span und
-   erbt die Textfarbe der Seite. An genau dem war in der Werkstatt die
-   Schwanzflosse des Fischs weiss statt orange. */
-var VOLL_PET = "█▟▙▛▜▐▌▝▘▖▗▄▀";
-
-export var PETS = [
-  { key: "kaefer", name: "Käfer", preis: 4,
-    pal: { fell: "#c0563f", muster: "#2f2a28", akzent: "#f0d8c8", tinte: "#1c1a18" },
-    zeilen: [" ▘   ▝ ", " ▟███▙ ", " ▐███▌ ", " ▝▀▀▀▘ "],
-    augen: [[1, 1], [1, 5]], extra: [],
-    hinweis: "Augen ganz außen, direkt unter den Fühlern. Sagt nichts, ist aber da." },
-  { key: "maus", name: "Maus", preis: 4,
-    pal: { fell: "#a89a8c", muster: "#7d7166", akzent: "#f2ece4", tinte: "#1c1a18" },
-    zeilen: ["▟█▙ ▟█▙", "▐█████▌", "▐█████▌", " ▀▀▀▀▀▖"],
-    augen: [[1, 2], [1, 4]], extra: [[2, 3, null, "M"]],
-    hinweis: "Runde Ohren, ein Schwanz hinten rechts. Nimmt wenig Platz weg." },
-  { key: "vogel", name: "Vögelchen", preis: 5,
-    pal: { fell: "#5b8ec4", muster: "#3a6fa8", akzent: "#eaf3fb", tinte: "#1b2b3a" },
-    zeilen: ["  ▄▄▄  ", " ▟███▙▖", " ▐███▌ ", "  ▀ ▀  "],
-    augen: [[1, 3]], extra: [[1, 6, "▖", "A"]],
-    hinweis: "Oben glatt, dafür Schnabel und zwei Füße." },
-  { key: "fisch", name: "Fisch", preis: 5,
-    pal: { fell: "#e08a3c", muster: "#c05a1f", akzent: "#fbe6c8", tinte: "#3a2410" },
-    zeilen: ["  ▄▄▄▄ ", "▙▟█████", "▛▐█████", "  ▀▀▀▀ "],
-    augen: [[1, 4]], extra: [],
-    hinweis: "Schwanzflosse links, zwei Keile übereinander. Schwimmt in der Luft." },
-  { key: "schildkroete", name: "Schildkröte", preis: 6,
-    pal: { fell: "#7fa86a", muster: "#4c6b3d", akzent: "#eef5e2", tinte: "#22301a" },
-    zeilen: ["  ▄▄▄  ", " ▟███▙ ", "▄▐███▌█", " ▀   ▀ "],
-    augen: [[2, 6]], extra: [[1, 3, null, "M"]],
-    hinweis: "Panzerkuppel mit Kopf rechts. Das teuerste, das langsamste." },
-];
-
-export function petVon(key) {
-  for (var i = 0; i < PETS.length; i++) if (PETS[i].key === key) return PETS[i];
-  return null;
-}
-
-export function petHtml(key) {
-  var p = petVon(key);
-  if (!p) return "";
-  var zeilen = p.zeilen.slice();
-  var maske = zeilen.map(function (zeile) {
-    return zeile.split("").map(function (ch) { return VOLL_PET.indexOf(ch) < 0 ? " " : "F"; }).join("");
-  });
-  (p.extra || []).forEach(function (x) { setzTier(zeilen, maske, x[0], x[1], x[2], x[3]); });
-  (p.augen || []).forEach(function (a) { setzTier(zeilen, maske, a[0], a[1], "█", "T"); });
-  return zeichne({ zeilen: zeilen, maske: maske },
-    { F: p.pal.fell, M: p.pal.muster, A: p.pal.akzent, T: p.pal.tinte });
-}
+/* ---------- Die Mini-Pets ----------
+   Liegen seit dem 03.09.2026 in geteilt-laden.js und nicht mehr hier. Sie waren
+   in beiden Trainern Zeichen fuer Zeichen dasselbe — und ihre Preise damit
+   zweimal derselbe Satz Zahlen, den irgendwann jemand nur an einer Stelle
+   anfasst. Die Namen bleiben hier stehen, damit der Laden unten lesbar bleibt. */
+var PETS = Laden.PETS;
+var petVon = Laden.petVon;
+/* Der Aufrufer in standKnoten() reicht den Look mit herein: ein Neon-Hund neben
+   einer erdfarbenen Maus saehe aus wie ein Fehler statt wie eine Entscheidung. */
+function petHtml(key, lookKey) { return Laden.petHtml(key, lookKey); }
 
 /* Das Bild zur Stufe — Ei oder Tier, eine Entscheidung an einer Stelle. */
-export function bildHtml(variante, stufe, nacht) {
-  return stufe < SCHLUEPF_STUFE ? eiHtml(variante, stufe) : figurHtml(variante, stufe, nacht);
+export function bildHtml(variante, stufe, nacht, opt) {
+  // Das Ei traegt nichts. Nicht aus Bequemlichkeit: der Laden geht erst auf
+  // der letzten Stufe auf, ein Ei mit Hut kann es also gar nicht geben. Der
+  // Zweig ist trotzdem hier und nicht beim Aufrufer, damit die Testseite alle
+  // neun Stufen durchgehen kann, ohne selbst zu unterscheiden.
+  return stufe < SCHLUEPF_STUFE ? eiHtml(variante, stufe) : figurHtml(variante, stufe, nacht, opt);
 }
 
 /* ---------- Der Storch ----------
@@ -1161,113 +1250,52 @@ export function shopOeffnen(tz, neu) {
   ov.addEventListener("click", function (e) { if (e.target === ov) schliesse(); });
   document.addEventListener("keydown", shopTaste);
 
-  /* Das Sheet zeichnet sich nach jedem Kauf selbst neu — und danach die Karte
-     darunter, weil dort das Pet sitzt. Reihenfolge ist Absicht: erst das
-     Sheet, damit der Knopf, den Rose gerade gedrueckt hat, sofort seinen neuen
-     Zustand zeigt; die Karte darunter kann warten. */
-  function malen() {
-    blatt.textContent = "";
-    blatt.appendChild(el("div", "chat-grip"));
+  /* Der Inhalt kommt aus geteilt-laden.js — die Oberflaeche ist in beiden
+     Trainern dieselbe, nur der Zustand darunter nicht. Was hier bleibt, ist
+     genau das, was am Trainer haengt: die Huelle, die Tastatur, der Fokus und
+     der ADAPTER, ueber den der Baustein an das Konto kommt.
 
-    var st = standJetzt(tz);
-    var frei = guthaben(st);
+     tz kommt von aussen herein statt gespeichert zu werden: standJetzt()
+     braucht den Tagesplan, und der ist geraetelokal und kann sich waehrend das
+     Sheet offen ist geaendert haben. */
 
-    blatt.appendChild(el("div", "shop-kopf", "Der Laden"));
-    var konto = el("p", "shop-konto");
-    /* Beide Waehrungen immer, auch bei 0 ★. blaseText() laesst die Sterne bei 0
-       weg (dort ist es eine Blase, kein Konto) — hier waere das Loeschung: wer
-       sein Guthaben ansieht, will wissen, dass es die zweite Waehrung gibt und
-       sie gerade leer ist. */
-    konto.innerHTML = "<b>" + frei.herz + "</b> ♥ frei · <b>" + frei.stern + "</b> ★ frei";
-    blatt.appendChild(konto);
-    blatt.appendChild(el("p", "shop-hinweis",
-      "Gekauft ist gekauft. Nichts läuft ab, nichts geht kaputt, und wenn du einen Tag nicht kannst, passiert hier gar nichts."));
-
-    // ---- Regal 1: die Mini-Pets ----
-    blatt.appendChild(el("h3", "shop-regal-kopf", "Mini-Pets"));
-    blatt.appendChild(el("p", "shop-regal-text",
-      "Sitzt neben dir in der Karte. Immer nur eins auf einmal, wechseln kostet nichts."));
-
-    var regal = el("div", "shop-regal");
-    var getragen = wahl("pet");
-
-    PETS.forEach(function (p) {
-      var was = "pet:" + p.key;
-      var hat = besitzt(was);
-      var an = hat && getragen === p.key;
-
-      var karte = el("div", "shop-stueck" + (an ? " an" : ""));
-      var bild = document.createElement("pre");
-      bild.className = "shop-bild";
-      bild.setAttribute("aria-hidden", "true");
-      bild.innerHTML = petHtml(p.key);
-      karte.appendChild(bild);
-
-      karte.appendChild(el("div", "shop-name", p.name));
-      karte.appendChild(el("p", "shop-text", p.hinweis));
-
-      if (!hat) {
-        var bezahlbar = frei.herz >= p.preis;
-        var kauf = knopf(p.preis + " ♥", "knopf klein shop-kauf", function () {
-          if (!kaufen(was, p.preis, "herz", standJetzt(tz))) return;
-          // Frisch gekauft wird gleich getragen. Alles andere waere ein zweiter
-          // Klick fuer etwas, das ohnehin gewollt ist.
-          waehle("pet", p.key);
-          malen();
-          if (typeof neu === "function") neu();
-        });
-        kauf.disabled = !bezahlbar;
-        if (!bezahlbar) {
-          kauf.title = "Dafür fehlen noch " + (p.preis - frei.herz) + " ♥";
-          // Der Screenreader bekommt denselben Satz — ein deaktivierter Knopf
-          // mit nur einer Zahl sagt sonst nicht, warum er nicht geht.
-          kauf.setAttribute("aria-label", p.name + " kostet " + p.preis + " ♥, dir fehlen noch " + (p.preis - frei.herz));
-        }
-        karte.appendChild(kauf);
-      } else if (an) {
-        var ab = knopf("ist dabei", "mk-link shop-an", function () {
-          waehle("pet", null);
-          malen();
-          if (typeof neu === "function") neu();
-        });
-        ab.setAttribute("aria-label", p.name + " ist dabei — antippen, um es zu Hause zu lassen");
-        karte.appendChild(ab);
-      } else {
-        karte.appendChild(knopf("mitnehmen", "knopf klein sekundaer", function () {
-          waehle("pet", p.key);
-          malen();
-          if (typeof neu === "function") neu();
-        }));
-      }
-      regal.appendChild(karte);
-    });
-    blatt.appendChild(regal);
-
-    /* Die Regale, die es noch nicht gibt. Sie stehen hier als ruhiger Satz und
-       NICHT als graue Kachel mit Preis: eine Auslage, die man nicht anfassen
-       kann, ist genau die Bauart, die dieser Shop nicht haben soll. */
-    blatt.appendChild(el("p", "shop-spaeter",
-      "Kleiderschrank, andere Farben und andere Tierformen sind ausgedacht, aber noch nicht gebaut. Die kommen später dazu."));
-
-    var zu = knopf("Schließen", "knopf klein sekundaer shop-zu", schliesse);
-    blatt.appendChild(zu);
-
-    /* Der Fokus geht auf das BLATT, nicht auf den Schliessen-Knopf. Das
-       Chat-Sheet macht es umgekehrt und hat recht damit — dort sitzt der Knopf
-       weit oben. Hier steht er ganz unten hinter fuenf Kacheln: ihn zu
-       fokussieren scrollt das Sheet beim Oeffnen an seinen eigenen Kopf vorbei,
-       und Rose landet unter dem Guthaben statt darueber. Gemessen am 22.08.2026
-       im 360-px-Lauf.
-       tabindex -1 macht das Blatt fokussierbar, ohne es in die Tab-Reihenfolge
-       aufzunehmen; scrollTop 0 setzt die Ansicht auch nach einem Kauf wieder
-       nach oben, damit die neue Zahl im Konto zu sehen ist. */
-    blatt.scrollTop = 0;
-    blatt.focus();
-  }
-
+  /* ERST anhaengen, DANN fuellen. Die Reihenfolge ist nicht Geschmack:
+     blattFuellen() setzt am Ende den Fokus auf das Blatt, und focus() auf einem
+     Element, das noch nicht im Dokument haengt, tut schlicht nichts — die
+     Tastatur bliebe hinter dem Sheet auf der Seite darunter, und Escape ginge
+     ins Leere. */
   document.body.appendChild(ov);
   offenerShop = ov;
-  malen();
+
+  /* Die Stufe wird EINMAL beim Oeffnen gerechnet, nicht je Kachel.
+     standJetzt() laeuft ueber herzenStand(), und das geht durch den ganzen
+     antwortLog — bei Rose rund 2600 Eintraege. Der Laden zeichnet ~30
+     Kacheln, jede mit einer eigenen Figur, und zeichnet sich bei JEDEM
+     Antippen neu. Je Kachel gerechnet waeren das 78 000 Eintraege pro
+     Farbtipp, auf ihrem Handy.
+
+     Einmal rechnen ist hier nicht nur billiger, sondern auch richtiger: der
+     Laden geht erst auf der LETZTEN Stufe auf, sie kann sich also gar nicht
+     mehr aendern, solange das Blatt offen ist. Und Antworten entstehen
+     waehrenddessen keine. Der KAUF prueft trotzdem gegen den Stand von jetzt
+     (siehe kaufen unten) — das Sheet kann lange offen liegen. */
+  var stufeImLaden = stufeJetzt(standJetzt(tz).herzen);
+
+  Laden.blattFuellen(blatt, {
+    stand: function () { return standJetzt(tz); },
+    guthaben: guthaben,
+    besitzt: besitzt,
+    // Der Preis wird NICHT vom Baustein bestimmt, sondern hier gegen den
+    // Stand von JETZT geprueft — das Sheet kann lange offen liegen.
+    kaufen: function (was, preis) { return kaufen(was, preis, standJetzt(tz)); },
+    wahl: wahl, waehle: waehle, outfit: outfit, anlegen: anlegen, faerben: faerben,
+    figur: function (opt) { return bildHtml(EIER[eiIndex()], stufeImLaden, false, opt); },
+    pet: petHtml,
+    nacht: nachtJetzt,
+    schliessen: schliesse,
+    el: el, knopf: knopf,
+    neu: typeof neu === "function" ? neu : null,
+  });
   return ov;
 }
 
@@ -1292,7 +1320,22 @@ function standKnoten(tz, neu, chatAuf) {
   // es noch nicht fertig.
   pre.className = "mk-ei" + (REDUCE_MOTION ? "" : stufe === 0 ? " mk-schwebt" : stufe === 2 ? " mk-wackelt" : " mk-atmet");
   pre.setAttribute("aria-hidden", "true");
-  pre.innerHTML = bildHtml(v, stufe, t.nacht);
+  /* Ab hier traegt die Figur, was Rose im Laden ausgesucht hat. Look und
+     Outfit werden NUR ab SHOP_STUFE gezeigt — nicht als Sperre, sondern als
+     Aufraeumen: wer den Laden noch nie offen hatte, kann nichts angezogen
+     haben, und ein Aufruf mit einem leeren Objekt waere derselbe DOM bei
+     mehr Arbeit. Wichtiger ist der umgekehrte Fall: wuerde ein alter,
+     gesyncter Stand aus einer Zeit mit anderen Schluesseln hier durchlaufen,
+     bliebe die Figur trotzdem heil — anziehen() zeichnet nur, was es kennt. */
+  var traegtWas = stufe >= SHOP_STUFE ? { look: wahl("look"), getragen: outfit() } : null;
+  pre.innerHTML = bildHtml(v, stufe, t.nacht, traegtWas);
+  // Was sich BEWEGEN soll, kann keine Zelle sein - die Musiknoten aus den
+  // Kopfhoerern steigen auf und verlassen dabei die Figur. Sie haengen als
+  // Ebene am <pre>, siehe geteilt-laden.js figurKlassen().
+  // Die Zzz haengen NICHT an traegtWas: zwischen 0 und 6 Uhr schlaeft die
+  // Kreatur, ob sie etwas gekauft hat oder nicht.
+  var fk = Laden.figurKlassen(traegtWas && traegtWas.getragen);
+  if (fk) pre.className += " " + fk;
   /* Der Einstieg in den Chat: das Bild wird in einen echten Knopf gewickelt.
      Das <pre> bleibt aria-hidden (Blockgrafik ist fuer einen Screenreader
      Zeichensalat), der Knopf traegt das Label. Nur in DIESER ruhigen Ansicht —
@@ -1328,18 +1371,47 @@ function standKnoten(tz, neu, chatAuf) {
      Welle einer anderen Session. */
   var petKey = wahl("pet");
   var petHoch = "";
-  if (petKey && besitzt("pet:" + petKey) && stufe >= SHOP_STUFE) petHoch = petHtml(petKey);
+  if (petKey && besitzt("pet:" + petKey) && stufe >= SHOP_STUFE) petHoch = petHtml(petKey, wahl("look"));
   if (petHoch) {
     var hof = el("div", "mk-figur-hof");
     hof.appendChild(figur);
     var petPre = document.createElement("pre");
-    petPre.className = "mk-pet" + (REDUCE_MOTION ? "" : " mk-atmet");
+    // Das Pet schlaeft mit — beide, nicht nur die Kreatur.
+    petPre.className = ("mk-pet" + (REDUCE_MOTION ? "" : " mk-atmet") + " " + Laden.petKlassen()).trim();
     petPre.setAttribute("aria-hidden", "true");
     petPre.innerHTML = petHoch;
     hof.appendChild(petPre);
     zeile.appendChild(hof);
   } else {
     zeile.appendChild(figur);
+  }
+
+  /* ---------- Der Hintergrund ----------
+     Eine Ebene HINTER Figur und Pet, kein gezeichnetes Feld. Die Figur ist
+     Blockgrafik in einem <pre>; ein gemalter Hintergrund muesste in dieselben
+     Zellen und wuerde jede Silhouette auffressen. Als CSS-Verlauf dahinter
+     kostet er null Zellen und skaliert mit jeder Schriftgroesse.
+
+     Er wird dem zuletzt angehaengten Kind umgehaengt (Hof oder Figur), damit
+     er genau so gross ist wie das, was davor steht — und nicht so breit wie
+     die ganze Karte. Der Hof ist inline-flex und traegt darum keine eigene
+     Groesse, die hier stoeren koennte.
+
+     nachtJetzt() und nicht t.nacht: t.nacht heisst "nach 22 Uhr" und laesst
+     ein Augenlid fallen. Hier geht es um das BLATT, nicht um die Uhr. */
+  var hgKey = stufe >= SHOP_STUFE ? wahl("hintergrund") : null;
+  var hgStil = hgKey && besitzt(Laden.stueckId("hintergrund", hgKey))
+    ? Laden.hintergrundStil(hgKey, nachtJetzt()) : null;
+  if (hgStil) {
+    var innen = zeile.lastChild;
+    // Die Klassen tragen die BEWEGTEN Ebenen (Sterne, Schnee). Sie lassen sich
+    // nicht als Farbwert ausdruecken - ein Verlauf funkelt nicht.
+    var rahmen = el("div", ("mk-hintergrund " + Laden.hintergrundKlassen(hgKey, nachtJetzt())).trim());
+    // Die drei Ebenen zuerst, die Figur danach: sie liegt darueber (z-index in
+    // shop.css) und wird von der Ausblendung nach aussen NICHT erfasst.
+    rahmen.innerHTML = Laden.hintergrundHtml(hgKey, nachtJetzt());
+    zeile.replaceChild(rahmen, innen);
+    rahmen.appendChild(innen);
   }
 
   var text = el("div", "mk-text");

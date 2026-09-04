@@ -1,14 +1,42 @@
 /* ==========================================================================
-   DER SHOP DES MASKOTTCHENS — 22.08.2026
+   DER LADEN — Aussehen. Geteilt zwischen beiden Trainern.
    ==========================================================================
-   EIGENE DATEI, UND ZWAR MIT ABSICHT. style.css ist rund 2200 Zeilen und wird
-   von mehreren Sessions gleichzeitig bearbeitet; der Shop entstand parallel zum
-   Umbau des Themen-Lernens. Zwei Sessions in einer Datei heisst: Konflikte an
-   Stellen, die nichts miteinander zu tun haben. Der Shop haengt an genau einem
-   Ort (dem Maskottchen) und kann darum sauber fuer sich stehen.
+   Verteilt per ../geteilte-styles/verteilen.sh nach app/css/shop.css.
+   NICHT die Kopie bearbeiten, immer diese Quelle.
+
+   EIGENE DATEI, UND ZWAR MIT ABSICHT. style.css ist in beiden Trainern rund
+   2200 Zeilen und wird von mehreren Sessions gleichzeitig bearbeitet; der Shop
+   entstand parallel zum Umbau des Themen-Lernens. Zwei Sessions in einer Datei
+   heisst: Konflikte an Stellen, die nichts miteinander zu tun haben. Der Laden
+   haengt an genau einem Ort (dem Maskottchen) und kann sauber fuer sich stehen.
+
+   GETEILT SEIT DEM 03.09.2026, als der ST-Trainer den Laden bekam. Die
+   Oberflaeche ist in beiden dieselbe (geteilt-laden.js baut sie), also darf sie
+   nicht zweimal gestylt werden.
+
+   ZWEI DINGE MUSSTEN DAFUER SELBSTTRAGEND WERDEN, weil die Trainer sie
+   verschieden loesen:
+     - DIE KNOEPFE. Der GE-Trainer hat eine .knopf-Familie, der ST-Trainer eine
+       .btn-Familie. Der Laden bringt darum seine eigene mit, unter
+       ".mk-shop-ov .knopf" — zwei Klassen schlagen die eine des Trainers, ohne
+       dass irgendwo !important stehen muss.
+     - DER REGENBOGEN. Er heisst im GE-Trainer --regenbogen und existiert im
+       ST-Trainer gar nicht. Hier steht er als --laden-regen, EINMAL und fuer
+       beide. Ihn an --regenbogen zu haengen waere die naheliegende Loesung und
+       die falsche: diese Datei wird nach style.css geladen, eine Neudefinition
+       von --regenbogen wuerde drueben still die Balken-Fuellung mitaendern.
 
    WAS HIER NICHT HINEINGEHOERT: alles, was nicht mit ".mk-shop-ov", ".shop-"
    oder ".mk-pet" anfaengt. Der Rest der .mk-*-Familie wohnt in style.css.
+
+   Am 03.09.2026 sind drei weitere .mk-*-Klassen dazugekommen, und zwar nach
+   derselben Regel, nach der .mk-pet hier steht: sie EXISTIEREN nur, weil es
+   den Laden gibt, und verschwaenden mit ihm.
+     .mk-hintergrund   die Ebene hinter der Figur in der Tageskarte
+     .mk-verlauf       ein Zeichen, das statt einer Farbe einen Verlauf traegt
+     .mk-schimmer      der Glitzer, der leise pulsiert
+   Die beiden letzten werden von geteilt-laden.js an einzelne Spans gehaengt.
+   Wer sie umbenennt, muss dort suchen, nicht in maskottchen.js.
 
    Sie wird als LETZTE Stylesheet-Zeile in index.html geladen, nach style.css —
    nicht wegen Spezifitaet (jede Regel hier ist ohnehin eigen benannt), sondern
@@ -21,6 +49,11 @@
 
    360 px ist die Messbreite. Rose uebt am Handy.
    ========================================================================== */
+
+/* Der Regenbogen des Ladens. Dieselben Stops wie --regenbogen im GE-Trainer,
+   aber unter eigenem Namen (siehe Kopf). geteilt-laden.js gibt ihn als Farbe
+   eines Farbtopfs aus. */
+:root { --laden-regen: linear-gradient(115deg, #ff6b7a, #ffb46b, #ffe873, #4ade80, #5ad7ff, #b98cff, #ff6b7a); }
 
 /* ---------- Die Huelle ----------
    Gleiche Bauart wie .mk-chat-ov in geteilt.css: fest ueber allem, unten
@@ -118,12 +151,31 @@
   flex: 1;
 }
 
-/* Der Kauf-Knopf traegt nur die Zahl. Der Name steht darueber, und ein
+/* ---------- Die Knoepfe des Ladens ----------
+   Vollstaendig hier und nicht aus dem Trainer geerbt: der GE-Trainer hat eine
+   .knopf-Familie, der ST-Trainer eine .btn-Familie, und der Laden benutzt in
+   beiden dieselben Klassennamen. Zwei Klassen im Selektor schlagen die eine
+   des Trainers — ohne !important und ohne Rangelei mit der Ladereihenfolge.
+
+   Der Kauf-Knopf traegt nur die Zahl. Der Name steht darueber, und ein
    "Kaufen fuer 4 ♥" waere auf 150 px die dritte Zeile Text auf einer Kachel,
    die schon zwei hat. */
+.mk-shop-ov .knopf {
+  font: inherit; font-weight: 600; cursor: pointer;
+  border: 1.5px solid transparent; border-radius: 999px;
+  padding: 7px 16px; box-shadow: none;
+  background: var(--mk-riss); color: var(--card);
+}
+.mk-shop-ov .knopf.sekundaer {
+  background: transparent; color: var(--ink); border-color: var(--line);
+}
 .mk-shop-ov .knopf.klein {
   padding: 5px 14px; font-size: .84rem; box-shadow: none;
 }
+.mk-shop-ov .knopf:active { transform: scale(.97); }
+/* .mk-link gibt es in beiden Trainern und sieht dort gleich aus — der wird
+   bewusst NICHT nachgebaut, sondern geerbt. */
+.mk-shop-ov .mk-link { cursor: pointer; }
 /* Nicht bezahlbar: sichtbar, aber ohne Aufforderung. NICHT ausgeblendet — Rose
    soll sehen, was es gibt, und der title/aria-label sagt, wie viel noch fehlt.
    Das ist der Unterschied zwischen "spaeter" und "verpasst". */
@@ -132,10 +184,11 @@
 }
 .mk-shop-ov .shop-an { margin-top: 2px; }
 
-.shop-spaeter {
-  margin: 0 0 14px; font-size: .78rem; color: var(--ink-soft);
-  text-align: center; max-width: 44ch; margin-left: auto; margin-right: auto;
-}
+/* .shop-spaeter ist am 03.09.2026 ersatzlos raus. Sie trug den Satz
+   "Kleiderschrank, andere Farben und andere Tierformen sind ausgedacht, aber
+   noch nicht gebaut" — den gibt es nicht mehr, weil es die Regale jetzt gibt.
+   Geloescht statt stehengelassen: eine Regel ohne Element laedt dazu ein, sie
+   spaeter versehentlich wieder anzuklemmen. */
 .mk-shop-ov .shop-zu { display: block; margin: 0 auto; }
 
 /* ---------- Das Pet neben der Figur ----------
@@ -169,4 +222,550 @@
 .mk-pet.mk-atmet { animation-delay: .9s; }
 @media (prefers-reduced-motion: reduce) {
   .mk-pet.mk-atmet { animation: none; }
+}
+
+
+/* ==========================================================================
+   DIE BUEHNE — 03.09.2026
+   ==========================================================================
+   Ganz oben im Sheet, unter dem Guthaben: die Figur, wie sie GERADE aussieht.
+   Sie steht dort und nicht unten, weil jeder Kauf und jedes Umfaerben hier
+   landet — wer eine Farbe antippt, will die Wirkung sehen, ohne zu scrollen.
+   Nach jedem Kauf springt blatt.scrollTop auf 0 und damit genau hierher.
+
+   min-height statt fester Hoehe: mit Hut und Fluegeln ist die Figur zwei
+   Zeilen hoeher als nackt, und eine feste Hoehe haette entweder abgeschnitten
+   oder unten immer ein Loch gelassen. */
+.shop-buehne {
+  display: flex; align-items: flex-end; justify-content: center; gap: 12px;
+  /* Groesser seit dem 04.09.2026 (Jennifer: "hintergründe können etwas
+     größer sein, damit man mehr sieht — z. B. sieht man die wolken ja gar
+     nicht"). Ein Verlauf, der nur die Figur umrandet, zeigt von einer Wolke
+     einen Streifen. */
+  min-height: 210px; padding: 42px 40px 28px;
+  position: relative;
+  margin: 0 0 6px;
+  border: 1px solid var(--line); border-radius: 14px;
+  background-color: var(--paper-2, transparent);
+  background-size: cover; background-position: center;
+  overflow: hidden;
+}
+.shop-buehne-bild, .shop-buehne-pet {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1; white-space: pre; margin: 0; flex-shrink: 0;
+}
+.shop-buehne-bild { font-size: 15px; }
+/* Kleiner als die Figur, aus demselben Grund wie .mk-pet: im Bild muss klar
+   bleiben, wer hier das Haustier ist. */
+.shop-buehne-pet { font-size: 11px; }
+.shop-buehne-text {
+  margin: 0 auto 16px; max-width: 44ch;
+  text-align: center; font-size: .78rem; color: var(--ink-soft);
+}
+
+/* ---------- Die Figur als Vorschau in einer Kachel ----------
+   Kleiner als auf der Buehne: neun Kleidungskacheln nebeneinander sind neun
+   Figuren, und bei 15px waere jede Kachel doppelt so hoch wie ihr Text. */
+.shop-bild-figur { font-size: 9px; }
+
+/* ---------- Eine Flaeche statt eines Bildes ----------
+   Farbtoepfe und Hintergruende haben keine Blockgrafik — sie SIND die Farbe.
+   Ein Rechteck in der Sache selbst sagt mehr als jedes Symbol davor. */
+.shop-flaeche {
+  width: 100%; height: 92px; border-radius: 10px;
+  position: relative; overflow: hidden;
+  background-size: cover; background-position: center;
+  border: 1px solid var(--line);
+}
+
+/* ---------- Der Farbstreifen an einem getragenen Stueck ----------
+   Sitzt IN der Kachel des Stuecks, nicht in einem eigenen Regal: so ist der
+   Weg "Stueck ansehen, Farbe antippen, fertig" statt "Farbe suchen, Stueck
+   suchen, zuordnen".
+
+   28 px Zielflaeche in beide Richtungen, obwohl der Punkt nur 18 px misst —
+   darunter liegt die Trefferquote am Daumen unter dem, was man Rose zumuten
+   will. Der Rand macht den Unterschied unsichtbar. */
+.shop-farben {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+  margin-top: 4px;
+}
+.shop-farbe {
+  width: 18px; height: 18px; padding: 0; margin: 5px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: var(--paper-2); cursor: pointer;
+  position: relative; flex-shrink: 0;
+}
+.shop-farbe::after {
+  content: ""; position: absolute; inset: -5px;   /* die unsichtbare Zielflaeche */
+}
+.shop-farbe.an {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 3px var(--ink);
+}
+.shop-farbe.verlauf { background-size: 300% 300%; }
+
+/* ---------- Der Hintergrund in der Tageskarte ----------
+   Liegt hinter Figur und Pet und ist genau so gross wie die beiden zusammen,
+   nicht so breit wie die Karte. inline-flex, damit er sich an den Inhalt
+   legt statt die Zeile zu sprengen. */
+.mk-hintergrund {
+  display: inline-flex; align-items: flex-end;
+  /* Deutlich mehr Luft als die 6/8 px des ersten Entwurfs, aus demselben Grund
+     wie bei der Buehne: bei einem Rand von sechs Pixeln ist vom Himmel nichts
+     zu sehen ausser einer Kontur um das Tier. Oben mehr als unten — dort
+     stehen Sonne, Wolken und Sterne. */
+  /* Rechts mehr als links, und zwar mit Grund: dort sitzt das Mini-Pet neben
+     der Figur (mk-figur-hof). Mit gleichem Rand ringsum steht es fast auf der
+     Kante, und der Himmel hoert genau dort auf, wo das zweite Wesen anfaengt.
+     Oben am meisten — dort haengen Sonne, Wolken und Sterne. */
+  padding: 32px 42px 18px 26px; border-radius: 16px;
+  background-size: cover; background-position: center;
+  flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+
+/* ---------- Ein Zeichen mit Verlauf statt Farbe ----------
+   Der Regenbogen-Farbtopf. Der Verlauf wird als Hintergrund gemalt und auf die
+   Glyphe beschnitten. -webkit- zuerst, weil Safari auf dem iPhone die
+   ungepraefixte Form bis heute nicht kennt — und Rose uebt am Handy.
+
+   color: transparent steht ABSICHTLICH nur hier und nicht im Inline-Stil: ein
+   Browser ohne background-clip:text ignoriert diesen ganzen Block und zeigt
+   dann die geerbte Textfarbe statt einer leeren Zelle. Ein Loch im Tier waere
+   schlimmer als ein einfarbiger Hut. */
+.mk-verlauf {
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  background-size: 200% 200%;
+}
+
+/* ---------- Glitzer ----------
+   ER BLINKT JETZT GANZ DURCH. Bis zum 04.09.2026 ging die Deckkraft nur auf
+   0,55 herunter — der Stern wurde blasser, verschwand aber nie. Jennifer:
+   "der glitzer soll zwischen glitzerstern auf farbe zu farbe [wechseln]", also
+   von "Stern sichtbar" bis "nur noch Fell" und zurueck.
+
+   Das geht hier ueber die Deckkraft und nicht ueber einen Farbwechsel, weil
+   die Zelle ohnehin den Fellgrund traegt (AUF_FELL): faellt der Stern auf 0,
+   bleibt genau die Fellfarbe stehen. Ein zweiter Farbwert waere dieselbe
+   Wirkung mit doppelter Buchfuehrung.
+
+   Langsam und mit langer Pause im Sichtbaren (0–35 % voll, kurz weg, zurueck):
+   ein gleichmaessiges Blinken neben dem Auge einer Figur, die man beim Lernen
+   ansieht, waere eine Ablenkung. So ist es ein Funkeln, das man aus dem
+   Augenwinkel mitbekommt. */
+@keyframes mk-schimmer {
+  0%, 34% { opacity: 1; }
+  50%, 56% { opacity: 0; }
+  72%, 100% { opacity: 1; }
+}
+.mk-schimmer { animation: mk-schimmer 4.4s ease-in-out infinite; }
+
+/* ---------- Der Glanz der teuren Looks ----------
+   "leuchteffekte … aber sehr subtil" (Jennifer). Ein weicher Schein in der
+   eigenen Farbe, kein Rand und keine zweite Farbe: currentColor heisst, jede
+   Rolle leuchtet in dem, was sie ohnehin ist. Zwei Radien uebereinander, der
+   innere fast geschlossen, der aeussere weit und schwach — das ist der
+   Unterschied zwischen "leuchtet" und "hat einen Schlagschatten".
+   Nicht animiert: er soll da sein, nicht auffallen. */
+.mk-glanz {
+  text-shadow: 0 0 2px currentColor, 0 0 7px color-mix(in srgb, currentColor 45%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-schimmer { animation: none; }
+  .shop-farbe.verlauf, .mk-verlauf { background-position: 0 0; }
+  /* Die Sterne bleiben SICHTBAR, sie hoeren nur auf zu funkeln — und der
+     Schnee liegt, statt zu fallen. Ein Hintergrund, den Rose gekauft hat,
+     soll nicht verschwinden, nur weil sie weniger Bewegung eingestellt hat. */
+  .mk-hg-sterne::before, .mk-hg-sterne::after, .mk-hg-schnee::after { animation: none; }
+}
+
+
+/* ==========================================================================
+   DIE HINTERGRUND-EBENEN — 04.09.2026, zweite Runde
+   ==========================================================================
+   Der Hintergrund besteht aus DREI leeren Elementen, die geteilt-laden.js
+   (hintergrundHtml) in den Kasten legt. Warum drei und nicht eines mit
+   Pseudoelementen: gebraucht werden bis zu fuenf Ebenen, ein Element hat zwei
+   — und vor allem darf die AUSBLENDUNG NACH AUSSEN die Figur nicht erwischen.
+   Eine Maske auf dem Kasten wuerde auch das Tier darin wegradieren. Der
+   Verlauf braucht deshalb ein eigenes Element, in dem die Figur nicht steckt.
+
+     .mk-hg-bild    der Verlauf, nach aussen ausgeblendet
+     .mk-hg-flor    ::before und ::after = zwei versetzt funkelnde Sterngruppen
+     .mk-hg-extra   ::before = Wolken | Schnee | Gras
+                    ::after  = Sonnenstrahlen | Sternschnuppe
+   Die Paare schliessen sich je Hintergrund gegenseitig aus, deshalb reichen
+   zwei Plaetze fuer fuenf Deko-Arten.
+
+   Alle Ebenen liegen absolut im Kasten und sind pointer-events: none — die
+   Figur darunter traegt den Chat-Knopf, und der muss anklickbar bleiben. */
+.mk-hintergrund, .shop-buehne, .buehne {
+  position: relative; overflow: hidden;
+}
+/* Die Figur (und alles andere, was kein Hintergrund ist) liegt DARUEBER. */
+.mk-hintergrund > *:not([class^="mk-hg-"]),
+.shop-buehne > *:not([class^="mk-hg-"]),
+.buehne > *:not([class^="mk-hg-"]) {
+  position: relative; z-index: 1;
+}
+.mk-hg-bild, .mk-hg-flor, .mk-hg-extra {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+}
+
+/* ---------- Der Verlauf, nach aussen ausgeblendet ----------
+   Jennifer: "die hgs sollten nach außen faden". Eine Ellipse, die in der Mitte
+   voll deckt und zum Rand hin durchsichtig wird — der Hintergrund endet damit
+   nicht als Rechteck mit Kante, sondern franst aus.
+
+   -webkit-mask zuerst: Safari auf dem iPhone kennt die ungepraefixte Form
+   bis heute nicht, und Rose uebt am Handy. Ohne die Maske sieht man ein
+   Rechteck; das ist haesslich, aber nichts geht kaputt. */
+.mk-hg-bild {
+  background-size: cover; background-position: center;
+  /* KOMPLETT ausgeblendet zum Rand (Jennifer: "die hintergründe sollen
+     komplett faden zum rand"). Der erste Versuch endete bei 100 % und damit
+     genau an der Kante — sichtbar blieb ein Rest Rechteck. Jetzt ist bei 88 %
+     schon nichts mehr da, und der Kern deckt nur noch bis 24 %: der Uebergang
+     ist dadurch lang statt hart. */
+  -webkit-mask-image: radial-gradient(ellipse 72% 76% at 50% 45%, #000 24%, rgba(0,0,0,.42) 58%, transparent 88%);
+  mask-image: radial-gradient(ellipse 72% 76% at 50% 45%, #000 24%, rgba(0,0,0,.42) 58%, transparent 88%);
+}
+/* Die Deko wird MIT ausgeblendet — sonst schwebten Sterne und Flocken noch
+   dort, wo der Himmel laengst aufgehoert hat. */
+.mk-hg-flor, .mk-hg-extra {
+  -webkit-mask-image: radial-gradient(ellipse 70% 74% at 50% 45%, #000 22%, rgba(0,0,0,.4) 56%, transparent 86%);
+  mask-image: radial-gradient(ellipse 70% 74% at 50% 45%, #000 22%, rgba(0,0,0,.4) 56%, transparent 86%);
+}
+
+/* ---------- Sterne ----------
+   Vierzackige Funkeln als SVG (konkave Taille, deshalb spitz statt rund).
+   ZWEI GRUPPEN mit verschiedenen Positionen, Groessen und Laufzeiten: eine
+   einzige Ebene kann nur als Ganzes auf- und abblenden, und das liest sich
+   als Pulsieren des ganzen Himmels statt als Funkeln einzelner Sterne.
+
+   Die %20 in den URIs sind Absicht: in einer url("…") waeren rohe Leerzeichen
+   zwar erlaubt, aber die Toleranz dafuer ist von Browser zu Browser
+   verschieden und faellt still aus — ein abgebrochener data-URI wirft keinen
+   Fehler, er malt nur nichts. Bei einer Sternenebene sieht man den Unterschied
+   zu "es ist gerade Nacht" nicht. */
+.mk-hg-sterne .mk-hg-flor::before,
+.mk-hg-sterne .mk-hg-flor::after {
+  content: ""; position: absolute; inset: 0;
+  background-repeat: repeat;
+}
+.mk-hg-sterne .mk-hg-flor::before {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Cpath%20d='M14%207.4L15.196%2010.804L18.6%2012L15.196%2013.196L14%2016.6L12.804%2013.196L9.4%2012L12.804%2010.804Z'%20fill='%23fff'/%3E%3Cpath%20d='M58%2022.8L58.832%2025.168L61.2%2026L58.832%2026.832L58%2029.2L57.168%2026.832L54.8%2026L57.168%2025.168Z'%20fill='%23fff'/%3E%3Cpath%20d='M86%205.1L87.014%207.986L89.9%209L87.014%2010.014L86%2012.9L84.986%2010.014L82.1%209L84.986%207.986Z'%20fill='%23fff'/%3E%3Cpath%20d='M34%2059.1L34.754%2061.246L36.9%2062L34.754%2062.754L34%2064.9L33.246%2062.754L31.1%2062L33.246%2061.246Z'%20fill='%23fff'/%3E%3Cpath%20d='M74%2070.5L74.91%2073.09L77.5%2074L74.91%2074.91L74%2077.5L73.09%2074.91L70.5%2074L73.09%2073.09Z'%20fill='%23fff'/%3E%3Cpath%20d='M46%2041.6L46.624%2043.376L48.4%2044L46.624%2044.624L46%2046.4L45.376%2044.624L43.6%2044L45.376%2043.376Z'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: 118px 118px;
+  animation: mk-funkeln-a 4.6s ease-in-out infinite;
+}
+.mk-hg-sterne .mk-hg-flor::after {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Cpath%20d='M40%204.9L40.806%207.194L43.1%208L40.806%208.806000000000001L40%2011.1L39.194%208.806000000000001L36.9%208L39.194%207.194Z'%20fill='%23fff'/%3E%3Cpath%20d='M8%2040.3L8.962%2043.038L11.7%2044L8.962%2044.962L8%2047.7L7.038%2044.962L4.3%2044L7.038%2043.038Z'%20fill='%23fff'/%3E%3Cpath%20d='M66%2045.3L66.702%2047.298L68.7%2048L66.702%2048.702L66%2050.7L65.298%2048.702L63.3%2048L65.298%2047.298Z'%20fill='%23fff'/%3E%3Cpath%20d='M92%2062.7L92.858%2065.142L95.3%2066L92.858%2066.858L92%2069.3L91.142%2066.858L88.7%2066L91.142%2065.142Z'%20fill='%23fff'/%3E%3Cpath%20d='M22%2081.1L22.754%2083.246L24.9%2084L22.754%2084.754L22%2086.9L21.246%2084.754L19.1%2084L21.246%2083.246Z'%20fill='%23fff'/%3E%3Cpath%20d='M56%2089.5L56.65%2091.35L58.5%2092L56.65%2092.65L56%2094.5L55.35%2092.65L53.5%2092L55.35%2091.35Z'%20fill='%23fff'/%3E%3Cpath%20d='M78%2029.8L78.572%2031.428L80.2%2032L78.572%2032.572L78%2034.2L77.428%2032.572L75.8%2032L77.428%2031.428Z'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: 84px 84px;
+  animation: mk-funkeln-b 3.1s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+/* Weiter Bereich, damit es wirklich funkelt und nicht nur atmet. Nie ganz
+   aus (Sterne, die verschwinden, lesen sich als Fehler) und nie ganz an
+   (sonst ueberstrahlen sie die Figur davor). */
+@keyframes mk-funkeln-a { 0%, 100% { opacity: .95; } 50% { opacity: .25; } }
+@keyframes mk-funkeln-b { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+
+/* ---------- Wolken ----------
+   Uebereinanderliegende Kreise auf einem Balken — das ist der ganze
+   Unterschied zwischen "fluffig" und "Fleck". Sie ziehen langsam nach rechts;
+   der Weg ist genau eine Kacheldrehung, damit nichts springt. */
+.mk-hg-wolken .mk-hg-extra::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20110'%3E%3Ccircle%20cx='46.0'%20cy='34.0'%20r='11.0'%20fill='%23fff'/%3E%3Ccircle%20cx='33.0'%20cy='38.0'%20r='8.0'%20fill='%23fff'/%3E%3Ccircle%20cx='59.0'%20cy='37.0'%20r='9.0'%20fill='%23fff'/%3E%3Ccircle%20cx='40.0'%20cy='28.0'%20r='8.0'%20fill='%23fff'/%3E%3Ccircle%20cx='53.0'%20cy='29.0'%20r='7.0'%20fill='%23fff'/%3E%3Crect%20x='26.0'%20y='34'%20width='40.0'%20height='9.0'%20fill='%23fff'/%3E%3Ccircle%20cx='150.0'%20cy='72.0'%20r='7.92'%20fill='%23fff'/%3E%3Ccircle%20cx='140.64'%20cy='74.88'%20r='5.76'%20fill='%23fff'/%3E%3Ccircle%20cx='159.36'%20cy='74.16'%20r='6.4799999999999995'%20fill='%23fff'/%3E%3Ccircle%20cx='145.68'%20cy='67.68'%20r='5.76'%20fill='%23fff'/%3E%3Ccircle%20cx='155.04'%20cy='68.4'%20r='5.04'%20fill='%23fff'/%3E%3Crect%20x='135.6'%20y='72'%20width='28.799999999999997'%20height='6.4799999999999995'%20fill='%23fff'/%3E%3Ccircle%20cx='250.0'%20cy='28.0'%20r='9.68'%20fill='%23fff'/%3E%3Ccircle%20cx='238.56'%20cy='31.52'%20r='7.04'%20fill='%23fff'/%3E%3Ccircle%20cx='261.44'%20cy='30.64'%20r='7.92'%20fill='%23fff'/%3E%3Ccircle%20cx='244.72'%20cy='22.72'%20r='7.04'%20fill='%23fff'/%3E%3Ccircle%20cx='256.16'%20cy='23.6'%20r='6.16'%20fill='%23fff'/%3E%3Crect%20x='232.4'%20y='28'%20width='35.2'%20height='7.92'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: 300px 110px; background-repeat: repeat-x;
+  background-position-y: 12%;
+  opacity: .9;
+  /* Langsamer seit dem 04.09. abends (Jennifer: "clouds can be a bit slower").
+     46 Sekunden waren schon gemaechlich, aber man SAH sie ziehen — und etwas,
+     das man ziehen sieht, zieht auch den Blick. 78 Sekunden fuer eine
+     Kachelbreite heisst: es hat sich bewegt, wenn man zweimal hinsieht. */
+  animation: mk-zieht 78s linear infinite;
+}
+@keyframes mk-zieht {
+  from { background-position-x: 0; }
+  to { background-position-x: 300px; }
+}
+
+/* ---------- Schnee ----------
+   Faellt, indem die Kachel nach unten wandert. background-position statt
+   transform: eine wiederholte Kachel laeuft dadurch endlos, ohne dass am Ende
+   ein Sprung sichtbar wird — der Weg ist genau eine Kachelhoehe. */
+.mk-hg-schnee .mk-hg-extra::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='16'%20cy='12'%20r='2.5'%20fill='%23fff'/%3E%3Ccircle%20cx='52'%20cy='30'%20r='1.9'%20fill='%23fff'/%3E%3Ccircle%20cx='82'%20cy='16'%20r='2.2'%20fill='%23fff'/%3E%3Ccircle%20cx='34'%20cy='58'%20r='1.7'%20fill='%23fff'/%3E%3Ccircle%20cx='70'%20cy='72'%20r='2.4'%20fill='%23fff'/%3E%3Ccircle%20cx='94'%20cy='46'%20r='1.8'%20fill='%23fff'/%3E%3Ccircle%20cx='8'%20cy='76'%20r='2.1'%20fill='%23fff'/%3E%3Ccircle%20cx='60'%20cy='88'%20r='1.6'%20fill='%23fff'/%3E%3Ccircle%20cx='28'%20cy='34'%20r='1.5'%20fill='%23fff'/%3E%3Ccircle%20cx='44'%20cy='68'%20r='2.0'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: 104px 104px;
+  opacity: .9;
+  animation: mk-schneit 9s linear infinite;
+}
+@keyframes mk-schneit {
+  from { background-position: 0 0; }
+  to { background-position: 14px 104px; }
+}
+
+/* ---------- Gras ----------
+   Gebogene Halme mit runden Enden statt spitzer Dreiecke, und sie WIEGEN SICH
+   IM WIND — aber nur oben (Jennifer: "weniger spitz und im wind leicht wiegen,
+   aber nur oben am halm; zudem sollten sie eh leicht gebogen sein").
+
+   "Nur oben" ist der interessante Teil, denn eine Hintergrundgrafik laesst sich
+   nicht teilweise bewegen. skewX mit transform-origin unten loest es trotzdem:
+   die Scherung ist an der Unterkante null und waechst nach oben — die Halme
+   stehen also fest im Boden und neigen ihre Spitzen. Genau das, was Wind mit
+   Gras macht.
+
+   Zurueckhaltender als vorher (opacity .38): es ist Hintergrund, kein Motiv. */
+.mk-hg-gras .mk-hg-extra::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2030'%3E%3Cpath%20d='M3%2030%20Q4.4%2018.0%206.5%2010'%20stroke='%23fff'%20stroke-width='2.6'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M11%2030%20Q10.0%2022.2%208.5%2017'%20stroke='%23fff'%20stroke-width='2.2'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M18%2030%20Q19.6%2015.600000000000001%2022.0%206'%20stroke='%23fff'%20stroke-width='2.8'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M26%2030%20Q24.8%2020.4%2023.0%2014'%20stroke='%23fff'%20stroke-width='2.4'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M33%2030%20Q34.28%2017.4%2036.2%209'%20stroke='%23fff'%20stroke-width='2.6'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M41%2030%20Q40.12%2022.8%2038.8%2018'%20stroke='%23fff'%20stroke-width='2.0'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M47%2030%20Q48.68%2014.4%2051.2%204'%20stroke='%23fff'%20stroke-width='3.0'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M55%2030%20Q53.64%2019.8%2051.6%2013'%20stroke='%23fff'%20stroke-width='2.4'%20stroke-linecap='round'%20fill='none'/%3E%3C/svg%3E");
+  background-size: 58px 28px; background-repeat: repeat-x;
+  background-position: bottom;
+  opacity: .38;
+  transform-origin: 50% 100%;
+  animation: mk-wiegt 6.5s ease-in-out infinite;
+}
+@keyframes mk-wiegt {
+  0%, 100% { transform: skewX(-2.2deg); }
+  50% { transform: skewX(2.2deg); }
+}
+
+/* ---------- Sonnenstrahlen ----------
+   Ein Faecher aus der Sonne oben rechts, dazu ein Hof, der ganz langsam
+   atmet. Beides sehr schwach: "leicht radiant" (Jennifer), nicht grell. */
+.mk-hg-strahlen .mk-hg-extra::before {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-conic-gradient(from 0deg at 80% 24%,
+    rgba(255,255,255,.16) 0deg 3deg, transparent 3deg 13deg);
+  opacity: .75;
+}
+.mk-hg-strahlen .mk-hg-extra::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 24%, rgba(255,240,180,.55) 0%, transparent 34%);
+  animation: mk-strahlt 7s ease-in-out infinite;
+}
+@keyframes mk-strahlt { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+
+/* ---------- Sternschnuppen ----------
+   Sie fallen SELTEN und jetzt in die richtige Richtung. Im ersten Entwurf
+   zeigte der Schweif nach oben rechts, waehrend sich die Schnuppe nach unten
+   rechts bewegte — sie flog also rueckwaerts. Der Schweif liegt jetzt hinter
+   dem Kopf, dort, wo sie herkam.
+
+   Der Kopf ist ein STERN, kein Kreis (Jennifer). Eine runde Murmel mit einem
+   Strich dahinter ist ein Komet; eine Sternschnuppe soll aussehen wie das,
+   wonach sie heisst — und der Vierzack ist derselbe wie im Sternenfeld
+   darunter, also dieselbe Handschrift.
+
+   ZWEI Stueck ("es können mehr sein"), auf verschiedenen Bahnen und mit
+   verschiedenen Umlaeufen: 13 und 19 Sekunden. Weil die beiden Zahlen
+   teilerfremd sind, treffen sie sich praktisch nie — es sieht nach Zufall aus,
+   ohne dass irgendwo gewuerfelt wird. Sichtbar ist jede nur gut eine Sekunde
+   je Umlauf; genau das macht sie zu einem kleinen Ereignis. */
+.mk-hg-schnuppe .mk-hg-extra::after,
+.mk-hg-schnuppe .mk-hg-bild::after {
+  content: ""; position: absolute;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2036%2036'%3E%3Cpath%20d='M2%202%20L26%2026'%20stroke='%23fff'%20stroke-width='2.2'%20stroke-linecap='round'%20opacity='.7'/%3E%3Cpath%20d='M28%2022.6L29.404%2026.596L33.4%2028L29.404%2029.404L28%2033.4L26.596%2029.404L22.6%2028L26.596%2026.596Z'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  opacity: 0;
+}
+.mk-hg-schnuppe .mk-hg-extra::after {
+  top: 4%; left: 2%; width: 32px; height: 32px;
+  animation: mk-schnuppe-a 13s linear infinite;
+}
+.mk-hg-schnuppe .mk-hg-bild::after {
+  top: 2%; left: 42%; width: 22px; height: 22px;
+  animation: mk-schnuppe-b 19s linear infinite;
+  animation-delay: -6s;
+}
+@keyframes mk-schnuppe-a {
+  0%, 84% { opacity: 0; transform: translate(0, 0); }
+  86% { opacity: .95; }
+  97% { opacity: 0; transform: translate(120px, 118px); }
+  100% { opacity: 0; transform: translate(120px, 118px); }
+}
+@keyframes mk-schnuppe-b {
+  0%, 88% { opacity: 0; transform: translate(0, 0); }
+  90% { opacity: .8; }
+  99% { opacity: 0; transform: translate(78px, 82px); }
+  100% { opacity: 0; transform: translate(78px, 82px); }
+}
+
+/* ---------- Halb durchscheinende Marken ----------
+   Nur noch die Sommersprossen. Rouge lief zuerst auch hierueber, faerbt aber
+   seit dem 04.09.2026 ueber einen radialen Verlauf (farbTabelle): das laeuft
+   nach aussen aus, statt gleichmaessig blass zu sein, und liest sich damit
+   als aufgetragen statt als aufgeklebt.
+
+   Die Deckkraft sitzt auf dem INNEREN Span; der Fellgrund liegt aussen und
+   bleibt voll — sonst waere es keine zarte Marke, sondern ein halbes Loch. */
+.mk-zart { opacity: .62; }
+
+/* ---------- Was sich dreht ----------
+   Die Bluete. Sehr langsam (18 Sekunden je Umdrehung) und in einer Richtung —
+   schneller waere ein Propeller, und hin und her waere nervoes. */
+@keyframes mk-drehen { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.mk-dreht { display: inline-block; animation: mk-drehen 18s linear infinite; }
+
+/* ---------- Blinzeln ----------
+   Jennifer: "wimpern sind cute, kann man blinzeln einbauen, selten?"
+
+   9 Sekunden Umlauf, davon zwei Zehntel Lid. Das ist selten genug, um nicht
+   abzulenken, und oft genug, um es zu bemerken, wenn man hinsieht — ungefaehr
+   die Frequenz, mit der ein Mensch blinzelt, ohne dass es auffaellt.
+
+   scaleY auf einem inline-block: die Zelle behaelt ihre Breite (Monospace),
+   nur die Hoehe faellt zusammen. transform-origin unten, damit das Lid von
+   oben herunterkommt statt sich in der Mitte zu treffen.
+
+   NUR DIE WIMPERN, nicht die Augen (Jennifer: "ich meinte blinzeln wenn man
+   wimpern drauf hat … das blinzeln ist dann quasi nur der teil, den die
+   wimpern gerade machen"). Ohne gekaufte Wimpern blinzelt gar nichts.
+
+   Das hat einen zweiten Effekt, der im Browser gemessen wurde: display
+   inline-block richtet sich an der Grundlinie anders aus als der Text daneben.
+   Solange die Augen die Klasse trugen, sass genau dort ein Spalt — der Spalt
+   zwischen Lidschatten und Auge, den Jennifer gemeldet hat. */
+@keyframes mk-blinzeln {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%, 96% { transform: scaleY(.12); }
+}
+.mk-blinzelt {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  animation: mk-blinzeln 9s ease-in-out infinite;
+}
+
+/* ---------- Fluegel ----------
+   "flügel sollen sich dann bewegen slightly und dahinter gerendert werden."
+
+   Bewegen: ein sehr flaches Auf und Ab, keine zwei Pixel. Mehr waere Flattern,
+   und ein flatterndes Tier neben einem Lerntext ist eine Ablenkung.
+
+   Dahinter: die Fluegel sitzen in eigenen Spalten neben der Figur und koennen
+   sie gar nicht ueberdecken. Was fehlte, war der EINDRUCK von Tiefe — den
+   traegt jetzt die leicht zurueckgenommene Deckkraft. Etwas Blasseres liest
+   das Auge als weiter hinten, ohne dass irgendwo eine Ebene noetig waere. */
+@keyframes mk-schwingen {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+.mk-fluegel {
+  display: inline-block;
+  opacity: .82;
+  animation: mk-schwingen 3.4s ease-in-out infinite;
+}
+
+/* ---------- Musiknoten aus den Kopfhoerern ----------
+   "bei kopfhörern sone animation mit musiknoten die rauskommen auch als blöcke."
+
+   Sie steigen auf und verlassen dabei die Figur — das kann keine Zelle mehr
+   sein, das ist eine Ebene ueber dem <pre>. geteilt-laden.js setzt dafuer die
+   Klasse mk-noten an die Figur (figurKlassen).
+
+   Als BLOCKGRAFIK gezeichnet und nicht als ♪: das Zeichen wuerde in einem
+   Ersatzfont landen und daneben stehen. Ein Notenkopf aus zwei Rechtecken
+   passt ausserdem zur Figur, die selbst aus Rechtecken besteht.
+
+   Zwei Noten, versetzt, mit langen Pausen dazwischen. */
+.mk-noten { position: relative; }
+.mk-noten::before, .mk-noten::after {
+  content: ""; position: absolute;
+  width: 13px; height: 15px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2024'%3E%3Crect%20x='2'%20y='16'%20width='9'%20height='7'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='2'%20width='3'%20height='16'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='2'%20width='6'%20height='3'%20fill='%23fff'/%3E%3Crect%20x='15'%20y='5'%20width='3'%20height='4'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  opacity: 0; pointer-events: none;
+}
+.mk-noten::before { left: -6px; top: 12%; animation: mk-note 4.2s ease-out infinite; }
+.mk-noten::after { right: -6px; top: 20%; animation: mk-note 4.2s ease-out infinite; animation-delay: 2.1s; }
+@keyframes mk-note {
+  0% { opacity: 0; transform: translate(0, 0) rotate(-6deg); }
+  15% { opacity: .95; }
+  70% { opacity: .5; }
+  100% { opacity: 0; transform: translate(-6px, -26px) rotate(10deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Alles Bewegte steht still, bleibt aber SICHTBAR. Ein Hintergrund, den Rose
+     gekauft hat, soll nicht verschwinden, nur weil sie weniger Bewegung
+     eingestellt hat — und ein Auge, das nie wieder aufgeht, waere ein Fehler,
+     kein Entgegenkommen. */
+  .mk-hg-sterne .mk-hg-flor::before, .mk-hg-sterne .mk-hg-flor::after,
+  .mk-hg-schnee .mk-hg-extra::before, .mk-hg-wolken .mk-hg-extra::before,
+  .mk-hg-strahlen .mk-hg-extra::after, .mk-hg-gras .mk-hg-extra::before,
+  .mk-hg-glimmer .mk-hg-extra::before, .mk-fluegel, .mk-dreht { animation: none; }
+  .mk-blinzelt { animation: none; transform: none; }
+  .mk-hg-schnuppe .mk-hg-extra::after, .mk-hg-schnuppe .mk-hg-bild::after,
+  .mk-noten::before, .mk-noten::after { display: none; }
+}
+
+
+/* ==========================================================================
+   SCHLAFEN — 04.09.2026
+   ==========================================================================
+   Zwischen 0 und 6 Uhr steigen Zzz auf, von der Kreatur UND vom Mini-Pet
+   (Jennifer: "can they at late night have zzzs, both the pet if its there and
+   the animal? moving zzzs"). geteilt-laden.js setzt die Klasse (figurKlassen /
+   petKlassen), hier steht nur, wie es aussieht.
+
+   Als Blockgrafik gezeichnet und nicht als Buchstabe "z": ein z aus der
+   Schrift stuende schraeg neben einer Figur, die aus Rechtecken besteht. Das
+   SVG ist ein Z aus fuenf Balken — oben, diagonal in Stufen, unten.
+
+   DREI Zzz je Figur waeren zu viel Bewegung; es sind zwei, versetzt, mit einer
+   langen Pause. Sie steigen auf, driften dabei zur Seite und werden kleiner —
+   das ist die Richtung, in die man Schlafblasen erwartet.
+
+   Das Pet bekommt kleinere (mk-schlaeft-klein): es ist kleiner als die Figur,
+   und gleich grosse Zzz saehen aus, als traeume es lauter. */
+.mk-schlaeft { position: relative; }
+.mk-schlaeft::before, .mk-schlaeft::after {
+  content: ""; position: absolute;
+  width: 11px; height: 11px;
+  right: -2px; top: 4%;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2020'%3E%3Crect%20x='2'%20y='2'%20width='16'%20height='3.4'%20fill='%23fff'/%3E%3Crect%20x='12.5'%20y='5'%20width='3.4'%20height='3.6'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='8'%20width='3.4'%20height='3.6'%20fill='%23fff'/%3E%3Crect%20x='5.5'%20y='11'%20width='3.4'%20height='3.6'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='14.2'%20width='16'%20height='3.4'%20fill='%23fff'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  opacity: 0; pointer-events: none;
+}
+.mk-schlaeft::before { animation: mk-zzz 5.2s ease-out infinite; }
+.mk-schlaeft::after { animation: mk-zzz 5.2s ease-out infinite; animation-delay: 2.6s; }
+.mk-schlaeft-klein::before, .mk-schlaeft-klein::after { width: 8px; height: 8px; }
+@keyframes mk-zzz {
+  0% { opacity: 0; transform: translate(0, 0) scale(.7) rotate(-8deg); }
+  18% { opacity: .85; }
+  62% { opacity: .55; }
+  100% { opacity: 0; transform: translate(11px, -22px) scale(1.15) rotate(12deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-schlaeft::before, .mk-schlaeft::after { display: none; }
+}
+
+
+/* ---------- Der Regenbogen glimmert ----------
+   Jennifer: "rainbow can glimmer a bit (like the gradient moving)". Ein
+   heller Schleier wandert schraeg darueber — background-position auf einem
+   Verlauf, der GROESSER ist als die Flaeche. Deshalb background-size 220 %:
+   waere er genau so gross wie der Kasten, gaebe es nichts zu verschieben.
+
+   Die Ebene liegt auf mk-hg-extra und nicht auf dem Verlauf selbst: der sitzt
+   in mk-hg-bild und traegt dort die Ausblendung nach aussen. Zwei Aufgaben auf
+   einem Element waeren zwei Animationen auf derselben background-position. */
+.mk-hg-glimmer .mk-hg-extra::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(160deg,
+    rgba(255,255,255,0) 0%, rgba(255,255,255,.30) 18%, rgba(255,255,255,0) 38%,
+    rgba(255,255,255,.20) 62%, rgba(255,255,255,0) 82%);
+  background-size: 220% 220%;
+  animation: mk-glimmert 11s ease-in-out infinite;
+}
+@keyframes mk-glimmert {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
 }

@@ -547,16 +547,29 @@ export function frageChatSagen(zeile) {
    1. mk.kaeufe — eine SAMMLUNG. Vereinigung ueber die Id, wie mkChat. Ein Kauf
       wird nie zurueckgenommen, also gibt es hier auch keine Grabsteine: die
       Liste waechst nur.
-   2. mk.pet / mk.getragen / mk.look / mk.tier — WAHLEN, je { wert, ts }. Ein
-      Einzelwert laesst sich nicht vereinigen, man muss sich entscheiden; das
-      Kriterium ist der Zeitpunkt der Wahl, genau wie bei mk.ei.
+   2. mk.pet / mk.getragen / mk.look / mk.hintergrund / mk.tier — WAHLEN, je
+      { wert, ts }. Ein Einzelwert laesst sich nicht vereinigen, man muss sich
+      entscheiden; das Kriterium ist der Zeitpunkt der Wahl, genau wie bei mk.ei.
 
    Die Feldliste steht HIER und nicht in maskottchen.js, obwohl sie dort
    benutzt wird: maskottchen.js importiert ohnehin schon aus dieser Datei
    (syncBald), umgekehrt gaebe es einen Zyklus. Eine zweite Liste drueben waere
    die Sorte Dopplung, die genau einmal auseinanderlaeuft und dann still eine
-   Wahl verschluckt. */
-export var MK_WAHL_FELDER = ["pet", "getragen", "look", "tier"];
+   Wahl verschluckt.
+
+   ANHAENGEN IST SICHER, ENTFERNEN NICHT. "hintergrund" kam am 03.09.2026 dazu
+   (Hintergruende-Regal). Ein neues Feld kostet nichts — der Merge laeuft die
+   Liste durch und findet auf der Gegenseite eben nichts. Ein ENTFERNTES Feld
+   dagegen wird stillschweigend nicht mehr gemerged und faellt beim naechsten
+   Push des anderen Geraets weg.
+
+   WARUM mk.getragen EIN EINZIGES OBJEKT IST und nicht ein Feld je Slot:
+   ein Outfit ist eine Wahl, keine Sammlung. Die Vereinigung koennte nichts
+   mehr ausziehen — jedes Ablegen kaeme beim naechsten Sync zurueck. Der Preis
+   dafuer steht offen in geteilt-laden.js: wer auf zwei Geraeten verschiedene
+   Sachen anzieht, behaelt das spaetere Outfit KOMPLETT. Der BESITZ geht dabei
+   nie verloren, nur das Angezogene — und das sind zwei Antipper. */
+export var MK_WAHL_FELDER = ["pet", "getragen", "look", "hintergrund", "tier"];
 
 /* Die Kauf-Ids eines mk-Objekts, sortiert und entdoppelt. Reine Funktion —
    signatur() wird auch auf die SERVER-Antwort angewandt (siehe einSync), und
@@ -568,7 +581,9 @@ function mkKaufIds(mk) {
   return ids.filter(function (id, i) { return ids.indexOf(id) === i; }).sort();
 }
 
-/* Die vier Wahl-Zeitstempel in fester Reihenfolge. */
+/* Die Wahl-Zeitstempel in fester Reihenfolge — so viele, wie die Liste lang
+   ist. Bewusst keine Zahl im Kommentar: sie stand hier als "vier" und war beim
+   fuenften Feld sofort falsch. */
 function mkWahlStempel(mk) {
   return MK_WAHL_FELDER.map(function (f) {
     var w = mk && mk[f];
