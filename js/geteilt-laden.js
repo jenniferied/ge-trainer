@@ -156,6 +156,12 @@ var SLOTS = {
    Zellfarbe. */
 var WIMPER_AUF_LID = "Q";
 
+/* Einen Schluessel fuer helles GLAS gab es am 04.09.2026 kurz. Er sollte den
+   fehlenden Kontrast zwischen fast schwarzem Rahmen und fast schwarzem Auge
+   ausgleichen. Ueberfluessig, seit die Brille auf einem FEINEREN Raster liegt
+   (siehe brilleBloecke): dort ist der Rahmen duenn genug, dass das Auge von
+   allein Platz hat. */
+
 /* Schluessel -> Slotname, fuer den Maler. Einmal gebaut statt bei jeder Zelle
    durch das Objekt gesucht. */
 var SLOT_VON_ZEICHEN = (function () {
@@ -228,6 +234,56 @@ function bezahlbar(p, frei) {
   return (p.herz || 0) <= (frei.herz || 0) && (p.stern || 0) <= (frei.stern || 0);
 }
 
+/* WARUM DIESE LISTE HIER OBEN STEHT und nicht unten bei der Zeichenfunktion,
+   zu der sie gehoert: KLEIDUNG verweist mit `farben` darauf. Bei `var` wird die
+   Deklaration hochgezogen, die ZUWEISUNG aber nicht — stand sie weiter unten,
+   war `farben` beim Bau des Katalogs schlicht undefined. Kein Fehler beim
+   Laden, keine Meldung: die Seite blieb einfach leer, weil eine Schleife ueber
+   undefined lief. Reihenfolge ist hier Semantik, nicht Geschmack. */
+/* ---------- Die Fassungsfarben ----------
+   Fuenf Ausfuehrungen, die zu JEDER der drei Formen passen. Sie sind KEINE
+   Farbtoepfe: die kosten Sterne und passen auf alles, was man traegt. Eine
+   Brillenfassung ist dagegen kein angemaltes Stueck, sondern ein Material —
+   Schildpatt gibt es nicht als Topf, und ein Schal aus Silber mit Reflexion
+   waere Unsinn. Deshalb haengen sie am Stueck (KLEIDUNG: `farben`) und sind
+   frei waehlbar, sobald die Brille gekauft ist.
+
+   ZWEI VON IHNEN BRAUCHEN ZWEI FARBEN, und genau dafuer zeichnet
+   brilleBloecke() zellweise statt in einem Rutsch:
+
+     schildpatt   gefleckt — zwei Braun, verteilt nach einer festen Formel.
+                  Nicht zufaellig: bei jedem Neuzeichnen dieselben Flecken,
+                  sonst flackert die Brille bei jedem Antippen.
+     silber       die OBERE Kante hell, der Rest dunkel. Das ist die ganze
+                  Reflexion — Licht faellt von oben, und mehr braucht es
+                  nicht, damit ein Auge "glaenzend" liest. */
+var BRILLEN_FARBEN = [
+  { key: "schwarz", name: "Schwarz", farbe: "#15151a" },
+  { key: "weiss", name: "Weiß", farbe: "#f4f3ef" },
+  { key: "creme", name: "Creme", farbe: "#c9b487" },
+  { key: "schildpatt", name: "Dunkelbraun gefleckt", farbe: "#412a19", zweit: "#8a5c33",
+    muster: function (z, sp) { return (z * 3 + sp * 5) % 4 === 0; } },
+  /* Silber ist EINFARBIG. Es hatte am 04.09.2026 kurz eine helle Oberkante als
+     Reflexion; auf einer Fassung von zwei Zellen Hoehe war das aber kein Glanz,
+     sondern ein zweiter Rahmen darueber. Jennifer: "silber braucht dieses helle
+     darüber nicht, einfach silber." Ein heller Grauton traegt den Metalleindruck
+     bei dieser Groesse allein. */
+  { key: "silber", name: "Silber", farbe: "#a9afb9" },
+];
+
+/* Die Fassungsfarbe zu einem Schluessel. Ohne Wahl gilt die Vorgabe DES
+   STUECKS, nicht die erste der Liste — jede der drei Brillen kommt in einer
+   anderen Ausfuehrung aus dem Regal, damit sie sich schon im Laden voneinander
+   unterscheiden und nicht erst, wenn man sie umfaerbt. */
+function brillenFarbe(stueck, key) {
+  var liste = (stueck && stueck.farben) || BRILLEN_FARBEN;
+  var i;
+  for (i = 0; i < liste.length; i++) if (liste[i].key === key) return liste[i];
+  var vorgabe = stueck && stueck.standardFarbe;
+  for (i = 0; i < liste.length; i++) if (liste[i].key === vorgabe) return liste[i];
+  return liste[0];
+}
+
 /* ==========================================================================
    3. REGAL: KLEIDERSCHRANK  — Herzen, zwei Stuecke zusaetzlich Sterne
    ==========================================================================
@@ -245,9 +301,26 @@ var KLEIDUNG = [
   { key: "bluete", name: "Blüte", slot: "rechts", preis: preis(4),
     standard: "#e8a0c0", dreht: true, pad: true,
     hinweis: "Sitzt auf einem eigenen kleinen Farbfeld und dreht sich ganz langsam. Das Gegenstück zur Schleife — beide zusammen sehen absichtlich ein bisschen zu viel aus." },
-  { key: "brille", name: "Brille", slot: "gesicht", preis: preis(6),
-    standard: "#15151a",
-    hinweis: "Schwarzes Gestell: ein durchgehender Oberbalken mit Bügeln nach außen, darunter zwei Fassungen. Die Augen bleiben frei." },
+  /* ZWEI FASSUNGEN AUF DEMSELBEN PLATZ, wie Hut und Krone sich den Kopf teilen.
+     Beide kosten gleich viel: es sind Alternativen, keine Stufen, und ein
+     Preisunterschied wuerde eine Wertung behaupten, die es nicht gibt.
+
+     `fassung` beschreibt die Form in Zellen des FEINEN Rasters (siehe
+     brilleBloecke): wie viel Luft links und rechts, wie viel oben und unten,
+     und ob die vier Ecken stehen bleiben. Genau diese vier Zahlen sind der
+     ganze Unterschied zwischen den beiden Brillen. */
+  { key: "brille", name: "Flache Brille", slot: "gesicht", preis: preis(6),
+    standard: "#15151a", farben: BRILLEN_FARBEN, standardFarbe: "schwarz",
+    fassung: { seite: 2, oben: 1, unten: 1, ecken: false },
+    hinweis: "Runde Fassung, flach: die vier Ecken fehlen, dadurch liest sie sich als Kreis. Kommt in Schwarz und trägt am wenigsten auf." },
+  { key: "rundbrille", name: "Runde Brille", slot: "gesicht", preis: preis(6),
+    standard: "#412a19", farben: BRILLEN_FARBEN, standardFarbe: "schildpatt",
+    fassung: { seite: 2, oben: 2, unten: 2, ecken: false },
+    hinweis: "Dieselbe runde Fassung, nur höher — fast ein Kreis. Kommt in dunkelbraun gefleckt und ist die auffälligste der drei." },
+  { key: "kastenbrille", name: "Kastenbrille", slot: "gesicht", preis: preis(6),
+    standard: "#c9b487", farben: BRILLEN_FARBEN, standardFarbe: "creme",
+    fassung: { seite: 2, oben: 2, unten: 1, ecken: true },
+    hinweis: "Eckige Fassung mit stehenden Ecken, etwas nach oben versetzt. Kommt in Creme, strenger als die runden — dieselbe Brille für ein anderes Gesicht." },
   { key: "schal", name: "Schal", slot: "hals", preis: preis(6),
     standard: "#c0563f",
     hinweis: "Legt sich um die ganze Unterkante. Ändert kein Zeichen, nur die Farbe — die runde Silhouette bleibt dadurch heil." },
@@ -542,6 +615,9 @@ function figurKlassen(getragen, stunde) {
   var g = getragen || {};
   var k = [];
   if (g.kopf && g.kopf.stueck === "kopfhoerer") k.push("mk-noten");
+  // Die Brille liegt als zweite Blockebene ueber der Figur und braucht dafuer
+  // ein positioniertes <pre> (siehe brilleBloecke).
+  if (g.gesicht && g.gesicht.stueck === "brille") k.push("mk-brille");
   if (schlaeft(stunde)) k.push("mk-schlaeft");
   return k.join(" ");
 }
@@ -658,7 +734,7 @@ var REGALE = [
   { art: "pet", titel: "Mini-Pets", liste: PETS,
     text: "Sitzt neben dir in der Karte. Immer nur eins auf einmal, wechseln kostet nichts." },
   { art: "kleidung", titel: "Kleiderschrank", liste: KLEIDUNG,
-    text: "Neun Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut und Krone teilen sich den Kopf." },
+    text: "Zehn Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die beiden Brillen das Gesicht." },
   { art: "farbe", titel: "Farbtöpfe", liste: FARBTOEPFE,
     text: "Eine Farbe, die danach auf jedes gekaufte Stück passt. Beliebig oft umfärben, das kostet nie wieder etwas." },
   { art: "makeup", titel: "Make-up", liste: MAKEUP,
@@ -703,6 +779,14 @@ function stueckId(art, key) { return art + ":" + key; }
    und das ist zwei Antipper wieder da. */
 function farbeVon(eintrag, stueck) {
   if (!stueck) return null;
+  /* Ein Stueck mit eigener Farbliste (die Brillen) waehlt daraus. Sein
+     Zeichner liest die Farbe ohnehin selbst; hier steht sie nur, damit die
+     Vorschau in der Kachel nicht die Standardfarbe zeigt, waehrend die Figur
+     daneben eine andere traegt. */
+  if (stueck.farben) {
+    var t = brillenFarbe(stueck, eintrag && eintrag.farbe);
+    return { farbe: t.farbe, verlauf: false };
+  }
   var topfKey = eintrag && eintrag.farbe;
   if (!topfKey || topfKey === "standard") return { farbe: stueck.standard, verlauf: false };
   var topf = null;
@@ -771,7 +855,10 @@ function farbTabelle(farben, getragen) {
     // Auf einem farbigen Feld muss das Zeichen selbst hell sein, sonst
     // verschwindet es darin. Fast weiss, mit einem Hauch der eigenen Farbe.
     if (stueck && stueck.pad && !farbe.verlauf) {
-      wert = "color-mix(in srgb, " + farbe.farbe + " 14%, #ffffff)";
+      // Pinker, nicht weisser (Jennifer: "die blume soll einfach pinker/dunkler
+      // sein"). Bei 14 % war sie praktisch weiss und die Farbe des Stuecks kam
+      // gar nicht mehr vor — ein Abzeichen soll aber nach seiner Farbe aussehen.
+      wert = "color-mix(in srgb, " + farbe.farbe + " 62%, #ffffff)";
     }
     if (!farbe.verlauf && stueck && stueck.weich) {
       wert = "radial-gradient(circle at 50% 45%, " + farbe.farbe + " 10%, " +
@@ -804,8 +891,9 @@ function farbTabelle(farben, getragen) {
 
          Das ist auch der Grund, warum es ausgerechnet ein Abzeichen sein darf:
          es SOLL sich absetzen, es ist ja etwas Angestecktes. */
+      // "der hg gleich" — das Feld wird mit: mehr eigene Farbe, weniger Grau.
       grund: (stueck && stueck.pad) && !farbe.verlauf
-        ? "color-mix(in srgb, " + farbe.farbe + " 58%, #2b2030)"
+        ? "color-mix(in srgb, " + farbe.farbe + " 74%, #2a1526)"
         : null,
       // Nur die Fluegel bewegen sich. Ein Rucksack, der schwingt, waere kein
       // Rucksack mehr, und der Schal soll ruhig bleiben.
@@ -929,7 +1017,7 @@ function kopie(e) {
   return { zeilen: e.zeilen.slice(), maske: e.maske.slice(), breite: e.breite,
            ohrHoehe: e.ohrHoehe, augen: listen(e.augen),
            maul: listen(e.maul), schnauze: listen(e.schnauze),
-           unten: e.unten };
+           unten: e.unten, brille: e.brille || null };
 }
 
 /* Links und rechts je n Zellen Luft. Die Figur RUECKT dadurch nicht — sie
@@ -946,6 +1034,7 @@ function verbreitern(e, n) {
   e.augen = e.augen.map(function (a) { return [a[0], a[1] + n, a[2]]; });
   e.maul = (e.maul || []).map(function (m) { return [m[0], m[1] + n]; });
   e.schnauze = (e.schnauze || []).map(function (x) { return [x[0], x[1] + n]; });
+  if (e.brille) e.brille.augen = e.brille.augen.map(function (a) { return [a[0] + n, a[1]]; });
   return e;
 }
 
@@ -1167,47 +1256,14 @@ function anziehen(ebenen, getragen) {
   }
 
   /* ---- 4. Brille ----
-     EIN DURCHGEHENDER OBERBALKEN, zwei Fassungen darunter, Buegel nach aussen.
-
-     Der Vorgaenger hatte drei Fehler auf einmal, und alle drei kamen daher,
-     dass jedes Teil fuer sich gedacht war statt als ein Gestell:
-
-       1. DER STEG VERBAND NICHT. Er lag als ▄ in der UNTEREN Zellhaelfte
-          zwischen zwei Fassungen aus ▐ und ▌, also in den SEITLICHEN Haelften.
-          Drei Teile, die sich nie beruehren — dazwischen blieb jedes Mal eine
-          halbe Zelle Luft. Jennifer: "the connecting bit should truly connect."
-       2. ES GAB KEINE BUEGEL. Eine Brille von vorn zeigt sie als kurze Striche,
-          die nach aussen zu den Ohren laufen; ohne sie schwebt die Fassung im
-          Gesicht.
-       3. SIE WAR GRAU, nicht schwarz.
-
-     Die Loesung fuer alle drei ist dieselbe Zeile: der OBERBALKEN. Er laeuft in
-     einer einzigen Reihe ▄ von Buegel zu Buegel durch — ueber die linke
-     Fassung, ueber den Steg, ueber die rechte Fassung und beidseitig darueber
-     hinaus. Damit verbindet er per Bauart, statt verbinden zu muessen, und die
-     Buegel sind einfach seine Enden.
-
-     Darunter haengen die Fassungen: ▐ links neben dem Auge (fuellt die rechte
-     Zellhaelfte, schmiegt sich also an), ▌ rechts davon, und unten ▀ als
-     Unterkante. Das Auge selbst bleibt unberuehrt.
-
-     Alles in schwarz und dank aufFell ohne durchscheinende Zellhaelften. */
-  if (traegt("gesicht") === "brille" && e.augen.length) {
-    var G = zeichenVon("gesicht");
-    var bz = e.augen[0][0];
-    var aL = Math.min.apply(null, e.augen.map(function (a) { return a[1]; }));
-    var aR = Math.max.apply(null, e.augen.map(function (a) { return a[1] + a[2] - 1; }));
-
-    // Der Oberbalken samt Buegeln: eine Reihe, eine Bewegung.
-    for (var ob = aL - 2; ob <= aR + 2; ob++) setz(e, bz - 1, ob, "▄", G);
-
-    e.augen.forEach(function (a) {
-      // Die beiden Seiten jeder Fassung, jeweils zum Auge hin gefuellt.
-      setz(e, bz, a[1] - 1, "▐", G);
-      setz(e, bz, a[1] + a[2], "▌", G);
-      // Die Unterkante.
-      for (var q = 0; q < a[2]; q++) setz(e, bz + 1, a[1] + q, "▀", G);
-    });
+     Sie wird hier nur GEMERKT, nicht gezeichnet. Warum, steht bei
+     brilleBloecke() weiter unten. */
+  var fassung = traegt("gesicht");
+  if (fassung && e.augen.length) {
+    e.brille = {
+      zeile: e.augen[0][0], stueck: fassung,
+      augen: e.augen.map(function (a) { return [a[1], a[2]]; }),
+    };
   }
 
   /* ---- 5. Schal ----
@@ -1384,6 +1440,124 @@ function anziehen(ebenen, getragen) {
   }
 
   return e;
+}
+
+/* ==========================================================================
+   10b. DIE BRILLE — BLOECKE AUF EINEM FEINEREN RASTER
+   ==========================================================================
+   Acht Anlaeufe hat es gebraucht, und der Fehler war die ganze Zeit derselbe:
+   ich habe die Brille in die Zellen der FIGUR gezwungen. Dort ist der
+   duennste waagerechte Strich eine halbe Zellhoehe — sieben Pixel bei
+   14-px-Schrift — und runde Ecken gibt es gar nicht. Eine Brille braucht
+   beides feiner. Deshalb wurde jeder Versuch entweder ein Fenster oder ein
+   Klumpen.
+
+   Der Ausweg war zwischendurch ein SVG. Das konnte die Form, sah aber falsch
+   aus: eine glatte Vektorlinie neben einer Figur aus harten Pixeln. Jennifer,
+   dreimal und zuletzt sehr deutlich: "es müssen blöcke seeeeeeeeeein, so wie
+   bei den tieren halt, nur darüber gerendert, damit du keine probleme kriegst
+   es zu konstruieren."
+
+   Genau das ist die Loesung, und sie ist beides zugleich:
+
+     BLOECKE, weil die Brille aus denselben Zeichen besteht wie das Tier.
+     DARUEBER, weil sie ihr EIGENES Raster mitbringt — halb so fein.
+
+   Eine zweite <pre>-Ebene mit halber Schriftgroesse liegt genau deckungsgleich
+   ueber der Figur: zwei Brillenzellen sind eine Figurzelle, in der Breite wie
+   in der Hoehe. Damit ist der duennste Strich eine halbe Figurzelle statt
+   einer ganzen, und aus abgeschnittenen Ecken wird eine Rundung, die man auch
+   als solche liest. Kein Vektor, kein Ausweichen — nur ein feineres Raster
+   derselben Bauart.
+
+   DIE ECKEN entscheiden ueber die Form, und zwar allein. Ein Rechteck ohne
+   seine vier Eckzellen ist ein Achteck, und ein Achteck bei dieser Groesse
+   liest Pixelgrafik seit jeher als Kreis — Jennifers "squared circle". Mit
+   Ecken bleibt es ein Kasten. Genau daran haengen die beiden Fassungen im
+   Katalog: dieselbe Funktion, vier andere Zahlen. */
+
+/* Wie viele Brillenzellen auf eine Figurzelle gehen. Zwei ist die einzige
+   Zahl, die hier funktioniert: bei drei waeren die Striche duenner als ein
+   Bildpunkt der kleinen Kachel (9 px / 3), bei eins waere man wieder im
+   Raster der Figur. */
+var BRILLE_FEIN = 2;
+
+
+function brilleBloecke(e, getragen) {
+  var b = e.brille;
+  if (!b || !b.augen.length) return "";
+
+  var stueck = stueckVon("kleidung", b.stueck);
+  var f = (stueck && stueck.fassung) || { seite: 2, oben: 1, unten: 1, ecken: false };
+  /* Die Fassungsfarbe steht in der getragenen Wahl, nicht in der Farbtabelle:
+     sie gehoert dem Stueck und nicht dem Maler. Ohne Wahl die erste. */
+  var wahlF = (getragen && getragen.gesicht && getragen.gesicht.farbe) || null;
+  var ton = brillenFarbe(stueck, wahlF);
+
+  var F = BRILLE_FEIN;
+  var breite = e.breite * F, hoehe = e.zeilen.length * F;
+  var raster = [], tonRaster = [];
+  for (var i = 0; i < hoehe; i++) {
+    raster.push(new Array(breite).fill(" "));
+    tonRaster.push(new Array(breite).fill(0));
+  }
+
+  var glaeser = b.augen.map(function (a) {
+    return { links: a[0] * F - f.seite, rechts: (a[0] + a[1]) * F - 1 + f.seite };
+  }).sort(function (x, y) { return x.links - y.links; });
+
+  var oben = b.zeile * F - f.oben, unten = b.zeile * F + F - 1 + f.unten;
+  var mitte = b.zeile * F;   // obere Haelfte der Augenzeile
+
+  /* Die Muster-Funktion bekommt die Oberkante hereingereicht, damit "silber"
+     nicht selbst ausrechnen muss, wo oben ist. */
+  function setzB(z, sp) {
+    if (z < 0 || z >= hoehe || sp < 0 || sp >= breite) return;
+    raster[z][sp] = "█";
+    tonRaster[z][sp] = (ton.muster && ton.muster(z, sp, oben)) ? 1 : 0;
+  }
+
+  glaeser.forEach(function (g) {
+    /* Ober- und Unterkante. Mit `ecken` laufen sie bis in die Ecken durch, ohne
+       sie enden sie eine Zelle vorher — und ein Rechteck ohne seine vier Ecken
+       ist ein Achteck, das bei dieser Groesse als Kreis gelesen wird. */
+    var von = f.ecken ? g.links : g.links + 1;
+    var bis = f.ecken ? g.rechts : g.rechts - 1;
+    for (var sp = von; sp <= bis; sp++) { setzB(oben, sp); setzB(unten, sp); }
+    for (var z = oben + 1; z < unten; z++) { setzB(z, g.links); setzB(z, g.rechts); }
+  });
+
+  /* Der Steg zwischen den Glaesern und die Buegel nach aussen — eine Linie auf
+     halber Hoehe. Die Buegel enden drei Zellen vor dem Rand: bei der Katze ist
+     die Augenzeile ganz aussen leer, und eine Linie bis dorthin haengt in der
+     Luft neben dem Kopf. */
+  for (var i2 = 1; i2 < glaeser.length; i2++) {
+    for (var sp2 = glaeser[i2 - 1].rechts + 1; sp2 < glaeser[i2].links; sp2++) setzB(mitte, sp2);
+  }
+  var aussenL = glaeser[0].links, aussenR = glaeser[glaeser.length - 1].rechts;
+  for (var q = 1; q <= 3; q++) { setzB(mitte, aussenL - q); setzB(mitte, aussenR + q); }
+
+  /* Zeilenweise zu Spans zusammenlegen, Zellen mit gleichem Ton als EIN Span
+     (Lauflaenge) — dieselbe Bauart wie beim Maler der Figur. Ein Span je Zelle
+     waeren bei 26 x 12 Zellen dreihundert Knoten fuer eine Brille. */
+  var farben = [ton.farbe, ton.zweit || ton.farbe];
+  return '<span class="mk-brille-bild" aria-hidden="true">' +
+    raster.map(function (zeile, z) {
+      var out = "", puffer = "", t = -1;
+      function spuelen() {
+        if (!puffer) return;
+        out += t < 0 ? puffer
+          : '<span style="color:' + farben[t] + '">' + puffer + "</span>";
+        puffer = "";
+      }
+      for (var sp = 0; sp < zeile.length; sp++) {
+        var tt = zeile[sp] === " " ? -1 : tonRaster[z][sp];
+        if (tt !== t) { spuelen(); t = tt; }
+        puffer += zeile[sp];
+      }
+      spuelen();
+      return out;
+    }).join("\n") + "</span>";
 }
 
 /* ==========================================================================
@@ -1692,16 +1866,39 @@ function blattFuellen(blatt, api) {
          So ist es: Stueck ansehen, Farbe antippen, fertig. Er erscheint nur an
          dem, was gerade AN ist — an einem Stueck im Schrank hat eine Farbe
          nichts zu entscheiden. */
-      if (opt.an && opt.slot) karte.appendChild(farbStreifen(opt.slot, opt.farbe));
+      if (opt.an && opt.slot) karte.appendChild(farbStreifen(opt.slot, opt.farbe, opt.eigeneFarben));
       return karte;
     }
 
-    /* Die gekauften Farbtoepfe als Reihe kleiner Kreise. "Wie geliefert" ist
-       immer dabei und immer der Weg zurueck. */
-    function farbStreifen(slot, aktuell) {
+    /* Die Farben als Reihe kleiner Kreise.
+
+       ZWEI QUELLEN, und der Unterschied ist inhaltlich: die meisten Stuecke
+       nehmen die gekauften FARBTOEPFE (kosten Sterne, passen auf alles). Ein
+       Stueck mit eigener Liste (`farben`, bisher nur die Brillen) nimmt DIESE
+       und ist damit frei — eine Brillenfassung ist kein angemaltes Stueck,
+       sondern ein Material. Schildpatt gibt es nicht als Topf. */
+    function farbStreifen(slot, aktuell, eigene) {
       var reihe = el("div", "shop-farben");
       reihe.setAttribute("role", "group");
       reihe.setAttribute("aria-label", "Farbe wählen");
+      if (eigene) {
+        eigene.forEach(function (t, i) {
+          var an = (aktuell || eigene[0].key) === t.key;
+          var b = knopf("", "shop-farbe" + (an ? " an" : ""), function () {
+            api.faerben(slot, t.key); nachKauf();
+          });
+          // Zweifarbige Fassungen (gefleckt, Silber) zeigen beide Toene im
+          // Punkt, sonst saehe Schildpatt aus wie ein braunes Nichts.
+          b.style.background = t.zweit
+            ? "linear-gradient(135deg, " + t.farbe + " 0 55%, " + t.zweit + " 55% 100%)"
+            : t.farbe;
+          b.setAttribute("aria-label", t.name + (an ? " (gewählt)" : ""));
+          b.setAttribute("aria-pressed", an ? "true" : "false");
+          b.title = t.name;
+          reihe.appendChild(b);
+        });
+        return reihe;
+      }
       FARBTOEPFE.forEach(function (t) {
         if (t.key !== "standard" && !api.besitzt(stueckId("farbe", t.key))) return;
         var an = (aktuell || "standard") === t.key;
@@ -1778,6 +1975,7 @@ function blattFuellen(blatt, api) {
           bildHtml: api.figur({ look: look, getragen: nur }),
           bildKlasse: ("shop-bild-figur " + figurKlassen(nur)).trim(),
           hat: hat, an: an, slot: stueck.slot, farbe: an ? eintrag.farbe : null,
+          eigeneFarben: stueck.farben || null,
           ausText: ausText,
           kaufen: function () {
             if (!api.kaufen(was, stueck.preis)) return;
@@ -1790,7 +1988,7 @@ function blattFuellen(blatt, api) {
     }
 
     tragbaresRegal("kleidung", KLEIDUNG, "Kleiderschrank",
-      "Neun Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut und Krone teilen sich den Kopf.",
+      "Zehn Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die beiden Brillen das Gesicht.",
       "anziehen");
 
     tragbaresRegal("makeup", MAKEUP, "Make-up",
@@ -1891,6 +2089,6 @@ export {
   hintergrundStil, hintergrundKlassen, hintergrundHtml,
   figurKlassen, petKlassen, schlaeft,
   petVon, petHtml,
-  anziehen, malen, alsText, verbreitern, zeileOben, setz, kopie,
+  anziehen, malen, brilleBloecke, alsText, verbreitern, zeileOben, setz, kopie,
   blattFuellen, buehneSatz,
 };

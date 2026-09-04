@@ -675,7 +675,7 @@
    passt ausserdem zur Figur, die selbst aus Rechtecken besteht.
 
    Zwei Noten, versetzt, mit langen Pausen dazwischen. */
-.mk-noten { position: relative; }
+.mk-noten, .mk-brille { position: relative; }
 .mk-noten::before, .mk-noten::after {
   content: ""; position: absolute;
   width: 13px; height: 15px;
@@ -768,4 +768,30 @@
 @keyframes mk-glimmert {
   0%, 100% { background-position: 0% 0%; }
   50% { background-position: 100% 100%; }
+}
+
+
+
+/* ---------- Die Brille: zweite Blockebene ueber der Figur ----------
+   Dieselben Zeichen wie das Tier, nur auf einem doppelt so feinen Raster.
+   font-size: 50 % heisst, dass zwei Brillenzellen genau eine Figurzelle
+   ergeben — in der Breite (ch) wie in der Hoehe (em). Die Ebene liegt deshalb
+   deckungsgleich auf der Figur, ohne dass irgendwo etwas ausgerechnet werden
+   muesste.
+
+   Das ist der ganze Trick, und er hat acht Anlaeufe gekostet: im Raster der
+   FIGUR ist der duennste Strich eine halbe Zellhoehe (sieben Pixel bei
+   14-px-Schrift) und runde Ecken gibt es nicht. Ein halb so grosses Raster
+   loest beides, ohne die Blockgrafik zu verlassen.
+
+   line-height: 1 ist Pflicht, nicht Kosmetik: nur damit ist eine Zelle genau
+   1em hoch, und nur dann liegen die beiden Raster aufeinander.
+
+   pointer-events: none, weil das <pre> in der Tageskarte im Chat-Knopf sitzt
+   und der anklickbar bleiben muss. */
+.mk-brille-bild {
+  position: absolute; left: 0; top: 0; z-index: 2;
+  display: block;
+  font-size: 50%; line-height: 1; white-space: pre;
+  pointer-events: none;
 }

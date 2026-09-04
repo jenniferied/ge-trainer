@@ -869,7 +869,12 @@ export function figurHtml(variante, stufe, nacht, opt) {
   var farben = Laden.farbenFuer(variante, o.look);
   var e = figurEbenen(variante, stufe, nacht);
   if (o.getragen) e = Laden.anziehen(e, o.getragen);
-  return Laden.malen(e, Laden.farbTabelle(farben, o.getragen));
+  var FARBE = Laden.farbTabelle(farben, o.getragen);
+  /* Die Brille kommt als ZWEITE Blockebene dazu, auf einem doppelt so feinen
+     Raster (siehe geteilt-laden.js brilleBloecke). Dieselben Zeichen wie das
+     Tier, nur kleiner — im Raster der Figur ist der duennste Strich eine halbe
+     Zellhoehe, und das ist fuer eine Brille zu dick. */
+  return Laden.malen(e, FARBE) + Laden.brilleBloecke(e, o.getragen);
 }
 
 /* ==========================================================================
