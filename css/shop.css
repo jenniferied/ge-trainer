@@ -278,6 +278,35 @@
   border: 1px solid var(--line);
 }
 
+/* ---------- Die beiden Reiter ----------
+   Laden und Ankleide. Zwei Knoepfe in einer Zeile, der offene mit Grund statt
+   nur mit Rand: bei zwei Reitern nebeneinander ist eine Linie darunter auf
+   einem Handy zu leise, um die Frage "wo bin ich" zu beantworten.
+
+   Sie sitzen unter der Buehne und ueber den Regalen — die Buehne gilt fuer
+   beide, sie zeigt Rose, wie sie gerade aussieht, egal ob sie kauft oder sich
+   anzieht. */
+.shop-reiter {
+  display: flex; gap: 6px; justify-content: center;
+  margin: 14px 0 4px;
+}
+.shop-reiter-knopf {
+  font: inherit; font-size: .82rem; font-weight: 600;
+  padding: .38rem 1.1rem; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+  cursor: pointer;
+}
+.shop-reiter-knopf.an {
+  background: var(--ink); border-color: var(--ink); color: var(--card);
+}
+
+/* Der Satz, wenn ein Reiter nichts zu zeigen hat. Mittig und ruhig — er ist
+   keine Fehlermeldung, sondern ein Zustand, den man erreicht hat. */
+.shop-leer {
+  margin: 18px 6px; text-align: center;
+  font-size: .82rem; color: var(--ink-soft);
+}
+
 /* ---------- Der Farbstreifen an einem getragenen Stueck ----------
    Sitzt IN der Kachel des Stuecks, nicht in einem eigenen Regal: so ist der
    Weg "Stueck ansehen, Farbe antippen, fertig" statt "Farbe suchen, Stueck

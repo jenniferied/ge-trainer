@@ -515,25 +515,64 @@ export function outfit() {
   return (o && typeof o === "object") ? o : {};
 }
 
+/* ---------- Die Farben ----------
+   mk.farben ist { "kleidung:hut": "gold", ... } — die Farbe haengt seit dem
+   04.09.2026 am STUECK und nicht mehr am Platz.
+
+   WARUM DER UMZUG: In der Ankleide soll man auch faerben koennen, was gerade
+   im Schrank liegt. Am Platz ging das nicht, denn ein Platz ist dann leer —
+   faerben() brach genau deshalb ab. Und die Farbe ueberlebt jetzt das
+   Ausziehen: wer die Fassung auf Silber stellt, findet sie beim naechsten
+   Aufsetzen silbern vor statt wieder schwarz.
+
+   GEZEICHNET WIRD WEITER AUS getragen[slot].farbe. Die beiden Speicher laufen
+   nicht auseinander, weil nur hier geschrieben wird und jede Aenderung in
+   beide geht. Der Maler bekommt darum kein neues Argument — figurHtml() hat
+   Aufrufer (Schluepf-Moment, KI-Blase), die von Farben nichts wissen. */
+export function farbenAlle() {
+  var f = wahl("farben");
+  return (f && typeof f === "object") ? f : {};
+}
+
+/* Die gemerkte Farbe eines Stuecks.
+
+   Der Rueckfall auf das GETRAGENE ist die Migration: bis zum 04.09.2026 stand
+   die Farbe nur dort. Ohne ihn saehe Rose nach dem ersten Laden ihr Outfit
+   anders aus als beim Schliessen — die silberne Fassung waere wieder schwarz.
+   Die Karte wird dafuer nicht umgeschrieben; der erste Farbwechsel legt den
+   Eintrag von selbst an. */
+export function stueckFarbe(art, key) {
+  var f = farbenAlle()[art + ":" + key];
+  if (f) return f;
+  var o = outfit(), slot;
+  for (slot in o) if (o[slot] && o[slot].stueck === key) return o[slot].farbe || null;
+  return null;
+}
+
 /* Ein Stueck an- oder ablegen. key === null zieht den Slot aus.
-   Die FARBE ueberlebt einen Wechsel des Stuecks bewusst NICHT: wer den Hut
-   gegen die Krone tauscht, hat eine andere Sache am Kopf, und dass die die
-   Farbe des Hutes erbt, waere eine Entscheidung, die niemand getroffen hat. */
-export function anlegen(slot, key) {
+   Die gemerkte Farbe kommt mit — sie gehoert dem Stueck. Ein WECHSEL des
+   Stuecks erbt dagegen nichts: wer den Hut gegen die Krone tauscht, hat eine
+   andere Sache am Kopf, und dass die die Farbe des Hutes uebernimmt, waere
+   eine Entscheidung, die niemand getroffen hat. */
+export function anlegen(slot, key, art) {
   var o = Object.assign({}, outfit());
   if (!key) delete o[slot];
-  else o[slot] = { stueck: key, farbe: (o[slot] && o[slot].stueck === key) ? o[slot].farbe : "standard" };
+  else o[slot] = { stueck: key, farbe: stueckFarbe(art || "kleidung", key) || "standard" };
   waehle("getragen", o);
 }
 
 /* Umfaerben. Kostet nie etwas — der Farbtopf war der Kauf, das Auftragen ist
-   eine Wahl. Auf einem leeren Slot passiert nichts: eine Farbe ohne Stueck
-   waere ein Zustand, den die Buehne nicht zeigen kann. */
-export function faerben(slot, farbKey) {
-  var o = Object.assign({}, outfit());
-  if (!o[slot]) return;
-  o[slot] = { stueck: o[slot].stueck, farbe: farbKey };
-  waehle("getragen", o);
+   eine Wahl. Geht auch an einem Stueck im Schrank; liegt es gerade an, wandert
+   die Farbe zusaetzlich ins Outfit, damit die Buehne sofort stimmt. */
+export function faerbeStueck(art, key, farbKey) {
+  var f = Object.assign({}, farbenAlle());
+  f[art + ":" + key] = farbKey;
+  waehle("farben", f);
+  var o = Object.assign({}, outfit()), slot, getroffen = false;
+  for (slot in o) {
+    if (o[slot] && o[slot].stueck === key) { o[slot] = { stueck: key, farbe: farbKey }; getroffen = true; }
+  }
+  if (getroffen) waehle("getragen", o);
 }
 
 /* Ob gerade das dunkle Thema laeuft. NICHT die Uhrzeit: satzVon() nennt seine
@@ -1293,7 +1332,8 @@ export function shopOeffnen(tz, neu) {
     // Der Preis wird NICHT vom Baustein bestimmt, sondern hier gegen den
     // Stand von JETZT geprueft — das Sheet kann lange offen liegen.
     kaufen: function (was, preis) { return kaufen(was, preis, standJetzt(tz)); },
-    wahl: wahl, waehle: waehle, outfit: outfit, anlegen: anlegen, faerben: faerben,
+    wahl: wahl, waehle: waehle, outfit: outfit, anlegen: anlegen,
+    stueckFarbe: stueckFarbe, faerbeStueck: faerbeStueck,
     figur: function (opt) { return bildHtml(EIER[eiIndex()], stufeImLaden, false, opt); },
     pet: petHtml,
     nacht: nachtJetzt,

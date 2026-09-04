@@ -569,7 +569,7 @@ export function frageChatSagen(zeile) {
    dafuer steht offen in geteilt-laden.js: wer auf zwei Geraeten verschiedene
    Sachen anzieht, behaelt das spaetere Outfit KOMPLETT. Der BESITZ geht dabei
    nie verloren, nur das Angezogene — und das sind zwei Antipper. */
-export var MK_WAHL_FELDER = ["pet", "getragen", "look", "hintergrund", "tier"];
+export var MK_WAHL_FELDER = ["pet", "getragen", "look", "hintergrund", "tier", "farben"];
 
 /* Die Kauf-Ids eines mk-Objekts, sortiert und entdoppelt. Reine Funktion —
    signatur() wird auch auf die SERVER-Antwort angewandt (siehe einSync), und

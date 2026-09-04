@@ -1730,8 +1730,13 @@ function alsText(e) { return e.zeilen.join("\n"); }
      api.wahl(feld)             eine getroffene Wahl lesen
      api.waehle(feld, wert)     eine Wahl setzen
      api.outfit()               das getragene Outfit als Objekt
-     api.anlegen(slot, key)     an- oder ausziehen (key null = aus)
-     api.faerben(slot, farbe)   umfaerben
+     api.anlegen(slot, key, art)  an- oder ausziehen (key null = aus). `art`
+                                  sagt, in welchem Regal das Stueck steht —
+                                  danach findet der Trainer seine gemerkte Farbe
+     api.stueckFarbe(art, key)    die gemerkte Farbe eines Stuecks, auch wenn
+                                  es gerade im Schrank liegt
+     api.faerbeStueck(art, key, farbe)  umfaerben. Am STUECK, nicht am Platz:
+                                  nur so laesst sich faerben, was nicht an ist
      api.figur(opt)             die eigene Figur als HTML
      api.pet(key, look)         ein Mini-Pet als HTML
      api.nacht()                ob das dunkle Blatt laeuft
@@ -1783,6 +1788,20 @@ function blattFuellen(blatt, api) {
      api.neu ist optional: die Testseite reicht keine Karte herein. */
   function nachKauf() { malen(); if (typeof api.neu === "function") api.neu(); }
 
+  /* Ob im Laden ueberhaupt noch eine Kachel stuende. Fragt die Regale, nicht
+     eine Zahl: eine gepflegte Konstante "es gibt 45 Dinge" waere beim
+     naechsten neuen Stueck still falsch. */
+  function etwasZuKaufen() {
+    return REGALE.some(function (r) {
+      return r.liste.some(function (x) {
+        if (r.art === "farbe" && x.key === "standard") return false;
+        if (r.art === "look" && x.key === "natur") return false;
+        if (r.art === "hintergrund" && x.key === "keiner") return false;
+        return !api.besitzt(stueckId(r.art, x.key));
+      });
+    });
+  }
+
   /* Nur der ERSTE Aufbau springt an den Anfang, jeder weitere bleibt stehen,
      wo Rose gerade war.
 
@@ -1794,6 +1813,13 @@ function blattFuellen(blatt, api) {
      Kachel bestaetigt sich selbst (Rahmen und "ist an"), das ist die
      Rueckmeldung, die am Daumen liegt. */
   var ersterAufbau = true;
+
+  /* Welcher Reiter offen ist. Lebt hier und nicht in malen(), weil jedes
+     Antippen einer Farbe oder eines Stuecks neu malt — der Reiter darf davon
+     nichts merken. Beim ERSTEN Aufbau wird er gesetzt, nicht vorher: ob es im
+     Laden ueberhaupt noch etwas gibt, weiss man erst mit dem Besitz in der Hand
+     (siehe reiterWaehlen). */
+  var reiter = null;
 
   function malen() {
     var stand = blatt.scrollTop;
@@ -1842,6 +1868,29 @@ function blattFuellen(blatt, api) {
     blatt.appendChild(buehne);
     // Die Buehne ist ein Bild aus Blockzeichen; ein Screenreader braucht den Satz.
     blatt.appendChild(el("p", "shop-buehne-text", buehneSatz(getragen, look)));
+
+    /* WOMIT DAS BLATT AUFGEHT: mit dem Laden, solange es dort etwas gibt, sonst
+       mit der Ankleide. Ein leerer Laden als Startbild waere die Belohnung
+       dafuer, alles gekauft zu haben — und genau falsch herum. */
+    if (reiter === null) reiter = etwasZuKaufen() ? "laden" : "ankleide";
+    var imLaden = reiter === "laden";
+
+    var leiste = el("div", "shop-reiter");
+    leiste.setAttribute("role", "tablist");
+    [["laden", "Laden"], ["ankleide", "Ankleide"]].forEach(function (r) {
+      var an = reiter === r[0];
+      var b = knopf(r[1], "shop-reiter-knopf" + (an ? " an" : ""), function () {
+        if (reiter === r[0]) return;
+        /* Beim Wechsel nach oben. Der Scrollstand des einen Reiters sagt im
+           anderen nichts — die Regale sind verschieden lang, und Rose landete
+           sonst mitten in einem Regal, das sie nie gesehen hat. */
+        reiter = r[0]; blatt.scrollTop = 0; malen();
+      });
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", an ? "true" : "false");
+      leiste.appendChild(b);
+    });
+    blatt.appendChild(leiste);
 
     /* ---- Eine Kachel ----
        Alle sechs Regale bauen dieselbe Kachel: Bild, Name, Hinweis, und darunter
@@ -1902,15 +1951,18 @@ function blattFuellen(blatt, api) {
 
       /* Der Farbstreifen sitzt IN der Kachel des Stuecks und nicht in einem
          eigenen Regal. Der Umweg waere: Farbe suchen, Stueck suchen, zuordnen.
-         So ist es: Stueck ansehen, Farbe antippen, fertig. Er erscheint nur an
-         dem, was gerade AN ist — an einem Stueck im Schrank hat eine Farbe
-         nichts zu entscheiden. */
-      if (opt.an && opt.slot) karte.appendChild(farbStreifen(opt.slot, opt.farbe, opt.eigeneFarben));
-      /* Ein Stueck mit EIGENEN Farben (die Brillen) zeigt sie auch, solange es
-         im Regal liegt — sonst sieht man drei Fassungen in drei Toenen und
-         haelt die Farbe fuer Teil der Form. Der Streifen ist hier bewusst
-         STUMM: faerben() greift nur an etwas Getragenem, ein Punkt vor dem Kauf
-         waere ein Knopf, der nichts tut. */
+         So ist es: Stueck ansehen, Farbe antippen, fertig.
+
+         BEDIENBAR AN ALLEM, WAS ROSE BESITZT — nicht mehr nur am Getragenen
+         (Jennifer, 04.09.2026: "die farben sollten einfach included options
+         sein immer"). Moeglich wurde das erst dadurch, dass die Farbe am
+         Stueck haengt statt am Platz (maskottchen.js stueckFarbe). Vorher gab
+         es fuer die Farbe eines abgelegten Stuecks schlicht keinen Ort.
+
+         Im LADEN, wo nur Ungekauftes steht, bleibt der Streifen stumm: dort
+         waere er ein Knopf, der einer fremden Sache eine Farbe gibt. Er sagt
+         "gibt es in", nicht "waehle". */
+      if (opt.faerbbar) karte.appendChild(farbStreifen(opt.art, opt.key, opt.farbe, opt.eigeneFarben));
       else if (opt.eigeneFarben) karte.appendChild(farbVorschau(opt.eigeneFarben));
       return karte;
     }
@@ -1953,7 +2005,7 @@ function blattFuellen(blatt, api) {
        Stueck mit eigener Liste (`farben`, bisher nur die Brillen) nimmt DIESE
        und ist damit frei — eine Brillenfassung ist kein angemaltes Stueck,
        sondern ein Material. Schildpatt gibt es nicht als Topf. */
-    function farbStreifen(slot, aktuell, eigene) {
+    function farbStreifen(art, key, aktuell, eigene) {
       var reihe = el("div", "shop-farben");
       reihe.setAttribute("role", "group");
       reihe.setAttribute("aria-label", "Farbe wählen");
@@ -1961,7 +2013,7 @@ function blattFuellen(blatt, api) {
         eigene.forEach(function (t, i) {
           var an = (aktuell || eigene[0].key) === t.key;
           var b = knopf("", "shop-farbe" + (an ? " an" : ""), function () {
-            api.faerben(slot, t.key); nachKauf();
+            api.faerbeStueck(art, key, t.key); nachKauf();
           });
           punktFarbe(b, t);
           b.setAttribute("aria-label", t.name + (an ? " (gewählt)" : ""));
@@ -1971,11 +2023,18 @@ function blattFuellen(blatt, api) {
         });
         return reihe;
       }
-      FARBTOEPFE.forEach(function (t) {
-        if (t.key !== "standard" && !api.besitzt(stueckId("farbe", t.key))) return;
+      /* NUR GEKAUFTE TOEPFE, und "standard" gehoert immer dazu. Besitzt Rose
+         noch keinen, bliebe ein Streifen aus einem einzigen Punkt uebrig — der
+         entscheidet nichts und wird darum gar nicht erst gebaut. Sonst haengen
+         an einem frischen Stand fuenfzehn Kacheln je ein sinnloser Punkt. */
+      var toepfe = FARBTOEPFE.filter(function (t) {
+        return t.key === "standard" || api.besitzt(stueckId("farbe", t.key));
+      });
+      if (toepfe.length < 2) return reihe;
+      toepfe.forEach(function (t) {
         var an = (aktuell || "standard") === t.key;
         var b = knopf("", "shop-farbe" + (an ? " an" : "") + (t.verlauf ? " verlauf" : ""), function () {
-          api.faerben(slot, t.key);
+          api.faerbeStueck(art, key, t.key);
           nachKauf();
         });
         // Ein Verlauf gehoert in background-image, eine Farbe in background.
@@ -2003,138 +2062,210 @@ function blattFuellen(blatt, api) {
       return r;
     }
 
-    // ---- Regal 1: die Mini-Pets ----
-    var rPets = regalKopf("Mini-Pets",
-      "Sitzt neben dir in der Karte. Immer nur eins auf einmal, wechseln kostet nichts.");
-    var petAn = api.wahl("pet");
-    PETS.forEach(function (p) {
-      var was = "pet:" + p.key;
-      var hat = api.besitzt(was);
-      rPets.appendChild(kachel({
-        name: p.name, hinweis: p.hinweis, preis: p.preis,
-        bildHtml: api.pet(p.key, look),
-        hat: hat, an: hat && petAn === p.key,
-        anText: "ist dabei", ausText: "mitnehmen",
-        kaufen: function () {
-          if (!api.kaufen(was, p.preis)) return;
-          // Frisch gekauft wird gleich getragen. Alles andere waere ein zweiter
-          // Klick fuer etwas, das ohnehin gewollt ist.
-          api.waehle("pet", p.key); nachKauf();
-        },
-        anlegen: function () { api.waehle("pet", p.key); nachKauf(); },
-        ablegen: function () { api.waehle("pet", null); nachKauf(); },
-      }));
-    });
+    /* ---------- Zwei Reiter ----------
+       Bis zum 04.09.2026 war das EIN Blatt mit sechs Regalen: kaufen, anziehen
+       und faerben untereinander, fuenfundvierzig Kacheln am Stueck. Das las
+       sich, solange Rose nichts besass — danach stand der Laden voll mit
+       Dingen, die ihr schon gehoerten, und der Preis darunter war eine Zahl
+       ohne Bedeutung.
 
-    // ---- Regal 2 und 4: Kleiderschrank und Make-up ----
-    // Dieselbe Mechanik, darum dieselbe Schleife. Der Unterschied ist die
-    // Liste und der Text darueber, sonst nichts.
-    function tragbaresRegal(art, liste, titel, text, ausText) {
-      var r = regalKopf(titel, text);
-      liste.forEach(function (stueck) {
-        var was = stueckId(art, stueck.key);
-        var hat = api.besitzt(was);
-        var eintrag = getragen[stueck.slot];
-        var an = hat && !!eintrag && eintrag.stueck === stueck.key;
-        /* Das Vorschaubild zeigt die Figur mit GENAU DIESEM Stueck und sonst
-           nichts. Nicht das ganze Outfit: sonst saehen alle neun Kacheln fast
-           gleich aus und man erkennt nicht, was man kauft. Das ganze Outfit
-           steht auf der Buehne oben. */
-        var nur = {};
-        nur[stueck.slot] = { stueck: stueck.key, farbe: an ? eintrag.farbe : "standard" };
+       Jetzt sind es zwei Fragen an dieselbe Kachel:
+
+         Laden      was Rose NOCH NICHT hat, mit Preis. Wird kuerzer, je mehr
+                    sie besitzt — und das ist genau richtig.
+         Ankleide   was sie HAT, mit Anziehen und Farben. Wird laenger.
+
+       Der Reiter wird NICHT gemerkt: jedes Oeffnen faengt oben an (siehe
+       ersterAufbau beim Scrollstand), und ein gemerkter Reiter neben einem
+       zurueckgesetzten Scrollstand waeren zwei halbe Erinnerungen. */
+    function hat(art, key) {
+      // Zwei Dinge gehoeren niemandem und sind trotzdem immer da — sie sind
+      // die Rueckfahrkarte und stehen darum in der Ankleide, nie im Laden.
+      if (art === "look" && key === "natur") return true;
+      if (art === "hintergrund" && key === "keiner") return true;
+      return api.besitzt(stueckId(art, key));
+    }
+
+    /* Gefiltert wird NUR nach Besitz, nie nach Bezahlbarkeit: ein Stueck, das
+       diese Woche zu teuer ist, muss trotzdem im Laden stehen. Es zu verstecken
+       hiesse, das Ziel zu verstecken. */
+    function fuerReiter(art, liste) {
+      return liste.filter(function (x) {
+        if (art === "farbe" && x.key === "standard") return false;   // gehoert niemandem
+        return imLaden ? !hat(art, x.key) : hat(art, x.key);
+      });
+    }
+
+    function regalPets(liste) {
+      var r = regalKopf("Mini-Pets",
+        "Sitzt neben dir in der Karte. Immer nur eins auf einmal, wechseln kostet nichts.");
+      var petAn = api.wahl("pet");
+      liste.forEach(function (p) {
+        var was = stueckId("pet", p.key);
         r.appendChild(kachel({
-          name: stueck.name, hinweis: stueck.hinweis, preis: stueck.preis,
-          bildHtml: api.figur({ look: look, getragen: nur }),
-          bildKlasse: ("shop-bild-figur " + figurKlassen(nur)).trim(),
-          hat: hat, an: an, slot: stueck.slot, farbe: an ? eintrag.farbe : null,
-          eigeneFarben: stueck.farben || null,
-          ausText: ausText,
+          name: p.name, hinweis: p.hinweis, preis: p.preis,
+          bildHtml: api.pet(p.key, look),
+          hat: !imLaden, an: !imLaden && petAn === p.key,
+          anText: "ist dabei", ausText: "mitnehmen",
           kaufen: function () {
-            if (!api.kaufen(was, stueck.preis)) return;
-            api.anlegen(stueck.slot, stueck.key); nachKauf();
+            if (!api.kaufen(was, p.preis)) return;
+            // Frisch gekauft wird gleich getragen. Alles andere waere ein zweiter
+            // Klick fuer etwas, das ohnehin gewollt ist.
+            api.waehle("pet", p.key); nachKauf();
           },
-          anlegen: function () { api.anlegen(stueck.slot, stueck.key); nachKauf(); },
-          ablegen: function () { api.anlegen(stueck.slot, null); nachKauf(); },
+          anlegen: function () { api.waehle("pet", p.key); nachKauf(); },
+          ablegen: function () { api.waehle("pet", null); nachKauf(); },
         }));
       });
     }
 
-    tragbaresRegal("kleidung", KLEIDUNG, "Kleiderschrank",
-      "Elf Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die drei Brillen das Gesicht.",
-      "anziehen");
+    // Kleiderschrank und Make-up sind dieselbe Mechanik, darum dieselbe
+    // Schleife. Der Unterschied ist die Liste und der Text darueber.
+    function tragbaresRegal(art, liste, titel, text, ausText) {
+      var r = regalKopf(titel, text);
+      liste.forEach(function (stueck) {
+        var was = stueckId(art, stueck.key);
+        var eintrag = getragen[stueck.slot];
+        var an = !imLaden && !!eintrag && eintrag.stueck === stueck.key;
+        /* Das Vorschaubild zeigt die Figur mit GENAU DIESEM Stueck und sonst
+           nichts. Nicht das ganze Outfit: sonst saehen alle Kacheln fast gleich
+           aus und man erkennt nicht, was man kauft. Das ganze Outfit steht auf
+           der Buehne oben.
 
-    tragbaresRegal("makeup", MAKEUP, "Make-up",
-      "Vier Plätze im Gesicht. Wimpern ersetzen den Lidschatten, alles andere geht nebeneinander.",
-      "auftragen");
+           Die Farbe kommt aus dem Gedaechtnis des Stuecks, nicht aus dem
+           Outfit — sonst zeigte eine Kachel im Schrank die Vorgabefarbe,
+           waehrend der Punkt darunter Silber als gewaehlt markiert. */
+        /* Ohne gemerkte Farbe gilt die VORGABE DES STUECKS, nicht der erste
+           Eintrag der Liste: die Kastenbrille kommt in Creme, die Rundbrille in
+           Schildpatt. Fiele der Streifen auf eigene[0] zurueck, staende an
+           beiden der schwarze Punkt als gewaehlt, waehrend die Figur daneben
+           creme trueg. */
+        var farbe = api.stueckFarbe(art, stueck.key) || stueck.standardFarbe || null;
+        var nur = {};
+        nur[stueck.slot] = { stueck: stueck.key, farbe: farbe || "standard" };
+        r.appendChild(kachel({
+          name: stueck.name, hinweis: stueck.hinweis, preis: stueck.preis,
+          bildHtml: api.figur({ look: look, getragen: nur }),
+          bildKlasse: ("shop-bild-figur " + figurKlassen(nur)).trim(),
+          hat: !imLaden, an: an, art: art, key: stueck.key,
+          faerbbar: !imLaden, farbe: farbe,
+          eigeneFarben: stueck.farben || null,
+          ausText: ausText,
+          kaufen: function () {
+            if (!api.kaufen(was, stueck.preis)) return;
+            api.anlegen(stueck.slot, stueck.key, art); nachKauf();
+          },
+          anlegen: function () { api.anlegen(stueck.slot, stueck.key, art); nachKauf(); },
+          ablegen: function () { api.anlegen(stueck.slot, null, art); nachKauf(); },
+        }));
+      });
+    }
 
-    // ---- Regal 3: Farbtöpfe ----
-    var rFarben = regalKopf("Farbtöpfe",
-      "Eine Farbe, die danach auf jedes getragene Stück passt. Du wählst sie direkt an der Kachel des Stücks aus, beliebig oft und immer kostenlos.");
-    FARBTOEPFE.forEach(function (t) {
-      if (t.key === "standard") return;   // gehoert niemandem, ist immer da
-      var was = stueckId("farbe", t.key);
-      var hat = api.besitzt(was);
-      rFarben.appendChild(kachel({
-        name: t.name, hinweis: t.hinweis || farbHinweis(t), preis: t.preis,
-        flaeche: t.verlauf ? t.farbe : "linear-gradient(" + t.farbe + ", " + t.farbe + ")",
-        hat: hat, an: hat,
-        // Ein Farbtopf wird nicht getragen — er ist einfach da. Der Knopf sagt
-        // das und laesst sich bewusst nicht druecken.
-        anText: "im Regal", ablegen: null,
-        kaufen: function () {
-          if (!api.kaufen(was, t.preis)) return;
-          nachKauf();
-        },
-      }));
+    function regalFarben(liste) {
+      var r = regalKopf("Farbtöpfe",
+        "Eine Farbe, die danach auf jedes gekaufte Stück passt. Du wählst sie in der Ankleide direkt an der Kachel des Stücks aus, beliebig oft und immer kostenlos.");
+      liste.forEach(function (t) {
+        var was = stueckId("farbe", t.key);
+        r.appendChild(kachel({
+          name: t.name, hinweis: t.hinweis || farbHinweis(t), preis: t.preis,
+          flaeche: t.verlauf ? t.farbe : "linear-gradient(" + t.farbe + ", " + t.farbe + ")",
+          hat: false, an: false, ablegen: null,
+          kaufen: function () {
+            if (!api.kaufen(was, t.preis)) return;
+            nachKauf();
+          },
+        }));
+      });
+    }
+
+    function regalLooks(liste) {
+      var r = regalKopf("Looks",
+        "Tauscht die Farben der Figur selbst. Gilt sofort auf jeder Stufe und färbt dein Mini-Pet mit.");
+      liste.forEach(function (l) {
+        var was = stueckId("look", l.key);
+        var an = !imLaden && (look || "natur") === l.key;
+        r.appendChild(kachel({
+          name: l.name, hinweis: l.hinweis, preis: l.preis,
+          bildHtml: api.figur({ look: l.key }),
+          bildKlasse: "shop-bild-figur",
+          hat: !imLaden, an: an, anText: "ist an", ausText: "anziehen",
+          ablegen: l.key === "natur" ? null : function () { api.waehle("look", "natur"); nachKauf(); },
+          kaufen: function () {
+            if (!api.kaufen(was, l.preis)) return;
+            api.waehle("look", l.key); nachKauf();
+          },
+          anlegen: function () { api.waehle("look", l.key); nachKauf(); },
+        }));
+      });
+    }
+
+    function regalHintergruende(liste) {
+      var r = regalKopf("Hintergründe",
+        "Liegt hinter dir in der Tageskarte. Jede Kachel zeigt beides: links der Tag, rechts die Nacht. Kostet immer Herzen UND Sterne — das Große im Bild soll beides verlangen.");
+      var hgAn = api.wahl("hintergrund") || "keiner";
+      liste.forEach(function (h) {
+        var was = stueckId("hintergrund", h.key);
+        r.appendChild(kachel({
+          name: h.name, hinweis: h.hinweis, preis: h.preis,
+          flaeche: hintergrundStil(h.key, api.nacht()) || "linear-gradient(var(--paper-2), var(--paper-2))",
+          /* Beide Modi nebeneinander. Die Deko-Klassen sitzen INNEN an je einer
+             Haelfte (hintergrundVorschauHtml) und darum nicht mehr hier — stuenden
+             sie zusaetzlich aussen, laegen Wolken und Sterne doppelt uebereinander. */
+          flaecheHtml: hintergrundVorschauHtml(h.key),
+          flaecheKlassen: "shop-flaeche-geteilt",
+          hat: !imLaden, an: !imLaden && hgAn === h.key,
+          anText: "ist an", ausText: "aufhängen",
+          ablegen: h.key === "keiner" ? null : function () { api.waehle("hintergrund", "keiner"); nachKauf(); },
+          kaufen: function () {
+            if (!api.kaufen(was, h.preis)) return;
+            api.waehle("hintergrund", h.key); nachKauf();
+          },
+          anlegen: function () { api.waehle("hintergrund", h.key); nachKauf(); },
+        }));
+      });
+    }
+
+    /* Die Reihenfolge der Regale ist in beiden Reitern dieselbe, damit ein
+       Stueck nach dem Kauf ungefaehr dort wieder auftaucht, wo es stand. Die
+       Farbtoepfe fehlen in der Ankleide: sie sind dort keine Kachel, sondern
+       die Punkte unter jedem Stueck. */
+    var BAU = {
+      pet: regalPets,
+      kleidung: function (l) { return tragbaresRegal("kleidung", l, "Kleiderschrank",
+        "Elf Stücke auf sechs Plätzen. Alles gleichzeitig tragbar, aber je Platz eins — Hut, Kopfhörer und Krone teilen sich den Kopf, die drei Brillen das Gesicht.",
+        "anziehen"); },
+      makeup: function (l) { return tragbaresRegal("makeup", l, "Make-up",
+        "Vier Plätze im Gesicht. Wimpern ersetzen den Lidschatten, alles andere geht nebeneinander.",
+        "auftragen"); },
+      farbe: regalFarben,
+      look: regalLooks,
+      hintergrund: regalHintergruende,
+    };
+
+    var ORDNUNG = imLaden
+      ? [["pet", PETS], ["kleidung", KLEIDUNG], ["makeup", MAKEUP],
+         ["farbe", FARBTOEPFE], ["look", LOOKS], ["hintergrund", HINTERGRUENDE]]
+      : [["pet", PETS], ["kleidung", KLEIDUNG], ["makeup", MAKEUP],
+         ["look", LOOKS], ["hintergrund", HINTERGRUENDE]];
+
+    var etwasDa = false;
+    ORDNUNG.forEach(function (eintrag) {
+      var liste = fuerReiter(eintrag[0], eintrag[1]);
+      // Ein leeres Regal bekommt auch keine Ueberschrift. Eine Zeile
+      // "Kleiderschrank" ueber nichts liest sich wie ein Ladefehler.
+      if (!liste.length) return;
+      etwasDa = true;
+      BAU[eintrag[0]](liste);
     });
 
-    // ---- Regal 5: Looks ----
-    var rLooks = regalKopf("Looks",
-      "Tauscht die Farben der Figur selbst. Gilt sofort auf jeder Stufe und färbt dein Mini-Pet mit.");
-    LOOKS.forEach(function (l) {
-      var was = stueckId("look", l.key);
-      // "Natur" gehoert niemandem und ist immer da — es ist die Rueckfahrkarte.
-      var hat = l.key === "natur" || api.besitzt(was);
-      var an = (look || "natur") === l.key;
-      rLooks.appendChild(kachel({
-        name: l.name, hinweis: l.hinweis, preis: l.preis,
-        bildHtml: api.figur({ look: l.key }),
-        bildKlasse: "shop-bild-figur",
-        hat: hat, an: an, anText: "ist an", ausText: "anziehen",
-        ablegen: l.key === "natur" ? null : function () { api.waehle("look", "natur"); nachKauf(); },
-        kaufen: function () {
-          if (!api.kaufen(was, l.preis)) return;
-          api.waehle("look", l.key); nachKauf();
-        },
-        anlegen: function () { api.waehle("look", l.key); nachKauf(); },
-      }));
-    });
-
-    // ---- Regal 6: Hintergründe ----
-    var rHg = regalKopf("Hintergründe",
-      "Liegt hinter dir in der Tageskarte. Jede Kachel zeigt beides: links der Tag, rechts die Nacht. Kostet immer Herzen UND Sterne — das Große im Bild soll beides verlangen.");
-    var hgAn = api.wahl("hintergrund") || "keiner";
-    HINTERGRUENDE.forEach(function (h) {
-      var was = stueckId("hintergrund", h.key);
-      var hat = h.key === "keiner" || api.besitzt(was);
-      var an = hgAn === h.key;
-      rHg.appendChild(kachel({
-        name: h.name, hinweis: h.hinweis, preis: h.preis,
-        flaeche: hintergrundStil(h.key, api.nacht()) || "linear-gradient(var(--paper-2), var(--paper-2))",
-        /* Beide Modi nebeneinander. Die Deko-Klassen sitzen INNEN an je einer
-           Haelfte (hintergrundVorschauHtml) und darum nicht mehr hier — stuenden
-           sie zusaetzlich aussen, laegen Wolken und Sterne doppelt uebereinander. */
-        flaecheHtml: hintergrundVorschauHtml(h.key),
-        flaecheKlassen: "shop-flaeche-geteilt",
-        hat: hat, an: an, anText: "ist an", ausText: "aufhängen",
-        ablegen: h.key === "keiner" ? null : function () { api.waehle("hintergrund", "keiner"); nachKauf(); },
-        kaufen: function () {
-          if (!api.kaufen(was, h.preis)) return;
-          api.waehle("hintergrund", h.key); nachKauf();
-        },
-        anlegen: function () { api.waehle("hintergrund", h.key); nachKauf(); },
-      }));
-    });
+    if (!etwasDa) {
+      blatt.appendChild(el("p", "shop-leer", imLaden
+        ? "Hier ist nichts mehr zu holen — dir gehört alles. Anziehen und umfärben kannst du drüben in der Ankleide."
+        : "Noch nichts im Schrank. Im Laden liegt alles, was es gibt."));
+    } else if (!imLaden) {
+      blatt.appendChild(el("p", "shop-regal-text",
+        "Neue Farben gibt es als Farbtöpfe im Laden. Sobald du einen hast, taucht er unter jedem Stück als Punkt auf."));
+    }
 
     var zu = knopf("Schließen", "knopf klein sekundaer shop-zu", api.schliessen);
     blatt.appendChild(zu);
