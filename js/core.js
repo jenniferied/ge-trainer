@@ -216,9 +216,27 @@ export function antwortText(roh) {
 var ZEIT_MAX_SEK = 3600;
 /* Deckel fuer die aus dem Abstand abgeleitete Zeit (logAntwort). Bewusst viel
    enger als ZEIT_MAX_SEK: eine offen liegengelassene Karte kann eine Stunde
-   dauern und das ist eine echte Messung, aber fuenf Minuten Abstand zwischen
-   zwei Antworten heisst, dass dazwischen etwas anderes passiert ist. */
-var LUECKE_MAX_SEK = 300;
+   dauern und das ist eine echte Messung, aber Abstand zwischen zwei Antworten
+   ist nur dann Bearbeitungszeit, wenn er plausibel bleibt.
+
+   ZWEI Deckel, weil ein einziger fuer beide Sorten falsch waere (Jennifer,
+   04.09.2026: "manche fragen wie afb III koennten ja 10 min locker dauern"):
+
+   - SCHREIBEN (900 s): ueberall dort, wo Rose einen Text formuliert - Glossar
+     erklaeren, die Abruf-Schritte im Themen-Lernen, alles mit einer getippten
+     Antwort. Zwoelf Minuten sind da eine ehrliche Aufgabe und keine Pause.
+   - TIPPEN (300 s): Begriffe-Blitz, Zuordnen, Ankreuzen. Wer hier fuenf Minuten
+     braucht, hat dazwischen etwas anderes gemacht - dann steht ehrlich null da.
+
+   Freie Aufgaben brauchen den Fallback ohnehin nicht, sie fuehren seit jeher
+   eine echte Uhr (main.js freiKarte) mit dem grossen ZEIT_MAX_SEK-Deckel. */
+var LUECKE_MAX_TIPPEN = 300, LUECKE_MAX_SCHREIBEN = 900;
+function lueckenDeckel(e) {
+  if (e.text) return LUECKE_MAX_SCHREIBEN;             // eine formulierte Antwort
+  if (e.modus === "frei") return LUECKE_MAX_SCHREIBEN;
+  if (e.spiel === "themenlernen" || e.spiel === "glossar") return LUECKE_MAX_SCHREIBEN;
+  return LUECKE_MAX_TIPPEN;
+}
 export function sekundenSeit(start) {
   if (!start) return null;
   var s = Math.max(0, Math.round((Date.now() - start) / 1000));
@@ -499,16 +517,17 @@ export function logAntwort(eintrag) {
      ueberall dasselbe - genau das fehlte vorher. Wer eine echte Uhr hat, setzt
      zeit weiterhin selbst; ein gesetzter Wert wird nie ueberschrieben.
 
-     Eigener, engerer Deckel als sekundenSeit(): mehr als LUECKE_MAX_SEK
-     zwischen zwei Antworten ist keine Bearbeitungsdauer mehr, sondern eine
-     Pause, und dann steht hier ehrlich null. Dieselbe Groessenordnung, mit der
+     Eigener, engerer Deckel als sekundenSeit(), und zwar zwei davon je nach
+     Art der Aufgabe (siehe lueckenDeckel): darueber ist es keine
+     Bearbeitungsdauer mehr, sondern eine Pause, und dann steht hier ehrlich null. Dieselbe Groessenordnung, mit der
      der ST-Trainer seine Zeiten auswertet. Die erste Antwort nach einer Pause
      und die erste ueberhaupt tragen deshalb null - auch das ist ehrlicher als
      eine geratene Zahl. Alteintraege werden NICHT nachgefuellt: das aenderte
      ihre aid nicht, ginge also nie hoch. */
   if (e.zeit === undefined) {
     var abstand = letzte ? Math.round((e.ts - letzte.ts) / 1000) : null;
-    e.zeit = (abstand !== null && abstand >= 0 && abstand <= LUECKE_MAX_SEK) ? abstand : null;
+    var deckel = lueckenDeckel(e);
+    e.zeit = (abstand !== null && abstand >= 0 && abstand <= deckel) ? abstand : null;
   }
   if (letzte && letzte.qid === e.qid && letzte.ts >= e.ts) e.ts = letzte.ts + 1;
   e.aid = antwortId(e);

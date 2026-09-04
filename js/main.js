@@ -3912,6 +3912,22 @@ function freiKarte(thema, f, opts) {
      - zeit steht nur am ERSTEN Eintrag: Umentscheiden ist keine zweite Runde. */
   var uhr = o.einzeln ? Date.now() : null;
   var zeitVergeben = false;
+  /* Die BEARBEITUNGSZEIT steht fest, sobald die Loesung aufgeht - ab da wird
+     verglichen und nachgelesen, nicht mehr an der Aufgabe gearbeitet.
+     Bis zum 04.09.2026 lief die Uhr bis zur Selbsteinschaetzung weiter, die
+     gemessene Zeit enthielt also das Lesen der Musterloesung und wuchs mit der
+     Gruendlichkeit beim Nachlesen statt mit der Aufgabe (Jennifer: "du zaehlst
+     dann aber nicht die zeit mit wo sie sich das feedback anschaut oder").
+     Wer die Loesung nie oeffnet, bekommt weiter die Zeit bis zum Selbstcheck. */
+  var bearbeitung = null;
+  /* Eigener Zeitpunkt NUR fuer die Anzeige, unabhaengig von uhr. Grund: uhr
+     startet absichtlich erst, wenn Rose etwas anfasst (siehe oben) - fasst sie
+     nichts an, soll im LOG keine geratene Zahl stehen. Fuer die Anzeige gilt
+     das nicht: wer die Loesung aufschlaegt, hat sich mit der Aufgabe befasst,
+     und dann ist "seit die Karte dasteht" die ehrliche Auskunft. Unter fuenf
+     Sekunden wird nichts gezeigt - das war dann ein Blick, keine Bearbeitung. */
+  var seitAufgabeDasteht = Date.now();
+  var angezeigteZeit = null;
   var getippt = !!(e.text || "").trim();
   var handBenutzt = !!e.bild;
   function uhrAn() { if (!uhr) uhr = Date.now(); }
@@ -4153,7 +4169,7 @@ function freiKarte(thema, f, opts) {
     var q = getippt && handBenutzt ? "gemischt" : handBenutzt ? "hand" : getippt ? "getippt" : null;
     if (q) zus.quelle = q;
     if (!zeitVergeben) {
-      var z = sekundenSeit(uhr);
+      var z = bearbeitung !== null ? bearbeitung : sekundenSeit(uhr);
       if (z !== null) { zus.zeit = z; zeitVergeben = true; }
     }
     return zus;
@@ -4400,6 +4416,8 @@ function freiKarte(thema, f, opts) {
 
   zeigen.addEventListener("click", function () {
     zeigen.remove();
+    if (bearbeitung === null) bearbeitung = sekundenSeit(uhr);
+    if (angezeigteZeit === null) angezeigteZeit = sekundenSeit(seitAufgabeDasteht);
     // Getipptes friert mit dem Fertig-Knopf ebenfalls ein: ab jetzt wird
     // verglichen, nicht mehr geschrieben. Handschrift ist schon fest.
     if (!eingefroren() && (eingabe.value || "").trim()) einfrieren();
@@ -4464,6 +4482,20 @@ function freiKarte(thema, f, opts) {
        der Karte - vorher wuerde die Erwartung die Antwort faerben. */
     var kompetenz = kompetenzZeile(f, thema);
     if (kompetenz) box.appendChild(kompetenz);
+
+    /* Wie lange sie an der Aufgabe war - klein, nachtraeglich, ohne laufende Uhr
+       (Jennifer, 04.09.2026: "keine laufende uhr zeigen aber ab jetzt bei
+       schriftlichen aufgaben die zeit subtil in dem kasten nach aufloesung").
+       Eine mitlaufende Anzeige waere Druck; hinterher ist es eine Information.
+       Bewusst ohne Wertung: kein "schnell", kein "lang", keine Zielzeit. Eine
+       AFB-III-Aufgabe DARF zehn Minuten dauern. */
+    if (angezeigteZeit !== null && angezeigteZeit >= 5) {
+      box.appendChild(el("div", "fundstelle",
+        "⏱️ " + (angezeigteZeit < 90
+          ? angezeigteZeit + " Sekunden"
+          : Math.round(angezeigteZeit / 60) + " Minuten")
+        + " an dieser Aufgabe"));
+    }
 
     /* Nachfragen. Steht am Fuss der Loesung und bekommt Roses eigene Antwort
        mit - dann kann das Gespraech an dem ansetzen, was sie geschrieben hat.

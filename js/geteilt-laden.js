@@ -246,8 +246,8 @@ var KLEIDUNG = [
     standard: "#e8a0c0", dreht: true, pad: true,
     hinweis: "Sitzt auf einem eigenen kleinen Farbfeld und dreht sich ganz langsam. Das Gegenstück zur Schleife — beide zusammen sehen absichtlich ein bisschen zu viel aus." },
   { key: "brille", name: "Brille", slot: "gesicht", preis: preis(6),
-    standard: "#4a4a52",
-    hinweis: "Ein Balken quer über die Augenzeile. Die Augen werden danach wieder obendrauf gesetzt — sonst wäre es eine Augenbinde." },
+    standard: "#15151a",
+    hinweis: "Schwarzes Gestell: ein durchgehender Oberbalken mit Bügeln nach außen, darunter zwei Fassungen. Die Augen bleiben frei." },
   { key: "schal", name: "Schal", slot: "hals", preis: preis(6),
     standard: "#c0563f",
     hinweis: "Legt sich um die ganze Unterkante. Ändert kein Zeichen, nur die Farbe — die runde Silhouette bleibt dadurch heil." },
@@ -1167,40 +1167,47 @@ function anziehen(ebenen, getragen) {
   }
 
   /* ---- 4. Brille ----
-     NUR DER RAND. Jennifer: "mach da mal lieber eine nerdbrille raus, also
-     rand nur."
+     EIN DURCHGEHENDER OBERBALKEN, zwei Fassungen darunter, Buegel nach aussen.
 
-     Zwei Anlaeufe lagen davor. Erst ein ▄ quer ueber die ganze Augenzeile —
-     das war eine Schlafmaske. Dann zwei Seitenraender mit Steg — besser, aber
-     das Auge stand immer noch offen im Fell, und ohne Ober- und Unterkante
-     liest man zwei Striche neben einem Auge nicht als Glas.
+     Der Vorgaenger hatte drei Fehler auf einmal, und alle drei kamen daher,
+     dass jedes Teil fuer sich gedacht war statt als ein Gestell:
 
-     Jetzt laeuft der Rand einmal HERUM: links ▐ und rechts ▌ (beide fuellen
-     die zum Auge zeigende Zellhaelfte und schmiegen sich damit an), oben ▄ und
-     unten ▀ (die fuellen die dem Auge zugewandte Haelfte der Nachbarzeile).
-     Vier Kanten, ein geschlossenes Glas, das Auge unberuehrt in der Mitte —
-     eine Nerdbrille eben.
+       1. DER STEG VERBAND NICHT. Er lag als ▄ in der UNTEREN Zellhaelfte
+          zwischen zwei Fassungen aus ▐ und ▌, also in den SEITLICHEN Haelften.
+          Drei Teile, die sich nie beruehren — dazwischen blieb jedes Mal eine
+          halbe Zelle Luft. Jennifer: "the connecting bit should truly connect."
+       2. ES GAB KEINE BUEGEL. Eine Brille von vorn zeigt sie als kurze Striche,
+          die nach aussen zu den Ohren laufen; ohne sie schwebt die Fassung im
+          Gesicht.
+       3. SIE WAR GRAU, nicht schwarz.
 
-     Das Make-up zeichnet NACH der Brille und gewinnt damit die Zellen, die
-     sich beide teilen (Lidschatten und Wimpern oben, Rouge unten). Das ist die
-     richtige Reihenfolge: wer beides traegt, hat das Make-up unter der Brille
-     aufgetragen, nicht darueber. */
+     Die Loesung fuer alle drei ist dieselbe Zeile: der OBERBALKEN. Er laeuft in
+     einer einzigen Reihe ▄ von Buegel zu Buegel durch — ueber die linke
+     Fassung, ueber den Steg, ueber die rechte Fassung und beidseitig darueber
+     hinaus. Damit verbindet er per Bauart, statt verbinden zu muessen, und die
+     Buegel sind einfach seine Enden.
+
+     Darunter haengen die Fassungen: ▐ links neben dem Auge (fuellt die rechte
+     Zellhaelfte, schmiegt sich also an), ▌ rechts davon, und unten ▀ als
+     Unterkante. Das Auge selbst bleibt unberuehrt.
+
+     Alles in schwarz und dank aufFell ohne durchscheinende Zellhaelften. */
   if (traegt("gesicht") === "brille" && e.augen.length) {
     var G = zeichenVon("gesicht");
     var bz = e.augen[0][0];
+    var aL = Math.min.apply(null, e.augen.map(function (a) { return a[1]; }));
+    var aR = Math.max.apply(null, e.augen.map(function (a) { return a[1] + a[2] - 1; }));
+
+    // Der Oberbalken samt Buegeln: eine Reihe, eine Bewegung.
+    for (var ob = aL - 2; ob <= aR + 2; ob++) setz(e, bz - 1, ob, "▄", G);
+
     e.augen.forEach(function (a) {
+      // Die beiden Seiten jeder Fassung, jeweils zum Auge hin gefuellt.
       setz(e, bz, a[1] - 1, "▐", G);
       setz(e, bz, a[1] + a[2], "▌", G);
-      for (var q = 0; q < a[2]; q++) {
-        setz(e, bz - 1, a[1] + q, "▄", G);
-        setz(e, bz + 1, a[1] + q, "▀", G);
-      }
+      // Die Unterkante.
+      for (var q = 0; q < a[2]; q++) setz(e, bz + 1, a[1] + q, "▀", G);
     });
-    /* Der Steg zwischen den Glaesern. Nur die Zellen, die noch frei sind — bei
-       eng stehenden Augen beruehren sich die Fassungen schon. */
-    var links = Math.min.apply(null, e.augen.map(function (a) { return a[1] + a[2]; }));
-    var rechts = Math.max.apply(null, e.augen.map(function (a) { return a[1]; })) - 1;
-    for (var sp = links + 1; sp < rechts; sp++) setz(e, bz, sp, "▄", G);
   }
 
   /* ---- 5. Schal ----
