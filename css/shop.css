@@ -749,25 +749,56 @@
    abzulenken, und oft genug, um es zu bemerken, wenn man hinsieht — ungefaehr
    die Frequenz, mit der ein Mensch blinzelt, ohne dass es auffaellt.
 
-   scaleY auf einem inline-block: die Zelle behaelt ihre Breite (Monospace),
-   nur die Hoehe faellt zusammen. transform-origin unten, damit das Lid von
-   oben herunterkommt statt sich in der Mitte zu treffen.
+   GESCHNITTEN, NICHT GESTAUCHT (05.09.2026). Bis dahin stauchte ein
+   scaleY(.12) die Zelle. Das sieht bei 64 px im Pruefblatt gut aus und bei
+   15 px in der App nicht: der Wimpernstrich ist dort sieben Pixel hoch, ein
+   Achtel davon ist knapp ein Pixel, und was der Browser daraus rechnet, ist
+   ein grauer Schmier statt einer Kante. Jennifer: "when blinking with the
+   eyebrow plis dint scale on the vertical axis. scale down to the bottom."
+
+   clip-path schneidet stattdessen von oben weg. Der Strich schrumpft dabei
+   genauso nach unten, aber jede stehengebliebene Zeile ist eine ECHTE
+   Pixelzeile in voller Farbe — kein Zwischenwert, keine Unschaerfe. Zu einer
+   Figur aus Blockzeichen passt ein Schnitt ohnehin besser als eine Stauchung:
+   Blockgrafik kennt keine halben Pixel.
+
+   display:inline-block bleibt, jetzt aus einem anderen Grund: es macht die
+   Bezugsflaeche des Schnitts zur ZELLE. Auf einem reinen Inline-Element waere
+   sie die (hoehere) Schriftbox, und die Prozentwerte laegen dann nicht auf der
+   Zellkante.
+
+   DER UNTERE RAND IST NEGATIV, und das ist keine Feinheit, sondern der
+   Unterschied zwischen "sieht gut aus" und "ist kaputt". Die Box des
+   inline-block ist genau eine Zelle hoch, die TINTE des Viertelblocks reicht
+   aber ein Stueck darunter hinaus (bei 48 px gemessen: drei Pixel). Ein
+   Schnitt auf die Box haette diese drei Pixel weggenommen — auch im offenen
+   Bild, denn der Keyframe bei 0 % schneidet ja ebenfalls. Genau das hat
+   Jennifer sofort gesehen: "jetzt ist da ein abstand zwischen augen und
+   wimpern. that makes 0 sense." Der negative Rand laesst den Bereich unten
+   ueber die Box hinauslaufen, dann bleibt die Wimper unten stehen und
+   beruehrt das Auge — offen wie zugekniffen.
 
    NUR DIE WIMPERN, nicht die Augen (Jennifer: "ich meinte blinzeln wenn man
    wimpern drauf hat … das blinzeln ist dann quasi nur der teil, den die
    wimpern gerade machen"). Ohne gekaufte Wimpern blinzelt gar nichts.
+
+   UND NUR TAGSUEBER. Nachts liegt das Auge als halbe Zelle da und die Wimpern
+   haengen darunter (siehe anziehen()); ein Blinzeln waere dort ein Zucken.
+   Entschieden wird das in JS, nicht hier: farbTabelle() haengt die Klasse bei
+   geschlossenem Auge gar nicht erst an. Eine CSS-Regel haette denselben
+   Effekt, koennte aber nichts davon wissen, dass die Wimpern nachts ausserdem
+   woanders sitzen und andere Zeichen tragen.
 
    Das hat einen zweiten Effekt, der im Browser gemessen wurde: display
    inline-block richtet sich an der Grundlinie anders aus als der Text daneben.
    Solange die Augen die Klasse trugen, sass genau dort ein Spalt — der Spalt
    zwischen Lidschatten und Auge, den Jennifer gemeldet hat. */
 @keyframes mk-blinzeln {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95%, 96% { transform: scaleY(.12); }
+  0%, 92%, 100% { clip-path: inset(0 0 -25% 0); }
+  95%, 96% { clip-path: inset(92% 0 -25% 0); }
 }
 .mk-blinzelt {
   display: inline-block;
-  transform-origin: 50% 100%;
   animation: mk-blinzeln 9s ease-in-out infinite;
 }
 
@@ -829,7 +860,7 @@
   .mk-hg-schnee .mk-hg-extra::before, .mk-hg-wolken .mk-hg-extra::before,
   .mk-hg-strahlen .mk-hg-extra::after, .mk-hg-gras .mk-hg-extra::before,
   .mk-hg-glimmer .mk-hg-extra::before, .mk-fluegel, .mk-dreht { animation: none; }
-  .mk-blinzelt { animation: none; transform: none; }
+  .mk-blinzelt { animation: none; clip-path: none; }
   .mk-hg-schnuppe .mk-hg-extra::after, .mk-hg-schnuppe .mk-hg-bild::after,
   .mk-noten::before, .mk-noten::after { display: none; }
 }

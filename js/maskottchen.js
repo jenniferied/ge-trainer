@@ -210,7 +210,7 @@ var SPRUCH = {
   nacht: [
     "Ich mach die Augen zu. Bis morgen.",
     "Schlaf gut. Ich bin morgen noch da.",
-    "So spaet noch? Ich leg mich hin.",
+    "Ich leg mich schon mal hin.",
   ],
   ruhig: [
     "Ich lieg hier und warte. Kein Stress.",
@@ -842,11 +842,21 @@ function figurEbenen(variante, stufe, nacht) {
      sie dieselbe Farbe haben wie das Maul. Der Grund ist das Blinzeln: es ist
      eine Animation auf dem Zeichen, und mit einem gemeinsamen Schluessel haette
      das Maul mitgeblinzelt. Zwei Dinge, die gleich aussehen, aber Verschiedenes
-     tun, brauchen zwei Schluessel. farbTabelle() gibt E dieselbe Farbe wie T. */
+     tun, brauchen zwei Schluessel. farbTabelle() gibt E dieselbe Farbe wie T.
+
+     ZWEI SCHLUESSEL, NICHT EINER. Das offene Auge (E) deckt seine Zelle
+     selbst und braucht keinen Zellgrund. Das geschlossene (Laden.AUGE_NACHT)
+     braucht einen: die obere Haelfte seiner Zelle waere sonst ein Loch, durch
+     das die Karte scheint. Der Laden legt dort den Lidschatten hin, wenn einer
+     getragen wird, sonst das Fell — der Grund gehoert deshalb an das
+     geschlossene Auge allein. Haette ihn auch das offene, wuerde er tagsueber
+     dem Lidschatten in der Zeile darueber die untere Kante wegfressen. Warum
+     Hintergruende das tun: siehe geteilt-laden.js bei AUGE_NACHT. */
   var augeCh = nacht ? "▄" : "█";
   k.augen.forEach(function (a) {
     for (var i = 0; i < k.augenBreit; i++) {
-      setzTier(zeilen, maske, a[0], a[1] + i, ahnung ? "▄" : augeCh, ahnung ? "A" : "E");
+      setzTier(zeilen, maske, a[0], a[1] + i, ahnung ? "▄" : augeCh,
+               ahnung ? "A" : (nacht ? Laden.AUGE_NACHT : "E"));
     }
   });
   if (!ahnung) k.maul.forEach(function (m) { setzTier(zeilen, maske, m[0], m[1], "▄", "T"); });
@@ -883,7 +893,14 @@ function figurEbenen(variante, stufe, nacht) {
      NEBEN die Nase legen, statt sie zu ersetzen.
 
      Ein Blob hat weder Schnauze noch Brustmarke; die Listen sind dann leer,
-     und der Laden zeichnet einfach nichts. */
+     und der Laden zeichnet einfach nichts.
+
+     nacht wandert seit dem 05.09.2026 MIT HERAUS. Der Laden zeichnet die Augen
+     nicht, aber er zeichnet die Wimpern daneben — und die gehoeren nachts
+     unter das geschlossene Auge statt darueber. Ohne das Feld muesste
+     anziehen() aus der Zeichnung raten, ob das ▄ im Auge ein Lid oder ein
+     Stueck Fell ist.
+   */
   return {
     zeilen: zeilen, maske: maske,
     breite: zeilen[0].length,
@@ -892,6 +909,7 @@ function figurEbenen(variante, stufe, nacht) {
     maul: (k.maul || []).map(function (m) { return [m[0], m[1]]; }),
     schnauze: (k.schnauze || []).map(function (x) { return [x[0], x[1]]; }),
     unten: zeilen.length - 1,
+    nacht: !!nacht,
   };
 }
 
@@ -908,7 +926,7 @@ export function figurHtml(variante, stufe, nacht, opt) {
   var farben = Laden.farbenFuer(variante, o.look);
   var e = figurEbenen(variante, stufe, nacht);
   if (o.getragen) e = Laden.anziehen(e, o.getragen);
-  var FARBE = Laden.farbTabelle(farben, o.getragen);
+  var FARBE = Laden.farbTabelle(farben, o.getragen, nacht);
   /* Die Brille kommt als ZWEITE Blockebene dazu, auf einem doppelt so feinen
      Raster (siehe geteilt-laden.js brilleBloecke). Dieselben Zeichen wie das
      Tier, nur kleiner — im Raster der Figur ist der duennste Strich eine halbe

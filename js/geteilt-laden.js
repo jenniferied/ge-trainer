@@ -133,19 +133,27 @@ var SLOTS = {
      zum Zeichen darin. Das ist nicht nur der Ausweg, es ist auch genau die
      Reihenfolge, in der man Make-up auftraegt. */
   wimpern: { zeichen: "Y", name: "Wimpern",  regal: "makeup", aufFell: true },
-  /* Mund und Nase tragen KEINEN Zellgrund, und das ist wichtig. Beide sitzen
-     auf Halbbloecken (▄ die Nase, ▀ die Lippe darunter), deren andere Haelfte
-     seit jeher durchscheint — so sieht die Schnauze aus, seit es sie gibt.
-     Mit Fellgrund wurde aus der halben Zelle eine ganze, und unter der Lippe
-     wuchs der Figur ein Block an, den niemand gemalt hatte. Jennifers Befund:
-     "darunter noch ein abstand, dann die lippe und dann ein extra block." */
-  /* Der Mund traegt KEINEN Zellgrund. Er sitzt auf ▄, dessen obere Haelfte
-     durchscheint — und genau dieses Loch ist die Nase (siehe "8. Lippenstift").
-     Mit Fellgrund waere sie zugemalt.
+  /* DER MUND TRAEGT SEIT DEM 05.09.2026 EINEN ZELLGRUND — aber nicht den des
+     Fells, sondern den der NASE.
 
-     Einen Slot "nase" gab es vom 04.09. bis zum selben Abend. Er faerbte den
-     dunklen Balken dunkler, in der Annahme, das sei die Nase. War es nicht. */
-  mund:    { zeichen: "P", name: "Mund",     regal: "makeup" },
+     Die Zelle ist ▄: untere Haelfte Lippe, obere Haelfte war ein Loch, durch
+     das die Karte schien. Genau dieses Loch liest Jennifer als Nase ("i now
+     realise the nose is actually a hole"), und genau darum stand hier lange,
+     der Mund duerfe keinen Grund bekommen — mit FELLgrund waere die Nase
+     zugemalt gewesen.
+
+     Ihr Befund vom 05.09.: "die nase bei der katze zumindest sollte auch
+     schwarz sein kein loch, also der obere kasten zwischen den weissen teilen
+     am mund." Ein Loch ist keine Farbe; es zeigt, was zufaellig dahinter
+     liegt. Die Nase bekommt jetzt eine eigene, fast schwarze Farbe
+     (NASEN_GRUND) als Zellhintergrund — dieselbe Stelle, dieselbe Optik auf
+     dunklem Grund, aber gemalt statt durchgelassen. Mit Lippenstift bleibt
+     der Unterschied sichtbar: die Lippe wird rot, die Nase darueber schwarz.
+
+     Der ALTE Fehlschlag ist ein anderer und bleibt es: einen Slot "nase" gab
+     es am 04.09. einen Abend lang, der faerbte den dunklen BALKEN — also die
+     Lippe. Hier geht es um die Haelfte darueber. */
+  mund:    { zeichen: "P", name: "Mund",     regal: "makeup", aufFell: true },
   glanz:   { zeichen: "X", name: "Glanz",    regal: "makeup", aufFell: true },
 };
 
@@ -155,6 +163,49 @@ var SLOTS = {
    beiden Farben, malen() nimmt die eine als Zeichen- und die andere als
    Zellfarbe. */
 var WIMPER_AUF_LID = "Q";
+
+/* ==========================================================================
+   DER ZELLGRUND BLUTET NACH OBEN — gemessen am 05.09.2026
+   ==========================================================================
+   Das <pre> laeuft mit line-height:1, damit die Blockzeichen luecken- und
+   ueberlappungsfrei kacheln. Die Zeichen tun das auch: ein ▄ endet exakt da,
+   wo das ▘ der naechsten Zeile anfaengt (im Browser nachgemessen, Luecke 0).
+
+   EIN HINTERGRUND TUT DAS NICHT. Die Hintergrundflaeche einer Inline-Zelle
+   ist nicht die Zeilenbox, sondern die Schriftbox — und die ist hoeher als
+   1 em. Eine Zelle mit Hintergrund uebermalt darum die unteren ~0,16 em der
+   Zeile UEBER ihr. Bei 64 px waren das 10 gemessene Pixel.
+
+   Daraus folgt die Regel, an der sich hier alles ausrichtet:
+
+     ZWEI ZEILEN BERUEHREN SICH NUR, WENN DIE UNTERE KEINEN GRUND HAT —
+     oder wenn ihr Grund GENAU DIE FARBE hat, die oben ohnehin steht.
+
+   Drei Auswege wurden gemessen und verworfen: inline-block mit
+   vertical-align top, dasselbe mit fester Hoehe, und je Zeile ein Block mit
+   overflow:hidden. Alle drei druecken die Luecke von 10 auf 4 Pixel, keiner
+   auf 0 — sie verschieben das Problem, statt es zu loesen.
+
+   Die beiden Schluessel hier sind die Anwendung der Regel auf das schlafende
+   Gesicht (Jennifer: "wenn zu ist immernoch abstand zwischen augenschlitz und
+   wimper … lidschatten sollte immer über lidern leben ohne abstand, ggf muss
+   er dann runterwandern"):
+
+     Z  DAS GESCHLOSSENE AUGE. Der Lidschatten ist nicht mehr die Zeile
+        darueber, sondern der GRUND DIESER Zelle. Das ▄ ist der Schlitz in
+        ihrer unteren Haelfte, der Lidschatten die obere — eine Zelle, zwei
+        Haelften, keine Zeilengrenze dazwischen, an der etwas verrutschen
+        koennte. Genau Jennifers "runterwandern".
+     N  DIE WIMPERN DARUNTER, umgedreht gedacht: der GRUND ist die
+        Wimpernfarbe, das ZEICHEN ist das Fell. ▟ laesst das obere linke
+        Viertel frei, ▙ das obere rechte — dort steht dann der Grund, und das
+        ist der Strich. Weil der Grund nach oben blutet, schliesst er
+        nahtlos an den Augenschlitz an, statt eine Fellkante dazwischen zu
+        schieben. Ungefaerbte Wimpern tragen ohnehin die Augenfarbe, dann
+        sieht man die Naht gar nicht.
+   ========================================================================== */
+var AUGE_NACHT = "Z";
+var WIMPER_NACHT = "N";
 
 /* Einen Schluessel fuer helles GLAS gab es am 04.09.2026 kurz. Er sollte den
    fehlenden Kontrast zwischen fast schwarzem Rahmen und fast schwarzem Auge
@@ -171,9 +222,19 @@ var SLOT_VON_ZEICHEN = (function () {
 })();
 
 /* Die Schluessel, die einen Fellhintergrund brauchen (siehe oben). "A" ist
-   der alte Akzent aus der Figur selbst und gehoert mit in dieselbe Menge. */
+   der alte Akzent aus der Figur selbst und gehoert mit in dieselbe Menge.
+
+   "E" (das OFFENE Auge) steht bewusst NICHT drin. Es ist ein volles █ und
+   deckt seine Zelle selbst; ein Grund brauchte es nur, um nachts das Loch
+   ueber dem halben Auge zu schliessen — und wuerde dafuer tagsueber den
+   Lidschatten der Zeile darueber um 10 Pixel anknabbern (siehe die Messung
+   bei AUGE_NACHT). Das geschlossene Auge hat darum seinen eigenen
+   Schluessel Z, und der steht hier.
+
+   "P" (der Mund) steckt ueber SLOTS drin, bekommt aber nicht das Fell,
+   sondern die Nasenfarbe — farbTabelle() setzt ihm ein eigenes `grund`. */
 var AUF_FELL = (function () {
-  var s = "A" + WIMPER_AUF_LID;
+  var s = "AT" + WIMPER_AUF_LID + AUGE_NACHT + WIMPER_NACHT;
   Object.keys(SLOTS).forEach(function (k) { if (SLOTS[k].aufFell) s += SLOTS[k].zeichen; });
   return s;
 })();
@@ -362,9 +423,15 @@ var MAKEUP = [
   { key: "lidschatten", name: "Lidschatten", slot: "lid", preis: preis(0, 3),
     standard: "#9a6fc4",
     hinweis: "Ein dünner Streifen direkt über den Augen. Lässt sich mit Wimpern kombinieren — die liegen dann darauf." },
+  /* DER STANDARD IST HIER NUR EIN RUECKFALL. Ungefaerbte Wimpern nehmen die
+     AUGENFARBE der Kreatur (Jennifer: "the eyelashes should take the color of
+     the eyes ig") — farbTabelle() setzt das ein. Ein fester Grauton stand auf
+     jedem Tier gleich da, egal ob es lila oder tuerkise Augen hat; Wimpern
+     gehoeren zum Auge, nicht neben es. Sobald ein Farbtopf gewaehlt ist, gilt
+     der Topf — die Wahl schlaegt die Ableitung. */
   { key: "wimpern", name: "Wimpern", slot: "wimpern", preis: preis(4, 3),
     standard: "#2a2430",
-    hinweis: "Einzelne Striche statt eines Lidstrichs. Blinzelt hin und wieder — selten genug, dass es nicht ablenkt." },
+    hinweis: "Einzelne Striche statt eines Lidstrichs, in der Augenfarbe. Blinzelt hin und wieder — selten genug, dass es nicht ablenkt." },
   { key: "lippenstift", name: "Lippenstift", slot: "mund", preis: preis(0, 3),
     standard: "#c8324f",
     hinweis: "Färbt die Schnauze links und rechts der Nase. Die Nase selbst bleibt dunkel — sie trägt das halbe Gesicht." },
@@ -758,11 +825,39 @@ var PETS = [
     zeilen: ["▟█▙ ▟█▙", "▐█████▌", "▐█████▌", " ▀▀▀▀▀▖"],
     augen: [[1, 2], [1, 4]], extra: [[2, 3, null, "M"]],
     hinweis: "Runde Ohren, ein Schwanz hinten rechts. Nimmt wenig Platz weg." },
+  /* DER VOGEL, 05.09.2026 neu gezeichnet. Jennifer: "also make the bird more
+     like a bird lol." Er hatte vorher EIN Auge in der Mitte und als einzigen
+     Vogel-Hinweis einen hellblauen Viertelblock rechts aussen — auf blauem
+     Fell praktisch unsichtbar. Uebrig blieb ein Blob mit zwei Fuessen.
+
+     Drei Dinge machen jetzt den Vogel, und alle drei sind SILHOUETTE oder
+     FARBE, nichts Feines:
+
+       Schnabel   eine volle Zelle in Akzent, mittig zwischen den Augen. Ein
+                  Halbblock waere huebscher, wuerde aber die untere Zellhaelfte
+                  aufreissen — mitten im Koerper ist ein Loch kein Detail,
+                  sondern ein Fehler (dieselbe Falle wie bei der Nase der
+                  Kreatur). Der Akzent ist darum von fast-Weiss auf Schnabel-
+                  Orange gewechselt: er kommt nur hier und an den Fuessen vor.
+       Fluegel    je ein Viertelblock aussen an der Koerperzeile, in Muster.
+                  Sie sitzen unten in ihrer Zelle und ragen dadurch schraeg
+                  nach hinten weg.
+       Fuesse     dieselben zwei ▀ wie vorher, aber in Orange statt Fell —
+                  zwei Beinchen unter einem runden Koerper lesen sich sofort
+                  als Vogel, sobald sie nicht mehr dieselbe Farbe haben. */
   { key: "vogel", name: "Vögelchen", preis: preis(9),
-    pal: { fell: "#5b8ec4", muster: "#3a6fa8", akzent: "#eaf3fb", tinte: "#1b2b3a" },
-    zeilen: ["  ▄▄▄  ", " ▟███▙▖", " ▐███▌ ", "  ▀ ▀  "],
-    augen: [[1, 3]], extra: [[1, 6, "▖", "A"]],
-    hinweis: "Oben glatt, dafür Schnabel und zwei Füße." },
+    pal: { fell: "#5b8ec4", muster: "#31608f", akzent: "#f2a63c", tinte: "#16232f" },
+    zeilen: ["  ▄▄▄  ", " ▟███▙ ", "▗▐███▌▖", "  ▀ ▀  "],
+    /* KEIN Eintrag in augen: der zeichnet volle Bloecke, und zwei volle Zellen
+       in einem 5 Zellen breiten Kopf sind keine Augen, sondern Scheinwerfer.
+       Der erste Anlauf am 05.09. sah damit aus wie ein Roboter. Hier sind es
+       Viertelbloecke, beide nach INNEN zum Schnabel hin. */
+    augen: [],
+    extra: [[1, 2, "▗", "T"], [1, 4, "▖", "T"],
+            [2, 3, "▀", "A"],
+            [2, 1, null, "M"], [2, 5, null, "M"], [2, 0, null, "M"], [2, 6, null, "M"],
+            [3, 2, "▀", "D"], [3, 4, "▀", "D"]],
+    hinweis: "Zwei Knopfaugen am Schnabel, angelegte Flügel, dünne Beine." },
   { key: "fisch", name: "Fisch", preis: preis(9),
     pal: { fell: "#e08a3c", muster: "#c05a1f", akzent: "#fbe6c8", tinte: "#3a2410" },
     zeilen: ["  ▄▄▄▄ ", "▙▟█████", "▛▐█████", "  ▀▀▀▀ "],
@@ -794,7 +889,21 @@ function petHtml(key, lookKey) {
   (p.extra || []).forEach(function (x) { setz(e, x[0], x[1], x[2], x[3]); });
   (p.augen || []).forEach(function (a) { setz(e, a[0], a[1], "█", "T"); });
   var f = farbenFuer(p.pal, lookKey);
-  return malen(e, { F: f.fell, M: f.muster, A: f.akzent, T: f.tinte });
+  /* ZWEIMAL DERSELBE AKZENT, unter zwei Schluesseln — der Unterschied ist der
+     Zellhintergrund, nicht die Farbe:
+
+       A  steht in AUF_FELL und bekommt das Fell als Grund. Ein Halbblock
+          darin (der Schnabel) laesst also keine Karte durch, sondern Fell.
+       D  steht nicht darin. Ein Halbblock bleibt ein Halbblock — genau das
+          brauchen die Beine des Vogels, die UNTER dem Koerper stehen und
+          dort nichts hinter sich haben sollen.
+
+     Ein Schluessel kann nur eines von beidem, und der Vogel braucht beides.
+     "D" und nicht "S": S ist schon der Buchstabe eines Kleidungsslots. Die
+     Pets teilen sich die Tabelle mit der Figur nicht, aber AUF_FELL ist
+     global — ein doppelt belegter Buchstabe waere eine Falle fuer den
+     naechsten, der dort etwas eintraegt. */
+  return malen(e, { F: f.fell, M: f.muster, A: f.akzent, D: f.akzent, T: f.tinte });
 }
 
 /* ==========================================================================
@@ -872,15 +981,65 @@ function farbeVon(eintrag, stueck) {
 /* Die Farbtabelle fuer den Maler: Figur-Schluessel plus je ein Eintrag fuer
    jeden belegten Slot. Was nicht getragen wird, taucht hier nicht auf — und
    kann darum auch nicht versehentlich gezeichnet werden. */
-function farbTabelle(farben, getragen) {
+/* ==========================================================================
+   EINE HALBE ZELLE FAERBEN — der dritte Farbplatz
+   ==========================================================================
+   Eine Zelle hat zwei Farbplaetze: das Zeichen und den Grund. Lidschatten UND
+   Wimpern in derselben Zelle brauchen aber drei — Fell, Lid, Wimper. Bis zum
+   05.09.2026 war der Ausweg, den Lidschatten die GANZE Zelle fuellen zu
+   lassen; damit war er doppelt so hoch wie allein getragen. Jennifer: "bei
+   augen offen + lidschatten muss der lidschatten ja nicht höher sein als
+   sonst."
+
+   Der dritte Platz ist ein harter Verlauf im Grund. Das geht nur, weil die
+   Hintergrundflaeche UNTEN buendig mit der Zeile abschliesst (im Browser
+   nachgemessen — sie ragt nur nach OBEN hinaus, siehe AUGE_NACHT). Von unten
+   gerechnet ist ".5em" darum exakt die halbe Zelle, und die Farbe sitzt auf
+   dem Pixel da, wo sonst ein ▄ steht.
+
+   Nach oben wird bewusst mit Fell aufgefuellt statt mit `transparent`: der
+   ueberstehende Teil liegt ueber der Zeile darueber, und dort gehoert Fell
+   hin, nicht die Karte.
+
+   Ein Farbtopf mit eigenem Verlauf (Regenbogen) passt hier nicht hinein —
+   zwei Verlaeufe uebereinander gehen nicht. Die Aufrufer pruefen das und
+   lassen es dann bei der einfachen Farbe. */
+function untereHaelfte(farbe, fell) {
+  return "linear-gradient(to top, " + farbe + " 0 .5em, " + fell + " .5em)";
+}
+function obereHaelfte(farbe, fell) {
+  return "linear-gradient(to top, " + fell + " 0 .5em, " +
+         farbe + " .5em 1em, " + fell + " 1em)";
+}
+
+/* Die Nase: fast schwarz, mit einem Rest der eigenen Tinte darin, damit sie
+   auf einem lila und auf einem blauen Tier nicht identisch wirkt. Sie sitzt
+   als HINTERGRUND in der Maul-Zelle; das Zeichen ▄ darin bleibt die Lippe.
+   Vorher war an dieser Stelle gar keine Farbe, sondern ein Loch. */
+function nasenGrund(tinte) {
+  return "color-mix(in srgb, " + tinte + " 32%, #0b0710)";
+}
+
+/* nacht sagt, ob die Augen gerade geschlossen sind (figurEbenen zeichnet dann
+   ▄ statt █). Es entscheidet hier nur eines: ob die Wimpern blinzeln duerfen.
+   Ein Blinzeln auf einem zugefallenen Lid ist ein Zucken, kein Blinzeln —
+   Jennifer: "die wimpern sollten nichtmehr blinzeln wenn die figur schläft."
+   Die Pets reichen das Feld nicht herein und blinzeln ohnehin nicht. */
+function farbTabelle(farben, getragen, nacht) {
   /* Ohne Glanz bleiben es schlichte Farbstrings — das ist der Normalfall und
      spart je Zelle ein Objekt. Mit Glanz wird daraus { farbe, glanz }, und
      malen() haengt die Klasse an. Der Fellgrund einer Marke (AUF_FELL) nimmt
      die Farbe immer als String, deshalb steht sie unten noch einmal roh. */
   function f(wert) { return farben.glanz ? { farbe: wert, glanz: true } : wert; }
+  var tinte = farben.tinte || farben.muster;
   var T = { F: f(farben.fell), M: f(farben.muster),
-            A: f(farben.akzent || farben.muster), T: f(farben.tinte || farben.muster) };
+            A: f(farben.akzent || farben.muster), T: f(tinte) };
   T.__grund = farben.fell;
+  /* Die Maul-Zelle bekommt die NASE als Zellhintergrund (siehe SLOTS.mund).
+     Die Pets teilen sich den Schluessel T fuer ihre Augen, reichen aber eine
+     schlichte Farbe herein und landen deshalb gar nicht in diesem Zweig —
+     ihre Augen sind volle Bloecke und haetten von einem Grund ohnehin nichts. */
+  T.T = { farbe: tinte, grund: nasenGrund(tinte), glanz: !!farben.glanz };
 
   /* Die AUGEN haben einen eigenen Schluessel, obwohl sie dieselbe Farbe tragen
      wie das Maul. Der Grund ist das Blinzeln: es ist eine Animation auf dem
@@ -975,15 +1134,65 @@ function farbTabelle(farben, getragen) {
     };
   });
 
+  /* Der Lippenstift sitzt auf DERSELBEN Zelle wie das Maul und braucht darum
+     denselben Nasengrund. Ohne diese Zeile waere das Loch ueber der Nase
+     genau dann zurueck, wenn Lippenstift getragen wird — also in genau dem
+     Fall, wegen dem die Nase ueberhaupt einmal verlorenging. */
+  var pk = SLOTS.mund.zeichen;
+  if (T[pk] && typeof T[pk] === "object") T[pk].grund = nasenGrund(tinte);
+
+  /* Ungefaerbte Wimpern in der Augenfarbe (siehe MAKEUP, Eintrag "wimpern").
+     Der Vergleich laeuft ueber den EINTRAG und nicht ueber die zurueckgegebene
+     Farbe: farbeVon() liefert bei "standard" den Hexwert des Stuecks, und dem
+     sieht man dann nicht mehr an, ob er gewaehlt oder nur uebrig war. */
+  function wimperFarbe(eintrag, stueck) {
+    if (!eintrag.farbe || eintrag.farbe === "standard") {
+      return { farbe: tinte, verlauf: false };
+    }
+    return farbeVon(eintrag, stueck);
+  }
+  if (g.wimpern && g.wimpern.stueck) {
+    var wf = wimperFarbe(g.wimpern, stueckVon("makeup", g.wimpern.stueck));
+    var wy = T[SLOTS.wimpern.zeichen];
+    if (wy && typeof wy === "object") { wy.farbe = wf.farbe; wy.verlauf = wf.verlauf; }
+  }
+
+  /* DAS SCHLAFENDE GESICHT. Beide Schluessel entstehen aus der Bluteregel
+     oben (siehe AUGE_NACHT) und werden nur nachts gezeichnet.
+
+       Z  Schlitz in Augenfarbe auf einem Grund, der der LIDSCHATTEN ist,
+          sobald einer getragen wird — sonst das Fell. Damit liegt der
+          Lidschatten in derselben Zelle direkt ueber dem Schlitz.
+       N  umgekehrt: Grund ist die Wimpernfarbe, Zeichen das Fell.
+
+     Sie werden IMMER gebaut, nicht nur wenn etwas getragen wird: das Auge
+     schliesst sich auch an einer nackten Kreatur, und figurEbenen() vergibt
+     den Schluessel Z ohne den Laden zu fragen. Ein Schluessel ohne Eintrag
+     faellt in malen() auf das Fell zurueck — sichtbar falsch statt gar
+     nichts, aber eben falsch. */
+  var lidNacht = (g.lid && g.lid.stueck)
+    ? farbeVon(g.lid, stueckVon("makeup", g.lid.stueck)) : null;
+  /* Der Lidschatten liegt in der OBEREN Haelfte dieser Zelle — direkt ueber
+     dem Schlitz und genau so hoch wie am offenen Auge. Ohne den Verlauf
+     faerbte er die ganze Zelle und waere ein Drittel hoeher. */
+  T[AUGE_NACHT] = { farbe: tinte, glanz: !!farben.glanz,
+                    grund: (lidNacht && !lidNacht.verlauf)
+                      ? obereHaelfte(lidNacht.farbe, farben.fell) : farben.fell };
+
   /* Wimper AUF Lidschatten: ein Zeichen in der einen Farbe auf einem Grund in
      der anderen. Nur gebaut, wenn wirklich beides getragen wird — anziehen()
      benutzt den Schluessel auch nur dann. */
   if (g.lid && g.lid.stueck && g.wimpern && g.wimpern.stueck) {
     var lidF = farbeVon(g.lid, stueckVon("makeup", g.lid.stueck));
-    var wimF = farbeVon(g.wimpern, stueckVon("makeup", g.wimpern.stueck));
+    var wimF = wimperFarbe(g.wimpern, stueckVon("makeup", g.wimpern.stueck));
     if (lidF && wimF) {
+      /* DREI FARBEN IN EINER ZELLE: Fell oben, Lidschatten in der unteren
+         Haelfte, Wimper als Zeichen darin. Der Lidschatten ist damit genau so
+         hoch wie ohne Wimpern (ein ▄), statt die ganze Zelle zu fuellen. */
       T[WIMPER_AUF_LID] = { farbe: wimF.farbe, verlauf: wimF.verlauf,
-                            grund: lidF.verlauf ? null : lidF.farbe, blinzelt: true };
+                            grund: lidF.verlauf
+                              ? null : untereHaelfte(lidF.farbe, farben.fell),
+                            blinzelt: !nacht };
     }
   }
   /* Wimpern ALLEIN blinzeln genauso. Der kombinierte Schluessel oben ist nur
@@ -991,7 +1200,13 @@ function farbTabelle(farben, getragen) {
      Ende gezeichnet wird, entscheidet anziehen(). Hier bekommen einfach beide
      das Blinzeln, dann stimmt es in jedem Fall. */
   var yk = SLOTS.wimpern.zeichen;
-  if (T[yk] && typeof T[yk] === "object") T[yk].blinzelt = true;
+  if (T[yk] && typeof T[yk] === "object") T[yk].blinzelt = !nacht;
+
+  /* Die Nachtwimper. Kein blinzelt: bei geschlossenen Augen zuckt nichts. */
+  if (g.wimpern && g.wimpern.stueck) {
+    var wn = wimperFarbe(g.wimpern, stueckVon("makeup", g.wimpern.stueck));
+    T[WIMPER_NACHT] = { farbe: farben.fell, grund: wn.farbe };
+  }
 
   return T;
 }
@@ -1091,7 +1306,7 @@ function kopie(e) {
   return { zeilen: e.zeilen.slice(), maske: e.maske.slice(), breite: e.breite,
            ohrHoehe: e.ohrHoehe, augen: listen(e.augen),
            maul: listen(e.maul), schnauze: listen(e.schnauze),
-           unten: e.unten, brille: e.brille || null };
+           unten: e.unten, brille: e.brille || null, nacht: !!e.nacht };
 }
 
 /* Links und rechts je n Zellen Luft. Die Figur RUECKT dadurch nicht — sie
@@ -1428,25 +1643,24 @@ function anziehen(ebenen, getragen) {
        muesste farbTabelle() eine Farbe erfinden, die niemand gewaehlt hat. */
     var hatLid = traegt("lid") === "lidschatten";
     var hatWimpern = traegt("wimpern") === "wimpern";
-    if (hatLid && !hatWimpern) {
+    /* NACHTS SCHLAEFT DIE FIGUR, und ein schlafendes Auge hat seine Wimpern
+       nicht ueber sich, sondern unter sich. Jennifer: "vllt können die wimpern
+       beim schlafen halt nach unten zeigen."
+
+       DER LIDSCHATTEN WIRD NACHTS GAR NICHT GEZEICHNET. Er steckt dann als
+       Grund in der Augenzelle selbst (Schluessel Z, siehe farbTabelle) und
+       liegt damit direkt auf dem Schlitz. Eine eigene Zeile darueber haette
+       zwangslaeufig eine Luecke — die Augenzelle blutet mit ihrem Grund nach
+       oben und frisst genau die 10 Pixel weg, die beide verbinden wuerden.
+       Jennifer zweimal dazu: "der lidschatten sollte direkt über dem auge
+       liegen, kein abstand" und "ggf muss er dann runterwandern". */
+    var nachts = !!e.nacht;
+    if (hatLid && !nachts && !hatWimpern) {
       var L = zeichenVon("lid");
       e.augen.forEach(function (a) {
         for (var q = 0; q < a[2]; q++) setz(e, a[0] - 1, a[1] + q, "▄", L);
       });
     }
-    if (hatWimpern) {
-      /* Viertelbloecke geben je Zelle einen einzelnen Strich, und weil ▖ links
-         und ▗ rechts in der Zelle sitzt, stehen sie abwechselnd weiter aussen
-         und weiter innen — vier Wimpern je Auge mit ungleichem Abstand. Genau
-         das unterscheidet einen Wimpernkranz von einem Lidstrich. */
-      var YK = hatLid ? WIMPER_AUF_LID : zeichenVon("wimpern");
-      e.augen.forEach(function (a) {
-        for (var q = 0; q < a[2]; q++) {
-          setz(e, a[0] - 1, a[1] + q, q % 2 === 0 ? "▖" : "▗", YK);
-        }
-      });
-    }
-
     /* Die Wange liegt je Auge unter DIESEM Auge, nicht an einer aus allen
        Augen gerechneten Aussenkante. Der Unterschied ist kein Geschmack: die
        Aussenkante lag eine Zelle neben dem aeussersten Auge und damit genau
@@ -1474,6 +1688,49 @@ function anziehen(ebenen, getragen) {
         }
       });
     }
+
+    /* DIE WIMPERN KOMMEN NACH DER WANGE, und das ist kein Geschmack: nachts
+       haengen sie in der Zeile UNTER dem Auge — genau der Zeile, in der auch
+       Rouge und Sommersprossen sitzen. Wer zuerst zeichnet, verliert. Eine
+       Wimper gehoert oben drauf: Rouge liegt auf der Haut, die Wimper davor. */
+    if (hatWimpern) {
+      /* Viertelbloecke geben je Zelle einen einzelnen Strich, und weil ▖ links
+         und ▗ rechts in der Zelle sitzt, stehen sie abwechselnd weiter aussen
+         und weiter innen — vier Wimpern je Auge mit ungleichem Abstand. Genau
+         das unterscheidet einen Wimpernkranz von einem Lidstrich. */
+      if (nachts) {
+        /* Eine Zeile TIEFER, und UMGEDREHT gezeichnet: Grund ist die
+           Wimpernfarbe, Zeichen das Fell (Schluessel N). ▟ laesst das obere
+           linke Viertel frei, ▙ das obere rechte — dort steht der Grund, und
+           das ist der Strich, der nach unten zeigt.
+
+           Warum nicht einfach ▘ und ▝ in Wimpernfarbe auf Fellgrund: dann
+           haette die Zelle einen FELLgrund, und der blutet nach oben ueber
+           den Augenschlitz. Genau die Luecke, die Jennifer gemeldet hat
+           ("wenn zu ist immernoch abstand zwischen augenschlitz und wimper").
+           So blutet stattdessen die Wimpernfarbe nach oben und schliesst
+           buendig an den Schlitz an.
+
+           Die Zeile unter den Augen ist bei jeder Groesse Koerper: die
+           Schnauze sitzt mittig, die Augen sitzen aussen. Der Laden zeichnet
+           Wimpern ohnehin nur auf der erwachsenen Figur — das Regal gibt es
+           erst dort (Jennifer: "kinder brauchen keine wimper weil der store
+           eh erst im erwachsenenalter zieht"). */
+        e.augen.forEach(function (a) {
+          for (var q = 0; q < a[2]; q++) {
+            setz(e, a[0] + 1, a[1] + q, q % 2 === 0 ? "▟" : "▙", WIMPER_NACHT);
+          }
+        });
+      } else {
+        var YK = hatLid ? WIMPER_AUF_LID : zeichenVon("wimpern");
+        e.augen.forEach(function (a) {
+          for (var q = 0; q < a[2]; q++) {
+            setz(e, a[0] - 1, a[1] + q, q % 2 === 0 ? "▖" : "▗", YK);
+          }
+        });
+      }
+    }
+
 
     if (traegt("glanz") === "glitzer") {
       var X = zeichenVon("glanz");
@@ -1505,9 +1762,12 @@ function anziehen(ebenen, getragen) {
      den niemand gemalt hatte). Beide Male hat Jennifer es zurueckgemeldet, und
      beide Male war die Ursache dieselbe Fehldeutung.
 
-     Jetzt also wieder: das Maul wird rot, die Nase daruber bleibt das Loch,
-     das sie immer war. Kein eigener Nasen-Schluessel mehr — er faerbte etwas
-     ein, das gar nicht die Nase ist. */
+     Jetzt also wieder: das Maul wird rot, die Nase darueber bleibt, wo sie
+     ist. Kein eigener Nasen-Schluessel — er faerbte etwas ein, das gar nicht
+     die Nase ist. Seit dem 05.09.2026 ist sie allerdings kein LOCH mehr,
+     sondern der Zellhintergrund der Maul-Zelle (nasenGrund, siehe SLOTS.mund):
+     dieselbe halbe Zelle, aber gemalt. Der Lippenstift-Schluessel P bekommt
+     denselben Grund in farbTabelle(), sonst risse er sie wieder auf. */
   if (traegt("mund") === "lippenstift") {
     var P = zeichenVon("mund");
     (e.maul || []).forEach(function (m) { setz(e, m[0], m[1], null, P); });
@@ -1711,8 +1971,11 @@ function malen(e, FARBE) {
 
       var kern = "<span" + (klassen.length ? ' class="' + klassen.join(" ") + '"' : "") +
                  ' style="' + stil + '">' + puffer + "</span>";
-      // Der Aussengrund entfaellt, wenn die Zelle gar keinen braucht (die
-      // Augen sitzen im Fell und bekommen ihn ueber aufFell nicht).
+      /* Der Aussengrund entfaellt, wenn die Zelle gar keinen braucht. Die
+         Augen bekommen ihren seit dem 05.09.2026 ueber aufFell (das nachts
+         halbe Auge liess sonst ein Loch offen) — sie stehen hier aber weiter
+         im else-Zweig, weil sie keinen der Effekte tragen, die eine Teilung
+         noetig machen. */
       out += eigenerGrund
         ? '<span style="background:' + (aufFell ? grund : GRUND) + '">' + kern + "</span>"
         : kern;
@@ -2356,7 +2619,7 @@ function blattFuellen(blatt, api) {
 }
 
 export {
-  SLOTS, SLOT_VON_ZEICHEN, AUF_FELL,
+  SLOTS, SLOT_VON_ZEICHEN, AUF_FELL, AUGE_NACHT,
   KLEIDUNG, MAKEUP, FARBTOEPFE, LOOKS, HINTERGRUENDE, PETS, REGALE,
   preis, preisText, preisGesprochen, fehltText, bezahlbar,
   stueckVon, stueckId, farbeVon, farbTabelle, farbenFuer,
