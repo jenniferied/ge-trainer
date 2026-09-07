@@ -421,29 +421,109 @@ function waehleAufgabenFuer(thema, qz, stufen, extra, schonDa) {
    ueber die gezogenen Themen, auf die Kernkompetenzen fokussiert, ohne
    Zwischenschritte - nur die schriftlichen Fragen.
 
-   Die AFB-Stufen laufen ueber den GANZEN Bogen rotierend durch (I, II, III, I,
-   ...), nicht je Themenblock: bei einer Aufgabe pro Thema gaebe es sonst gar
-   keine Streuung, und sieben Aufgaben auf AFB I waeren keine Klausur, sondern
-   eine Abfrage. Der Versatz ist zufaellig, damit nicht jeder Bogen mit AFB I
-   anfaengt.
+   Die AFB-Stufen werden ueber den GANZEN Bogen verteilt, nicht je Themenblock:
+   bei einer Aufgabe pro Thema gaebe es sonst gar keine Streuung, und sieben
+   Aufgaben auf AFB I waeren keine Klausur, sondern eine Abfrage. WELCHES Thema
+   welche Stufe traegt, entscheidet stufenZuteilung() nach dem Angebot - die
+   Begruendung steht dort, sie ist der Kern der Korrektur vom 07.09.2026.
 
    Der Fokus steckt in kernWahl(), nicht hier - siehe die Stufenfolge dort. */
+/* Wie viele ECHTE Kandidaten hat ein Thema auf einer Stufe? Gezaehlt in
+   derselben Reihenfolge, in der kernWahl() spaeter waehlt - eine Planung, die
+   eine Auswahl verspricht, welche die Ziehung nicht einloest, waere schlimmer
+   als keine.
+
+   Aufgaben ausserhalb des Pflichtpensums zaehlen hier bewusst NICHT mit: eine
+   Zelle, in der nur noch Nicht-Kern-Aufgaben liegen, gilt der Planung als leer,
+   damit sie einen anderen Zuschnitt sucht. kernWahl() greift trotzdem darauf
+   zurueck, wenn die Stufe am Ende doch hier landet. */
+function angebot(thema, stufe, qz) {
+  var stufig = (thema.frei || []).filter(function (f) { return (f.afb || 1) === stufe; });
+  if (!stufig.length) return 0;
+  var kern = stufig.filter(function (f) { return f.core; });
+  var kernNeu = kern.filter(function (f) { return ungesehen(f, qz); });
+  return kernNeu.length || kern.length;
+}
+
+/* WELCHE STUFE IN WELCHEM THEMA - nach dem tatsaechlichen Angebot statt nach
+   einer festen Rotation (07.09.2026).
+
+   VORGESCHICHTE, und sie ist der Grund fuer diese ganze Funktion: bis hierher
+   lief eine starre Rotation (I, II, III, I, ...) ueber die Themen in ihrer
+   Reihenfolge. Das klang nach Streuung, war aber in Wahrheit eine Zuweisung
+   ins Blaue - denn das Pflichtpensum liegt sehr ungleich: 50 der 74
+   Kern-Aufgaben stehen auf AFB I, und in vier Thema-x-Stufe-Zellen gibt es gar
+   keine. In Roses Bogen vom 07.09. hatten deshalb VIER VON SECHS Aufgaben
+   genau EINEN Kandidaten - die gewichtete Ziehung hat gar nichts ausgewaehlt,
+   sie hat genommen, was in der genannten Zelle zufaellig lag. Dass drei der
+   sechs Fragen den Rahmenlehrplan zum Thema hatten, war keine Gewichtung
+   (RLP macht nur 6 % des Bestands aus), sondern die Folge davon: die wenigen
+   Kern-Aufgaben auf AFB II und III sind in ihren Themen zufaellig die
+   RLP-lastigen.
+
+   Deshalb jetzt andersherum: erst wird gezaehlt, wer welche Stufe ueberhaupt
+   anbieten kann, dann werden die KNAPPEN Stufen zuerst an die Themen vergeben,
+   die dort wirklich etwas haben. Slots, fuer die keine Stufe mehr traegt,
+   bekommen am Ende die Stufe mit dem groessten Angebot ihres Themas. So bleibt
+   die Streuung erhalten UND es bleibt etwas zu waehlen. */
+function stufenZuteilung(gezogen, slots, qz) {
+  var offen = slots.slice();
+  var zu = gezogen.map(function () { return []; });
+  // Wunsch: moeglichst gleich viele Aufgaben je AFB-Stufe ueber den Bogen.
+  var wunsch = verteileSlots(3, HALBE_AUFGABEN);   // Index 0 = AFB I, 1 = II, 2 = III
+  // Knapp zuerst: AFB III ist im Pensum am duennsten, AFB I im Ueberfluss da.
+  [3, 2, 1].forEach(function (stufe) {
+    var n = wunsch[stufe - 1];
+    while (n > 0) {
+      var besterI = -1, bestesN = 0;
+      for (var i = 0; i < gezogen.length; i++) {
+        if (!offen[i]) continue;
+        // Ein Thema soll dieselbe Stufe nicht zweimal bekommen, solange es
+        // eine andere anbieten kann - sonst stehen zwei Aufgaben desselben
+        // Themas auf derselben Stufe und der Bogen wird eintoenig.
+        if (zu[i].indexOf(stufe) >= 0) continue;
+        var a = angebot(gezogen[i], stufe, qz);
+        if (a > bestesN) { bestesN = a; besterI = i; }
+      }
+      if (besterI < 0) break;            // diese Stufe kann gerade niemand mehr
+      zu[besterI].push(stufe);
+      offen[besterI]--;
+      n--;
+    }
+  });
+  // Was jetzt noch offen ist, bekommt die Stufe, die sein Thema am besten kann.
+  gezogen.forEach(function (t, i) {
+    while (offen[i] > 0) {
+      var beste = 1, bestesN = -1;
+      [1, 2, 3].forEach(function (stufe) {
+        var a = angebot(t, stufe, qz);
+        // Doppelte Stufe im selben Thema nur, wenn es nicht anders geht.
+        if (zu[i].indexOf(stufe) >= 0) a -= 100;
+        if (a > bestesN) { bestesN = a; beste = stufe; }
+      });
+      zu[i].push(beste);
+      offen[i]--;
+    }
+  });
+  return zu;
+}
+
+/* Die halbe Klausur: sieben Aufgaben, gleichmaessig ueber die gezogenen Themen,
+   auf die Kernkompetenzen fokussiert, ohne Zwischenschritte. Welche Stufe wo
+   abgefragt wird, entscheidet stufenZuteilung() nach dem echten Angebot. */
 function haelfteZiehen(gezogen, qz, schonDa) {
   var slots = verteileSlots(gezogen.length, HALBE_AUFGABEN);
-  var versatz = Math.floor(Math.random() * 3);
-  var lauf = 0;
+  var zu = stufenZuteilung(gezogen, slots, qz);
   return gezogen.map(function (t, i) {
     var pool = (t.frei || []).slice();
     var fuer = [];
-    for (var sl = 0; sl < slots[i]; sl++) {
-      var stufe = (lauf + versatz) % 3 + 1;
-      lauf++;
+    zu[i].forEach(function (stufe) {
       var f = kernWahl(pool, stufe, qz, schonDa);
-      if (!f) break;                       // Thema leer: der Bogen wird kuerzer, nicht falsch
+      if (!f) return;                      // Thema leer: der Bogen wird kuerzer, nicht falsch
       pool = pool.filter(function (x) { return x !== f; });
       keMerken(schonDa, f);
       fuer.push(f);
-    }
+    });
     fuer.sort(function (a, b) { return (a.afb || 1) - (b.afb || 1); });
     return { thema: t, aufgaben: fuer };
   });
