@@ -49,6 +49,21 @@ function rn() { return window.RoughNotation && window.RoughNotation.annotate ? w
 
 var AFB_KURZ = { 1: "AFB I", 2: "AFB II", 3: "AFB III" };
 var PUNKTE_AFB = { 1: 4, 2: 5, 3: 5 };   // Muster der Dozentin: AFB I eher 4, AFB II/III eher 5
+
+/* Zeitmodell (07.09.2026): dieselben drei Stufen wie im ST-Trainer
+   (Ohne / Normal / + Nachteilsausgleich, dort main.js builder()), damit Rose
+   in beiden Trainern denselben Schalter bedient. Die volle Klausur ist laut
+   Klausur-Info 90 Minuten, Roses Nachteilsausgleich 120. Die halbe ist exakt
+   die Haelfte davon - halbe Aufgabenzahl, halbe Zeit, sonst ist es kein
+   Massstab, an dem sie ihr Tempo messen kann. */
+var DAUER = {
+  voll: { normal: 90, nta: 120 },
+  halbe: { normal: 45, nta: 60 }
+};
+// Sieben Aufgaben. Bei "alle" heisst das je eine aus sieben der acht Themen
+// (das achte setzt aus und rotiert), bei "5 wie in echt" bekommen zwei der
+// fuenf Themen eine zweite Aufgabe.
+var HALBE_AUFGABEN = 7;
 var REDUCE_MOTION = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 var THEMEN = [];            // von main.js hereingereicht
@@ -70,6 +85,26 @@ function pkt(n) {
 }
 
 function halbe(n) { return Math.round(n * 2) / 2; }
+
+/* Alte Boegen lesen (07.09.2026). state.klausur ueberlebt Neustarts ("Der Bogen
+   bleibt liegen") und steht bewusst NICHT in snapshot() - es kann also heute
+   noch ein Bogen von vor dieser Aenderung dort liegen, ohne modus und ohne
+   timerModus. Beide Felder werden deshalb nirgends direkt gelesen, sondern nur
+   ueber diese zwei Funktionen; dasselbe Muster faehrt k.umfang schon. */
+function kModus(k) { return k && k.modus === "halbe" ? "halbe" : "voll"; }
+function kTimer(k) {
+  if (!k) return "nta";
+  if (k.timerModus) return k.timerModus;
+  return (k.dauerMin === 90 || k.dauerMin === 45) ? "normal" : "nta";
+}
+// Laeuft ueberhaupt eine Uhr? dauerMin ist bei "Ohne" null, und genau daran
+// haengen restMs(), die Warnungen und die Zeile auf dem Aufgabenbogen.
+function hatUhr(k) { return !!(k && k.dauerMin); }
+function dauerFuer(modus, timerModus) {
+  if (timerModus === "aus") return null;
+  var d = DAUER[modus] || DAUER.voll;
+  return timerModus === "normal" ? d.normal : d.nta;
+}
 
 function kipp(id) {
   var h = 0;
@@ -96,6 +131,10 @@ document.addEventListener("visibilitychange", function () {
   if (!imLauf) return;
   var k = state.klausur;
   if (document.visibilityState === "hidden") {
+    // pausiere() ruft zeitStop() selbst - hier steht es trotzdem noch einmal,
+    // fuer den Fall, dass schon eine Pause laeuft (dann kehrt pausiere() sofort
+    // zurueck) oder der Bogen in der Korrektur steht.
+    zeitStop();
     if (k && k.phase === "lauf" && !k.pauseSeit) pausiere("hintergrund");
     speichernJetzt();
   } else if (k && k.pauseGrund === "hintergrund") {
@@ -209,14 +248,23 @@ function zieh(liste, n, gewFn) {
     .map(function (e) { return e.x; });
 }
 
-// umfang "alle": alle Themen kommen dran (dafuer weniger Aufgaben je Thema) - das ist
-// der Default, weil vorher niemand weiss, welche 5 Themen in der echten Klausur stehen.
-// umfang "fuenf": 5 gewichtet gezogene Themen, so wie die Klausur wirklich aussieht.
-function waehleThemen(themen, alleThemen) {
-  if (alleThemen) return themen.slice();
+/* Welche Themen auf den Bogen kommen. anzahl = 0 heisst alle.
+
+   umfang "alle": jedes Thema kommt dran (dafuer weniger Aufgaben je Thema) -
+   das ist der Default, weil vorher niemand weiss, welche 5 Themen in der
+   echten Klausur stehen. umfang "fuenf": 5 gewichtet gezogene Themen, so wie
+   die Klausur wirklich aussieht.
+
+   Seit dem 07.09.2026 zieht auch die halbe Klausur hierueber: sie braucht bei
+   "alle" sieben der acht Themen, und WELCHES aussetzt, soll rotieren statt
+   fest zu sein. Genau das kann diese Funktion schon - der Rotations-Malus aus
+   letzteLaeufe() sorgt dafuer, dass zuletzt geschriebene Themen nach hinten
+   rutschen. Deshalb hier eine Zahl statt des frueheren Booleans. */
+function waehleThemen(themen, anzahl) {
+  if (!anzahl || anzahl >= themen.length) return themen.slice();
   var z = logZaehlung().thema;
   var letzte = letzteLaeufe();
-  return zieh(themen, 5, function (t) {
+  return zieh(themen, anzahl, function (t) {
     var n = z[t.id] || 0;
     var g = 1 + 6 / (2 + n);                      // wenig geuebt = schwer
     if (letzte[0] && letzte[0][t.id]) g *= 0.3;   // Rotations-Malus: zuletzt dran
@@ -234,40 +282,161 @@ function aufgabenGewicht(f, qz) {
   return g;
 }
 
+/* War die Aufgabe ueberhaupt schon einmal dran? Zwei Ablagen, weil beide
+   verschieden Buch fuehren: qz zaehlt die Eintraege im Log, state.frei traegt
+   die letzte Selbsteinschaetzung. Dieselbe Pruefung wie ungesehen() in
+   stats.js, nur auf freie Aufgaben verkuerzt - die Klausur zieht nur aus t.frei. */
+function ungesehen(f, qz) { return (qz[f.id] || 0) === 0 && !state.frei[f.id]; }
+
+/* "Immer unbekannte Fragen ziehen wenn es geht" (Jennifer, 07.09.2026).
+   aufgabenGewicht() allein reicht dafuer NICHT: dort steht eine ungesehene
+   Aufgabe bei 5 und eine oft geuebte, wacklige bei 1.6 x 2 = 3.2 - nach ein
+   paar Boegen verschwindet das Neue zwischen den Wacklern. Der Faktor 8 ist
+   derselbe wie in stats.js ("Neues zuerst") und aus demselben Grund KEIN
+   Ausschluss: zieh() multipliziert mit (0.4 + Math.random()), die Bereiche
+   ueberlappen knapp. Gibt der Korpus nichts Neues mehr her, faellt die Regel
+   von selbst weg statt den Bogen zu verkuerzen. */
+function neuZuerst(f, qz) {
+  var g = aufgabenGewicht(f, qz);
+  return ungesehen(f, qz) ? g * 8 : g;
+}
+
+/* "Die volle Klausur ist hoffentlich auch nach den KEs sortiert" (Jennifer,
+   07.09.2026): ein Bogen soll moeglichst viele VERSCHIEDENE
+   Kompetenzerwartungen anfassen statt dreimal dieselbe. schonDa sammelt, was
+   auf diesem Bogen bereits vorkommt.
+
+   Heruntergewichtet, nicht ausgeschlossen: ein Thema hat drei bis fuenf
+   Kompetenzerwartungen, bei einem Ausschluss waere nach ebenso vielen Aufgaben
+   Schluss und der Bogen kaeme kuerzer heraus als bestellt. Aufgaben ohne ke
+   (der Korpus hat welche) bleiben neutral - eine leere Liste ist keine
+   Doppelung. */
+function keNeuFaktor(f, schonDa) {
+  var ke = f.ke || [];
+  if (!ke.length) return 1;
+  var neu = 0;
+  ke.forEach(function (k) { if (!schonDa[k]) neu++; });
+  return neu ? 1 + neu * 0.6 : 0.3;
+}
+
+function keMerken(schonDa, f) {
+  (f && f.ke || []).forEach(function (k) { schonDa[k] = true; });
+}
+
+/* Der Pool einer Aufgabenwahl in der halben Klausur, und die Reihenfolge der
+   Stufen ist die eigentliche Aussage des Modus:
+
+     1. Kernkompetenz UND ungesehen    2. Kernkompetenz    3. alles uebrige
+
+   Erst wenn eine Stufe leer ist, geht die naechste auf. Ein ungesehenes
+   NICHT-Kern-Item schlaegt also nie ein bereits gesehenes Kern-Item - andersherum
+   verloere der Modus genau den Fokus, fuer den es ihn gibt (74 der 173 freien
+   Aufgaben tragen core, ueber acht Themen wird das schnell duenn).
+
+   DIE AFB-STUFE FILTERT DAVOR, UND ZWAR HAERTER ALS core. Das ist eine
+   Entscheidung, keine Reihenfolge aus Versehen: von den 74 core-Aufgaben
+   liegen 50 auf AFB I, und vier Thema-x-Stufe-Zellen haben ueberhaupt keine
+   (entwicklungsbereiche II, prinzipien III, mobilitaet III, grundlagen III).
+   Waere core der harte Filter, kippte der halbe Bogen genau dorthin zurueck,
+   wo dieses Projekt schon einmal war - lauter AFB I, und AFB III nie geuebt.
+   In so einer Zelle kommt deshalb lieber eine Nicht-Kern-Aufgabe AUF DER
+   RICHTIGEN STUFE als eine Kern-Aufgabe auf der falschen: die Stufe bestimmt,
+   welche Denkbewegung verlangt wird, core nur, welcher Inhalt. Der Fokus
+   traegt weiter ueber die restlichen fuenf bis sechs Aufgaben.
+
+   Findet der Korpus zur Stufe gar nichts, faellt auch sie weg - ein kuerzerer
+   Bogen waere schlechter als einer mit einer Aufgabe von nebenan. */
+function kernWahl(pool, stufe, qz, schonDa) {
+  if (!pool.length) return null;
+  var stufig = pool.filter(function (f) { return (f.afb || 1) === stufe; });
+  if (!stufig.length) stufig = pool;
+  var kern = stufig.filter(function (f) { return f.core; });
+  var kernNeu = kern.filter(function (f) { return ungesehen(f, qz); });
+  var kand = kernNeu.length ? kernNeu : (kern.length ? kern : stufig);
+  return zieh(kand, 1, function (f) { return neuZuerst(f, qz) * keNeuFaktor(f, schonDa); })[0] || null;
+}
+
+/* Wie viele Aufgaben je Thema. Der Rest wird ZUFAELLIG verteilt, nicht auf die
+   ersten Themen: gezogen ist nach Manifest-Reihenfolge sortiert, sonst
+   bekaemen immer Konzeptionen und Entwicklungsbereiche die zweite Aufgabe. */
+function verteileSlots(anzahlThemen, anzahlAufgaben) {
+  var basis = Math.floor(anzahlAufgaben / anzahlThemen);
+  var rest = anzahlAufgaben % anzahlThemen;
+  var idx = [];
+  for (var i = 0; i < anzahlThemen; i++) idx.push(i);
+  var extra = Object.create(null);
+  mischen(idx).slice(0, rest).forEach(function (i) { extra[i] = true; });
+  return idx.map(function (i) { return basis + (extra[i] ? 1 : 0); });
+}
+
 // Je Thema eine Aufgabe pro verlangter AFB-Stufe. Im 5-Themen-Modus sind das I/II/III
 // (4+5+5 = 14 P., das Muster der Dozentin), im Alle-Themen-Modus nur zwei Stufen je
 // Block, damit der Bogen nicht doppelt so lang wird. Fehlt eine Stufe im Korpus, wird
 // aus dem Rest aufgefuellt; bei extra kommt eine weitere Aufgabe dazu.
-function waehleAufgabenFuer(thema, qz, stufen, extra) {
+function waehleAufgabenFuer(thema, qz, stufen, extra, schonDa) {
   var pool = (thema.frei || []).slice();
   var gewaehlt = [];
+  // Ungesehenes zuerst, und dabei moeglichst eine noch nicht abgefragte
+  // Kompetenzerwartung treffen. Beides sind Gewichte, keine Filter - der Bogen
+  // wird nie kuerzer, weil der Korpus gerade nichts Passendes hergibt.
+  var gew = function (f) { return neuZuerst(f, qz) * keNeuFaktor(f, schonDa); };
+  var nimm = function (f) {
+    if (!f) return;
+    gewaehlt.push(f);
+    keMerken(schonDa, f);
+    pool = pool.filter(function (x) { return x !== f; });
+  };
   stufen.forEach(function (stufe) {
     var kand = pool.filter(function (f) { return (f.afb || 1) === stufe; });
     if (!kand.length) return;
-    var g = zieh(kand, 1, function (f) { return aufgabenGewicht(f, qz); })[0];
-    gewaehlt.push(g);
-    pool = pool.filter(function (f) { return f !== g; });
+    nimm(zieh(kand, 1, gew)[0]);
   });
-  while (gewaehlt.length < stufen.length && pool.length) {
-    var f2 = zieh(pool, 1, function (x) { return aufgabenGewicht(x, qz); })[0];
-    gewaehlt.push(f2);
-    pool = pool.filter(function (x) { return x !== f2; });
-  }
-  if (extra && pool.length) {
-    gewaehlt.push(zieh(pool, 1, function (x) { return aufgabenGewicht(x, qz); })[0]);
-  }
+  while (gewaehlt.length < stufen.length && pool.length) nimm(zieh(pool, 1, gew)[0]);
+  if (extra && pool.length) nimm(zieh(pool, 1, gew)[0]);
   gewaehlt.sort(function (a, b) { return (a.afb || 1) - (b.afb || 1); });
   return gewaehlt;
+}
+
+/* Die halbe Klausur (07.09.2026, Jennifer): sieben Aufgaben, gleichmaessig
+   ueber die gezogenen Themen, auf die Kernkompetenzen fokussiert, ohne
+   Zwischenschritte - nur die schriftlichen Fragen.
+
+   Die AFB-Stufen laufen ueber den GANZEN Bogen rotierend durch (I, II, III, I,
+   ...), nicht je Themenblock: bei einer Aufgabe pro Thema gaebe es sonst gar
+   keine Streuung, und sieben Aufgaben auf AFB I waeren keine Klausur, sondern
+   eine Abfrage. Der Versatz ist zufaellig, damit nicht jeder Bogen mit AFB I
+   anfaengt.
+
+   Der Fokus steckt in kernWahl(), nicht hier - siehe die Stufenfolge dort. */
+function haelfteZiehen(gezogen, qz, schonDa) {
+  var slots = verteileSlots(gezogen.length, HALBE_AUFGABEN);
+  var versatz = Math.floor(Math.random() * 3);
+  var lauf = 0;
+  return gezogen.map(function (t, i) {
+    var pool = (t.frei || []).slice();
+    var fuer = [];
+    for (var sl = 0; sl < slots[i]; sl++) {
+      var stufe = (lauf + versatz) % 3 + 1;
+      lauf++;
+      var f = kernWahl(pool, stufe, qz, schonDa);
+      if (!f) break;                       // Thema leer: der Bogen wird kuerzer, nicht falsch
+      pool = pool.filter(function (x) { return x !== f; });
+      keMerken(schonDa, f);
+      fuer.push(f);
+    }
+    fuer.sort(function (a, b) { return (a.afb || 1) - (b.afb || 1); });
+    return { thema: t, aufgaben: fuer };
+  });
 }
 
 // Zwei AFB-Stufen je Block im Alle-Themen-Modus, rotierend - so kommen ueber den
 // ganzen Bogen alle drei Stufen vor, ohne dass ein Thema alle drei tragen muss.
 var STUFEN_PAARE = [[1, 2], [2, 3], [1, 3]];
 
-function erstelleKlausur(dauerMin, feedback, umfang) {
-  var alleThemen = umfang !== "fuenf";
-  var qz = logZaehlung().qid;
-  var gezogen = waehleThemen(THEMEN, alleThemen);
+/* Die volle Klausur, unveraendert im Zuschnitt: alle Themen mit je zwei
+   Aufgaben, oder fuenf Themen mit je drei bis vier. Neu ist nur, dass die
+   Auswahl die Kompetenzerwartungen mitzaehlt (schonDa, siehe keNeuFaktor). */
+function volleZiehen(gezogen, alleThemen, qz, schonDa) {
   var versatz = Math.floor(Math.random() * STUFEN_PAARE.length);
 
   // Nur im 5-Themen-Modus: hoechstens ein Themenblock bekommt eine vierte Aufgabe,
@@ -279,16 +448,53 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
     if (kand.length && Math.random() < 0.5) extraIdx = gezogen.indexOf(kand[Math.floor(Math.random() * kand.length)]);
   }
 
-  var aufgaben = [], blaetter = {}, nr = 0, bz = 0;
-  gezogen.forEach(function (t, i) {
+  return gezogen.map(function (t, i) {
     var stufen = alleThemen ? STUFEN_PAARE[(i + versatz) % STUFEN_PAARE.length] : [1, 2, 3];
-    waehleAufgabenFuer(t, qz, stufen, i === extraIdx).forEach(function (f, j) {
+    return { thema: t, aufgaben: waehleAufgabenFuer(t, qz, stufen, i === extraIdx, schonDa) };
+  });
+}
+
+/* Einen Bogen austeilen. wahl kommt aus zeigeSetup() und traegt
+   { modus, umfang, timerModus, feedback } - ein Objekt statt der frueheren drei
+   Stellungen, weil seit dem 07.09.2026 zwei Felder dazugekommen sind und eine
+   Reihenfolge aus fuenf Argumenten sich nicht mehr lesen laesst. */
+function erstelleKlausur(wahl) {
+  var modus = wahl.modus === "halbe" ? "halbe" : "voll";
+  var alleThemen = wahl.umfang !== "fuenf";
+  var timerModus = wahl.timerModus || "nta";
+  var dauerMin = dauerFuer(modus, timerModus);
+  var feedback = wahl.feedback === "ende" ? "ende" : "sofort";
+  var qz = logZaehlung().qid;
+
+  /* Wie viele Themen. Die halbe Klausur hat sieben Aufgaben; bei "alle" heisst
+     das sieben Themen mit je einer, also setzt eines der acht aus. Welches,
+     entscheidet waehleThemen() mit demselben Rotations-Malus wie sonst - ein
+     fest ausgeschlossenes Thema waere nach drei Boegen ein blinder Fleck. */
+  var themenZahl = alleThemen
+    ? (modus === "halbe" ? Math.min(HALBE_AUFGABEN, THEMEN.length) : 0)
+    : 5;
+  var gezogen = waehleThemen(THEMEN, themenZahl);
+
+  // Welche Kompetenzerwartungen dieser Bogen schon abfragt. Wandert durch die
+  // ganze Ziehung mit und wird in keNeuFaktor() ausgewertet.
+  var schonDa = Object.create(null);
+  var bloecke = modus === "halbe"
+    ? haelfteZiehen(gezogen, qz, schonDa)
+    : volleZiehen(gezogen, alleThemen, qz, schonDa);
+
+  var aufgaben = [], blaetter = {}, nr = 0, bz = 0;
+  bloecke.forEach(function (blk, i) {
+    var t = blk.thema;
+    // Ein Block mit genau einer Aufgabe heisst "3", nicht "3a" - der Buchstabe
+    // unterscheidet nichts und der Aufgabenbogen liest sich mit ihm schlechter.
+    var einzeln = blk.aufgaben.length <= 1;
+    blk.aufgaben.forEach(function (f, j) {
       nr++; bz++;
       var bid = "b" + bz;
       blaetter[bid] = { id: bid, aufgabeNr: nr, teil: 1, text: "", canvasBild: null, transkribiert: false };
       aufgaben.push({
         nr: nr,
-        label: (i + 1) + "abcd".charAt(j),
+        label: einzeln ? String(i + 1) : (i + 1) + "abcd".charAt(j),
         qid: f.id,
         thema: t.id,
         block: i + 1,
@@ -308,6 +514,15 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
         // beim Abschliessen wandern beide an die aid der Antwort (logAufgaben).
         kiMarken: null,
         geloggt: false,
+        /* Festgelegt, weil sie das Feedback zu DIESER Aufgabe aufgemacht hat
+           (07.09.2026, Jennifer: "wenn sie auf Feedback klickt per Frage, kann
+           sie es nicht mehr aendern"). Bis dahin darf sie auf dem ganzen Bogen
+           frei hin und her, wie in einer echten Klausur. */
+        gesperrt: false,
+        // Reine Schreibzeit an dieser Aufgabe, in Sekunden. Gemessen wird die
+        // Zeit im Textfeld (zeitStart/zeitStop), nicht die Zeit auf der Seite -
+        // sonst zaehlte Lesen und Blaettern bei jeder Aufgabe doppelt.
+        sekunden: 0,
         blaetter: [bid]
       });
     });
@@ -319,6 +534,13 @@ function erstelleKlausur(dauerMin, feedback, umfang) {
     pausiertMs: 0,
     pauseSeit: null,
     pauseGrund: null,
+    // "voll" | "halbe". Wie umfang eine Angabe, die man HAT - nicht spaeter aus
+    // der Aufgabenzahl erraten (siehe die Notiz an detail.umfang in abschliessen).
+    modus: modus,
+    // "aus" | "normal" | "nta". dauerMin bleibt die gerechnete Zahl daneben
+    // stehen, damit restMs(), der Aufgabenbogen und die gepushte Sitzung
+    // unveraendert weiterrechnen; bei "aus" ist sie null.
+    timerModus: timerModus,
     dauerMin: dauerMin,
     feedback: feedback,       // "sofort" | "ende"
     phase: "lauf",            // "lauf" | "korrektur"
@@ -351,13 +573,37 @@ function bestehensGrenze(k) { return Math.ceil(gesamtPunkte(k) * 0.5); }
    Zeit wird immer aus Date.now() gerechnet, nie hochgezaehlt (Hintergrund-Tab).
    Pausen sammeln sich in pausiertMs; pauseSeit haelt die laufende Pause. */
 
+// Verstrichene Netto-Zeit, also ohne Pausen. Zaehlt bei "Ohne Uhr" nach oben
+// statt nach unten - dieselbe Anzeige wie im ST-Trainer, wo der Kopf ohne
+// Timer die Gesamtzeit zeigt. Ganz ohne Zahl waere schlechter: Rose soll auch
+// beim entspannten Ueben sehen koennen, wie lange ein Bogen bei ihr dauert.
+function verbrauchtMs(k) {
+  var laufendePause = k.pauseSeit ? Date.now() - k.pauseSeit : 0;
+  return Math.max(0, Date.now() - k.gestartet - (k.pausiertMs || 0) - laufendePause);
+}
+
+/* Restzeit, oder null, wenn dieser Bogen ohne Uhr laeuft. Der null-Fall MUSS
+   hier heraus und darf nicht als NaN durchrutschen: dauerMin ist bei "Ohne"
+   null, und null * 60000 - irgendwas ergibt zwar 0, aber jede spaetere
+   Rechnung mit einem fehlenden dauerMin (Migration, alter Bogen) faende in
+   uhrText() ein "NaN:NaN" auf Roses Klausurbogen. */
 function restMs(k) {
+  if (!hatUhr(k)) return null;
   var laufendePause = k.pauseSeit ? Date.now() - k.pauseSeit : 0;
   return k.dauerMin * 60000 - (Date.now() - k.gestartet - k.pausiertMs - laufendePause);
 }
 
+/* Restzeit wird AUFgerundet, verstrichene Zeit ABgerundet - beide Male, damit
+   die Zahl nicht mehr verspricht, als da ist. Bei "noch 30 Sekunden" ist "0:01"
+   richtig (es ist noch eine angefangene Minute uebrig); bei "seit 30 Sekunden
+   dabei" waere dieselbe 0:01 eine erfundene Minute. */
 function uhrText(ms) {
   var m = Math.max(0, Math.ceil(ms / 60000));
+  return Math.floor(m / 60) + ":" + ("0" + (m % 60)).slice(-2);
+}
+
+function uhrTextGelaufen(ms) {
+  var m = Math.max(0, Math.floor(ms / 60000));
   return Math.floor(m / 60) + ":" + ("0" + (m % 60)).slice(-2);
 }
 
@@ -375,8 +621,11 @@ function tick() {
   var uhr = document.getElementById("kl-uhr");
   if (!uhr) { timerStoppen(); return; }
   var rest = restMs(k);
-  uhr.textContent = uhrText(rest);
   uhr.classList.toggle("pausiert", !!k.pauseSeit);
+  // Ohne Uhr laeuft die Anzeige nach oben, und es gibt weder Ablauf noch
+  // Warnung - beide Zweige unten wuerden sonst auf null rechnen.
+  if (rest === null) { uhr.textContent = uhrTextGelaufen(verbrauchtMs(k)); return; }
+  uhr.textContent = uhrText(rest);
   if (rest <= 0 && !k.ueberzogen) {
     k.ueberzogen = true;
     speichernJetzt();
@@ -394,9 +643,53 @@ function metaSetzen(text) {
   if (m) m.textContent = text;
 }
 
+// Die Zeile unter der Uhr: was fuer ein Bogen liegt hier und wie viel ist er wert.
+function bogenZeile(k) {
+  return (kModus(k) === "halbe" ? "Halbe Klausur · " : "")
+    + k.aufgaben.length + " Aufgaben · " + gesamtPunkte(k) + " Punkte"
+    + (hatUhr(k) ? "" : " · ohne Zeitlimit");
+}
+
+/* ---------- Zeit je Aufgabe ----------
+   "Alles speichern. Antworten, Feedback, Zeit etc." (Jennifer, 07.09.2026).
+   Der Bogen kannte bisher nur seine Gesamtdauer; welche Aufgabe die Zeit
+   gefressen hat, liess sich hinterher nicht sagen.
+
+   Gemessen wird die Zeit IM TEXTFELD (focus bis blur), nicht die Zeit, in der
+   eine Aufgabe sichtbar ist: auf der Rolle stehen alle Blaetter untereinander,
+   sichtbar sind also staendig mehrere. Gezaehlt wird immer nur eine Aufgabe -
+   zeitStart() rechnet die vorige zuerst ab.
+
+   Der Stempel liegt im Modul, nicht am Bogen: er gilt nur, solange dieses
+   Fenster schreibt. Die Summe dagegen steht in a.sekunden und ueberlebt damit
+   jeden Neustart wie der Rest des Bogens. */
+var zeitAuf = null;   // { a: Aufgabe, seit: ms }
+
+function zeitStop() {
+  if (!zeitAuf) return;
+  var sek = Math.round((Date.now() - zeitAuf.seit) / 1000);
+  // Deckel: wer das Feld offen laesst und weggeht, hat nicht zwei Stunden
+  // geschrieben. 20 Minuten an EINER Aufgabe sind bei 14 Punkten schon viel;
+  // darueber ist es eine Pause, und eine geratene Zahl waere schlechter als
+  // die ehrliche Untergrenze. visibilitychange faengt den haeufigen Fall
+  // ohnehin ab, dieser Deckel ist fuer den Rest.
+  if (sek > 0) zeitAuf.a.sekunden = (zeitAuf.a.sekunden || 0) + Math.min(sek, 20 * 60);
+  zeitAuf = null;
+  speichernBald();
+}
+
+function zeitStart(a) {
+  zeitStop();
+  if (!a) return;
+  zeitAuf = { a: a, seit: Date.now() };
+}
+
 function pausiere(grund) {
   var k = state.klausur;
   if (!k || k.pauseSeit) return;
+  // Erst die Aufgaben-Uhr abrechnen, dann die grosse anhalten - sonst laeuft
+  // die Zeit einer Aufgabe durch die Pause und durchs Feedback-Lesen weiter.
+  zeitStop();
   k.pauseSeit = Date.now();
   k.pauseGrund = grund || "pause";
   speichernJetzt();
@@ -427,14 +720,23 @@ export function zeigeKlausur(themen, zurueck) {
 
 function einstellungen() {
   var e = state.klausurEinst || {};
+  /* timerModus loest das frueher gemerkte dauerMin ab (07.09.2026): die Zeit
+     haengt jetzt am Modus (volle Klausur 90/120, halbe 45/60), eine gemerkte
+     Minutenzahl passte also nach dem Umschalten nicht mehr. Ein alter
+     Lernstand traegt noch dauerMin - daraus wird einmalig die Stufe gelesen,
+     damit Rose ihre Wahl nicht verliert. Danach faellt das Feld beim naechsten
+     Speichern von selbst heraus, wie seinerzeit umfang. */
+  var tm = e.timerModus;
+  if (tm !== "aus" && tm !== "normal" && tm !== "nta") tm = (e.dauerMin === 90 ? "normal" : "nta");
   return {
-    dauerMin: e.dauerMin === 90 ? 90 : 120,          // Nachteilsausgleich ist Default
-    feedback: e.feedback === "sofort" ? "sofort" : "ende",
+    timerModus: tm,                                  // Nachteilsausgleich ist Default
+    // Sofort je Aufgabe ist seit dem 07.09.2026 der Default (Jennifer). Beim
+    // Ueben ist die Rueckmeldung am Stueck mehr wert als die Ernstfall-Treue,
+    // und die Uhr steht waehrend des Lesens ohnehin still.
+    feedback: e.feedback === "ende" ? "ende" : "sofort",
     blatt: e.blatt === "hell" ? "hell" : "dunkel"
-    // umfang fehlt hier mit Absicht - siehe einstellungenMerken(). Der Wert wird
-    // auch dann nicht mehr gelesen, wenn er aus frueheren Laeufen noch im
-    // gespeicherten klausurEinst steht; sonst haette sich fuer Rose nichts
-    // geaendert. Der Default steht stattdessen in zeigeSetup().
+    // umfang und modus fehlen hier mit Absicht - siehe einstellungenMerken().
+    // Ihre Defaults stehen in zeigeSetup().
   };
 }
 
@@ -443,10 +745,16 @@ function einstellungen() {
    wenig Themen. Die Wahl soll bei jedem Bogen neu getroffen werden, alles
    andere (Zeit, Feedback, Blatt) bleibt gemerkt. Weil einstellungen() den
    Schluessel nicht mehr liefert, faellt der alte Wert beim naechsten Speichern
-   von selbst aus dem Lernstand - es braucht keine Aufraeum-Runde. */
+   von selbst aus dem Lernstand - es braucht keine Aufraeum-Runde.
+
+   modus (voll/halbe) faellt seit dem 07.09.2026 unter dieselbe Regel und aus
+   demselben Grund: die halbe Klausur ist die bequemere Wahl, und gemerkt waere
+   sie nach zwei Sitzungen die einzige. Der Bogen faengt jedes Mal bei der
+   vollen Klausur an - wer die halbe will, tippt einmal. */
 function einstellungenMerken(neu) {
   var merken = Object.assign({}, neu);
   delete merken.umfang;
+  delete merken.modus;
   state.klausurEinst = Object.assign(einstellungen(), merken);
   speichernJetzt();
 }
@@ -469,9 +777,14 @@ function zeigeFortsetzen() {
   var karte = el("div", "karte");
   karte.appendChild(el("h2", null, "Da liegt noch ein angefangener Bogen"));
   var geschrieben = Object.keys(k.blaetter).filter(function (id) { return (k.blaetter[id].text || "").trim(); }).length;
+  var rest = restMs(k);
   karte.appendChild(el("p", null,
+    (kModus(k) === "halbe" ? "Halbe Klausur, " : "") +
     k.aufgaben.length + " Aufgaben, " + gesamtPunkte(k) + " Punkte, " +
-    (k.phase === "korrektur" ? "bereits abgegeben - die Auswertung wartet." : geschrieben + " Blätter schon beschrieben.")));
+    (k.phase === "korrektur"
+      ? "bereits abgegeben - die Auswertung wartet."
+      : geschrieben + " Blätter schon beschrieben." +
+        (rest === null ? "" : rest > 0 ? " Auf der Uhr stehen noch " + uhrText(rest) + "." : " Die Zeit war um - weiterschreiben geht trotzdem."))));
   karte.appendChild(el("p", null, "Beides ist völlig in Ordnung: weitermachen oder frisch anfangen."));
 
   var reihe = el("div", "knopf-reihe");
@@ -497,70 +810,117 @@ function zeigeFortsetzen() {
   app.appendChild(karte);
 }
 
-// segment() ist nach ui.js gewandert (segmentWahl) - dieselben Schalter
-// bauen seit dem 12.08. auch die anderen Runden ihren Baukasten.
-var segment = segmentWahl;
+/* Was der eingestellte Bogen enthalten wird. Steht als Satz ueber den
+   Schaltern, damit "5 wie in echt" und "halbe Klausur" nicht geraten werden
+   muessen. Die Zahlen kommen aus THEMEN und HALBE_AUFGABEN, also aus denselben
+   Quellen, aus denen erstelleKlausur() nachher wirklich zieht - eine
+   hartkodierte Zahl wuerde hier irgendwann luegen. */
+function setupVorschau(wahl) {
+  var n = THEMEN.length;
+  if (wahl.modus === "halbe") {
+    var m = Math.min(HALBE_AUFGABEN, n);
+    return wahl.umfang === "fuenf"
+      ? HALBE_AUFGABEN + " Aufgaben über 5 Themen — zwei Themen bekommen eine zweite."
+      : HALBE_AUFGABEN + " Aufgaben über " + m + " der " + n + " Themen, je eine. Welches Thema aussetzt, wechselt von Bogen zu Bogen.";
+  }
+  return wahl.umfang === "fuenf"
+    ? "15 bis 16 Aufgaben über 5 Themen, je 3 bis 4 — der Zuschnitt der echten Klausur."
+    : (n * 2) + " Aufgaben über alle " + n + " Themen, je 2.";
+}
 
-function zeigeSetup() {
+/* Der Einstieg. vorwahl haelt die bereits getroffenen Stellungen fest: das
+   Umschalten zwischen voller und halber Klausur zeichnet den Screen neu, weil
+   die Zeiten, die Vorschau und der Erklaertext daran haengen - ohne die
+   Uebergabe faengt Rose bei jedem Tipp auf "Halbe Klausur" wieder von vorn an. */
+function zeigeSetup(vorwahl) {
   imLauf = false;
   leeren();
   kopfLeiste("Klausur-Simulation", "Wie am 10.09.: Papier, Stift, offene Aufgaben. Nur ohne Ernstfall.");
 
   var e = einstellungen();
-  // umfang kommt nicht aus einstellungen() (wird nicht gemerkt), sondern faengt
-  // jedes Mal bei "alle" an. Der Wert muss hier wirklich stehen: segmentWahl
-  // vergleicht mit ===, ein undefined liesse beide Knoepfe unmarkiert.
-  var wahl = { dauerMin: e.dauerMin, feedback: e.feedback, blatt: e.blatt, umfang: "alle" };
+  /* modus und umfang kommen nicht aus einstellungen() (werden nicht gemerkt),
+     sondern fangen jedes Mal bei der vollen Klausur ueber alle Themen an. Die
+     Werte muessen hier wirklich stehen: segmentWahl vergleicht mit ===, ein
+     undefined liesse alle Knoepfe unmarkiert. */
+  var wahl = Object.assign({
+    modus: "voll",
+    umfang: "alle",
+    timerModus: e.timerModus,
+    feedback: e.feedback,
+    blatt: e.blatt
+  }, vorwahl || {});
+
+  var halb = wahl.modus === "halbe";
+  var dauer = DAUER[halb ? "halbe" : "voll"];
 
   var info = el("div", "karte info-karte");
   var ul = document.createElement("ul");
   [
-    "Punkte stehen an jeder Aufgabe, bestanden ab der Hälfte. Pausieren geht jederzeit.",
-    "Bewertet wird an den Stichpunkten - du entscheidest, was ein Punkt wert war."
+    setupVorschau(wahl),
+    halb
+      ? "Nur die Kernkompetenzen, alle drei AFB-Stufen, und möglichst Aufgaben, die du noch nie hattest."
+      : "Punkte stehen an jeder Aufgabe, bestanden ab der Hälfte. Pausieren geht jederzeit.",
+    "Du schreibst in der Reihenfolge, die du willst — abgegeben wird unten mit einem Knopf.",
+    "Bewertet wird an den Stichpunkten — du entscheidest, was ein Punkt wert war."
   ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
   info.appendChild(ul);
   app.appendChild(info);
 
   var setup = el("div", "karte kl-setup");
 
-  var z0 = el("div", "zeile");
-  var l0 = el("div", "label", "Umfang");
-  /* Die Zahl kommt aus THEMEN, also aus data/manifest.json (core.js ladeThemen) -
-     dieselbe Liste, aus der waehleThemen() zieht. Faellt ein Thema weg oder kommt
-     eines dazu, aendert sich der Text mit; eine hartkodierte 8 wuerde dann luegen.
+  function zeile(labelText, kleinText, werte, schluessel, beiWahl) {
+    var z = el("div", "zeile");
+    var l = el("div", "label", labelText);
+    if (kleinText) l.appendChild(el("div", "klein", kleinText));
+    z.appendChild(l);
+    z.appendChild(segmentWahl(werte, wahl[schluessel], function (v) {
+      wahl[schluessel] = v;
+      if (beiWahl) beiWahl(v);
+    }));
+    setup.appendChild(z);
+  }
+
+  /* Modus. Zeichnet den Screen neu statt nur den Wert zu setzen: Zeiten,
+     Vorschau und Erklaertext haengen alle daran. wahl wird dabei
+     weitergereicht, es geht also nichts verloren. */
+  zeile("Klausur", halb
+    ? "Die halbe zum Zwischendurchüben — halbe Zeit, halber Bogen."
+    : "Die volle Simulation, so lang wie am 10.09.",
+    [{ wert: "voll", text: "Volle Klausur" }, { wert: "halbe", text: "Halbe Klausur" }],
+    "modus", function () { zeigeSetup(wahl); });
+
+  /* Umfang gilt seit dem 07.09.2026 fuer BEIDE Modi (Jennifer). Die Zahl kommt
+     aus THEMEN, also aus data/manifest.json (core.js ladeThemen) - dieselbe
+     Liste, aus der waehleThemen() zieht. Faellt ein Thema weg oder kommt eines
+     dazu, aendert sich der Text mit; eine hartkodierte 8 wuerde dann luegen.
      Die 5 daneben bleibt fest: das ist die echte Klausur, nicht unser Korpus. */
-  var alleN = THEMEN.length;
-  l0.appendChild(el("div", "klein", "Alle " + alleN + " mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben."));
-  z0.appendChild(l0);
-  z0.appendChild(segment([{ wert: "alle", text: "Alle " + alleN + " Themen" }, { wert: "fuenf", text: "5 wie in echt" }], wahl.umfang, function (v) { wahl.umfang = v; }));
-  setup.appendChild(z0);
+  zeile("Umfang", halb
+    ? "Alle Themen streuen breiter, 5 trifft den echten Zuschnitt."
+    : "Alle " + THEMEN.length + " mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben.",
+    [{ wert: "alle", text: "Alle " + THEMEN.length + " Themen" }, { wert: "fuenf", text: "5 wie in echt" }],
+    "umfang", function () { zeigeSetup(wahl); });
 
-  var z1 = el("div", "zeile");
-  var l1 = el("div", "label", "Zeit");
-  l1.appendChild(el("div", "klein", "Dein Nachteilsausgleich sind 120 Minuten."));
-  z1.appendChild(l1);
-  z1.appendChild(segment([{ wert: 120, text: "120 min" }, { wert: 90, text: "90 min" }], wahl.dauerMin, function (v) { wahl.dauerMin = v; }));
-  setup.appendChild(z1);
+  // Dieselben drei Stufen wie im ST-Trainer. Die Minuten stehen im
+  // Kleingedruckten statt auf den Knoepfen: am Handy muessen die kurz bleiben.
+  zeile("Zeit", "Normal sind " + dauer.normal + " Minuten, dein Nachteilsausgleich " + dauer.nta + ". Ohne Uhr läuft nur die Stoppuhr mit.",
+    [{ wert: "aus", text: "Ohne" },
+     { wert: "normal", text: "Normal" },
+     { wert: "nta", text: "+ Nachteilsausgleich" }],
+    "timerModus");
 
-  var z2 = el("div", "zeile");
-  var l2 = el("div", "label", "Feedback");
-  l2.appendChild(el("div", "klein", "Je Aufgabe hilft beim Lernen, am Ende ist näher an echt."));
-  z2.appendChild(l2);
-  z2.appendChild(segment([{ wert: "ende", text: "Am Ende" }, { wert: "sofort", text: "Je Aufgabe" }], wahl.feedback, function (v) { wahl.feedback = v; }));
-  setup.appendChild(z2);
+  zeile("Feedback", "Sofort hält die Uhr an, solange du liest — dafür ist die Aufgabe danach festgelegt. Am Ende ist näher an echt.",
+    [{ wert: "sofort", text: "Sofort je Aufgabe" }, { wert: "ende", text: "Am Ende" }],
+    "feedback");
 
-  var z3 = el("div", "zeile");
-  var l3 = el("div", "label", "Blatt");
-  l3.appendChild(el("div", "klein", "Helles Blatt ist kontrastreicher, getönt ist augenfreundlicher."));
-  z3.appendChild(l3);
-  z3.appendChild(segment([{ wert: "dunkel", text: "Getönt" }, { wert: "hell", text: "Hell" }], wahl.blatt, function (v) { wahl.blatt = v; }));
-  setup.appendChild(z3);
+  zeile("Blatt", "Helles Blatt ist kontrastreicher, getönt ist augenfreundlicher.",
+    [{ wert: "dunkel", text: "Getönt" }, { wert: "hell", text: "Hell" }],
+    "blatt");
 
   var start = el("button", "knopf", "Bogen austeilen");
   start.style.marginTop = "16px";
   start.addEventListener("click", function () {
     einstellungenMerken(wahl);
-    state.klausur = erstelleKlausur(wahl.dauerMin, wahl.feedback, wahl.umfang);
+    state.klausur = erstelleKlausur(wahl);
     speichernJetzt();
     rendereLauf();
   });
@@ -588,15 +948,17 @@ function kopfBauen(imKorrektur) {
   var k = state.klausur;
   var kopf = el("div", "kl-kopf");
 
-  var uhr = el("div", "kl-uhr", imKorrektur ? "✓" : uhrText(restMs(k)));
+  var uhr = el("div", "kl-uhr", imKorrektur ? "✓"
+    : (hatUhr(k) ? uhrText(restMs(k)) : uhrTextGelaufen(verbrauchtMs(k))));
   uhr.id = "kl-uhr";
+  if (!imKorrektur && !hatUhr(k)) uhr.title = "Ohne Zeitlimit - das ist deine bisherige Schreibzeit.";
   kopf.appendChild(uhr);
 
   var meta = el("div", "kl-kopf-meta");
   meta.id = "kl-meta";
   meta.textContent = imKorrektur
     ? "Auswertung - in deinem Tempo"
-    : (k.aufgaben.length + " Aufgaben · " + gesamtPunkte(k) + " Punkte");
+    : bogenZeile(k);
   kopf.appendChild(meta);
 
   if (!imKorrektur) {
@@ -630,9 +992,12 @@ function sprungBauen(imKorrektur) {
   k.aufgaben.forEach(function (a) {
     var t = themaVon(a);
     var chip = el("button", "kl-chip", a.label);
+    chip.id = "chip-" + a.nr;
     if (t) setzeFarbe(chip, t.farbe);
     var text = k.blaetter[a.blaetter[0]] && a.blaetter.some(function (id) { return (k.blaetter[id].text || "").trim() || k.blaetter[id].canvasBild; });
     if (text) chip.classList.add("hat-text");
+    // Festgelegt: die Aufgabe ist durch, dort gibt es nichts mehr zu tun.
+    if (!imKorrektur && a.gesperrt) chip.classList.add("gesperrt");
     if (imKorrektur && a.punkte !== null) chip.classList.add("aktiv");
     chip.addEventListener("click", function () {
       var ziel = document.getElementById("wrap-" + (imKorrektur ? "k" + a.nr : a.blaetter[0]));
@@ -684,7 +1049,7 @@ function aufgabenbogenBauen() {
   var kopf = el("div", "amtskopf");
   kopf.appendChild(el("div", "uni", "Übungsklausur · GE-Trainer"));
   kopf.appendChild(el("div", "titel", "Didaktik im Förderschwerpunkt geistige Entwicklung"));
-  kopf.appendChild(el("div", "fach", "Aufgabenbogen"));
+  kopf.appendChild(el("div", "fach", kModus(k) === "halbe" ? "Aufgabenbogen · halbe Klausur" : "Aufgabenbogen"));
   b.appendChild(kopf);
 
   var fz = el("div", "feldzeile");
@@ -699,7 +1064,8 @@ function aufgabenbogenBauen() {
   b.appendChild(fz);
 
   b.appendChild(el("div", "rahmenzeile",
-    k.dauerMin + " Minuten · " + gesamtPunkte(k) + " Punkte · bestanden ab " +
+    (hatUhr(k) ? k.dauerMin + " Minuten" : "ohne Zeitlimit") +
+    " · " + gesamtPunkte(k) + " Punkte · bestanden ab " +
     bestehensGrenze(k) + " Punkten · Hilfsmittel: keine"));
 
   var ol = el("ol", "aufgabenliste");
@@ -753,14 +1119,32 @@ function schreibBlattBauen(a, blattId, istLetztes) {
   ta.className = "kl-schrift";
   ta.value = blatt.text || "";
   ta.setAttribute("aria-label", "Antwort Aufgabe " + a.label);
-  if (blatt.teil === 1) ta.placeholder = "Hier schreiben - ganze Sätze, Fachbegriffe rein.";
+  if (a.gesperrt) {
+    // Festgelegt: sie hat das Feedback zu dieser Aufgabe aufgemacht. readOnly
+    // statt disabled - der Text bleibt lesbar, markierbar und normal gefaerbt,
+    // ein disabled-Textarea graut auf dem Handy komplett aus.
+    ta.readOnly = true;
+    ta.setAttribute("aria-readonly", "true");
+  } else if (blatt.teil === 1) {
+    ta.placeholder = "Hier schreiben - ganze Sätze, Fachbegriffe rein.";
+  }
   ta.addEventListener("input", function () {
+    if (a.gesperrt) return;
     blatt.text = ta.value;
     autoWachsen(ta);
     speichernBald();
   });
+  /* Die Uhr dieser Aufgabe laeuft, solange der Cursor im Feld steht. Ein
+     gesperrtes Blatt zaehlt nicht mehr mit - dort wird nur noch gelesen. */
+  ta.addEventListener("focus", function () { if (!a.gesperrt) zeitStart(a); });
+  ta.addEventListener("blur", function () { zeitStop(); });
   b.appendChild(ta);
   requestAnimationFrame(function () { autoWachsen(ta); });
+
+  if (a.gesperrt && istLetztes) {
+    b.appendChild(el("div", "kl-anhang-hinweis kl-gesperrt-hinweis",
+      "Festgelegt — du hast das Feedback zu dieser Aufgabe schon gesehen. Die anderen Aufgaben kannst du weiter ändern."));
+  }
 
   if (blatt.canvasBild) {
     var img = document.createElement("img");
@@ -779,6 +1163,7 @@ function schreibBlattBauen(a, blattId, istLetztes) {
      das Ueben auf echtem Papier genauso weit kommen wie das digitale. */
   var werkzeuge = el("div", "kl-werkzeuge");
   var stift = el("button", "kl-stift", "✎");
+  werkzeuge.dataset.fuer = String(a.nr);
   stift.type = "button";
   stift.title = "Mit dem Stift schreiben";
   stift.setAttribute("aria-label", "Mit Stift schreiben");
@@ -796,13 +1181,16 @@ function schreibBlattBauen(a, blattId, istLetztes) {
     beiStart: function () { toast("Bild wird vorbereitet …", 2500); },
     beiFehler: function (satz) { toast(satz, 6000); }
   }).forEach(function (k) { werkzeuge.appendChild(k); });
-  b.appendChild(werkzeuge);
+  // Stift, Kamera und Upload schreiben alle drei ins selbe Blatt - bei einer
+  // festgelegten Aufgabe waeren sie ein Weg an der Sperre vorbei.
+  if (!a.gesperrt) b.appendChild(werkzeuge);
 
   var box = document.createDocumentFragment();
   box.appendChild(teil.wrap);
 
-  if (istLetztes) {
+  if (istLetztes && !a.gesperrt) {
     var neu = el("button", "kl-neuer-abschnitt", "Neuer Abschnitt");
+    neu.id = "na-" + a.nr;
     neu.addEventListener("click", function () {
       var y = scrollMerken();
       k.blattZaehler++;
@@ -816,12 +1204,15 @@ function schreibBlattBauen(a, blattId, istLetztes) {
       if (neuTa) neuTa.focus();
     });
     box.appendChild(neu);
+  }
 
-    if (k.feedback === "sofort") {
-      var fb = el("button", "kl-neuer-abschnitt", "Feedback zu Aufgabe " + a.label);
-      fb.addEventListener("click", function () { sofortFeedback(a, fb); });
-      box.appendChild(fb);
-    }
+  // Der Feedback-Knopf bleibt auch bei einer festgelegten Aufgabe stehen:
+  // nachlesen darf sie jederzeit, nur aendern nicht mehr.
+  if (istLetztes && k.feedback === "sofort") {
+    var fb = el("button", "kl-neuer-abschnitt", feedbackKnopfText(a));
+    fb.id = "fbk-" + a.nr;
+    fb.addEventListener("click", function () { sofortFeedback(a, fb); });
+    box.appendChild(fb);
   }
 
   return box;
@@ -832,16 +1223,87 @@ function schreibBlattBauen(a, blattId, istLetztes) {
 // steht im DOM: nach einem Re-Render sind alle weg, dann darf die Uhr weiter.
 function feedbackOffen() { return !!document.querySelector(".kl-feedback"); }
 
+/* Die Beschriftung des Feedback-Knopfs. An EINER Stelle, weil sie an drei
+   Stellen gebraucht wird (beim Bauen, beim Zumachen, nach dem Sperren) und
+   dabei zweierlei sagen muss: vor dem Festlegen ist es eine Entscheidung,
+   danach nur noch Nachlesen. */
+function feedbackKnopfText(a) {
+  return (a.gesperrt ? "Feedback nochmal ansehen — Aufgabe " : "Feedback zu Aufgabe ") + a.label;
+}
+
+/* Eine Aufgabe festlegen. Passiert genau dann, wenn Rose ihr Feedback zum
+   ersten Mal aufmacht (Jennifer, 07.09.2026): bis dahin darf sie auf dem
+   ganzen Bogen frei springen und alles umschreiben, wie in einer echten
+   Klausur - wer aber die Stichpunkte und die Musterloesung gesehen hat, kann
+   seine Antwort nicht mehr ehrlich nachbessern.
+
+   Aendert das DOM an Ort und Stelle statt neu zu rendern. rendereLauf() waere
+   einfacher, wuerde aber (a) die Scrollposition verlieren, (b) ueber
+   k.pauseGrund === "feedback" die Uhr wieder anwerfen, die gleich anhalten
+   soll, und (c) alle offenen Feedback-Blaetter anderer Aufgaben wegwerfen. */
+function sperren(a) {
+  if (a.gesperrt) return;
+  a.gesperrt = true;
+  zeitStop();
+  speichernJetzt();
+  a.blaetter.forEach(function (id, i) {
+    var w = document.getElementById("wrap-" + id);
+    if (!w) return;
+    w.classList.add("gesperrt");
+    var ta = w.querySelector(".kl-schrift");
+    if (ta) {
+      ta.readOnly = true;
+      ta.setAttribute("aria-readonly", "true");
+      ta.placeholder = "";
+    }
+    var wz = w.querySelector(".kl-werkzeuge");
+    if (wz) wz.remove();
+    if (i === a.blaetter.length - 1) {
+      var bl = w.querySelector(".kl-blatt");
+      if (bl && !bl.querySelector(".kl-gesperrt-hinweis")) {
+        bl.appendChild(el("div", "kl-anhang-hinweis kl-gesperrt-hinweis",
+          "Festgelegt — du hast das Feedback zu dieser Aufgabe schon gesehen. Die anderen Aufgaben kannst du weiter ändern."));
+      }
+    }
+  });
+  // "Neuer Abschnitt" gehoert der Aufgabe, nicht dem Blatt, und steht hinter
+  // dem letzten - ohne diese Zeile bliebe der Weg zu einem leeren Blatt offen.
+  var na = document.getElementById("na-" + a.nr);
+  if (na) na.remove();
+  // Die Sprungleiste zeigt es mit: ein Chip mit Haken ist erledigt.
+  var chip = document.getElementById("chip-" + a.nr);
+  if (chip) chip.classList.add("gesperrt");
+  var fbk = document.getElementById("fbk-" + a.nr);
+  if (fbk) fbk.textContent = feedbackKnopfText(a);
+}
+
 function sofortFeedback(a, knopf) {
   var vorhanden = document.getElementById("fb-" + a.nr);
   if (vorhanden) {
     vorhanden.remove();
     if (!feedbackOffen()) weiterlaufen();   // erst wenn das letzte Blatt zu ist
-    knopf.textContent = "Feedback zu Aufgabe " + a.label;
-    if (!state.klausur.pauseSeit) metaSetzen(state.klausur.aufgaben.length + " Aufgaben · " + gesamtPunkte(state.klausur) + " Punkte");
+    knopf.textContent = feedbackKnopfText(a);
+    if (!state.klausur.pauseSeit) metaSetzen(bogenZeile(state.klausur));
     tick();
     return;
   }
+  /* Beim ERSTEN Mal fragen. Die Uhr laeuft waehrend der Frage weiter und das
+     ist Absicht: sich zu entscheiden gehoert zur Klausurzeit. Wer abbricht,
+     verliert nichts - die Aufgabe bleibt offen. */
+  if (!a.gesperrt) {
+    return void frag("Aufgabe " + a.label + " festlegen?",
+      "Im Feedback stehen die Stichpunkte und die Musterlösung. Danach lässt sich diese eine Aufgabe nicht mehr ändern — alle anderen bleiben offen.",
+      "Feedback zeigen", "Noch weiterschreiben")
+      .then(function (ja) {
+        if (!ja) return;
+        sperren(a);
+        feedbackOeffnen(a, knopf);
+      });
+  }
+  feedbackOeffnen(a, knopf);
+}
+
+function feedbackOeffnen(a, knopf) {
   pausiere("feedback");
   tick();
   metaSetzen("Uhr steht - Lesen ist keine Schreibzeit.");
@@ -861,10 +1323,16 @@ function abgabeBlattBauen() {
   var k = state.klausur;
   var teil = blattWrap("abgabe", "abgabe");
   var b = teil.blatt;
-  b.appendChild(el("p", null, "Wenn du magst, gehst du nochmal nach oben durch. Danach:"));
+  b.appendChild(el("p", null, k.feedback === "sofort"
+    ? "Alles, was noch nicht festgelegt ist, kannst du oben weiter ändern. Wenn du durch bist:"
+    : "Wenn du magst, gehst du nochmal nach oben durch — bis zur Abgabe ist alles änderbar. Danach:"));
   var ab = el("button", "kl-abgabe-knopf", "Abgeben und auswerten");
   ab.addEventListener("click", function () {
+    /* Was noch gar nichts abbekommen hat. Eine festgelegte Aufgabe zaehlt nie
+       dazu, auch wenn nichts darin steht: Rose hat sich dort bewusst das
+       Feedback geholt und damit entschieden, dass sie fertig ist. */
     var offen = k.aufgaben.filter(function (a) {
+      if (a.gesperrt) return false;
       return !a.blaetter.some(function (id) { return (k.blaetter[id].text || "").trim() || k.blaetter[id].canvasBild; });
     }).length;
     var weiter = offen
@@ -901,6 +1369,9 @@ function rendereLauf() {
   if (k.pauseSeit && k.pauseGrund === "pause") {
     metaSetzen("Pause läuft. Die Uhr steht still.");
   }
+  // Ein Re-Render wirft das Textfeld weg, in dem der Cursor stand - die
+  // Aufgaben-Uhr haette sonst keinen blur mehr bekommen und liefe weiter.
+  zeitStop();
   timerStarten();
 }
 
@@ -1852,9 +2323,29 @@ function logAufgaben(k) {
     var e = {
       qid: a.qid, thema: a.thema, afb: a.afb,
       punkte: a.punkte, max: a.max,
+      /* modus bleibt "klausur", auch bei der halben (07.09.2026). An genau
+         diesem String haengen wertVon() in stats.js (und damit das AFB-Raster
+         UND die Kompetenz-Abdeckung), die Modus-Tabelle im Verlauf und der
+         Wiederholen-Knopf in main.js. Ein eigener modus-Wert fuer die halbe
+         Klausur wuerde sie aus allen dreien herauskippen. Welcher Bogen es
+         war, steht daneben in kunfang/kmodus - Felder, die nur liest, wer
+         sie kennt. */
       modus: "klausur", kid: k.id,
       sid: k.id, art: "klausur",
+      // "voll" | "halbe" - steht zum Log-Zeitpunkt fest (eiserne Regel in core.js).
+      kmodus: kModus(k),
       bearbeitet: sp.bearbeitet, hand: sp.hand,
+      /* Die echte Schreibzeit an DIESER Aufgabe. core.js fuellt zeit sonst mit
+         dem Abstand zur vorigen Antwort - das waere hier grob falsch, weil
+         alle Aufgaben eines Bogens erst beim Abschliessen auf einmal ins Log
+         wandern und der Abstand dann ein paar Millisekunden betruege. Ein
+         gesetzter Wert wird von logAntwort() nie ueberschrieben.
+         Null statt 0, wenn nichts gemessen wurde (handschriftlich auf Papier,
+         oder abgetippt ohne dass das Feld je den Fokus hatte). */
+      zeit: a.sekunden ? a.sekunden : null,
+      // Hat sie sich das Feedback waehrend der Klausur geholt? Das aendert,
+      // wie eine Punktzahl zu lesen ist.
+      gesperrt: !!a.gesperrt,
       // Treffer je Stichpunkt, direkt so wie in der Bewertung angeklickt.
       // Daraus laesst sich spaeter sagen, welcher Stichpunkt regelmaessig fehlt.
       bewertung: Array.isArray(a.bewertung) ? a.bewertung.slice() : null,
@@ -1914,7 +2405,9 @@ function klausurSitzung(k, bewertet) {
     erstellt: k.gestartet,
     ts: Date.now(),
     art: "klausur",
-    titel: "Klausur-Simulation",
+    // Der Titel steht so im Verlauf. art und modus bleiben "klausur" - daran
+    // haengt die Gruppierung und der Wiederholen-Knopf (main.js).
+    titel: kModus(k) === "halbe" ? "Halbe Klausur" : "Klausur-Simulation",
     modus: "klausur",
     anzahl: k.aufgaben.length,
     dauerSek: Math.max(0, Math.round((Date.now() - k.gestartet - (k.pausiertMs || 0)) / 1000)),
@@ -1955,7 +2448,9 @@ function abschliessen() {
     id: k.id,
     ts: k.gestartet,
     modus: "klausur",
-    timerModus: k.dauerMin + "min",
+    // "90min" / "120min" / "45min" / "60min" - oder "ohne", seit es einen Bogen
+    // ohne Uhr gibt. Ein "nullmin" waere in der Tabelle nicht auswertbar.
+    timerModus: hatUhr(k) ? k.dauerMin + "min" : "ohne",
     dauerSek: Math.round((Date.now() - k.gestartet - (k.pausiertMs || 0)) / 1000),
     anzahl: k.aufgaben.length,
     punkte: hatP,
@@ -1970,6 +2465,12 @@ function abschliessen() {
       // fehlt das Feld, und geraten ist besser als leer.
       themen: k.themen,
       umfang: k.umfang || (k.themen.length > 5 ? "alle" : "fuenf"),
+      // Gleiche Begruendung wie bei umfang: eine Angabe, die der Bogen HAT,
+      // wird nicht aus der Aufgabenzahl erraten. Ein Bogen von vor dem
+      // 07.09.2026 traegt sie nicht - dann ist es eine volle Klausur, denn
+      // eine andere gab es nicht.
+      modus: kModus(k),
+      timerModus: kTimer(k),
       feedback: k.feedback,
       // proFrage wie im ST-Trainer: ohne das steht in der Datenbank von einer
       // ganzen Klausur nur eine Gesamtpunktzahl, und "welche Themen kosten
@@ -1981,7 +2482,12 @@ function abschliessen() {
           qid: a.qid, thema: a.thema, afb: a.afb,
           punkte: a.punkte, max: a.max,
           bewertung: Array.isArray(a.bewertung) ? a.bewertung.slice() : null,
-          punkteKi: a.punkteKi == null ? null : a.punkteKi
+          punkteKi: a.punkteKi == null ? null : a.punkteKi,
+          // Schreibzeit und ob die Aufgabe waehrend des Laufs festgelegt wurde.
+          // Erst damit laesst sich ueber mehrere Boegen fragen, welche Aufgaben
+          // Zeit kosten - die Gesamtdauer allein sagt das nie.
+          sekunden: a.sekunden || 0,
+          gesperrt: !!a.gesperrt
         };
       })
     },

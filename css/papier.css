@@ -93,6 +93,12 @@
 .kl-chip.hat-text { border-color: var(--tfarbe); }
 .kl-chip.aktiv { background: var(--tfarbe); color: #14111f; border-color: transparent; }
 :root[data-theme="hell"] .kl-chip.aktiv { color: #fff; }
+/* Festgelegt (07.09.2026): Rose hat das Feedback zu dieser Aufgabe schon
+   gesehen, dort ist nichts mehr zu tun. Bewusst ZURUECKGENOMMEN und nicht
+   hervorgehoben - der Haken soll den Blick auf das lenken, was noch offen ist,
+   nicht auf das Erledigte. */
+.kl-chip.gesperrt { opacity: .55; }
+.kl-chip.gesperrt::after { content: " \2713"; }
 
 /* ---------- Blatt ---------- */
 
@@ -173,6 +179,14 @@
   border: 1px solid var(--blatt-rand); border-radius: 3px;
   background: #fff;
 }
+/* Ein festgelegtes Blatt. Der Text bleibt voll lesbar - nur das Blatt selbst
+   tritt einen Schritt zurueck, damit beim Scrollen sofort zu sehen ist, wo
+   noch geschrieben werden kann. Kein Ausgrauen des Textes: das ist Roses
+   Arbeit, und sie soll sie beim Feedback-Lesen daneben sehen koennen. */
+.kl-blatt-wrap.gesperrt .kl-blatt { opacity: .92; }
+.kl-blatt-wrap.gesperrt .kl-schrift { cursor: default; }
+.kl-gesperrt-hinweis { font-style: italic; }
+
 .kl-anhang-hinweis {
   font-family: "Karla", system-ui, sans-serif;
   font-size: .76rem; color: var(--blatt-ink-2); margin-top: 4px;
