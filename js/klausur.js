@@ -668,11 +668,12 @@ var zeitAuf = null;   // { a: Aufgabe, seit: ms }
 function zeitStop() {
   if (!zeitAuf) return;
   var sek = Math.round((Date.now() - zeitAuf.seit) / 1000);
-  // Deckel: wer das Feld offen laesst und weggeht, hat nicht zwei Stunden
-  // geschrieben. 20 Minuten an EINER Aufgabe sind bei 14 Punkten schon viel;
-  // darueber ist es eine Pause, und eine geratene Zahl waere schlechter als
-  // die ehrliche Untergrenze. visibilitychange faengt den haeufigen Fall
-  // ohnehin ab, dieser Deckel ist fuer den Rest.
+  /* Deckel je EINZELNEM Aufenthalt im Feld, nicht je Aufgabe: wer das Feld
+     offen laesst und weggeht, hat nicht zwei Stunden geschrieben. Ein
+     gesperrter Bildschirm ist genau so ein Aufenthalt und wird gekappt;
+     mehrere kurze Besuche summieren sich dagegen weiter, und das ist richtig -
+     eine Aufgabe, an der Rose dreimal zwoelf Minuten sass, hat sie auch
+     gekostet. Den haeufigsten Fall faengt ohnehin visibilitychange ab. */
   if (sek > 0) zeitAuf.a.sekunden = (zeitAuf.a.sekunden || 0) + Math.min(sek, 20 * 60);
   zeitAuf = null;
   speichernBald();
@@ -1912,6 +1913,13 @@ window.addEventListener("resize", function () {
 function abgeben() {
   var k = state.klausur;
   timerStoppen();
+  /* Die Aufgaben-Uhr abrechnen, BEVOR die Korrektur aufgeht. Ohne diese Zeile
+     zeigt zeitAuf noch auf die Aufgabe, in deren Textfeld der Cursor stand, als
+     Rose auf Abgeben getippt hat - ein blur kommt auf diesem Weg nie (die Rolle
+     wird komplett neu gebaut). Der naechste zeitStop() irgendwo waere dann die
+     ganze Lesezeit der Korrektur, gebucht auf eine Aufgabe, die laengst fertig
+     ist. rendereLauf() traegt denselben Riegel aus demselben Grund. */
+  zeitStop();
   weiterlaufen();
   k.phase = "korrektur";
   speichernJetzt();
