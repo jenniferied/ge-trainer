@@ -205,6 +205,26 @@ function themaVon(a) {
   return null;
 }
 
+/* Die Themen, aus denen ein Bogen GEZOGEN wird - seit dem 07.09.2026 nicht mehr
+   automatisch alle. Das Flag steht in fragen/manifest.json (inKlausur), core.js
+   reicht es durch; grundlagen (Foerderschule & Beschulung) steht dort auf false.
+
+   DIESE FUNKTION FILTERT NUR DIE AUSWAHL. themaVon() und frageVon() gehen
+   weiter ueber das volle THEMEN, und das ist der ganze Trick: ein Bogen, der
+   noch von vorher herumliegt, findet seine Grundlagen-Aufgabe samt Text,
+   Stichpunkten und Musterloesung - er wuerde sonst beim naechsten Oeffnen
+   "Diese Aufgabe steht nicht mehr im Fragenbestand" anzeigen und Roses
+   geschriebene Antwort waere nicht mehr bewertbar.
+
+   Ueberall sonst in der App bleibt das Thema unangetastet: Themen-Lernen,
+   Statistik, Stoebern, freies Ueben kennen das Flag gar nicht. */
+function klausurThemen() {
+  var raus = THEMEN.filter(function (t) { return t.inKlausur !== false; });
+  // Notbremse: waere das Manifest einmal so gesetzt, dass nichts uebrig
+  // bleibt, ist ein voller Bogen besser als gar keiner.
+  return raus.length ? raus : THEMEN.slice();
+}
+
 function frageVon(a) {
   var t = themaVon(a);
   if (!t || !t.frei) return null;
@@ -470,10 +490,11 @@ function erstelleKlausur(wahl) {
      das sieben Themen mit je einer, also setzt eines der acht aus. Welches,
      entscheidet waehleThemen() mit demselben Rotations-Malus wie sonst - ein
      fest ausgeschlossenes Thema waere nach drei Boegen ein blinder Fleck. */
+  var waehlbar = klausurThemen();
   var themenZahl = alleThemen
-    ? (modus === "halbe" ? Math.min(HALBE_AUFGABEN, THEMEN.length) : 0)
+    ? (modus === "halbe" ? Math.min(HALBE_AUFGABEN, waehlbar.length) : 0)
     : 5;
-  var gezogen = waehleThemen(THEMEN, themenZahl);
+  var gezogen = waehleThemen(waehlbar, themenZahl);
 
   // Welche Kompetenzerwartungen dieser Bogen schon abfragt. Wandert durch die
   // ganze Ziehung mit und wird in keNeuFaktor() ausgewertet.
@@ -817,11 +838,17 @@ function zeigeFortsetzen() {
    Quellen, aus denen erstelleKlausur() nachher wirklich zieht - eine
    hartkodierte Zahl wuerde hier irgendwann luegen. */
 function setupVorschau(wahl) {
-  var n = THEMEN.length;
+  var n = klausurThemen().length;
   if (wahl.modus === "halbe") {
     var m = Math.min(HALBE_AUFGABEN, n);
-    return wahl.umfang === "fuenf"
-      ? HALBE_AUFGABEN + " Aufgaben über 5 Themen — zwei Themen bekommen eine zweite."
+    if (wahl.umfang === "fuenf") return HALBE_AUFGABEN + " Aufgaben über 5 Themen — zwei Themen bekommen eine zweite.";
+    /* Zwei verschiedene Saetze, weil die Lage seit dem Ausschluss von
+       grundlagen (manifest inKlausur) eine andere ist: bei genau sieben
+       waehlbaren Themen geht jedes einmal dran und es setzt keines aus. Der
+       Satz vom Aussetzen stand hier zuerst fest verdrahtet und behauptete
+       danach "7 der 7 Themen, welches aussetzt wechselt". */
+    return m >= n
+      ? HALBE_AUFGABEN + " Aufgaben über alle " + n + " Themen, je eine."
       : HALBE_AUFGABEN + " Aufgaben über " + m + " der " + n + " Themen, je eine. Welches Thema aussetzt, wechselt von Bogen zu Bogen.";
   }
   return wahl.umfang === "fuenf"
@@ -897,8 +924,8 @@ function zeigeSetup(vorwahl) {
      Die 5 daneben bleibt fest: das ist die echte Klausur, nicht unser Korpus. */
   zeile("Umfang", halb
     ? "Alle Themen streuen breiter, 5 trifft den echten Zuschnitt."
-    : "Alle " + THEMEN.length + " mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben.",
-    [{ wert: "alle", text: "Alle " + THEMEN.length + " Themen" }, { wert: "fuenf", text: "5 wie in echt" }],
+    : "Alle " + klausurThemen().length + " mit je 2 Aufgaben deckt sicher ab. 5 wie in echt heißt je 3 bis 4 Aufgaben.",
+    [{ wert: "alle", text: "Alle " + klausurThemen().length + " Themen" }, { wert: "fuenf", text: "5 wie in echt" }],
     "umfang", function () { zeigeSetup(wahl); });
 
   // Dieselben drei Stufen wie im ST-Trainer. Die Minuten stehen im
@@ -2546,7 +2573,11 @@ export function zeigeMcQuer(themen, zurueck) {
   beendeRunde();   // siehe zeigeKlausur
 
   var pool = [];
-  THEMEN.forEach(function (t) { (t.mc || []).forEach(function (f) { pool.push({ f: f, t: t }); }); });
+  // Dieselbe Themenmenge wie der Klausurbogen: die Quermischung ist das
+  // Aufwaermen davor, sie soll nicht auf Stoff schicken, den die Simulation
+  // gar nicht mehr zieht. Wer grundlagen ueben will, findet es im
+  // Themen-Lernen, im freien Ueben und im Stoebern unveraendert.
+  klausurThemen().forEach(function (t) { (t.mc || []).forEach(function (f) { pool.push({ f: f, t: t }); }); });
   if (!pool.length) {
     leeren();
     kopfLeiste("Alle Themen", null);
@@ -2557,14 +2588,14 @@ export function zeigeMcQuer(themen, zurueck) {
   }
 
   leeren();
-  kopfLeiste("Ankreuzen", "Konzept-Check quer durch alle acht Themen – oder genau durch die, die du auswählst.");
+  kopfLeiste("Ankreuzen", "Konzept-Check quer durch alle " + klausurThemen().length + " Themen – oder genau durch die, die du auswählst.");
 
   /* THEMENWAHL AUCH HIER (Jennifer, 22.08.2026: "Bei MC alle Themen, aber auch
      Themen auswählbar machen, mit Anzahl wie viel es gibt jeweils"). Der
      Baukasten der MC-Runde hatte bis dahin Laenge, Auswahl und Erklaer-Modus,
      aber keine Themenwahl - die gab es nur in der Eigenen Runde. Die Vorgabe
      bleibt "alle an": die Klausur zieht ihre fuenf Themen auch unangekuendigt. */
-  var auswahl = themenAuswahl(THEMEN, {
+  var auswahl = themenAuswahl(klausurThemen(), {
     titel: "Welche Themen",
     klein: "Alle an ist die Vorgabe. Die Zahl in Klammern sagt, wie viele Ankreuzfragen dahinterstehen.",
     zaehle: function (id, unter) {

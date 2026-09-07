@@ -551,7 +551,7 @@ export function beiAntwort(fn) {
 /* ---------- Daten laden ---------- */
 
 // Laedt manifest.json + alle Themen-Dateien; reichert jedes Thema um
-// farbe/beispielthema aus dem Manifest an. Wirft bei Netz-/JSON-Fehlern.
+// farbe/beispielthema/inKlausur aus dem Manifest an. Wirft bei Netz-/JSON-Fehlern.
 export function ladeThemen() {
   return fetch("data/manifest.json")
     .then(function (r) { return r.json(); })
@@ -562,6 +562,12 @@ export function ladeThemen() {
           .then(function (thema) {
             thema.farbe = eintrag.farbe;
             thema.beispielthema = eintrag.beispielthema;
+            /* Zieht die Klausur-Simulation dieses Thema? Fehlt der Schluessel,
+               ist es drin - ein neues Thema muss nicht erst freigeschaltet
+               werden. Gefiltert wird damit NUR die Auswahl (klausur.js
+               klausurThemen), nirgends das Nachschlagen: sonst faende ein
+               bereits ausgeteilter Bogen seine eigenen Aufgaben nicht mehr. */
+            thema.inKlausur = eintrag.inKlausur !== false;
             return thema;
           });
       }));

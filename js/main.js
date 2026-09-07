@@ -2516,7 +2516,7 @@ function uebenKacheln() {
          Klausur statt der eingestellten Dauer, die der Bogen wirklich austeilt.
          Die Begruendung ist dieselbe wie in der Klausur-Infokarte weiter unten,
          nur kurz: wer die Auswahl nicht kennt, uebt alles. */
-      ["📄", "Klausur", "Papier & Stift wie am 10.09.: alle Themen, weil die 5 echten vorher niemand kennt · Umfang und Zeit wählbar · 120 min", function () { zeige("klausur"); }]
+      ["📄", "Klausur", "Papier & Stift wie am 10.09.: ganz oder halb, Umfang und Zeit wählbar · 45 bis 120 min", function () { zeige("klausur"); }]
     ] },
     { titel: "Nachschauen", kacheln: [
       /* Die Kachel scrollt seit dem 24.08. auf DERSELBEN Seite nach unten,

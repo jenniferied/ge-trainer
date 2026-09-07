@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "hinweis": "inKlausur: false schliesst ein Thema von der ZIEHUNG der Klausur-Simulation und der MC-Quermischung aus (klausur.js klausurThemen). Es bleibt ueberall sonst voll dabei - Themen-Lernen, Statistik, Stoebern, freies Ueben - und ein bereits ausgeteilter Bogen mit einer solchen Aufgabe funktioniert weiter, weil nur die Auswahl filtert, nicht das Nachschlagen. Fehlt der Schluessel, ist das Thema drin. grundlagen (Foerderschule & Beschulung, V1) steht seit dem 07.09.2026 auf false - Jennifers Entscheidung, damit die Simulation die sieben Themen zieht, auf die Rose sich konzentrieren will.",
   "themen": [
     { "datei": "konzeptionen.json", "farbe": "#7a4f9e", "beispielthema": true },
     { "datei": "entwicklungsbereiche.json", "farbe": "#1e7d74", "beispielthema": true },
@@ -8,6 +9,6 @@
     { "datei": "mobilitaet.json", "farbe": "#a83a4f", "beispielthema": true },
     { "datei": "wohnen.json", "farbe": "#4e7d2e", "beispielthema": false },
     { "datei": "freizeit.json", "farbe": "#c26a4a", "beispielthema": false },
-    { "datei": "grundlagen.json", "farbe": "#5b6770", "beispielthema": false }
+    { "datei": "grundlagen.json", "farbe": "#5b6770", "beispielthema": false, "inKlausur": false }
   ]
 }
