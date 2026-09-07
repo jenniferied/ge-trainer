@@ -259,6 +259,25 @@ function letzteLaeufe() {
     .map(function (l) { return l.themen; });
 }
 
+/* Welche Thema-x-Stufe-Paare trugen die letzten beiden Klausurlaeufe? Aus dem
+   Log gerechnet, kein neues Feld - Gegenstueck zu letzteLaeufe(), nur eine
+   Ebene feiner. Damit bekommt "Entwicklungsbereiche auf AFB III" beim naechsten
+   Bogen einen Malus, nicht bloss "Entwicklungsbereiche". */
+function letzteStufen() {
+  var laeufe = {};
+  state.antwortLog.forEach(function (a) {
+    if (a.modus !== "klausur" || !a.kid) return;
+    var l = laeufe[a.kid] || (laeufe[a.kid] = { ts: 0, paare: {} });
+    if (a.ts > l.ts) l.ts = a.ts;
+    if (a.thema && a.afb) l.paare[a.thema + "/" + a.afb] = true;
+  });
+  return Object.keys(laeufe)
+    .map(function (k) { return laeufe[k]; })
+    .sort(function (x, y) { return y.ts - x.ts; })
+    .slice(0, 2)
+    .map(function (l) { return l.paare; });
+}
+
 // Gewichtete Ziehung wie im ST-Trainer: gewicht * (0.4 + random), dann die besten n.
 function zieh(liste, n, gewFn) {
   return liste
@@ -469,39 +488,67 @@ function angebot(thema, stufe, qz) {
 function stufenZuteilung(gezogen, slots, qz) {
   var offen = slots.slice();
   var zu = gezogen.map(function () { return []; });
+  var letzte = letzteStufen();
+
+  /* Das Gewicht eines Themas fuer eine Stufe. Angebot mal Rotations-Malus -
+     WER ZULETZT AUF DIESER STUFE DRAN WAR, RUTSCHT NACH HINTEN.
+
+     Der Malus ist der Grund, warum hier gewichtet gezogen und nicht das
+     Maximum genommen wird (Korrektur vom 08.09.2026): das blosse Maximum war
+     deterministisch, und weil das Angebot je Thema fest ist, bekam ueber 1000
+     simulierte Boegen SECHS VON SIEBEN Themen immer exakt dieselbe Stufe -
+     Entwicklungsbereiche immer AFB III, Prinzipien immer AFB II,
+     Unterrichtsformen immer AFB I. Das war keine Streuung mehr, sondern ein
+     fester Stundenplan, und es hat die erste Fassung dieser Funktion in
+     dieselbe Falle laufen lassen wie die starre Rotation davor: viel Auswahl
+     auf dem Papier, immer dasselbe Ergebnis. */
+  function gewicht(t, stufe) {
+    var a = angebot(t, stufe, qz);
+    if (!a) return 0;
+    var schluessel = t.id + "/" + stufe;
+    if (letzte[0] && letzte[0][schluessel]) a *= 0.3;
+    else if (letzte[1] && letzte[1][schluessel]) a *= 0.6;
+    return a;
+  }
+
   // Wunsch: moeglichst gleich viele Aufgaben je AFB-Stufe ueber den Bogen.
   var wunsch = verteileSlots(3, HALBE_AUFGABEN);   // Index 0 = AFB I, 1 = II, 2 = III
   // Knapp zuerst: AFB III ist im Pensum am duennsten, AFB I im Ueberfluss da.
   [3, 2, 1].forEach(function (stufe) {
     var n = wunsch[stufe - 1];
     while (n > 0) {
-      var besterI = -1, bestesN = 0;
+      var kand = [];
       for (var i = 0; i < gezogen.length; i++) {
-        if (!offen[i]) continue;
         // Ein Thema soll dieselbe Stufe nicht zweimal bekommen, solange es
         // eine andere anbieten kann - sonst stehen zwei Aufgaben desselben
         // Themas auf derselben Stufe und der Bogen wird eintoenig.
-        if (zu[i].indexOf(stufe) >= 0) continue;
-        var a = angebot(gezogen[i], stufe, qz);
-        if (a > bestesN) { bestesN = a; besterI = i; }
+        if (!offen[i] || zu[i].indexOf(stufe) >= 0) continue;
+        var g = gewicht(gezogen[i], stufe);
+        if (g > 0) kand.push({ i: i, g: g });
       }
-      if (besterI < 0) break;            // diese Stufe kann gerade niemand mehr
-      zu[besterI].push(stufe);
-      offen[besterI]--;
+      if (!kand.length) break;           // diese Stufe kann gerade niemand mehr
+      var gewaehlt = zieh(kand, 1, function (x) { return x.g; })[0];
+      zu[gewaehlt.i].push(stufe);
+      offen[gewaehlt.i]--;
       n--;
     }
   });
-  // Was jetzt noch offen ist, bekommt die Stufe, die sein Thema am besten kann.
+
+  /* Was jetzt noch offen ist, bekommt eine Stufe, die sein Thema tragen kann -
+     ebenfalls gezogen und nicht bestimmt, aus demselben Grund. */
   gezogen.forEach(function (t, i) {
     while (offen[i] > 0) {
-      var beste = 1, bestesN = -1;
+      var kand = [];
       [1, 2, 3].forEach(function (stufe) {
-        var a = angebot(t, stufe, qz);
+        var g = gewicht(t, stufe);
         // Doppelte Stufe im selben Thema nur, wenn es nicht anders geht.
-        if (zu[i].indexOf(stufe) >= 0) a -= 100;
-        if (a > bestesN) { bestesN = a; beste = stufe; }
+        if (zu[i].indexOf(stufe) >= 0) g *= 0.02;
+        if (g > 0) kand.push({ stufe: stufe, g: g });
       });
-      zu[i].push(beste);
+      // Gibt das Thema gar nichts mehr her, faellt der Slot auf AFB I zurueck;
+      // kernWahl() sucht dort weiter und liefert notfalls ausserhalb des Kerns.
+      var w = kand.length ? zieh(kand, 1, function (x) { return x.g; })[0].stufe : 1;
+      zu[i].push(w);
       offen[i]--;
     }
   });
@@ -1276,11 +1323,21 @@ function schreibBlattBauen(a, blattId, istLetztes) {
   stift.title = "Mit dem Stift schreiben";
   stift.setAttribute("aria-label", "Mit Stift schreiben");
   stift.addEventListener("click", function () {
+    /* Die Aufgaben-Uhr laeuft, solange die Stiftflaeche offen ist (08.09.2026).
+       Ohne das misst sie bei Rose GAR NICHTS: sie hat ihre erste halbe Klausur
+       komplett handschriftlich geschrieben (alle sechs Eintraege quelle "hand"),
+       und die Messung haengt sonst am Fokus des Textfelds, das sie nie anfasst.
+
+       Beim FOTO bleibt die Zeit weiterhin leer, und das ist ehrlich so: dort
+       ist auf Papier neben dem Geraet geschrieben worden, davon sieht die App
+       nichts. Eine geschaetzte Zahl waere schlechter als keine. */
+    zeitStart(a);
     // Die Aufgabe steht beim Schreiben oben auf dem Blatt - frageTextZuBlatt
     // liefert sie schon fuer die Transkription, hier zeigt sie dieselbe Quelle.
     stiftFlaeche(function (bilder) { uebernehmen(blatt, bilder); }, {
       frage: frageTextZuBlatt(blatt),
-      nr: "Aufgabe " + blatt.aufgabeNr
+      nr: "Aufgabe " + blatt.aufgabeNr,
+      beiSchluss: zeitStop
     });
   });
   werkzeuge.appendChild(stift);
@@ -1528,6 +1585,9 @@ function exportBilder(cv) {
 // opts.frage: der Aufgabentext. Steht gedruckt oben auf dem Blatt und bleibt
 // beim Schreiben sichtbar - genau wie auf dem echten Klausurbogen. Ohne Text
 // faellt der Kopf weg und die Schreibflaeche nimmt das ganze Blatt.
+//
+// opts.beiSchluss: laeuft, wenn die Flaeche zugeht - egal ob ueber Fertig oder
+// Abbrechen. Die Klausur stoppt darin ihre Aufgaben-Uhr.
 export function stiftFlaeche(beiFertig, opts) {
   var o = opts || {};
   var y = scrollMerken();
@@ -1686,6 +1746,9 @@ export function stiftFlaeche(beiFertig, opts) {
     window.removeEventListener("resize", groesse);
     ov.remove();
     scrollZurueck(y);
+    // Einziger Ausgang der Flaeche - Abbrechen wie Fertig laufen hier durch.
+    // Die Klausur haengt daran ihre Aufgaben-Uhr (opts.beiSchluss).
+    if (typeof o.beiSchluss === "function") o.beiSchluss();
   }
   abbruch.addEventListener("click", schliessen);
 
