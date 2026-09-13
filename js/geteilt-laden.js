@@ -2025,6 +2025,10 @@ function alsText(e) { return e.zeilen.join("\n"); }
      api.guthaben(stand)        das abgeleitete Guthaben { herz, stern }
      api.besitzt(was)           ob ein Stueck schon gekauft ist
      api.kaufen(was, preis)     kauft; false, wenn es nicht geht
+     api.tauschen()             5 ♥ gegen 1 ★ (optional; fehlt es, gibt es
+                                  keinen Tausch-Knopf). Kurs als api.TAUSCH
+                                  { herz, stern } daneben, damit der Knopf
+                                  die Zahl nicht selbst wissen muss
      api.wahl(feld)             eine getroffene Wahl lesen
      api.waehle(feld, wert)     eine Wahl setzen
      api.outfit()               das getragene Outfit als Objekt
@@ -2137,6 +2141,29 @@ function blattFuellen(blatt, api) {
        sie gerade leer ist. */
     konto.innerHTML = "<b>" + frei.herz + "</b> ♥ frei · <b>" + frei.stern + "</b> ★ frei";
     blatt.appendChild(konto);
+
+    /* ---- Der Tausch (Jennifer, 13.09.2026: "5 Herzen in 1 Stern umwandeln") ----
+       Sterne gibt es nur ueber Streckziel-Tage, Herzen jeden Tag - wer die
+       Sterne-Preise nie erreicht, sieht das halbe Regal als Vitrine. Der Kurs
+       steht im Trainer (api.TAUSCH), der Knopf zeigt ihn nur an. Bei zu wenig
+       Herzen bleibt er sichtbar, aber stumm, mit dem Grund daneben: ein Knopf,
+       der verschwindet, erklaert nichts. Nach dem Tausch zeichnet sich das
+       Blatt neu wie nach jedem Kauf (nachKauf), damit die Zahl oben sofort
+       stimmt. */
+    if (typeof api.tauschen === "function") {
+      var kurs = api.TAUSCH || { herz: 5, stern: 1 };
+      var tausch = el("div", "shop-tausch");
+      var kann = frei.herz >= kurs.herz;
+      var tKnopf = knopf(kurs.herz + " ♥ → " + kurs.stern + " ★ tauschen", "knopf klein shop-kauf shop-tausch-knopf", function () {
+        if (api.tauschen()) nachKauf();
+      });
+      tKnopf.disabled = !kann;
+      tausch.appendChild(tKnopf);
+      tausch.appendChild(el("span", "shop-tausch-text", kann
+        ? "Herzen bleiben Herzen – nur was du tauschst, wird ein Stern."
+        : "Ab " + kurs.herz + " ♥ frei kannst du tauschen."));
+      blatt.appendChild(tausch);
+    }
     blatt.appendChild(el("p", "shop-hinweis",
       "Gekauft ist gekauft. Nichts läuft ab, nichts geht kaputt, und wenn du einen Tag nicht kannst, passiert hier gar nichts."));
 

@@ -101,6 +101,14 @@
   margin: 0 auto 16px; max-width: 44ch;
   text-align: center; font-size: .8rem; color: var(--ink-soft);
 }
+/* Der Tausch-Knopf unter dem Konto: eine Zeile, mittig, der Satz daneben in
+   der Kleinschrift des Hinweises. Auf schmalen Geraeten bricht der Satz unter
+   den Knopf (flex-wrap), der Knopf bleibt ganz. */
+.shop-tausch {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  flex-wrap: wrap; margin: 0 auto 10px; max-width: 44ch;
+}
+.shop-tausch-text { font-size: .78rem; color: var(--ink-soft); text-align: center; }
 
 /* ---------- Ein Regal ---------- */
 .shop-regal-kopf {
