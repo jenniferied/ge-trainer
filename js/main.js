@@ -928,11 +928,11 @@ function countdownKarte(tz) {
   // maskottchen.js kennt weder main.js noch den Chat. Das Sheet haengt danach an
   // document.body, nicht in dieser Karte: ein Sync oder ein Tabwechsel zeichnet
   // die Karte neu und risse es sonst mitten im Satz weg.
+  var tage = tageBisKlausur();
+  var feier = tage < 0;
   karte.appendChild(Mk.knoten(tz, function () { zeigeStart(); }, konfetti, function (stufe) {
     MkChat.chatOeffnen(mkChatAdapter(tz, stufe));
-  }));
-
-  var tage = tageBisKlausur();
+  }, { feier: feier }));
 
   /* KEIN HERUNTERZAEHLEN MEHR (Rose ueber Jennifer, 23.08.2026: "kannst du die
      anzeige 18 tage wegmachen auf der seite, das stresst sie?").
@@ -949,10 +949,24 @@ function countdownKarte(tz) {
      mehr, siehe SYSTEM_MASKOTTCHEN). */
   if (tage <= 0) {
     var zeile = el("div", "countdown-zeile");
-    zeile.appendChild(el("span", "countdown-zahl", tage === 0 ? "Heute ist der Tag" : "Geschafft"));
+    zeile.appendChild(el("span", "countdown-zahl", tage === 0 ? "Heute ist der Tag" : "🏁 Geschafft"));
     zeile.appendChild(el("span", "countdown-datum",
       tage === 0 ? "du hast dich vorbereitet" : "die Klausur liegt hinter dir"));
     karte.appendChild(zeile);
+  }
+
+  /* NACH DER KLAUSUR (Jennifer, 13.09.2026: "ihr Animal und Pet am Tanzen und
+     eine andere UI"). Bis hierhin fiel der Zweig durch bis zur Reststoff-Zeile
+     unten - "Tagespensum aus dem Reststoff gerechnet (noch ~N Antworten)" stand
+     also unter einer Klausur, die vorbei ist. Jetzt: Kreatur und Pet tanzen
+     (mk-feier, CSS), einmal am Tag Konfetti beim Oeffnen, und die Karte sagt
+     nur noch, was wahr ist. Kein Ergebnis-Talk: das steht noch aus. */
+  if (feier) {
+    karte.classList.add("feier");
+    karte.appendChild(el("div", "countdown-meta feier-satz",
+      "Hier steht kein Pensum mehr. Was du geübt hast, bleibt – und die beiden da oben tanzen für dich. 🎉"));
+    feiereEinmal("klausur-vorbei");
+    return karte;
   }
 
   // Am Klausurtag selbst kein Pensum: da wird nicht mehr aufgeholt, da wird
@@ -2611,12 +2625,18 @@ function zeigeStart() {
   app.appendChild(kopf);
 
   var tz = Stats.tagesziel(themen, tageBisKlausur());
+  var nachKlausur = tageBisKlausur() < 0;
   // Einer der zwei Feier-Anlaesse (Jennifer, 12.08.): das Streckziel ist voll,
   // der Tag leuchtet im Kalender im Regenbogen. Einmal am Tag, nicht bei jedem
   // Zurueck zur Startseite - darum feiereEinmal statt konfetti.
-  if (tz.n >= tz.stretch) feiereEinmal("streckziel");
+  if (!nachKlausur && tz.n >= tz.stretch) feiereEinmal("streckziel");
   app.appendChild(countdownKarte(tz));
-  app.appendChild(heuteDranKarte());
+  /* Nach der Klausur (13.09.2026) faellt "Heute dran" weg: die Kacheln pulsen
+     rot fuer offene Tagesaufgaben, und offen ist hier nichts mehr. Die
+     Uebungs-Kacheln bleiben - wer nachschlagen oder aus Lust spielen will,
+     findet alles. Ebenso faellt "So laeuft die Klausur" weg, die Ansage fuer
+     einen Tag, der vorbei ist. */
+  if (!nachKlausur) app.appendChild(heuteDranKarte());
   app.appendChild(uebenKacheln());
 
   /* Kurzinfo zur Klausur - seit dem 24.08. HIER statt ganz unten (Jennifer:
@@ -2626,6 +2646,7 @@ function zeigeStart() {
      ausfuehrlich im Spickzettel der Signalwoerter; hier waeren sie eine
      dritte Kopie. */
   var info = el("div", "karte info-karte");
+  if (nachKlausur) info.hidden = true;
   info.appendChild(el("h2", null, "So läuft die Klausur"));
   var ul = document.createElement("ul");
   /* NUR DAS SCHLUESSELWORT FETT, nicht die ganze Zeile eingefaerbt (Jennifer,

@@ -1801,6 +1801,35 @@ p { margin: 0 0 var(--sp-3); }
 .mk-wackelt { animation: mkWackeln 3.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .mk-atmet, .mk-wackelt, .mk-schwebt { animation: none; } }
 
+/* ---------- Der Tanz nach der Klausur (13.09.2026) ----------
+   .mk-feier setzt maskottchen.js auf die Zeile, wenn main.js Feier meldet
+   (Datum nach dem Klausurtag). Das Atmen wird zum Tanz: huepfen und kippen,
+   im Takt. Die Klasse .mk-atmet bleibt am Element - so greift der
+   Reduced-Motion-Block oben weiter (dort steht sie gar nicht erst dran), und
+   ohne .mk-feier ist alles wie vorher. Das Pet tanzt versetzt (shop.css),
+   sonst sehen zwei synchrone Wesen aus wie ein flackerndes Bild. */
+@keyframes mkTanzt {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25%      { transform: translateY(-5px) rotate(-6deg); }
+  50%      { transform: translateY(0) rotate(0); }
+  75%      { transform: translateY(-5px) rotate(6deg); }
+}
+.mk-feier .mk-atmet { animation: mkTanzt 1s ease-in-out infinite; transform-origin: 50% 100%; }
+/* Zwischen 0 und 6 Uhr schlafen beide (mk-schlaeft, geteilt-laden.js) - ein
+   schlafendes Tier, das huepft, saehe kaputt aus. Nachts wird nur geatmet,
+   getanzt wird ab sechs. Die Party wartet, sie laeuft nicht weg. */
+.mk-feier .mk-schlaeft.mk-atmet { animation: mkAtmen 3.4s ease-in-out infinite; }
+
+/* Die Karte selbst: Regenbogen-Kante oben (dieselbe wie im Kalender fuer den
+   Streckziel-Tag) und ein paar stille Girlanden. Kein Rot, kein Balken. */
+.countdown.feier { overflow: hidden; }
+.countdown.feier::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px;
+  background: var(--tag-regenbogen); opacity: .85; z-index: 1;
+}
+.countdown.feier .countdown-zahl { font-size: 1.75rem; }
+.countdown.feier .feier-satz { font-size: .92rem; color: var(--ink); }
+
 /* ---------- Das Schluepfen ----------
    Wortgleich mit dem ST-Trainer. Bleibt bewusst je App eigen und geht NICHT ins
    geteilte Style-Paket: .mk-* ist dort ausdruecklich ausgenommen, weil beide

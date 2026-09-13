@@ -220,6 +220,11 @@
    bekommt dieselbe Animation, aber verzoegert — zwei Wesen, die synchron
    atmen, sehen aus wie ein Bild, das flackert. */
 .mk-pet.mk-atmet { animation-delay: .9s; }
+/* Im Tanz nach der Klausur (.mk-feier, GE style.css) einen halben Takt
+   versetzt: Figur oben, Pet unten, Figur unten, Pet oben - wie zwei, die
+   wirklich zusammen tanzen. Im ST-Trainer gibt es .mk-feier (noch) nicht,
+   die Regel ist dort schlicht tot. */
+.mk-feier .mk-pet.mk-atmet { animation-delay: .5s; }
 @media (prefers-reduced-motion: reduce) {
   .mk-pet.mk-atmet { animation: none; }
 }

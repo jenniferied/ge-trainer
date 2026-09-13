@@ -233,6 +233,17 @@ var SPRUCH = {
     "Das war alles, was heute ging. Ich bin satt.",
     "Voll. Ab jetzt übst du nur noch für dich, nicht für mich.",
   ],
+  /* Nach der Klausur (13.09.2026). Die Kreatur weiss, dass es vorbei ist, und
+     verlangt nichts mehr - kein Herz, keine Aufgabe. Sie tanzt. Die Saetze
+     reden nicht ueber Noten oder Ergebnisse (die stehen noch aus), nur ueber
+     das, was sicher ist: die Klausur ist geschrieben. */
+  feier: [
+    "Wir haben es geschafft. Ich tanze, du darfst zuschauen.",
+    "Klausur geschrieben. Heute wird nichts geübt, heute wird getanzt.",
+    "Musik an, Sorgen aus. Das hier ist für dich.",
+    "Fertig. Einfach fertig. Ich bin so stolz, dass mir die Ohren wackeln.",
+    "Du hast das durchgezogen. Ich hab nur zugeschaut – und trotzdem Muskelkater vom Mitfiebern.",
+  ],
 };
 function spruchVon(liste, tag) { return liste[tag % liste.length]; }
 
@@ -1367,7 +1378,7 @@ export function shopOeffnen(tz, neu) {
    Wahrheiten waeren. */
 function aktuelleStufe(tz) { return stufeJetzt(standJetzt(tz).herzen); }
 
-function standKnoten(tz, neu, chatAuf) {
+function standKnoten(tz, neu, chatAuf, opt) {
   var st = standJetzt(tz);
   // stufeJetzt() zieht die Sperrklinke nach; blaseText() bekommt sie herein und
   // rechnet nicht selbst. Sonst haette die Blase eine andere Stufe als das Bild.
@@ -1375,8 +1386,20 @@ function standKnoten(tz, neu, chatAuf) {
     stunde: new Date().getHours(), hh: herzenHeute(tz), stufeMax: stufeJetzt(st.herzen) });
   var stufe = t.stufe;
   var v = EIER[eiIndex()];
+  var feier = !!(opt && opt.feier);
+  /* Feier-Modus (nach der Klausur, main.js entscheidet das am Datum): Spruch
+     und Meta-Zeile reden nicht mehr von "noch N Herzen" oder "heute noch
+     keins" - es gibt nichts mehr zu holen. Was bleibt, ist der Stand als
+     Erinnerung. Bild, Stufe, Outfit und Pet bleiben, wie Rose sie kennt; nur
+     die Bewegung wird ein Tanz (CSS, .mk-feier). */
+  if (feier) {
+    t.satz = spruchVon(SPRUCH.feier, new Date().getDate());
+    t.meta = "Die Klausur ist geschrieben. <b>" + st.herzen + "</b> ♥" +
+      (st.sterne ? " · <b>" + st.sterne + "</b> ★" : "") + " aus " + st.tage +
+      " Übungstagen – das bleibt.";
+  }
 
-  var zeile = el("div", "mk-zeile");
+  var zeile = el("div", "mk-zeile" + (feier ? " mk-feier" : ""));
   var pre = document.createElement("pre");
   // Das Wackeln gehoert zum Riss kurz vor dem Schluepfen. Danach atmet das Tier
   // nur noch — ein geschluepftes Tier, das weiter zappelt, sieht aus, als waere
@@ -1530,12 +1553,15 @@ function standKnoten(tz, neu, chatAuf) {
    dieses Modul weiter nur von core/sync/stats abhaengt und den Chat gar nicht
    kennen muss. Es bekommt die aktuelle Stufe uebergeben, damit der Adapter
    nicht selbst danach fragen muss. */
-export function knoten(tz, neuZeichnen, feiern, chatAuf) {
+/* opt (13.09.2026): { feier: true } nach der Klausur - main.js entscheidet am
+   Datum, das Modul kennt den Termin weiter nicht. Wirkt nur in der ruhigen
+   Stand-Ansicht; Ankunft, Auswahl und Schluepfen bleiben ihre eigenen Momente. */
+export function knoten(tz, neuZeichnen, feiern, chatAuf, opt) {
   if (angesehen) return auswahlKnoten(neuZeichnen);
   if (!gewaehlt()) return ankunftKnoten(neuZeichnen);
   // Laeuft die Animation, schlaegt sie alles andere — sonst reisst ein
   // Neuzeichnen (Sync-Antwort, Tabwechsel) sie mittendrin weg.
   if (schluepfPhase === "bricht") return bruchKnoten();
   if (!geschluepft() && aktuelleStufe(tz) >= SCHLUEPF_STUFE) return schluepfKnoten(neuZeichnen, feiern);
-  return standKnoten(tz, neuZeichnen, chatAuf);
+  return standKnoten(tz, neuZeichnen, chatAuf, opt);
 }
